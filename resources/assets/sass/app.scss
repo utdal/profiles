@@ -1,0 +1,25 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+// Trix
+@import '~trix/dist/trix.css';
+
+// Boostrap datepicker
+@import '~bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css';
+
+// Bootstrap tagsinput
+@import '~bootstrap4-tagsinput/scss/tagsinput';
+
+// Custom Classes
+@import 'core';
+@import 'header';
+@import 'profile_card';
+@import 'profile';
+@import 'tags';
+@import 'dump';

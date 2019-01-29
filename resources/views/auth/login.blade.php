@@ -1,0 +1,86 @@
+@extends('layout')
+
+@section('header')
+    @include('nav')
+@stop
+
+@section('content')
+<div class="container container-fluid" style="margin-top: 20vh; margin-bottom: 30vh;">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    Login
+                </div>
+                <div class="card-body">
+                    @if (count($errors) > 0)
+                        <div class="alert alert-danger">
+                            <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+                        <div class="form-group row justify-content-center">
+                            <label class="col-md-3 col-form-label text-md-right" for="password">NetID</label>
+                            <div class="col-md-7">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" aria-label="NedID" aria-describedby="at_utdallas_edu">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="at_utdallas_edu">@utdallas.edu</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row justify-content-center">
+                            <label class="col-md-3 col-form-label text-md-right" for="password">Password</label>
+                            <div class="col-md-7">
+                                <input type="password" class="form-control" id="password" name="password">
+                            </div>
+                        </div>
+
+                        <div class="form-group row justify-content-center">
+                            <div class="col-md-7 offset-md-3">
+                                <div class="form-check">
+                                    <input class="form-check-imput" type="checkbox" id="remember" name="remember">
+                                    <label class="form-check-label" for="remember">Remember Me</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row justify-content-center">
+                            <div class="col-md-4 offset-md-3">
+                                <button type="submit" class="btn btn-success btn-block" style="margin-right: 15px;">
+                                    <i class="fas fa-sign-in-alt"></i> Login
+                                </button>
+                            </div>
+                            <div class="col-md-3 d-flex align-items-center justify-content-end">
+                                <a href="https://netid.utdallas.edu" target="_blank"><small>Forgot Your Password?</small></a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
+@section('scripts')
+<script>
+$(document).ready(function() {
+    // focus the name field if it's empty
+    $username = $('#name');
+    if (! $username.val()) {
+        $username.focus();
+    }
+});
+</script>
+@endsection

@@ -1,0 +1,21 @@
+/* Symfony Var Dumper styling */
+
+table td pre.sf-dump {
+	color: $gray-light !important;
+	background-color: inherit !important;
+	z-index: auto !important;
+	border-style: none;
+	word-break: break-all !important;
+
+	.sf-dump-note {
+		color: $gray-light !important;
+	}
+
+	.sf-dump-key, .sf-dump-str, .sf-dump-num {
+		color: $gray !important;
+	}
+
+	.sf-dump-ref {
+		color: $link-color !important;
+	}
+}

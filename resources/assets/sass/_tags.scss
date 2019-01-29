@@ -1,0 +1,9 @@
+.tags-badge {
+  border-radius: 3px;
+  padding: 0.35em 0.5em;
+
+	&.large {
+    font-size: 90%;
+    margin-bottom: 0.5em;
+  }
+}

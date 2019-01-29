@@ -1,0 +1,51 @@
+// header
+
+.navbar.main-nav {
+
+    .navbar-brand {
+        display: flex;
+        align-items: center;
+        margin-right: 2rem;
+
+        .profiles-logo {
+            width: 50px;
+            height: auto;
+            padding: 1px 0 0 1px; // for better centering
+            margin-right: 1rem;
+        }
+
+        .vertical-line {
+            border-left: 4px dotted rgba($white, 0.5);
+            height: 1.85rem;
+            margin-right: 1rem;
+        }
+    }
+
+    .search {
+
+        input {
+            font-size: 1rem;
+            border-radius: $border-radius-search 0 0 $border-radius-search;
+
+            &:focus {
+                box-shadow: inherit;
+                border: $input-border-width solid $input-border-color;
+                z-index: inherit;
+            }
+        }
+
+        button {
+            border-radius: 0 $border-radius-search $border-radius-search 0;
+        }
+    }
+
+    .header_thumb {
+        max-height: 35px;
+        margin: -13px 5px -8px 0;
+        border-radius: 50%;
+    }
+
+    .navbar-toggler {
+        border: none;
+    }
+}

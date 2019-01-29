@@ -1,0 +1,195 @@
+// profile.show
+
+.profile {
+
+	.profile-header {
+		background-color: $light;
+		padding: 60px 40px 40px;
+		margin-bottom: 30px;
+		box-shadow: 2px 2px 4px $gray-300;
+	}
+
+	.profile_photo {
+		width: 100%;
+		height: auto;
+		float: left;
+	}
+	
+	.fancy_header{
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+		background-position: center top;
+		background-size: cover;
+		height: 85vh;
+		position: relative;
+
+		@media (max-width: map-get($grid-breakpoints, lg)){
+			//some mobile adjustment here
+			background-size: contain;
+			background-attachment: scroll;
+			height: auto;
+			.contact_info {
+				margin-top: 50%;
+				box-shadow: 2px 2px 4px $gray-300;
+			}
+		}
+		
+		.contact_info {
+			padding: 15px 45px 60px;
+			background: $light;
+			// opacity: .92;
+		}
+
+		.fancy_link_container{
+			position: absolute;
+			bottom: 45px;
+			right: 0px;
+			left: 0px;
+			text-align: center;
+		}
+
+		.fancy_link {
+			padding: 20px 25px 20px;
+			margin: 15px;
+			background: $light;
+			width: auto;
+		}
+	}
+
+	.profile_list_photo {
+		width: 100%;
+		height: auto;
+		float: left;
+    }
+
+	.contact_info {
+		> i:first-of-type {
+			margin-top: 15px;
+		}
+		> i {
+			margin-bottom: 10px;
+		}
+		> div{
+			margin-top: 30px;
+		}
+    }
+
+	h3 {
+		font-weight: lighter;
+		font-size: 1.8rem;
+		margin-bottom: 1.4rem;
+		z-index: 0;
+		position: relative;
+    }
+
+	h5 {
+		clear: both;
+		margin-bottom: 15px;
+    }
+
+	h6 {
+		color: $utd-flame-orange;
+	}
+	
+	.links {
+		text-align: center;
+
+		@media (max-width: map-get($grid-breakpoints, lg)){
+			font-size: .8rem;
+		}
+
+		ul {
+			list-style-type: none;
+			display: inline-block;
+			margin: 10px 0px 30px;
+			padding: 0px;
+			@media (min-width: map-get($grid-breakpoints, lg)){
+				margin: 10px 120px 30px;
+			}
+
+			li {
+				// float: left;
+				display: inherit;
+				margin: 15px 2px;
+			}
+			li a {
+				background-color: $light;
+				padding: 15px 12px;
+				box-shadow: 1px 1px 2px $gray-300;
+				&:hover{
+					background-color: $gray-300;
+				}
+			}
+			li::before {
+				// font-style: italic;
+				content: ' | ';
+				color: $gray-300;
+			}
+			li:first-of-type {
+				// margin-bottom: 40px;
+				&:before {
+					content: '';
+				}
+			}
+		}
+	}
+
+	.entry {
+		margin-bottom: 12px;
+    }
+	.entry:last-of-type{
+		margin-bottom: 0px;
+	}
+
+	.section {
+		@extend .col-md-6;
+    }
+
+	.card-columns{
+		-webkit-column-count: 1;
+		column-count: 1;
+		@media (min-width: map-get($grid-breakpoints, lg)){
+		    -webkit-column-count: 2;
+		    column-count: 2;
+		}
+	}
+
+	.card{
+		border: none;
+		background-color: $light;
+		padding: 35px 60px 60px;
+		margin-bottom: 30px;
+		box-shadow: 2px 2px 4px $gray-300;
+		@media (max-width: map-get($grid-breakpoints, sm)){
+			padding: 25px 40px 40px;
+		}
+	}
+
+	.main_areas {
+		@media (max-width: map-get($grid-breakpoints, lg)) {
+			.section{
+				padding-top: 15px;
+				clear: left;
+			}
+		}
+	}
+
+	.pagination {
+		margin-top: 15px;
+		z-index: 100;
+		position: relative;
+  	}
+
+	.news_image {
+		float: left;
+		max-width: 150px;
+		height: auto;
+		margin-right: 15px;
+		margin-bottom: 5px;
+	}
+}
+
+//general
+.profile_photo{
+		width: 100%
+}

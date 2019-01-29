@@ -1,0 +1,531 @@
+h1, h2 {
+	margin-top: $line-height-computed * 2.5;
+	margin-bottom: $line-height-computed * 2;
+}
+h3, h4, h5, h6{
+	margin-top: $line-height-computed * 1;
+	margin-bottom: $line-height-computed * .75;
+}
+
+img{
+	max-width: 100%;
+	height: auto;
+}
+
+.error-message::before {
+	content: '* ';
+}
+
+.inline {
+	display: inline-block;
+}
+
+.clickable:hover {
+	cursor: pointer;
+}
+
+label {
+	font-weight: 700;
+}
+
+#key .label {
+	color: $text-color;
+	background-color: $gray-200;
+	font-size: 0.9em;
+	font-weight: unset;
+}
+
+// Completed reminders
+label.completed {
+	text-decoration: line-through;
+	color: $utd-warm-gray2;
+	a {
+		color: $utd-warm-gray2;
+	}
+}
+
+// Helper classes to do bottom-alignment withing columns
+.pull-down-parent {
+	display: flex;
+	flex-wrap: wrap;
+	> div.pull-down {
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+	}
+}
+
+// Apply proper error-state borders to TinyMCE
+
+.has-error .mce-tinymce.mce-container.mce-panel {
+	border-color: $state-danger-text;
+}
+
+.has-success .mce-tinymce.mce-container.mce-panel {
+	border-color: $state-success-text;
+}
+
+.has-warning .mce-tinymce.mce-container.mce-panel {
+	border-color: $state-warning-text;
+}
+
+// BOOTSTRAP Overrides
+
+// Override the default Bootstrap style for file inputs, which is messed up in Firefox
+input[type="file"].form-control {
+	height: auto;
+	box-shadow: unset;
+}
+.form-control{
+	margin-bottom: 20px;
+}
+.clear, .clear:before, .clear:after {
+    clear:both;
+}
+
+
+// lighten buttons and badges on hover instead of default bootstrap darken
+@each $color, $value in $theme-colors {
+	$button_hover_lighten_by: if($color == 'light', 1%, 5%);
+	$button_hover_color: lighten($value, $button_hover_lighten_by);
+	.btn-#{$color} {
+		@include hover {
+			background-color: $button_hover_color;
+			border-color: $button_hover_color;
+		}
+	}
+	.badge-#{$color} {
+		&[href] {
+			@include hover-focus {
+				background-color: $button_hover_color;
+				border-color: $button_hover_color;
+			}
+		}
+	}
+}
+
+.dropdown-menu {
+  min-width: 100px;
+}
+
+.dropdown-menu > li.select-submission > a:hover {
+	cursor: pointer;
+}
+
+.help-block {
+	&.error-message-container {
+		color: $state-danger-text;
+	}
+}
+h3, .h3 {
+  font-size: 20px;
+}
+span[data-tooltip]{
+	color: $link-color;
+}
+.tooltip-inner{
+	text-align: left;
+	max-width: 400px;
+	background-color: $info;
+}
+.tooltip.top .tooltip-arrow {
+	border-top-color: $info;
+}
+.tooltip.right .tooltip-arrow {
+	border-right-color: $info;
+}
+.tooltip.left .tooltip-arrow {
+	border-left-color: $info;
+}
+.tooltip.bottom .tooltip-arrow {
+	border-bottom-color: $info;
+}
+.tooltip.in {
+	opacity: 1;
+	filter: alpha(opacity=100);
+}
+//Gabe - these need to be double checked
+.checkbox-inline{
+	margin-right: 10px;
+
+	+ .checkbox-inline {
+		margin-left: 0px;
+	}
+}
+
+.radio-inline {
+	margin-right: 10px;
+
+	+ .radio-inline {
+		margin-left: 0px;
+	}
+}
+
+legend + h4 {
+  margin-top: 0px;
+}
+textarea.form-control{
+	height: 100px;
+	margin-top: 10px;
+}
+input[type="radio"], input[type="checkbox"]{
+	margin: 3px 12px;
+}
+
+.subform {
+	display: none;
+	background-color: rgba(0,0,0,0.04);
+	padding: 15px;
+	margin-bottom: 15px;
+	clear: both;
+
+	.subform {
+		margin-bottom: 0;
+	}
+}
+
+// Font-Awesome Overrides
+
+th .fa {
+	display: inline;
+}
+
+//Profiles
+
+body{
+	font-variant-ligatures: none;
+}
+
+div.container a{
+	transition: color 0.3s linear;
+}
+
+a.edit {
+	color: $utd-sapling-green;
+
+	@include hover {
+		color: lighten($utd-sapling-green, 5%);
+	}
+}
+
+.edit-button{
+	margin-top: 30px;
+	margin-right: 15px;
+	float: right;
+}
+.form-group{
+	clear: both;
+	@media (max-width: map-get($grid-breakpoints, md)) {
+		padding-top: 25px;
+		&:first-of-type{
+			padding-top: 0px;
+		}
+	}
+}
+.lower-border{
+	border-bottom: 1px solid lightgrey;
+	padding-bottom: 30px;
+	margin-bottom: 30px;
+}
+.trash, .handle{
+	line-height: 34px;
+	font-size: 22px;
+	&:hover {
+		cursor: pointer;
+	}
+}
+.record{
+	position: relative;
+}
+.actions{
+	position: absolute;
+	top: -10px;
+	right: -10px;
+	z-index: 100;
+
+	@media (max-width: map-get($grid-breakpoints, lg)){
+		top: -10px;
+		right: 10px;
+	}
+}
+.handle{
+	color: lightgrey;
+	padding-left: 12px;
+	padding-right: 10px;
+	&:hover {
+		cursor: move;
+	}
+}
+.sortable-ghost{
+	opacity: 0.4;
+}
+textarea.form-control{
+	margin-top: 0px;
+}
+.profiles-wordmark sup{
+	font-size: 12px;
+}
+
+.level {
+	display: flex;
+	align-items: center;
+}
+.level-item {
+	margin-right: 1em;
+}
+.flex {
+	flex: 1;
+}
+
+//rich text editor
+trix-editor{
+	margin-bottom: 15px;
+}
+trix-toolbar .trix-button-row{
+	flex-wrap: wrap;
+}
+trix-toolbar .trix-button-group--history-tools {
+    display: none;
+}
+pre{
+	background-color: lightgrey;
+	padding: 1em;
+}
+
+//show more functionality
+
+div.text-container {
+    margin: 0 auto;
+		line-height: 1.5em;
+}
+
+div.content {
+	transition: max-height 5s;
+	overflow: hidden;
+	height: 6em;
+	max-height: 6em;
+}
+
+div.content.showContent {
+    height: auto;
+		max-height: 5000px;
+}
+
+.show-more {
+    padding: 10px 0;
+    text-align: center;
+}
+
+
+//fancy checkbox toggles
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  margin-bottom: -8px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {display:none;}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: $utd-eco-green;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px $utd-eco-green;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+//some extra html5 validation styles
+.form-control:focus{
+	box-shadow: 0 0 0 0.1rem $utd-eco-green;
+	border-color: $utd-eco-green;
+}
+input:required:invalid, input:focus:invalid {
+	box-shadow: 0 0 0 0.1rem red;
+}
+input[type="file"]:invalid{
+	border: none;
+	box-shadow: none;
+}
+
+//drop-down
+
+.dropdown-item{
+	@media (max-width: map-get($grid-breakpoints, lg)){
+    white-space: normal;
+	}
+}
+
+//footer
+
+#footer-container{
+	background-color: $utd-warm-gray6;
+	border-top: 10px solid $utd-sapling-green;
+	min-height: 350px;
+	margin-top: 100px;
+}
+
+footer{
+	padding: 120px 10px;
+	color: white;
+	font-size: 1.25rem;
+	text-align: center;
+
+	a{
+		color: white;
+
+		&.little{
+			font-size: .75rem;
+		}
+		&:hover{
+			color: $utd-sapling-green;
+		}
+	}
+}
+
+
+footer > ul{
+	list-style: none;
+}
+
+//flash messages
+.flash-container{
+	position: fixed;
+	right: 20px;
+	bottom: 20px;
+	cursor: pointer;
+}
+.flash-container .flash-message{
+	padding: 30px;
+}
+
+//homepage
+.full-width{
+	width: 100vw;
+	position: relative;
+	left: 50%;
+	margin-left: -50vw;
+	padding: 5px 10px 30px;
+}
+#home-bottom{
+  background-size: cover;
+	min-height: 65vh;
+	padding-top: 10vh;
+	margin-bottom: -100px;
+}
+#stats{
+	background-color: $utd-flame-orange;
+	color: white;
+	min-height: 200px;
+	opacity: .93;
+
+	.col{
+		padding: 55px 40px 60px;
+		text-align: center;
+	}
+}
+#home-top{
+	background-size: cover;
+	color: white;
+	min-height: 60vh;
+
+	@media (max-width: map-get($grid-breakpoints, lg)){
+			min-height: 35vh;
+	}
+
+	#home-search{
+		padding: 40px 65px 70px;
+		width: 42rem;
+
+		.search:focus{
+			border-color: $gray-400;
+			box-shadow: none;
+		}
+
+		form{
+			display: none;
+		}
+
+		a{
+			color: $utd-sapling-green;
+		}
+		a:hover, a:active{
+			color: $utd-flame-orange;
+		}
+
+		#search-terms{
+			padding-top: 20px;
+		}
+		.terms{
+			padding: 10px 0px;
+		}
+	}
+}
+
+.info{
+	background-color: white;
+	padding: 10px 40px;
+	border-radius: 5px;
+	width: 24rem;
+	height: 100%;
+}
+
+.num{
+	font-size: 3.5rem;
+}
+
+.form-inline .input-group{
+	width: 100%;
+}
+
+#home-video{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+		z-index: -100;
+}

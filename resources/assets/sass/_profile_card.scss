@@ -1,0 +1,19 @@
+.profile-card {
+    margin-bottom: 2rem;
+    width: 16rem;
+    border-radius: 5px;
+
+    .card-title {
+        margin-top: 0;
+    }
+
+    @media (max-width: map-get($grid-breakpoints, lg)){
+        width: 12rem;
+        font-size: 0.9rem;
+	}
+
+    @media (max-width: map-get($grid-breakpoints, sm)){
+        width: 9rem;
+        font-size: 0.75rem;
+	}
+}
