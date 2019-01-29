@@ -39,12 +39,17 @@ A simple CRUD/search profile system for research profiles, providing user-editab
 git clone git@github.com:utdallasresearch/profiles.git
 composer install --ignore-platform-reqs
 cp .env.example .env
+```
+
+Edit the .env file for your environment.
+
+```
 php artisan key:generate
 php artisan storage:link
 php artisan migrate --seed
 ```
 
-Edit the .env file to your environment. First user to login will have the administrator role, which can then be granted to other users.
+First user to login will have the administrator role, which can then be granted to other users.
 
 #### License
 This project is licensed under the terms of the MIT license.
