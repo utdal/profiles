@@ -152,10 +152,6 @@ class Profile extends Model implements HasMediaConversions, Auditable
 
       $datum = json_decode($res->getBody()->getContents(), true);
 
-      // remove previous publications
-      //TODO: should be done transactionally
-      $this->data()->publications()->delete();
-
       foreach($datum['works']['group'] as $record){
           $url = NULL;
           foreach($record['external-ids']['external-id'] as $ref){
@@ -166,9 +162,12 @@ class Profile extends Model implements HasMediaConversions, Auditable
               $url = "http://doi.org/" . $ref['external-id-value'];
             }
           }
-          $record = ProfileData::create([
-              'profile_id' => $this->id,
-              'type' => 'publications',
+          $record = ProfileData::firstOrCreate([
+            'profile_id' => $this->id,
+            'type' => 'publications',
+            'data->title' => $record['work-summary'][0]['title']['title']['value'],
+            'sort_order' => $record['work-summary'][0]['publication-date']['year']['value']
+          ],[
               'data' => [
                   'url' => $url,
                   'title' => $record['work-summary'][0]['title']['title']['value'],
@@ -176,7 +175,6 @@ class Profile extends Model implements HasMediaConversions, Auditable
                   'type' => ucwords(strtolower(str_replace('_', ' ', $record['work-summary'][0]['type']))),
                   'status' => 'Published'
               ],
-              'sort_order' => $record['work-summary'][0]['publication-date']['year']['value']
           ]);
       }
       //TODO: cache key invalidation
