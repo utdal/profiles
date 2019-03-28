@@ -9,6 +9,7 @@
 .DS_Store
 .bundle
 .phpstorm.meta.php
+.vscode
 _ide_helper*
 *.css.map
 *.js.map

@@ -15,15 +15,15 @@ return [
      * Format: ['user model attribute' => 'ldap attribute']
      */
     'attributes' => [
-        'name'          => 'uid',
-        'display_name'  => 'cn',
+        'name'          => 'samaccountname',
+        'display_name'  => 'displayname',
         'college'       => 'college',
-        'department'    => 'dept',
+        'department'    => 'department',
         'firstname'     => 'givenname',
         'lastname'      => 'sn',
         'email'         => 'mail',
         'title'         => 'title',
-        'pea'           => 'pea',
+        'pea'           => 'mail',
     ],
 
     /**
@@ -33,10 +33,8 @@ return [
      */
     'roles' => [
         'staff'     => 'staff',
-        'employee'  => 'staff',
-        'student'   => 'student',
+        'students'   => 'student',
         'faculty'   => 'faculty',
-        'directory' => 'directory'
     ],
 
     /**
@@ -44,7 +42,7 @@ return [
      *
      * This attribute should return an array when accessed via an adldap User instance.
      */
-    'role_attribute' => env('ADLDAP_ROLE_ATTRIBUTE', 'edupersonaffiliation'),
+    // 'role_attribute' => env('ADLDAP_ROLE_ATTRIBUTE', 'edupersonaffiliation'),
 
    /**
      * Default email domain for accounts.

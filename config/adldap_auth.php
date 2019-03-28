@@ -50,7 +50,7 @@ return [
     |
     */
 
-    'resolver' => App\Ldap\Auth\Resolver::class,
+    'resolver' => Adldap\Laravel\Auth\Resolver::class,
 
     /*
     |--------------------------------------------------------------------------

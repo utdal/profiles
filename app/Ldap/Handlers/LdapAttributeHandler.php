@@ -19,7 +19,7 @@ class LdapAttributeHandler
     {
         $this->syncUserAttributes($ldap_user, $user);
         $this->syncUserRoles($ldap_user, $user);
-        $this->syncUserSchool($ldap_user, $user);
+        // $this->syncUserSchool($ldap_user, $user);
     }
 
     /**
@@ -71,12 +71,12 @@ class LdapAttributeHandler
      */
     protected function syncUserRoles(LdapUser $ldap_user, User $user)
     {
-        $role_attribute = $this->getRoleAttribute();
-        $ldap_roles = $ldap_user->getAttribute($role_attribute);
+        $ldap_roles = $ldap_user->getGroupNames();
 
         foreach ($this->getRoleMap() as $role => $app_role) {
             $user_has_role = $user->hasRole($app_role);
-            if (!is_null($ldap_roles)) {
+            // if (!is_null($ldap_roles)) {
+            if (is_array($ldap_roles)) {
                 $ldap_has_role = in_array($role, $ldap_roles);
                 $app_role = Role::whereName($app_role)->first();
                 if ($user_has_role && !$ldap_has_role) {
@@ -104,16 +104,6 @@ class LdapAttributeHandler
         if ($school->exists()) {
             $user->school()->associate($school->first());
         }
-    }
-
-    /**
-     * Get the LDAP attribute corresponding to roles.
-     * 
-     * @return string
-     */
-    protected function getRoleAttribute()
-    {
-        return config('adldap_sync.role_attribute', 'edupersonaffiliation');
     }
 
     /**

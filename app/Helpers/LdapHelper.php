@@ -28,7 +28,7 @@ class LdapHelper implements LdapHelperContract
      * @param  array  $fields      : fields to retrieve
      * @return array
      */
-    public function search($displayname, array $fields = ['displayname','uid'])
+    public function search($displayname, array $fields = ['displayname','samaccountname'])
     {
         $query = $this->adldap->getDefaultProvider()->search()->select($fields);
 
@@ -40,7 +40,17 @@ class LdapHelper implements LdapHelperContract
             $query->orWhereContains('uid', $name_fragment);
         }
 
-        return $this->flattenUserAttributes($query->get(), $fields);
+        // return $this->flattenUserAttributes($query->get(), $fields);
+        $users = $query->get();
+
+        // Copy samaccountname attribute to uid attribute, which is missing in AD LDAP
+        // @todo Remove this and change the front-end references to samaccountname instead of uid
+        $users->transform(function ($user, $key) {
+            $user->setFirstAttribute('uid', $user->getFirstAttribute('samaccountname'));
+            return $user;
+        });
+
+        return $this->flattenUserAttributes($users, $fields);
     }
 
     /**
@@ -69,7 +79,8 @@ class LdapHelper implements LdapHelperContract
      */
     public function getUser($name)
     {
-        $ldap_user = $this->adldap->getDefaultProvider()->search()->whereUid($name)->get()->first();
+        // $ldap_user = $this->adldap->getDefaultProvider()->search()->whereUid($name)->get()->first();
+        $ldap_user = $this->adldap->getDefaultProvider()->search()->whereSamaccountname($name)->get()->first();
 
         if ($ldap_user && $ldap_user->exists) {
             return $this->getUserFromLdapUser($ldap_user);
@@ -86,7 +97,8 @@ class LdapHelper implements LdapHelperContract
      */
     protected function getUserFromLdapUser($ldap_user)
     {
-        $user = User::firstOrCreate(['name' => $ldap_user->getFirstAttribute('uid')]);
+        // $user = User::firstOrCreate(['name' => $ldap_user->getFirstAttribute('uid')]);
+        $user = User::firstOrCreate(['name' => $ldap_user->getFirstAttribute('samaccountname')]);
 
         // Sync User attributes and roles
         $handler = app(LdapAttributeHandler::class);
