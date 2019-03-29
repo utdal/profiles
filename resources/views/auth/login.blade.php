@@ -28,7 +28,7 @@
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                         <div class="form-group row justify-content-center">
-                            <label class="col-md-3 col-form-label text-md-right" for="password">Username</label>
+                            <label class="col-md-3 col-form-label text-md-right" for="name">Username</label>
                             <div class="col-md-7">
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" aria-label="Username">
