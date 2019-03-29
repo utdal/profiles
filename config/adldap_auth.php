@@ -110,11 +110,8 @@ return [
 
     'scopes' => [
 
-        // Only allows users with a user principal name to authenticate.
-        // Adldap\Laravel\Scopes\UpnScope::class,
-        
-        // Only allows users with a uid to authenticate.
-        App\Ldap\Scopes\UserIdScope::class,
+        // Only allows users with the configured username to authenticate.
+        App\Ldap\Scopes\UsernameScope::class,
 
     ],
 
