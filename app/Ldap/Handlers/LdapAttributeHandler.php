@@ -17,9 +17,20 @@ class LdapAttributeHandler
      */
     public function handle(LdapUser $ldap_user, User $user)
     {
-        $this->syncUserAttributes($ldap_user, $user);
-        $this->syncUserRoles($ldap_user, $user);
-        // $this->syncUserSchool($ldap_user, $user);
+        if ($this->shouldSyncAttributes()) {
+            $this->syncUserAttributes($ldap_user, $user);
+        }
+
+        $this->normalizeUserAttributes($ldap_user, $user);
+        $user->save();
+
+        if ($this->shouldSyncRoles()) {
+            $this->syncUserRoles($ldap_user, $user);
+        }
+
+        if ($this->shouldSyncSchool()) {
+            $this->syncUserSchool($ldap_user, $user);
+        }
     }
 
     /**
@@ -33,10 +44,6 @@ class LdapAttributeHandler
         foreach ($this->getAttributeMap() as $user_attribute => $ldap_attribute) {
             $user->$user_attribute = $ldap_user->getFirstAttribute($ldap_attribute);
         }
-
-        $this->normalizeUserAttributes($user);
-
-        $user->save();
     }
 
     /**
@@ -45,11 +52,16 @@ class LdapAttributeHandler
      * @param  User   $user
      * @return void
      */
-    protected function normalizeUserAttributes(User $user)
+    protected function normalizeUserAttributes(LdapUser $ldap_user, User $user)
     {
+        // If they don't have a name, set it to their login name
+        if (!$user->name) {
+            $user->name = $ldap_user->getFirstAttribute($this->getLoginAttributeName());
+        }
+
         // If they don't have an email address, set it to name@example.com
         if (!$user->email && $user->name) {
-            $user->email = $user->name . config('adldap_sync.email_domain');
+            $user->email = $user->name . $this->getEmailDomain();
         }
 
         // If they don't have a pea, set it to their name
@@ -73,18 +85,20 @@ class LdapAttributeHandler
     {
         $ldap_roles = $ldap_user->getGroupNames();
 
-        foreach ($this->getRoleMap() as $role => $app_role) {
+        if (!is_array($ldap_roles)) {
+            return;
+        }
+
+        foreach ($this->getRoleMap() as $app_role => $role) {
             $user_has_role = $user->hasRole($app_role);
-            // if (!is_null($ldap_roles)) {
-            if (is_array($ldap_roles)) {
-                $ldap_has_role = in_array($role, $ldap_roles);
-                $app_role = Role::whereName($app_role)->first();
-                if ($user_has_role && !$ldap_has_role) {
-                    $user->detachRole($app_role);
-                }
-                if (!$user_has_role && $ldap_has_role) {
-                    $user->attachRole($app_role);
-                }
+            $ldap_has_role = in_array($app_role, $ldap_roles);
+            $app_role = Role::whereName($app_role)->first();
+
+            if ($user_has_role && !$ldap_has_role) {
+                $user->detachRole(Role::whereName($app_role)->first());
+            }
+            if (!$user_has_role && $ldap_has_role) {
+                $user->attachRole($app_role);
             }
         }
     }
@@ -97,13 +111,46 @@ class LdapAttributeHandler
      */
     protected function syncUserSchool(LdapUser $ldap_user, User $user)
     {
-        $ldap_school = $ldap_user->getFirstAttribute('college');
-        $ldap_department = $ldap_user->getFirstAttribute('dept');
-        $school = School::WithName($ldap_school ?: $ldap_department);
+        $ldap_school = $ldap_user->getFirstAttribute($this->getSchoolAttributeName());
+        $ldap_department = $ldap_user->getFirstAttribute($this->getDepartmentAttributeName());
 
-        if ($school->exists()) {
-            $user->school()->associate($school->first());
+        if ($ldap_school || $ldap_department) {
+            $school = School::WithName($ldap_school ?: $ldap_department);
+
+            if ($school->exists()) {
+                $user->school()->associate($school->first());
+            }
         }
+    }
+
+    /**
+     * Should we sync LDAP user attributes to local user on login?
+     *
+     * @return bool
+     */
+    protected function shouldSyncAttributes()
+    {
+        return config('adldap_sync.sync_attributes', true);
+    }
+
+    /**
+     * Should we sync LDAP user roles to local user on login?
+     *
+     * @return bool
+     */
+    protected function shouldSyncRoles()
+    {
+        return config('adldap_sync.sync_roles', true);
+    }
+
+    /**
+     * Should we sync LDAP user school to local user on login?
+     *
+     * @return bool
+     */
+    protected function shouldSyncSchool()
+    {
+        return config('adldap_sync.sync_school', true);
     }
 
     /**
@@ -124,6 +171,47 @@ class LdapAttributeHandler
     protected function getAttributeMap()
     {
         return config('adldap_sync.attributes', []);
+    }
+
+    /**
+     * Get the name of the LDAP attribute used for login
+     *
+     * @return string
+     */
+    protected function getLoginAttributeName()
+    {
+        return config('adldap_auth.usernames.ldap', 'samaccountname');
+    }
+
+    /**
+     * Get the name of the LDAP attribute used for a user's school
+     *
+     * @return string
+     */
+    protected function getSchoolAttributeName()
+    {
+        return $this->getAttributeMap()['school'] ?? 'college';
+    }
+
+    /**
+     * Get the name of the LDAP attribute used for a user's department
+     *
+     * @return string
+     */
+    protected function getDepartmentAttributeName()
+    {
+        return $this->getAttributeMap()['department'] ?? 'department';
+    }
+
+    /**
+     * Get the default email domain to use if the user doesn't have
+     * an email address specified.
+     *
+     * @return string
+     */
+    protected function getEmailDomain()
+    {
+        return config('adldap_sync.email_domain', '@example.com');
     }
 
 }
