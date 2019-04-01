@@ -24,9 +24,9 @@
 	@endif
 
 	{!! Form::model($user, ['method' => 'PATCH', 'route' => ['users.update', $user->pea], 'class' => 'form-horizontal', 'files' => true]) !!}
-	<!-- NetID (name) -->
+	<!-- Username (name) -->
 	<div class="form-group {{ ($errors->has('name') ?  'has-error' : '') }}">
-		{!! Form::label('name', 'NetID:', ['class' => 'col-sm-2 control-label']) !!}
+		{!! Form::label('name', $settings['account_name'] ?? 'Username', ['class' => 'col-sm-2 control-label']) !!}
 		<div class="col-sm-9">
 		{!! Form::text('name', null, ['class' => 'form-control']) !!}
 		<span class="text-danger">{!! $errors->first('name') !!}</span>
@@ -34,7 +34,7 @@
 	</div>
 	<!-- pea -->
 	<div class="form-group {{ ($errors->has('pea') ?  'has-error' : '') }}">
-		{!! Form::label('pea', 'PEA:', ['class' => 'col-sm-2 control-label']) !!}
+		{!! Form::label('pea', 'URL Name', ['class' => 'col-sm-2 control-label']) !!}
 		<div class="col-sm-9">
 		{!! Form::text('pea', null, ['class' => 'form-control']) !!}
 		<span class="text-danger">{!! $errors->first('pea') !!}</span>

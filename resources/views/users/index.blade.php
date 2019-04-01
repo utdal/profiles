@@ -22,8 +22,8 @@
         <thead>
             <tr>
                 <th>id</th>
-                <th>NetID</th>
-                <th>PEA</th>
+                <th>{{ $settings['account_name'] ?? 'Username' }}</th>
+                <th>URL Name</th>
                 <th>First</th>
                 <th>Last</th>
                 <th>Title</th>

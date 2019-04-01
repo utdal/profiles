@@ -28,7 +28,9 @@
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                         <div class="form-group row justify-content-center">
-                            <label class="col-md-3 col-form-label text-md-right" for="name">Username</label>
+                            <label class="col-md-3 col-form-label text-md-right" for="name">
+                                {{ $settings['account_name'] ?? 'Username' }}
+                            </label>
                             <div class="col-md-7">
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" aria-label="Username">
@@ -59,7 +61,11 @@
                                 </button>
                             </div>
                             <div class="col-md-3 d-flex align-items-center justify-content-end">
-                                <a href="https://netid.utdallas.edu" target="_blank"><small>Forgot Your Password?</small></a>
+                                @if(isset($settings['forgot_password_url']))
+                                <a href="{{ $settings['forgot_password_url'] ?? '#' }}" target="_blank">
+                                    <small>Forgot Your Password?</small>
+                                </a>
+                                @endif
                             </div>
                         </div>
                     </form>

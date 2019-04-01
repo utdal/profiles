@@ -25,7 +25,7 @@ class UserStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'netid' => 'required|alpha_num',
+            'name' => 'required|alpha_num',
             'create_profile' => 'required|boolean',
         ];
     }

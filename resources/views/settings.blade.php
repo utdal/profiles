@@ -70,6 +70,20 @@
 
     <div class="row record form-group level lower-border">
         <div class="col col-12">
+            <label for="rte_account_name">Institution User Account Name</label>
+            <input id="rte_account_name" type="text" class="form-control" name="setting[account_name]" placeholder="MyInstitutionID" value="{{ $settings['account_name'] ?? NULL }}">
+        </div>
+    </div>
+
+    <div class="row record form-group level lower-border">
+        <div class="col col-12">
+            <label for="rte_forgot_password_url">Forgot Password URL</label>
+            <input id="rte_forgot_password_url" type="url" class="form-control" name="setting[forgot_password_url]" placeholder="https://id.example.com" value="{{ $settings['forgot_password_url'] ?? NULL }}">
+        </div>
+    </div>
+
+    <div class="row record form-group level lower-border">
+        <div class="col col-12">
             <label for="rte_faq">FAQ Page</label>
             <input id="rte_faq" type="hidden" class="clearable" name="setting[faq]" value="{{ $settings['faq'] ?? NULL }}">
             <trix-editor input="rte_faq"></trix-editor>

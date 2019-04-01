@@ -17,7 +17,7 @@
                 {!! Form::open(['route' => ['users.store'], 'method' => 'POST']) !!}
                     <div class="form-group row justify-content-center">
                         <div class="col-sm-10">
-                            <input placeholder="NetID" class="form-control" maxlength="255" name="netid" id="netid" type="text" required>
+                            <input placeholder="{{ $settings['account_name'] ?? 'Username' }}" class="form-control" maxlength="255" name="name" id="name" type="text" required>
                         </div>
                     </div>
                     <div class="form-group row justify-content-center ">
@@ -46,7 +46,7 @@
 <script>
 $(document).ready( function () {
 
-  $('#netid').focus();
+  $('#name').focus();
 
 });
 </script>

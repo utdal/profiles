@@ -23,7 +23,17 @@ class AppServiceProvider extends ServiceProvider
         Paginator::defaultView('vendor.pagination.default');
         Paginator::defaultSimpleView('vendor.pagination.simple-default');
 
-        View::composer(['layout', 'home', 'nav', 'faq'], function ($view) {
+        View::composer([
+            'layout',
+            'home',
+            'nav',
+            'faq',
+            'auth.login',
+            'users.index',
+            'users.panel',
+            'users.create',
+            'users.edit',
+        ], function ($view) {
             $settings = Cache::rememberForever('settings', function(){
                 return Setting::pluck('value', 'name')->toArray();
             });

@@ -91,17 +91,18 @@ class UsersController extends Controller
      */
     public function store(UserStoreRequest $request, LdapHelperContract $ldap)
     {
-        $user = $ldap->getUser($request->input('netid'));
+        $name = $request->input('name');
+        $user = $ldap->getUser($name);
 
         if ($user) {
             if ($request->input('create_profile')) {
                 return redirect()->route('profiles.create', ['user' => $user]);
             }
 
-            return redirect()->route('users.index')->with('flash_message', "Added user {$request->netid}");
+            return redirect()->route('users.index')->with('flash_message', "Added user {$name}");
         }
 
-        return back()->with('flash_message', "Unable to find user with NetID &ldquo;{$request->netid}&rdquo;");
+        return back()->with('flash_message', "Unable to find user with username &ldquo;{$name}&rdquo; in the directory.");
     }
 
     /**

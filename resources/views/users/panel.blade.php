@@ -16,9 +16,9 @@
       <div class="row">
         <div class="col-sm-4">
           <dl class="">
-            <dt>NetID</dt><dd>{{ $user->name }}</dd>
+            <dt>{{ $settings['account_name'] ?? 'Username' }}</dt><dd>{{ $user->name }}</dd>
             <dt>First / Last</dt><dd>{{ $user->firstname }} / {{ $user->lastname }}</dd>
-            <dt>PEA partial</dt><dd>{{ $user->pea }}</dd>
+            <dt>URL name</dt><dd>{{ $user->pea }}</dd>
             <dt>Email</dt><dd>{{ $user->email }}</dd>
           </dl>
         </div>
