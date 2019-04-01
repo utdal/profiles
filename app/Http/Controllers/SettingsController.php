@@ -14,24 +14,22 @@ class SettingsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
-
-        $this->middleware('can:viewAdminIndex,App\User');
-
+        $this->middleware(['auth', 'can:update,App\Setting']);
     }
-    
+
     /**
      * Show the settings for editing.
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(){
+    public function edit()
+    {
         $settings = Setting::pluck('value', 'name')->toArray();
         return view('settings', compact('settings'));
     }
 
-    public function update(Request $request){
-
+    public function update(Request $request)
+    {
         foreach($request->input('setting') as $name => $value){  
             Setting::updateOrCreate([
                 'name' => $name

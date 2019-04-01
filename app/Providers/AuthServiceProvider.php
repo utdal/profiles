@@ -4,10 +4,12 @@ namespace App\Providers;
 
 use App\Policies\LogPolicy;
 use App\Policies\ProfilePolicy;
+use App\Policies\SettingPolicy;
 use App\Policies\SchoolPolicy;
 use App\Policies\UserPolicy;
 use App\LogEntry;
 use App\Profile;
+use App\Setting;
 use App\School;
 use App\User;
 use Illuminate\Support\Facades\Gate;
@@ -23,6 +25,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         LogEntry::class => LogPolicy::class,
         Profile::class => ProfilePolicy::class,
+        Setting::class => SettingPolicy::class,
         School::class => SchoolPolicy::class,
         User::class => UserPolicy::class,
     ];
