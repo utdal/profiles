@@ -13,12 +13,24 @@ class LdapHelper implements LdapHelperContract
     /** @var Adldap instance */
     protected $adldap;
 
+    public $handler;
+
+    public $schema;
+
+    public $displayname_attribute;
+
+    public $username_attribute;
+
     /**
      * Class constructor.
      */
     public function __construct(AdldapInterface $adldap)
     {
         $this->adldap = $adldap;
+        $this->schema = $adldap->getDefaultProvider()->getSchema();
+        $this->handler = app(LdapAttributeHandler::class);
+        $this->username_attribute = $this->schema->loginName();
+        $this->displayname_attribute = $this->schema->displayName();
     }
 
     /**
@@ -28,29 +40,27 @@ class LdapHelper implements LdapHelperContract
      * @param  array  $fields      : fields to retrieve
      * @return array
      */
-    public function search($displayname, array $fields = ['displayname','samaccountname'])
+    public function search($displayname, array $fields = [], $to_array = false)
     {
+        if (empty($fields)) {
+            $fields = [$this->username_attribute, $this->displayname_attribute];
+        }
+
         $query = $this->adldap->getDefaultProvider()->search()->select($fields);
 
         // Break the search string into fragments and search each fragment
         $displayname = str_replace(",","",$displayname); // get rid of commas
         $displayname = (substr($displayname,-1) === " ") ? [$displayname] : explode(' ',$displayname);
         foreach ($displayname as $name_fragment) {
-            $query->orWhereContains('displayname', $name_fragment);
-            $query->orWhereContains('uid', $name_fragment);
+            $query->orWhereContains($this->displayname_attribute, $name_fragment);
+            $query->orWhereContains($this->username_attribute, $name_fragment);
         }
 
-        // return $this->flattenUserAttributes($query->get(), $fields);
-        $users = $query->get();
+        if ($to_array) {
+            return $this->flattenUserAttributes($query->get(), $fields);
+        }
 
-        // Copy samaccountname attribute to uid attribute, which is missing in AD LDAP
-        // @todo Remove this and change the front-end references to samaccountname instead of uid
-        $users->transform(function ($user, $key) {
-            $user->setFirstAttribute('uid', $user->getFirstAttribute('samaccountname'));
-            return $user;
-        });
-
-        return $this->flattenUserAttributes($users, $fields);
+        return $query->get();
     }
 
     /**
@@ -79,8 +89,8 @@ class LdapHelper implements LdapHelperContract
      */
     public function getUser($name)
     {
-        // $ldap_user = $this->adldap->getDefaultProvider()->search()->whereUid($name)->get()->first();
-        $ldap_user = $this->adldap->getDefaultProvider()->search()->whereSamaccountname($name)->get()->first();
+        $ldap_user = $this->adldap->getDefaultProvider()->search()
+                          ->where($this->username_attribute, $name)->get()->first();
 
         if ($ldap_user && $ldap_user->exists) {
             return $this->getUserFromLdapUser($ldap_user);
@@ -97,13 +107,12 @@ class LdapHelper implements LdapHelperContract
      */
     protected function getUserFromLdapUser($ldap_user)
     {
-        // $user = User::firstOrCreate(['name' => $ldap_user->getFirstAttribute('uid')]);
-        $user = User::firstOrCreate(['name' => $ldap_user->getFirstAttribute('samaccountname')]);
+        $user = User::firstOrCreate([
+            'name' => $ldap_user->getFirstAttribute($this->username_attribute),
+        ]);
 
         // Sync User attributes and roles
-        $handler = app(LdapAttributeHandler::class);
-        $handler->handle($ldap_user, $user);
-        $user->save();
+        $this->handler->handle($ldap_user, $user);
 
         return $user;
     }

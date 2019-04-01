@@ -35,6 +35,14 @@ return [
     ],
 
     /**
+     * Other LDAP attributes (non-syncing)
+     */
+    'other_attributes' => [
+        'office'        => env('LDAP_SCHEMA_OFFICE', 'physicaldeliveryofficename'),
+        'telephone'     => env('LDAP_SCHEMA_TELEPHONE', 'telephonenumber'),
+    ],
+
+    /**
      * Mapping of roles to sync from LDAP to the User record.
      *
      * Format: ['user model attribute' => 'ldap group name']

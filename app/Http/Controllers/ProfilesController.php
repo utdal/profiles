@@ -141,14 +141,15 @@ class ProfilesController extends Controller
      * @param  User   $user
      *
      */
-    public function redirectById($id){
+    public function redirectById($id)
+    {
         $profile = Profile::findOrFail($id);
 
         return redirect()->route('profiles.show', $profile);
     }
 
-    public function create(User $user, LdapHelperContract $ldap){
-
+    public function create(User $user, LdapHelperContract $ldap)
+    {
         //redirect to edit page if user already has a profile
         if($user->profiles()->count() > 0){
             return redirect()->route('profiles.edit', [$user->profiles()->first()->slug, 'information'])->with('flash_message', 'Profile already exists.');
@@ -156,14 +157,14 @@ class ProfilesController extends Controller
 
         //get fresh information for creating profile stub
         $ldap_user = $ldap->search($user->name, [
-            'uid',
-            'displayname',
-            'title',
-            'dept',
-            'office',
-            'telephonenumber',
-            'canonicalmailaddress'
-        ]);
+            $ldap->schema->loginName(),
+            $ldap->schema->displayName(),
+            $ldap->schema->department(),
+            $ldap->schema->title(),
+            $ldap->schema->email(),
+            $ldap->schema->telephone(),
+            $ldap->schema->physicalDeliveryOfficeName(),
+        ])->first();
 
         //create profile
         $profile = Profile::create([
@@ -179,14 +180,14 @@ class ProfilesController extends Controller
         //create profile information stub
         $information = ProfileData::create([
             'type' => 'information',
-            'data' => array(
-                'title' => $ldap_user[0]['title'] . " - " . $ldap_user[0]['dept'],
+            'data' => [
+                'title' => $ldap_user->getTitle() . " - " . $ldap_user->getDepartment(),
                 'secondary_title' => '',
                 'tertiary_title' => '',
-                'email' => $ldap_user[0]['canonicalmailaddress'],
-                'phone' => isset($ldap_user[0]['telephonenumber']) ? $ldap_user[0]['telephonenumber'] : NULL,
-                'location' => isset($ldap_user[0]['office']) ? $ldap_user[0]['office'] : NULL,
-            )
+                'email' => $ldap_user->getEmail(),
+                'phone' => $ldap_user->getTelephoneNumber(),
+                'location' => $ldap_user->getPhysicalDeliveryOfficeName(),
+            ],
         ]);
 
         $profile->data()->save($information);

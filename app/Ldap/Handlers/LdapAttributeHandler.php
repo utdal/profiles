@@ -111,8 +111,8 @@ class LdapAttributeHandler
      */
     protected function syncUserSchool(LdapUser $ldap_user, User $user)
     {
-        $ldap_school = $ldap_user->getFirstAttribute($this->getSchoolAttributeName());
-        $ldap_department = $ldap_user->getFirstAttribute($this->getDepartmentAttributeName());
+        $ldap_school = $ldap_user->getFirstAttribute($ldap_user->getSchema()->college());
+        $ldap_department = $ldap_user->getFirstAttribute($ldap_user->getSchema()->department());
 
         if ($ldap_school || $ldap_department) {
             $school = School::WithName($ldap_school ?: $ldap_department);
@@ -178,29 +178,9 @@ class LdapAttributeHandler
      *
      * @return string
      */
-    protected function getLoginAttributeName()
+    public function getLoginAttributeName()
     {
         return config('adldap_auth.usernames.ldap', 'samaccountname');
-    }
-
-    /**
-     * Get the name of the LDAP attribute used for a user's school
-     *
-     * @return string
-     */
-    protected function getSchoolAttributeName()
-    {
-        return $this->getAttributeMap()['school'] ?? 'college';
-    }
-
-    /**
-     * Get the name of the LDAP attribute used for a user's department
-     *
-     * @return string
-     */
-    protected function getDepartmentAttributeName()
-    {
-        return $this->getAttributeMap()['department'] ?? 'department';
     }
 
     /**
