@@ -47,17 +47,10 @@ class User extends Authenticatable implements Auditable
     {
         parent::boot();
 
-        // after a user is created, see if we can attach a school to them
         // grant admin acess to first user record
         static::created(function($user)
         {
-            $school = School::WithName($user->college ?: $user->department);
-            if ($school->exists()) {
-                $user->school()->associate($school->first());
-                $user->save();
-            }
-
-            if($user->id == 1){
+            if($user->id == 1) {
                 $user->roles()->attach(Role::where('name','site_admin')->first()->id);
             }
         });

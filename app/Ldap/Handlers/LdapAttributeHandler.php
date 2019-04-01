@@ -31,6 +31,8 @@ class LdapAttributeHandler
         if ($this->shouldSyncSchool()) {
             $this->syncUserSchool($ldap_user, $user);
         }
+
+        $user->save();
     }
 
     /**
