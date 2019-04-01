@@ -23,15 +23,15 @@ return [
      * Format: ['user model attribute' => 'ldap attribute']
      */
     'attributes' => [
-        'name'          => env('LDAP_SYNC_USERNAME', 'samaccountname'),
-        'display_name'  => env('LDAP_SYNC_DISPLAYNAME', 'displayname'),
-        'college'       => env('LDAP_SYNC_SCHOOL', 'college'),
-        'department'    => env('LDAP_SYNC_DEPARTMENT', 'department'),
-        'firstname'     => env('LDAP_SYNC_FIRSTNAME', 'givenname'),
-        'lastname'      => env('LDAP_SYNC_LASTNAME', 'sn'),
-        'email'         => env('LDAP_SYNC_EMAIL', 'mail'),
-        'pea'           => env('LDAP_SYNC_EMAILNICKNAME', 'mail'),
-        'title'         => env('LDAP_SYNC_TITLE', 'title'),
+        'name'          => env('LDAP_SCHEMA_USERNAME', 'samaccountname'),
+        'display_name'  => env('LDAP_SCHEMA_DISPLAYNAME', 'displayname'),
+        'college'       => env('LDAP_SCHEMA_SCHOOL', 'college'),
+        'department'    => env('LDAP_SCHEMA_DEPARTMENT', 'department'),
+        'firstname'     => env('LDAP_SCHEMA_FIRSTNAME', 'givenname'),
+        'lastname'      => env('LDAP_SCHEMA_LASTNAME', 'sn'),
+        'email'         => env('LDAP_SCHEMA_EMAIL', 'mail'),
+        'pea'           => env('LDAP_SCHEMA_EMAILNICKNAME', 'mail'),
+        'title'         => env('LDAP_SCHEMA_TITLE', 'title'),
     ],
 
     /**
@@ -40,9 +40,9 @@ return [
      * Format: ['user model attribute' => 'ldap group name']
      */
     'roles' => [
-        'staff'     => env('LDAP_SYNC_ROLE_STAFF', 'staff'),
-        'student'   => env('LDAP_SYNC_ROLE_STAFF', 'students'),
-        'faculty'   => env('LDAP_SYNC_ROLE_STAFF', 'faculty'),
+        'staff'     => env('LDAP_SCHEMA_ROLE_STAFF', 'staff'),
+        'student'   => env('LDAP_SCHEMA_ROLE_STAFF', 'students'),
+        'faculty'   => env('LDAP_SCHEMA_ROLE_STAFF', 'faculty'),
     ],
 
    /**
