@@ -68,12 +68,14 @@ Route::name('tags.')->prefix('/tags')->group(function () {
  ******************/
 Route::name('schools.')->prefix('/schools')->group(function () {
     Route::name('index')->get('/', 'SchoolsController@index');
-    Route::name('edit')->get('/edit', 'SchoolsController@edit');
-    Route::name('update')->post('/edit', 'SchoolsController@update');
+    Route::name('create')->get('/create', 'SchoolsController@create');
+    Route::name('store')->post('/edit', 'SchoolsController@store');
 
     // Individual school
     Route::prefix('/{school}')->group(function () {
         Route::name('show')->get('/', 'SchoolsController@show');
+        Route::name('edit')->get('/edit', 'SchoolsController@edit');
+        Route::name('update')->patch('/edit', 'SchoolsController@update');
     });
 
 });

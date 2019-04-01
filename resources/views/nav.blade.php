@@ -7,6 +7,7 @@ $schools = App\School::where('display_name', '!=', 'Other')->orderBy('short_name
 
 $can_create_own_profile = $user && $user->can('createOwn', 'App\Profile');
 $can_view_profile_admin_index = $user && $user->can('viewAdminIndex', 'App\Profile');
+$can_view_school_admin_index = $user && $user->can('viewAdminIndex', 'App\School');
 $can_view_user_admin_index = $user && $user->can('viewAdminIndex', 'App\User');
 $can_view_log_admin_index = $user && $user->can('viewAdminIndex', 'App\LogEntry');
 $can_create_users = $user && $user->can('create', 'App\User');
@@ -41,7 +42,7 @@ $can_create_users = $user && $user->can('create', 'App\User');
           </div>
         </li>
         <li class="nav-item"><a href="{{ route('profiles.index') }}" class="nav-link">Browse All</a></li>
-        @if($can_view_user_admin_index || $can_create_users || $can_view_profile_admin_index || $can_view_log_admin_index)
+        @if($can_view_user_admin_index || $can_create_users || $can_view_profile_admin_index || $can_view_log_admin_index || $can_view_school_admin_index)
         <li class="nav-item dropdown">
           <a href="#" class="nav-link dropdown-toggle" id="adminNavDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Admin <span class="caret"></span>
@@ -62,14 +63,16 @@ $can_create_users = $user && $user->can('create', 'App\User');
               <span class="fas fa-plus fa-fw"></span> Add User / Profile
             </a>
             @endif
+            @if($can_view_school_admin_index)
+            <a class="dropdown-item" href="{{ route('schools.index') }}">
+              <span class="fas fa-university fa-fw"></span> All Schools
+            </a>
+            @endif
             @if($can_view_log_admin_index)
             <a class="dropdown-item" href="{{ route('app.logs.index') }}">
               <span class="fas fa-history fa-fw"></span> Activity Logs
             </a>
             @endif
-            <a class="dropdown-item" href="{{ route('schools.edit') }}">
-              <span class="fas fa-university fa-fw"></span> Edit Schools
-            </a>            
             <a class="dropdown-item" href="{{ route('app.settings.edit') }}">
               <span class="fas fa-cog fa-fw"></span> Settings
             </a>

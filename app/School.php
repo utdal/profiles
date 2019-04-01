@@ -3,10 +3,14 @@
 namespace App;
 
 use App\User;
+use OwenIt\Auditing\Auditable as HasAudits;
+use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\Model;
 
-class School extends Model
+class School extends Model implements Auditable
 {
+    use HasAudits;
+
     protected $fillable = [
         'name',
         'display_name',

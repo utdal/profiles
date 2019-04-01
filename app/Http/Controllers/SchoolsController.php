@@ -10,8 +10,19 @@ class SchoolsController extends Controller
 
     public function __construct()
     {
-        
-        $this->middleware('can:viewAdminIndex,App\User')->only(['edit', 'update']);
+        $this->middleware('auth')->except('show');
+
+        $this->middleware('can:viewAdminIndex,App\School')->only('index');
+
+        $this->middleware('can:create,App\School')->only([
+            'create',
+            'store',
+        ]);
+
+        $this->middleware('can:update,school')->only([
+            'edit',
+            'update',
+        ]);
 
     }
 
@@ -22,7 +33,9 @@ class SchoolsController extends Controller
      */
     public function index()
     {
-        //
+        $schools = School::get();
+
+        return view('schools.index', compact('schools'));
     }
 
     /**
@@ -32,7 +45,7 @@ class SchoolsController extends Controller
      */
     public function create()
     {
-        //
+        return view('schools.create');
     }
 
     /**
@@ -43,7 +56,11 @@ class SchoolsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $school = School::create($request->all());
+
+        $message = $school ? "Created school $school->display_name" : "Unable to create school";
+
+        return redirect()->route('schools.index')->with('flash_message', $message);
     }
 
     /**
@@ -67,15 +84,7 @@ class SchoolsController extends Controller
      */
     public function edit(School $school)
     {
-        $schools = School::orderBy('short_name')->get();
-
-        for($i = -1; $i > -5; $i--){
-            $school = new School;
-            $school->id = $i;
-            $schools->add($school);
-        }
-
-        return view('schools.edit', compact('schools'));
+        return view('schools.edit', compact('school'));
     }
 
     /**
@@ -87,27 +96,11 @@ class SchoolsController extends Controller
      */
     public function update(Request $request, School $school)
     {
-        foreach($request->schools as $id => $school){
-            if($id > 0){
-                $record = School::findOrFail($id);
-                
-                if(empty($school['name']) && empty($school['display_name']) && empty($school['short_name']) && empty($school['aliases'])){
-                    $record->delete();
-                }else{
-                    $record->name = $school['name'];
-                    $record->display_name = $school['display_name'];
-                    $record->short_name = $school['short_name'];
-                    $record->aliases = $school['aliases'];
-                    $record->save();
-                }
-            }else{
-                if(!empty($school['name']) && !empty($school['short_name'])){
-                    School::create($school);
-                }
-            }
-        }
+        $updated = $school->update($request->all());
 
-        return redirect()->route('schools.edit')->with('flash_message', 'Schools updated.');
+        $message = $updated ? "Updated school $school->display_name" : "Unable to update school";
+
+        return redirect()->route('schools.index')->with('flash_message', $message);
     }
 
     /**
