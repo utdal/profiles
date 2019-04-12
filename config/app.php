@@ -204,8 +204,6 @@ return [
         /*
          * Package Service Providers...
          */
-        // Adldap\Laravel\AdldapServiceProvider::class,
-        // Adldap\Laravel\AdldapAuthServiceProvider::class,
         Laravel\Tinker\TinkerServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
 
@@ -275,7 +273,6 @@ return [
         'Adldap' => Adldap\Laravel\Facades\Adldap::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
-        'Entrust' => Zizaco\Entrust\EntrustFacade::class,
 
     ],
 
