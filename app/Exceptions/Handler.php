@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
+use Sentry\State\Scope;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Handler extends ExceptionHandler
@@ -96,19 +97,19 @@ class Handler extends ExceptionHandler
     {
         $sentry = app('sentry');
 
-        $user_context = ['id' => null];
         if (auth()->check()) {
-            $user = auth()->user();
-            $user_context = [
-                'id' => $user->id,
-                'username' => $user->name,
-                'email' => $user->email,
-            ];
+            \Sentry\configureScope(function (Scope $scope): void {
+                $user = auth()->user();
+                $scope->setUser([
+                    'id' => $user->id,
+                    'username' => $user->name,
+                    'email' => $user->email,
+                ]);
+            });
         }
 
-        $sentry->setEnvironment(app()->environment());
-        $sentry->setRelease($this->revision());
-        $sentry->user_context($user_context);
+        // $sentry->setEnvironment(app()->environment());
+        // $sentry->setRelease($this->revision());
 
         $sentry->captureException($e);
     }

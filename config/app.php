@@ -55,6 +55,9 @@ return [
     /** enable scheduled backup monitoring */
     'enable_backup_monitor' => env('ENABLE_BACKUP_MONITOR', false),
 
+    /** public DSN for Sentry error reporting */
+    'sentry_public_dsn' => env('SENTRY_PUBLIC_DSN', false),
+
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
@@ -106,7 +109,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://profiles.dev'),
+    'url' => env('APP_URL', 'http://profiles.test'),
 
     /*
     |--------------------------------------------------------------------------

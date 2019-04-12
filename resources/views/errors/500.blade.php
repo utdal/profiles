@@ -1,5 +1,5 @@
 <?php
-$shouldReportToSentry = app()->bound('sentry') && !empty(Sentry::getLastEventID()) && !config('app.debug');
+$shouldReportToSentry = app()->bound('sentry') && !empty(Sentry::getLastEventID()) && config('app.sentry_public_dsn') && !config('app.debug');
 ?>
 @extends('layout')
 @section('header')
@@ -24,15 +24,13 @@ $shouldReportToSentry = app()->bound('sentry') && !empty(Sentry::getLastEventID(
 
 @section('scripts')
     @if($shouldReportToSentry)
-        <!-- Sentry JS SDK 2.1.+ required -->
-        <script src="https://cdn.ravenjs.com/3.3.0/raven.min.js"></script>
-
+        <script src="https://browser.sentry-cdn.com/5.0.7/bundle.min.js" crossorigin="anonymous"></script>
         <script>
-        Raven.showReportDialog({
+        Sentry.init({
+            dsn: "{{ config('app.sentry_public_dsn') }}",
+        });
+        Sentry.showReportDialog({
             eventId: '{{ Sentry::getLastEventID() }}',
-
-            // use the public DSN (dont include your secret!)
-            dsn: 'https://79be214dedd542088edd97169e7538b6@sentry.io/1057311'
         });
         </script>
     @endif
