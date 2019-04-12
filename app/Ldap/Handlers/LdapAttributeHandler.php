@@ -132,7 +132,7 @@ class LdapAttributeHandler
      */
     protected function shouldSyncAttributes()
     {
-        return config('adldap_sync.sync_attributes', true);
+        return config('ldap_sync.sync_attributes', true);
     }
 
     /**
@@ -142,7 +142,7 @@ class LdapAttributeHandler
      */
     protected function shouldSyncRoles()
     {
-        return config('adldap_sync.sync_roles', true);
+        return config('ldap_sync.sync_roles', true);
     }
 
     /**
@@ -152,7 +152,7 @@ class LdapAttributeHandler
      */
     protected function shouldSyncSchool()
     {
-        return config('adldap_sync.sync_school', true);
+        return config('ldap_sync.sync_school', true);
     }
 
     /**
@@ -162,7 +162,7 @@ class LdapAttributeHandler
      */
     protected function getRoleMap()
     {
-        return config('adldap_sync.roles', []);
+        return config('ldap_sync.roles', []);
     }
 
     /**
@@ -172,7 +172,7 @@ class LdapAttributeHandler
      */
     protected function getAttributeMap()
     {
-        return config('adldap_sync.attributes', []);
+        return config('ldap_sync.attributes', []);
     }
 
     /**
@@ -182,7 +182,7 @@ class LdapAttributeHandler
      */
     public function getLoginAttributeName()
     {
-        return config('adldap_auth.usernames.ldap.discover', 'samaccountname');
+        return config('ldap_auth.usernames.ldap.discover', 'samaccountname');
     }
 
     /**
@@ -193,7 +193,7 @@ class LdapAttributeHandler
      */
     protected function getEmailDomain()
     {
-        return config('adldap_sync.email_domain', '@example.com');
+        return config('ldap_sync.email_domain', '@example.com');
     }
 
 }

@@ -20,8 +20,8 @@ class InstitutionActiveDirectory extends ActiveDirectory
      */
     public function configNameFor($attribute, $default = null)
     {
-        return config('adldap_sync.attributes')[$attribute]
-               ?? config('adldap_sync.other_attributes')[$attribute]
+        return config('ldap_sync.attributes')[$attribute]
+               ?? config('ldap_sync.other_attributes')[$attribute]
                ?? $default
                ?? $attribute;
     }
@@ -33,7 +33,7 @@ class InstitutionActiveDirectory extends ActiveDirectory
      */
     public function loginName()
     {
-        return config('adldap_auth.usernames.ldap.discover', 'samaccountname');
+        return config('ldap_auth.usernames.ldap.discover', 'samaccountname');
     }
 
     /**

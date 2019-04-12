@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Adldap\AdldapInterface;
 use App\Helpers\Contracts\LdapHelperContract;
 use App\Helpers\LdapHelper;
 use Illuminate\Support\ServiceProvider;
@@ -29,7 +30,7 @@ class HelperServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(LdapHelperContract::class, function ($app) {
-            return new LdapHelper($app['adldap']);
+            return new LdapHelper($app[AdldapInterface::class]);
         });
     }
 

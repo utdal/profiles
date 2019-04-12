@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'connection' => env('ADLDAP_CONNECTION', 'default'),
+    'connection' => env('LDAP_CONNECTION', 'default'),
 
     /*
     |--------------------------------------------------------------------------
@@ -36,6 +36,19 @@ return [
     */
 
     'provider' => Adldap\Laravel\Auth\DatabaseUserProvider::class,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Model
+    |--------------------------------------------------------------------------
+    |
+    | The model to utilize for authentication and importing.
+    |
+    | This option is only applicable to the DatabaseUserProvider.
+    |
+    */
+
+    'model' => App\User::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -82,6 +95,14 @@ return [
 
         // Only allows users with the configured username to authenticate.
         App\Ldap\Scopes\UsernameScope::class,
+
+        // Only allows users with a user principal name to authenticate.
+        // Suitable when using ActiveDirectory.
+        // Adldap\Laravel\Scopes\UpnScope::class,
+
+        // Only allows users with a uid to authenticate.
+        // Suitable when using OpenLDAP.
+        // Adldap\Laravel\Scopes\UidScope::class,
 
     ],
 
@@ -182,13 +203,13 @@ return [
         |
         | The password sync option allows you to automatically synchronize users
         | LDAP passwords to your local database. These passwords are hashed
-        | natively by Laravel using the bcrypt() method.
+        | natively by Laravel using the Hash::make() method.
         |
         | Enabling this option would also allow users to login to their accounts
         | using the password last used when an LDAP connection was present.
         |
         | If this option is disabled, the local database account is applied a
-        | random 16 character hashed password upon every login, and will
+        | random 16 character hashed password upon first login, and will
         | lose access to this account upon loss of LDAP connectivity.
         |
         | This option must be true or false and is only applicable
@@ -196,7 +217,7 @@ return [
         |
         */
 
-        'sync' => env('ADLDAP_PASSWORD_SYNC', false),
+        'sync' => env('LDAP_PASSWORD_SYNC', false),
 
         /*
         |--------------------------------------------------------------------------
@@ -231,7 +252,7 @@ return [
     |
     */
 
-    'login_fallback' => env('ADLDAP_LOGIN_FALLBACK', false),
+    'login_fallback' => env('LDAP_LOGIN_FALLBACK', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -244,6 +265,8 @@ return [
     |
     | The array key represents the users Laravel model key, and
     | the value represents the users LDAP attribute.
+    |
+    | You **must** include the users login attribute here.
     |
     | This option must be an array and is only applicable
     | to the DatabaseUserProvider.

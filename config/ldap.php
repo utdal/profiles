@@ -24,44 +24,32 @@ return [
             | Auto Connect
             |--------------------------------------------------------------------------
             |
-            | If auto connect is true, anytime Adldap is instantiated it will automatically
-            | connect to your AD server. If this is set to false, you must connect manually
-            | using: Adldap::connect().
+            | If auto connect is true, Adldap will try to automatically connect to
+            | your LDAP server in your configuration. This allows you to assume
+            | connectivity rather than having to connect manually
+            | in your application.
+            |
+            | If this is set to false, you **must** connect manually before running
+            | LDAP operations.
             |
             */
 
-            'auto_connect' => true,
+            'auto_connect' => env('LDAP_AUTO_CONNECT', true),
 
             /*
             |--------------------------------------------------------------------------
             | Connection
             |--------------------------------------------------------------------------
             |
-            | The connection class to use to run operations on.
+            | The connection class to use to run raw LDAP operations on.
             |
-            | You can also set this option to `null` to use the default connection class.
+            | Custom connection classes must implement:
             |
-            | Custom connection classes must implement \Adldap\Contracts\Connections\ConnectionInterface
+            |  Adldap\Connections\ConnectionInterface
             |
             */
 
             'connection' => Adldap\Connections\Ldap::class,
-
-            /*
-            |--------------------------------------------------------------------------
-            | Schema
-            |--------------------------------------------------------------------------
-            |
-            | The schema class to use for retrieving attributes and generating models.
-            |
-            | You can also set this option to `null` to use the default schema class.
-            |
-            | Custom schema classes must implement \Adldap\Contracts\Schemas\SchemaInterface
-            |
-            */
-
-            //'schema' => Adldap\Schemas\OpenLDAP::class,
-            'schema' => App\Ldap\Schemas\InstitutionActiveDirectory::class,
 
             /*
             |--------------------------------------------------------------------------
@@ -74,17 +62,39 @@ return [
             |
             */
 
-            'connection_settings' => [
+            'settings' => [
+
+                /*
+                |--------------------------------------------------------------------------
+                | Schema
+                |--------------------------------------------------------------------------
+                |
+                | The schema class to use for retrieving attributes and generating models.
+                |
+                | You can also set this option to `null` to use the default schema class.
+                |
+                | For OpenLDAP, you must use the schema:
+                |
+                |   Adldap\Schemas\OpenLDAP::class
+                |
+                | For FreeIPA, you must use the schema:
+                |
+                |   Adldap\Schemas\FreeIPA::class
+                |
+                | Custom schema classes must implement Adldap\Schemas\SchemaInterface
+                |
+                */
+
+                'schema' => App\Ldap\Schemas\InstitutionActiveDirectory::class,
 
                 /*
                 |--------------------------------------------------------------------------
                 | Account Prefix
                 |--------------------------------------------------------------------------
                 |
-                | The account prefix option is the prefix of your user accounts in AD.
+                | The account prefix option is the prefix of your user accounts in LDAP directory.
                 |
-                | For example, if you'd prefer your users to use only their username instead
-                | of specifying a domain ('ACME\jdoe'), enter your domain name.
+                | This string is prepended to all authenticating users usernames.
                 |
                 */
 
@@ -95,11 +105,9 @@ return [
                 | Account Suffix
                 |--------------------------------------------------------------------------
                 |
-                | The account suffix option is the suffix of your user accounts in AD.
+                | The account suffix option is the suffix of your user accounts in your LDAP directory.
                 |
-                | For example, if your domain DN is DC=corp,DC=acme,DC=org, then your
-                | account suffix would be @corp.acme.org. This is then appended to
-                | then end of your user accounts on authentication.
+                | This string is appended to all authenticating users usernames.
                 |
                 */
 
@@ -115,16 +123,18 @@ return [
                 | as little as you'd like depending on your forest (with the
                 | minimum of one of course).
                 |
+                | These can be IP addresses of your server(s), or the host name.
+                |
                 */
 
-                'domain_controllers' => explode(' ', env('LDAP_HOSTS', 'corp-dc1.corp.acme.org corp-dc2.corp.acme.org')),
+                'hosts' => explode(' ', env('LDAP_HOSTS', 'corp-dc1.corp.acme.org corp-dc2.corp.acme.org')),
 
                 /*
                 |--------------------------------------------------------------------------
                 | Port
                 |--------------------------------------------------------------------------
                 |
-                | The port option is used for authenticating and binding to your AD server.
+                | The port option is used for authenticating and binding to your LDAP server.
                 |
                 */
 
@@ -140,19 +150,20 @@ return [
                 | is received from your LDAP server.
                 |
                 */
-                'timeout' => env('ADLDAP_TIMEOUT', 5),
+
+                'timeout' => env('LDAP_TIMEOUT', 5),
 
                 /*
                 |--------------------------------------------------------------------------
                 | Base Distinguished Name
                 |--------------------------------------------------------------------------
                 |
-                | The base distinguished name is the base distinguished name you'd like
-                | to perform operations on. An example base DN would be DC=corp,DC=acme,DC=org.
+                | The base distinguished name is the base distinguished name you'd
+                | like to perform query operations on. An example base DN would be:
                 |
-                | If one is not defined, then Adldap will try to find it automatically
-                | by querying your server. It's recommended to include it to
-                | limit queries executed per request.
+                |        dc=corp,dc=acme,dc=org
+                |
+                | A correct base DN is required for any query results to be returned.
                 |
                 */
 
@@ -160,33 +171,19 @@ return [
 
                 /*
                 |--------------------------------------------------------------------------
-                | Administrator Account Suffix / Prefix
+                | LDAP Username & Password
                 |--------------------------------------------------------------------------
                 |
-                | This option allows you to set a different account prefix and suffix
-                | for your configured administrator account upon binding.
-                |
-                | If left empty or set to `null`, your `account_prefix` and
-                | `account_suffix` options above will be used.
-                |
-                */
-                'admin_account_prefix' => env('ADLDAP_ADMIN_ACCOUNT_PREFIX', ''),
-                'admin_account_suffix' => env('ADLDAP_ADMIN_ACCOUNT_SUFFIX', ''),
-
-                /*
-                |--------------------------------------------------------------------------
-                | Administrator Username & Password
-                |--------------------------------------------------------------------------
-                |
-                | When connecting to your AD server, an administrator username and
-                | password is required to be able to query and run operations on
-                | your server(s). You can use any user account that has
-                | these permissions.
+                | When connecting to your LDAP server, a username and password is required
+                | to be able to query and run operations on your server(s). You can
+                | use any user account that has these permissions. This account
+                | does not need to be a domain administrator unless you
+                | require changing and resetting user passwords.
                 |
                 */
 
-                'admin_username' => env('ADLDAP_ADMIN_USERNAME', ''),
-                'admin_password' => env('ADLDAP_ADMIN_PASSWORD', ''),
+                'username' => env('ADLDAP_ADMIN_USERNAME'),
+                'password' => env('ADLDAP_ADMIN_PASSWORD'),
 
                 /*
                 |--------------------------------------------------------------------------
@@ -211,8 +208,10 @@ return [
                 |
                 | If you need to be able to change user passwords on your server, then an
                 | SSL or TLS connection is required. All other operations are allowed
-                | on unsecured protocols. One of these options are definitely recommended
-                | if you have the ability to connect to your server securely.
+                | on unsecured protocols.
+                | 
+                | One of these options are definitely recommended if you 
+                | have the ability to connect to your server securely.
                 |
                 */
 
