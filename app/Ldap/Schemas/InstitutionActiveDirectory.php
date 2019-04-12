@@ -33,7 +33,7 @@ class InstitutionActiveDirectory extends ActiveDirectory
      */
     public function loginName()
     {
-        return config('adldap_auth.usernames.ldap', 'samaccountname');
+        return config('adldap_auth.usernames.ldap.discover', 'samaccountname');
     }
 
     /**

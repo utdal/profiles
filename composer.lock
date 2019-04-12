@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a7629a6acb80438452055c6ff90fce8a",
+    "content-hash": "3c5dd1a22aacdd52bceff06180c0ccdf",
     "packages": [
         {
             "name": "adldap2/adldap2",
-            "version": "v7.0.15",
+            "version": "v8.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Adldap2/Adldap2.git",
-                "reference": "d40f983d58dbecd516856786474893c5fb4b7297"
+                "reference": "54722408c68f12942fcbf4a1b666d90a178ddc5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Adldap2/Adldap2/zipball/d40f983d58dbecd516856786474893c5fb4b7297",
-                "reference": "d40f983d58dbecd516856786474893c5fb4b7297",
+                "url": "https://api.github.com/repos/Adldap2/Adldap2/zipball/54722408c68f12942fcbf4a1b666d90a178ddc5c",
+                "reference": "54722408c68f12942fcbf4a1b666d90a178ddc5c",
                 "shasum": ""
             },
             "require": {
@@ -26,7 +26,7 @@
                 "php": ">=5.5.9"
             },
             "require-dev": {
-                "mockery/mockery": "~0.9",
+                "mockery/mockery": "~0.9|~1.0",
                 "phpunit/phpunit": "~4.8|~5.6"
             },
             "type": "library",
@@ -46,7 +46,7 @@
                     "role": "Developer"
                 }
             ],
-            "description": "A PHP LDAP Package for Active Directory Manipulation.",
+            "description": "A PHP LDAP Package for humans.",
             "keywords": [
                 "active directory",
                 "ad",
@@ -56,30 +56,30 @@
                 "ldap",
                 "windows"
             ],
-            "time": "2017-05-16T13:46:45+00:00"
+            "time": "2018-04-19T15:06:54+00:00"
         },
         {
             "name": "adldap2/adldap2-laravel",
-            "version": "v3.0.9",
+            "version": "v4.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Adldap2/Adldap2-Laravel.git",
-                "reference": "8c79a01014dc16137a7e2b0c215663c640182f6d"
+                "reference": "a5196cce3b5394d7b5e84eb68b38260cb9f0fd3c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Adldap2/Adldap2-Laravel/zipball/8c79a01014dc16137a7e2b0c215663c640182f6d",
-                "reference": "8c79a01014dc16137a7e2b0c215663c640182f6d",
+                "url": "https://api.github.com/repos/Adldap2/Adldap2-Laravel/zipball/a5196cce3b5394d7b5e84eb68b38260cb9f0fd3c",
+                "reference": "a5196cce3b5394d7b5e84eb68b38260cb9f0fd3c",
                 "shasum": ""
             },
             "require": {
-                "adldap2/adldap2": "7.0.*",
-                "php": ">=5.6"
+                "adldap2/adldap2": "^8.0",
+                "php": ">=7.0"
             },
             "require-dev": {
-                "mockery/mockery": "0.9.*",
+                "mockery/mockery": "~1.0",
                 "orchestra/testbench": "~3.2",
-                "phpunit/phpunit": "~5.6"
+                "phpunit/phpunit": "~6.0"
             },
             "type": "project",
             "extra": {
@@ -109,7 +109,7 @@
                 "laravel",
                 "ldap"
             ],
-            "time": "2018-01-18T18:49:09+00:00"
+            "time": "2018-09-18T14:27:05+00:00"
         },
         {
             "name": "asm89/stack-cors",

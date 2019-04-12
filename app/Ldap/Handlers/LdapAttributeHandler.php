@@ -182,7 +182,7 @@ class LdapAttributeHandler
      */
     public function getLoginAttributeName()
     {
-        return config('adldap_auth.usernames.ldap', 'samaccountname');
+        return config('adldap_auth.usernames.ldap.discover', 'samaccountname');
     }
 
     /**

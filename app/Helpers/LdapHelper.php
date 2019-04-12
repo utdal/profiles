@@ -13,6 +13,7 @@ class LdapHelper implements LdapHelperContract
     /** @var Adldap instance */
     protected $adldap;
 
+    /** @var App\Ldap\Handlers\LdapAttributeHandler */
     public $handler;
 
     public $schema;

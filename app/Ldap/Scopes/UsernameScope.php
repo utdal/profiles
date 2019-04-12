@@ -12,6 +12,6 @@ class UsernameScope implements ScopeInterface
      */
     public function apply(Builder $builder)
     {
-        $builder->whereHas(config('adldap_auth.usernames.ldap'));
+        $builder->whereHas(config('adldap_auth.usernames.ldap.discover'));
     }
 }
