@@ -19,7 +19,7 @@
     "bootstrap4-tagsinput": "github:utdallasresearch/bootstrap4-tagsinput",
     "corejs-typeahead": "^1.2.1",
     "cross-env": "^5.0.1",
-    "jquery": "^3.3.0",
+    "jquery": "^3.4.0",
     "jquery-form-validator": "^2.3.77",
     "laravel-mix": "^2.0",
     "popper.js": "^1.12.9",

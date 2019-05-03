@@ -6,10 +6,21 @@ let mix = require('laravel-mix');
  * `npm run dev` or `npm run watch` or `npm run prod`
  */
 
+let webpackConfigOptions = {
+    resolve: {
+        alias: {
+            // Force all modules to use the same jquery version.
+            'jquery': path.join(__dirname, 'node_modules/jquery/src/jquery')
+        }
+    }
+}
+
 if (!mix.inProduction()) {
     // Do non-inline source-maps
-    mix.webpackConfig({ devtool: "source-map" });
+    webpackConfigOptions.devtool = "source-map";
 }
+
+mix.webpackConfig(webpackConfigOptions);
 
 // Compile Sass into CSS
 mix.sass('resources/assets/sass/app.scss', 'public/css', {
@@ -20,6 +31,11 @@ mix.sass('resources/assets/sass/app.scss', 'public/css', {
 if (!mix.inProduction()) {
     mix.sourceMaps();
 }
+
+// Make specified modules globally known by certain aliases
+mix.autoload({
+    jquery: ['$', 'jQuery', 'window.jQuery']
+});
 
 // Compile JS
 mix

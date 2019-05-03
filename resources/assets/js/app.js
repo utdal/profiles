@@ -214,6 +214,8 @@ window.profiles = profiles;
 
 $(document).ready(function() {
 
+    require('bootstrap-datepicker');
+
   $('.datepicker.year').datepicker({
       autoclose: true,
       assumeNearbyYear: true,

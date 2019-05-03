@@ -3,7 +3,7 @@ webpackJsonp([1],{
 /***/ "./resources/assets/js/app.js":
 /***/ (function(module, exports, __webpack_require__) {
 
-
+/* WEBPACK VAR INJECTION */(function(jQuery, $) {
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -216,6 +216,8 @@ window.profiles = profiles;
 
 $(document).ready(function () {
 
+    __webpack_require__("./node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.js");
+
     $('.datepicker.year').datepicker({
         autoclose: true,
         assumeNearbyYear: true,
@@ -288,6 +290,7 @@ $(document).ready(function () {
     $('[data-toggle=replace-icon]').on('click', profiles.replace_icon);
     $('[data-toggle=show]').on('change page_up', profiles.toggle_show).trigger('change');
 });
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/jquery/src/jquery.js"), __webpack_require__("./node_modules/jquery/src/jquery.js")))
 
 /***/ }),
 
@@ -296,7 +299,7 @@ $(document).ready(function () {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__fortawesome_fontawesome__ = __webpack_require__("./node_modules/@fortawesome/fontawesome/index.es.js");
+/* WEBPACK VAR INJECTION */(function(__webpack_provided_window_dot_jQuery) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__fortawesome_fontawesome__ = __webpack_require__("./node_modules/@fortawesome/fontawesome/index.es.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__fortawesome_fontawesome_free_solid__ = __webpack_require__("./node_modules/@fortawesome/fontawesome-free-solid/index.es.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__fortawesome_fontawesome_free_regular__ = __webpack_require__("./node_modules/@fortawesome/fontawesome-free-regular/index.es.js");
 /** Load JavaScript dependencies */
@@ -310,7 +313,7 @@ window.Popper = __webpack_require__("./node_modules/popper.js/dist/esm/popper.js
  */
 
 try {
-  window.$ = window.jQuery = __webpack_require__("./node_modules/jquery/dist/jquery.js");
+  window.$ = __webpack_provided_window_dot_jQuery = __webpack_require__("./node_modules/jquery/src/jquery.js");
 
   __webpack_require__("./node_modules/bootstrap/dist/js/bootstrap.js");
 } catch (e) {}
@@ -332,6 +335,7 @@ window.Sortable = __webpack_require__("./node_modules/sortablejs/Sortable.js");
 
 // Typeahead Bloodhound
 window.Bloodhound = __webpack_require__("./node_modules/corejs-typeahead/dist/typeahead.bundle.js");
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__("./node_modules/jquery/src/jquery.js")))
 
 /***/ }),
 
