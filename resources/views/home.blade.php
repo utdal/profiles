@@ -8,9 +8,9 @@
 @if(File::exists(public_path('/storage/video/home.jpg')) && File::exists(public_path('/storage/video/home.mp4')))
 	<video autoplay muted loop
 		id="home-video"
-		poster="{{asset('/video/home.jpg')}}"
+		poster="{{asset('storage/video/home.jpg')}}"
 	>
-		<source src="{{asset('/video/home.mp4')}}" type="video/mp4">
+		<source src="{{asset('storage/video/home.mp4')}}" type="video/mp4">
 </video>
 @endif
 
