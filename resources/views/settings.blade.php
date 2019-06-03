@@ -13,15 +13,36 @@
     <div class="row lower-border">
         <div class="col col-md-4">
             {!! Form::open(['url' => route('app.settings.update-image', 'logo'), 'method' => 'POST', 'files' => true]) !!}
-            <label for="file">Icon</label>
+            <label for="logo">Logo</label>
             @if(isset($settings['logo']))
-                <img id="file-img" class="profile_photo mb-3" src="{{ $settings['logo'] }}" style="background-color:{{ $settings['primary_color'] ?? '#008542' }};padding:10px;" />
+                <img id="logo-img" class="profile_photo p-2 border mb-3" src="{{ $settings['logo'] }}" style="background-color:{{ $settings['primary_color'] ?? '#008542' }};">
             @endif
             <div class="control-group">
                 <div class="controls">
-                    {!! Form::file('image', ['id' => 'file', 'name' => 'image', 'required' => 'true', 'accept' => 'image/*', 'class' => 'd-none']) !!}
-                    <label for="file" class="btn btn-secondary btn-block"><i class="fas fa-plus"></i> Select Image</label>
-                    <p class="errors">{!!$errors->first('image')!!}</p>
+                    {!! Form::file('logo', ['id' => 'logo', 'name' => 'logo', 'required' => 'true', 'accept' => 'image/*', 'class' => 'd-none']) !!}
+                    <label for="logo" class="btn btn-secondary btn-block"><i class="fas fa-plus"></i> Select Image</label>
+                    <p class="errors">{!!$errors->first('logo')!!}</p>
+                    @if(Session::has('error'))
+                        <p class="errors">{!! Session::get('error') !!}</p>
+                    @endif
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" data-toggle="replace-icon" data-newicon="sync" data-newiconclasses="fa-spin" data-inputrequired="#file">
+                <i class="fas fa-upload"></i> Replace Image
+            </button>
+            {!! Form::close() !!}
+        </div>
+        <div class="col col-md-4">
+            {!! Form::open(['url' => route('app.settings.update-image', 'favicon'), 'method' => 'POST', 'files' => true]) !!}
+            <label for="favicon">Favicon</label>
+            @if(isset($settings['favicon']))
+                <img id="favicon-img" class="profile_photo p-2 border mb-3" src="{{ $settings['favicon'] }}">
+            @endif
+            <div class="control-group">
+                <div class="controls">
+                    {!! Form::file('favicon', ['id' => 'favicon', 'name' => 'favicon', 'required' => 'true', 'accept' => 'image/*', 'class' => 'd-none']) !!}
+                    <label for="favicon" class="btn btn-secondary btn-block"><i class="fas fa-plus"></i> Select Image</label>
+                    <p class="errors">{!!$errors->first('favicon')!!}</p>
                     @if(Session::has('error'))
                         <p class="errors">{!! Session::get('error') !!}</p>
                     @endif

@@ -5,11 +5,11 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>@yield('title') - {{ $settings['site_title'] ?? 'Profiles' }}</title>
-	@if(isset($settings['logo']))
+	@if(isset($settings['favicon']))
 		<!--[if lt IE 11]>
 			<link rel="shortcut icon" href="{{ $settings['logo'] ?? '' }}">
 		<![endif]-->
-		<link rel="icon" href="{{ $settings['logo'] ?? '' }}">
+		<link rel="icon" href="{{ $settings['favicon'] ?? '' }}">
 	@endif
 	<link rel="stylesheet" href="{{ asset(mix('css/app.css')) }}">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">

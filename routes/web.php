@@ -30,7 +30,8 @@ Route::name('app.')->group(function () {
     Route::name('logs.index')->get('/logs', 'LogsController@index');
     Route::name('settings.edit')->get('/settings', 'SettingsController@edit');
     Route::name('settings.update')->post('/settings', 'SettingsController@update');
-    Route::name('settings.update-image')->post('/settings/image/{image}', 'SettingsController@updateImage');
+    Route::name('settings.update-image')->post('/settings/image/{image}', 'SettingsController@updateImage')
+        ->where('image', '(logo|favicon)');
     Route::name('faq')->get('/faq', 'AppController@faq');
 });
 
