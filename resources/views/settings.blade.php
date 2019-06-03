@@ -12,27 +12,25 @@
 
     <div class="row lower-border">
         <div class="col col-md-4">
-        {!! Form::open(['url' => route('app.settings.update-image', 'logo'), 'method' => 'POST', 'files' => true]) !!}
-        <label for="file">Icon</label>
-        @if(isset($settings['logo']))
-            <img id="file-img" class="profile_photo" src="{{ $settings['logo'] }}" style="background-color:{{ $settings['primary_color'] ?? '#008542' }};padding:10px;" />
-        @endif
-        <br />
-        <br />
-        <div class="control-group">
-            <div class="controls">
-                {!! Form::file('image', ['id' => 'file', 'name' => 'image', 'required' => 'true', 'accept' => 'image/*', 'class' => 'd-none']) !!}
-                <label for="file" class="btn btn-secondary btn-block"><i class="fas fa-plus"></i> Select Image</label>
-                <p class="errors">{!!$errors->first('image')!!}</p>
-                @if(Session::has('error'))
-                    <p class="errors">{!! Session::get('error') !!}</p>
-                @endif
+            {!! Form::open(['url' => route('app.settings.update-image', 'logo'), 'method' => 'POST', 'files' => true]) !!}
+            <label for="file">Icon</label>
+            @if(isset($settings['logo']))
+                <img id="file-img" class="profile_photo mb-3" src="{{ $settings['logo'] }}" style="background-color:{{ $settings['primary_color'] ?? '#008542' }};padding:10px;" />
+            @endif
+            <div class="control-group">
+                <div class="controls">
+                    {!! Form::file('image', ['id' => 'file', 'name' => 'image', 'required' => 'true', 'accept' => 'image/*', 'class' => 'd-none']) !!}
+                    <label for="file" class="btn btn-secondary btn-block"><i class="fas fa-plus"></i> Select Image</label>
+                    <p class="errors">{!!$errors->first('image')!!}</p>
+                    @if(Session::has('error'))
+                        <p class="errors">{!! Session::get('error') !!}</p>
+                    @endif
+                </div>
             </div>
-        </div>
-        <button type="submit" class="btn btn-primary btn-block" data-toggle="replace-icon" data-newicon="sync" data-newiconclasses="fa-spin" data-inputrequired="#file">
-            <i class="fas fa-upload"></i> Replace Image
-        </button>
-        {!! Form::close() !!}
+            <button type="submit" class="btn btn-primary btn-block" data-toggle="replace-icon" data-newicon="sync" data-newiconclasses="fa-spin" data-inputrequired="#file">
+                <i class="fas fa-upload"></i> Replace Image
+            </button>
+            {!! Form::close() !!}
         </div>
     </div>
     {!! Form::open(['url' => route('app.settings.update')]) !!}
