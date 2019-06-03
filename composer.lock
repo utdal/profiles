@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1536665fc1c36207fec12e63da2cd3f1",
+    "content-hash": "84b6a1554ec9035bb8f36ae8b9992ab7",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -1809,6 +1809,58 @@
                 "processing"
             ],
             "time": "2019-04-03T23:46:42+00:00"
+        },
+        {
+            "name": "maennchen/zipstream-php",
+            "version": "v0.5.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/maennchen/ZipStream-PHP.git",
+                "reference": "95922b6324955974675fd4923f987faa598408af"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/maennchen/ZipStream-PHP/zipball/95922b6324955974675fd4923f987faa598408af",
+                "reference": "95922b6324955974675fd4923f987faa598408af",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">= 7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ZipStream\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Paul Duncan",
+                    "email": "pabs@pablotron.org"
+                },
+                {
+                    "name": "Jesse Donat",
+                    "email": "donatj@gmail.com"
+                },
+                {
+                    "name": "Jonatan Männchen",
+                    "email": "jonatan@maennchen.ch"
+                }
+            ],
+            "description": "ZipStream is a library for dynamically streaming dynamic zip files from PHP without writing to the disk at all on the server.",
+            "keywords": [
+                "stream",
+                "zip"
+            ],
+            "time": "2018-02-09T09:26:57+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -3656,27 +3708,28 @@
         },
         {
             "name": "spatie/laravel-medialibrary",
-            "version": "6.9.2",
+            "version": "7.5.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-medialibrary.git",
-                "reference": "24d0b5bc2271f2258bb999c3e9450fec6000fd64"
+                "reference": "bced3ce9ed69a1060fa978842c7fb5f87a5f7f67"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/24d0b5bc2271f2258bb999c3e9450fec6000fd64",
-                "reference": "24d0b5bc2271f2258bb999c3e9450fec6000fd64",
+                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/bced3ce9ed69a1060fa978842c7fb5f87a5f7f67",
+                "reference": "bced3ce9ed69a1060fa978842c7fb5f87a5f7f67",
                 "shasum": ""
             },
             "require": {
-                "illuminate/bus": "~5.5.0|~5.6.0|~5.7.0",
-                "illuminate/console": "~5.5.0|~5.6.0|~5.7.0",
-                "illuminate/database": "~5.5.0|~5.6.0|~5.7.0",
-                "illuminate/pipeline": "~5.5.0|~5.6.0|~5.7.0",
-                "illuminate/support": "~5.5.0|~5.6.0|~5.7.0",
+                "illuminate/bus": "~5.5.0|~5.6.0|~5.7.0|~5.8.0",
+                "illuminate/console": "~5.5.0|~5.6.0|~5.7.0|~5.8.0",
+                "illuminate/database": "~5.5.0|~5.6.0|~5.7.0|~5.8.0",
+                "illuminate/pipeline": "~5.5.0|~5.6.0|~5.7.0|~5.8.0",
+                "illuminate/support": "~5.5.0|~5.6.0|~5.7.0|~5.8.0",
                 "league/flysystem": "^1.0.8",
-                "php": "^7.0",
-                "spatie/image": "^1.4",
+                "maennchen/zipstream-php": "~0.4",
+                "php": "^7.1",
+                "spatie/image": "^1.4.0",
                 "spatie/pdf-to-image": "^1.2",
                 "spatie/temporary-directory": "^1.1"
             },
@@ -3685,11 +3738,13 @@
             },
             "require-dev": {
                 "doctrine/dbal": "^2.5.2",
+                "ext-pdo_sqlite": "*",
                 "guzzlehttp/guzzle": "^6.3",
                 "league/flysystem-aws-s3-v3": "^1.0.13",
                 "mockery/mockery": "^1.0.0",
-                "orchestra/testbench": "~3.5.0|~3.6.0",
-                "phpunit/phpunit": "^6.2|^7.0"
+                "orchestra/testbench": "~3.5.0|~3.6.0|~3.7.0|~3.8.0",
+                "phpunit/phpunit": "^7.0|^8.0",
+                "spatie/phpunit-snapshot-assertions": "^2.0"
             },
             "suggest": {
                 "league/flysystem-aws-s3-v3": "Required to use AWS S3 file storage",
@@ -3732,7 +3787,7 @@
                 "media",
                 "spatie"
             ],
-            "time": "2018-10-30T15:01:06+00:00"
+            "time": "2019-02-27T07:27:31+00:00"
         },
         {
             "name": "spatie/laravel-tags",

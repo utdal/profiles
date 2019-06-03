@@ -9,14 +9,14 @@ use OwenIt\Auditing\Auditable as HasAudits;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
-use Spatie\MediaLibrary\Media;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\Models\Media;
 use Spatie\Tags\HasTags;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Cache;
 
-class Profile extends Model implements HasMediaConversions, Auditable
+class Profile extends Model implements HasMedia, Auditable
 {
     use HasAudits, HasMediaTrait, HasTags;
 
