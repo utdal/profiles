@@ -17,14 +17,13 @@ try {
 /**
  * Font Awesome 5
  */
-import fontawesome from '@fortawesome/fontawesome';
-import solid from '@fortawesome/fontawesome-free-solid';
-import regular from '@fortawesome/fontawesome-free-regular';
-// import brands from '@fortawesome/fontawesome-free-brands';
+import { library, dom } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
 
-fontawesome.library.add(solid);
-fontawesome.library.add(regular);
-// fontawesome.library.add(brands);
+library.add(fas, far);
+// Kicks off the process of finding <i> tags and replacing with <svg>
+dom.watch();
 
 // Sortable
 window.Sortable = require('sortablejs');
