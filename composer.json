@@ -15,6 +15,7 @@
         "laravelcollective/html": "5.7.1",
         "league/flysystem-aws-s3-v3": "^1.0",
         "owen-it/laravel-auditing": "^8.0",
+        "predis/predis": "^1.1",
         "sentry/sentry-laravel": "^1.0.0",
         "spatie/laravel-backup": "^5.4",
         "spatie/laravel-medialibrary": "7.5.6",
