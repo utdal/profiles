@@ -12,6 +12,7 @@ try {
     window.$ = window.jQuery = require('jquery');
 
     require('bootstrap');
+    require('bootstrap4-tagsinput');
 } catch (e) {}
 
 /**
@@ -30,3 +31,6 @@ window.Sortable = require('sortablejs');
 
 // Typeahead Bloodhound
 window.Bloodhound = require('corejs-typeahead');
+
+// Trix editor
+require('trix');

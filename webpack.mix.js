@@ -23,9 +23,7 @@ if (!mix.inProduction()) {
 mix.webpackConfig(webpackConfigOptions);
 
 // Compile Sass into CSS
-mix.sass('resources/assets/sass/app.scss', 'public/css', {
-    precision: 10,
-});
+mix.sass('resources/assets/sass/app.scss', 'public/css');
 
 // Create CSS sourcemaps
 if (!mix.inProduction()) {
