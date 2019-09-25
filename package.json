@@ -22,7 +22,7 @@
     "cross-env": "^5.0.1",
     "jquery": "^3.4.0",
     "jquery-form-validator": "^2.3.77",
-    "laravel-mix": "^2.0",
+    "laravel-mix": "^3.0.0",
     "popper.js": "^1.15.0",
     "sortablejs": "^1.4.2",
     "trix": "^0.11.2"
