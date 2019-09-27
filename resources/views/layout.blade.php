@@ -65,7 +65,7 @@
 		var this_url = '{{ url('/') }}';
 		window.this_url = this_url;
 	</script>
-	<script src="{{ asset('js/manifest.js') }}"></script>
+	<script src="{{ asset(mix('js/manifest.js')) }}"></script>
 	<script src="{{ asset(mix('js/vendor.js')) }}"></script>
 	<script src="{{ asset(mix('js/app.js')) }}"></script>
 	@yield('scripts')

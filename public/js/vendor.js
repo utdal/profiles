@@ -16765,7 +16765,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {/*
- * bootstrap-tagsinput v0.8.0
+ * bootstrap4-tagsinput v4.2.0
  * 
  */
 

@@ -717,6 +717,7 @@ var profiles = function ($, undefined) {
 
 window.profiles = profiles;
 $(document).ready(function () {
+  // date-picker
   __webpack_require__(/*! bootstrap-datepicker */ "./node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.js");
 
   $('.datepicker.year').datepicker({

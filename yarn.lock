@@ -1287,8 +1287,8 @@ bootstrap-datepicker@^1.8.0:
     jquery ">=1.7.1 <4.0.0"
 
 "bootstrap4-tagsinput@github:utdallasresearch/bootstrap4-tagsinput":
-  version "4.1.2"
-  resolved "https://codeload.github.com/utdallasresearch/bootstrap4-tagsinput/tar.gz/c6d4915d5d33a39bf67bc4dbfbb224912a8db3a4"
+  version "4.2.0"
+  resolved "https://codeload.github.com/utdallasresearch/bootstrap4-tagsinput/tar.gz/468fb17556e59c8863c46d040fe68654c966ca4d"
 
 bootstrap@^4.0.0:
   version "4.3.1"
