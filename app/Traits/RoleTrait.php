@@ -5,6 +5,7 @@ namespace App\Traits;
 use App\Role;
 use App\UserRole;
 use Illuminate\Cache\TaggableStore;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 
@@ -130,7 +131,7 @@ trait RoleTrait
             return null;
         }
 
-        return array_get($role->pivot->options, $option_name);
+        return Arr::get($role->pivot->options, $option_name);
     }
 
     /**

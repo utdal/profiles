@@ -59,7 +59,7 @@
 							</div>
 						@if(!$profile->tags->isEmpty() || $editable)
 						<div class="protocol-tags">
-						<i class="fas fa-tags" aria-hidden="true"></i><span class="sr-only">Tags:</span> @include('tags.show', ['model' => $profile]) @if($editable)<a class="btn btn-primary btn-sm badge" href="#" data-target="#{{ str_slug($profile->getRouteKey()) }}_tags_editor" data-toggle="modal" role="button"><i class="fas fa-edit"></i> Edit</a>@endif
+						<i class="fas fa-tags" aria-hidden="true"></i><span class="sr-only">Tags:</span> @include('tags.show', ['model' => $profile]) @if($editable)<a class="btn btn-primary btn-sm badge" href="#" data-target="#{{ Illuminate\Support\Str::slug($profile->getRouteKey()) }}_tags_editor" data-toggle="modal" role="button"><i class="fas fa-edit"></i> Edit</a>@endif
 						</div>
 						@endif
 					</div>

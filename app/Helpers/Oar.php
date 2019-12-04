@@ -2,8 +2,9 @@
 
 namespace App\Helpers;
 
-use Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class Oar
 {
@@ -34,7 +35,7 @@ class Oar
      */
     public static function uniqueString($length, $model_name, $attribute_name)
     {
-        $result = str_random($length);
+        $result = Str::random($length);
 
         if ($model_name::where($attribute_name, '=', $result)->exists()) {
             return static::uniqueString($length, $model_name, $attribute_name);

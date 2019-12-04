@@ -1,5 +1,5 @@
 <?php
-$id = $id ?? str_slug($model->getRouteKey());
+$id = $id ?? Illuminate\Support\Str::slug($model->getRouteKey());
 $tags = $model->tags;
 $model_class = get_class($model);
 $all_tags = Spatie\Tags\Tag::getWithType($model_class);
