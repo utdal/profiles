@@ -206,7 +206,7 @@ trait RoleTrait
         $userPrimaryKey = $this->primaryKey;
         $cacheKey = 'entrust_roles_for_user_' . $this->$userPrimaryKey;
         if (Cache::getStore() instanceof TaggableStore) {
-            return Cache::tags('role_user')->remember($cacheKey, Config::get('cache.ttl'), function () {
+            return Cache::tags('role_user')->remember($cacheKey, Config::get('cache.ttl', 3600), function () {
                 return $this->roles()->get();
             });
         } else return $this->roles()->get();
