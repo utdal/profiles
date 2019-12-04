@@ -13,7 +13,7 @@
                     Login
                 </div>
                 <div class="card-body">
-                    @if (count($errors) > 0)
+                    @if ($errors->isNotEmpty())
                         <div class="alert alert-danger">
                             <strong>Whoops!</strong> There were some problems with your input.<br><br>
                             <ul>

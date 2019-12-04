@@ -186,9 +186,9 @@ class Profile extends Model implements HasMedia, Auditable
 
     public function updateDatum($section, $request)
     {
-      $sort_order = count($request->data) + 1;
+      $sort_order = count($request->data ?? []) + 1;
+
       //iterate over each record
-      // dd($request);
       foreach($request->data as $entry){
           $should_save = false;
           //do we have any data in the record and should we save it
