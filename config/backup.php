@@ -8,7 +8,7 @@ return [
          * The name of this application. You can use this name to monitor
          * the backups.
          */
-        'name' => config('app.name'),
+        'name' => env('APP_NAME', 'Profiles'),
 
         'source' => [
 
@@ -34,7 +34,7 @@ return [
                 /*
                  * Determines if symlinks should be followed.
                  */
-                'followLinks' => true,
+                'follow_links' => true,
             ],
 
             /*
@@ -47,9 +47,17 @@ return [
         ],
 
         /*
-         * The database dump can be gzipped to decrease diskspace usage.
+         * The database dump can be compressed to decrease diskspace usage.
+         *
+         * Out of the box Laravel-backup supplies
+         * Spatie\DbDumper\Compressors\GzipCompressor::class.
+         *
+         * You can also create custom compressor. More info on that here:
+         * https://github.com/spatie/db-dumper#using-compression
+         *
+         * If you do not want any compressor at all, set it to null.
          */
-        'gzip_database_dump' => true,
+        'database_dump_compressor' => \Spatie\DbDumper\Compressors\GzipCompressor::class,
 
         'destination' => [
 
@@ -66,6 +74,11 @@ return [
                 's3',
             ],
         ],
+
+        /*
+         * The directory where the temporary files will be stored.
+         */
+        'temporary_directory' => env('BACKUP_TEMP_PATH', storage_path('app/backup-temp')),
     ],
 
     /*
@@ -94,6 +107,10 @@ return [
 
         'mail' => [
             'to' => env('BACKUP_EMAIL_NOTIFICATION', 'email@example.com'),
+            'from' => [
+                'address' => env('MAIL_FROM_ADDRESS', 'do_not_reply@utdallas.edu'),
+                'name' => env('MAIL_FROM_NAME', 'UT Dallas Profiles'),
+            ],
         ],
 
         'slack' => [
@@ -103,6 +120,10 @@ return [
              * If this is set to null the default channel of the webhook will be used.
              */
             'channel' => null,
+
+            'username' => null,
+
+            'icon' => null,
         ],
     ],
 
@@ -111,20 +132,26 @@ return [
      * If a backup does not meet the specified requirements the
      * UnHealthyBackupWasFound event will be fired.
      */
-    'monitorBackups' => [
+    'monitor_backups' => [
         [
-            'name' => config('app.name'),
+            'name' => env('APP_NAME', 'Profiles'),
             'disks' => ['s3'],
             'newestBackupsShouldNotBeOlderThanDays' => 1,
             'storageUsedMayNotBeHigherThanMegabytes' => 0,
+            'health_checks' => [
+                \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays::class => env('BACKUP_HEALTHCHECK_AGE_DAYS', 1),
+                \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumStorageInMegabytes::class => env('BACKUP_HEALTHCHECK_STORAGE_LIMIT', 0),
+            ],
         ],
 
         /*
         [
             'name' => 'name of the second app',
             'disks' => ['local', 's3'],
-            'newestBackupsShouldNotBeOlderThanDays' => 1,
-            'storageUsedMayNotBeHigherThanMegabytes' => 5000,
+            'health_checks' => [
+                \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays::class => 1,
+                \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumStorageInMegabytes::class => 5000,
+            ],
         ],
         */
     ],
@@ -141,38 +168,38 @@ return [
          */
         'strategy' => \Spatie\Backup\Tasks\Cleanup\Strategies\DefaultStrategy::class,
 
-        'defaultStrategy' => [
+        'default_strategy' => [
 
             /*
              * The number of days for which backups must be kept.
              */
-            'keepAllBackupsForDays' => 90,
+            'keep_all_backups_for_days' => env('BACKUP_KEEP_ALL_FOR_DAYS', 90),
 
             /*
              * The number of days for which daily backups must be kept.
              */
-            'keepDailyBackupsForDays' => 90,
+            'keep_daily_backups_for_days' => env('BACKUP_KEEP_DAILY_FOR_DAYS', 90),
 
             /*
              * The number of weeks for which one weekly backup must be kept.
              */
-            'keepWeeklyBackupsForWeeks' => 24,
+            'keep_weekly_backups_for_weeks' => env('BACKUP_KEEP_WEEKLY_FOR_WEEKS', 24),
 
             /*
              * The number of months for which one monthly backup must be kept.
              */
-            'keepMonthlyBackupsForMonths' => 12,
+            'keep_monthly_backups_for_months' => env('BACKUP_KEEP_MONTHLY_FOR_MONTHS', 12),
 
             /*
              * The number of years for which one yearly backup must be kept.
              */
-            'keepYearlyBackupsForYears' => 5,
+            'keep_yearly_backups_for_years' => env('BACKUP_KEEP_YEARLY_FOR_YEARS', 5),
 
             /*
              * After cleaning up the backups remove the oldest backup until
              * this amount of megabytes has been reached.
              */
-            'deleteOldestBackupsWhenUsingMoreMegabytesThan' => 25000,
+            'delete_oldest_backups_when_using_more_megabytes_than' => env('BACKUP_KEEP_TOTAL_MB', 25000),
         ],
     ],
 ];

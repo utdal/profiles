@@ -5,13 +5,11 @@ namespace App\Providers;
 use Adldap\AdldapInterface;
 use App\Helpers\Contracts\LdapHelperContract;
 use App\Helpers\LdapHelper;
+use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 
-class HelperServiceProvider extends ServiceProvider
+class HelperServiceProvider extends ServiceProvider implements DeferrableProvider
 {
-    /** @var boolean Defer loading until needed */
-    protected $defer = true;
-
     /**
      * Bootstrap the application services.
      *

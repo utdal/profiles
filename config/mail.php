@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'do_not_reply@utdallas.edu'),
-        'name' => env('MAIL_FROM_NAME', 'UT Dallas Profiles'),
+        'address' => env('MAIL_FROM_ADDRESS', 'do_not_reply@example.com'),
+        'name' => env('MAIL_FROM_NAME', 'Profiles'),
     ],
 
     /*

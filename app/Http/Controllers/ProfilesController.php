@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\Contracts\LdapHelperContract;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class ProfilesController extends Controller
 {
@@ -52,35 +53,33 @@ class ProfilesController extends Controller
         $keyword_profiles = Profile::containing($search)
             ->where('full_name', 'NOT LIKE', "%$search%")->public()->paginate(24, ['*'], 'key');
 
-        if(!empty($search)){
-            $tag_profiles = Profile::taggedWith($search)->public()->paginate(24, ['*'], 'tag');
-        }
+        $tag_profiles = !empty($search) ? Profile::taggedWith($search)->public()->paginate(24, ['*'], 'tag') : null;
 
         return view('profiles.index', compact('profiles', 'keyword_profiles', 'tag_profiles', 'search'));
     }
 
     public function home(){
 
-        $random_profile = Cache::remember('home-random-profiles', 1440, function(){
+        $random_profile = Cache::remember('home-random-profiles', 86400, function(){
             $profiles = Profile::public()->get();
             return !$profiles->isEmpty() ? $profiles->random(min(2, $profiles->count())) : collect([]);
         }); 
 
-        $num_profiles = Cache::remember('home-profile-count', 1440, function(){
+        $num_profiles = Cache::remember('home-profile-count', 86400, function(){
             return Profile::public()->get()->count();
         });
 
-        $num_publications = Cache::remember('home-publication-count', 1440, function(){
+        $num_publications = Cache::remember('home-publication-count', 86400, function(){
             return ProfileData::all()->where('type', 'publications')->count();
         });
 
-        $num_datum = Cache::remember('home-datum-count', 1440, function(){
+        $num_datum = Cache::remember('home-datum-count', 86400, function(){
             return ProfileData::all()->count();
         });
 
-        $tags = Cache::remember('home-tags', 1440, function(){
+        $tags = Cache::remember('home-tags', 86400, function(){
             $tags = Tag::whereExists(function ($query) {
-                $query->select(\DB::raw(1))->from('taggables')->whereRaw('tags.id = taggables.tag_id');
+                $query->select(DB::raw(1))->from('taggables')->whereRaw('tags.id = taggables.tag_id');
             })->inRandomOrder()->get();
             return !$tags->isEmpty() ? $tags->random(min(20, $tags->count())) : collect([]);
         });
@@ -109,7 +108,7 @@ class ProfilesController extends Controller
      */
     public function show(Profile $profile)
     {
-
+        /** @var User the logged-in user */
         $user = Auth::user();
         $editable = $user && $user->can('update', $profile);
 
