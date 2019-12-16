@@ -16,7 +16,7 @@
 		    </div>
 
 		    <div class="paginator">
-		        {!! $tag_profiles->appends(Input::except('tag'))->render() !!}
+		        {!! $tag_profiles->appends(Request::except('tag'))->render() !!}
 		    </div>
 		@endif
 		@if(!$profiles->isEmpty())
@@ -29,7 +29,7 @@
 		    </div>
 
 		    <div class="paginator">
-		        {{ $profiles->appends(Input::except('page'))->links() }}
+		        {{ $profiles->appends(Request::except('page'))->links() }}
 		    </div>
 		@endif
 		@if(!$keyword_profiles->isEmpty())
@@ -42,7 +42,7 @@
 		    </div>
 
 		    <div class="paginator">
-		        {!! $keyword_profiles->appends(Input::except('key'))->render() !!}
+		        {!! $keyword_profiles->appends(Request::except('key'))->render() !!}
 		    </div>
 		@endif
 		@if($profiles->isEmpty() && $keyword_profiles->isEmpty() && (isset($tag_profiles) && $tag_profiles->isEmpty()))

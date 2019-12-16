@@ -25,7 +25,18 @@ class SchoolPolicy
     }
 
     /**
-     * Determine whether the user can view the model.
+     * Determine whether the user can view the index.
+     *
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function viewAny(User $user)
+    {
+        return $this->viewAdminIndex($user);
+    }
+
+    /**
+     * Determine whether the user can view the admin index.
      *
      * @param  \App\User  $user
      * @return mixed

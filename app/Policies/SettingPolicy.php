@@ -25,6 +25,17 @@ class SettingPolicy
     }
 
     /**
+     * Determine whether the user can view the index.
+     *
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function viewAny(User $user)
+    {
+        return false;
+    }
+
+    /**
      * Determine whether the user can view the setting.
      *
      * @param  \App\User  $user

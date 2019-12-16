@@ -24,6 +24,17 @@ class UserPolicy
     }
 
     /**
+     * Determine whether the user can view the index.
+     *
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function viewAny(User $user)
+    {
+        return $this->viewAdminIndex($user);
+    }
+
+    /**
      * Determine whether the user can view the model.
      *
      * @param  \App\User  $user

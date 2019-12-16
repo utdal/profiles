@@ -54,7 +54,7 @@
     </table>
 
     <div class="paginator">
-        {{ $logs->appends(Input::except('page'))->links() }}
+        {{ $logs->appends(Request::except('page'))->links() }}
     </div>
 
 </div>

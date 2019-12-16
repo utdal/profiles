@@ -49,6 +49,17 @@ class ProfilePolicy
     }
 
     /**
+     * Determine whether the user can view the index.
+     *
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function viewAny(User $user)
+    {
+        return $this->viewAdminIndex($user);
+    }
+
+    /**
      * Determine whether the user can view the admin table of Profiles.
      *
      * @param  \App\User  $user

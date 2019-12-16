@@ -454,7 +454,7 @@ class Profile extends Model implements HasMedia, Auditable
      */
     public function getUrlAttribute()
     {
-        return route('profiles.show', ['profiles' => $this->slug]);
+        return route('profiles.show', ['profile' => $this->slug]);
     }
 
     /**

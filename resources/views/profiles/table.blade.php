@@ -42,7 +42,7 @@
     </table>
 
     <div class="paginator">
-        {{ $profiles->appends(Input::except('page'))->links() }}
+        {{ $profiles->appends(Request::except('page'))->links() }}
     </div>
 
 </div>

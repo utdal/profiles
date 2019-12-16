@@ -137,7 +137,7 @@
 						@endif
 					</div>
 				@endforeach
-				{!! $publications->fragment('publications')->appends(Input::except('pub'))->render() !!}
+				{!! $publications->fragment('publications')->appends(Request::except('pub'))->render() !!}
 			</div>
 		@endif
 		@if(!$appointments->isEmpty() || $editable)
@@ -153,7 +153,7 @@
 						@endif
 					</div>
 				@endforeach
-				{!! $appointments->fragment('appointments')->appends(Input::except('appt'))->render() !!}
+				{!! $appointments->fragment('appointments')->appends(Request::except('appt'))->render() !!}
 			</div>
 		@endif
 		@if(!$awards->isEmpty() || $editable)
@@ -164,7 +164,7 @@
 						<strong>{{$award->name}}</strong> - <em>{{$award->organization}}</em> @if($award->year)[{{$award->year}}]@endif<br />
 					</div>
 				@endforeach
-				{!! $awards->fragment('awards')->appends(Input::except('awd'))->render() !!}
+				{!! $awards->fragment('awards')->appends(Request::except('awd'))->render() !!}
 			</div>
 		@endif
 		@if(!$projects->isEmpty() || $editable)
@@ -183,7 +183,7 @@
 						@endif
 					</div>
 				@endforeach
-				{!! $projects->fragment('projects')->appends(Input::except('proj'))->render() !!}
+				{!! $projects->fragment('projects')->appends(Request::except('proj'))->render() !!}
 			</div>
 		@endif
 		@if(!$presentations->isEmpty() || $editable)
@@ -202,7 +202,7 @@
 						@endif
 					</div>
 				@endforeach
-				{!! $presentations->fragment('presentations')->appends(Input::except('pres'))->render() !!}
+				{!! $presentations->fragment('presentations')->appends(Request::except('pres'))->render() !!}
 			</div>
 		@endif
 		@if(!$additionals->isEmpty() || $editable)
@@ -214,7 +214,7 @@
 							{!! Purify::clean($additional->description) !!}
 					</div>
 				@endforeach
-				{!! $additionals->fragment('additional')->appends(Input::except('addl'))->render() !!}
+				{!! $additionals->fragment('additional')->appends(Request::except('addl'))->render() !!}
 			</div>
 		@endif
 		@if(!$news->isEmpty() || $editable)
@@ -235,7 +235,7 @@
 						{!! Purify::clean($article->description) !!}
 					</div>
 				@endforeach
-				{!! $news->fragment('news')->appends(Input::except('news'))->render() !!}
+				{!! $news->fragment('news')->appends(Request::except('news'))->render() !!}
 			</div>
 		@endif
 		@if(!$activites->isEmpty() || $editable)
@@ -260,7 +260,7 @@
 						{!! Purify::clean($affiliation->description) !!}
 					</div>
 				@endforeach
-				{!! $affiliations->fragment('affiliations')->appends(Input::except('affl'))->render() !!}
+				{!! $affiliations->fragment('affiliations')->appends(Request::except('affl'))->render() !!}
 			</div>
 		@endif
 		@if(!$support->isEmpty() || $editable)
@@ -277,7 +277,7 @@
 						{{ $funding->description }}
 					</div>
 				@endforeach
-				{!! $support->fragment('funding')->appends(Input::except('sppt'))->render() !!}
+				{!! $support->fragment('funding')->appends(Request::except('sppt'))->render() !!}
 			</div>
 		@endif
 	</div>

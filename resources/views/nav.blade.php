@@ -36,7 +36,7 @@ $can_create_users = $user && $user->can('create', 'App\User');
           </a>
           <div class="dropdown-menu" aria-labelledby="schoolNavDropdown">
             @foreach($schools as $school)
-            <a class="dropdown-item" href="{{ route('schools.show', ['short_name' => $school->short_name]) }}">
+            <a class="dropdown-item" href="{{ route('schools.show', $school) }}">
               <span class="fas fa-university fa-fw"></span> {{ $school->display_name }}
             </a>
             @endforeach
