@@ -8,6 +8,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Response;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
 use Sentry\State\Scope;
@@ -74,6 +75,24 @@ class Handler extends ExceptionHandler
             return response()->view('errors.ldap', [], 500);
         }
 
+        if ($request->is('api/*')) {
+            if ($exception instanceof AuthenticationException) {
+                return response()->json([
+                    'errors' => ["Unauthorized."],
+                ], Response::HTTP_UNAUTHORIZED);
+            }
+            if ($exception instanceof ModelNotFoundException) {
+                return response()->json([
+                    'errors' => ['Entry for ' . str_replace('App\\', '', $exception->getModel()) . ' not found']
+                ], Response::HTTP_NOT_FOUND);
+            }
+            if ($exception instanceof ValidationException) {
+                return response()->json([
+                    'errors' => $exception->errors()
+                ], Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+        }
+
         return parent::render($request, $exception);
     }
 
@@ -95,6 +114,7 @@ class Handler extends ExceptionHandler
      */
     protected function reportToSentry(Exception $e)
     {
+        /** @var \Sentry\State\Hub */
         $sentry = app('sentry');
 
         if (auth()->check()) {
