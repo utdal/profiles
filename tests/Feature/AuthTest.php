@@ -45,7 +45,7 @@ class AuthTest extends TestCase
         $this->assertDatabaseHas('users', $user->getAttributes());
 
         // Logged-in User's display_name should show in the navbar
-        $this->get('/')->assertSee($user->display_name);
+        $this->get('/')->assertSee(e($user->display_name));
     }
 
 }
