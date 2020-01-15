@@ -10,12 +10,14 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Tests\Feature\Traits\HasJson;
+use Tests\Feature\Traits\HasUserEditor;
 use Tests\Feature\Traits\MockLdap;
 use Tests\TestCase;
 
 class UserTest extends TestCase
 {
     use HasJson;
+    use HasUserEditor;
     use MockLdap;
     use RefreshDatabase;
     use WithFaker;
@@ -152,7 +154,8 @@ class UserTest extends TestCase
 
         $response
             ->assertSessionHasNoErrors()
-            ->assertStatus(200);
+            ->assertStatus(200)
+            ->assertSee('Profile created.');
 
         $this->assertDatabaseHas('users', Arr::except($user->getAttributes(), ['guid']));
 
@@ -163,20 +166,6 @@ class UserTest extends TestCase
             'last_name' => $user->lastname,
             'slug' => $user->pea,
         ]);
-    }
-
-    /**
-     * Create a logged-in User editor.
-     *
-     * @return User
-     */
-    protected function loginAsUserEditor()
-    {
-        $editor = factory(User::class)->create();
-        $editor->attachRole(Role::whereName('site_admin')->firstOrFail());
-        auth()->loginUsingId($editor->id);
-
-        return $editor;
     }
 
 }
