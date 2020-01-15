@@ -33,6 +33,6 @@ class CreateProfileDataTable extends Migration
      */
     public function down()
     {
-        Schema::drop('profile_data');
+        Schema::dropIfExists('profile_data');
     }
 }
