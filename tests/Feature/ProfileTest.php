@@ -9,12 +9,14 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\Feature\Traits\HasJson;
+use Tests\Feature\Traits\HasUploadedImage;
 use Tests\Feature\Traits\HasUserEditor;
 use Tests\TestCase;
 
 class ProfileTest extends TestCase
 {
     use HasJson;
+    use HasUploadedImage;
     use HasUserEditor;
     use RefreshDatabase;
     use WithFaker;
@@ -257,20 +259,4 @@ class ProfileTest extends TestCase
         $this->assertFileExists($profile->getFirstMedia('banners')->getPath());
     }
 
-    /**
-     * Mock an uploaded image file
-     *
-     * @return \Illuminate\Http\Testing\File
-     */
-    protected function mockUploadedImage()
-    {
-        Storage::fake('images');
-
-        config()->set('filesystems.disks.images', [
-            'driver' => 'local',
-            'root' => Storage::disk('images')->getAdapter()->getPathPrefix(),
-        ]);
-
-        return UploadedFile::fake()->image('fake_image.jpg');
-    }
 }
