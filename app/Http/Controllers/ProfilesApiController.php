@@ -88,4 +88,9 @@ class ProfilesApiController extends Controller
 
         return response()->json(compact('profile'));
     }
+
+    public function authRouteAPI(Request $request)
+    {
+        return $request->user();
+    }
 }
