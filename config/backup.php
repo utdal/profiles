@@ -108,8 +108,8 @@ return [
         'mail' => [
             'to' => env('BACKUP_EMAIL_NOTIFICATION', 'email@example.com'),
             'from' => [
-                'address' => env('MAIL_FROM_ADDRESS', 'do_not_reply@utdallas.edu'),
-                'name' => env('MAIL_FROM_NAME', 'UT Dallas Profiles'),
+                'address' => env('MAIL_FROM_ADDRESS', 'do_not_reply@example.com'),
+                'name' => env('MAIL_FROM_NAME', 'Profiles'),
             ],
         ],
 
@@ -136,11 +136,9 @@ return [
         [
             'name' => env('APP_NAME', 'Profiles'),
             'disks' => ['s3'],
-            'newestBackupsShouldNotBeOlderThanDays' => 1,
-            'storageUsedMayNotBeHigherThanMegabytes' => 0,
             'health_checks' => [
                 \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays::class => env('BACKUP_HEALTHCHECK_AGE_DAYS', 1),
-                \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumStorageInMegabytes::class => env('BACKUP_HEALTHCHECK_STORAGE_LIMIT', 0),
+                \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumStorageInMegabytes::class => env('BACKUP_HEALTHCHECK_STORAGE_LIMIT', 500000),
             ],
         ],
 
