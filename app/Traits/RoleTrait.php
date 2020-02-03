@@ -33,32 +33,25 @@ trait RoleTrait
         
         // Clear role cache after a user is deleted
         static::deleted(function ($user) {
-            if (Cache::getStore() instanceof TaggableStore) {
-                Cache::tags('role_user')->flush();
-            }
+            static::flushCachedRoles();
 
             return true;
         });
 
         // Clear role cache when saving/updating a user
         static::saving(function ($user) {
-            if (Cache::getStore() instanceof TaggableStore) {
-                Cache::tags('role_user')->flush();
-            }
+            static::flushCachedRoles();
 
             return true;
         });
         
         // Clear role cache when a user is restored from a soft delete
         // static::restored(function ($user) {
-        //     if (Cache::getStore() instanceof TaggableStore) {
-        //         Cache::tags('role_user')->flush();
-        //     }
+        //     static::flushCachedRoles();
 
         //     return true;
         // });
 
-        
     }
 
     /**
@@ -150,6 +143,7 @@ trait RoleTrait
         }
 
         $this->roles()->attach($role);
+        static::flushCachedRoles();
     }
 
     /**
@@ -168,6 +162,7 @@ trait RoleTrait
         }
 
         $this->roles()->detach($role);
+        static::flushCachedRoles();
     }
 
     /**
@@ -210,6 +205,20 @@ trait RoleTrait
                 return $this->roles()->get();
             });
         } else return $this->roles()->get();
+    }
+
+    /**
+     * Flush the cached roles
+     *
+     * @return bool
+     */
+    public static function flushCachedRoles()
+    {
+        if (Cache::getStore() instanceof TaggableStore) {
+            return Cache::tags('role_user')->flush();
+        }
+
+        return false;
     }
 
     /**
