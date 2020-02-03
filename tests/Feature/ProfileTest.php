@@ -45,10 +45,15 @@ class ProfileTest extends TestCase
         $this->assertDatabaseHas('users', $profile->user->getAttributes());
 
         $this->get(route('profiles.home'))->assertStatus(200);
-        $this->get(route('profiles.index'))->assertStatus(200);
+        $this->get(route('profiles.index'))
+            ->assertSee($profile->name)
+            ->assertStatus(200);
         $this->get(route('profiles.show', ['profile' => $profile]))
             ->assertStatus(200)
             ->assertSee($profile->name);
+        
+        $this->loginAsUserEditor();
+        $this->get(route('profiles.table'))->assertStatus(200);
     }
 
     /**

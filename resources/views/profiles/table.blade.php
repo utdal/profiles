@@ -33,7 +33,7 @@
             <tr>
                 <td>{{ $profile->id }}</a></td>
                 <td>{{ $profile->full_name }}</td>
-                <td><a href="{{ route('profiles.show', ['slug' => $profile->slug]) }}">{{ $profile->slug }}</a></td>
+                <td><a href="{{ route('profiles.show', ['profile' => $profile->slug]) }}">{{ $profile->slug }}</a></td>
                 <td><span class="fas {{ $profile->public ? 'fa-eye' : 'fa-eye-slash text-muted' }}"></span></td>
                 <td>{{ $profile->created_at }}</td>
             </tr>
