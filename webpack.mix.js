@@ -47,6 +47,7 @@ mix
         '@fortawesome/fontawesome-svg-core',
         '@fortawesome/free-solid-svg-icons',
         '@fortawesome/free-regular-svg-icons',
+        '@fortawesome/free-brands-svg-icons',
         'sortablejs',
         'bootstrap-datepicker',
         'bootstrap4-tagsinput',
