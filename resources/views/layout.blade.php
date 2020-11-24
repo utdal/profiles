@@ -41,12 +41,7 @@
 		</div>
 	@endif
 	@if (Session::has('flash_message'))
-	<div class="flash-container">
-		<div class="flash-message alert-success alert-dismissable" role="alert">
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&nbsp;&times;</span></button>
-			{{ session('flash_message') }}
-		</div>
-	</div>
+		@include('alert', ['message' => session('flash_message'), 'type' => 'success'])
 	@endif
 	@yield('content')
 	@yield('footer')
