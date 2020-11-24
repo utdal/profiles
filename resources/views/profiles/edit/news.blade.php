@@ -20,11 +20,15 @@
 				</div>
 				<div class="col col-lg-3 col-12">
 					<label for="file-{{$news->id}}">Image</label>
-					<img class="profile_photo" id="file-{{$news->id}}-img" src="@if($news->imageUrl != asset('/img/default.png')){{$news->imageUrl}}@endif">
+					<img class="profile_photo" id="data[{{$news->id}}][image]-img" src="@if($news->imageUrl != asset('/img/default.png')){{$news->imageUrl}}@endif">
 				</div>
 				<div class="col col-lg-3 col-12">
-					<input type="file" id="file-{{$news->id}}" name="file-{{$news->id}}" accept="image/*" class="d-none">
-					<label for="file-{{$news->id}}" class="btn btn-secondary btn-block">Select Image</label>
+					<input type="file" id="data[{{$news->id}}][image]" name="data[{{$news->id}}][image]" accept="image/*" class="d-none">
+					<label for="data[{{$news->id}}][image]" class="btn btn-secondary btn-block">Select Image</label>
+					@foreach($errors->get("data.{$news->id}.image") as $image_error)
+						@include('alert', ['message' => $image_error, 'type' => 'danger'])
+						<p class="d-block invalid-feedback"><i class="fas fa-asterisk"></i> {!! $image_error !!}</p>
+					@endforeach
 				</div>
 				<div class="actions">
 					<label for="data[{{$news->id}}][public]"></label>

@@ -9,12 +9,12 @@
 			<br />
 			<div class="control-group">
 				<div class="controls">
-					{!! Form::file('image', ['id' => 'file', 'name' => 'image', 'required' => 'true', 'accept' => 'image/*', 'class' => 'd-none']) !!}
+					{!! Form::file('image', ['id' => 'file', 'name' => 'image', 'required' => 'true', 'accept' => 'image/*', 'class' => 'd-none form-control']) !!}
 					<label for="file" class="btn btn-secondary btn-block"><i class="fas fa-plus"></i> Select Image</label>
-					<p class="errors">{!!$errors->first('image')!!}</p>
-					@if(Session::has('error'))
-						<p class="errors">{!! Session::get('error') !!}</p>
-					@endif
+					@foreach($errors->get('image') as $image_error)
+						@include('alert', ['message' => $image_error, 'type' => 'danger'])
+						<p class="d-block invalid-feedback"><i class="fas fa-asterisk"></i> {!! $image_error !!}</p>
+					@endforeach
 				</div>
 			</div>
 			<button type="submit" class="btn btn-primary btn-block" data-toggle="replace-icon" data-newicon="sync" data-newiconclasses="fa-spin" data-inputrequired="#file">
@@ -30,12 +30,12 @@
 			<br />
 			<div class="control-group">
 				<div class="controls">
-					{!! Form::file('image', ['id' => 'banner', 'name' => 'image', 'required' => 'true', 'accept' => 'image/*', 'class' => 'd-none']) !!}
+					{!! Form::file('banner_image', ['id' => 'banner', 'name' => 'banner_image', 'required' => 'true', 'accept' => 'image/*', 'class' => 'd-none form-control']) !!}
 					<label for="banner" class="btn btn-secondary btn-block"><i class="fas fa-plus"></i> Select Image</label>
-					<p class="errors">{!!$errors->first('image')!!}</p>
-					@if(Session::has('error'))
-						<p class="errors">{!! Session::get('error') !!}</p>
-					@endif
+					@foreach($errors->get('banner_image') as $banner_image_error)
+						@include('alert', ['message' => $banner_image_error, 'type' => 'danger'])
+						<p class="d-block invalid-feedback"><i class="fas fa-asterisk"></i> {!! $banner_image_error !!}</p>
+					@endforeach
 				</div>
 			</div>
 			<button type="submit" class="btn btn-primary btn-block" data-toggle="replace-icon" data-newicon="sync" data-newiconclasses="fa-spin" data-inputrequired="#banner">

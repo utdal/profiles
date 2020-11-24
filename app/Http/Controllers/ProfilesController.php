@@ -9,6 +9,9 @@ use Spatie\Tags\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\Contracts\LdapHelperContract;
+use App\Http\Requests\ProfileBannerImageRequest;
+use App\Http\Requests\ProfileImageRequest;
+use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
@@ -229,19 +232,20 @@ class ProfilesController extends Controller
       }
     }
 
-    public function update(Profile $profile, $section, Request $request)
+    public function update(Profile $profile, $section, ProfileUpdateRequest $request)
     {
         $profile->updateDatum($section, $request);
+
         return redirect()->route('profiles.show', $profile->slug)->with('flash_message', 'Profile updated.');
     }
 
-    public function updateImage(Profile $profile, Request $request)
+    public function updateImage(Profile $profile, ProfileImageRequest $request)
     {
         return redirect()->route('profiles.edit', [$profile->slug, 'information'])->with('flash_message', $profile->processImage($request->file('image'), 'images'));
     }
 
-    public function updateBanner(Profile $profile, Request $request)
+    public function updateBanner(Profile $profile, ProfileBannerImageRequest $request)
     {
-        return redirect()->route('profiles.edit', [$profile->slug, 'information'])->with('flash_message', $profile->processImage($request->file('image'), 'banners'));
+        return redirect()->route('profiles.edit', [$profile->slug, 'information'])->with('flash_message', $profile->processImage($request->file('banner_image'), 'banners'));
     }
 }

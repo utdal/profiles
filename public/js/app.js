@@ -740,8 +740,10 @@ $(document).ready(function () {
   }); //show preview of uploaded image
 
   $('input[type="file"]').on('change', function () {
-    $('label[for="' + this.id + '"]').addClass('active').text(this.files[0].name);
-    $('#' + this.id + '-img').attr('src', window.URL.createObjectURL(this.files[0]));
+    var id = this.id.replace(/\[/g, '\\[').replace(/\]/g, '\\]');
+    $('label[for="' + id + '"]').addClass('active').text(this.files[0].name);
+    $('#' + id + '-img').attr('src', window.URL.createObjectURL(this.files[0]));
+    $(this).siblings('.invalid-feedback').removeClass('d-block');
   }); //enable drag and drop sorting for items with sotable class
 
   if ($('.sortable').length > 0) {

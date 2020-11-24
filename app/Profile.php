@@ -229,7 +229,7 @@ class Profile extends Model implements HasMedia, Auditable
               $record->save();
 
               //this might need to be sequenced differently
-              $new_file = $request->file('file-' . $entry['id']);
+              $new_file = $request->file("data.{$entry['id']}.image");
               //have a new file for this record
               if($new_file){
                   $record->clearMediaCollection('images');

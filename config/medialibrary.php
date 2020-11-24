@@ -12,7 +12,7 @@ return [
      * The maximum file size of an item in bytes. Adding a file
      * that is larger will result in an exception.
      */
-    'max_file_size' => 1024 * 1024 * 32,
+    'max_file_size' => 1024 * 1024 * ((int) env('IMAGE_MAX_MB', 16)),
 
     /*
      * This queue will be used to generate derived images.
