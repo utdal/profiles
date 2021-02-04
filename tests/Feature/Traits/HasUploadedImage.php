@@ -21,6 +21,6 @@ trait HasUploadedImage
             'root' => Storage::disk('images')->getAdapter()->getPathPrefix(),
         ]);
 
-        return UploadedFile::fake()->image('fake_image.jpg');
+        return UploadedFile::fake()->image('fake_image.jpg', 300, 300);
     }
 }

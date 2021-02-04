@@ -252,7 +252,7 @@ class ProfileTest extends TestCase
         $editor = $this->loginAsUserEditor();
 
         $response = $this->followingRedirects()->post($image_update_route, [
-            'image' => $this->mockUploadedImage(),
+            'banner_image' => $this->mockUploadedImage(),
         ]);
 
         $response
