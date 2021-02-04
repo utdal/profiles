@@ -28,7 +28,7 @@ library.add(fas, far, fab);
 dom.watch();
 
 // Sortable
-window.Sortable = require('sortablejs');
+window.Sortable = require('sortablejs/Sortable');
 
 // Typeahead Bloodhound
 window.Bloodhound = require('corejs-typeahead');

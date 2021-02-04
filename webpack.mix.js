@@ -1,4 +1,5 @@
-let mix = require('laravel-mix');
+const mix = require('laravel-mix');
+var path = require('path');
 
 /**
  * App-related tasks (compile css, scripts, and etc.)
