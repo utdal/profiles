@@ -138,7 +138,7 @@ return [
             'disks' => ['s3'],
             'health_checks' => [
                 \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays::class => env('BACKUP_HEALTHCHECK_AGE_DAYS', 1),
-                \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumStorageInMegabytes::class => env('BACKUP_HEALTHCHECK_STORAGE_LIMIT', 500000),
+                // \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumStorageInMegabytes::class => env('BACKUP_HEALTHCHECK_STORAGE_LIMIT', 500000),
             ],
         ],
 
