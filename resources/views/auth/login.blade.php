@@ -1,5 +1,5 @@
 @extends('layout')
-
+@section('title', 'Login')
 @section('header')
     @include('nav')
 @stop

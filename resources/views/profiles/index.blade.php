@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title', 'All Profiles')
+@section('title', $search ? 'Search Results' : 'All Profiles')
 @section('header')
 	@include('nav')
 @stop
