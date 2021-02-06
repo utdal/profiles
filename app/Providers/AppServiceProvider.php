@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
 use App\Setting;
+use Collective\Html\FormFacade as Form;
 use Illuminate\Support\Facades\Cache;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,6 +23,8 @@ class AppServiceProvider extends ServiceProvider
         //register modified paginator view as default
         Paginator::defaultView('vendor.pagination.default');
         Paginator::defaultSimpleView('vendor.pagination.simple-default');
+
+        Form::component('inlineErrors', 'errors.inline', ['field_name']);
 
         View::composer([
             'layout',
