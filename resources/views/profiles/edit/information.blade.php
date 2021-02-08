@@ -11,10 +11,7 @@
 				<div class="controls">
 					{!! Form::file('image', ['id' => 'file', 'name' => 'image', 'required' => 'true', 'accept' => 'image/*', 'class' => 'd-none form-control']) !!}
 					<label for="file" class="btn btn-secondary btn-block"><i class="fas fa-plus"></i> Select Image</label>
-					@foreach($errors->get('image') as $image_error)
-						@include('alert', ['message' => $image_error, 'type' => 'danger'])
-						<p class="d-block invalid-feedback"><i class="fas fa-asterisk"></i> {!! $image_error !!}</p>
-					@endforeach
+					{!! Form::inlineErrors('image') !!}
 				</div>
 			</div>
 			<button type="submit" class="btn btn-primary btn-block" data-toggle="replace-icon" data-newicon="sync" data-newiconclasses="fa-spin" data-inputrequired="#file">
@@ -32,10 +29,7 @@
 				<div class="controls">
 					{!! Form::file('banner_image', ['id' => 'banner', 'name' => 'banner_image', 'required' => 'true', 'accept' => 'image/*', 'class' => 'd-none form-control']) !!}
 					<label for="banner" class="btn btn-secondary btn-block"><i class="fas fa-plus"></i> Select Image</label>
-					@foreach($errors->get('banner_image') as $banner_image_error)
-						@include('alert', ['message' => $banner_image_error, 'type' => 'danger'])
-						<p class="d-block invalid-feedback"><i class="fas fa-asterisk"></i> {!! $banner_image_error !!}</p>
-					@endforeach
+					{!! Form::inlineErrors('banner_image') !!}
 				</div>
 			</div>
 			<button type="submit" class="btn btn-primary btn-block" data-toggle="replace-icon" data-newicon="sync" data-newiconclasses="fa-spin" data-inputrequired="#banner">
@@ -117,7 +111,7 @@
 			</div>
 			<div class="form-group">
 				<label for="data[{{$info->id}}][data][orc_id]">ORCID</label>
-				<input type="text" class="form-control" name="data[{{$info->id}}][data][orc_id]" id="data[{{$info->id}}][data][orc_id]" value="{{$info->orc_id}}"  onkeyup="javascript:$(this).val($(this).val().replace('https://orcid.org/', '').replace('http://orcid.org/', ''));" pattern="^[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}$"/>
+				<input type="text" class="form-control" name="data[{{$info->id}}][data][orc_id]" id="data[{{$info->id}}][data][orc_id]" value="{{$info->orc_id}}"  onkeyup="javascript:$(this).val($(this).val().replace('https://orcid.org/', '').replace('http://orcid.org/', ''));" pattern="^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$"/>
 			</div>
 			<div class="form-group row">
 				<div class="col col-4">
@@ -155,7 +149,7 @@
 			</div>
 			<div class="form-group row">
 				<div class="col col-4">
-					<label for="visibility">Profile Visibility</label><br>
+					<label for="visibility">Profile Visible</label><br>
 					<label class="switch pull-left">
 						<input type="hidden" name="public" id="public" value="0">
 						<input type="checkbox" name="public" id="public" value="1" @if($profile->public) checked @endif>
@@ -164,7 +158,7 @@
 				</div>
 				<div class="col col-8">
 					<br>
-					<p>Hide profile from public index. It will still be accessible via the public API and to administration.</p>
+					<p>Make profile viewable and searchable by website visitors. (If turned off, it will still be accessible via the public API and to site administrators.</p>
 				</div>
 			</div>
 			{!! Form::submit('Save', array('class' => 'btn btn-primary edit-button')) !!}
