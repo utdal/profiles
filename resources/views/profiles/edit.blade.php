@@ -6,6 +6,7 @@
 @section('content')
 @if(View::exists('profiles.edit.' . $section))
 	<div class="container">
+		@include('errors.list')
 		@include('profiles.edit.' . $section)
 	</div>
 @else
