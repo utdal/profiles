@@ -46,7 +46,12 @@
 			<br>
 		</div>
 		<div class="col col-md-8 col-12">
-			{!! Form::open(array('url' => route('profiles.update', [$profile->slug, 'information']))) !!}
+			{!! Form::model($profile, ['route' => ['profiles.update', 'profile' => $profile, 'section' => 'information']]) !!}
+			<div class="form-group">
+				{!! Form::label('full_name', 'Display Name') !!}
+				{!! Form::text('full_name', $profile->full_name, ['class' => 'form-control', 'required']) !!}
+				{!! Form::inlineErrors('full_name') !!}
+			</div>
 			<div class="form-group">
 				<input type="hidden" name="data[{{$info->id}}][id]"  value="{{$info->id}}" />
 				<label for="data[{{$info->id}}][data][title]">Title</label>

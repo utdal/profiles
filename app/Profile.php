@@ -242,8 +242,11 @@ class Profile extends Model implements HasMedia, Auditable
       }
 
         // update overall profile visibility
-        if ($section == 'information' && $request->has('public')) {
-            $this->update(['public' => $request->input('public')]);
+        if ($section == 'information' && $request->hasAny(['public', 'full_name'])) {
+            $this->update([
+                'public' => $request->input('public') ?? $this->public,
+                'full_name' => $request->input('full_name') ?? $this->full_name,
+            ]);
         }
 
         Cache::flush();
@@ -394,7 +397,7 @@ class Profile extends Model implements HasMedia, Auditable
      */
     public function getNameAttribute()
     {
-        return $this->first_name . ' ' . $this->last_name;
+        return $this->full_name;
     }
 
     /**
