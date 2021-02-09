@@ -11007,6 +11007,9 @@ table td pre.sf-dump {
   border-style: none;
   word-break: break-all !important;
 }
+table td pre.sf-dump .sf-dump-default {
+  display: none !important;
+}
 table td pre.sf-dump .sf-dump-note {
   color: #777777 !important;
 }
