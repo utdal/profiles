@@ -92,6 +92,7 @@ class Profile extends Model implements HasMedia, Auditable
     {
         return [
             'id',
+            'full_name',
             'first_name',
             'last_name',
             'slug',
