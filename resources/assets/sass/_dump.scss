@@ -7,6 +7,10 @@ table td pre.sf-dump {
 	border-style: none;
 	word-break: break-all !important;
 
+	.sf-dump-default {
+		display: none !important;
+	}
+
 	.sf-dump-note {
 		color: $gray-light !important;
 	}
