@@ -103,6 +103,30 @@
 
     <div class="row record form-group level lower-border">
         <div class="col col-12">
+            <label for="visibility">School Search Shortcut</label><br>
+            <p><small class="form-text text-muted">If a search exactly matches a single school name, display name, or short name, skip the search results and redirect to that school's profiles instead.</small></p>
+            <label class="switch pull-left">
+                <input type="hidden" name="setting[school_search_shortcut]" id="setting[school_search_shortcut]" value="0">
+                <input type="checkbox" name="setting[school_search_shortcut]" id="setting[school_search_shortcut]" value="1" @if($settings['school_search_shortcut'] ?? false) checked @endif>
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+
+    <div class="row record form-group level lower-border">
+        <div class="col col-12">
+            <label for="visibility">Profile Search Shortcut</label><br>
+            <p><small class="form-text text-muted">If a search exactly matches a single profile display name, skip the search results and redirect to that profile instead.</small></p>
+            <label class="switch pull-left">
+                <input type="hidden" name="setting[profile_search_shortcut]" id="setting[profile_search_shortcut]" value="0">
+                <input type="checkbox" name="setting[profile_search_shortcut]" id="setting[profile_search_shortcut]" value="1" @if($settings['profile_search_shortcut'] ?? false) checked @endif>
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+
+    <div class="row record form-group level lower-border">
+        <div class="col col-12">
             <label for="rte_faq">FAQ Page</label>
             <input id="rte_faq" type="hidden" class="clearable" name="setting[faq]" value="{{ $settings['faq'] ?? NULL }}">
             <trix-editor input="rte_faq"></trix-editor>
@@ -111,7 +135,7 @@
 
     <div class="row record form-group level lower-border">
         <div class="col col-12">
-            <label for="rte_footer">Footer Footer</label>
+            <label for="rte_footer">Site Footer</label>
             <input id="rte_footer" type="hidden" class="clearable" name="setting[footer]" value="{{ $settings['footer'] ?? NULL }}">
             <trix-editor input="rte_footer"></trix-editor>
         </div>

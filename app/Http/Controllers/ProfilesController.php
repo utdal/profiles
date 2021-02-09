@@ -12,6 +12,7 @@ use App\Helpers\Contracts\LdapHelperContract;
 use App\Http\Requests\ProfileBannerImageRequest;
 use App\Http\Requests\ProfileImageRequest;
 use App\Http\Requests\ProfileUpdateRequest;
+use App\School;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
@@ -53,12 +54,22 @@ class ProfilesController extends Controller
 
         $profiles = Profile::where('full_name', 'LIKE', "%$search%")->public()->paginate(24);
 
+        if ((Cache::get('settings')['profile_search_shortcut'] ?? false) && ($profiles->count() === 1) && ($profiles->first()->full_name === $search)) {
+            return redirect()->route('profiles.show', ['profile' => $profiles->first()]);
+        }
+
         $keyword_profiles = Profile::containing($search)
             ->where('full_name', 'NOT LIKE', "%$search%")->public()->paginate(24, ['*'], 'key');
 
         $tag_profiles = !empty($search) ? Profile::taggedWith($search)->public()->paginate(24, ['*'], 'tag') : null;
 
-        return view('profiles.index', compact('profiles', 'keyword_profiles', 'tag_profiles', 'search'));
+        $schools = !empty($search) ? School::withNameLike($search)->get() : collect();
+
+        if ((Cache::get('settings')['school_search_shortcut'] ?? false) && ($schools->count() === 1) && $schools->first()->hasName($search, false, true)) {
+            return redirect()->route('schools.show', ['school' => $schools->first()]);
+        }
+
+        return view('profiles.index', compact('profiles', 'keyword_profiles', 'tag_profiles', 'schools', 'search'));
     }
 
     public function home(){
