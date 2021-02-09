@@ -27,7 +27,7 @@
                     @endif
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary btn-block" data-toggle="replace-icon" data-newicon="sync" data-newiconclasses="fa-spin" data-inputrequired="#file">
+            <button type="submit" class="btn btn-primary btn-block" data-toggle="replace-icon" data-newicon="fas fa-sync fa-spin" data-inputrequired="#logo">
                 <i class="fas fa-upload"></i> Replace Image
             </button>
             {!! Form::close() !!}
@@ -48,7 +48,7 @@
                     @endif
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary btn-block" data-toggle="replace-icon" data-newicon="sync" data-newiconclasses="fa-spin" data-inputrequired="#file">
+            <button type="submit" class="btn btn-primary btn-block" data-toggle="replace-icon" data-newicon="fas fa-sync fa-spin" data-inputrequired="#favicon">
                 <i class="fas fa-upload"></i> Replace Image
             </button>
             {!! Form::close() !!}
