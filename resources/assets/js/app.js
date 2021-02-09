@@ -18,8 +18,12 @@ var profiles = (function ($, undefined) {
      * Checks to see if an input is empty.
      *
      * @param {HTMLElement} input
+     * @return {boolean}
      */
     var _input_is_empty = function(input) {
+        if (!(input instanceof HTMLInputElement)) {
+            return true;
+        }
         switch (input.getAttribute('type')) {
             case 'file':
                 return input.files.length == 0;
@@ -61,7 +65,6 @@ var profiles = (function ($, undefined) {
      *
      * The replacement icon may be specified in the [data-newicon=] attribute.
      * Optional target (existing icon parent) element may be specified in the [data-target=] attribute.
-     * Optional additional classes on the new icon may be specified in the [data-newiconclasses=] attribute.
      * Optional input element to check for emptiness may be specified in the [data-inputrequired=] attribute.
      *
      * @param {Event} evt - jQuery event object
@@ -73,15 +76,8 @@ var profiles = (function ($, undefined) {
         }
 
         var target = this.dataset.target ? document.querySelector(this.dataset.target) : this;
-        var existing_icon = target.querySelector('svg');
-        var replacement_icon = FontAwesome.icon({
-            prefix: 'fas',
-            iconName: this.dataset.newicon,
-        }, {
-            classes: this.dataset.newiconclasses ? this.dataset.newiconclasses.split(' ') : [],
-        }).node[0];
 
-        target.replaceChild(replacement_icon, existing_icon);
+        target.querySelector('[data-fa-i2svg]').className = this.dataset.newicon;
 
         // this shouldn't be needed, but for some reason Chrome occasionally fails
         // to propogate when a submit button is clicked.

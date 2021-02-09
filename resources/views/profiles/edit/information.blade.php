@@ -14,7 +14,7 @@
 					{!! Form::inlineErrors('image') !!}
 				</div>
 			</div>
-			<button type="submit" class="btn btn-primary btn-block" data-toggle="replace-icon" data-newicon="sync" data-newiconclasses="fa-spin" data-inputrequired="#file">
+			<button type="submit" class="btn btn-primary btn-block" data-toggle="replace-icon" data-newicon="fas fa-sync fa-spin" data-inputrequired="#file">
 				<i class="fas fa-upload"></i> Replace Image
 			</button>
 			{!! Form::close() !!}
@@ -32,7 +32,7 @@
 					{!! Form::inlineErrors('banner_image') !!}
 				</div>
 			</div>
-			<button type="submit" class="btn btn-primary btn-block" data-toggle="replace-icon" data-newicon="sync" data-newiconclasses="fa-spin" data-inputrequired="#banner">
+			<button type="submit" class="btn btn-primary btn-block" data-toggle="replace-icon" data-newicon="fas fa-sync fa-spin" data-inputrequired="#banner">
 				<i class="fas fa-upload"></i> Replace Image
 			</button>
 			{!! Form::close() !!}
