@@ -8,13 +8,16 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Tests\Feature\Traits\HasUploadedImage;
-use Tests\Feature\Traits\HasUserEditor;
+use Tests\Feature\Traits\LoginWithRole;
 use Tests\TestCase;
 
+/**
+ * @group settings
+ */
 class SiteSettingsTest extends TestCase
 {
     use HasUploadedImage;
-    use HasUserEditor;
+    use LoginWithRole;
     use RefreshDatabase;
     use WithFaker;
 
@@ -26,7 +29,7 @@ class SiteSettingsTest extends TestCase
     public function testEditSiteSettings()
     {
         $this->seed();
-        $this->loginAsUserEditor();
+        $this->loginAsAdmin();
         Cache::flush();
 
         $this->get(route('app.settings.edit'))
@@ -41,6 +44,8 @@ class SiteSettingsTest extends TestCase
             'description' => $this->faker->paragraph(),
             'account_name' => 'MyInstititionID',
             'forgot_password_url' => $this->faker->url,
+            'school_search_shortcut' => $this->faker->boolean(),
+            'profile_search_shortcut' => $this->faker->boolean(),
             'faq' => $this->faker->paragraph(),
             'footer' => $this->faker->paragraph(),
         ];
@@ -54,12 +59,14 @@ class SiteSettingsTest extends TestCase
             ->assertSee($settings['primary_color'])
             ->assertSee($settings['secondary_color'])
             ->assertSee($settings['tertiary_color'])
-            ->assertSee($settings['site_title'])
-            ->assertSee($settings['description'])
+            ->assertSee(e($settings['site_title']))
+            ->assertSee(e($settings['description']))
             ->assertSee($settings['account_name'])
             ->assertSee($settings['forgot_password_url'])
-            ->assertSee($settings['faq'])
-            ->assertSee($settings['footer']);
+            ->assertSee("id=\"setting[school_search_shortcut]\" value=\"1\" " . ($settings['school_search_shortcut'] ? ' checked ' : ''))
+            ->assertSee("id=\"setting[profile_search_shortcut]\" value=\"1\" " . ($settings['profile_search_shortcut'] ? ' checked ' : ''))
+            ->assertSee(e($settings['faq']))
+            ->assertSee(e($settings['footer']));
 
         foreach ($settings as $setting_name => $setting_value) {
             $this->assertDatabaseHas('settings', [
@@ -87,7 +94,7 @@ class SiteSettingsTest extends TestCase
         $this->get(route('app.faq'))
             ->assertStatus(200)
             ->assertViewIs('faq')
-            ->assertSee($settings['faq']);
+            ->assertSee(e($settings['faq']));
 
         Cache::flush();
     }
@@ -100,7 +107,7 @@ class SiteSettingsTest extends TestCase
     public function testEditSiteLogo()
     {
         $this->seed();
-        $this->loginAsUserEditor();
+        $this->loginAsAdmin();
         Cache::flush();
 
         $response = $this->followingRedirects()->post(route('app.settings.update-image', ['image' => 'logo']), [
@@ -132,7 +139,7 @@ class SiteSettingsTest extends TestCase
     public function testEditSiteFavicon()
     {
         $this->seed();
-        $this->loginAsUserEditor();
+        $this->loginAsAdmin();
         Cache::flush();
 
         $response = $this->followingRedirects()->post(route('app.settings.update-image', ['image' => 'favicon']), [

@@ -10,14 +10,17 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Tests\Feature\Traits\HasJson;
-use Tests\Feature\Traits\HasUserEditor;
+use Tests\Feature\Traits\LoginWithRole;
 use Tests\Feature\Traits\MockLdap;
 use Tests\TestCase;
 
+/**
+ * @group user
+ */
 class UserTest extends TestCase
 {
     use HasJson;
-    use HasUserEditor;
+    use LoginWithRole;
     use MockLdap;
     use RefreshDatabase;
     use WithFaker;
@@ -36,9 +39,8 @@ class UserTest extends TestCase
         $school_profiles_editor_role = Role::whereName('school_profiles_editor')->firstOrFail();
         $department_profiles_editor_role = Role::whereName('department_profiles_editor')->firstOrFail();
 
-        $user = factory(User::class)->create();
         $other_user = factory(User::class)->create();
-        auth()->loginUsingId($user->id);
+        $user = $this->loginAsUser();
 
         // normal user
         $this->get(route('users.create'))->assertStatus(403);
@@ -91,7 +93,7 @@ class UserTest extends TestCase
     public function testUserCreation()
     {
         $this->seed();
-        $this->loginAsUserEditor();
+        $this->loginAsAdmin();
 
         // mock an Ldap user to find
         $user = factory(User::class)->make();
@@ -115,7 +117,7 @@ class UserTest extends TestCase
     public function testUserNotFound()
     {
         $this->seed();
-        $this->loginAsUserEditor();
+        $this->loginAsAdmin();
 
         // mock an Ldap user not found
         $name = $this->faker->userName;
@@ -141,7 +143,7 @@ class UserTest extends TestCase
     public function testUserCreationWithProfile()
     {
         $this->seed();
-        $this->loginAsUserEditor();
+        $this->loginAsAdmin();
 
         // mock an Ldap user to find
         $user = factory(User::class)->make();

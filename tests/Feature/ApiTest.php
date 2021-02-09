@@ -9,6 +9,9 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
 
+/**
+ * @group api
+ */
 class ApiTest extends TestCase
 {
     use RefreshDatabase;
