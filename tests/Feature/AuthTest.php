@@ -9,7 +9,9 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\Feature\Traits\MockLdap;
 use Tests\TestCase;
 
-
+/**
+ * @group auth
+ */
 class AuthTest extends TestCase
 {
     use RefreshDatabase;
