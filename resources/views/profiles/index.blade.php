@@ -6,7 +6,17 @@
 @section('content')
 
 <div class="container profile-container">
-		@if(isset($tag_profiles) && !$tag_profiles->isEmpty())
+	@if(!empty($search))
+		<h1 class="display-4"><span class="fas fa-search"></span> Search Results</h1>
+	@endif
+	@if($schools->isNotEmpty())
+		<h1>Schools (by Keyword: {{ $search }})</h1>
+
+		@foreach($schools as $school)
+			<h2><a href="{{ route('schools.show', $school) }}"><span class="fas fa-university"></span> {{ $school->display_name }}: View Profiles</a></h2>
+		@endforeach
+	@endif
+		@if(isset($tag_profiles) && $tag_profiles->isNotEmpty())
 		    <h1 id="keyword-profiles">Profiles (by Tag: {{$search}})</h1>
 
 		    <div class="profiles d-flex flex-wrap justify-content-around justify-content-md-between">
@@ -19,7 +29,7 @@
 		        {!! $tag_profiles->appends(Request::except('tag'))->render() !!}
 		    </div>
 		@endif
-		@if(!$profiles->isEmpty())
+		@if($profiles->isNotEmpty())
 		    <h1 id="profiles">Profiles (by Name)</h1>
 
 		    <div class="profiles d-flex flex-wrap justify-content-around justify-content-md-between">
@@ -32,7 +42,7 @@
 		        {{ $profiles->appends(Request::except('page'))->links() }}
 		    </div>
 		@endif
-		@if(!$keyword_profiles->isEmpty())
+		@if($keyword_profiles->isNotEmpty())
 		    <h1 id="keyword-profiles">Profiles (by Keyword: {{$search}})</h1>
 
 		    <div class="profiles d-flex flex-wrap justify-content-around justify-content-md-between">
@@ -45,7 +55,7 @@
 		        {!! $keyword_profiles->appends(Request::except('key'))->render() !!}
 		    </div>
 		@endif
-		@if($profiles->isEmpty() && $keyword_profiles->isEmpty() && (isset($tag_profiles) && $tag_profiles->isEmpty()))
+		@if($profiles->isEmpty() && $keyword_profiles->isEmpty() && (isset($tag_profiles) && $tag_profiles->isEmpty()) && $schools->isEmpty())
 		    <h1 class="text-center" style="margin-top: 200px; margin-bottom: 300px;">No Results.</h1>
 		@endif
 </div>

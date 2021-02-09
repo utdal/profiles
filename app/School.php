@@ -49,9 +49,19 @@ class School extends Model implements Auditable
         return $this;
     }
 
-    public function hasName($name)
+    public function hasName($name, $include_aliases = true, $case_insensitive = false)
     {
-        $school_names = [$this->name, $this->display_name, $this->short_name] + explode(self::ALIAS_DELIMITER,$this->aliases);
+        $school_names = [$this->name, $this->display_name, $this->short_name];
+
+        if ($include_aliases) {
+            $school_names = array_merge($school_names, explode(self::ALIAS_DELIMITER, $this->aliases));
+        }
+
+        if ($case_insensitive) {
+            $name = strtolower($name);
+            $school_names = array_map('strtolower', $school_names);
+        }
+
         return in_array($name,$school_names);
     }
 
@@ -61,6 +71,15 @@ class School extends Model implements Auditable
                     ->orWhere('display_name',$name)
                     ->orWhere('aliases','like','%'.$name.'%')
                     ->orderByRaw("name = ? DESC, short_name = ? DESC, display_name = ? DESC", [$name, $name, $name]);
+    }
+
+    public function scopeWithNameLike($query, $name)
+    {
+        return $query->where('name', 'like', "%$name%")
+            ->orWhere('short_name', 'like', "%$name%")
+            ->orWhere('display_name', 'like', "%$name%")
+            ->orWhere('aliases', 'like', "%$name%")
+            ->orderByRaw("name = ? DESC, short_name = ? DESC, display_name = ? DESC", [$name, $name, $name]);
     }
 
     ///////////////
