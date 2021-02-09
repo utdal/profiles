@@ -9,7 +9,7 @@
 
     {!! Form::open(['url' => route('profiles.table'), 'method' => 'get', 'class' => 'form-inline mb-4']) !!}
     <div class="search input-group input-group-lg">
-        <input id="profile_search" class="search form-control" type="search" name="search" placeholder="search..." aria-label="Search" value="{{$search}}">
+        <input id="profile_search" class="search form-control" type="search" name="profile_search" placeholder="search..." aria-label="Search" value="{{$profile_search}}">
         <div class="input-group-append">
         <button class="btn btn-success" type="submit" data-toggle="replace-icon" data-newicon="fas fa-sync fa-spin" data-inputrequired="#profile_search">
             <i class="fas fa-search"></i><span class="sr-only">search</span>
