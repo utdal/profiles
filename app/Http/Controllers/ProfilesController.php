@@ -108,10 +108,10 @@ class ProfilesController extends Controller
      */
     public function table(Request $request)
     {
-        $search = $request->input('search');
-        $profiles = Profile::where('full_name', 'LIKE', "%$search%")->orderBy('last_name')->paginate(50);
-
-        return view('profiles.table', compact('profiles', 'search'));
+        return view('profiles.table', [
+            'profiles' => Profile::where('full_name', 'LIKE', "%{$request->profile_search}%")->orderBy('last_name')->paginate(50),
+            'profile_search' => $request->profile_search,
+        ]);
     }
 
     /**
