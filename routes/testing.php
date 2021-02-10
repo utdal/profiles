@@ -21,4 +21,6 @@ Route::name('testing.')->prefix('/testing')->group(function () {
 
     });
 
+    Route::name('exception')->get('/throw-exception', 'Testing\TestingController@throwException');
+
 });

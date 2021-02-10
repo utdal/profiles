@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Testing;
 use App\Role;
 use App\User;
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Http\Request;
 
 class TestingController extends Controller
@@ -78,5 +79,15 @@ class TestingController extends Controller
         auth()->loginUsingId($id);
 
         return redirect('/');
+    }
+
+    /**
+     * Throw a test exception
+     *
+     * @return void
+     */
+    public function throwException()
+    {
+        throw new Exception('Just testing. This is a test exception.');
     }
 }
