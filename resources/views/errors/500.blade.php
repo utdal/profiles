@@ -1,7 +1,9 @@
 <?php
-$shouldReportToSentry = app()->bound('sentry') && !empty(Sentry::getLastEventID()) && config('app.sentry_public_dsn') && !config('app.debug');
+$shouldReportToSentry = app()->bound('sentry') && !empty(app('sentry')->getLastEventID()) && config('app.sentry_public_dsn') && !config('app.debug');
+$sentryEventId = $shouldReportToSentry ? app('sentry')->getLastEventID() : null;
 ?>
 @extends('layout')
+@section('title', 'Whoops')
 @section('header')
 	@include('nav')
 @stop
@@ -12,7 +14,7 @@ $shouldReportToSentry = app()->bound('sentry') && !empty(Sentry::getLastEventID(
         <h2>Something went wrong 😭</h2>
 
         @if($shouldReportToSentry)
-            <p>Error ID: {{ Sentry::getLastEventID() }}</p>
+            <p>Error ID: {{ $sentryEventId }}</p>
         @endif
 
     </div>
@@ -24,13 +26,17 @@ $shouldReportToSentry = app()->bound('sentry') && !empty(Sentry::getLastEventID(
 
 @section('scripts')
     @if($shouldReportToSentry)
-        <script src="https://browser.sentry-cdn.com/5.0.7/bundle.min.js" crossorigin="anonymous"></script>
+        <script
+            src="https://browser.sentry-cdn.com/6.1.0/bundle.min.js"
+            integrity="sha384-T4wn6EUhrkGRYp9a0X2/uXu6frHKrfbSeO4zRRA4KIgrEaJMMRbpunhBtNahdsxW"
+            crossorigin="anonymous"
+        ></script>
         <script>
         Sentry.init({
             dsn: "{{ config('app.sentry_public_dsn') }}",
         });
         Sentry.showReportDialog({
-            eventId: '{{ Sentry::getLastEventID() }}',
+            eventId: '{{ $sentryEventId }}',
         });
         </script>
     @endif

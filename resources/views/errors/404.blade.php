@@ -1,4 +1,5 @@
 @extends('layout')
+@section('title', 'Not Found')
 @section('header')
 	@include('nav')
 @stop
