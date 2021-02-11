@@ -111,11 +111,21 @@ class LdapAttributeHandler
      */
     protected function syncUserSchool(LdapUser $ldap_user, User $user)
     {
-        $ldap_school = $ldap_user->getFirstAttribute($ldap_user->getSchema()->college());
-        $ldap_department = $ldap_user->getFirstAttribute($ldap_user->getSchema()->department());
+        /** @var App\Ldap\Schemas\InstitutionActiveDirectory */
+        $ldap_user_schema = $ldap_user->getSchema();
 
-        if ($ldap_school || $ldap_department) {
-            $school = School::WithName($ldap_school ?: $ldap_department);
+        $ldap_user_primary_role = $ldap_user->getFirstAttribute($ldap_user_schema->primaryRole());
+        $ldap_college = $ldap_user->getFirstAttribute($ldap_user_schema->college());
+        $ldap_department = $ldap_user->getFirstAttribute($ldap_user_schema->department());
+
+        if ($ldap_college || $ldap_department) {
+            if ($ldap_department && in_array($ldap_user_primary_role, $this->getSchoolFromDepartmentRoles())) {
+                $school = School::WithName($ldap_department);
+            } elseif ($ldap_college && in_array($ldap_user_primary_role, $this->getSchoolFromCollegeRoles())) {
+                $school = School::WithName($ldap_college);
+            } else {
+                $school = School::WithName($ldap_college ?: $ldap_department);
+            }
 
             if ($school->exists()) {
                 $user->school()->associate($school->first());
@@ -171,6 +181,28 @@ class LdapAttributeHandler
     protected function getAttributeMap()
     {
         return config('ldap_sync.attributes', []);
+    }
+
+    /**
+     * Get the list of primary affiliation roles for which
+     * to prioritize _department_ to infer school affiliation.
+     * 
+     * @return array default ['none']
+     */
+    protected function getSchoolFromDepartmentRoles()
+    {
+        return explode('|', config('ldap_sync.school_from.department', 'none'));
+    }
+
+    /**
+     * Get the list of primary affiliation roles for which
+     * to prioritize _college_ to infer school affiliation.
+     * 
+     * @return array default ['none']
+     */
+    protected function getSchoolFromCollegeRoles()
+    {
+        return explode('|', config('ldap_sync.school_from.department', 'none'));
     }
 
     /**

@@ -132,4 +132,12 @@ class InstitutionActiveDirectory extends ActiveDirectory
         return 'name';
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function primaryRole()
+    {
+        return $this->configNameFor('primaryrole', 'noprimaryrolename');
+    }
+
 }
