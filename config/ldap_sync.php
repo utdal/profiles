@@ -45,12 +45,12 @@ return [
     /**
      * Mapping of roles to sync from LDAP to the User record.
      *
-     * Format: ['user model attribute' => 'ldap group name']
+     * Format: ['application role name' => 'ldap group name']
      */
     'roles' => [
         'staff'     => env('LDAP_SCHEMA_ROLE_STAFF', 'staff'),
-        'student'   => env('LDAP_SCHEMA_ROLE_STAFF', 'students'),
-        'faculty'   => env('LDAP_SCHEMA_ROLE_STAFF', 'faculty'),
+        'student'   => env('LDAP_SCHEMA_ROLE_STUDENT', 'students'),
+        'faculty'   => env('LDAP_SCHEMA_ROLE_FACULTY', 'faculty'),
     ],
 
    /**
