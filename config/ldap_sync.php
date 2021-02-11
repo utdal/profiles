@@ -40,6 +40,7 @@ return [
     'other_attributes' => [
         'office'        => env('LDAP_SCHEMA_OFFICE', 'physicaldeliveryofficename'),
         'telephone'     => env('LDAP_SCHEMA_TELEPHONE', 'telephonenumber'),
+        'primaryrole'   => env('LDAP_SCHEMA_PRIMARY_ROLE'),
     ],
 
     /**
@@ -51,6 +52,11 @@ return [
         'staff'     => env('LDAP_SCHEMA_ROLE_STAFF', 'staff'),
         'student'   => env('LDAP_SCHEMA_ROLE_STUDENT', 'students'),
         'faculty'   => env('LDAP_SCHEMA_ROLE_FACULTY', 'faculty'),
+    ],
+
+    'school_from' => [
+        'department' => env('LDAP_INFER_SCHOOL_FROM_DEPT', 'faculty|staff'),
+        'college' => env('LDAP_INFER_SCHOOL_FROM_COLLEGE', 'student|studentworker'),
     ],
 
    /**
