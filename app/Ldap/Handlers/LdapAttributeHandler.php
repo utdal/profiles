@@ -91,16 +91,14 @@ class LdapAttributeHandler
             return;
         }
 
-        foreach ($this->getRoleMap() as $app_role => $role) {
+        foreach ($this->getRoleMap() as $app_role => $ldap_role) {
             $user_has_role = $user->hasRole($app_role);
-            $ldap_has_role = in_array($app_role, $ldap_roles);
-            $app_role = Role::whereName($app_role)->first();
+            $ldap_has_role = in_array($ldap_role, $ldap_roles);
 
             if ($user_has_role && !$ldap_has_role) {
                 $user->detachRole(Role::whereName($app_role)->first());
-            }
-            if (!$user_has_role && $ldap_has_role) {
-                $user->attachRole($app_role);
+            } elseif (!$user_has_role && $ldap_has_role) {
+                $user->attachRole(Role::whereName($app_role)->first());
             }
         }
     }
