@@ -86,6 +86,29 @@ var profiles = (function ($, undefined) {
         }
     }
 
+    /**
+     * Deobfuscate an email address
+     * 
+     * @param {String} obfuscated_mail_address - the obfuscated
+     * @see App\Helpers\Utils for obfuscation strategy
+     */
+    let deobfuscate_mail = (obfuscated_mail_address) => {
+        return obfuscated_mail_address
+            .replace(/[a-z]/gi, (c) => String.fromCharCode((c <= "Z" ? 90 : 122) >= (c = c.charCodeAt(0) + 13) ? c : c - 26))
+            .replace('☄️', '@').split('@').reverse().join('@');
+    }
+
+    /**
+     * Deobfuscate email address HTML links
+     *
+     * @param {HTMLElement} i - the element index
+     * @param {HTMLElement} el - the DOM element
+     */
+    let deobfuscate_mail_links = (i, el) => {
+        el.innerText = deobfuscate_mail(el.id);
+        el.href = "mailto:" + el.innerText;
+    }
+
     var toggle_show = function (evt) {
         var $this = $(this);
         var target = $this.data('toggle-target') || this;
@@ -200,6 +223,7 @@ var profiles = (function ($, undefined) {
         toggle_class: toggle_class,
         toggle_show: toggle_show,
         replace_icon: replace_icon,
+        deobfuscate_mail_links: deobfuscate_mail_links,
         registerTagEditors: registerTagEditors,
     };
 
@@ -286,5 +310,6 @@ $(document).ready(function() {
   $('[data-toggle=class]').on('click', profiles.toggle_class);
   $('[data-toggle=replace-icon]').on('click', profiles.replace_icon);
   $('[data-toggle=show]').on('change page_up', profiles.toggle_show).trigger('change');
+  $('[data-evaluate=profile-eml]').each(profiles.deobfuscate_mail_links);
 
 });
