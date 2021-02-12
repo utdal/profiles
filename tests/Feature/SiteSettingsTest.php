@@ -84,12 +84,12 @@ class SiteSettingsTest extends TestCase
 
         $this->get('/')
             ->assertStatus(200)
-            ->assertSeeInOrder(['<title>', $settings['site_title'], '</title>'])
-            ->assertSee($settings['description'])
+            ->assertSeeInOrder(['<title>', e($settings['site_title']), '</title>'])
+            ->assertSee(e($settings['description']))
             ->assertSeeInOrder(['<style>', $settings['primary_color'], '</style>'])
             ->assertSeeInOrder(['<style>', $settings['secondary_color'], '</style>'])
             ->assertSeeInOrder(['<style>', $settings['tertiary_color'], '</style>'])
-            ->assertSeeInOrder(['<footer', $settings['footer'], '</footer>']);
+            ->assertSeeInOrder(['<footer', e($settings['footer']), '</footer>']);
 
         $this->get(route('app.faq'))
             ->assertStatus(200)
