@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Helpers\Utils;
 use App\Profile;
 use App\ProfileData;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -150,7 +151,7 @@ class ProfileTest extends TestCase
             ->assertSeeText(e($new_profile_data->distinguished_title))
             ->assertSeeText(e($new_profile_data->secondary_title))
             ->assertSeeText(e($new_profile_data->tertiary_title))
-            ->assertSeeText($new_profile_data->email)
+            ->assertSee(Utils::obfuscateEmailAddress($new_profile_data->email))
             ->assertSeeText($new_profile_data->phone)
             ->assertSeeText(e($new_profile_data->location))
             ->assertSeeText(e($new_profile_data->url_name))
