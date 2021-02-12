@@ -1,7 +1,7 @@
 <?php
 
 /**
- * OAR-specific LDAP Attribute and property syncing settings.
+ * Profiles-specific LDAP Attribute and property syncing settings.
  *
  * Note: This is not part of the adldap2/adldap2-laravel package.
  * It is specific to this application.
