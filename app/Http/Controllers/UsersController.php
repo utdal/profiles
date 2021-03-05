@@ -138,6 +138,13 @@ class UsersController extends Controller
     {
         $user->update($request->all());
 
+        if ($request->additional_departments || $request->additional_schools || $user->setting()->exists()) {
+            $user->setting()->updateOrCreate(['user_id' => $user->id,], [
+                'additional_departments' => $request->additional_departments ? explode(',', $request->additional_departments) : null,
+                'additional_schools' => $request->additional_schools ?? null,
+            ]);
+        }
+
         $user->roles()->sync($request->input('role_list') ?: []);
 
         Cache::flush();
