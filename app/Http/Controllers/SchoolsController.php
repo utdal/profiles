@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Profile;
 use App\School;
 use Illuminate\Http\Request;
 
@@ -71,7 +72,7 @@ class SchoolsController extends Controller
      */
     public function show(School $school)
     {
-        $profiles = $school->profiles()->public()->paginate(24);
+        $profiles = Profile::fromSchoolId($school->id)->public()->paginate(24);
 
         return view('schools.show', compact('school', 'profiles'));
     }

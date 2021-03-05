@@ -380,9 +380,14 @@ class Profile extends Model implements HasMedia, Auditable
     public function scopeFromSchool($query, $school)
     {
         return $query->whereHas('user', function($user_query) use ($school) {
-            $user_query->whereHas('school', function($school_query) use ($school) {
-                $school_query->withName($school);
-            });
+            $user_query->withSchoolNamed($school);
+        });
+    }
+
+    public function scopeFromSchoolId($query, $school_id)
+    {
+        return $query->whereHas('user', function($user_query) use ($school_id) {
+            $user_query->withSchool($school_id);
         });
     }
 

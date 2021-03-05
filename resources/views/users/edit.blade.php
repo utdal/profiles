@@ -96,9 +96,32 @@
 		<span class="text-danger">{!! $errors->first('school_id') !!}</span>
 		</div>
 	</div>
+	<!-- Additionals -->
+	<div class="form-group">
+		<button type="button" class="btn btn-link" data-toggle="collapse" data-target="#additional" aria-expanded="false" aria-controls="other">
+			<strong>Additional departments and schools <i class="fas fa-caret-right"></i></strong>
+		</button>
+		<div class="collapse col-sm-9" id="additional">
+			<div class="form-group col-sm-12">
+				{!! Form::label('additional_departments', 'Additional Departments:', ['class' => 'control-label']) !!}
+				{!! Form::text('additional_departments', implode(',', $user->setting->additional_departments ?? []), ['class' => 'form-control']) !!}
+			</div>
+			<div class="form-group col-sm-12">
+				{!! Form::label('additional_schools', 'Additional Schools:', ['class' => 'control-label']) !!}
+				<div class="col-sm-12">
+					@foreach($schools as $school_id => $school_name)
+						<label class="checkbox">
+							{!! Form::checkbox("additional_schools[{$school_id}]", $school_name, optional($user->setting->additional_schools ?? null)->contains('id', $school_id)) !!}
+							{{ $school_name }}
+						</label>
+					@endforeach
+				</div>
+			</div>
+		</div>
+	</div>
 	<!-- Roles -->
 	<div class="form-group{{ ($errors->has('roles') ?  'has-error' : '') }}">
-		{!! Form::label('roles', 'roles:', ['class' => 'col-sm-2 control-label']) !!}
+		{!! Form::label('roles', 'Roles:', ['class' => 'col-sm-2 control-label']) !!}
 		<div class="col-sm-9">
 			<div class="checkbox">
 				@foreach($roles as $role)
@@ -147,4 +170,19 @@
 	</div>
 	{!! Form::close() !!}
 </div>
+@stop
+@section('scripts')
+<script>
+	$('[name^=additional_departments]').tagsinput({
+		typeaheadjs: {
+			name: 'departments',
+			source: (new Bloodhound({
+				datumTokenizer: Bloodhound.tokenizers.whitespace,
+				queryTokenizer: Bloodhound.tokenizers.whitespace,
+				local: {!! json_encode(array_values($departments)) !!},
+			})).ttAdapter(),
+		},
+		trimValue: true,
+	});
+</script>
 @stop

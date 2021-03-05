@@ -24,9 +24,19 @@
         </div>
         <div class="col-sm-4">
           <dl class="">
-            <dt>Department</dt><dd>{{ $user->department }}</dd>
+            <dt>Department</dt><dd>
+              {{ $user->department }}
+              @if($user->additional_departments)
+                / {{ implode(' / ', $user->additional_departments) }}
+              @endif
+            </dd>
             <dt>Title</dt><dd>{{ $user->title }}</dd>
-            <dt>School</dt><dd>{{  ($user->school_id) ? $user->school->name : 'none' }}</dd>
+            <dt>School</dt><dd>
+              {{  ($user->school_id) ? $user->school->short_name : 'none' }}
+              @if($additional_schools = $user->additional_schools)
+                / {{ implode(' / ', $additional_schools->pluck('short_name')->all()) }}
+              @endif
+            </dd>
           </dl>
         </div>
         <div class="col-sm-3 d-flex flex-column">
