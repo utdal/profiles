@@ -20316,7 +20316,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /* provided dependency */ var jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/src/jquery.js");
 /*
- * bootstrap4-tagsinput v4.2.0
+ * bootstrap4-tagsinput v4.2.1
  * 
  */
 
@@ -20598,7 +20598,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
             return self.options.itemValue(item).toString();
           });
 
-      self.$element.val( val.join(self.options.delimiter) );
+      self.$element.val( self.multiple ? val : val.join(self.options.delimiter) );
 
       if (self.options.triggerChange)
         self.$element.trigger('change');

@@ -127,6 +127,67 @@ var profiles = (function ($, undefined) {
     }
 
     /**
+     * Creates and initializes Bootstrap-Tagsinput / Typeahead.js Profile Picker.
+     *
+     * @param  {String} selector : CSS selector for the input field to register
+     * @param  {String} api      : URL to the profile API
+     * @return {void}
+     */
+    let registerProfilePicker = (selector, api) => {
+      if (typeof (api) === 'undefined') api = this_url + '/api/v1';
+      let $select = $(selector);
+      if ($select.length === 0) return;
+
+      let profileSearch = new Bloodhound({
+        datumTokenizer: (profiles) => Bloodhound.tokenizers.whitespace(profiles.value),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        limit: 50,
+        remote: {
+          url: api + '/?search_names=%QUERY',
+          wildcard: '%QUERY',
+          transform: (response) => response.profile,
+        }
+      });
+
+      $select.tagsinput({
+        typeaheadjs: {
+          name: 'profileslist',
+          displayKey: 'full_name',
+          limit: 75,
+          source: profileSearch.ttAdapter(),
+        },
+        freeInput: false,
+        itemValue: (profile) => profile.full_name,
+        itemText: (profile) => profile.full_name,
+        afterSelect: () => $select.tagsinput('input').val(''),
+      });
+
+      // add back existing options
+      $select.find('option').each((i, option) => $select.tagsinput('add', {'full_name': option.value}));
+
+      $select.tagsinput('input')
+        .on('typeahead:asyncrequest', function () {
+          $(this).closest('.twitter-typeahead').css('background', 'no-repeat center url(' + this_url + '/img/ajax-loader.gif)');
+        })
+        .on('typeahead:asyncreceive typeahead:asynccancel', function () {
+          $(this).closest('.twitter-typeahead').css('background-image', 'none');
+        });
+    }
+
+    /**
+     * Registers and enables any profile pickers on the page
+     * 
+     * @return {void}
+     */
+    let registerProfilePickers = () => {
+      $('.profile-picker').each((i, picker) => {
+        if (picker.querySelector('select')) {
+          registerProfilePicker('#' + picker.querySelector('select').id.replace('[]', '\\[\\]'));
+        }
+      });
+    };
+
+    /**
 	 * Registers and enables any tag editors on the page.
 	 * 
 	 * @return {void}
@@ -225,6 +286,7 @@ var profiles = (function ($, undefined) {
         replace_icon: replace_icon,
         deobfuscate_mail_links: deobfuscate_mail_links,
         registerTagEditors: registerTagEditors,
+        registerProfilePickers: registerProfilePickers,
     };
 
 })(jQuery);
@@ -305,11 +367,13 @@ $(document).ready(function() {
   // register tag editors if tagsinput is loaded
   if (typeof $.fn.tagsinput === 'function' && typeof Bloodhound === 'function') {
     profiles.registerTagEditors();
+    profiles.registerProfilePickers();
   }
 
   $('[data-toggle=class]').on('click', profiles.toggle_class);
   $('[data-toggle=replace-icon]').on('click', profiles.replace_icon);
   $('[data-toggle=show]').on('change page_up', profiles.toggle_show).trigger('change');
   $('[data-evaluate=profile-eml]').each(profiles.deobfuscate_mail_links);
+  $('[data-toggle="tooltip"]').tooltip();
 
 });

@@ -140,6 +140,77 @@ var profiles = function ($, undefined) {
     }
   };
   /**
+   * Creates and initializes Bootstrap-Tagsinput / Typeahead.js Profile Picker.
+   *
+   * @param  {String} selector : CSS selector for the input field to register
+   * @param  {String} api      : URL to the profile API
+   * @return {void}
+   */
+
+
+  var registerProfilePicker = function registerProfilePicker(selector, api) {
+    if (typeof api === 'undefined') api = this_url + '/api/v1';
+    var $select = $(selector);
+    if ($select.length === 0) return;
+    var profileSearch = new Bloodhound({
+      datumTokenizer: function datumTokenizer(profiles) {
+        return Bloodhound.tokenizers.whitespace(profiles.value);
+      },
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      limit: 50,
+      remote: {
+        url: api + '/?search_names=%QUERY',
+        wildcard: '%QUERY',
+        transform: function transform(response) {
+          return response.profile;
+        }
+      }
+    });
+    $select.tagsinput({
+      typeaheadjs: {
+        name: 'profileslist',
+        displayKey: 'full_name',
+        limit: 75,
+        source: profileSearch.ttAdapter()
+      },
+      freeInput: false,
+      itemValue: function itemValue(profile) {
+        return profile.full_name;
+      },
+      itemText: function itemText(profile) {
+        return profile.full_name;
+      },
+      afterSelect: function afterSelect() {
+        return $select.tagsinput('input').val('');
+      }
+    }); // add back existing options
+
+    $select.find('option').each(function (i, option) {
+      return $select.tagsinput('add', {
+        'full_name': option.value
+      });
+    });
+    $select.tagsinput('input').on('typeahead:asyncrequest', function () {
+      $(this).closest('.twitter-typeahead').css('background', 'no-repeat center url(' + this_url + '/img/ajax-loader.gif)');
+    }).on('typeahead:asyncreceive typeahead:asynccancel', function () {
+      $(this).closest('.twitter-typeahead').css('background-image', 'none');
+    });
+  };
+  /**
+   * Registers and enables any profile pickers on the page
+   * 
+   * @return {void}
+   */
+
+
+  var registerProfilePickers = function registerProfilePickers() {
+    $('.profile-picker').each(function (i, picker) {
+      if (picker.querySelector('select')) {
+        registerProfilePicker('#' + picker.querySelector('select').id.replace('[]', '\\[\\]'));
+      }
+    });
+  };
+  /**
   * Registers and enables any tag editors on the page.
   * 
   * @return {void}
@@ -236,7 +307,8 @@ var profiles = function ($, undefined) {
     toggle_show: toggle_show,
     replace_icon: replace_icon,
     deobfuscate_mail_links: deobfuscate_mail_links,
-    registerTagEditors: registerTagEditors
+    registerTagEditors: registerTagEditors,
+    registerProfilePickers: registerProfilePickers
   };
 }(jQuery);
 
@@ -306,12 +378,14 @@ $(document).ready(function () {
 
   if (typeof $.fn.tagsinput === 'function' && typeof Bloodhound === 'function') {
     profiles.registerTagEditors();
+    profiles.registerProfilePickers();
   }
 
   $('[data-toggle=class]').on('click', profiles.toggle_class);
   $('[data-toggle=replace-icon]').on('click', profiles.replace_icon);
   $('[data-toggle=show]').on('change page_up', profiles.toggle_show).trigger('change');
   $('[data-evaluate=profile-eml]').each(profiles.deobfuscate_mail_links);
+  $('[data-toggle="tooltip"]').tooltip();
 });
 
 /***/ }),
