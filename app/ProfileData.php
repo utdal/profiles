@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Profile;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Auditable as HasAudits;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -12,7 +13,7 @@ use Spatie\MediaLibrary\Models\Media;
 
 class ProfileData extends Model implements HasMedia, Auditable
 {
-    use HasAudits, HasMediaTrait;
+    use HasFactory, HasAudits, HasMediaTrait;
 
     /** @var string The database table used by the model */
     protected $table = 'profile_data';

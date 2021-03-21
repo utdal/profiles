@@ -26,20 +26,25 @@ class UserTest extends TestCase
     use WithFaker;
 
     /**
+     * Indicates whether the default seeder should run before each test.
+     *
+     * @var bool
+     */
+    protected $seed = true;
+
+    /**
      * Tests permissions for creating users.
      *
      * @return void
      */
     public function testUserPermissions()
     {
-        $this->seed();
-
         $site_admin_role = Role::whereName('site_admin')->firstOrFail();
         $profiles_editor_role = Role::whereName('profiles_editor')->firstOrFail();
         $school_profiles_editor_role = Role::whereName('school_profiles_editor')->firstOrFail();
         $department_profiles_editor_role = Role::whereName('department_profiles_editor')->firstOrFail();
 
-        $other_user = factory(User::class)->create();
+        $other_user = User::factory()->create();
         $user = $this->loginAsUser();
 
         // normal user
@@ -92,11 +97,10 @@ class UserTest extends TestCase
      */
     public function testUserCreation()
     {
-        $this->seed();
         $this->loginAsAdmin();
 
         // mock an Ldap user to find
-        $user = factory(User::class)->make();
+        $user = User::factory()->make();
         $this->mockLdapUserSearch($user);
 
         $response = $this->post(route('users.store'), [
@@ -116,7 +120,6 @@ class UserTest extends TestCase
      */
     public function testUserNotFound()
     {
-        $this->seed();
         $this->loginAsAdmin();
 
         // mock an Ldap user not found
@@ -142,11 +145,10 @@ class UserTest extends TestCase
      */
     public function testUserCreationWithProfile()
     {
-        $this->seed();
         $this->loginAsAdmin();
 
         // mock an Ldap user to find
-        $user = factory(User::class)->make();
+        $user = User::factory()->make();
         $this->mockLdapUserSearch($user);
 
         $response = $this->followingRedirects()->post(route('users.store'), [

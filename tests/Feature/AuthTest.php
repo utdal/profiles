@@ -18,15 +18,20 @@ class AuthTest extends TestCase
     use MockLdap;
 
     /**
+     * Indicates whether the default seeder should run before each test.
+     *
+     * @var bool
+     */
+    protected $seed = true;
+
+    /**
      * Test User creation and authentication from LDAP.
      *
      * @return void
      */
     public function testLdapAuthenticationWorks(): void
     {
-        $this->seed();
-
-        $user = factory(User::class)->make();
+        $user = User::factory()->make();
 
         // The actual values here don't really matter,
         // because we're mocking the LDAP User Resolver

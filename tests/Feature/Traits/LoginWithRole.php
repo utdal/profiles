@@ -17,7 +17,7 @@ trait LoginWithRole
     protected function loginAsUserWithRole($role_name, $user = null)
     {
         if ($user === null) {
-            $user = factory(User::class)->create();
+            $user = User::factory()->create();
             $user->detachRoles();
         }
 

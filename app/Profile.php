@@ -14,11 +14,12 @@ use Spatie\MediaLibrary\Models\Media;
 use Spatie\Tags\HasTags;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Cache;
 
 class Profile extends Model implements HasMedia, Auditable
 {
-    use HasAudits, HasMediaTrait, HasTags;
+    use HasFactory, HasAudits, HasMediaTrait, HasTags;
 
     /** @var string The database table used by the model. */
     protected $table = 'profiles';

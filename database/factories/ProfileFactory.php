@@ -1,29 +1,43 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
 use App\Profile;
 use App\User;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Profile::class, function (Faker $faker) {
+class ProfileFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Profile::class;
 
-    return [
-        'user_id' => factory(User::class),
-        'full_name' => function (array $profile) {
-            return User::find($profile['user_id'])->display_name;
-        },
-        'first_name' => function (array $profile) {
-            return User::find($profile['user_id'])->firstname;
-        },
-        'last_name' => function (array $profile) {
-            return User::find($profile['user_id'])->lastname;
-        },
-        'slug' => function (array $profile) {
-            return User::find($profile['user_id'])->pea;
-        },
-        'type' => 0,
-        'public' => 1,
-    ];
-
-});
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'user_id' => User::factory(),
+            'full_name' => function (array $attributes) {
+                return User::find($attributes['user_id'])->display_name;
+            },
+            'first_name' => function (array $attributes) {
+                return User::find($attributes['user_id'])->firstname;
+            },
+            'last_name' => function (array $attributes) {
+                return User::find($attributes['user_id'])->lastname;
+            },
+            'slug' => function (array $attributes) {
+                return User::find($attributes['user_id'])->pea;
+            },
+            'type' => 0,
+            'public' => 1,
+        ];
+    }
+}

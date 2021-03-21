@@ -4,13 +4,14 @@ namespace App;
 
 use App\School;
 use App\User;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Auditable as HasAudits;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class UserSetting extends Model implements Auditable
 {
-    use HasAudits;
+    use HasFactory, HasAudits;
 
     /** @var array Whitelist of mass-editable columns */
     protected $fillable = [

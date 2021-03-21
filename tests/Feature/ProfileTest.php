@@ -24,20 +24,21 @@ class ProfileTest extends TestCase
     use WithFaker;
 
     /**
+     * Indicates whether the default seeder should run before each test.
+     *
+     * @var bool
+     */
+    protected $seed = true;
+
+    /**
      * Test profile creation.
      *
      * @return void
      */
     public function testProfileCreation()
     {
-        $this->seed();
-
-        $profile = factory(Profile::class)->create();
-
-        // basic info is always created with a profile
-        $profile_data = factory(ProfileData::class)->create([
-            'profile_id' => $profile->id,
-        ]);
+        $profile = Profile::factory()->create();
+        $profile_data = ProfileData::factory()->for($profile)->create();
 
         $this->assertDatabaseHas('profiles', $profile->getAttributes());
         $this->assertDatabaseHas('profile_data', array_merge($profile_data->getAttributes(), [
@@ -65,14 +66,8 @@ class ProfileTest extends TestCase
      */
     public function testProfileInformationEdit()
     {
-        $this->seed();
-
-        $profile = factory(Profile::class)->create();
-
-        // basic info is always created with a profile
-        $profile_data = factory(ProfileData::class)->create([
-            'profile_id' => $profile->id,
-        ]);
+        $profile = Profile::factory()->create();
+        $profile_data = ProfileData::factory()->for($profile)->create();
 
         $information_edit_route = route('profiles.edit', [
             'profile' => $profile,
@@ -90,7 +85,7 @@ class ProfileTest extends TestCase
             ->assertSee($profile_data->title);
 
         $new_profile_displayname = $this->faker->name;
-        $new_profile_data = factory(ProfileData::class)->make([
+        $new_profile_data = ProfileData::factory()->make([
             'data->distinguished_title' => $this->faker->jobTitle,
             'data->secondary_title' => $this->faker->jobTitle,
             'data->tertiary_title' => $this->faker->jobTitle,
@@ -208,14 +203,7 @@ class ProfileTest extends TestCase
      */
     public function testProfileImageEdit()
     {
-        $this->seed();
-
-        $profile = factory(Profile::class)->create();
-
-        // basic info is always created with a profile
-        $profile_data = factory(ProfileData::class)->create([
-            'profile_id' => $profile->id,
-        ]);
+        $profile = Profile::factory()->hasData()->create();
 
         $image_update_route = route('profiles.update-image', [
             'profile' => $profile,
@@ -243,14 +231,7 @@ class ProfileTest extends TestCase
      */
     public function testProfileBannerEdit()
     {
-        $this->seed();
-
-        $profile = factory(Profile::class)->create();
-
-        // basic info is always created with a profile
-        $profile_data = factory(ProfileData::class)->create([
-            'profile_id' => $profile->id,
-        ]);
+        $profile = Profile::factory()->hasData()->create();
 
         $image_update_route = route('profiles.update-banner', [
             'profile' => $profile,

@@ -1,21 +1,37 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
-use App\Model;
-use Faker\Generator as Faker;
+use App\UserSetting;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(App\UserSetting::class, function (Faker $faker) {
-    $departments = [
-        'Chemistry',
-        'Physics',
-        'Biology',
-        'Management',
-        'Psychology',
-        'Economics',
-    ];
+class UserSettingFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = UserSetting::class;
 
-    return [
-        'additional_departments' => $faker->randomElements($departments, 1),
-    ];
-});
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        $departments = [
+            'Chemistry',
+            'Physics',
+            'Biology',
+            'Management',
+            'Psychology',
+            'Economics',
+        ];
+
+        return [
+            'additional_departments' => $this->faker->randomElements($departments, 1),
+        ];
+    }
+}

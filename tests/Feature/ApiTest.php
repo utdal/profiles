@@ -17,14 +17,19 @@ class ApiTest extends TestCase
     use RefreshDatabase;
 
     /**
+     * Indicates whether the default seeder should run before each test.
+     *
+     * @var bool
+     */
+    protected $seed = true;
+
+    /**
      * Test the basic API.
      *
      * @return void
      */
     public function testApi()
     {
-        $this->seed();
-
         //////////////////////
         // Without profiles //
         //////////////////////
@@ -46,11 +51,8 @@ class ApiTest extends TestCase
         $number_of_profiles = 10;
 
         for ($i=1; $i <= $number_of_profiles; $i++) { 
-            $profiles[$i] = factory(Profile::class)->create();
-            // basic info is always created with a profile
-            $profile_data[$profiles[$i]->id] = factory(ProfileData::class)->create([
-                'profile_id' => $profiles[$i]->id,
-            ]);
+            $profiles[$i] = Profile::factory()->create();
+            $profile_data[$profiles[$i]->id] = ProfileData::factory()->for($profiles[$i])->create();
         }
 
         Cache::flush();

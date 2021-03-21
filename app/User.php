@@ -8,6 +8,7 @@ use App\Student;
 use App\Role;
 use App\UserSetting;
 use App\Traits\RoleTrait;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use OwenIt\Auditing\Auditable as HasAudits;
 use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Notifications\Notifiable;
@@ -15,7 +16,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements Auditable
 {
-    use HasAudits, RoleTrait, Notifiable;
+    use HasFactory, HasAudits, RoleTrait, Notifiable;
 
     /** @var array The attributes that are mass-assignable */
     protected $fillable = [

@@ -22,13 +22,19 @@ class SiteSettingsTest extends TestCase
     use WithFaker;
 
     /**
+     * Indicates whether the default seeder should run before each test.
+     *
+     * @var bool
+     */
+    protected $seed = true;
+
+    /**
      * Test editing site settings.
      *
      * @return void
      */
     public function testEditSiteSettings()
     {
-        $this->seed();
         $this->loginAsAdmin();
         Cache::flush();
 
@@ -106,7 +112,6 @@ class SiteSettingsTest extends TestCase
      */
     public function testEditSiteLogo()
     {
-        $this->seed();
         $this->loginAsAdmin();
         Cache::flush();
 
@@ -138,7 +143,6 @@ class SiteSettingsTest extends TestCase
      */
     public function testEditSiteFavicon()
     {
-        $this->seed();
         $this->loginAsAdmin();
         Cache::flush();
 
