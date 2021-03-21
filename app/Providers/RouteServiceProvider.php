@@ -60,6 +60,11 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->group(base_path('routes/components/testing.php'));
         }
+
+        if (config('app.enable_students')) {
+            Route::middleware('web')
+                ->group(base_path('routes/components/students.php'));
+        }
     }
 
     /**

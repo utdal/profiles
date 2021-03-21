@@ -3,6 +3,7 @@
 $user = Auth::user();
 
 $user_profile = $user ? $user->profiles()->first() : null;
+$user_student_profile = $user ? $user->studentProfiles()->first() : null;
 $schools = App\School::where('display_name', '!=', 'Other')->orderBy('short_name')->get();
 
 $can_create_own_profile = $user && $user->can('createOwn', 'App\Profile');
@@ -43,6 +44,17 @@ $can_create_users = $user && $user->can('create', 'App\User');
           </div>
         </li>
         <li class="nav-item"><a href="{{ route('profiles.index') }}" class="nav-link">Browse All</a></li>
+        @if(config('app.enable_students'))
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" id="studentNavDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Students <span class="caret"></span>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="studentNavDropdown">
+            <a href="{{ route('students.about') }}" class="dropdown-item">Get Started with Research</a>
+            <a href="{{ route('students.index') }}" class="dropdown-item">Student Research Profiles</a>
+          </div>
+        </li>
+        @endif
         @if($can_view_user_admin_index || $can_create_users || $can_view_profile_admin_index || $can_view_log_admin_index || $can_view_school_admin_index || $can_update_settings)
         <li class="nav-item dropdown">
           <a href="#" class="nav-link dropdown-toggle" id="adminNavDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -99,6 +111,9 @@ $can_create_users = $user && $user->can('create', 'App\User');
               <a class="dropdown-item" href="{{ route('profiles.show', ['profile' => $user_profile]) }}"><span class="fa fa-user fa-fw"></span> My Profile</a>
             @elseif($can_create_own_profile)
               <a class="dropdown-item" href="{{ route('profiles.create', ['user' => $user]) }}"><span class="fa fa-plus fa-fw"></span> Create Profile</a>
+            @endif
+            @if($user_student_profile)
+              <a class="dropdown-item" href="{{ route('students.show', ['student' => $user_student_profile]) }}"><span class="fa fa-user fa-fw"></span> My Student Research Profile</a>
             @endif
             <a class="dropdown-item" href="{{ route('users.show', ['user' => $user->pea]) }}"><span class="fa fa-cog fa-fw"></span> My Account</a>
             <div class="dropdown-divider"></div>

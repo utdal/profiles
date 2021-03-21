@@ -4,6 +4,7 @@ namespace App;
 
 use App\Profile;
 use App\School;
+use App\Student;
 use App\Role;
 use App\UserSetting;
 use App\Traits\RoleTrait;
@@ -238,6 +239,11 @@ class User extends Authenticatable implements Auditable
     public function profiles()
     {
         return $this->hasMany(Profile::class);
+    }
+
+    public function studentProfiles()
+    {
+        return $this->hasMany(Student::class);
     }
 
     /**

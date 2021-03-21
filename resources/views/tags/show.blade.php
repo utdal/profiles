@@ -1,6 +1,6 @@
 <?php
 $id = $id ?? Illuminate\Support\Str::slug($model->getRouteKey());
-$tags = $model->tags;
+$tags = $model->tags ?? collect();
 $model_class = get_class($model);
 $all_tags = Spatie\Tags\Tag::getWithType($model_class);
 $random_tags = $all_tags->random(min(15, $all_tags->count()))->pluck('name')->all();
