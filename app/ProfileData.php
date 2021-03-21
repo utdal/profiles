@@ -101,6 +101,17 @@ class ProfileData extends Model implements HasMedia, Auditable
         return $this->getAttribute('data')[$key] ?? parent::__get($key);
     }
 
+    /**
+     * Check if profile data attribute isset
+     *
+     * @param string $key
+     * @return bool
+     */
+    public function __isset($key)
+    {
+        return !is_null($this->getAttribute('data')[$key] ?? null) || parent::__isset($key);
+    }
+
     //////////////////
     // Query Scopes //
     //////////////////
