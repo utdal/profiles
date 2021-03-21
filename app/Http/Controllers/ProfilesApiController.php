@@ -34,6 +34,10 @@ class ProfilesApiController extends Controller
                 $profile = $profile->containing($request->search, $request->search_section);
             }
 
+            if ($request->has('search_names')) {
+                $profile = $profile->withName($request->search_names);
+            }
+
             if ($request->has('info_contains')) {
                 $profile = $profile->containing($request->info_contains, 'information');
             }

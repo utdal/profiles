@@ -377,6 +377,16 @@ class Profile extends Model implements HasMedia, Auditable
         });
     }
 
+    public function scopeWithName($query, string $search)
+    {
+        return $query->where(function ($q) use ($search) {
+            $q->orWhere('full_name', 'LIKE', "%$search%");
+            $q->orWhere('first_name', 'LIKE', "%$search%");
+            $q->orWhere('last_name', 'LIKE', "%$search%");
+            $q->orWhere('slug', 'LIKE', "%$search%");
+        });
+    }
+
     public function scopeFromSchool($query, $school)
     {
         return $query->whereHas('user', function($user_query) use ($school) {
