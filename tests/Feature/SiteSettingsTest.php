@@ -59,14 +59,14 @@ class SiteSettingsTest extends TestCase
             ->assertSee($settings['primary_color'])
             ->assertSee($settings['secondary_color'])
             ->assertSee($settings['tertiary_color'])
-            ->assertSee(e($settings['site_title']))
-            ->assertSee(e($settings['description']))
+            ->assertSee($settings['site_title'])
+            ->assertSee($settings['description'])
             ->assertSee($settings['account_name'])
             ->assertSee($settings['forgot_password_url'])
-            ->assertSee("id=\"setting[school_search_shortcut]\" value=\"1\" " . ($settings['school_search_shortcut'] ? ' checked ' : ''))
-            ->assertSee("id=\"setting[profile_search_shortcut]\" value=\"1\" " . ($settings['profile_search_shortcut'] ? ' checked ' : ''))
-            ->assertSee(e($settings['faq']))
-            ->assertSee(e($settings['footer']));
+            ->assertSee("id=\"setting[school_search_shortcut]\" value=\"1\" " . ($settings['school_search_shortcut'] ? ' checked ' : ''), false)
+            ->assertSee("id=\"setting[profile_search_shortcut]\" value=\"1\" " . ($settings['profile_search_shortcut'] ? ' checked ' : ''), false)
+            ->assertSee($settings['faq'])
+            ->assertSee($settings['footer']);
 
         foreach ($settings as $setting_name => $setting_value) {
             $this->assertDatabaseHas('settings', [
@@ -84,17 +84,17 @@ class SiteSettingsTest extends TestCase
 
         $this->get('/')
             ->assertStatus(200)
-            ->assertSeeInOrder(['<title>', e($settings['site_title']), '</title>'])
-            ->assertSee(e($settings['description']))
-            ->assertSeeInOrder(['<style>', $settings['primary_color'], '</style>'])
-            ->assertSeeInOrder(['<style>', $settings['secondary_color'], '</style>'])
-            ->assertSeeInOrder(['<style>', $settings['tertiary_color'], '</style>'])
-            ->assertSeeInOrder(['<footer', e($settings['footer']), '</footer>']);
+            ->assertSeeInOrder(['<title>', e($settings['site_title']), '</title>'], false)
+            ->assertSee($settings['description'])
+            ->assertSeeInOrder(['<style>', $settings['primary_color'], '</style>'], false)
+            ->assertSeeInOrder(['<style>', $settings['secondary_color'], '</style>'], false)
+            ->assertSeeInOrder(['<style>', $settings['tertiary_color'], '</style>'], false)
+            ->assertSeeInOrder(['<footer', e($settings['footer']), '</footer>'], false);
 
         $this->get(route('app.faq'))
             ->assertStatus(200)
             ->assertViewIs('faq')
-            ->assertSee(e($settings['faq']));
+            ->assertSee($settings['faq']);
 
         Cache::flush();
     }
@@ -128,7 +128,7 @@ class SiteSettingsTest extends TestCase
 
         $this->get('/')
             ->assertStatus(200)
-            ->assertSee("<img class=\"profiles-logo\" src=\"{$setting->value}\"");
+            ->assertSee("<img class=\"profiles-logo\" src=\"{$setting->value}\"", false);
     }
 
     /**
@@ -160,7 +160,7 @@ class SiteSettingsTest extends TestCase
 
         $this->get('/')
             ->assertStatus(200)
-            ->assertSee("<link rel=\"icon\" href=\"{$setting->value}\"");
+            ->assertSee("<link rel=\"icon\" href=\"{$setting->value}\"", false);
     }
 
 }

@@ -13,6 +13,7 @@ use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
 use Sentry\State\Scope;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Throwable;
 
 class Handler extends ExceptionHandler
 {
@@ -49,7 +50,7 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return void
      */
-    public function report(Exception $exception)
+    public function report(Throwable $exception)
     {
         if ($this->shouldReport($exception)) {
             // Send reports to Sentry.io
@@ -68,7 +69,7 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $exception)
+    public function render($request, Throwable $exception)
     {
         // Show the LDAP error view if we can't bind to the LDAP server
         if ($exception instanceof BindException) {
@@ -109,10 +110,10 @@ class Handler extends ExceptionHandler
     /**
      * Report the exception to Sentry.io
      * 
-     * @param  Exception $e
+     * @param  Throwable $e
      * @return void
      */
-    protected function reportToSentry(Exception $e)
+    protected function reportToSentry(Throwable $e)
     {
         /** @var \Sentry\State\Hub */
         $sentry = app('sentry');

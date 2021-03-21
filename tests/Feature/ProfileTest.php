@@ -48,11 +48,11 @@ class ProfileTest extends TestCase
 
         $this->get(route('profiles.home'))->assertStatus(200);
         $this->get(route('profiles.index'))
-            ->assertSee(e($profile->name))
+            ->assertSee($profile->name)
             ->assertStatus(200);
         $this->get(route('profiles.show', ['profile' => $profile]))
             ->assertStatus(200)
-            ->assertSee(e($profile->name));
+            ->assertSee($profile->name);
 
         $this->loginAsAdmin();
         $this->get(route('profiles.table'))->assertStatus(200);
@@ -86,8 +86,8 @@ class ProfileTest extends TestCase
         $this->get($information_edit_route)
             ->assertStatus(200)
             ->assertViewIs('profiles.edit')
-            ->assertSeeTextInOrder(["Edit", e($profile->name), "Information"])
-            ->assertSee(e($profile_data->title));
+            ->assertSeeTextInOrder(["Edit", $profile->name, "Information"])
+            ->assertSee($profile_data->title);
 
         $new_profile_displayname = $this->faker->name;
         $new_profile_data = factory(ProfileData::class)->make([
@@ -146,17 +146,17 @@ class ProfileTest extends TestCase
             ->assertStatus(200)
             ->assertViewIs('profiles.show')
             ->assertSee('Profile updated.')
-            ->assertSeeText(e($new_profile_displayname))
-            ->assertSeeText(e($new_profile_data->title))
-            ->assertSeeText(e($new_profile_data->distinguished_title))
-            ->assertSeeText(e($new_profile_data->secondary_title))
-            ->assertSeeText(e($new_profile_data->tertiary_title))
+            ->assertSeeText($new_profile_displayname)
+            ->assertSeeText($new_profile_data->title)
+            ->assertSeeText($new_profile_data->distinguished_title)
+            ->assertSeeText($new_profile_data->secondary_title)
+            ->assertSeeText($new_profile_data->tertiary_title)
             ->assertSee(Utils::obfuscateEmailAddress($new_profile_data->email))
             ->assertSeeText($new_profile_data->phone)
-            ->assertSeeText(e($new_profile_data->location))
-            ->assertSeeText(e($new_profile_data->url_name))
-            ->assertSeeText(e($new_profile_data->secondary_url_name))
-            ->assertSeeText(e($new_profile_data->tertiary_url_name))
+            ->assertSeeText($new_profile_data->location)
+            ->assertSeeText($new_profile_data->url_name)
+            ->assertSeeText($new_profile_data->secondary_url_name)
+            ->assertSeeText($new_profile_data->tertiary_url_name)
             ->assertSee($new_profile_data->url)
             ->assertSee($new_profile_data->secondary_url)
             ->assertSee($new_profile_data->tertiary_url)
