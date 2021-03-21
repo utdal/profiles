@@ -10362,23 +10362,23 @@ span[data-tooltip] {
 .tooltip-inner {
   text-align: left;
   max-width: 400px;
-  background-color: #5BC6E8;
+  background-color: #6c757d;
 }
 
-.tooltip.top .tooltip-arrow {
-  border-top-color: #5BC6E8;
+.bs-tooltip-top .arrow::before, .bs-tooltip-auto[x-placement^=top] .arrow::before {
+  border-top-color: #6c757d;
 }
 
-.tooltip.right .tooltip-arrow {
-  border-right-color: #5BC6E8;
+.bs-tooltip-right .arrow::before, .bs-tooltip-auto[x-placement^=right] .arrow::before {
+  border-right-color: #6c757d;
 }
 
-.tooltip.left .tooltip-arrow {
-  border-left-color: #5BC6E8;
+.bs-tooltip-left .arrow::before, .bs-tooltip-auto[x-placement^=left] .arrow::before {
+  border-left-color: #6c757d;
 }
 
-.tooltip.bottom .tooltip-arrow {
-  border-bottom-color: #5BC6E8;
+.bs-tooltip-bottom .arrow::before, .bs-tooltip-auto[x-placement^=bottom] .arrow::before {
+  border-bottom-color: #6c757d;
 }
 
 .tooltip.in {

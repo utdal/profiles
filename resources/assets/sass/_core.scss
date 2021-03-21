@@ -126,19 +126,19 @@ span[data-tooltip]{
 .tooltip-inner{
 	text-align: left;
 	max-width: 400px;
-	background-color: $info;
+	background-color: $secondary;
 }
-.tooltip.top .tooltip-arrow {
-	border-top-color: $info;
+.bs-tooltip-top .arrow::before {
+	border-top-color: $secondary;
 }
-.tooltip.right .tooltip-arrow {
-	border-right-color: $info;
+.bs-tooltip-right .arrow::before {
+	border-right-color: $secondary;
 }
-.tooltip.left .tooltip-arrow {
-	border-left-color: $info;
+.bs-tooltip-left .arrow::before {
+	border-left-color: $secondary;
 }
-.tooltip.bottom .tooltip-arrow {
-	border-bottom-color: $info;
+.bs-tooltip-bottom .arrow::before {
+	border-bottom-color: $secondary;
 }
 .tooltip.in {
 	opacity: 1;
