@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\App;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -54,6 +55,11 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('web')
              ->namespace($this->namespace)
              ->group(base_path('routes/web.php'));
+
+        if (config('app.testing_menu') && !App::environment('production')) {
+            Route::middleware('web')
+                ->group(base_path('routes/components/testing.php'));
+        }
     }
 
     /**

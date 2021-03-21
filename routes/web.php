@@ -18,11 +18,6 @@ Route::name('login')->get('/login', 'Auth\LoginController@showLoginForm');
 Route::name('login')->post('/login', 'Auth\LoginController@login');
 Route::name('logout')->get('/logout', 'Auth\LoginController@logout');
 
-// Testing
-if (config('app.testing_menu')) {
-    require(__DIR__ . '/testing.php');
-}
-
 /******************
  * Common
  ******************/
