@@ -10,6 +10,8 @@
 			<link rel="shortcut icon" href="{{ $settings['logo'] ?? '' }}">
 		<![endif]-->
 		<link rel="icon" href="{{ $settings['favicon'] ?? '' }}">
+	@else
+		<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2016%2016'%3E%3Ctext%20x='0'%20y='14'%3E👩🏻‍🔬%3C/text%3E%3C/svg%3E" type="image/svg+xml" />
 	@endif
 	<link rel="stylesheet" href="{{ asset(mix('css/app.css')) }}">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
