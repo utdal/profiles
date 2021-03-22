@@ -16,6 +16,7 @@
         "laravel/ui": "^3.0",
         "laravelcollective/html": "^6.0.3",
         "league/flysystem-aws-s3-v3": "^1.0",
+        "livewire/livewire": "^2.4",
         "owen-it/laravel-auditing": "^12.0",
         "predis/predis": "^1.1",
         "sentry/sentry-laravel": "^2.3.1",
