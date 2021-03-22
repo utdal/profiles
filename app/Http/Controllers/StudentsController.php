@@ -33,9 +33,7 @@ class StudentsController extends Controller
      */
     public function index()
     {
-        $students = Student::with(['research_profile', 'tags'])->paginate(50);
-
-        return view('students.index', ['students' => $students]);
+        return view('students.index');
     }
 
     /**

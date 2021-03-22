@@ -61,12 +61,64 @@ class Student extends Model implements Auditable
 
     public function scopeDrafted($query)
     {
-        return $query->where('status', '=', 'drafted');
+        return $this->scopeWithStatus($query, 'drafted');
     }
 
     public function scopeSubmitted($query)
     {
-        return $query->where('status', '=', 'submitted');
+        return $this->scopeWithStatus($query, 'submitted');
+    }
+
+    public function scopeSearch($query, $search)
+    {
+        if ($search) {
+            $query->where('full_name', 'LIKE', "%$search%");
+        }
+
+        return $query;
+    }
+
+    public function scopeWithStatus($query, $status)
+    {
+        if ($status) {
+            $query->where('status', '=', $status);
+        }
+
+        return $query;
+    }
+
+    public function scopeWithTag($query, $tag)
+    {
+        if ($tag) {
+            $query->whereHas('tags', function($q) use ($tag) {
+                $q->where('slug->en', '=', $tag);
+                $q->orWhere('name->en', '=', $tag);
+            });
+        }
+
+        return $query;
+    }
+
+    public function scopeWithFaculty($query, $faculty)
+    {
+        if ($faculty) {
+            $query->whereHas('research_profile', function ($q) use ($faculty) {
+                $q->whereJsonContains('data->faculty', $faculty);
+            });
+        }
+
+        return $query;
+    }
+    
+    public function scopeWithSchool($query, $school)
+    {
+        if ($school) {
+            $query->whereHas('research_profile', function ($q) use ($school) {
+                $q->whereJsonContains('data->schools', $school);
+            });
+        }
+
+        return $query;
     }
 
     ///////////////
