@@ -27,6 +27,7 @@ config.autoReplaceSvg = 'nest';
 library.add(fas, far, fab);
 // Kicks off the process of finding <i> tags and replacing with <svg>
 dom.watch();
+window.FontAwesomeDom = dom;
 
 // Sortable
 window.Sortable = require('sortablejs/Sortable');
