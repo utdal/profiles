@@ -134,7 +134,7 @@ var profiles = (function ($, undefined) {
      * @return {void}
      */
     let registerProfilePicker = (selector, api) => {
-      if (typeof (api) === 'undefined') api = this_url + '/api/v1';
+      if (typeof (api) === 'undefined') api = this_url + '/api/v1/?with_data=1&data_type=information';
       let $select = $(selector);
       if ($select.length === 0) return;
 
@@ -143,7 +143,7 @@ var profiles = (function ($, undefined) {
         queryTokenizer: Bloodhound.tokenizers.whitespace,
         limit: 50,
         remote: {
-          url: api + '/?search_names=%QUERY',
+          url: api + '&search_names=%QUERY',
           wildcard: '%QUERY',
           transform: (response) => response.profile,
         }
@@ -155,6 +155,9 @@ var profiles = (function ($, undefined) {
           displayKey: 'full_name',
           limit: 75,
           source: profileSearch.ttAdapter(),
+          templates: {
+            suggestion: (profile) => '<p><strong>' + profile.full_name + '</strong>, <em>' + (profile.information[0].data.title || '') + '</em></p>',
+          }
         },
         freeInput: false,
         itemValue: (profile) => profile.full_name,

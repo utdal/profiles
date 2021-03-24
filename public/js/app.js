@@ -149,7 +149,7 @@ var profiles = function ($, undefined) {
 
 
   var registerProfilePicker = function registerProfilePicker(selector, api) {
-    if (typeof api === 'undefined') api = this_url + '/api/v1';
+    if (typeof api === 'undefined') api = this_url + '/api/v1/?with_data=1&data_type=information';
     var $select = $(selector);
     if ($select.length === 0) return;
     var profileSearch = new Bloodhound({
@@ -159,7 +159,7 @@ var profiles = function ($, undefined) {
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       limit: 50,
       remote: {
-        url: api + '/?search_names=%QUERY',
+        url: api + '&search_names=%QUERY',
         wildcard: '%QUERY',
         transform: function transform(response) {
           return response.profile;
@@ -171,7 +171,12 @@ var profiles = function ($, undefined) {
         name: 'profileslist',
         displayKey: 'full_name',
         limit: 75,
-        source: profileSearch.ttAdapter()
+        source: profileSearch.ttAdapter(),
+        templates: {
+          suggestion: function suggestion(profile) {
+            return '<p><strong>' + profile.full_name + '</strong>, <em>' + (profile.information[0].data.title || '') + '</em></p>';
+          }
+        }
       },
       freeInput: false,
       itemValue: function itemValue(profile) {
