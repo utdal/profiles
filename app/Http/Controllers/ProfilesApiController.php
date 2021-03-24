@@ -54,7 +54,7 @@ class ProfilesApiController extends Controller
                 if(count(array_filter($request->query())) <=1){
                     return response()->json(['error' => 'Please use a filter when pulling data.'], 400);
                 }
-                $profile = $profile->withApiData();
+                $profile = $profile->withApiData($request->input('data_type'));
             }
 
             $profile = $profile->get();
@@ -63,7 +63,7 @@ class ProfilesApiController extends Controller
             // iterate over all data and strip tags
             if ($request->input('with_data') && !$request->input('raw_data')){
                 $profile->map(function($single_profile) {
-                    $single_profile->stripTagsFromData(['publications'], 'title');
+                    $single_profile->stripTagsFromData(['publications'], 'title', true);
                     $single_profile->stripTagsFromData([
                         'news',
                         'areas',
@@ -72,7 +72,7 @@ class ProfilesApiController extends Controller
                         'activities',
                         'additionals',
                         'presentations',
-                    ], 'description');
+                    ], 'description', true);
                 });
             }
 

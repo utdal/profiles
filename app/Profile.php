@@ -261,10 +261,14 @@ class Profile extends Model implements HasMedia, Auditable
      *
      * @param array $data_names : the names of data properties to strip tags from
      * @param string $field : the field on each data property to strip tags from
+     * @param boolean $loaded_only : only strip if the data relation has already been eager-loaded
      */
-    public function stripTagsFromData($data_names, $field = 'description')
+    public function stripTagsFromData($data_names, $field = 'description', $loaded_only = true)
     {
         foreach ($data_names as $data_name) {
+            if ($loaded_only && !$this->relationLoaded($data_name)) {
+                continue;
+            }
             $this->$data_name->map(function($datum) use ($field) {
                 $clean_data = $datum->data;
                 $clean_data[$field] = strip_tags($datum->data[$field]);
@@ -328,13 +332,17 @@ class Profile extends Model implements HasMedia, Auditable
      * Query scope to eager load the Profiles along with their API-accessible data.
      *
      * @param  \Illuminate\Database\Eloquent\Builder $query
-     * @param  string $info  what to search for
+     * @param  array|string|null $sections  which data sections to load
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeWithApiData($query)
+    public function scopeWithApiData($query, $sections = null)
     {
         //add each meta-section to API eager load payload
-        $sections = ['information', 'tags', 'preparation', 'awards', 'areas', 'activities', 'news', 'appointments', 'publications', 'affiliations', 'support', 'projects', 'additionals', 'presentations'];
+        if ($sections === null) {
+            $sections = ['information', 'tags', 'preparation', 'awards', 'areas', 'activities', 'news', 'appointments', 'publications', 'affiliations', 'support', 'projects', 'additionals', 'presentations'];
+        } elseif (is_string($sections)) {
+            $sections = explode(';', $sections);
+        }
 
         return $query->with($sections);
     }
