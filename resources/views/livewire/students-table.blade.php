@@ -1,5 +1,5 @@
 <div class="livewire-datatable">
-    
+
     <div class="form-row">
         <div class="form-group col-lg-2">
             <label for="studentNameSearch">Name</label>
@@ -40,19 +40,28 @@
                 <option value="drafted">drafted</option>
             </select>
         </div>
+        <div class="form-group col-lg-2">
+            <label for="perPage">Per Page</label>
+            <select wire:model="per_page" id="perPage" class="form-control">
+                <option value="10">10</option>
+                <option value="25" selected>25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+        </div>
     </div>
 
     <table class="table table-sm table-striped">
         <thead>
             <tr>
-                <th>id</th>
-                <th>Name</th>
+                @include('livewire.partials._th-sortable', ['title' => 'ID', 'field' => 'id'])
+                @include('livewire.partials._th-sortable', ['title' => 'Name', 'field' => 'full_name'])
                 <th>Topic Interests</th>
                 <th>Faculty Interest</th>
                 <th>Schools</th>
                 <th>Graduates</th>
-                <th>Status</th>
-                <th>Updated</th>
+                @include('livewire.partials._th-sortable', ['title' => 'Status', 'field' => 'status'])
+                @include('livewire.partials._th-sortable', ['title' => 'Updated', 'field' => 'updated_at'])
             </tr>
         </thead>
         <tbody>
@@ -70,4 +79,6 @@
             @endforeach
         </tbody>
     </table>
+
+    {{ $students->links() }}
 </div>
