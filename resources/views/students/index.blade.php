@@ -1,8 +1,5 @@
 @extends('layout')
 @section('title', 'Student Research Profiles')
-@section('head')
-    <livewire:styles>
-@stop
 @section('header')
 	@include('nav')
 @stop
@@ -16,8 +13,4 @@
 
 </div>
 
-@stop
-
-@section('scripts')
-    <livewire:scripts>
 @stop

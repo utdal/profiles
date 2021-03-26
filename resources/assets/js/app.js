@@ -380,3 +380,10 @@ $(document).ready(function() {
   $('[data-toggle="tooltip"]').tooltip();
 
 });
+
+// Livewire global hooks
+if (typeof Livewire === 'object' && typeof FontAwesomeDom === 'object') {
+  document.addEventListener('DOMContentLoaded', () => {
+    Livewire.hook('message.processed', () => FontAwesomeDom.i2svg());
+  });
+}

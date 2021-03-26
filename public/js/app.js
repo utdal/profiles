@@ -8,6 +8,8 @@
 
 /* provided dependency */ var jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/src/jquery.js");
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/src/jquery.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -391,7 +393,15 @@ $(document).ready(function () {
   $('[data-toggle=show]').on('change page_up', profiles.toggle_show).trigger('change');
   $('[data-evaluate=profile-eml]').each(profiles.deobfuscate_mail_links);
   $('[data-toggle="tooltip"]').tooltip();
-});
+}); // Livewire global hooks
+
+if ((typeof Livewire === "undefined" ? "undefined" : _typeof(Livewire)) === 'object' && (typeof FontAwesomeDom === "undefined" ? "undefined" : _typeof(FontAwesomeDom)) === 'object') {
+  document.addEventListener('DOMContentLoaded', function () {
+    Livewire.hook('message.processed', function () {
+      return FontAwesomeDom.i2svg();
+    });
+  });
+}
 
 /***/ }),
 
