@@ -97,7 +97,7 @@ $can_create_users = $user && $user->can('create', 'App\User');
       </ul>
       <ul class="navbar-nav">
         @if (!$user)
-        <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">
+        <li class="nav-item"><a class="nav-link" href="{{ route('login.show') }}">
           <span class="fas fa-sign-in-alt" aria-hidden="true"></span> Login</a>
         </li>
         @else

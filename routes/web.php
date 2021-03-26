@@ -14,7 +14,7 @@
 /******************
  * Auth
  ******************/
-Route::name('login')->get('/login', 'Auth\LoginController@showLoginForm');
+Route::name('login.show')->get('/login', 'Auth\LoginController@showLoginForm');
 Route::name('login')->post('/login', 'Auth\LoginController@login');
 Route::name('logout')->get('/logout', 'Auth\LoginController@logout');
 
