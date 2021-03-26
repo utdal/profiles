@@ -43,6 +43,7 @@ Route::name('users.')->prefix('/users')->group(function() {
         Route::name('show')->get('/', 'UsersController@show');
         Route::name('edit')->get('/edit', 'UsersController@edit');
         Route::name('update')->patch('/', 'UsersController@update');
+        Route::name('bookmarks.show')->get('/bookmarks', 'UsersController@showBookmarks');
         Route::name('confirm-destroy')->get('/confirm-destroy', 'UsersController@confirmDestroy');
         Route::name('destroy')->delete('/', 'UsersController@destroy');
     });

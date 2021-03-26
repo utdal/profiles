@@ -60,7 +60,7 @@
     {!! Form::label('research_profile_faculty[]', 'Any particular faculty you would like to work with?', ['class' => 'form-label']) !!}
     <div class="profile-picker">
         @if($editable)
-        <small class="form-text text-muted">Max 5. Start typing and select from the list, or see a full list of faculty here.</small>
+        <small class="form-text text-muted">Max 5. Start typing a name and select from the list. You can also refer to <a href="{{ route('users.bookmarks.show', ['user' => auth()->user()]) }}" target="_blank">your bookmarks <i class="fas fa-external-link-alt"></i></a>.</small>
         <i class="fas fa-users" aria-hidden="true"></i> {!! Form::select('research_profile[faculty][]', array_combine($student->research_profile->faculty ?? [], $student->research_profile->faculty ?? []), $student->research_profile->faculty ?? [], ['id' => 'research_profile_faculty[]', 'multiple']) !!}
         @else
             <i class="fas fa-users" aria-hidden="true"></i><span class="sr-only">Faculty:</span> 

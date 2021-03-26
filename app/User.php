@@ -2,10 +2,11 @@
 
 namespace App;
 
+use App\Bookmark;
 use App\Profile;
+use App\Role;
 use App\School;
 use App\Student;
-use App\Role;
 use App\UserSetting;
 use App\Traits\RoleTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -92,6 +93,46 @@ class User extends Authenticatable implements Auditable
         }
 
         return false;
+    }
+
+    /**
+     * Determine if this User has bookmarked the given model
+     *
+     * @param  Illuminate\Database\Eloquent\Model $model
+     * @return bool
+     */
+    public function hasBookmarked($model)
+    {
+        if ($this->relationLoaded('bookmarks')) {
+            return $this->bookmarks->contains(function($bookmark, $i) use ($model) {
+                return $bookmark->userable_id === $model->getKey() &&
+                       $bookmark->userable_type === get_class($model);
+            });
+        }
+
+        return $this->bookmarked($model)->where('userable_id', '=', $model->getKey())->exists();
+    }
+
+    /**
+     * Bookmark the given model
+     *
+     * @param  Illuminate\Database\Eloquent\Model $model
+     * @return void
+     */
+    public function bookmark($model)
+    {
+        return $this->bookmarked($model)->attach($model);
+    }
+
+    /**
+     * Un-bookmark the given model
+     *
+     * @param  Illuminate\Database\Eloquent\Model $model
+     * @return void
+     */
+    public function unbookmark($model)
+    {
+        return $this->bookmarked($model)->detach($model);
     }
 
     //////////////////
@@ -256,4 +297,31 @@ class User extends Authenticatable implements Auditable
     {
         return $this->hasOne(UserSetting::class);
     }
+
+    /**
+     * User has many bookmarks (one to many)
+     * 
+     * This is for direct access to the pivot class (i.e. all bookmarks of any type),
+     * and also allows us to eager-load bookmarks in order to check existence.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class);
+    }
+
+    /**
+     * User has many bookmarked models (polymorphic many-to-many)
+     *
+     * @param string|\Illuminate\Database\Eloquent\Model $model : model class name or instance
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     */
+    public function bookmarked($model)
+    {
+        return $this->morphedByMany(is_object($model) ? get_class($model) : $model, 'userable', 'bookmarks')
+            ->using(Bookmark::class)
+            ->withTimestamps();
+    }
+
 }

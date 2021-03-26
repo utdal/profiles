@@ -50,8 +50,8 @@ $can_create_users = $user && $user->can('create', 'App\User');
             Students <span class="caret"></span>
           </a>
           <div class="dropdown-menu" aria-labelledby="studentNavDropdown">
-            <a href="{{ route('students.about') }}" class="dropdown-item">Get Started with Research</a>
-            <a href="{{ route('students.index') }}" class="dropdown-item">Student Research Profiles</a>
+            <a href="{{ route('students.about') }}" class="dropdown-item"><i class="fas fa-rocket"></i> Get Started with Research</a>
+            <a href="{{ route('students.index') }}" class="dropdown-item"><i class="fas fa-users"></i> Student Research Profiles</a>
           </div>
         </li>
         @endif
@@ -115,6 +115,7 @@ $can_create_users = $user && $user->can('create', 'App\User');
             @if($user_student_profile)
               <a class="dropdown-item" href="{{ route('students.show', ['student' => $user_student_profile]) }}"><span class="fa fa-user fa-fw"></span> My Student Research Profile</a>
             @endif
+            <a class="dropdown-item" href="{{ route('users.bookmarks.show', ['user' => $user->pea]) }}"><span class="fas fa-bookmark fa-fw"></span> My Bookmarks</a>
             <a class="dropdown-item" href="{{ route('users.show', ['user' => $user->pea]) }}"><span class="fa fa-cog fa-fw"></span> My Account</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{ route('logout') }}"><span class="fas fa-sign-out-alt fa-fw" aria-hidden="true"></span> Logout</a>

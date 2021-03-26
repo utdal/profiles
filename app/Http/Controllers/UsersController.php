@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Contracts\LdapHelperContract;
 use App\Http\Requests\UserStoreRequest;
+use App\Profile;
 use App\Role;
 use App\School;
 use App\User;
@@ -71,6 +72,20 @@ class UsersController extends Controller
     public function show(User $user)
     {
         return view('users.show', compact('user'));
+    }
+
+    /**
+     * Show the User info.
+     *
+     * @param  User   $user
+     * @return \Illuminate\View\View
+     */
+    public function showBookmarks(User $user)
+    {
+        return view('users.bookmarks', [
+            'user' => $user,
+            'profile_bookmarks' => $user->bookmarked(Profile::class)->orderBy('last_name')->get(),
+        ]);
     }
 
     /**
