@@ -27,6 +27,7 @@ class Setting extends Model implements HasMedia
     {
         $this->addMediaCollection('logo')->singleFile();
         $this->addMediaCollection('favicon')->singleFile();
+        $this->addMediaCollection('student_info_image')->singleFile();
     }
 
     /**

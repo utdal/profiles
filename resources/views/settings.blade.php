@@ -53,6 +53,29 @@
             </button>
             {!! Form::close() !!}
         </div>
+        @if(config('app.enable_students'))
+        <div class="col col-md-4">
+            {!! Form::open(['url' => route('app.settings.update-image', 'student_info_image'), 'method' => 'POST', 'files' => true]) !!}
+            <label for="student_info_image">Student Info Image</label>
+            @if(isset($settings['student_info_image']))
+                <img id="student_info_image-img" class="profile_photo p-2 border mb-3" src="{{ $settings['student_info_image'] }}">
+            @endif
+            <div class="control-group">
+                <div class="controls">
+                    {!! Form::file('student_info_image', ['id' => 'student_info_image', 'name' => 'student_info_image', 'required' => 'true', 'accept' => 'image/*', 'class' => 'd-none']) !!}
+                    <label for="student_info_image" class="btn btn-secondary btn-block"><i class="fas fa-plus"></i> Select Image</label>
+                    <p class="errors">{!!$errors->first('student_info_image')!!}</p>
+                    @if(Session::has('error'))
+                        <p class="errors">{!! Session::get('error') !!}</p>
+                    @endif
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" data-toggle="replace-icon" data-newicon="fas fa-sync fa-spin" data-inputrequired="#student_info_image">
+                <i class="fas fa-upload"></i> Replace Image
+            </button>
+            {!! Form::close() !!}
+        </div>
+        @endif
     </div>
     {!! Form::open(['url' => route('app.settings.update')]) !!}
 
@@ -140,6 +163,24 @@
             <trix-editor input="rte_footer"></trix-editor>
         </div>
     </div>
+
+    @if(config('app.enable_students'))
+    <div class="row record form-group level lower-border">
+        <div class="col col-12 col-lg-9">
+            <label for="rte_student_info">Student Info</label>
+            <input id="rte_student_info" type="hidden" class="clearable" name="setting[student_info]" value="{{ $settings['student_info'] ?? NULL }}">
+            <trix-editor input="rte_student_info"></trix-editor>
+        </div>
+        <div class="col col-12 col-lg-3">
+            <label for="visibility">Overlay student info over image</label><br>
+            <label class="switch pull-left">
+                <input type="hidden" name="setting[student_info_overlay]" id="setting[student_info_overlay]" value="0">
+                <input type="checkbox" name="setting[student_info_overlay]" id="setting[student_info_overlay]" value="1" @if($settings['student_info_overlay'] ?? false) checked @endif>
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+    @endif
    	
     <div class="row">
         <div class="col">
