@@ -151,7 +151,7 @@ var profiles = function ($, undefined) {
 
 
   var registerProfilePicker = function registerProfilePicker(selector, api) {
-    if (typeof api === 'undefined') api = this_url + '/api/v1/?with_data=1&data_type=information';
+    if (typeof api === 'undefined') api = this_url + '/api/v1?with_data=1&data_type=information';
     var $select = $(selector);
     if ($select.length === 0) return;
     var profileSearch = new Bloodhound({

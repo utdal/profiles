@@ -134,7 +134,7 @@ var profiles = (function ($, undefined) {
      * @return {void}
      */
     let registerProfilePicker = (selector, api) => {
-      if (typeof (api) === 'undefined') api = this_url + '/api/v1/?with_data=1&data_type=information';
+      if (typeof (api) === 'undefined') api = this_url + '/api/v1?with_data=1&data_type=information';
       let $select = $(selector);
       if ($select.length === 0) return;
 
