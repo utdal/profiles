@@ -100,6 +100,35 @@ var profiles = function ($, undefined) {
     }
   };
   /**
+   * Display a dynamic toast alert
+   * 
+   * @param {String} message - the message to display
+   * @param {String} type - alert type, e.g. primary, success, warning, danger, and etc.
+   */
+
+
+  var toast = function toast(message, type) {
+    var flash_container = document.querySelector('.flash-container');
+
+    if (!flash_container) {
+      flash_container = document.createElement('div');
+      flash_container.classList = 'flash-container';
+      document.body.appendChild(flash_container);
+    }
+
+    var flash_message = document.createElement('div');
+    flash_message.classList = 'flash-message alert-dismissable alert-' + (type || 'success');
+    flash_message.setAttribute('role', 'alert');
+    flash_message.innerHTML = message;
+    flash_container.appendChild(flash_message);
+    flash_message.addEventListener('click', function (e) {
+      e.target.style.display = 'none';
+    });
+    $(flash_message).animate({
+      opacity: 0
+    }, 5000);
+  };
+  /**
    * Deobfuscate an email address
    * 
    * @param {String} obfuscated_mail_address - the obfuscated
@@ -309,6 +338,7 @@ var profiles = function ($, undefined) {
   };
 
   return {
+    toast: toast,
     clear_row: clear_row,
     toggle_class: toggle_class,
     toggle_show: toggle_show,
@@ -395,11 +425,17 @@ $(document).ready(function () {
   $('[data-toggle="tooltip"]').tooltip();
 }); // Livewire global hooks
 
-if ((typeof Livewire === "undefined" ? "undefined" : _typeof(Livewire)) === 'object' && (typeof FontAwesomeDom === "undefined" ? "undefined" : _typeof(FontAwesomeDom)) === 'object') {
-  document.addEventListener('DOMContentLoaded', function () {
-    Livewire.hook('message.processed', function () {
-      return FontAwesomeDom.i2svg();
+if ((typeof Livewire === "undefined" ? "undefined" : _typeof(Livewire)) === 'object') {
+  if ((typeof FontAwesomeDom === "undefined" ? "undefined" : _typeof(FontAwesomeDom)) === 'object') {
+    document.addEventListener('DOMContentLoaded', function () {
+      Livewire.hook('message.processed', function () {
+        return FontAwesomeDom.i2svg();
+      });
     });
+  }
+
+  Livewire.on('alert', function (message, type) {
+    return profiles.toast(message, type);
   });
 }
 

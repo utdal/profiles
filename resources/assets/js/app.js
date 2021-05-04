@@ -87,6 +87,32 @@ var profiles = (function ($, undefined) {
     }
 
     /**
+     * Display a dynamic toast alert
+     * 
+     * @param {String} message - the message to display
+     * @param {String} type - alert type, e.g. primary, success, warning, danger, and etc.
+     */
+    let toast = (message, type) => {
+      let flash_container = document.querySelector('.flash-container');
+
+      if (!flash_container) {
+        flash_container = document.createElement('div');
+        flash_container.classList = 'flash-container';
+        document.body.appendChild(flash_container);
+      }
+
+      let flash_message = document.createElement('div');
+      flash_message.classList = 'flash-message alert-dismissable alert-' + (type || 'success');
+      flash_message.setAttribute('role', 'alert');
+      flash_message.innerHTML = message;
+
+      flash_container.appendChild(flash_message);
+      
+      flash_message.addEventListener('click', (e) => {e.target.style.display = 'none'});
+      $(flash_message).animate({opacity: 0}, 5000);
+    }
+
+    /**
      * Deobfuscate an email address
      * 
      * @param {String} obfuscated_mail_address - the obfuscated
@@ -283,6 +309,7 @@ var profiles = (function ($, undefined) {
     }
 
     return {
+        toast: toast,
         clear_row: clear_row,
         toggle_class: toggle_class,
         toggle_show: toggle_show,
@@ -382,8 +409,11 @@ $(document).ready(function() {
 });
 
 // Livewire global hooks
-if (typeof Livewire === 'object' && typeof FontAwesomeDom === 'object') {
-  document.addEventListener('DOMContentLoaded', () => {
-    Livewire.hook('message.processed', () => FontAwesomeDom.i2svg());
-  });
+if (typeof Livewire === 'object') {
+  if (typeof FontAwesomeDom === 'object') {
+    document.addEventListener('DOMContentLoaded', () => {
+      Livewire.hook('message.processed', () => FontAwesomeDom.i2svg());
+    });
+  }
+  Livewire.on('alert', (message, type) => profiles.toast(message, type));
 }
