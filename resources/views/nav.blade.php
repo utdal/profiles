@@ -10,6 +10,7 @@ $can_create_own_profile = $user && $user->can('createOwn', 'App\Profile');
 $can_view_profile_admin_index = $user && $user->can('viewAdminIndex', 'App\Profile');
 $can_view_school_admin_index = $user && $user->can('viewAdminIndex', 'App\School');
 $can_view_user_admin_index = $user && $user->can('viewAdminIndex', 'App\User');
+$can_view_tag_admin_index = $user && $user->can('viewAdminIndex', 'Spatie\Tags\Tag');
 $can_view_log_admin_index = $user && $user->can('viewAdminIndex', 'App\LogEntry');
 $can_update_settings = $user && $user->can('update', 'App\Setting');
 $can_create_users = $user && $user->can('create', 'App\User');
@@ -55,7 +56,7 @@ $can_create_users = $user && $user->can('create', 'App\User');
           </div>
         </li>
         @endif
-        @if($can_view_user_admin_index || $can_create_users || $can_view_profile_admin_index || $can_view_log_admin_index || $can_view_school_admin_index || $can_update_settings)
+        @if($can_view_user_admin_index || $can_view_tag_admin_index || $can_create_users || $can_view_profile_admin_index || $can_view_log_admin_index || $can_view_school_admin_index || $can_update_settings)
         <li class="nav-item dropdown">
           <a href="#" class="nav-link dropdown-toggle" id="adminNavDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Admin <span class="caret"></span>
@@ -79,6 +80,11 @@ $can_create_users = $user && $user->can('create', 'App\User');
             @if($can_view_school_admin_index)
             <a class="dropdown-item" href="{{ route('schools.index') }}">
               <span class="fas fa-university fa-fw"></span> All Schools
+            </a>
+            @endif
+            @if($can_view_tag_admin_index)
+            <a class="dropdown-item" href="{{ route('tags.table') }}">
+              <span class="fas fa-tags fa-fw"></span> All Tags
             </a>
             @endif
             @if($can_update_settings)

@@ -14,11 +14,14 @@ class TagsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth',
-            ['except' => [
-                'index'
-            ]]
-        );
+        $this->middleware('auth')->except('index');
+
+        $this->middleware('can:viewAdminIndex,'.Tag::class)->only('table');
+
+        $this->middleware('can:create,'.Tag::class)->only([
+            'create',
+            'store',
+        ]);
     }
 
     /**
@@ -39,6 +42,39 @@ class TagsController extends Controller
         });
 
         return view('tags.index', compact('tag_groups'));
+    }
+
+    /**
+     * Show the index table of all associated tags.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function table()
+    {
+        return view('tags.table');
+    }
+
+    /**
+     * Show the index table of all associated tags.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function create()
+    {
+        return view('tags.create');
+    }
+
+    /**
+     * Save the tag in the database.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function store(Request $request)
+    {
+        Tag::findOrCreate(preg_split('/\r\n|\r|\n/', $request->tag_name ?? ''), $request->tag_type);
+
+        return redirect()->route('tags.table')
+            ->with('flash_message', 'Added tags');
     }
 
     /**

@@ -55,6 +55,9 @@ Route::name('users.')->prefix('/users')->group(function() {
  ******************/
 Route::name('tags.')->prefix('/tags')->group(function () {
     Route::name('index')->get('/', 'TagsController@index');
+    Route::name('table')->get('/table', 'TagsController@table');
+    Route::name('create')->get('/create', 'TagsController@create');
+    Route::name('store')->post('/store', 'TagsController@store');
     Route::name('api.search')->get('/api/search', 'TagsController@search');
     Route::name('api.update')->post('/api', 'TagsController@update');
 
