@@ -56,6 +56,7 @@
 									<a href="{{$information->$url_key}}" target="_blank">@if($information->$url_name){{$information->$url_name}}@else{{"Website"}}@endif</a><br />@endif
 								@endforeach
 								@if($information->orc_id)<i class="fa fa-fw fa-globe" aria-hidden="true"></i> <a href="https://orcid.org/{{$information->orc_id}}" target="_blank">ORCID</a><br />@endif
+								@if($information->not_accepting_students)<p class="mt-3 mb-0 text-muted"><small><i class="fas fa-fw fa-user-slash" aria-hidden="true"></i> Not currently accepting students</small></p>@endif
 							</div>
 						@if(!$profile->tags->isEmpty() || $editable)
 						<div class="protocol-tags">

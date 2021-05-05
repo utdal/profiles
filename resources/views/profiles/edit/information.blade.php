@@ -147,6 +147,22 @@
 					</label>
 				</div>
 			</div>
+			@if(config('app.enable_students'))
+			<div class="form-group row">
+				<div class="col col-4">
+					<label for="visibility">Not Accepting Students</label><br>
+					<label class="switch pull-left">
+						<input type="hidden" name="data[{{$info->id}}][data][not_accepting_students]" id="data[{{$info->id}}][data][not_accepting_students]" value="0">
+						<input type="checkbox" name="data[{{$info->id}}][data][not_accepting_students]" id="data[{{$info->id}}][data][not_accepting_students]" value="1" @if($info->not_accepting_students) checked @endif>
+						<span class="slider round"></span>
+					</label>
+				</div>
+				<div class="col col-8">
+					<br>
+					<p>Turning this on will show a standard note on your profile that you're not currently accepting students.</p>
+				</div>
+			</div>
+			@endif
 			<div class="form-group row">
 				<div class="col col-4">
 					<label for="visibility">Profile Visible</label><br>
