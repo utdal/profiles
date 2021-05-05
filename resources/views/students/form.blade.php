@@ -10,6 +10,13 @@
 </div>
 
 <div class="mb-3">
+    <label for="topics" class="form-label">Select a few research topics that interest you:</label>
+    <div class="tags">
+        <livewire:tags-modal :model="$student"> @if($editable)<a class="btn btn-primary btn-sm badge" href="#" data-target="#{{ Illuminate\Support\Str::slug($student->getRouteKey()) }}_tags_editor" data-toggle="modal" role="button"><i class="fas fa-edit"></i> Edit</a>@endif
+    </div>
+</div>
+
+<div class="mb-3">
     <strong class="mr-5">Days Available:</strong>
     @foreach(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $day)
     <div class="form-check form-check-inline">
@@ -40,13 +47,6 @@
     <div class="form-check form-check-inline">
         {!! Form::radio("research_profile[future_semester]", '0', $student->research_profile->future_semester === '0', ['id' => "future_semester_no", 'class' => 'form-check-input']) !!}
         {!! Form::label("future_semester_no", "No", ['class' => 'form-check-label']) !!}
-    </div>
-</div>
-
-<div class="mb-3">
-    <label for="topics" class="form-label">Select a few research topics that interest you:</label>
-    <div class="tags">
-        <i class="fas fa-tags" aria-hidden="true"></i><span class="sr-only">Tags:</span> @include('tags.show', ['model' => $student]) @if($editable)<a class="btn btn-primary btn-sm badge" href="#" data-target="#{{ Illuminate\Support\Str::slug($student->getRouteKey()) }}_tags_editor" data-toggle="modal" role="button"><i class="fas fa-edit"></i> Edit</a>@endif
     </div>
 </div>
 
