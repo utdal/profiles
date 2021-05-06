@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Student;
 use App\StudentData;
+use App\Helpers\Semester;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Spatie\Tags\Tag;
@@ -23,6 +24,8 @@ class StudentsTable extends Component
     public $faculty_filter = '';
 
     public $schools_filter = '';
+
+    public $semester_filter = '';
 
     public $per_page = 25;
 
@@ -45,6 +48,7 @@ class StudentsTable extends Component
             ->withStatus($this->status_filter)
             ->withFaculty($this->faculty_filter)
             ->withSchool($this->schools_filter)
+            ->withSemester($this->semester_filter)
             ->orderBy($this->sort_field, $this->sort_descending ? 'desc' : 'asc');
 
         return view('livewire.students-table', [
@@ -52,6 +56,10 @@ class StudentsTable extends Component
             'tags' => Tag::getWithType(Student::class),
             'faculty' => StudentData::whereType('research_profile')->pluck('data')->pluck('faculty')->flatten()->unique()->filter()->sort()->values(),
             'schools' => StudentData::whereType('research_profile')->pluck('data')->pluck('schools')->flatten()->unique()->filter()->sort()->values(),
+            'semesters' => StudentData::whereType('research_profile')->pluck('data')->pluck('semesters')->flatten()->unique()->filter()
+                ->sortBy(function($semester, $key) {
+                    return Semester::date($semester)->toDateString();
+                })->values(),
         ]);
     }
 }

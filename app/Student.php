@@ -121,6 +121,17 @@ class Student extends Model implements Auditable
         return $query;
     }
 
+    public function scopeWithSemester($query, $semester)
+    {
+        if ($semester) {
+            $query->whereHas('research_profile', function ($q) use ($semester) {
+                $q->whereJsonContains('data->semesters', $semester);
+            });
+        }
+
+        return $query;
+    }
+
     ///////////////
     // Relations //
     ///////////////

@@ -282,6 +282,7 @@ return [
         /**
          * Application Aliases
          */
+        'Semester' => App\Helpers\Semester::class,
         'Utils' => App\Helpers\Utils::class,
 
     ],

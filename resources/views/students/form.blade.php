@@ -17,37 +17,35 @@
 </div>
 
 <div class="mb-3">
-    <strong class="mr-5">Days Available:</strong>
-    @foreach(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $day)
-    <div class="form-check form-check-inline">
-        {!! Form::checkbox("research_profile[availability][]", $day, in_array($day, $student->research_profile->availability ?? []), ['id' => "data_availability_$day", 'class' => 'form-check-input']) !!}
-        {!! Form::label("data_availability_$day", $day, ['class' => 'form-check-label']) !!}
-    </div>
+    <strong class="mr-5">Which semesters are you applying for?</strong>
+    @php($semesters = $editable ? App\Helpers\Semester::next(3) : $student->research_profile->semesters ?? [])
+    @foreach($semesters as $i => $semester)
+        <div class="form-check form-check-inline">
+            {!! Form::checkbox("research_profile[semesters][]", $semester, in_array($semester, $student->research_profile->semesters ?? []), ['id' => "data_semester_$i", 'class' => 'form-check-input', 'data-toggle' => 'show', 'data-toggle-target' => "#semester_{$i}_subform"]) !!}
+            {!! Form::label("data_semester_$i", $semester, ['class' => 'form-check-label']) !!}
+        </div>
     @endforeach
-</div>
-
-<div class="mb-3">
-    <strong class="mr-5">Are you willing to start in the middle of the semester?</strong>
-    <div class="form-check form-check-inline">
-        {!! Form::radio("research_profile[mid_semester]", '1', $student->research_profile->mid_semester === '1', ['id' => "mid_semester_yes", 'class' => 'form-check-input']) !!}
-        {!! Form::label("mid_semester_yes", "Yes", ['class' => 'form-check-label']) !!}
-    </div>
-    <div class="form-check form-check-inline">
-        {!! Form::radio("research_profile[mid_semester]", '0', $student->research_profile->mid_semester === '0', ['id' => "mid_semester_no", 'class' => 'form-check-input']) !!}
-        {!! Form::label("mid_semester_no", "No", ['class' => 'form-check-label']) !!}
-    </div>
-</div>
-
-<div class="mb-3">
-    <strong class="mr-5">Are you willing to start in a future semester?</strong>
-    <div class="form-check form-check-inline">
-        {!! Form::radio("research_profile[future_semester]", '1', $student->research_profile->future_semester === '1', ['id' => "future_semester_yes", 'class' => 'form-check-input']) !!}
-        {!! Form::label("future_semester_yes", "Yes", ['class' => 'form-check-label']) !!}
-    </div>
-    <div class="form-check form-check-inline">
-        {!! Form::radio("research_profile[future_semester]", '0', $student->research_profile->future_semester === '0', ['id' => "future_semester_no", 'class' => 'form-check-input']) !!}
-        {!! Form::label("future_semester_no", "No", ['class' => 'form-check-label']) !!}
-    </div>
+    @foreach($semesters as $i => $semester)
+        @php($semester_slug = Illuminate\Support\Str::slug($semester))
+        <div class="subform my-3" id="semester_{{ $i }}_subform">
+            <div class="mb-3">
+                {!! Form::label("research_profile[availability][$semester_slug][hours]", "In $semester, how many hours are you willing to commit to research?", ['class' => 'form-label']) !!}
+                {!! Form::text("research_profile[availability][$semester_slug][hours]", $student->research_profile->availability[$semester_slug]['hours'] ?? null, ['class' => 'form-control']) !!}
+            </div>
+            <div class="mb-3">
+                {!! Form::label("research_profile[availability][$semester_slug][hours_weekdays]", "In $semester, how many hours Monday to Friday between 9-5?", ['class' => 'form-label']) !!}
+                {!! Form::text("research_profile[availability][$semester_slug][hours_weekdays]", $student->research_profile->availability[$semester_slug]['hours_weekdays'] ?? null, ['class' => 'form-control']) !!}
+            </div>
+            <div class="mb-3">
+                {!! Form::label("research_profile[availability][$semester_slug][hours_weekends]", "In $semester, how many hours on weeknights and/or weekends?", ['class' => 'form-label']) !!}
+                {!! Form::text("research_profile[availability][$semester_slug][hours_weekends]", $student->research_profile->availability[$semester_slug]['hours_weekends'] ?? null, ['class' => 'form-control']) !!}
+            </div>
+            <div class="mb-3">
+                {!! Form::label("research_profile[availability][$semester_slug][hours_specific]", "For $semester, if you know your specific hours of availability, please list them here:", ['class' => 'form-label']) !!}
+                {!! Form::textarea("research_profile[availability][$semester_slug][hours_specific]", $student->research_profile->availability[$semester_slug]['hours_specific'] ?? null, ['class' => 'form-control']) !!}
+            </div>
+        </div>
+    @endforeach
 </div>
 
 <div class="mb-3">

@@ -33,20 +33,20 @@
             </select>
         </div>
         <div class="form-group col-lg-2">
+            <label for="studentSemesterSearch">Semester</label>
+            <select wire:model="semester_filter" id="studentSemesterSearch" class="form-control">
+                <option value="" selected>All</option>
+                @foreach($semesters as $semester)
+                <option value="{{ $semester }}">{{ $semester }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group col-lg-2">
             <label for="studentStatus">Status</label>
             <select wire:model="status_filter" id="studentStatus" class="form-control">
                 <option value="" selected>All</option>
                 <option value="submitted">submitted</option>
                 <option value="drafted">drafted</option>
-            </select>
-        </div>
-        <div class="form-group col-lg-2">
-            <label for="perPage">Per Page</label>
-            <select wire:model="per_page" id="perPage" class="form-control">
-                <option value="10">10</option>
-                <option value="25" selected>25</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
             </select>
         </div>
     </div>
@@ -59,6 +59,7 @@
                 <th>Topic Interests</th>
                 <th>Faculty Interest</th>
                 <th>Schools</th>
+                <th>Applying For</th>
                 <th>Graduates</th>
                 @include('livewire.partials._th-sortable', ['title' => 'Status', 'field' => 'status'])
                 @include('livewire.partials._th-sortable', ['title' => 'Updated', 'field' => 'updated_at'])
@@ -72,6 +73,7 @@
                 <td>{{ $student->tags->implode('name', ', ') }}</td>
                 <td>{{ implode(', ', $student->research_profile->faculty ?? []) }}</td>
                 <td>{{ implode(', ', $student->research_profile->schools ?? []) }}</td>
+                <td>{{ implode(', ', $student->research_profile->semesters ?? []) }}</td>
                 <td>{{ $student->research_profile->graduation_date }}</td>
                 <td>{{ $student->status }}</td>
                 <td>{{ $student->updated_at->toFormattedDateString() }}</td>
@@ -80,5 +82,17 @@
         </tbody>
     </table>
 
-    {{ $students->links() }}
+    <div class="row mt-5">
+        <div class="col-lg-10">
+            {{ $students->links() }}
+        </div>
+        <div class="col-lg-2">
+            <select wire:model="per_page" id="perPage" class="form-control form-control-sm">
+                <option value="10">10 per page</option>
+                <option value="25" selected>25 per page</option>
+                <option value="50">50 per page</option>
+                <option value="100">100 per page</option>
+            </select>
+        </div>
+    </div>
 </div>
