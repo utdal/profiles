@@ -127,7 +127,7 @@ class StudentsController extends Controller
         ]);
 
         return redirect()->route('students.show', ['student' => $student])
-            ->with('flash_message', ($updated && $research_profile_updated) ? 'Saved!' : 'Sorry, unable to save.');
+            ->with('flash_message', ($updated && $research_profile_updated) ? 'Submitted!' : 'Sorry, unable to save.');
     }
 
     public function setStatus(Request $request, Student $student)

@@ -16,9 +16,12 @@
 </div>
 
 <div class="mb-3">
-    <label for="topics" class="form-label">Select a few research topics that interest you:</label>
-    <div class="tags">
-        <livewire:tags-modal :model="$student"> @if($editable)<a class="btn btn-primary btn-sm badge" href="#" data-target="#{{ Illuminate\Support\Str::slug($student->getRouteKey()) }}_tags_editor" data-toggle="modal" role="button"><i class="fas fa-edit"></i> Edit</a>@endif
+    <label for="topics" class="form-label mr-3">Select a few research topics that interest you:</label>
+    @if($editable)
+        <a class="btn btn-success btn-sm" href="#" data-target="#{{ Illuminate\Support\Str::slug($student->getRouteKey()) }}_tags_editor" data-toggle="modal" role="button"><i class="fas fa-tags"></i> Select Tags&hellip;</a>
+    @endif
+    <div class="tags my-2">
+        <livewire:tags-modal :model="$student">
     </div>
 </div>
 
