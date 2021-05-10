@@ -28,9 +28,9 @@ A simple CRUD/search profile system for research profiles, providing user-editab
 
 #### Minimum Requirements
 
-* PHP 7.1
+* PHP 7.3
 * MySQL 5.7
-* Apache 2.4
+* Apache 2.4 / Nginx
 * [Composer](https://getcomposer.org/)
 
 #### Installation
