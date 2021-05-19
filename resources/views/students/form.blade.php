@@ -27,7 +27,7 @@
 
 <div class="mb-3">
     <strong class="mr-5">Which semesters are you applying for?</strong>
-    @php($semesters = $editable ? App\Helpers\Semester::next(3) : $student->research_profile->semesters ?? [])
+    @php($semesters = $editable ? App\Helpers\Semester::currentAndNext(3) : $student->research_profile->semesters ?? [])
     @foreach($semesters as $i => $semester)
         <div class="form-check form-check-inline">
             {!! Form::checkbox("research_profile[semesters][]", $semester, in_array($semester, $student->research_profile->semesters ?? []), ['id' => "data_semester_$i", 'class' => 'form-check-input', 'data-toggle' => 'show', 'data-toggle-target' => "#semester_{$i}_subform"]) !!}
