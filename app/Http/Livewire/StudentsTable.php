@@ -29,7 +29,7 @@ class StudentsTable extends Component
 
     public $per_page = 25;
 
-    public $sort_field = 'updated_at';
+    public $sort_field = 'id';
 
     public $sort_descending = true;
 

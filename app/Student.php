@@ -157,6 +157,16 @@ class Student extends Model implements Auditable
     }
 
     /**
+     * Student has many feedback.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function feedback()
+    {
+        return $this->hasMany(StudentData::class)->where('type', 'feedback');
+    }
+
+    /**
      * Student has one research profile.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne

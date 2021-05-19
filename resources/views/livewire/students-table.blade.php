@@ -62,7 +62,7 @@
                 <th>Applying For</th>
                 <th>Graduates</th>
                 @include('livewire.partials._th-sortable', ['title' => 'Status', 'field' => 'status'])
-                @include('livewire.partials._th-sortable', ['title' => 'Updated', 'field' => 'updated_at'])
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -76,7 +76,14 @@
                 <td>{{ implode(', ', $student->research_profile->semesters ?? []) }}</td>
                 <td>{{ $student->research_profile->graduation_date }}</td>
                 <td>{{ $student->status }}</td>
-                <td>{{ $student->updated_at->toFormattedDateString() }}</td>
+                <td class="text-center">
+                    <a href="{{ route('students.show', ['student' => $student]) }}" target="_blank" title="View in new tab/window">
+                        <i class="far fa-fw fa-window-restore"></i><span class="sr-only">View</span>
+                    </a>
+                    <a href="{{ route('students.show', ['student' => $student]) }}#student_feedback" target="_blank" title="Add or view feedback">
+                        <i class="fas fa-fw fa-comment"></i><span class="sr-only">Feedback</span>
+                    </a>
+                </td>
             </tr>
             @endforeach
         </tbody>
