@@ -42,7 +42,7 @@
         </div>
         
         <div class="col-md-4">
-            <h2><i class="fas fa-hands-helping"></i> Apply</h2>
+            <h2><i class="fas fa-hands-helping"></i> Apply <sup class="badge badge-secondary rounded-pill"><small>Beta</small></sup></h2>
             <p>Ready to reach out? Create an application here:</p>
             <p><a class="btn btn-primary" href="{{ route('students.create') }}" role="button">Apply to join a research lab <i class="fas fa-arrow-right"></i></a></p>
         </div>
