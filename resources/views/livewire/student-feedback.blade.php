@@ -1,6 +1,6 @@
 <div>
     {{-- Feedback form --}}
-    @if(true) {{-- @todo: add permission --}}
+    @can('create', App\StudentFeedback::class)
         <div class="add-feedback mb-5">
             <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#student_{{ $student->id }}_feedback_form" aria-expanded="false" aria-controls="student_{{ $student->id }}_feedback_form">
                 <i class="fas fa-comment-medical"></i> Add feedback <i class="fas fa-caret-down"></i>
@@ -37,18 +37,18 @@
                 </div>
             </div>
         </div>
-    @endif
+    @endcan
 
     {{-- Feedback list --}}
     @forelse($feedback as $feedback_item)
         <div class="card mb-3">
             <div class="card-header text-right">
                 <em>{{ $feedback_item->created_at->toFormattedDateString() }}</em>
-                @if(true) {{-- @todo: permissions to delete --}}
+                @can('delete', $feedback_item)
                     <a onclick="confirm('Are you sure you want to remove this feedback?') || event.stopImmediatePropagation()" wire:click="destroy({{ $feedback_item->id }})" role="button" title="remove">
                         <i class="far fa-trash-alt"></i><span class="sr-only">Remove</span>
                     </a>
-                @endif
+                @endcan
             </div>
             <div class="card-body">
                 <ul>

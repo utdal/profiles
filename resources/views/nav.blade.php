@@ -52,7 +52,9 @@ $can_create_users = $user && $user->can('create', 'App\User');
           </a>
           <div class="dropdown-menu" aria-labelledby="studentNavDropdown">
             <a href="{{ route('students.about') }}" class="dropdown-item"><i class="fas fa-rocket"></i> Get Started with Research</a>
-            <a href="{{ route('students.index') }}" class="dropdown-item"><i class="fas fa-users"></i> Student Research Profiles</a>
+            @can('viewAny', App\Student::class)
+              <a href="{{ route('students.index') }}" class="dropdown-item"><i class="fas fa-users"></i> Student Research Profiles</a>
+            @endcan
           </div>
         </li>
         @endif

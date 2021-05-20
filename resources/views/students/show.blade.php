@@ -18,9 +18,9 @@
         @else
             <a class="btn btn-secondary btn-sm" href="{{ route('students.status', ['student' => $student, 'status' => 'drafted']) }}" data-toggle="tooltip" data-placement="auto" title="Un-submit if you've already joined a research group or want to remove your profile from consideration"><i class="fas fa-undo"></i> Un-submit</a>
         @endif
-        @if(true) {{-- @todo permission to view feedback --}}
+        @can('viewFeedback', $student)
             <a class="btn btn-primary btn-sm" href="#student_feedback"><i class="fas fa-comment"></i> Feedback</a>
-        @endif
+        @endcan
     </h2>
     <div class="text-muted text-right">
         <small>last updated: {{ $student->updated_at->toFormattedDateString() }}</small>
@@ -31,11 +31,11 @@
         @include('students.form', ['editable' => false])
     </fieldset>
 
-    @if($student->feedback()->exists() || true) {{-- @todo permission to view feedback --}}
+    @can('viewFeedback', $student)
         <hr>
         <h2 id="student_feedback"><i class="fas fa-comment"></i> Feedback</h2>
         <livewire:student-feedback :student="$student">
-    @endif
+    @endcan
 </div>
 
 @stop

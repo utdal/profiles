@@ -3,16 +3,21 @@
 namespace App\Http\Livewire;
 
 use App\StudentFeedback as StudentFeedbackEntry;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class StudentFeedback extends Component
 {
+    use AuthorizesRequests;
+
     public $student;
 
     public $new_feedback = [];
 
     public function add()
     {
+        $this->authorize('create', StudentFeedbackEntry::class);
+
         $feedback = $this->student->feedback()->create([
             'data' => $this->new_feedback + ['submitted_by' => auth()->user()->id ?? 'system'],
         ]);
@@ -27,6 +32,8 @@ class StudentFeedback extends Component
 
     public function destroy(StudentFeedbackEntry $feedback)
     {
+        $this->authorize('delete', $feedback);
+
         $feedback->delete();
 
         $this->emit('alert', "Feedback removed.", 'success');

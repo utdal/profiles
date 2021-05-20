@@ -11,14 +11,12 @@ class StudentsController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->only([
-            'index',
-            'create',
-            'store',
-            'edit',
-            'update',
-            'destroy',
-        ]);
+        $this->middleware('auth')->except('about');
+        $this->middleware('can:viewAny,'.Student::class)->only('index');
+        $this->middleware('can:create,'.Student::class)->only(['create', 'store']);
+        $this->middleware('can:view,student')->only('show');
+        $this->middleware('can:update,student')->only(['edit', 'update']);
+        $this->middleware('can:delete,student')->only('destroy');
     }
 
     public function about()
@@ -150,6 +148,6 @@ class StudentsController extends Controller
      */
     public function destroy(Student $student)
     {
-        dd($student);
+        //
     }
 }
