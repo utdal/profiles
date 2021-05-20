@@ -24,13 +24,6 @@ class StudentData extends ProfileData
         'sort_order',
     ];
 
-    public const FEEDBACK_REASONS = [
-        'availability' => "Availability doesn't match my needs",
-        'interests' => "Interests don't match my research",
-        'qualifications' => "Qualifications or experience doesn't match my needs",
-        'preferences' => "Preferences (travel, credit, and etc.) don't match my needs",
-    ];
-
     //////////////////
     // Query Scopes //
     //////////////////

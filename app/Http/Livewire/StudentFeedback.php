@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\StudentData;
+use App\StudentFeedback as StudentFeedbackEntry;
 use Livewire\Component;
 
 class StudentFeedback extends Component
@@ -14,7 +14,6 @@ class StudentFeedback extends Component
     public function add()
     {
         $feedback = $this->student->feedback()->create([
-            'type' => 'feedback',
             'data' => $this->new_feedback + ['submitted_by' => auth()->user()->id ?? 'system'],
         ]);
 
@@ -26,7 +25,7 @@ class StudentFeedback extends Component
         }
     }
 
-    public function destroy(StudentData $feedback)
+    public function destroy(StudentFeedbackEntry $feedback)
     {
         $feedback->delete();
 
@@ -37,7 +36,7 @@ class StudentFeedback extends Component
     {
         return view('livewire.student-feedback', [
             'feedback' => $this->student->feedback()->orderBy('created_at', 'desc')->get(),
-            'reasons' => StudentData::FEEDBACK_REASONS,
+            'reasons' => StudentFeedbackEntry::REASONS,
         ]);
     }
 }

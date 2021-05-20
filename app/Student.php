@@ -3,6 +3,7 @@
 namespace App;
 
 use App\StudentData;
+use App\StudentFeedback;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Auditable as HasAudits;
@@ -163,7 +164,7 @@ class Student extends Model implements Auditable
      */
     public function feedback()
     {
-        return $this->hasMany(StudentData::class)->where('type', 'feedback');
+        return $this->hasMany(StudentFeedback::class)->where('type', 'feedback');
     }
 
     /**
