@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title', 'Student Research Profile')
+@section('title', "Student Research Profile for {$student->full_name}")
 @section('header')
 	@include('nav')
 @stop
@@ -10,7 +10,7 @@
     <h1 class="mb-0">
         Student Research Profile @if($student->status === 'drafted')<span class="badge rounded-pill badge-secondary">drafted</span>@endif
     </h1>
-    <h2 class="my-0 text-muted">
+    <h2 class="mt-0 text-muted">
         for {{ $student->full_name }}
         @can('update', $student)
             <a class="btn btn-primary btn-sm" href="{{ route('students.edit', [$student]) }}"><i class="fas fa-edit"></i> Edit</a>
@@ -24,8 +24,15 @@
             <a class="btn btn-primary btn-sm" href="#student_feedback"><i class="fas fa-comment"></i> Feedback</a>
         @endcan
     </h2>
-    <div class="text-muted text-right">
-        <small>last updated: {{ $student->updated_at->toFormattedDateString() }}</small>
+    <div class="row">
+        <div class="col text-muted">
+            <a href="mailto:{{ optional($student->user)->email }}">
+                <i class="fas fa-envelope"></i> {{ optional($student->user)->email }}
+            </a>
+        </div>
+        <div class="col text-muted text-right">
+            <small>last updated: {{ $student->updated_at->toFormattedDateString() }}</small>
+        </div>
     </div>
     <hr>
 

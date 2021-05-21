@@ -51,7 +51,7 @@
         </div>
     </div>
 
-    <table class="table table-sm table-striped">
+    <table class="table table-sm table-striped table-responsive-lg">
         <thead>
             <tr>
                 @include('livewire.partials._th-sortable', ['title' => 'ID', 'field' => 'id'])
@@ -76,12 +76,15 @@
                 <td>{{ implode(', ', $student->research_profile->semesters ?? []) }}</td>
                 <td>{{ $student->research_profile->graduation_date }}</td>
                 <td>{{ $student->status }}</td>
-                <td class="text-center">
+                <td class="text-center text-nowrap">
                     <a href="{{ route('students.show', ['student' => $student]) }}" target="_blank" title="View in new tab/window">
                         <i class="far fa-fw fa-window-restore"></i><span class="sr-only">View</span>
                     </a>
                     <a href="{{ route('students.show', ['student' => $student]) }}#student_feedback" target="_blank" title="Add or view feedback">
                         <i class="fas fa-fw fa-comment"></i><span class="sr-only">Feedback</span>
+                    </a>
+                    <a href="mailto:{{ optional($student->user)->email }}" title="Email the student">
+                        <i class="fas fa-fw fa-envelope"></i><span class="sr-only">Email</span>
                     </a>
                 </td>
             </tr>
