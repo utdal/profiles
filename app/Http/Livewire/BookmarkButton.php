@@ -10,6 +10,8 @@ class BookmarkButton extends Component
 
     public $user;
 
+    public $mini = false;
+
     public function mount()
     {
         $this->user = auth()->user();
@@ -23,10 +25,14 @@ class BookmarkButton extends Component
     public function bookmark()
     {
         $this->user->bookmark($this->model);
+
+        $this->emit('alert', "Bookmarked!", 'success');
     }
 
     public function unbookmark()
     {
         $this->user->unbookmark($this->model);
+
+        $this->emit('alert', "Removed from your bookmarks", 'success');
     }
 }

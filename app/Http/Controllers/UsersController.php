@@ -7,6 +7,7 @@ use App\Http\Requests\UserStoreRequest;
 use App\Profile;
 use App\Role;
 use App\School;
+use App\Student;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -85,6 +86,7 @@ class UsersController extends Controller
         return view('users.bookmarks', [
             'user' => $user,
             'profile_bookmarks' => $user->bookmarked(Profile::class)->orderBy('last_name')->get(),
+            'student_bookmarks' => $user->bookmarked(Student::class)->orderBy('full_name')->get(),
         ]);
     }
 

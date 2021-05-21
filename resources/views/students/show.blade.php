@@ -20,6 +20,9 @@
                 <a class="btn btn-secondary btn-sm" href="{{ route('students.status', ['student' => $student, 'status' => 'drafted']) }}" data-toggle="tooltip" data-placement="auto" title="Un-submit if you've already joined a research group or want to remove your profile from consideration"><i class="fas fa-undo"></i> Un-submit</a>
             @endif
         @endcan
+        @if(!auth()->user()->owns($student))
+            <livewire:bookmark-button :model="$student">
+        @endif
         @can('viewFeedback', $student)
             <a class="btn btn-primary btn-sm" href="#student_feedback"><i class="fas fa-comment"></i> Feedback</a>
         @endcan
