@@ -15,7 +15,7 @@ class StudentsController extends Controller
         $this->middleware('can:viewAny,'.Student::class)->only('index');
         $this->middleware('can:create,'.Student::class)->only(['create', 'store']);
         $this->middleware('can:view,student')->only('show');
-        $this->middleware('can:update,student')->only(['edit', 'update']);
+        $this->middleware('can:update,student')->only(['edit', 'update', 'setStatus']);
         $this->middleware('can:delete,student')->only('destroy');
     }
 

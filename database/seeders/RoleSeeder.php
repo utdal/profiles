@@ -23,7 +23,7 @@ class RoleSeeder extends Seeder {
 		]);
 
 		// UTD roles
-		 
+
 		$dean = Role::create([
 			'name' => 'dean',
 			'display_name' => 'Dean',
@@ -61,7 +61,7 @@ class RoleSeeder extends Seeder {
 			'display_name' => 'Profiles Editor',
 			'description' => 'User is an editor of any profiles',
 		]);
-		
+	
 		$school_profiles_editor = Role::create([
 			'name' => 'school_profiles_editor',
 			'display_name' => 'School Profiles Editor',
@@ -73,6 +73,14 @@ class RoleSeeder extends Seeder {
             'display_name' => 'Department Profiles Editor',
             'description' => 'User is an editor of profiles for their department',
         ]);
-	
+
+		// Student roles
+
+		$students_admin = Role::create([
+			'name' => 'students_admin',
+			'display_name' => 'Student Research Admin',
+			'description' => 'User is an administrator for the student research feature',
+		]);
+
 	}
 }
