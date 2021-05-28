@@ -183,6 +183,11 @@ var profiles = function ($, undefined) {
     if (typeof api === 'undefined') api = this_url + '/api/v1?with_data=1&data_type=information';
     var $select = $(selector);
     if ($select.length === 0) return;
+
+    if ($select.data('school')) {
+      api += '&from_school=' + $select.data('school');
+    }
+
     var profileSearch = new Bloodhound({
       datumTokenizer: function datumTokenizer(profiles) {
         return Bloodhound.tokenizers.whitespace(profiles.value);

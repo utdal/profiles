@@ -164,6 +164,10 @@ var profiles = (function ($, undefined) {
       let $select = $(selector);
       if ($select.length === 0) return;
 
+      if ($select.data('school')) {
+          api += '&from_school=' + $select.data('school');
+      }
+
       let profileSearch = new Bloodhound({
         datumTokenizer: (profiles) => Bloodhound.tokenizers.whitespace(profiles.value),
         queryTokenizer: Bloodhound.tokenizers.whitespace,

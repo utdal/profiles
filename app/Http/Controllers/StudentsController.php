@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\School;
+use App\Setting;
 use App\Student;
 use App\StudentData;
 use Illuminate\Http\Request;
@@ -84,6 +86,18 @@ class StudentsController extends Controller
     }
 
     /**
+     * Get the list of schools participating in student research
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    protected function participatingSchools()
+    {
+        $names = json_decode(optional(Setting::whereName('student_participating_schools')->first())->value ?? "[]");
+
+        return empty($names) ? collect([]) : School::withNames($names)->pluck('display_name', 'short_name');
+    }
+
+    /**
      * Display the specified student research profile.
      *
      * @param  \App\Student  $student
@@ -91,7 +105,10 @@ class StudentsController extends Controller
      */
     public function show(Student $student)
     {
-        return view('students.show', ['student' => $student]);
+        return view('students.show', [
+            'student' => $student,
+            'schools' => $this->participatingSchools(),
+        ]);
     }
 
     /**
@@ -102,7 +119,10 @@ class StudentsController extends Controller
      */
     public function edit(Student $student)
     {
-        return view('students.edit', ['student' => $student]);
+        return view('students.edit', [
+            'student' => $student,
+            'schools' => $this->participatingSchools(),
+        ]);
     }
 
     /**

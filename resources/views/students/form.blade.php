@@ -60,15 +60,15 @@
 <div class="mb-3">
     {!! Form::label('research_profile[schools][]', 'Any particular schools you would like to do research within?', ['class' => 'form-label']) !!}
     <small class="form-text text-muted">Hold down control/command when clicking to select multiple.</small>
-    {!! Form::select('research_profile[schools][]', App\School::pluck('display_name', 'short_name'), $student->research_profile->schools ?? [], ['class' => 'form-control', 'multiple', 'size' => App\School::count()]); !!}
+    {!! Form::select('research_profile[schools][]', $schools, $student->research_profile->schools ?? [], ['class' => 'form-control', 'multiple', 'size' => $schools->count()]); !!}
 </div>
 
 <div class="mb-3">
-    {!! Form::label('research_profile_faculty[]', 'Any particular faculty you would like to work with?', ['class' => 'form-label']) !!}
+    {!! Form::label('research_profile_faculty[]', 'Any particular ' . $schools->keys()->implode(' / ') . ' faculty you would like to work with?', ['class' => 'form-label']) !!}
     <div class="profile-picker">
         @if($editable)
-        <small class="form-text text-muted">Max 5. Start typing a name and select from the list. You can also refer to <a href="{{ route('users.bookmarks.show', ['user' => auth()->user()]) }}" target="_blank">your bookmarks <i class="fas fa-external-link-alt"></i></a>.</small>
-        <i class="fas fa-users" aria-hidden="true"></i> {!! Form::select('research_profile[faculty][]', array_combine($student->research_profile->faculty ?? [], $student->research_profile->faculty ?? []), $student->research_profile->faculty ?? [], ['id' => 'research_profile_faculty[]', 'multiple']) !!}
+        <small class="form-text text-muted">Max 5. Start typing the name of a professor, and select from the list. You can also refer to <a href="{{ route('users.bookmarks.show', ['user' => auth()->user()]) }}" target="_blank">your bookmarks <i class="fas fa-external-link-alt"></i></a>.</small>
+        <i class="fas fa-users" aria-hidden="true"></i> {!! Form::select('research_profile[faculty][]', array_combine($student->research_profile->faculty ?? [], $student->research_profile->faculty ?? []), $student->research_profile->faculty ?? [], ['id' => 'research_profile_faculty[]', 'multiple'] + ($schools->isNotEmpty() ? ['data-school' => $schools->keys()->implode(';')] : [])) !!}
         @else
             <i class="fas fa-users" aria-hidden="true"></i><span class="sr-only">Faculty:</span> 
             @foreach(($student->research_profile->faculty ?? []) as $faculty)

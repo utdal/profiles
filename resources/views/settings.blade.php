@@ -179,6 +179,11 @@
                 <span class="slider round"></span>
             </label>
         </div>
+        <div class="col col-12">
+            <label for="rte_student_schools">Schools participating in student research</label>
+            <small class="form-text text-muted">Hold down control/command when clicking to select multiple.</small>
+            {!! Form::select('setting[student_participating_schools][]', App\School::pluck('display_name', 'short_name'), json_decode($settings['student_participating_schools'] ?? "[]"), ['class' => 'form-control', 'multiple', 'size' => App\School::count()]); !!}
+        </div>
     </div>
     @endif
    	

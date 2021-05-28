@@ -30,11 +30,11 @@ class SettingsController extends Controller
 
     public function update(Request $request)
     {
-        foreach($request->input('setting') as $name => $value){  
+        foreach ($request->input('setting') as $name => $value) {
             Setting::updateOrCreate([
                 'name' => $name
             ],[
-                'value' => $value
+                'value' => is_array($value) ? json_encode($value) : $value
             ]);
         }
 
