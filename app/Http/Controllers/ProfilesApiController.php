@@ -43,7 +43,7 @@ class ProfilesApiController extends Controller
             }
 
             if ($request->has('from_school')) {
-                $profile = $profile->fromSchool($request->from_school);
+                $profile = $profile->fromSchool(explode(';', $request->from_school));
             }
 
             if ($request->has('tag')) {

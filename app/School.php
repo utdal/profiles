@@ -73,6 +73,14 @@ class School extends Model implements Auditable
                     ->orderByRaw("name = ? DESC, short_name = ? DESC, display_name = ? DESC", [$name, $name, $name]);
     }
 
+    public function scopeWithNames($query, $names) {
+        return $query->whereIn('name', $names)
+                    ->orWhereIn('short_name', $names)
+                    ->orWhereIn('display_name', $names)
+                    ->orWhereRaw("aliases REGEXP ?", [implode('|', $names)])
+                    ->orderBy('name', 'DESC');
+    }
+
     public function scopeWithNameLike($query, $name)
     {
         return $query->where('name', 'like', "%$name%")

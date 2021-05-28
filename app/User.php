@@ -162,17 +162,19 @@ class User extends Authenticatable implements Auditable
      * Query scope to get users associated with a particular school name
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param string $school_name : the name of the school
+     * @param string|array $school_names : the name(s) of the school
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeWithSchoolNamed($query, $school_name)
+    public function scopeWithSchoolNamed($query, $school_names)
     {
+        $school_names = (array) $school_names;
+
         return $query
-            ->whereHas('school', function ($q) use ($school_name) {
-                $q->withName($school_name);
+            ->whereHas('school', function ($q) use ($school_names) {
+                $q->withNames($school_names);
             })
-            ->orWhereHas('setting', function ($q) use ($school_name) {
-                $q->joinSub(School::withName($school_name), 'schools', function ($j) {
+            ->orWhereHas('setting', function ($q) use ($school_names) {
+                $q->joinSub(School::withNames($school_names), 'schools', function ($j) {
                     $j->whereRaw("JSON_CONTAINS(JSON_KEYS(`additional_schools`), JSON_QUOTE(CAST(`schools`.`id` as char)))");
                 });
             });
