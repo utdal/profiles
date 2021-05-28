@@ -2,13 +2,14 @@
 
 namespace App\Http\Livewire;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Spatie\Tags\Tag;
 
 class TagsTable extends Component
 {
-    use WithPagination;
+    use AuthorizesRequests, WithPagination;
 
     protected $paginationTheme = 'bootstrap';
 
@@ -28,8 +29,18 @@ class TagsTable extends Component
         $this->sort_field = $field;
     }
 
+    public function updating($name)
+    {
+        // reset pagination when searching or filtering
+        if (in_array($name, ['search', 'tag_type_filter', 'per_page'])) {
+            $this->resetPage();
+        }
+    }
+
     public function destroy(Tag $tag)
     {
+        $this->authorize('delete', $tag);
+
         $tag_name = $tag->name;
 
         $tag->delete();

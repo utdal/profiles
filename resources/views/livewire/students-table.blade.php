@@ -80,7 +80,7 @@
                     <a href="{{ route('students.show', ['student' => $student]) }}" target="_blank" title="View in new tab/window">
                         <i class="far fa-fw fa-window-restore"></i><span class="sr-only">View</span>
                     </a>
-                    <livewire:bookmark-button :model="$student" :mini="true">
+                    <livewire:bookmark-button :model="$student" :mini="true" :wire:key="$student->id">
                     <a href="{{ route('students.show', ['student' => $student]) }}#student_feedback" target="_blank" title="Add or view feedback">
                         <i class="fas fa-fw fa-comment"></i><span class="sr-only">Feedback</span>
                     </a>

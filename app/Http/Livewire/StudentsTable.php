@@ -39,6 +39,14 @@ class StudentsTable extends Component
         $this->sort_field = $field;
     }
 
+    public function updating($name)
+    {
+        // reset pagination when searching or filtering
+        if (in_array($name, ['search', 'tag_filter', 'status_filter', 'faculty_filter', 'schools_filter', 'semester_filter', 'per_page'])) {
+            $this->resetPage();
+        }
+    }
+
     public function render()
     {
         $students_query = Student::query()

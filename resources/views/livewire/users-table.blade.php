@@ -78,9 +78,11 @@
                     <a href="{{ route('users.show', ['user' => $user]) }}" title="View">
                         <i class="fas fa-fw fa-link"></i><span class="sr-only">View</span>
                     </a>
+                    @can('edit', $user)
                     <a href="{{ route('users.edit', ['user' => $user]) }}" target="_blank" title="Edit">
                         <i class="fas fa-fw fa-edit"></i><span class="sr-only">Edit</span>
                     </a>
+                    @endcan
                 </td>
             </tr>
             @endforeach

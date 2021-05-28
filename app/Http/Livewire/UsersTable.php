@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Setting;
 use App\School;
 use App\User;
 use Livewire\Component;
@@ -78,7 +77,6 @@ class UsersTable extends Component
             'schools' => School::all(),
             'titles' => User::pluck('title')->unique()->filter()->sort(),
             'departments' => User::pluck('department')->unique()->filter()->sort(),
-            // 'username' => optional(Setting::whereName('account_name')->first())->value ?? 'Username',
         ]);
     }
 }
