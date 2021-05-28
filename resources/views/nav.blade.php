@@ -120,7 +120,7 @@ $can_create_users = $user && $user->can('create', 'App\User');
             @elseif($can_create_own_profile)
               <a class="dropdown-item" href="{{ route('profiles.create', ['user' => $user]) }}"><span class="fa fa-plus fa-fw"></span> Create Profile</a>
             @endif
-            @if($user_student_profile)
+            @if(config('app.enable_students') && $user_student_profile)
               <a class="dropdown-item" href="{{ route('students.show', ['student' => $user_student_profile]) }}"><span class="fa fa-user fa-fw"></span> My Student Research Profile</a>
             @endif
             <a class="dropdown-item" href="{{ route('users.bookmarks.show', ['user' => $user->pea]) }}"><span class="fas fa-bookmark fa-fw"></span> My Bookmarks</a>
