@@ -58,10 +58,7 @@ class UsersController extends Controller
      */
     public function index(Request $request)
     {
-        return view('users.index', [
-            'users' => User::where('display_name', 'LIKE', "%{$request->user_search}%")->with('school')->orderBy('lastname')->paginate(50),
-            'user_search' => $request->user_search,
-        ]);
+        return view('users.index');
     }
 
     /**
