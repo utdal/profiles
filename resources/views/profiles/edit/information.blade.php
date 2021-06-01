@@ -91,22 +91,42 @@
 			</div>
 			<div class="row">
 				<div class="form-group col col-sm-6 col-12">
-					<label for="data[{{$info->id}}][data][url_name]">Secondary URL</label>
+					<label for="data[{{$info->id}}][data][url_name]">Second URL</label>
 					<input type="url" class="form-control" name="data[{{$info->id}}][data][secondary_url]" id="data[{{$info->id}}][data][secondary_url]" value="{{$info->secondary_url}}"  />
 				</div>
 				<div class="form-group col col-sm-6 col-12">
-					<label for="data[{{$info->id}}][data][url_name]">Secondary URL Title</label>
+					<label for="data[{{$info->id}}][data][url_name]">Second URL Title</label>
 					<input type="text" class="form-control" name="data[{{$info->id}}][data][secondary_url_name]" id="data[{{$info->id}}][data][secondary_url_name]" value="{{$info->secondary_url_name}}"  />
 				</div>
 			</div>
 			<div class="row">
 				<div class="form-group col col-sm-6 col-12">
-					<label for="data[{{$info->id}}][data][url_name]">Tertiary URL</label>
+					<label for="data[{{$info->id}}][data][url_name]">Third URL</label>
 					<input type="url" class="form-control" name="data[{{$info->id}}][data][tertiary_url]" id="data[{{$info->id}}][data][tertiary_url]" value="{{$info->tertiary_url}}"  />
 				</div>
 				<div class="form-group col col-sm-6 col-12">
-					<label for="data[{{$info->id}}][data][url_name]">Tertiary URL Title</label>
+					<label for="data[{{$info->id}}][data][url_name]">Third URL Title</label>
 					<input type="text" class="form-control" name="data[{{$info->id}}][data][tertiary_url_name]" id="data[{{$info->id}}][data][tertiary_url_name]" value="{{$info->tertiary_url_name}}"  />
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col col-sm-6 col-12">
+					<label for="data[{{$info->id}}][data][url_name]">Fourth URL</label>
+					<input type="url" class="form-control" name="data[{{$info->id}}][data][quaternary_url]" id="data[{{$info->id}}][data][quaternary_url]" value="{{$info->quaternary_url}}"  />
+				</div>
+				<div class="form-group col col-sm-6 col-12">
+					<label for="data[{{$info->id}}][data][url_name]">Fourth URL Title</label>
+					<input type="text" class="form-control" name="data[{{$info->id}}][data][quaternary_url_name]" id="data[{{$info->id}}][data][quaternary_url_name]" value="{{$info->quaternary_url_name}}"  />
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col col-sm-6 col-12">
+					<label for="data[{{$info->id}}][data][url_name]">Fifth URL</label>
+					<input type="url" class="form-control" name="data[{{$info->id}}][data][quinary_url]" id="data[{{$info->id}}][data][quinary_url]" value="{{$info->quinary_url}}"  />
+				</div>
+				<div class="form-group col col-sm-6 col-12">
+					<label for="data[{{$info->id}}][data][url_name]">Fifth URL Title</label>
+					<input type="text" class="form-control" name="data[{{$info->id}}][data][quinary_url_name]" id="data[{{$info->id}}][data][quinary_url_name]" value="{{$info->quinary_url_name}}"  />
 				</div>
 			</div>
 			<div class="form-group">

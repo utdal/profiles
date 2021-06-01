@@ -36,7 +36,7 @@
 								@if($information->email)<i class="fa fa-fw fa-envelope" aria-hidden="true"></i> <a href="#" id="{{ Utils::obfuscateEmailAddress($information->email) }}" data-evaluate="profile-eml">&nbsp;</a><br>@endif
 								@if($information->phone)<i class="fa fa-fw fa-phone" aria-hidden="true"></i> {{ $information->phone }}<br />@endif
 								@if($information->location)<i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> {{ $information->location }}<br />@endif
-								@foreach(['url' => 'url_name', 'secondary_url' => 'secondary_url_name', 'tertiary_url' => 'tertiary_url_name'] as $url_key => $url_name)
+								@foreach(['url' => 'url_name', 'secondary_url' => 'secondary_url_name', 'tertiary_url' => 'tertiary_url_name', 'quaternary_url' => 'quaternary_url_name', 'quinary_url' => 'quinary_url_name'] as $url_key => $url_name)
 									@if($information->$url_key)
 										@if(strpos($information->$url_key, 'twitter') !== false)
 												<i class="fab fa-fw fa-twitter" aria-hidden="true"></i>
