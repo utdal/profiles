@@ -10999,6 +10999,20 @@ footer > ul {
   margin-bottom: 0.5em;
 }
 
+table.table-live {
+  position: relative;
+}
+table.table-live .loading-indicator {
+  background-color: rgba(0, 0, 0, 0.05);
+  position: absolute;
+  top: 35px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  align-items: center;
+  justify-content: center;
+}
+
 /* Symfony Var Dumper styling */
 table td pre.sf-dump {
   color: #777777 !important;

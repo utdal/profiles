@@ -51,7 +51,8 @@
         </div>
     </div>
 
-    <table class="table table-sm table-striped table-responsive-lg">
+    <table class="table table-sm table-striped table-live table-responsive-lg" aria-live="polite" wire:loading.attr="aria-busy">
+        <caption class="sr-only">List of student research profiles</caption>
         <thead>
             <tr>
                 @include('livewire.partials._th-sortable', ['title' => 'ID', 'field' => 'id'])
@@ -90,6 +91,7 @@
                 </td>
             </tr>
             @endforeach
+            @include('livewire.partials._loading-indicator')
         </tbody>
     </table>
 

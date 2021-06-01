@@ -1,5 +1,5 @@
 {{-- Component must have $sort_field, $sort_descending, and sortBy() --}}
-<th style="min-width:3em">
+<th style="min-width:3em" aria-sort="{{ ($sort_field !== $field) ? 'none' : ($sort_descending ? 'descending' : 'ascending') }}">
     <a wire:click.prevent="sortBy('{{ $field }}')" href="#">
         <span wire:ignore>{!! $title ?? ucfirst($field) !!}</span>
         @if ($sort_field !== $field)

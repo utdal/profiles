@@ -119,6 +119,8 @@ var profiles = function ($, undefined) {
     var flash_message = document.createElement('div');
     flash_message.classList = 'flash-message alert-dismissable alert-' + (type || 'success');
     flash_message.setAttribute('role', 'alert');
+    flash_message.setAttribute('aria-live', 'assertive');
+    flash_message.setAttribute('aria-atomic', 'true');
     flash_message.innerHTML = message;
     flash_container.appendChild(flash_message);
     flash_message.addEventListener('click', function (e) {
@@ -126,7 +128,12 @@ var profiles = function ($, undefined) {
     });
     $(flash_message).animate({
       opacity: 0
-    }, 5000);
+    }, {
+      duration: 5000,
+      complete: function complete() {
+        return flash_message.style.display = 'none';
+      }
+    });
   };
   /**
    * Deobfuscate an email address

@@ -1,0 +1,17 @@
+table {
+
+  &.table-live {
+    position: relative;
+
+    .loading-indicator {
+      background-color: rgba(0, 0, 0, 0.05);
+      position: absolute;
+      top: 35px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}

@@ -104,12 +104,17 @@ var profiles = (function ($, undefined) {
       let flash_message = document.createElement('div');
       flash_message.classList = 'flash-message alert-dismissable alert-' + (type || 'success');
       flash_message.setAttribute('role', 'alert');
+      flash_message.setAttribute('aria-live', 'assertive');
+      flash_message.setAttribute('aria-atomic', 'true');
       flash_message.innerHTML = message;
 
       flash_container.appendChild(flash_message);
       
       flash_message.addEventListener('click', (e) => {e.target.style.display = 'none'});
-      $(flash_message).animate({opacity: 0}, 5000);
+      $(flash_message).animate({opacity: 0}, {
+          duration: 5000,
+          complete: () => flash_message.style.display = 'none',
+      });
     }
 
     /**
