@@ -228,6 +228,14 @@ var profiles = function ($, undefined) {
       itemText: function itemText(profile) {
         return profile.full_name;
       },
+      onTagExists: function onTagExists(item, $tag) {
+        return $tag.css({
+          opacity: 0
+        }).animate({
+          opacity: 1
+        }, 500);
+      },
+      // blink once
       afterSelect: function afterSelect() {
         return $select.tagsinput('input').val('');
       }
@@ -300,8 +308,16 @@ var profiles = function ($, undefined) {
         source: tagSearch.ttAdapter()
       },
       freeInput: true,
+      onTagExists: function onTagExists(item, $tag) {
+        return $tag.css({
+          opacity: 0
+        }).animate({
+          opacity: 1
+        }, 500);
+      },
+      // blink once
       afterSelect: function afterSelect() {
-        $select.tagsinput('input').val('');
+        return $select.tagsinput('input').val('');
       }
     });
     $select.tagsinput('input').on('typeahead:asyncrequest', function () {
