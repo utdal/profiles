@@ -67,7 +67,7 @@ class StudentPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole(['student', 'students_admin']);
+        return true;
     }
 
     /**

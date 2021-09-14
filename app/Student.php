@@ -42,6 +42,16 @@ class Student extends Model implements Auditable
         return 'slug';
     }
 
+    /**
+     * Whether this record was ever updated after creation
+     *
+     * @return bool
+     */
+    public function wasEverUpdated(): bool
+    {
+        return $this->updated_at->greaterThan($this->created_at);
+    }
+
     ////////////////////////////////////
     // Mutators and Virtual Attributes//
     ////////////////////////////////////
@@ -131,6 +141,11 @@ class Student extends Model implements Auditable
         }
 
         return $query;
+    }
+
+    public function scopeEverUpdated($query)
+    {
+        return $query->whereColumn('updated_at', '>', 'created_at');
     }
 
     ///////////////

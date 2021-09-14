@@ -3,7 +3,7 @@
 $user = Auth::user();
 
 $user_profile = $user ? $user->profiles()->first() : null;
-$user_student_profile = $user ? $user->studentProfiles()->first() : null;
+$user_student_profile = $user ? $user->studentProfiles()->everUpdated()->first() : null;
 $schools = App\School::where('display_name', '!=', 'Other')->orderBy('short_name')->get();
 
 $can_create_own_profile = $user && $user->can('createOwn', 'App\Profile');

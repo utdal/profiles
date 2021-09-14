@@ -165,5 +165,5 @@
 
 @if($editable)
 <button type="submit" class="btn btn-primary edit-button">Submit</button>
-<a href="{{ $student->url }}" class='btn btn-light edit-button'>Cancel</a>
+<a href="{{ $student->wasEverUpdated() ? $student->url : route('students.about') }}" class='btn btn-light edit-button'>Cancel</a>
 @endif
