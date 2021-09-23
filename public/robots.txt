@@ -1,2 +1,12 @@
 User-agent: *
-Disallow:
+Allow: *?page=*
+Disallow: /api/*
+Disallow: *?*=*
+Crawl-delay: 10
+
+User-agent: Yandex
+Allow: *?page=*
+Disallow: /api/*
+Disallow: *?*=*
+Crawl-delay: 10
+Clean-param: pub&appt&awd&proj&pres&addl&news

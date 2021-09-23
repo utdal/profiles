@@ -11,6 +11,7 @@
 <meta property="og:type" content="profile" />
 <meta property="og:url" content="{{ $profile->url }}" />
 <meta property="og:image" content="{{ $profile->image_url }}" />
+<link rel="canonical" href="{{ $profile->url }}">
 @stop
 @section('header')
 	@include('nav')
