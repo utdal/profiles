@@ -160,7 +160,7 @@
 
 <div class="mb-3">
     {!! Form::label('research_profile[other_info]', 'Please feel free to add any other relevant information that you think may help us in making this decision', ['class' => 'form-label']) !!}
-    {!! Form::textarea('research_profile[other_info]', $student->research_profile->intro ?? '', ['class' => 'form-control']) !!}
+    {!! Form::textarea('research_profile[other_info]', $student->research_profile->other_info ?? '', ['class' => 'form-control']) !!}
 </div>
 
 @if($editable)
