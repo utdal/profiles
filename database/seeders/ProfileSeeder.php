@@ -17,9 +17,9 @@ class ProfileSeeder extends Seeder
     {
         // Create a random User, Profile, and ProfileData
 
-        $profile = factory(Profile::class)->create();
+        $profile = Profile::factory()->create();
 
-        $profile_data = factory(ProfileData::class)->make();
+        $profile_data = ProfileData::factory()->make();
 
         $profile_data->profile_id = $profile->id;
         $profile_data->setAttribute('data->email', $profile->user->email);
