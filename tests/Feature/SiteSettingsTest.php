@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\School;
 use App\Setting;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -38,10 +39,13 @@ class SiteSettingsTest extends TestCase
         $this->loginAsAdmin();
         Cache::flush();
 
+        $schools = School::factory()->count(3)->create();
+
         $this->get(route('app.settings.edit'))
             ->assertStatus(200)
-            ->assertViewIs('settings');
-        
+            ->assertViewIs('settings')
+            ->assertSee($schools->pluck('display_name')->all());
+
         $settings = [
             'primary_color' => $this->faker->hexColor,
             'secondary_color' => $this->faker->hexColor,
@@ -54,6 +58,11 @@ class SiteSettingsTest extends TestCase
             'profile_search_shortcut' => $this->faker->boolean(),
             'faq' => $this->faker->paragraph(),
             'footer' => $this->faker->paragraph(),
+            'student_info' => '<div>' . $this->faker->paragraph() . '</div>',
+            'student_info_overlay' => $this->faker->boolean(),
+            'student_participating_schools' => [
+                $this->faker->randomElement($schools->pluck('short_name')->all()),
+            ],
         ];
 
         $this->followingRedirects()->post(route('app.settings.update'), [
@@ -72,12 +81,15 @@ class SiteSettingsTest extends TestCase
             ->assertSee("id=\"setting[school_search_shortcut]\" value=\"1\" " . ($settings['school_search_shortcut'] ? ' checked ' : ''), false)
             ->assertSee("id=\"setting[profile_search_shortcut]\" value=\"1\" " . ($settings['profile_search_shortcut'] ? ' checked ' : ''), false)
             ->assertSee($settings['faq'])
-            ->assertSee($settings['footer']);
+            ->assertSee($settings['footer'])
+            ->assertSee($settings['student_info'])
+            ->assertSee("id=\"setting[student_info_overlay]\" value=\"1\" " . ($settings['student_info_overlay'] ? ' checked ' : ''), false)
+            ->assertSee("option value=\"{$settings['student_participating_schools'][0]}\" selected", false);
 
         foreach ($settings as $setting_name => $setting_value) {
             $this->assertDatabaseHas('settings', [
                 'name' => $setting_name,
-                'value' => $setting_value,
+                'value' => is_array($setting_value) ? json_encode($setting_value) : $setting_value,
             ]);
         }
 
@@ -101,6 +113,10 @@ class SiteSettingsTest extends TestCase
             ->assertStatus(200)
             ->assertViewIs('faq')
             ->assertSee($settings['faq']);
+
+        $this->get(route('students.about'))
+            ->assertStatus(200)
+            ->assertSee($settings['student_info'], false);
 
         Cache::flush();
     }
@@ -165,6 +181,37 @@ class SiteSettingsTest extends TestCase
         $this->get('/')
             ->assertStatus(200)
             ->assertSee("<link rel=\"icon\" href=\"{$setting->value}\"", false);
+    }
+
+    /**
+     * Test changing student info image
+     *
+     * @return void
+     */
+    public function testEditStudentInfoImage()
+    {
+        $this->loginAsAdmin();
+        Cache::flush();
+
+        $response = $this->followingRedirects()->post(route('app.settings.update-image', ['image' => 'student_info_image']), [
+            'student_info_image' => $this->mockUploadedImage(),
+        ]);
+
+        $response
+            ->assertStatus(200)
+            ->assertViewIs('settings')
+            ->assertSee('Settings image has been updated.');
+
+        $this->assertDatabaseHas('settings', ['name' => 'student_info_image']);
+
+        $setting = Setting::where('name', '=', 'student_info_image')->first();
+        $this->assertNotNull($setting);
+
+        $this->assertFileExists($setting->getFirstMedia('student_info_image')->getPath());
+
+        $this->get(route('students.about'))
+            ->assertStatus(200)
+            ->assertSee("<img class=\"card-img\" src=\"{$setting->value}\"", false);
     }
 
 }
