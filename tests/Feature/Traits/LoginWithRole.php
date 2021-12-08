@@ -4,6 +4,7 @@ namespace Tests\Feature\Traits;
 
 use App\Role;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 
 trait LoginWithRole
 {
@@ -12,22 +13,34 @@ trait LoginWithRole
      * 
      * @param string $role_name
      * @param User $user (optional) the User to whom to assign the role and login as (default: a random new user)
-     * @return User
+     * @return User|null
      */
     protected function loginAsUserWithRole($role_name, $user = null)
     {
+        if ($role_name === 'guest') {
+            return $this->actingAsGuest();
+        }
+
         if ($user === null) {
             $user = User::factory()->create();
             $user->detachRoles();
         }
 
-        if ($role_name) {
+        if ($role_name && Role::whereName($role_name)->exists()) {
             $user->attachRole(Role::whereName($role_name)->firstOrFail());
         }
 
         $this->actingAs($user);
 
         return $user;
+    }
+
+    /**
+     * Act as a guest (logout)
+     */
+    protected function actingAsGuest(): void
+    {
+        Auth::logout();
     }
 
     /**
@@ -50,5 +63,21 @@ trait LoginWithRole
     protected function loginAsAdmin($user = null)
     {
         return $this->loginAsUserWithRole('site_admin', $user);
+    }
+
+    /**
+     * Data provider for various roles
+     */
+    public function userRolesProvider(): array
+    {
+        return [
+            ['guest'],
+            ['member'],
+            ['faculty'],
+            ['student'],
+            ['students_admin'],
+            ['site_admin'],
+            ['data_owner'],
+        ];
     }
 }

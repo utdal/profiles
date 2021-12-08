@@ -35,6 +35,18 @@ class PageTest extends TestCase
     }
 
     /**
+     * Test if we can see the student about page.
+     * 
+     * @return void
+     */
+    public function testStudentAboutPageIsOk(): void
+    {
+        $response = $this->get(route('students.about'));
+
+        $response->assertStatus(200);
+    }
+
+    /**
      * Test that the Login page is OK.
      *
      * @return void
