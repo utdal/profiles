@@ -17,18 +17,18 @@ A simple CRUD/search profile system for research profiles, providing user-editab
 * General and tags search on profile data
 * Delegation to other users to maintain profile information
 * As much automation as possible in updating
+* Student engagement
+	* Learn about researchers/labs based on interest
+	* Connect and facilitate placement in labs and research opportunities
 
 #### Future Goals
 
 * Provide FAR (Faculty Annual Report) functionality by consolidating all researcher activity
-* Student engagement
-	* Learn about researchers/labs based on interest
-	* Connect and facilitate placement in labs and research opportunities
 * Additional imports, feeds, etc.
 
 #### Minimum Requirements
 
-* PHP 7.3
+* PHP 7.4
 * MySQL 5.7
 * Apache 2.4 / Nginx
 * [Composer](https://getcomposer.org/)
