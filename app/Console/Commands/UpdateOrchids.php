@@ -41,20 +41,19 @@ class UpdateOrchids extends Command
     public function handle()
     {
         $inc = 0;
-        $profiles_to_update = Profile::with('data')->get()->filter(function($profile, $key){
-            return $profile->hasOrcidManagedPublications();
-        });
+        $profiles = Profile::whereHas('data', function($query) { $query->where('type', 'information')->where('data->orc_id_managed', '1'); } )->get();
 
-        foreach($profiles_to_update as $profile) {
+        foreach($profiles as $profile) {
             if ($profile->updateORCID()) {
                 $inc++;
+                $this->info("Updated ORCiD info for {$profile->full_name}");
             }
             else {
-                $this->error('An error has occurred');
+                $this->error('An error has occurred updating ORCiD info for ' . $profile->full_name);
             }
         }
 
-        $this->info('Success: '.$inc .' profiles have been updated.');
+        $this->info("Success: {$inc} profiles have been updated.");
         return Command::SUCCESS;
     }
 }
