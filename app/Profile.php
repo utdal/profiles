@@ -168,12 +168,12 @@ class Profile extends Model implements HasMedia, Auditable
             'profile_id' => $this->id,
             'type' => 'publications',
             'data->title' => $record['work-summary'][0]['title']['title']['value'],
-            'sort_order' => $record['work-summary'][0]['publication-date']['year']['value']
+            'sort_order' => $record['work-summary'][0]['publication-date']['year']['value'] ?? null,
           ],[
               'data' => [
                   'url' => $url,
                   'title' => $record['work-summary'][0]['title']['title']['value'],
-                  'year' => $record['work-summary'][0]['publication-date']['year']['value'],
+                  'year' => $record['work-summary'][0]['publication-date']['year']['value'] ?? null,
                   'type' => ucwords(strtolower(str_replace('_', ' ', $record['work-summary'][0]['type']))),
                   'status' => 'Published'
               ],
