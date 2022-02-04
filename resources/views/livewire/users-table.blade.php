@@ -65,7 +65,7 @@
                 <td>{{ $user->name }}</td>
                 <td>
                     @if($user_profile = $user->profiles->first())
-                        <a href="{{ route('profiles.show', ['profile' => $user_profile]) }}">{{ $user_profile->slug }}</a>
+                        <a href="{{ route('profiles.show', ['profile' => $user_profile]) }}">{{ $user->pea }}</a>
                     @else
                         {{ $user->pea }}
                     @endif
