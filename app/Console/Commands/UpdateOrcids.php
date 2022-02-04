@@ -41,9 +41,13 @@ class UpdateOrcids extends Command
     public function handle()
     {
         $inc = 0;
-        $profiles = Profile::whereHas('data', function($query) { $query->where('type', 'information')->where('data->orc_id_managed', '1'); } )->get();
+        $profiles = Profile::whereHas('data', function ($query) {
+            $query->where('type', 'information')
+                ->where('data->orc_id_managed', '1')
+                ->whereNotNull('data->orc_id');
+        })->get();
 
-        foreach($profiles as $profile) {
+        foreach ($profiles as $profile) {
             if ($profile->updateORCID()) {
                 $inc++;
                 $this->info("Updated ORCiD info for {$profile->full_name}");
