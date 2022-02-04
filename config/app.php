@@ -61,6 +61,8 @@ return [
     /** public DSN for Sentry error reporting */
     'sentry_public_dsn' => env('SENTRY_PUBLIC_DSN', false),
 
+    /** enable scheduled orcid data update */
+    'enable_orcid_update' => env('ENABLE_ORCID_UPDATE', false),
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode

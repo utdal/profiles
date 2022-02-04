@@ -33,6 +33,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('backup:monitor')->daily()->at('04:00')->when(function() {
             return config('app.enable_backup_monitor');
         });
+        $schedule->command('orcid:update')->withoutOverlapping()->when(function() {
+            return config('app.enable_orcid_update');
+        });
     }
 
     /**
