@@ -69,7 +69,7 @@
             </dd>
           </dl>
           @if($user->profiles()->exists())
-          <a class="btn btn-secondary btn-sm" href="{{ route('profiles.show', $user->profiles->first()->slug ) }}">Profile</a>
+          <a class="btn btn-secondary btn-sm" href="{{ route('profiles.show', [$user->pea]) }}">Profile</a>
           @endif
         </div>
       </div>
