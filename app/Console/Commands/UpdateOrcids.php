@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 use App\Profile;
 use App\ProfileData;
 
@@ -47,17 +48,23 @@ class UpdateOrcids extends Command
                 ->whereNotNull('data->orc_id');
         })->get();
 
+        Log::notice("Starting scheduled ORCiD data update for {$profiles->count()} profiles... ");
+
         foreach ($profiles as $profile) {
             if ($profile->updateORCID()) {
                 $inc++;
-                $this->info("Updated ORCiD info for {$profile->full_name}");
+                Log::info("Updated ORCiD info for {$profile->full_name}");
             }
             else {
-                $this->error('An error has occurred updating ORCiD info for ' . $profile->full_name);
+                Log::error("An error has occurred updating ORCiD info for {$profile->full_name},
+                profile_id: {$profile->id}, orc_id: {$profile->data->orc_id}");
+                $this->error("An error has occurred updating ORCiD info for {$profile->full_name},
+                profile_id: {$profile->id}, orc_id: {$profile->data->orc_id}");
             }
         }
-
-        $this->info("Success: {$inc} profiles have been updated.");
+        Log::notice("Completed: {$inc}/{$profiles->count()} profiles have been updated.");
+        $this->info("Completed: {$inc}/{$profiles->count()} profiles have been updated. 
+        See application log for further details.");
         return Command::SUCCESS;
     }
 }
