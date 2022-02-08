@@ -48,23 +48,29 @@ class UpdateOrcids extends Command
                 ->whereNotNull('data->orc_id');
         })->get();
 
-        Log::notice("Starting scheduled ORCiD data update for {$profiles->count()} profiles... ");
+        $this->lineAndLog("Starting scheduled ORCiD data update for {$profiles->count()} profiles... ");
 
         foreach ($profiles as $profile) {
             if ($profile->updateORCID()) {
                 $inc++;
-                Log::info("Updated ORCiD info for {$profile->full_name}");
+                $this->lineAndLog("Updated ORCiD info for {$profile->full_name}");
             }
             else {
-                Log::error("An error has occurred updating ORCiD info for {$profile->full_name},
-                profile_id: {$profile->id}, orc_id: {$profile->data->orc_id}");
-                $this->error("An error has occurred updating ORCiD info for {$profile->full_name},
-                profile_id: {$profile->id}, orc_id: {$profile->data->orc_id}");
+                $this->lineAndLog("An error has occurred updating ORCiD info for {$profile->full_name}, profile_id: {$profile->id}, profile: {$profile->url}", 'error');
             }
         }
-        Log::notice("Completed: {$inc}/{$profiles->count()} profiles have been updated.");
-        $this->info("Completed: {$inc}/{$profiles->count()} profiles have been updated. 
-        See application log for further details.");
+
+        $this->lineAndLog("Completed: {$inc}/{$profiles->count()} profiles have been updated.");
+
         return Command::SUCCESS;
+    }
+
+    /**
+     * Output a message to the console and log file
+     */
+    public function lineAndLog(string $message, string $type = 'info'): void
+    {
+        $this->line($message, $type);
+        Log::$type($message);
     }
 }
