@@ -144,7 +144,8 @@ class Profile extends Model implements HasMedia, Auditable
         'headers' => [
           'Authorization' => 'Bearer ' . config('ORCID_TOKEN'),
           'Accept' => 'application/json'
-        ]
+        ],
+        'http_errors' => false, // don't throw exceptions for 4xx,5xx responses
       ]);
 
       //an error of some sort
