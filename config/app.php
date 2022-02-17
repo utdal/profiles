@@ -37,6 +37,9 @@ return [
     /** ORCID */
     'ORCID_TOKEN' => env('ORCID_TOKEN', false),
 
+    /** enable scheduled orcid data update */
+    'enable_orcid_update' => env('ENABLE_ORCID_UPDATE', false),
+
     /** banner message */
     'banner_message' => env('APP_BANNER_MESSAGE', null),
 
