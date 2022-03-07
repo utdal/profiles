@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\User;
+use App\UserDelegation;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class UserPolicy
@@ -55,6 +56,18 @@ class UserPolicy
     public function view(User $user, User $model)
     {
         return $user->owns($model) || $user->hasRole(['profiles_editor', 'school_profiles_editor', 'department_profiles_editor']);
+    }
+
+    /**
+     * Determine whether the user can view the delegator's delegations.
+     *
+     * @param  \App\User  $user
+     * @param  \App\User  $model
+     * @return mixed
+     */
+    public function viewDelegations(User $user, User $delegator)
+    {
+        return $user->can('viewForDelegator', [UserDelegation::class, $delegator]);
     }
 
     /**
