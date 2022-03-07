@@ -14,6 +14,7 @@ class CreateDelegationsPivotTable extends Migration
     public function up()
     {
         Schema::create('user_delegations', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->integer('delegator_user_id')->unsigned();
             $table->integer('delegate_user_id')->unsigned();
             $table->dateTime('starting')->useCurrent();
@@ -26,6 +27,8 @@ class CreateDelegationsPivotTable extends Migration
                     ->references('id')->on('users');
             $table->foreign('delegate_user_id')
                     ->references('id')->on('users');
+            
+            $table->index(['delegator_user_id', 'delegate_user_id']);
         });
     }
 
@@ -36,6 +39,6 @@ class CreateDelegationsPivotTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('delegations_pivot');
+        Schema::dropIfExists('user_delegations');
     }
 }
