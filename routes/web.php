@@ -37,6 +37,7 @@ Route::name('users.')->prefix('/users')->group(function() {
     Route::name('index')->get('/', 'UsersController@index');
     Route::name('create')->get('/create', 'UsersController@create');
     Route::name('store')->post('/', 'UsersController@store');
+    Route::name('delegations-index')->get('/delegations', 'UserDelegationsController@index');
 
     // Individual user
     Route::prefix('/{user}')->group(function() {
@@ -44,6 +45,7 @@ Route::name('users.')->prefix('/users')->group(function() {
         Route::name('edit')->get('/edit', 'UsersController@edit');
         Route::name('update')->patch('/', 'UsersController@update');
         Route::name('bookmarks.show')->get('/bookmarks', 'UsersController@showBookmarks');
+        Route::name('delegations.show')->get('/delegations', 'UserDelegationsController@show');
         Route::name('confirm-destroy')->get('/confirm-destroy', 'UsersController@confirmDestroy');
         Route::name('destroy')->delete('/', 'UsersController@destroy');
     });

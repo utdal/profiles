@@ -79,6 +79,9 @@ $can_create_users = $user && $user->can('create', 'App\User');
               <span class="fas fa-plus fa-fw"></span> Add User / Profile
             </a>
             @endif
+            <a class="dropdown-item" href="{{ route('users.delegations-index') }}">
+              <span class="fas fa-user-friends fa-fw"></span> All Delegations
+            </a>
             @if($can_view_school_admin_index)
             <a class="dropdown-item" href="{{ route('schools.index') }}">
               <span class="fas fa-university fa-fw"></span> All Schools
@@ -116,15 +119,16 @@ $can_create_users = $user && $user->can('create', 'App\User');
           </a>
           <div class="dropdown-menu" aria-labelledby="usernavDropdown">
             @if($user_profile)
-              <a class="dropdown-item" href="{{ route('profiles.show', ['profile' => $user_profile]) }}"><span class="fa fa-user fa-fw"></span> My Profile</a>
+              <a class="dropdown-item" href="{{ route('profiles.show', ['profile' => $user_profile]) }}"><span class="fa fa-user fa-fw"></span> Profile</a>
             @elseif($can_create_own_profile)
               <a class="dropdown-item" href="{{ route('profiles.create', ['user' => $user]) }}"><span class="fa fa-plus fa-fw"></span> Create Profile</a>
             @endif
             @if(config('app.enable_students') && $user_student_profile)
-              <a class="dropdown-item" href="{{ route('students.show', ['student' => $user_student_profile]) }}"><span class="fa fa-user fa-fw"></span> My Student Research Profile</a>
+              <a class="dropdown-item" href="{{ route('students.show', ['student' => $user_student_profile]) }}"><span class="fa fa-user fa-fw"></span> Student Research Profile</a>
             @endif
-            <a class="dropdown-item" href="{{ route('users.bookmarks.show', ['user' => $user->pea]) }}"><span class="fas fa-bookmark fa-fw"></span> My Bookmarks</a>
-            <a class="dropdown-item" href="{{ route('users.show', ['user' => $user->pea]) }}"><span class="fa fa-cog fa-fw"></span> My Account</a>
+            <a class="dropdown-item" href="{{ route('users.bookmarks.show', ['user' => $user->pea]) }}"><span class="fas fa-bookmark fa-fw"></span> Bookmarks</a>
+            <a class="dropdown-item" href="{{ route('users.delegations.show', ['user' => $user->pea]) }}"><span class="fas fa-user-friends fa-fw"></span> Delegations</a>
+            <a class="dropdown-item" href="{{ route('users.show', ['user' => $user->pea]) }}"><span class="fa fa-cog fa-fw"></span> Account</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{ route('logout') }}"><span class="fas fa-sign-out-alt fa-fw" aria-hidden="true"></span> Logout</a>
           </div>
