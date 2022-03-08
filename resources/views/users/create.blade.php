@@ -17,7 +17,7 @@
                 {!! Form::open(['route' => ['users.store'], 'method' => 'POST']) !!}
                     <div class="form-group row justify-content-center">
                         <div class="col-sm-10">
-                            <input placeholder="{{ $settings['account_name'] ?? 'Username' }}" class="form-control" maxlength="255" name="name" id="name" type="text" required>
+                            <livewire:directory-search :input_name="'name'">
                         </div>
                     </div>
                     <div class="form-group row justify-content-center ">

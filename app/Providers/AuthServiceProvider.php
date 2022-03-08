@@ -8,11 +8,13 @@ use App\Policies\SettingPolicy;
 use App\Policies\SchoolPolicy;
 use App\Policies\TagPolicy;
 use App\Policies\UserPolicy;
+use App\Policies\UserDelegationPolicy;
 use App\LogEntry;
 use App\Profile;
 use App\Setting;
 use App\School;
 use App\User;
+use App\UserDelegation;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Spatie\Tags\Tag;
@@ -31,6 +33,7 @@ class AuthServiceProvider extends ServiceProvider
         School::class => SchoolPolicy::class,
         Tag::class => TagPolicy::class,
         User::class => UserPolicy::class,
+        UserDelegation::class => UserDelegationPolicy::class,
     ];
 
     /**

@@ -326,6 +326,11 @@ class User extends Authenticatable implements Auditable
             ->withTimestamps();
     }
 
+    public function delegations()
+    {
+        return $this->hasMany(UserDelegation::class, 'delegator_user_id');
+    }
+
     /**
      * User delegates. Many-to-many relationship.
      *
@@ -334,6 +339,7 @@ class User extends Authenticatable implements Auditable
     public function delegates()
     {
         return $this->belongsToMany('App\User', 'user_delegations', 'delegator_user_id', 'delegate_user_id')
+                    ->using(UserDelegation::class)
                     ->withPivot('starting', 'until', 'gets_reminders')
                     ->withTimestamps();
     }
@@ -380,6 +386,7 @@ class User extends Authenticatable implements Auditable
     public function delegators()
     {
         return $this->belongsToMany('App\User', 'user_delegations', 'delegate_user_id', 'delegator_user_id')
+                    ->using(UserDelegation::class)
                     ->withPivot('starting', 'until', 'gets_reminders')
                     ->withTimestamps();
     }

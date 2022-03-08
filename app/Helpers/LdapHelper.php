@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use Adldap\AdldapInterface;
+use Adldap\Connections\ProviderInterface;
 use Adldap\Models\User as LdapUser;
 use App\Helpers\Contracts\LdapHelperContract;
 use App\Ldap\Handlers\LdapAttributeHandler;
@@ -16,10 +17,16 @@ class LdapHelper implements LdapHelperContract
     /** @var App\Ldap\Handlers\LdapAttributeHandler */
     public $handler;
 
+    /** @var ProviderInterface the LDAP provider */
+    public $provider;
+
+    /** @var Schema the LDAP server schema */
     public $schema;
 
+    /** @var string the displayname attribute name */
     public $displayname_attribute;
 
+    /** @var string the username attribute name */
     public $username_attribute;
 
     /**
@@ -28,7 +35,9 @@ class LdapHelper implements LdapHelperContract
     public function __construct(AdldapInterface $adldap)
     {
         $this->adldap = $adldap;
-        $this->schema = $adldap->getDefaultProvider()->getSchema();
+        $this->provider = $this->adldap->getDefaultProvider();
+        /** @var Schema */
+        $this->schema = $this->provider->getSchema();
         $this->handler = app(LdapAttributeHandler::class);
         $this->username_attribute = $this->schema->loginName();
         $this->displayname_attribute = $this->schema->displayName();
@@ -37,31 +46,51 @@ class LdapHelper implements LdapHelperContract
     /**
      * Search for users in LDAP.
      * 
-     * @param  string $displayname : name to search for
-     * @param  array  $fields      : fields to retrieve
+     * @param  string $query_string name to search for
+     * @param  array  $fields fields to retrieve
      * @return array
      */
-    public function search($displayname, array $fields = [], $to_array = false)
+    public function search($query_string, array $fields = [], $to_array = false)
     {
+        if (empty($query_string)) {
+            return [];
+        }
         if (empty($fields)) {
-            $fields = [$this->username_attribute, $this->displayname_attribute];
+            $fields = [
+                $this->username_attribute,
+                $this->displayname_attribute,
+            ];
         }
 
-        $query = $this->adldap->getDefaultProvider()->search()->select($fields);
+        $query = $this->provider->search()
+            ->where($this->schema->anr(), '=', $query_string)
+            ->select($fields);
 
-        // Break the search string into fragments and search each fragment
-        $displayname = str_replace(",","",$displayname); // get rid of commas
-        $displayname = (substr($displayname,-1) === " ") ? [$displayname] : explode(' ',$displayname);
-        foreach ($displayname as $name_fragment) {
-            $query->orWhereContains($this->displayname_attribute, $name_fragment);
-            $query->orWhereContains($this->username_attribute, $name_fragment);
-        }
+        $users = $this->sortUsers($query->get(), $query_string);
 
         if ($to_array) {
-            return $this->flattenUserAttributes($query->get(), $fields);
+            return $this->flattenUserAttributes($users, $fields);
         }
 
-        return $query->get();
+        return $users;
+    }
+
+    /**
+     * Sorts users by relevance to a query string.
+     *
+     * Orders by location of the query string in the user's displayname, and then by displayname.
+     * 
+     * @param  Illuminate\Support\Collection $users
+     * @param  string $query_string
+     * @return Illuminate\Support\Collection
+     */
+    protected function sortUsers($users, $query_string)
+    {
+        return $users->sortBy(function ($user, $key) use ($query_string) {
+            $displayname = $user->getFirstAttribute('displayname');
+            $query_string_location = strpos(strtolower($displayname), strtolower($query_string));
+            return ($query_string_location !== false) ? $query_string_location . $displayname : $displayname;
+        }, SORT_STRING)->values();
     }
 
     /**
@@ -90,8 +119,8 @@ class LdapHelper implements LdapHelperContract
      */
     public function getUser($name)
     {
-        $ldap_user = $this->adldap->getDefaultProvider()->search()
-                          ->where($this->username_attribute, $name)->get()->first();
+        $ldap_user = $this->provider->search()
+            ->where($this->username_attribute, $name)->get()->first();
 
         if ($ldap_user && $ldap_user->exists) {
             return $this->getUserFromLdapUser($ldap_user);
