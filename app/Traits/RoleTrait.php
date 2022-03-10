@@ -91,6 +91,54 @@ trait RoleTrait
     }
 
     /**
+     * Checks if the user or the user's delegator has a role by its name.
+     *
+     * Override of EntrustUserTrait@hasRole(). If a user does not have the named role,
+     * then the check will still return true if the user is a delegate for another user
+     * that has that role.
+     *
+     * @param string|array $role       Role name or array of role names.
+     * @param bool         $requireAll All roles in the array are required.
+     *
+     * @return bool
+     */
+    public function userOrDelegatorhasRole($role, $requireAll = false)
+    {
+        if (is_array($role)) {
+            foreach ($role as $roleName) {
+                $hasRole = $this->hasRole($roleName) || $this->delegatorHasRole($roleName);
+
+                if ($hasRole && !$requireAll) {
+                    return true;
+                } elseif (!$hasRole && $requireAll) {
+                    return false;
+                }
+            }
+            return $requireAll;
+        } elseif ($this->hasRole($role) || $this->delegatorHasRole($role)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Check if any of the user's delegators have a role.
+     *
+     * @param  string $role Name of the role.
+     * @return bool
+     */
+    public function delegatorHasRole($role)
+    {
+        $delegators = $this->currentDelegators()->get();
+        foreach ($delegators as $delegator) {
+            if ($delegator->hasRole($role)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Checks if the user has a role option
      *
      * @param string $role_name

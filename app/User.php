@@ -10,6 +10,7 @@ use App\Student;
 use App\UserSetting;
 use App\Traits\RoleTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Auditable as HasAudits;
 use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Notifications\Notifiable;
@@ -345,15 +346,18 @@ class User extends Authenticatable implements Auditable
     }
 
     /**
-     * User's current delegates.
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * Current user delegates.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function currentDelegates()
     {
-        return $this->delegates()->getQuery()
-                    ->whereRaw('`starting` <= now() and (`until` > now() or `until` is null)')
-                    ->get();
+        return $this->delegates()
+            ->where('user_delegations.starting', '<=', DB::raw('now()'))
+            ->where(function($q) {
+                $q->where('user_delegations.until', '>', DB::raw('now()'));
+                $q->orWhereNull('user_delegations.until');
+            });
     }
 
     /**
@@ -363,9 +367,8 @@ class User extends Authenticatable implements Auditable
      */
     public function currentReminderDelegates()
     {
-        return $this->delegates()->getQuery()
-                    ->whereRaw('`starting` <= now() and (`until` > now() or `until` is null) and `gets_reminders` is true')
-                    ->get();
+        return $this->currentDelegates()->where('gets_reminders', '=', true);
+
     }
 
     /**
@@ -392,6 +395,31 @@ class User extends Authenticatable implements Auditable
     }
 
     /**
+     * Current user delegators.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function currentDelegators()
+    {
+        return $this->delegators()
+            ->where('user_delegations.starting', '<=', DB::raw('now()'))
+            ->where(function($q) {
+                $q->where('user_delegations.until', '>', DB::raw('now()'));
+                $q->orWhereNull('user_delegations.until');
+            });
+    }
+
+    /**
+     * User's current delegators that have allowed the user to get reminders.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function currentReminderDelegators()
+    {
+        return $this->currentDelegators()->where('gets_reminders', '=', true);
+    }  
+    
+    /**
      * Additional roles currently delegated to the user.
      *
      * @return \Illuminate\Database\Query\Builder
@@ -404,34 +432,11 @@ class User extends Authenticatable implements Auditable
             })
             ->whereHas('users.delegates', function ($q) {
                 $q->where(function ($q) {
-                    $q->where('delegate_user_id', $this->id)
-                      ->whereRaw('`starting` <= now() and (`until` > now() or `until` is null)');
+                    $q->where('delegate_user_id', $this->id);
+                    $q->where('user_delegations.until', '>', DB::raw('now()'));
+                    $q->orWhereNull('user_delegations.until');
                 });
             });
-    }
-
-    /**
-     * User's current delegators.
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function currentDelegators()
-    {
-        return $this->delegators()->getQuery()
-                    ->whereRaw('`starting` <= now() and (`until` > now() or `until` is null)')
-                    ->get();
-    }
-
-    /**
-     * User's current delegators that have allowed the user to get reminders.
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function currentReminderDelegators()
-    {
-        return $this->delegators()->getQuery()
-                    ->whereRaw('`starting` <= now() and (`until` > now() or `until` is null) and `gets_reminders` is true')
-                    ->get();
     }
 
 }
