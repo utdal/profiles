@@ -32,7 +32,7 @@ class StudentPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasRole(['faculty', 'students_admin']);
+        return $user->userOrDelegatorhasRole(['faculty', 'students_admin']);
     }
 
     /**
