@@ -353,9 +353,9 @@ class User extends Authenticatable implements Auditable
     public function currentDelegates()
     {
         return $this->delegates()
-            ->where('user_delegations.starting', '<=', DB::raw('now()'))
+            ->whereDate('user_delegations.starting', '<=', now())
             ->where(function($q) {
-                $q->where('user_delegations.until', '>', DB::raw('now()'));
+                $q->whereDate('user_delegations.until', '>', now());
                 $q->orWhereNull('user_delegations.until');
             });
     }
@@ -402,9 +402,9 @@ class User extends Authenticatable implements Auditable
     public function currentDelegators()
     {
         return $this->delegators()
-            ->where('user_delegations.starting', '<=', DB::raw('now()'))
+            ->whereDate('user_delegations.starting', '<=', now())
             ->where(function($q) {
-                $q->where('user_delegations.until', '>', DB::raw('now()'));
+                $q->whereDate('user_delegations.until', '>', now());
                 $q->orWhereNull('user_delegations.until');
             });
     }
@@ -431,11 +431,12 @@ class User extends Authenticatable implements Auditable
                 $q->where('id', '=', $this->id);
             })
             ->whereHas('users.delegates', function ($q) {
-                $q->where(function ($q) {
-                    $q->where('delegate_user_id', $this->id);
-                    $q->where('user_delegations.until', '>', DB::raw('now()'));
-                    $q->orWhereNull('user_delegations.until');
-                });
+                $q->where('delegate_user_id', $this->id)
+                  ->whereDate('user_delegations.starting', '<=', now())
+                  ->where(function($q) {
+                    $q->whereDate('user_delegations.until', '>', now())
+                      ->orWhereNull('user_delegations.until');
+                  });
             });
     }
 
