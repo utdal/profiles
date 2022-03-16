@@ -2,7 +2,7 @@
 
     {{-- Delegations List --}}
     @foreach ($delegations as $delegation)
-        <div class="card mb-3">
+        <div class="card mb-3" wire:key="delegation_{{ $delegation->id }}">
             <div class="card-header">
                 <h5 class="d-inline">{{ $delegation->delegate->display_name }}</h5> 
                 ({{ collect([$delegation->delegate->title, $delegation->delegate->name, $delegation->delegate->email])->filter()->implode(', ') }})
