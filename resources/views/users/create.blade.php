@@ -13,27 +13,26 @@
     <div class="row text-center d-flex justify-content-around mt-5">
     <div class="col-md-8">
             <div class="card">
-                <div class="card-body">
+                <div class="card-body p-5">
                 {!! Form::open(['route' => ['users.store'], 'method' => 'POST']) !!}
-                    <div class="form-group row justify-content-center">
-                        <div class="col-sm-10">
-                            <livewire:directory-search :input_name="'name'">
-                        </div>
+                    <div class="form-group">
+                        <livewire:directory-search
+                            :input_name="'name'"
+                            :aria_describedby='"user_search_help"'
+                            :required="true"
+                        >
+                        <small id="user_search_help" class="form-text text-muted mt-2">
+                            Required. Start typing a name to search for a person. Then, select them from the list.
+                        </small>
                     </div>
-                    <div class="form-group row justify-content-center ">
-                        <div class="col-sm-10">
-                            <input name="create_profile" value="0" type="hidden"> 
-                            <input checked="checked" name="create_profile" value="1" type="checkbox">
-                            <label class="form-check-label" for="create_profile">Also a create profile</label>
-                        </div>
+                    <div class="form-group">
+                        <input name="create_profile" value="0" type="hidden"> 
+                        <input checked="checked" id="create_profile" name="create_profile" value="1" type="checkbox">
+                        <label class="form-check-label" for="create_profile">Also a create profile</label>
                     </div>
-                    <div class="form-group row justify-content-center">
-                        <div class="col-md-10">
-                            <button type="submit" class="btn btn-success btn-block" style="margin-right: 15px;">
-                                <i class="fas fa-plus"></i> Add
-                            </button>
-                        </div>
-                    </div>
+                    <button type="submit" class="btn btn-success btn-block mt-md-5">
+                        <i class="fas fa-plus"></i> Add
+                    </button>
                 {!! Form::close() !!}
                 </div>
             </div>
