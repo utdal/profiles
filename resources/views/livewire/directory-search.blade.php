@@ -8,13 +8,18 @@
         data-toggle="dropdown"
         data-flip="false"
         placeholder="search for a person..."
+        autocomplete="off"
         @if($aria_describedby) aria-describedby="{{ $aria_describedby }}" @endif
         @if($required) required @endif
     >
     <input wire:model="selected_username" type="hidden" name="{{ $input_name }}">
 
     <div class="dropdown-menu shadow border-primary w-100">
-        <button wire:loading.delay.short wire:loading.class="dropdown-item disabled">
+        <button
+            wire:loading.delay.short
+            wire:loading.class="dropdown-item disabled"
+            wire:target="query"
+        >
             <i class="fas fa-spinner fa-spin"></i> Searching
         </button>
         @forelse($people as $index => $person)
