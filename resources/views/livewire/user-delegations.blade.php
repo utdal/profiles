@@ -129,7 +129,7 @@
         </div>
     </div>
 
-    @include('livewire.partials._loading-fixed')
+    @include('livewire.partials._loading-fixed', ['loading_target' => 'add, destroy'])
 
     @push('scripts')
     <script>
