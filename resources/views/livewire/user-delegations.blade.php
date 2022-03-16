@@ -38,7 +38,7 @@
         </button>
         <div id="user_{{ $user->id }}_delegation_form" class="collapse" wire:ignore.self>
             <div class="card">
-                <form wire:submit.prevent="add()" class="card-body">
+                <form wire:submit.prevent="add()" class="card-body" novalidate>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="user_{{ $user->id }}_directorySearch" class="form-label">Name:</label>
@@ -144,12 +144,16 @@
         addDelegationForm.noValidate = true;
         addDelegationForm.querySelector('button[type="submit"]').addEventListener('click', (event) => {
             nameInput.readOnly = false;
-            nameInput.setCustomValidity('You must select a person from the Name search drop-down to fill this field.');
-            if (!addDelegationForm.reportValidity()) {
+            if (!addDelegationForm.checkValidity()) {
+                if (nameInput.validity.valueMissing) {
+                    nameInput.setCustomValidity('You must select a person from the Name search drop-down to fill this field.');
+                }
+                addDelegationForm.reportValidity();
                 event.stopPropagation();
                 event.preventDefault();
             }
             nameInput.readOnly = true;
+            nameInput.setCustomValidity('');
         });
     </script>
     @endpush

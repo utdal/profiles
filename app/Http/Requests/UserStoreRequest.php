@@ -29,4 +29,16 @@ class UserStoreRequest extends FormRequest
             'create_profile' => 'required|boolean',
         ];
     }
+
+    /**
+     * Get the validation error messages.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'name.required' => 'Please select a valid user from the search results.',
+        ];
+    }
 }
