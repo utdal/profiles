@@ -13,6 +13,25 @@
         <p><span class="fa fa-info-circle"></span> A delegate can optionally also receive the same email notifications as you.</p>
         <p class="mb-0"><span class="fa fa-info-circle"></span> A delegate only has the above abilities during the timeframe that you specify.</p>
     </div>
+
+    {{-- Delegators List --}}
+    @if($delegators->isNotEmpty())
+        <h3 class="mt-5">Delegators</h3>
+        @foreach($delegators as $delegator)
+            <div class="card">
+                <div class="card-body">
+                    {{ $delegator->display_name }} added {{ $user->display_name }} as their delegate
+                    <strong>starting</strong> {{ optional($delegator->pivot->starting)->toFormattedDateString() ?? '' }},
+                    @if ($delegator->pivot->until)  
+                    <strong>until</strong> {{ optional($delegator->pivot->until)->toFormattedDateString() }},
+                    @endif
+                    <strong>{{ $delegator->pivot->gets_reminders ? 'with' : 'without' }} notifications</strong>
+                </div>
+            </div>
+        @endforeach
+    @endif
+
+    <h3 class="mt-5">Delegates</h3>
     
     <livewire:user-delegations :user="$user">
 
