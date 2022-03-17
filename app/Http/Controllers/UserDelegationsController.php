@@ -39,6 +39,7 @@ class UserDelegationsController extends Controller
     {
         return view('users.delegations.show', [
             'user' => $user,
+            'delegators' => $user->delegators,
         ]);
     }
 }

@@ -1,7 +1,7 @@
 <div class="delegations">
 
     {{-- Delegations List --}}
-    @foreach ($delegations as $delegation)
+    @forelse ($delegations as $delegation)
         <div class="card mb-3" wire:key="delegation_{{ $delegation->id }}">
             <div class="card-header">
                 <h5 class="d-inline">{{ $delegation->delegate->display_name }}</h5> 
@@ -21,7 +21,9 @@
                 <small class="text-muted">delegation added on {{ optional($delegation->created_at)->toDayDateTimeString() }}</small>
             </div>
         </div>
-    @endforeach
+    @empty
+        <p>{{ $user->display_name }} has no delegates.</p>
+    @endforelse
 
     {{-- Delegations form --}}
     <div class="add-delegation mt-5">
