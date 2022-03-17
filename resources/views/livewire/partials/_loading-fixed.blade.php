@@ -8,6 +8,6 @@
     @endisset
 >
     <div class="p-4">
-        <h1 class="m-0"><i class="fas fa-spinner fa-spin"></i></h1>
+        <h1 class="m-0"><i class="fas fa-sync fa-spin"></i></h1>
     </div>
 </div>

@@ -20,7 +20,7 @@
             wire:loading.class="dropdown-item disabled"
             wire:target="query"
         >
-            <i class="fas fa-spinner fa-spin"></i> Searching
+            <i class="fas fa-sync fa-spin"></i> Searching
         </button>
         @forelse($people as $index => $person)
             <button
