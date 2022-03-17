@@ -5,9 +5,16 @@ namespace App;
 use App\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use OwenIt\Auditing\Auditable as HasAudits;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class UserDelegation extends Pivot
+class UserDelegation extends Pivot implements Auditable
 {
+    use HasAudits;
+
+    /** @var bool Indicates if the id is auto-incrementing */
+    public $incrementing = true;
+
     /** @var string The database table used by the model */
     protected $table = 'user_delegations';
 
@@ -31,6 +38,21 @@ class UserDelegation extends Pivot
         'lastname',
         'pea',
     ];
+
+    /**
+     * Modify the audit data
+     *
+     * @param array $data
+     * @return array
+     */
+    public function transformAudit(array $data): array
+    {
+        // The detach model event doesn't properly include the pivot model id,
+        // so we need this workaround for now.
+        $data['auditable_id'] = $data['auditable_id'] ?? 0;
+
+        return $data;
+    }
 
     public function delegateIs(User $user): bool
     {
