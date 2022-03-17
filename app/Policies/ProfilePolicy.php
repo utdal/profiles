@@ -125,7 +125,7 @@ class ProfilePolicy
      */
     public function update(User $user, Profile $profile)
     {
-        return $user->owns($profile) ||
+        return $user->owns($profile, true) ||
                $this->checkSchoolEditor($user, $profile) ||
                $this->checkDepartmentEditor($user, $profile);
     }

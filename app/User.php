@@ -79,9 +79,10 @@ class User extends Authenticatable implements Auditable
      * Determine if this User owns the given model.
      * 
      * @param  Illuminate\Database\Eloquent\Model $model
+     * @param  bool $check_delegators also check if the delegator(s) owns the given model
      * @return bool
      */
-    public function owns($model)
+    public function owns($model, $check_delegators = false)
     {
         if (($model instanceof User) && $this->is($model)) {
             return true;
@@ -91,6 +92,14 @@ class User extends Authenticatable implements Auditable
         }
         if (method_exists($model, 'users') && $model->users()->whereId($this->id)->exists()) {
             return true;
+        }
+
+        if ($check_delegators) {
+            foreach ($this->currentDelegators as $delegator) {
+                if ($delegator->owns($model)) {
+                    return true;
+                }
+            }
         }
 
         return false;
