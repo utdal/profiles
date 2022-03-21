@@ -18,8 +18,8 @@
             <label for="studentFacultySearch">Faculty Interest</label>
             <select wire:model="faculty_filter" id="studentFacultySearch" class="form-control">
                 <option value="" selected>All</option>
-                @foreach($faculty as $fac)
-                <option value="{{ $fac }}">{{ $fac }}</option>
+                @foreach($faculty as $faculty_id => $faculty_name)
+                <option value="{{ $faculty_id }}">{{ $faculty_name }}</option>
                 @endforeach
             </select>
         </div>

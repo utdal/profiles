@@ -195,14 +195,17 @@ var profiles = (function ($, undefined) {
           }
         },
         freeInput: false,
-        itemValue: (profile) => profile.full_name,
+        itemValue: (profile) => profile.id,
         itemText: (profile) => profile.full_name,
         onTagExists: (item, $tag) => $tag.css({opacity: 0}).animate({opacity: 1}, 500), // blink once
         afterSelect: () => $select.tagsinput('input').val(''),
       });
 
       // add back existing options
-      $select.find('option').each((i, option) => $select.tagsinput('add', {'full_name': option.value}));
+      $select.find('option').each((i, option) => $select.tagsinput('add', {
+          'id': option.value,
+          'full_name': option.text,
+        }));
 
       $select.tagsinput('input')
         .on('typeahead:asyncrequest', function () {

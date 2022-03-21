@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Student;
 use App\StudentData;
 use App\Helpers\Semester;
+use App\Profile;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Spatie\Tags\Tag;
@@ -62,7 +63,7 @@ class StudentsTable extends Component
         return view('livewire.students-table', [
             'students' => $students_query->paginate($this->per_page),
             'tags' => Tag::getWithType(Student::class),
-            'faculty' => StudentData::whereType('research_profile')->pluck('data')->pluck('faculty')->flatten()->unique()->filter()->sort()->values(),
+            'faculty' => Profile::whereHas('students')->pluck('full_name', 'id'),
             'schools' => StudentData::whereType('research_profile')->pluck('data')->pluck('schools')->flatten()->unique()->filter()->sort()->values(),
             'semesters' => StudentData::whereType('research_profile')->pluck('data')->pluck('semesters')->flatten()->unique()->filter()
                 ->sortBy(function($semester, $key) {

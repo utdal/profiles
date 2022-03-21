@@ -3,6 +3,7 @@
 namespace App;
 
 use App\ProfileData;
+use App\Student;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Auditable as HasAudits;
@@ -520,6 +521,19 @@ class Profile extends Model implements HasMedia, Auditable
         return $this->hasMany(ProfileData::class)
                     ->orderBy('data->year', 'desc')
                     ->orderBy('sort_order', 'desc');
+    }
+
+    /**
+     * This has many students (many-to-many).
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function students()
+    {
+        return $this->belongsToMany(Student::class)
+            ->withPivot('status')
+            ->as('application')
+            ->withTimestamps();
     }
 
     ///////////////////

@@ -223,7 +223,7 @@ var profiles = function ($, undefined) {
       },
       freeInput: false,
       itemValue: function itemValue(profile) {
-        return profile.full_name;
+        return profile.id;
       },
       itemText: function itemText(profile) {
         return profile.full_name;
@@ -243,7 +243,8 @@ var profiles = function ($, undefined) {
 
     $select.find('option').each(function (i, option) {
       return $select.tagsinput('add', {
-        'full_name': option.value
+        'id': option.value,
+        'full_name': option.text
       });
     });
     $select.tagsinput('input').on('typeahead:asyncrequest', function () {

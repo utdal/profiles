@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Profile;
 use App\StudentData;
 use App\StudentFeedback;
 use App\User;
@@ -113,8 +114,8 @@ class Student extends Model implements Auditable
     public function scopeWithFaculty($query, $faculty)
     {
         if ($faculty) {
-            $query->whereHas('research_profile', function ($q) use ($faculty) {
-                $q->whereJsonContains('data->faculty', $faculty);
+            $query->whereHas('faculty', function ($q) use ($faculty) {
+                $q->where('profiles.id', '=', $faculty);
             });
         }
 
@@ -190,5 +191,18 @@ class Student extends Model implements Auditable
     public function research_profile()
     {
         return $this->hasOne(StudentData::class)->where('type', 'research_profile');
+    }
+
+    /**
+     * Student has many faculty profiles (many-to-many).
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function faculty()
+    {
+        return $this->belongsToMany(Profile::class)
+            ->withPivot('status')
+            ->as('applicaton')
+            ->withTimestamps();
     }
 }
