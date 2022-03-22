@@ -3,6 +3,7 @@
 namespace App;
 
 use App\ProfileData;
+use App\ProfileStudent;
 use App\Student;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
@@ -531,6 +532,7 @@ class Profile extends Model implements HasMedia, Auditable
     public function students()
     {
         return $this->belongsToMany(Student::class)
+            ->using(ProfileStudent::class)
             ->withPivot('status')
             ->as('application')
             ->withTimestamps();

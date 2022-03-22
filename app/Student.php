@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Profile;
+use App\ProfileStudent;
 use App\StudentData;
 use App\StudentFeedback;
 use App\User;
@@ -93,7 +94,7 @@ class Student extends Model implements Auditable
     public function scopeWithStatus($query, $status)
     {
         if ($status) {
-            $query->where('status', '=', $status);
+            $query->where('students.status', '=', $status);
         }
 
         return $query;
@@ -201,6 +202,7 @@ class Student extends Model implements Auditable
     public function faculty()
     {
         return $this->belongsToMany(Profile::class)
+            ->using(ProfileStudent::class)
             ->withPivot('status')
             ->as('applicaton')
             ->withTimestamps();
