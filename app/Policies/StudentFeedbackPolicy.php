@@ -34,7 +34,7 @@ class StudentFeedbackPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasRole(['faculty', 'students_admin']);
+        return $user->userOrDelegatorhasRole(['faculty', 'students_admin']);
     }
 
     /**
@@ -46,7 +46,7 @@ class StudentFeedbackPolicy
      */
     public function view(User $user, StudentFeedback $studentFeedback)
     {
-        return $this->viewAny($user) || $user->owns($studentFeedback) || $user->owns($studentFeedback->student);
+        return $this->viewAny($user) || $user->owns($studentFeedback, true) || $user->owns($studentFeedback->student, true);
     }
 
     /**
@@ -57,7 +57,7 @@ class StudentFeedbackPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole(['faculty', 'students_admin']);
+        return $user->userOrDelegatorhasRole(['faculty', 'students_admin']);
     }
 
     /**
@@ -69,7 +69,7 @@ class StudentFeedbackPolicy
      */
     public function update(User $user, StudentFeedback $studentFeedback)
     {
-        return $user->hasRole(['students_admin']) || $user->owns($studentFeedback);;
+        return $user->userOrDelegatorhasRole(['students_admin']) || $user->owns($studentFeedback, true);
     }
 
     /**
@@ -81,7 +81,7 @@ class StudentFeedbackPolicy
      */
     public function delete(User $user, StudentFeedback $studentFeedback)
     {
-        return $user->hasRole(['students_admin']) || $user->owns($studentFeedback);
+        return $user->userOrDelegatorhasRole(['students_admin']) || $user->owns($studentFeedback, true);
     }
 
     /**

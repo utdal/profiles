@@ -68,6 +68,7 @@
 	<script src="{{ asset(mix('js/vendor.js')) }}"></script>
 	<script src="{{ asset(mix('js/app.js')) }}"></script>
 	@yield('scripts')
+	@stack('scripts')
 	@if(isset($settings['primary_color']) || isset($settings['secondary_color']) || isset($settings['tertiary_color'] ))
 	<style>
 		.bg-primary, .btn-primary, .dropdown-item:active, .badge-primary, .page-item.active .page-link, input:checked + .slider{

@@ -10,6 +10,7 @@ use App\Student;
 use App\UserSetting;
 use App\Traits\RoleTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Auditable as HasAudits;
 use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Notifications\Notifiable;
@@ -78,9 +79,10 @@ class User extends Authenticatable implements Auditable
      * Determine if this User owns the given model.
      * 
      * @param  Illuminate\Database\Eloquent\Model $model
+     * @param  bool $check_delegators also check if the delegator(s) owns the given model
      * @return bool
      */
-    public function owns($model)
+    public function owns($model, $check_delegators = false)
     {
         if (($model instanceof User) && $this->is($model)) {
             return true;
@@ -90,6 +92,14 @@ class User extends Authenticatable implements Auditable
         }
         if (method_exists($model, 'users') && $model->users()->whereId($this->id)->exists()) {
             return true;
+        }
+
+        if ($check_delegators) {
+            foreach ($this->currentDelegators as $delegator) {
+                if ($delegator->owns($model)) {
+                    return true;
+                }
+            }
         }
 
         return false;
@@ -324,6 +334,119 @@ class User extends Authenticatable implements Auditable
         return $this->morphedByMany(is_object($model) ? get_class($model) : $model, 'userable', 'bookmarks')
             ->using(Bookmark::class)
             ->withTimestamps();
+    }
+
+    public function delegations()
+    {
+        return $this->hasMany(UserDelegation::class, 'delegator_user_id');
+    }
+
+    /**
+     * User delegates. Many-to-many relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function delegates()
+    {
+        return $this->belongsToMany('App\User', 'user_delegations', 'delegator_user_id', 'delegate_user_id')
+                    ->using(UserDelegation::class)
+                    ->withPivot('starting', 'until', 'gets_reminders')
+                    ->withTimestamps();
+    }
+
+    /**
+     * Current user delegates.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function currentDelegates()
+    {
+        return $this->delegates()
+            ->whereDate('user_delegations.starting', '<=', now())
+            ->where(function($q) {
+                $q->whereDate('user_delegations.until', '>', now());
+                $q->orWhereNull('user_delegations.until');
+            });
+    }
+
+    /**
+     * User's current delegates that get reminders.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function currentReminderDelegates()
+    {
+        return $this->currentDelegates()->where('gets_reminders', '=', true);
+
+    }
+
+    /**
+     * Email addresses of the user's current delegates that get reminders.
+     *
+     * @return array
+     */
+    public function currentReminderDelegateEmailAddresses()
+    {
+        return $this->currentReminderDelegates()->pluck('email')->all();
+    }
+
+    /**
+     * User delegators. Inverse of delegate many-to-many relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function delegators()
+    {
+        return $this->belongsToMany('App\User', 'user_delegations', 'delegate_user_id', 'delegator_user_id')
+                    ->using(UserDelegation::class)
+                    ->withPivot('starting', 'until', 'gets_reminders')
+                    ->withTimestamps();
+    }
+
+    /**
+     * Current user delegators.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function currentDelegators()
+    {
+        return $this->delegators()
+            ->whereDate('user_delegations.starting', '<=', now())
+            ->where(function($q) {
+                $q->whereDate('user_delegations.until', '>', now());
+                $q->orWhereNull('user_delegations.until');
+            });
+    }
+
+    /**
+     * User's current delegators that have allowed the user to get reminders.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function currentReminderDelegators()
+    {
+        return $this->currentDelegators()->where('gets_reminders', '=', true);
+    }  
+    
+    /**
+     * Additional roles currently delegated to the user.
+     *
+     * @return \Illuminate\Database\Query\Builder
+     */
+    public function currentDelegatedRoles()
+    {
+        return Role::query()
+            ->wheredoesntHave('users', function ($q) {
+                $q->where('id', '=', $this->id);
+            })
+            ->whereHas('users.delegates', function ($q) {
+                $q->where('delegate_user_id', $this->id)
+                  ->whereDate('user_delegations.starting', '<=', now())
+                  ->where(function($q) {
+                    $q->whereDate('user_delegations.until', '>', now())
+                      ->orWhereNull('user_delegations.until');
+                  });
+            });
     }
 
 }

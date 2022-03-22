@@ -32,7 +32,7 @@ class StudentPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasRole(['faculty', 'students_admin']);
+        return $user->userOrDelegatorhasRole(['faculty', 'students_admin']);
     }
 
     /**
@@ -44,7 +44,7 @@ class StudentPolicy
      */
     public function view(User $user, Student $student)
     {
-        return $this->viewAny($user) || $user->owns($student);
+        return $this->viewAny($user) || $user->owns($student, true);
     }
 
     /**
@@ -79,7 +79,7 @@ class StudentPolicy
      */
     public function update(User $user, Student $student)
     {
-        return $user->owns($student);
+        return $user->owns($student, true);
     }
 
     /**
