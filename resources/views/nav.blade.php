@@ -126,6 +126,9 @@ $can_create_users = $user && $user->can('create', 'App\User');
             @if(config('app.enable_students') && $user_student_profile)
               <a class="dropdown-item" href="{{ route('students.show', ['student' => $user_student_profile]) }}"><span class="fa fa-user fa-fw"></span> Student Research Profile</a>
             @endif
+            @if(config('app.enable_students') && $user_profile && true) {{-- @todo:implement permissions --}}
+              <a class="dropdown-item" href="{{ route('profiles.students', ['profile' => $user_profile]) }}"><span class="fa fa-users fa-fw"></span> Student Applications</a>
+            @endif
             <a class="dropdown-item" href="{{ route('users.bookmarks.show', ['user' => $user->pea]) }}"><span class="fas fa-bookmark fa-fw"></span> Bookmarks</a>
             <a class="dropdown-item" href="{{ route('users.delegations.show', ['user' => $user->pea]) }}"><span class="fas fa-user-friends fa-fw"></span> Delegations</a>
             <a class="dropdown-item" href="{{ route('users.show', ['user' => $user->pea]) }}"><span class="fa fa-cog fa-fw"></span> Account</a>

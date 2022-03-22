@@ -1,5 +1,6 @@
-<?php 
+<?php
 
+use App\Http\Controllers\ProfileStudentsController;
 use App\Http\Controllers\StudentsController;
 
 /******************
@@ -17,6 +18,14 @@ Route::name('students.')->prefix('/students')->group(function () {
         Route::name('edit')->get('/edit', [StudentsController::class, 'edit']);
         Route::name('update')->post('/update', [StudentsController::class, 'update']);
         Route::name('status')->get('/status', [StudentsController::class, 'setStatus']);
+    });
+
+});
+
+Route::name('profiles.')->prefix('/')->group(function () {
+
+    Route::prefix('/{profile}')->group(function () {
+        Route::name('students')->get('/students', [ProfileStudentsController::class, 'show']);
     });
 
 });
