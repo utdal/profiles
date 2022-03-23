@@ -68,11 +68,11 @@
     <div class="profile-picker">
         @if($editable)
         <small class="form-text text-muted">Max 5. Start typing the name of a professor, and select from the list. You can also refer to <a href="{{ route('users.bookmarks.show', ['user' => auth()->user()]) }}" target="_blank">your bookmarks <i class="fas fa-external-link-alt"></i></a>.</small>
-        <i class="fas fa-users" aria-hidden="true"></i> {!! Form::select('research_profile[faculty][]', array_combine($student->research_profile->faculty ?? [], $student->research_profile->faculty ?? []), $student->research_profile->faculty ?? [], ['id' => 'research_profile_faculty[]', 'multiple'] + ($schools->isNotEmpty() ? ['data-school' => $schools->keys()->implode(';')] : [])) !!}
+        <i class="fas fa-users" aria-hidden="true"></i> {!! Form::select('faculty[]', $student->faculty->pluck('full_name', 'id')->all(), $student->faculty->pluck('id')->all() ?? [], ['id' => 'research_profile_faculty[]', 'multiple'] + ($schools->isNotEmpty() ? ['data-school' => $schools->keys()->implode(';')] : [])) !!}
         @else
             <i class="fas fa-users" aria-hidden="true"></i><span class="sr-only">Faculty:</span> 
-            @foreach(($student->research_profile->faculty ?? []) as $faculty)
-                <span class="badge badge-primary tags-badge">{{ $faculty }}</span>
+            @foreach($student->faculty as $faculty)
+                <span class="badge badge-primary tags-badge">{{ $faculty->full_name }}</span>
             @endforeach
         @endif
     </div>

@@ -144,6 +144,8 @@ class StudentsController extends Controller
             'data' => $request->research_profile,
         ]);
 
+        $student->faculty()->sync($request->faculty ?? []);
+
         return redirect()->route('students.show', ['student' => $student])
             ->with('flash_message', ($updated && $research_profile_updated) ? 'Submitted!' : 'Sorry, unable to save.');
     }
