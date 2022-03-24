@@ -47,20 +47,16 @@ class NotifyStudentDataPendingReview extends Command
         $year = $this->argument('year');
 
         $semester = ($season & $year) ? Semester::formatName($season, $year) : Semester::current();
-        $student_data_count = StudentData::student_data_count_by_faculty($semester);
-        $users = User::whereIn('id', array_keys($student_data_count))->get();
+        $apps_count = StudentData::applications_count_by_faculty($semester);
 
-        foreach ($users as $user) {            
-            if ($user) {
-                $count = $student_data_count[$user->id];
+        foreach ($apps_count as $faculty_apps) { 
+                
+                $count = $faculty_apps['count'];           
+                $user = $faculty_apps['user'];
                 $message = new StudentDataReceived($user, $count, $semester);
-                Mail::to($user)->send($message);
-                $this->line("Message sent to: {$user->display_name}");
-            }
-            else{
-                $this->line("Error - User: {$user->display_name}");
-            }
-            
+                
+                Mail::to($user['email'])->send($message);
+                $this->line("Message sent to: {$user['full_name']}");
             
         }
 

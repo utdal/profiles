@@ -56,28 +56,38 @@ class StudentData extends ProfileData
         return $this->belongsTo(Student::class, 'student_id');
     }
 
-    /* Add another query scope for the where semester
-    * array_key_exists(string|int $key, array $array) to ask if it's set
-    * use the current semester helper in case the parameter is null
-    */
-    public static function student_data_count_by_faculty($semester)
+    /**
+     * Get the student applications for a specific semester and returns an array with the total number of applications per faculty.
+     *
+     * @return array
+     */
+    public static function applications_count_by_faculty($semester)
     { 
-        $student_data_count = array(); 
-        $apps = StudentData::whereNotNull('data->faculty')->where('data->semesters', 'like', "%{$semester}%")->get();
+        $apps_count = array(); 
+        $apps = StudentData::with('student.faculty')
+                            ->whereNotNull('data->faculty')
+                            ->where('data->semesters', 'like', "%{$semester}%")->get();
 
         foreach ($apps as $app) {
-            foreach ($app->data['faculty'] as $faculty) {
-                $id = Profile::firstWhere('full_name', 'like', "%{$faculty}%")->user->id;
-                if (array_key_exists($faculty, $student_data_count)) {
-                    $student_data_count[$id] = ++$student_data_count[$faculty];
+            foreach ($app->student->faculty as $faculty) {
+
+                $user = ['full_name' => $faculty->user->display_name, 'email' => $faculty->user->email ];
+                $id = $faculty->user->id;
+
+                if (Arr::exists($apps_count, $id)) {
+                    $count = ++$apps_count[$id]['count'];
                 }
                 else {
-                    $student_data_count[$id] = 1;
+                    $count = 1;
+                    $apps_count = Arr::add($apps_count, $id, ['user' => $user] );
                 }
+                 
+                $apps_count[$id]['count'] = $count; 
+                
             }
         }
         
-        return $student_data_count;
+        return $apps_count;
     }
 
 }
