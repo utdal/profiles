@@ -64,9 +64,7 @@ class StudentData extends ProfileData
     public static function applications_count_by_faculty($semester)
     { 
         $apps_count = array(); 
-        $apps = StudentData::with('student.faculty')
-                            ->whereNotNull('data->faculty')
-                            ->where('data->semesters', 'like', "%{$semester}%")->get();
+        $apps = StudentData::with('student.faculty')->whereNotNull('data->faculty')->where('data->semesters', 'like', "%{$semester}%")->get();
 
         foreach ($apps as $app) {
             foreach ($app->student->faculty as $faculty) {
@@ -80,8 +78,17 @@ class StudentData extends ProfileData
                 else {
                     $count = 1;
                     $apps_count = Arr::add($apps_count, $id, ['user' => $user] );
+
+                    foreach ($faculty->user->currentReminderDelegates as $current_delegate) {
+                        $delegate_user = ['full_name' => $current_delegate->display_name, 
+                                            'email' => $current_delegate->email, 
+                                            'delegator' => $faculty->user->display_name ];
+
+                        $apps_count[$id]['delegates'][$current_delegate->id] = $delegate_user;
+                    }
+
                 }
-                 
+
                 $apps_count[$id]['count'] = $count; 
                 
             }

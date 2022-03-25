@@ -22,12 +22,13 @@ class StudentDataReceived extends Mailable
      *
      * @return void
      */
-    public function __construct($user, $count, $semester)
+    public function __construct($user, $count, $semester, $delegate = false)
     {
         $this->params = [
             'user' => $user,
             'count' => $count,
             'semester' => $semester,
+            'delegate' => $delegate,
         ];
     }
 

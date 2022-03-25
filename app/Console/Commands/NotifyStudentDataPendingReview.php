@@ -8,6 +8,7 @@ use App\Profile;
 use App\StudentData;
 use App\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Mail;
 
 class NotifyStudentDataPendingReview extends Command
@@ -50,16 +51,23 @@ class NotifyStudentDataPendingReview extends Command
         $apps_count = StudentData::applications_count_by_faculty($semester);
 
         foreach ($apps_count as $faculty_apps) { 
-                
-                $count = $faculty_apps['count'];           
-                $user = $faculty_apps['user'];
-                $message = new StudentDataReceived($user, $count, $semester);
-                
-                Mail::to($user['email'])->send($message);
-                $this->line("Message sent to: {$user['full_name']}");
-            
+            $this->send_message($faculty_apps['user'], $faculty_apps['count'], $semester);
+
+            if (Arr::exists($faculty_apps, 'delegates')) {
+                foreach ($faculty_apps['delegates'] as $delegate) {
+                    $this->send_message($delegate, $faculty_apps['count'], $semester, true);   
+                }
+            }
         }
 
         return Command::SUCCESS;
     }
+
+    public function send_message($user, $count, $semester, $delegate = false):void {
+        $message = new StudentDataReceived($user, $count, $semester, $delegate);
+                
+        Mail::to($user['email'])->send($message);
+        $this->line("Message sent to: {$user['full_name']}");
+    }
+
 }
