@@ -63,6 +63,9 @@ class NotifyStudentDataPendingReview extends Command
         return Command::SUCCESS;
     }
 
+    /**
+     * Send email and output a message to the console
+     */
     public function send_message($user, $count, $semester, $delegate = false):void {
         $message = new StudentDataReceived($user, $count, $semester, $delegate);
                 
