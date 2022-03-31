@@ -7,7 +7,7 @@
         wire:key="{{ $profile->slug }}_{{ $student->slug }}_status"
         name="{{ $profile->slug }}_{{ $student->slug }}_status"
         id="{{ $profile->slug }}_{{ $student->slug }}_status"
-        class="custom-select custom-select-sm rounded-pill"
+        class="custom-select custom-select-sm rounded-pill my-1"
     >
         @foreach (App\ProfileStudent::$statuses as $status_value => $status_name)
             <option
