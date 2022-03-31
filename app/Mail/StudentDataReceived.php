@@ -22,12 +22,13 @@ class StudentDataReceived extends Mailable
      *
      * @return void
      */
-    public function __construct($user, $count, $semester, $delegate = false)
+    public function __construct($name, $count, $semester, $faculty, $delegate)
     {
         $this->params = [
-            'user' => $user,
+            'name' => $name,
             'count' => $count,
             'semester' => $semester,
+            'faculty' => $faculty,
             'delegate' => $delegate,
         ];
     }
@@ -39,8 +40,7 @@ class StudentDataReceived extends Mailable
      */
     public function build()
     {
-        return $this->from('example@example.com', 'Example')
-                    ->view('emails.studentdatareceived')
+        return $this->view('emails.studentdatareceived')
                     ->with( $this->params );
     }
 }

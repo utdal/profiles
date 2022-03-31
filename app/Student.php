@@ -150,6 +150,29 @@ class Student extends Model implements Auditable
         return $query->whereColumn('updated_at', '>', 'created_at');
     }
 
+    /**
+     * Query scope for Students whose application status is 'maybe later' or Null. To be used through the Profile relation.
+     * 
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeWithStatusPendingReview($query) 
+    {
+        return $query->whereNull('profile_student.status')
+                     ->orWhere('profile_student.status', '=', 'maybe later');
+    }
+
+    /**
+     * Query scope for Students whose application status is 'not interested'. To be used through the Profile relation.
+     * 
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeWithStatusNotInterested($query)
+    {
+        return $query->Where('profile_student.status', '=', 'not interested');
+    }
+
     ///////////////
     // Relations //
     ///////////////

@@ -11,6 +11,8 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Mail;
 
+use function PHPUnit\Framework\isNull;
+
 class NotifyStudentDataPendingReview extends Command
 {
     /**
@@ -47,30 +49,34 @@ class NotifyStudentDataPendingReview extends Command
         $season = $this->argument('season');
         $year = $this->argument('year');
 
-        $semester = ($season & $year) ? Semester::formatName($season, $year) : Semester::current();
-        $apps_count = StudentData::applications_count_by_faculty($semester);
+        $semester = ($season && $year) ? Semester::formatName($season, $year) : Semester::current();
+        $faculty_list = Profile::StudentsPendingReviewWithSemester($semester)
+                                ->EagerStudentsPendingReviewWithSemester($semester)
+                                ->with('user:id,email,display_name')->get();
 
-        foreach ($apps_count as $faculty_apps) { 
-            $this->send_message($faculty_apps['user'], $faculty_apps['count'], $semester);
+        foreach ($faculty_list as $faculty) { 
+            $count = $faculty->students->count();
 
-            if (Arr::exists($faculty_apps, 'delegates')) {
-                foreach ($faculty_apps['delegates'] as $delegate) {
-                    $this->send_message($delegate, $faculty_apps['count'], $semester, true);   
-                }
-            }
+            $this->send_message($faculty->user->email, $faculty->full_name, $count, $semester, $faculty);
+       
+            $faculty->user->currentReminderDelegates->each(function($delegate) use ($count, $semester, $faculty) 
+            {
+                $this->send_message($delegate->email, $delegate->display_name, $count, $semester, $faculty, true);
+            });
         }
 
         return Command::SUCCESS;
     }
 
     /**
-     * Send email and output a message to the console
+     * Send email to faculty member or delegate(s) and output a message to the console
      */
-    public function send_message($user, $count, $semester, $delegate = false):void {
-        $message = new StudentDataReceived($user, $count, $semester, $delegate);
+    public function send_message($email, $name, $count, $semester, $faculty, $delegate = false):void {
+        
+        $message = new StudentDataReceived($name, $count, $semester, $faculty, $delegate);
                 
-        Mail::to($user['email'])->send($message);
-        $this->line("Message sent to: {$user['full_name']}");
+        Mail::to($email)->send($message);
+        $this->line("Message sent to: {$name}");
     }
 
 }

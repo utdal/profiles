@@ -56,45 +56,4 @@ class StudentData extends ProfileData
         return $this->belongsTo(Student::class, 'student_id');
     }
 
-    /**
-     * Get the student applications for a specific semester and returns an array with the total number of applications per faculty.
-     *
-     * @return array
-     */
-    public static function applications_count_by_faculty($semester)
-    { 
-        $apps_count = array(); 
-        $apps = StudentData::with('student.faculty')->where('data->semesters', 'like', "%{$semester}%")->get();
-
-        foreach ($apps as $app) {
-            foreach ($app->student->faculty as $faculty) {
-
-                $user = ['full_name' => $faculty->user->display_name, 'email' => $faculty->user->email ];
-                $id = $faculty->user->id;
-
-                if (Arr::exists($apps_count, $id)) {
-                    $count = ++$apps_count[$id]['count'];
-                }
-                else {
-                    $count = 1;
-                    $apps_count = Arr::add($apps_count, $id, ['user' => $user] );
-
-                    foreach ($faculty->user->currentReminderDelegates as $current_delegate) {
-                        $delegate_user = ['full_name' => $current_delegate->display_name, 
-                                            'email' => $current_delegate->email, 
-                                            'delegator' => $faculty->user->display_name ];
-
-                        $apps_count[$id]['delegates'][$current_delegate->id] = $delegate_user;
-                    }
-
-                }
-
-                $apps_count[$id]['count'] = $count; 
-                
-            }
-        }
-        
-        return $apps_count;
-    }
-
 }
