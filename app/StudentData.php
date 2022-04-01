@@ -24,6 +24,20 @@ class StudentData extends ProfileData
         'sort_order',
     ];
 
+    /** @var array Language choices */
+    public static $languages = [
+        'ar' => 'Arabic',
+        'bn' => 'Bengali',
+        'zh' => 'Chinese',
+        'en' => 'English',
+        'hi' => 'Hindi',
+        'ja' => 'Japanese',
+        'pt' => 'Portugese',
+        'es' => 'Spanish',
+        'ru' => 'Russian',
+        'other' => 'Other',
+    ];
+
     //////////////////
     // Query Scopes //
     //////////////////

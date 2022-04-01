@@ -7,7 +7,7 @@
             role="tablist"
             aria-orientation="vertical"
         >
-            @foreach(App\ProfileStudent::$statuses as $status => $status_name)
+            @foreach($statuses as $status => $status_name)
                 <a
                     class="nav-link @if($status === '') active @endif"
                     id="tab_pill_{{ Str::slug($status) }}"
@@ -25,11 +25,148 @@
                     </span>
                 </a>
             @endforeach
+            <div class="accordion filters mt-5" id="accordionFilters">
+                <div class="card bg-transparent border-right-0 border-left-0">
+                    <div class="card-header p-0" id="filterHeading">
+                        <h2 class="my-0">
+                            <button
+                                class="btn btn-link btn-block text-left px-3 py-2"
+                                type="button"
+                                data-toggle="collapse"
+                                data-target="#collapseFilters"
+                                aria-expanded="true"
+                                aria-controls="collapseFilters"
+                            >
+                                <span class="fa-fw fas fa-filter mr-2" style="opacity:0.3"></span>
+                                Filter by <span class="fas fa-fw fa-caret-down"></span>
+                            </button>
+                        </h2>
+                    </div>
+
+                    <div
+                        id="collapseFilters"
+                        class="collapse"
+                        aria-labelledby="filterHeading"
+                        data-parent="#accordionFilters"
+                        wire:ignore.self
+                    >
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="studentNameSearch">Name</label>
+                                <input wire:model.debounce.250ms="search_filter" type="text" id="studentNameSearch" class="form-control" placeholder="Search...">
+                            </div>
+                            <div class="form-group">
+                                <label for="studentSemesterSearch">Semester</label>
+                                <select wire:model="semester_filter" id="studentSemesterSearch" class="form-control">
+                                    <option value="" selected>All</option>
+                                    @foreach($semesters as $semester)
+                                    <option value="{{ $semester }}">{{ $semester }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="studentTagSearch">Topic Interests</label>
+                                <select wire:model="tag_filter" id="studentTagSearch" class="form-control">
+                                    <option value="" selected>All</option>
+                                    @foreach($tags as $tag)
+                                    <option value="{{ $tag->slug }}">{{ $tag->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="studentSchoolSearch">School</label>
+                                <select wire:model="schools_filter" id="studentSchoolSearch" class="form-control">
+                                    <option value="" selected>All</option>
+                                    @foreach($schools as $school)
+                                    <option value="{{ $school }}">{{ $school }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="studentMajorSearch">Major</label>
+                                <select wire:model="major_filter" id="studentMajorSearch" class="form-control">
+                                    <option value="" selected>All</option>
+                                    @foreach($majors as $major)
+                                    <option value="{{ $major }}">{{ $major }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="studentLanguageSearch">Language</label>
+                                <select wire:model="language_filter" id="studentLanguageSearch" class="form-control">
+                                    <option value="" selected>All</option>
+                                    @foreach($languages as $language_code => $language)
+                                    <option value="{{ $language_code }}">{{ $language }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="studentTravelSearch">Travel to Research Centers</label>
+                                <select wire:model="travel_filter" id="studentTravelSearch" class="form-control">
+                                    <option value="" selected>All</option>
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="studentTravelOtherSearch">Travel to Sites</label>
+                                <select wire:model="travel_other_filter" id="studentTravelOtherSearch" class="form-control">
+                                    <option value="" selected>All</option>
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="studentAnimalsSearch">Work with Animals</label>
+                                <select wire:model="animals_filter" id="studentAnimalsSearch" class="form-control">
+                                    <option value="" selected>All</option>
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="studentCreditSearch">Research Credit</label>
+                                <select wire:model="credit_filter" id="studentCreditSearch" class="form-control">
+                                    <option value="" selected>All</option>
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="studentGraduatesSearch">Graduates</label>
+                                <select wire:model="graduation_filter" id="studentGraduatesSearch" class="form-control">
+                                    <option value="" selected>All</option>
+                                    @foreach($graduation_dates as $graduation_date)
+                                    <option value="{{ $graduation_date }}">{{ $graduation_date }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <button type="button" class="btn btn-primary" wire:click="resetFilters">Clear All Filters</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-md-9">
+        <div class="applied_filters">
+            @foreach($filtered_by as $filter_name => $filter_value)
+                <span wire:key="filter_badge_{{ $filter_name }}" class="badge badge-primary mb-3">
+                    {{ Str::before($filter_name, '_filter') }}: {{ $filter_value }}
+                    <button
+                        wire:click="resetFilter('{{ $filter_name }}')"
+                        type="button"
+                        class="close float-none ml-2"
+                        style="font-size: 1rem;"
+                        aria-label="Clear Filter"
+                    >
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </span>
+            @endforeach
+        </div>
         <div class="tab-content h-100" id="profileStudentTabContent">
-            @foreach(App\ProfileStudent::$statuses as $status => $status_name)
+            @foreach($statuses as $status => $status_name)
                 <div
                     class="tab-pane fade @if($status === '') show active @endif"
                     id="tab_{{ Str::slug($status) }}"
@@ -102,4 +239,6 @@
             @endforeach
         </div>
     </div>
+
+    @include('livewire.partials._loading-fixed', ['loading_target' => 'resetFilter, resetFilters, animals_filter, credit_filter, graduation_filter, language_filter, search_filter, schools_filter, semester_filter, travel_filter, travel_other_filter, tag_filter'])
 </div>
