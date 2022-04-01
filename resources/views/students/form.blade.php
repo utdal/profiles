@@ -113,11 +113,11 @@
     <strong class="col-lg-9">Are you willing to take part in research that will require you to travel regularly to sites in the Dallas area, such as community centers, participants’ homes or area schools?</strong>
     <div class="col-lg-3">
         <div class="form-check form-check-inline">
-            {!! Form::radio("research_profile[travel_other]", '1', $student->research_profile->travel === '1', ['id' => "travel_other_yes", 'class' => 'form-check-input']) !!}
+            {!! Form::radio("research_profile[travel_other]", '1', $student->research_profile->travel_other === '1', ['id' => "travel_other_yes", 'class' => 'form-check-input']) !!}
             {!! Form::label("travel_other_yes", "Yes", ['class' => 'form-check-label']) !!}
         </div>
         <div class="form-check form-check-inline">
-            {!! Form::radio("research_profile[travel_other]", '0', $student->research_profile->travel === '0', ['id' => "travel_other_no", 'class' => 'form-check-input']) !!}
+            {!! Form::radio("research_profile[travel_other]", '0', $student->research_profile->travel_other === '0', ['id' => "travel_other_no", 'class' => 'form-check-input']) !!}
             {!! Form::label("travel_other_no", "No", ['class' => 'form-check-label']) !!}
         </div>
     </div>
