@@ -117,6 +117,7 @@ class ProfileStudents extends Component
                 })->values(),
             'tags' => Tag::getWithType(Student::class),
             'statuses' => ProfileStudent::$statuses,
+            'status_icons' => ProfileStudent::$icons,
         ]);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\ProfileStudent;
 use Livewire\Component;
 
 class StudentFiler extends Component
@@ -10,21 +11,17 @@ class StudentFiler extends Component
 
     public $profile;
 
-    public $status = null;
+    public $status = '';
 
-    public function mount()
-    {
-        $this->status = $this->profile->students()->find($this->student->id)->application->status;
-    }
-
-    public function updatedStatus($value)
+    public function updateStatus(string $new_status, string $new_status_name): void
     {
         $updated = $this->profile->students()->updateExistingPivot($this->student->id, [
-            'status' => $value ?: null,
+            'status' => $new_status ?: null,
         ]);
 
         if ($updated) {
-            $this->emit('alert', "Student filed.", 'success');
+            $this->status = $new_status;
+            $this->emit('alert', "{$this->student->full_name} filed as {$new_status_name}", 'success');
             $this->emit('profileStudentStatusUpdated');
         } else {
             $this->emit('alert', "Unable to file student.", 'danger');
@@ -33,6 +30,9 @@ class StudentFiler extends Component
 
     public function render()
     {
-        return view('livewire.student-filer');
+        return view('livewire.student-filer', [
+            'statuses' => ProfileStudent::$statuses,
+            'status_icons' => ProfileStudent::$icons,
+        ]);
     }
 }

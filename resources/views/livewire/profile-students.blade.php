@@ -18,7 +18,7 @@
                     aria-selected="true"
                     wire:ignore.self
                 >
-                    <span class="fa-fw mr-2 {{ App\ProfileStudent::$icons[$status] }}" style="opacity:0.3"></span>
+                    <span class="fa-fw mr-2 {{ $status_icons[$status] }}" style="opacity:0.3"></span>
                     {{ $status_name }}
                     <span class="badge">
                         ({{ $students->where('application.status', $status)->count() }})
@@ -213,16 +213,19 @@
                                         {{ $student->research_profile->graduation_date }}
                                     </div>
                                     <div class="col-lg-3">
-                                        <a href="{{ route('students.show', ['student' => $student]) }}" target="_blank" title="View in new tab/window">
-                                            <i class="far fa-fw fa-lg fa-window-restore"></i><span class="sr-only">View</span>
-                                        </a>
-                                        <a href="{{ route('students.show', ['student' => $student]) }}#student_feedback" target="_blank" title="Add or view feedback">
-                                            <i class="fas fa-fw fa-lg fa-comment"></i><span class="sr-only">Feedback</span>
-                                        </a>
-                                        <a href="mailto:{{ optional($student->user)->email }}" title="Email the student">
-                                            <i class="fas fa-fw fa-lg fa-envelope"></i><span class="sr-only">Email</span>
-                                        </a>
-                                        <livewire:student-filer :profile="$profile" :student="$student" :wire:key="$student->slug . '_filer'">
+                                        <div>
+                                            <a href="{{ route('students.show', ['student' => $student]) }}" target="_blank" title="View in new tab/window">
+                                                <i class="far fa-fw fa-window-restore"></i> View
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <a href="mailto:{{ optional($student->user)->email }}" title="Email the student">
+                                                <i class="fas fa-fw fa-envelope"></i> Email
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <livewire:student-filer :profile="$profile" :student="$student" :status="$student->application->status" :wire:key="$student->slug . '_filer'">
+                                        </div>
                                     </div>
                                 </div>
                             </li>
