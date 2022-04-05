@@ -466,6 +466,13 @@ if ((typeof Livewire === "undefined" ? "undefined" : _typeof(Livewire)) === 'obj
   Livewire.on('alert', function (message, type) {
     return profiles.toast(message, type);
   });
+  Livewire.onError(function (status, response) {
+    // show a toast instead of a modal for 403 responses
+    if (status === 403) {
+      profiles.toast('⛔️ Sorry, you are not authorized to do that.', 'danger');
+      return false;
+    }
+  });
 }
 
 /***/ }),
