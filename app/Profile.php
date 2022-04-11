@@ -214,6 +214,9 @@ class Profile extends Model implements HasMedia, Auditable
                 $record->data = $entry['data'];
               }
               $record->sort_order = $sort_order--;
+              if ($record->type === 'information') {
+                  $should_save = true;
+              }
           }
           //new records
           else if($should_save){
@@ -238,7 +241,7 @@ class Profile extends Model implements HasMedia, Auditable
                   $record->clearMediaCollection('images');
                   $record->addMedia($new_file)->toMediaCollection('images');
               }
-          } elseif ($record !== null) {
+          } elseif ($record instanceof ProfileData && $record->type !== 'information') {
               $record->delete();
           }
 

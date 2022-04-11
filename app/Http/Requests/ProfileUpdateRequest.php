@@ -35,6 +35,7 @@ class ProfileUpdateRequest extends FormRequest
         return [
             'full_name' => 'required|string',
             'public' => 'required|boolean',
+            'data.*.data.title' => 'required|string',
             'data.*.data.email' => 'nullable|email',
             'data.*.data.url' => 'nullable|url',
             'data.*.data.secondary_url' => 'nullable|url',
@@ -67,6 +68,7 @@ class ProfileUpdateRequest extends FormRequest
     {
         return [
             'full_name' => 'Display Name',
+            'data.*.data.title' => 'Title',
             'data.*.data.email' => 'Email address',
             'data.*.data.url' => 'Primary URL',
             'data.*.data.secondary_url' => 'Secondary URL',
