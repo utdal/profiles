@@ -108,6 +108,7 @@ class StudentsController extends Controller
         return view('students.show', [
             'student' => $student,
             'schools' => $this->participatingSchools(),
+            'languages' => StudentData::$languages,
         ]);
     }
 
@@ -122,6 +123,7 @@ class StudentsController extends Controller
         return view('students.edit', [
             'student' => $student,
             'schools' => $this->participatingSchools(),
+            'languages' => StudentData::$languages,
         ]);
     }
 

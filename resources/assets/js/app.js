@@ -418,6 +418,17 @@ $(document).ready(function() {
   $('[data-evaluate=profile-eml]').each(profiles.deobfuscate_mail_links);
   $('[data-toggle="tooltip"]').tooltip();
 
+  /**
+ * Load html element as content into a popover
+ */
+  $('[data-toggle="popover"]').popover({
+    html: true,
+    content: function () {
+      const content = $(this).data("popover-content");
+      return (typeof content === 'string' && $(content).length) ? $(content).html() : '';
+    }
+  });
+
 });
 
 // Livewire global hooks
