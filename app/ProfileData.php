@@ -72,6 +72,23 @@ class ProfileData extends Model implements HasMedia, Auditable
         return $this->addMediaConversion($name)->width($size)->height($size)->performOnCollections($collection);
     }
 
+    /**
+     * Gets a list of unique values of the given key from stored records of the given type
+     *
+     * @param string $type
+     * @param string $key
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public static function uniqueValuesFor(string $type, string $key)
+    {
+        return self::whereType($type)
+            ->pluck('data')
+            ->pluck($key)
+            ->flatten()
+            ->unique()
+            ->filter();
+    }
+
     ///////////////////////////////////
     // Mutators & Virtual Attributes //
     ///////////////////////////////////

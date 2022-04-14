@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\User;
 use App\Profile;
+use App\ProfileStudent;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ProfilePolicy
@@ -81,7 +82,19 @@ class ProfilePolicy
     {
         return true;
     }
-    
+
+    /**
+     * Determine whether the user can view the profile-specific students.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Profile  $profile
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function viewStudents(User $user, Profile $profile)
+    {
+        return $user->can('viewForProfile', [ProfileStudent::class, $profile]);
+    }
+
     /**
      * Determine whether the user can administer profiles.
      *

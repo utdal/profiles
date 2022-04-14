@@ -223,7 +223,7 @@ var profiles = function ($, undefined) {
       },
       freeInput: false,
       itemValue: function itemValue(profile) {
-        return profile.full_name;
+        return profile.id;
       },
       itemText: function itemText(profile) {
         return profile.full_name;
@@ -243,7 +243,8 @@ var profiles = function ($, undefined) {
 
     $select.find('option').each(function (i, option) {
       return $select.tagsinput('add', {
-        'full_name': option.value
+        'id': option.value,
+        'full_name': option.text
       });
     });
     $select.tagsinput('input').on('typeahead:asyncrequest', function () {
@@ -451,6 +452,17 @@ $(document).ready(function () {
   $('[data-toggle=show]').on('change page_up', profiles.toggle_show).trigger('change');
   $('[data-evaluate=profile-eml]').each(profiles.deobfuscate_mail_links);
   $('[data-toggle="tooltip"]').tooltip();
+  /**
+  * Load html element as content into a popover
+  */
+
+  $('[data-toggle="popover"]').popover({
+    html: true,
+    content: function content() {
+      var content = $(this).data("popover-content");
+      return typeof content === 'string' && $(content).length ? $(content).html() : '';
+    }
+  });
 }); // Livewire global hooks
 
 if ((typeof Livewire === "undefined" ? "undefined" : _typeof(Livewire)) === 'object') {
@@ -464,6 +476,13 @@ if ((typeof Livewire === "undefined" ? "undefined" : _typeof(Livewire)) === 'obj
 
   Livewire.on('alert', function (message, type) {
     return profiles.toast(message, type);
+  });
+  Livewire.onError(function (status, response) {
+    // show a toast instead of a modal for 403 responses
+    if (status === 403) {
+      profiles.toast('⛔️ Sorry, you are not authorized to do that.', 'danger');
+      return false;
+    }
   });
 }
 

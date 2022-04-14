@@ -68,31 +68,64 @@
     <div class="profile-picker">
         @if($editable)
         <small class="form-text text-muted">Max 5. Start typing the name of a professor, and select from the list. You can also refer to <a href="{{ route('users.bookmarks.show', ['user' => auth()->user()]) }}" target="_blank">your bookmarks <i class="fas fa-external-link-alt"></i></a>.</small>
-        <i class="fas fa-users" aria-hidden="true"></i> {!! Form::select('research_profile[faculty][]', array_combine($student->research_profile->faculty ?? [], $student->research_profile->faculty ?? []), $student->research_profile->faculty ?? [], ['id' => 'research_profile_faculty[]', 'multiple'] + ($schools->isNotEmpty() ? ['data-school' => $schools->keys()->implode(';')] : [])) !!}
+        <i class="fas fa-users" aria-hidden="true"></i> {!! Form::select('faculty[]', $student->faculty->pluck('full_name', 'id')->all(), $student->faculty->pluck('id')->all() ?? [], ['id' => 'research_profile_faculty[]', 'multiple'] + ($schools->isNotEmpty() ? ['data-school' => $schools->keys()->implode(';')] : [])) !!}
         @else
             <i class="fas fa-users" aria-hidden="true"></i><span class="sr-only">Faculty:</span> 
-            @foreach(($student->research_profile->faculty ?? []) as $faculty)
-                <span class="badge badge-primary tags-badge">{{ $faculty }}</span>
+            @foreach($student->faculty as $faculty)
+                <span class="badge badge-primary tags-badge">{{ $faculty->full_name }}</span>
             @endforeach
         @endif
     </div>
 </div>
 
+<div id="lang-proficiency-levels" style="display:none">
+    <p><small><strong>Limited Working Proficiency:</strong> Someone at this level still needs help with more extensive conversations in the language. They can only operate independently in basic conversations.</small></p>
+    <p><small><strong>Professional Working Proficiency:</strong> Someone at this level can speak at a normal speed in the language and has a fairly extensive vocabulary. They likely require help understanding subtle and nuanced phrasing.</small></p>
+    <p><small><strong>Full Professional Proficiency:</strong> Someone at this level can have personal and technical conversations. People at this level may occasionally misspeak or make minor mistakes. Their vocabulary is extensive and they can carry on conversations with ease.</small></p>
+    <p><small><strong>Native / Bilingual Proficiency:</strong> Someone at this level was either raised speaking the language as their native tongue or has been speaking it so long that they are completely fluent.</small></p>
+</div>
+
 <div class="mb-3">
-    {!! Form::label('research_profile[languages][]', 'Select your spoken languages:', ['class' => 'form-label']) !!}
-    <small class="form-text text-muted">Hold down control/command when clicking to select multiple.</small>
-    {!! Form::select('research_profile[languages][]', [
-        'ar' => 'Arabic',
-        'bn' => 'Bengali',
-        'zh' => 'Chinese',
-        'en' => 'English',
-        'hi' => 'Hindi',
-        'ja' => 'Japanese',
-        'pt' => 'Portugese',
-        'es' => 'Spanish',
-        'ru' => 'Russian',
-        'other' => 'Other',
-        ], $student->research_profile->languages ?? [], ['class' => 'form-control', 'multiple', 'size' => 10]); !!}
+    <div class="mb-3">
+        <strong class="mr-5">Select your spoken languages:</strong>
+    </div>
+    <div class="mb-3">
+        @foreach($languages as $key => $value)
+            <div class="form-check form-check-inline">
+                {!! Form::checkbox("research_profile[languages][]", $key, in_array($key, $student->research_profile->languages ?? []), ['id' => "data_language_$key", 'class' => 'form-check-input', 'data-toggle' => 'show', 'data-toggle-target' => "#language_{$key}_subform"]) !!}
+                {!! Form::label("data_language_$key", $value, ['class' => 'form-check-label']) !!}
+            </div>
+        @endforeach
+    </div>
+    <div class="mb-4">
+        <strong class="mr-5">How well do you speak the selected languages?</strong>
+        <small class="form-text text-muted">Proficiency level for each selected language <a role="button" tabindex="0" aria-label="proficiency information" data-toggle="popover" data-trigger="focus" data-popover-content="#lang-proficiency-levels"><i class="fas fa-question-circle"></i></a></small>
+        @foreach($languages as $key => $value)
+            <div class="subform my-3" id="language_{{ $key }}_subform">
+                <div class="row">
+                    <strong class="col-lg-1">{{ $value }}</strong>
+                    <div class="col-lg-11">
+                        <div class="form-check form-check-inline">
+                            {!! Form::radio("research_profile[lang_proficiency][$key]", 'limited', (isset($student->research_profile->lang_proficiency[$key])) and ($student->research_profile->lang_proficiency[$key] == "limited") ? true : false, ['class' => 'form-check-input', 'id'=>$key.'_proficiency_limited']) !!}
+                            {!! Form::label($key.'_proficiency_limited', "Limited Working", ['class' => 'form-check-label']) !!}
+                        </div>
+                        <div class="form-check form-check-inline">
+                            {!! Form::radio("research_profile[lang_proficiency][$key]", 'basic', (isset($student->research_profile->lang_proficiency[$key])) and ($student->research_profile->lang_proficiency[$key] == "basic") ? true : false, ['class' => 'form-check-input', 'id'=>$key.'_proficiency_basic']) !!}
+                            {!! Form::label($key.'_proficiency_basic', "Professional Working", ['class' => 'form-check-label']) !!}
+                        </div>
+                        <div class="form-check form-check-inline">
+                            {!! Form::radio("research_profile[lang_proficiency][$key]", 'professional', (isset($student->research_profile->lang_proficiency[$key])) and ($student->research_profile->lang_proficiency[$key] == "professional") ? true : false, ['class' => 'form-check-input', 'id'=>$key.'_proficiency_professional']) !!}
+                            {!! Form::label($key.'_proficiency_professional', "Full Professional", ['class' => 'form-check-label']) !!}
+                        </div>
+                        <div class="form-check form-check-inline">
+                            {!! Form::radio("research_profile[lang_proficiency][$key]", 'native', (isset($student->research_profile->lang_proficiency[$key])) and ($student->research_profile->lang_proficiency[$key] == "native") ? true : false, ['class' => 'form-check-input', 'id'=>$key.'_proficiency_native']) !!}
+                            {!! Form::label($key.'_proficiency_native', "Native / Bilingual", ['class' => 'form-check-label']) !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </div>
 </div>
 
 <div class="row mb-4">
@@ -113,11 +146,11 @@
     <strong class="col-lg-9">Are you willing to take part in research that will require you to travel regularly to sites in the Dallas area, such as community centers, participants’ homes or area schools?</strong>
     <div class="col-lg-3">
         <div class="form-check form-check-inline">
-            {!! Form::radio("research_profile[travel_other]", '1', $student->research_profile->travel === '1', ['id' => "travel_other_yes", 'class' => 'form-check-input']) !!}
+            {!! Form::radio("research_profile[travel_other]", '1', $student->research_profile->travel_other === '1', ['id' => "travel_other_yes", 'class' => 'form-check-input']) !!}
             {!! Form::label("travel_other_yes", "Yes", ['class' => 'form-check-label']) !!}
         </div>
         <div class="form-check form-check-inline">
-            {!! Form::radio("research_profile[travel_other]", '0', $student->research_profile->travel === '0', ['id' => "travel_other_no", 'class' => 'form-check-input']) !!}
+            {!! Form::radio("research_profile[travel_other]", '0', $student->research_profile->travel_other === '0', ['id' => "travel_other_no", 'class' => 'form-check-input']) !!}
             {!! Form::label("travel_other_no", "No", ['class' => 'form-check-label']) !!}
         </div>
     </div>

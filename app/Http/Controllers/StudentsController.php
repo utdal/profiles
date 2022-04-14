@@ -108,6 +108,7 @@ class StudentsController extends Controller
         return view('students.show', [
             'student' => $student,
             'schools' => $this->participatingSchools(),
+            'languages' => StudentData::$languages,
         ]);
     }
 
@@ -122,6 +123,7 @@ class StudentsController extends Controller
         return view('students.edit', [
             'student' => $student,
             'schools' => $this->participatingSchools(),
+            'languages' => StudentData::$languages,
         ]);
     }
 
@@ -143,6 +145,8 @@ class StudentsController extends Controller
             'type' => 'research_profile',
             'data' => $request->research_profile,
         ]);
+
+        $student->faculty()->sync($request->faculty ?? []);
 
         return redirect()->route('students.show', ['student' => $student])
             ->with('flash_message', ($updated && $research_profile_updated) ? 'Submitted!' : 'Sorry, unable to save.');

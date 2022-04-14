@@ -10,7 +10,9 @@ use App\Policies\TagPolicy;
 use App\Policies\UserPolicy;
 use App\Policies\UserDelegationPolicy;
 use App\LogEntry;
+use App\Policies\ProfileStudentPolicy;
 use App\Profile;
+use App\ProfileStudent;
 use App\Setting;
 use App\School;
 use App\User;
@@ -29,6 +31,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         LogEntry::class => LogPolicy::class,
         Profile::class => ProfilePolicy::class,
+        ProfileStudent::class => ProfileStudentPolicy::class,
         Setting::class => SettingPolicy::class,
         School::class => SchoolPolicy::class,
         Tag::class => TagPolicy::class,

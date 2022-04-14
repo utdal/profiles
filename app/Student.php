@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Profile;
+use App\ProfileStudent;
 use App\StudentData;
 use App\StudentFeedback;
 use App\User;
@@ -92,7 +94,7 @@ class Student extends Model implements Auditable
     public function scopeWithStatus($query, $status)
     {
         if ($status) {
-            $query->where('status', '=', $status);
+            $query->where('students.status', '=', $status);
         }
 
         return $query;
@@ -113,8 +115,8 @@ class Student extends Model implements Auditable
     public function scopeWithFaculty($query, $faculty)
     {
         if ($faculty) {
-            $query->whereHas('research_profile', function ($q) use ($faculty) {
-                $q->whereJsonContains('data->faculty', $faculty);
+            $query->whereHas('faculty', function ($q) use ($faculty) {
+                $q->where('profiles.id', '=', $faculty);
             });
         }
 
@@ -123,20 +125,65 @@ class Student extends Model implements Auditable
     
     public function scopeWithSchool($query, $school)
     {
-        if ($school) {
-            $query->whereHas('research_profile', function ($q) use ($school) {
-                $q->whereJsonContains('data->schools', $school);
+        return $this->scopeDataContains($query, 'schools', $school);
+    }
+
+    public function scopeWithSemester($query, $semester)
+    {
+        return $this->scopeDataContains($query, 'semesters', $semester);
+    }
+
+    public function scopeWithLanguage($query, $language)
+    {
+        return $this->scopeDataContains($query, 'languages', $language);
+    }
+
+    public function scopeWithMajor($query, $major)
+    {
+        return $this->scopeDataContains($query, 'major', $major);
+    }
+
+    public function scopeWillTravel($query, $travel)
+    {
+        return $this->scopeDataEquals($query, 'travel', $travel);
+    }
+
+    public function scopeWillTravelOther($query, $travel)
+    {
+        return $this->scopeDataEquals($query, 'travel_other', $travel);
+    }
+
+    public function scopeWillWorkWithAnimals($query, $animals)
+    {
+        return $this->scopeDataEquals($query, 'animals', $animals);
+    }
+
+    public function scopeNeedsResearchCredit($query, $credit)
+    {
+        return $this->scopeDataEquals($query, 'credit', $credit);
+    }
+
+    public function scopeGraduatesOn($query, $graduation_date)
+    {
+        return $this->scopeDataEquals($query, 'graduation_date', $graduation_date);
+    }
+
+    public function scopeDataContains($query, $key, $value)
+    {
+        if ($value !== '') {
+            $query->whereHas('research_profile', function ($q) use ($key, $value) {
+                $q->whereJsonContains("data->{$key}", $value);
             });
         }
 
         return $query;
     }
 
-    public function scopeWithSemester($query, $semester)
+    public function scopeDataEquals($query, $key, $value)
     {
-        if ($semester) {
-            $query->whereHas('research_profile', function ($q) use ($semester) {
-                $q->whereJsonContains('data->semesters', $semester);
+        if ($value !== '') {
+            $query->whereHas('research_profile', function ($q) use ($key, $value) {
+                $q->where("data->{$key}", "=", $value);
             });
         }
 
@@ -190,5 +237,19 @@ class Student extends Model implements Auditable
     public function research_profile()
     {
         return $this->hasOne(StudentData::class)->where('type', 'research_profile');
+    }
+
+    /**
+     * Student has many faculty profiles (many-to-many).
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function faculty()
+    {
+        return $this->belongsToMany(Profile::class)
+            ->using(ProfileStudent::class)
+            ->withPivot('status')
+            ->as('applicaton')
+            ->withTimestamps();
     }
 }
