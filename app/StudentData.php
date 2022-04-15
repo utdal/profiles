@@ -2,12 +2,9 @@
 
 namespace App;
 
-use Illuminate\Support\Arr;
 use App\ProfileData;
 use App\Student;
 use Illuminate\Database\Eloquent\Model;
-
-use function PHPUnit\Framework\isNull;
 
 class StudentData extends ProfileData
 {

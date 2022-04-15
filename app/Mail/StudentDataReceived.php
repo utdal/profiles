@@ -17,6 +17,12 @@ class StudentDataReceived extends Mailable
      */
     protected $student_data_received;
 
+    /** @var array 
+    * Parameters to pass to the view.
+    *
+    */
+    public $params = [];
+    
     /**
      * Create a new message instance.
      *
