@@ -9,13 +9,13 @@
         >
             @foreach($statuses as $status => $status_name)
                 <a
-                    class="nav-link @if($status === '') active @endif"
+                    class="nav-link @if($loop->first) active @endif"
                     id="tab_pill_{{ Str::slug($status) }}"
                     data-toggle="pill"
                     href="#tab_{{ Str::slug($status) }}"
                     role="tab"
                     aria-controls="tab_{{ Str::slug($status) }}"
-                    aria-selected="true"
+                    aria-selected="{{ $loop->first ? 'true' : 'false' }}"
                     wire:ignore.self
                 >
                     <span class="fa-fw mr-2 {{ $status_icons[$status] }}" style="opacity:0.3"></span>
