@@ -13,8 +13,6 @@ class ProfileStudents extends Component
 {
     public $profile;
 
-    public $students = [];
-
     public $animals_filter = '';
 
     public $credit_filter = '';
@@ -38,7 +36,7 @@ class ProfileStudents extends Component
     public $tag_filter = '';
 
     protected $listeners = [
-        'profileStudentStatusUpdated' => 'refreshLists'
+        'profileStudentStatusUpdated' => 'refreshStudents'
     ];
 
     protected $queryString = [
@@ -55,22 +53,9 @@ class ProfileStudents extends Component
         'semester_filter' => ['except' => '', 'as' => 'semester'],
     ];
 
-    public function mount()
+    public function getStudentsProperty()
     {
-        $this->refreshLists();
-    }
-
-    public function updated($name, $value)
-    {
-        if ($this->isAFilter($name)) {
-            $this->emit('alert', ($value === '') ? "Cleared filter." : "Applied filter.", 'success');
-            $this->refreshLists();
-        }
-    }
-
-    public function refreshLists()
-    {
-        $this->students = $this->profile->students()
+        return $this->profile->students()
             ->submitted()
             ->search($this->search_filter)
             ->graduatesOn($this->graduation_filter)
@@ -83,13 +68,27 @@ class ProfileStudents extends Component
             ->willWorkWithAnimals($this->animals_filter)
             ->needsResearchCredit($this->credit_filter)
             ->with('user:id,email')
+            ->orderBy('last_name')
             ->get();
+    }
+
+    public function updated($name, $value)
+    {
+        if ($this->isAFilter($name)) {
+            $this->emit('alert', ($value === '') ? "Cleared filter." : "Applied filter.", 'success');
+            $this->refreshStudents();
+        }
+    }
+
+    public function refreshStudents()
+    {
+        $this->students = $this->getStudentsProperty();
     }
 
     public function resetFilters()
     {
         $this->reset($this->availableFilters());
-        $this->refreshLists();
+        $this->refreshStudents();
         $this->emit('alert', "Cleared all filters.", 'success');
     }
 

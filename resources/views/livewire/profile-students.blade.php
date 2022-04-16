@@ -21,7 +21,7 @@
                     <span class="fa-fw mr-2 {{ $status_icons[$status] }}" style="opacity:0.3"></span>
                     {{ $status_name }}
                     <span class="badge">
-                        ({{ $students->where('application.status', $status)->count() }})
+                        ({{ $this->students->where('application.status', $status)->count() }})
                     </span>
                 </a>
             @endforeach
@@ -177,7 +177,7 @@
                     wire:ignore.self
                 >
                     <ul class="list-group list-group-flush">
-                        @forelse($students->where('application.status', $status) as $student)
+                        @forelse($this->students->where('application.status', $status) as $student)
                             @if ($loop->first)
                                 <li class="list-group-item bg-light py-1">
                                     <div class="row align-items-center">
