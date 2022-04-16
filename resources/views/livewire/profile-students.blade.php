@@ -150,19 +150,21 @@
     </div>
     <div class="col-md-9">
         <div class="applied_filters">
-            @foreach($filtered_by as $filter_name => $filter_value)
-                <span wire:key="filter_badge_{{ $filter_name }}" class="badge badge-primary mb-3">
-                    {{ Str::before($filter_name, '_filter') }}: {{ $filter_value }}
-                    <button
-                        wire:click="resetFilter('{{ $filter_name }}')"
-                        type="button"
-                        class="close float-none ml-2"
-                        style="font-size: 1rem;"
-                        aria-label="Clear Filter"
-                    >
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </span>
+            @foreach($filter_names as $filter_name)
+                @if($this->$filter_name !== '')
+                    <span wire:key="filter_badge_{{ $filter_name }}" class="badge badge-primary mb-3">
+                        {{ Str::before($filter_name, '_filter') }}: {{ $this->$filter_name }}
+                        <button
+                            wire:click="resetFilter('{{ $filter_name }}')"
+                            type="button"
+                            class="close float-none ml-2"
+                            style="font-size: 1rem;"
+                            aria-label="Clear Filter"
+                        >
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </span>
+                @endif
             @endforeach
         </div>
         <div class="tab-content h-100" id="profileStudentTabContent">
