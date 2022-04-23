@@ -5,13 +5,8 @@ namespace App\Console\Commands;
 use App\Helpers\Semester;
 use App\Mail\StudentDataReceived;
 use App\Profile;
-use App\StudentData;
-use App\User;
 use Illuminate\Console\Command;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Mail;
-
-use function PHPUnit\Framework\isNull;
 
 class NotifyStudentDataPendingReview extends Command
 {
