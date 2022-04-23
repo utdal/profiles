@@ -20,14 +20,16 @@ class NotifyStudentDataPendingReview extends Command
      *
      * @var string
      */
-    protected $signature = 'studentdata:notify {season?} {year?}';
+    protected $signature = 'studentdata:notify
+                            {season? : The student application season, e.g. Fall, Spring, Summer. Default: the current season.}
+                            {year? : The student application year, e.g. 2022. Default: the current year.}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Loop through the faculty members that have applications received pending review';
+    protected $description = 'Send notifications to faculty members that have student applications received pending review';
 
     /**
      * Create a new command instance.
@@ -71,11 +73,11 @@ class NotifyStudentDataPendingReview extends Command
     /**
      * Send email to faculty member or delegate(s) and output a message to the console
      */
-    public function send_message($email, $name, $count, $semester, $faculty, $delegate = false):void {
-        
-        $message = new StudentDataReceived($name, $count, $semester, $faculty, $delegate);
-                
-        Mail::to($email)->send($message);
+    public function send_message($email, $name, $count, $semester, $faculty, $delegate = false):void
+    {
+        Mail::to($email)
+            ->send(new StudentDataReceived($name, $count, $semester, $faculty, $delegate));
+
         $this->line("Message sent to: {$name}");
     }
 

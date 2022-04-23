@@ -46,7 +46,8 @@ class StudentDataReceived extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.studentdatareceived')
+        return $this->subject($this->params['semester'] . ' Undergraduate Student Research Applications')
+                    ->view('emails.studentdatareceived')
                     ->with( $this->params );
     }
 }

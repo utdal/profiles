@@ -8,9 +8,9 @@
 
 	@else
 		<p>You have been delegated to review <span style="font-weight:bold;">{{ $count }}</span> applications of undergraduate students that have expressed interest in working with <span style="font-weight:bold;">{{ $faculty->full_name }}</span> for the <span style="font-weight:bold;">{{ $semester }}</span> semester.</p>
-		
+
 	@endif
-		
+
 	<p><a href="{{ route('profiles.students', ['profile' => $faculty]) }}"> Review Student Applications</a></p>
 
 @stop
