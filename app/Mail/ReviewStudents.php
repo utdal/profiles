@@ -7,12 +7,12 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class StudentDataReceived extends Mailable
+class ReviewStudents extends Mailable
 {
     use Queueable, SerializesModels;
 
      /**
-     * The StudentDataReceived instance.
+     * The ReviewStudents instance.
      *
      */
     protected $student_data_received;
@@ -22,7 +22,7 @@ class StudentDataReceived extends Mailable
     *
     */
     public $params = [];
-    
+
     /**
      * Create a new message instance.
      *
@@ -47,7 +47,7 @@ class StudentDataReceived extends Mailable
     public function build()
     {
         return $this->subject($this->params['semester'] . ' Undergraduate Student Research Applications')
-                    ->view('emails.studentdatareceived')
+                    ->view('emails.reviewstudents')
                     ->with( $this->params );
     }
 }

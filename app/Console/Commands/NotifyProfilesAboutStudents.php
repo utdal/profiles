@@ -3,19 +3,19 @@
 namespace App\Console\Commands;
 
 use App\Helpers\Semester;
-use App\Mail\StudentDataReceived;
+use App\Mail\ReviewStudents;
 use App\Profile;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 
-class NotifyStudentDataPendingReview extends Command
+class NotifyProfilesAboutStudents extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'studentdata:notify
+    protected $signature = 'profiles:notify-about-students
                             {season? : The student application season, e.g. Fall, Spring, Summer. Default: the current season.}
                             {year? : The student application year, e.g. 2022. Default: the current year.}';
 
@@ -24,7 +24,7 @@ class NotifyStudentDataPendingReview extends Command
      *
      * @var string
      */
-    protected $description = 'Send notifications to faculty members that have student applications received pending review';
+    protected $description = 'Send notifications to profile users about new student applications for the given semester';
 
     /**
      * Create a new command instance.
@@ -71,7 +71,7 @@ class NotifyStudentDataPendingReview extends Command
     public function send_message($email, $name, $count, $semester, $faculty, $delegate = false):void
     {
         Mail::to($email)
-            ->send(new StudentDataReceived($name, $count, $semester, $faculty, $delegate));
+            ->send(new ReviewStudents($name, $count, $semester, $faculty, $delegate));
 
         $this->line("Message sent to: {$name}");
     }
