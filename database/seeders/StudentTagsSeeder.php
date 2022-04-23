@@ -49,27 +49,7 @@ class StudentTagsSeeder extends Seeder
      */
     public function createNewTags()
     {
-        $new_tags = [
-            "Biopsychology", 
-            "Clinical Psychology / Psychopathology", 
-            "Cognition / Cognitive Psychology", 
-            "Cognitive Development", 
-            "Cognitive Neuroscience", 
-            "Developmental Psychology", 
-            "Health Psychology", 
-            "Hearing / Audiology", 
-            "Medical Devices & Assistive Technology", 
-            "Neuroscience / Neuropsychology", 
-            "Pain", 
-            "Personality Psychology", 
-            "Social Psychology", 
-            "Speech / Language", 
-            "Speech and Language Disorders", 
-            "Statistics / Measurement / Modeling / Machine Learning", 
-        ];
-
-        Tag::findOrCreate($new_tags, "App\StudentNew");
-
+        Tag::findOrCreate(collect($this::NEW_TAGS_ASSOCIATION)->keys(), "App\StudentNew");
     }
     /**
      * Loop through the students with tags,
