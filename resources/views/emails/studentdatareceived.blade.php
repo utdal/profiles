@@ -1,16 +1,16 @@
 @extends('emails.template')
 
 @section('message')
-    <p style="font-weight:bold;"> Dear {{ $name }},</p>
+    <p><strong>Dear {{ $name }}</strong>,</p>
 
-    @if (!$delegate)
-        <p><span style="font-weight:bold;">{{ $count }}</span> undergraduate students have expressed interest in working with you for the <span style="font-weight:bold;">{{ $semester }}</span></p>
+    <p><strong>{{ $count }}</strong> undergraduate students have expressed interest in working with @if($delegate)<strong>{{ $faculty->full_name }}</strong>@else you @endif for the <strong>{{ $semester }}</strong> semester.</p>
 
-    @else
-        <p>You have been delegated to review <span style="font-weight:bold;">{{ $count }}</span> applications of undergraduate students that have expressed interest in working with <span style="font-weight:bold;">{{ $faculty->full_name }}</span> for the <span style="font-weight:bold;">{{ $semester }}</span> semester.</p>
-
+    @if($delegate)
+        <p>You are receiving this notification because {{ $faculty->full_name }} has added you as their delegate on {{ $settings['site_title'] ?? 'Profiles' }}, which allows you to view the following on their behalf.</p>
     @endif
 
-    <p><a href="{{ route('profiles.students', ['profile' => $faculty]) }}"> Review Student Applications</a></p>
+    <p>If you would like to review these undergraduate student research applications, please visit the following page. On this page, you will also be able to delegate review of the applications to another person or indicate if you're not accepting students.</p>
+
+    <p><a href="{{ route('profiles.students', ['profile' => $faculty, 'semester' => $semester]) }}"> Review Undergraduate Student Research Applications</a></p>
 
 @stop
