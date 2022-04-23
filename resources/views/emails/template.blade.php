@@ -30,8 +30,10 @@
             <tr style="margin:0;padding:0;width:100%;background:{{ $bg_primary }};">
                 <td colspan="6" style="text-align:center;margin:0;padding:20px 15px;width:100%;color:#fff;">
                     <a style="display:flex; align-items: center; justify-content: center; color:#fff;text-decoration:none;" title="{{ $settings['site_title'] ?? 'Profiles' }}" href="{{ url('/') }}">
-                        <img style="height:70px; margin-right:1rem;" class="profiles-logo" src="{{ $settings['logo'] ?? asset('img/UTDmono_rev.svg') }}" alt="Logo">
-                        <span style="font-size:1.25rem; white-space:nowrap;">{{ $settings['site_title'] ?? 'UT Dallas Profiles' }}</span>
+                        @if(isset($settings['logo']))
+                        <img style="height:70px; margin-right:1rem;" class="profiles-logo" src="{{ $settings['logo'] }}" alt="Logo">
+                        @endif
+                        <span style="font-size:1.25rem; white-space:nowrap;">{{ $settings['site_title'] ?? 'Profiles' }}</span>
                     </a>
                 </td>
             </tr>

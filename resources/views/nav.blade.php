@@ -20,7 +20,7 @@ $can_create_users = $user && $user->can('create', 'App\User');
   <div class="container">
     <a class="navbar-brand" href="{{ url('/') }}" title="{{ $settings['site_title'] ?? 'Profiles' }}">
       @if(isset($settings['logo']))
-        <img class="profiles-logo" src="{{ $settings['logo'] ?? asset('img/UTDmono_rev.svg') }}" alt="Logo">
+        <img class="profiles-logo" src="{{ $settings['logo'] }}" alt="Logo">
         <span class="vertical-line"></span>
       @endif
       <span class="profiles-wordmark">Profiles</span>
