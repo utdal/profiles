@@ -37,6 +37,7 @@ class AppServiceProvider extends ServiceProvider
             'users.create',
             'users.edit',
             'students.about',
+            'emails.template',
         ], function ($view) {
             $settings = Cache::rememberForever('settings', function(){
                 return Setting::pluck('value', 'name')->toArray();
