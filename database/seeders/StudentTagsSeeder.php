@@ -30,15 +30,13 @@ class StudentTagsSeeder extends Seeder
     ];
     
     /**
-     * 
+     * Run the StudentTags Seeder
      *
      * @return void
      */
     public function run()
     {
-        /**
-         * Run the StudentTags Seeder
-         */
+
         $this->createNewTags();
         $this->syncStudentApplicationsNewTags();
 
