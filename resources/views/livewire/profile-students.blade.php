@@ -12,6 +12,7 @@
                     class="nav-link @if($loop->first) active @endif"
                     id="tab_pill_{{ Str::slug($status) }}"
                     data-toggle="pill"
+                    data-scrollto-anchor="false"
                     href="#tab_{{ Str::slug($status) }}"
                     role="tab"
                     aria-controls="tab_{{ Str::slug($status) }}"
