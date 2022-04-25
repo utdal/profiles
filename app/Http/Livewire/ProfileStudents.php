@@ -13,10 +13,6 @@ class ProfileStudents extends Component
 {
     public $profile;
 
-    public $students = [];
-
-    public $filtered_by = [];
-
     public $animals_filter = '';
 
     public $credit_filter = '';
@@ -40,31 +36,26 @@ class ProfileStudents extends Component
     public $tag_filter = '';
 
     protected $listeners = [
-        'profileStudentStatusUpdated' => 'refreshLists'
+        'profileStudentStatusUpdated' => 'refreshStudents'
     ];
 
-    public function mount()
-    {
-        $this->refreshLists();
-    }
+    protected $queryString = [
+        'animals_filter' => ['except' => '', 'as' => 'animals'],
+        'credit_filter' => ['except' => '', 'as' => 'credit'],
+        'graduation_filter' => ['except' => '', 'as' => 'graduates'],
+        'language_filter' => ['except' => '', 'as' => 'language'],
+        'major_filter' => ['except' => '', 'as' => 'major'],
+        'search_filter' => ['except' => '', 'as' => 'search'],
+        'schools_filter' => ['except' => '', 'as' => 'school'],
+        'travel_filter' => ['except' => '', 'as' => 'travel'],
+        'travel_other_filter' => ['except' => '', 'as' => 'travel_other'],
+        'tag_filter' => ['except' => '', 'as' => 'topic'],
+        'semester_filter' => ['except' => '', 'as' => 'semester'],
+    ];
 
-    public function updated($name, $value)
+    public function getStudentsProperty()
     {
-        if ($this->isAFilter($name)) {
-            if ($value === '') {
-                unset($this->filtered_by[$name]);
-                $this->emit('alert', "Cleared filter.", 'success');
-            } else {
-                $this->filtered_by[$name] = $value;
-                $this->emit('alert', "Applied filter.", 'success');
-            }
-            $this->refreshLists();
-        }
-    }
-
-    public function refreshLists()
-    {
-        $this->students = $this->profile->students()
+        return $this->profile->students()
             ->submitted()
             ->search($this->search_filter)
             ->graduatesOn($this->graduation_filter)
@@ -77,26 +68,41 @@ class ProfileStudents extends Component
             ->willWorkWithAnimals($this->animals_filter)
             ->needsResearchCredit($this->credit_filter)
             ->with('user:id,email')
+            ->orderBy('last_name')
             ->get();
+    }
+
+    public function updated($name, $value)
+    {
+        if ($this->isAFilter($name)) {
+            $this->emit('alert', ($value === '') ? "Cleared filter." : "Applied filter.", 'success');
+            $this->refreshStudents();
+        }
+    }
+
+    public function refreshStudents()
+    {
+        $this->students = $this->getStudentsProperty();
     }
 
     public function resetFilters()
     {
-        foreach (get_class_vars(self::class) as $name => $value) {
-            if ($this->isAFilter($name)) {
-                $this->$name = '';
-            }
-        }
-
-        $this->filtered_by = [];
-        $this->refreshLists();
+        $this->reset($this->availableFilters());
+        $this->refreshStudents();
         $this->emit('alert', "Cleared all filters.", 'success');
     }
 
     public function resetFilter($filter_name)
     {
-        $this->$filter_name = '';
+        $this->reset($filter_name);
         $this->updated($filter_name, '');
+    }
+
+    protected function availableFilters(): array
+    {
+        return array_filter(array_keys(get_class_vars(self::class)), function($property_name) {
+            return $this->isAFilter($property_name);
+        });
     }
 
     protected function isAFilter($name)
@@ -107,6 +113,7 @@ class ProfileStudents extends Component
     public function render()
     {
         return view('livewire.profile-students', [
+            'filter_names' => $this->availableFilters(),
             'languages' => StudentData::$languages,
             'graduation_dates' => StudentData::uniqueValuesFor('research_profile', 'graduation_date')->sort()->values(),
             'majors' => StudentData::uniqueValuesFor('research_profile', 'major')->sort()->values(),

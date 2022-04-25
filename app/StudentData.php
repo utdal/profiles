@@ -66,4 +66,5 @@ class StudentData extends ProfileData
     {
         return $this->belongsTo(Student::class, 'student_id');
     }
+
 }

@@ -4,6 +4,11 @@
 </div>
 
 <div class="mb-3">
+    {!! Form::label('major', 'Major', ['class' => 'form-label']) !!}
+    {!! Form::text('research_profile[major]', $student->research_profile->major ?? '', ['class' => 'form-control', 'required']) !!}
+</div>
+
+<div class="mb-3">
     {!! Form::label('research_profile[intro]', 'Why are you interested in doing research?', ['class' => 'form-label']) !!}
     <small class="form-text text-muted">Please be concise (500 words)</small>
     {!! Form::textarea('research_profile[intro]', $student->research_profile->intro ?? '', ['class' => 'form-control', 'required']) !!}
