@@ -431,7 +431,7 @@ $(document).ready(function () {
     opacity: 0
   }, 5000); //animate anchor clicks on page
 
-  $('a[href^="#"]:not([href="#"])').on('click', function (event) {
+  $('a[href^="#"]:not([href="#"]):not([data-scrollto-anchor="false"])').on('click', function (event) {
     var target = $($(this).attr('href'));
 
     if (target.length) {
