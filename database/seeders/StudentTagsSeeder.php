@@ -36,10 +36,14 @@ class StudentTagsSeeder extends Seeder
      */
     public function run()
     {
-
         $this->createNewTags();
         $this->syncStudentApplicationsNewTags();
 
+        $old_tags_deleted = Tag::where('type', 'App\Student')->delete();
+        $this->lineAndLog($old_tags_deleted . " Tags have been deleted.");
+
+        $tags_type_renamed = Tag::where('type', 'App\StudentNew')->update(['type' => "App\Student"]);
+        $this->lineAndLog($tags_type_renamed . " Tags new tags has been created as App\Student.");
     }
 
     /**
@@ -49,8 +53,9 @@ class StudentTagsSeeder extends Seeder
      */
     public function createNewTags()
     {
-        Tag::findOrCreate(collect($this::NEW_TAGS_ASSOCIATION)->keys(), "App\StudentNew");
+        Tag::findOrCreate(array_keys($this::NEW_TAGS_ASSOCIATION), "App\StudentNew");
     }
+
     /**
      * Loop through the students with tags,
      * find the new tags associated to store them in an array
@@ -59,8 +64,7 @@ class StudentTagsSeeder extends Seeder
      * @return void
      */
     public function syncStudentApplicationsNewTags()
-    {   
-        
+    {           
         $new_tags_association = collect($this::NEW_TAGS_ASSOCIATION);
         $new_tags = Tag::WithType("App\StudentNew")->get();
         $students_with_tags = Student::with('tags')->has('tags')->get();
@@ -80,10 +84,9 @@ class StudentTagsSeeder extends Seeder
                     return trim(strtolower($item->name)) == trim(strtolower($elem->keys()->first()));
                 })->first();
 
-                if (isset($new_tag)) {
+                if (isset($new_tag) && !in_array($new_tag, $student_new_tags)) {
                     array_push($student_new_tags, $new_tag);
-                }
-                else {
+                } else {
                     array_push($tags_not_found, $student_old_tag);
                 }
             }
@@ -98,8 +101,8 @@ class StudentTagsSeeder extends Seeder
                 }
                 
                 $this->lineAndLog(sizeof($student_new_tags)." New tags have been assigned to the student ID: " . $student->id);   
-            }    
-            else if (!empty($tags_not_found)) {
+
+            } elseif (!empty($tags_not_found)) {
 
                 $this->lineAndLog("The following" . sizeof($tags_not_found) ." could not be found to assign to student ID: ". $student->id);
                 
@@ -119,5 +122,6 @@ class StudentTagsSeeder extends Seeder
         $this->command->info($message);
         Log::info($message);
     }
+
 }
 
