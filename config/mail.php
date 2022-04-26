@@ -99,7 +99,7 @@ return [
 
     'reply_to' => [
         'address' => env('MAIL_REPLY_TO_ADDRESS', 'reply_to@example.com'),
-        'name' => env('MAIL_REPLY_TO_NAME', 'Profiles'),
+        'name' => env('MAIL_REPLY_TO_NAME', 'Reply to'),
     ],
 
     /*
