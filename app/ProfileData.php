@@ -73,6 +73,68 @@ class ProfileData extends Model implements HasMedia, Auditable
     }
 
     /**
+     * Update data with new values for specific nested keys using dot notation
+     *
+     * @param array $new_data Array of values to insert/update
+     * @return bool
+     */
+    public function updateData(array $new_data): bool
+    {
+        $data = $this->data;
+
+        foreach ($new_data as $key => $new_value) {
+            data_set($data, $key, $new_value);
+        }
+
+        return $this->update(['data' => $data]);
+    }
+
+    /**
+     * Adds to data, inserting new items and converting existing items to arrays as needed.
+     *
+     * @param array $new_data Array of values to insert
+     * @return bool
+     */
+    public function insertData(array $new_data): bool
+    {
+        return $this->update(['data' => collect($this->data)->mergeRecursive($new_data)->all()]);
+    }
+
+    /**
+     * Increments a datum for a specific nested key using dot notation
+     *
+     * @param string $key
+     * @param int $increment
+     * @return bool
+     */
+    public function incrementDatum(string $key, int $increment = 1): bool
+    {
+        $data = $this->data;
+
+        data_set($data, $key, data_get($data, $key, 0) + $increment);
+
+        return $this->update(['data' => $data]);
+    }
+
+    /**
+     * Decrements a datum for a specified nested key using dot notation
+     *
+     * @param string $key
+     * @param int $decrement
+     * @param bool $allow_negative
+     * @return bool
+     */
+    public function decrementDatum(string $key, int $decrement = 1, bool $allow_negative = true): bool
+    {
+        $data = $this->data;
+        $new_value = data_get($data, $key, 0) - $decrement;
+
+        data_set($data, $key, $allow_negative ? $new_value : max($new_value, 0));
+
+        return $this->update(['data' => $data]);
+    }
+
+    /**
      * Gets a list of unique values of the given key from stored records of the given type
      *
      * @param string $type

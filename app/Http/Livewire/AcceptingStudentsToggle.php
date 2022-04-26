@@ -27,11 +27,7 @@ class AcceptingStudentsToggle extends Component
         /** @var App\ProfileData fresh copy of the profile info */
         $info = $this->profile->information()->first();
 
-        // Update the value in a way that gets logged properly
-        $data = $info->data;
-        $data['not_accepting_students'] = $toggled_on ? '1' : '0';
-        $info->data = $data;
-        $updated = $info->save();
+        $updated = $info->updateData(['not_accepting_students' => $toggled_on ? '1' : '0']);
 
         if (!$updated) {
             $this->emit('alert', "There was a problem changing that setting", 'danger');
