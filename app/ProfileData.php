@@ -5,6 +5,7 @@ namespace App;
 use App\Profile;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use OwenIt\Auditing\Auditable as HasAudits;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
@@ -98,6 +99,21 @@ class ProfileData extends Model implements HasMedia, Auditable
     public function insertData(array $new_data): bool
     {
         return $this->update(['data' => collect($this->data)->mergeRecursive($new_data)->all()]);
+    }
+
+    /**
+     * Removes a given data item for the specified nested key using dot notation
+     *
+     * @param string $key
+     * @return bool
+     */
+    public function removeData(string $key): bool
+    {
+        $data = $this->data;
+
+        Arr::forget($data, $key);
+
+        return $this->update(['data' => $data]);
     }
 
     /**
