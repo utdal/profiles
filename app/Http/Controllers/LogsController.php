@@ -25,24 +25,12 @@ class LogsController extends Controller
      */
     public function index(Request $request)
     {
-        $search = $request->input('log_search');
-
-        $logs = LogEntry::with('user')->where(function($query) use ($search){
-            if($search){
-                $query->whereIn('user_id', User::select('id')->where('display_name', 'LIKE', "%$search%"));
-            }
-        })
-        ->orWhere('event', 'LIKE', "%$search%")
-        ->orWhere('auditable_type', 'LIKE', "%$search%")
-        ->orWhere('old_values', 'LIKE', "%$search%")
-        ->orWhere('new_values', 'LIKE', "%$search%")
-        ->orWhere('url', 'LIKE', "%$search%")
-        ->orderBy('created_at', 'desc')
-        ->paginate(30);
-
         return view('logs.index', [
-            'logs' => $logs,
-            'log_search' => $search,
+            'logs' => LogEntry::with('user')
+                ->searchFor($request->log_search)
+                ->orderByDesc('id')
+                ->paginate(30),
+            'log_search' => $request->log_search,
         ]);
     }
 
