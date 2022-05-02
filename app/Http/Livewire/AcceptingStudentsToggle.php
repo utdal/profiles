@@ -30,10 +30,10 @@ class AcceptingStudentsToggle extends Component
         $updated = $info->updateData(['not_accepting_students' => $toggled_on ? '1' : '0']);
 
         if (!$updated) {
-            $this->emit('alert', "There was a problem changing that setting", 'danger');
+            $this->emit('alert', "Not saved. There was a problem changing that setting", 'danger');
         }
 
-        $this->emit('alert', "Profile for {$this->profile->full_name} marked as " . ($toggled_on ? "not" : "") . " accepting students", 'success');
+        $this->emit('alert', "<strong>Saved.</strong><br> Profile for {$this->profile->full_name} marked as " . ($toggled_on ? "not" : "") . " accepting students", 'success');
     }
 
     public function render()

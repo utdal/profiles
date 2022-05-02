@@ -17,7 +17,29 @@
             </li>
             <li class="mt-2">
                 <span class="fa-li"><i class="fas fa-cog"></i></span> Related tasks: 
-                <livewire:accepting-students-toggle :profile="$profile">
+                <span class="dropdown student-filer">
+                    <button
+                        class="btn dropdown-toggle py-0 pl-0 text-primary font-weight-bold"
+                        type="button"
+                        id="notAcceptingStudentsButton"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-controls="notAcceptingStudentsMenu"
+                        aria-expanded="false"
+                    >
+                        <i class="fas fa-user-slash fa-fw"></i> Indicate you're not accepting students
+                    </button>
+                    <div
+                        id="notAcceptingStudentsMenu"
+                        class="dropdown-menu p-4"
+                        aria-labelledby="notAcceptingStudentsButton"
+                    >
+                        <p>
+                            <small class="form-text text-muted">Checking the box below will show a standard note on your profile that you're not currently accepting students.</small>
+                        </p>
+                        <livewire:accepting-students-toggle :profile="$profile">
+                    </div>
+                </span>
                 <a class="ml-3 font-weight-bold" href="{{ route('users.delegations.show', ['user' => $profile->user]) }}" title="View/Edit {{ $profile->full_name }} Delegations"><i class="fas fa-user-friends fa-fw"></i> Let someone else do this</a>
             </li>
         </ul>
