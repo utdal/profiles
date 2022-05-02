@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\StudentViewed;
 use App\School;
 use App\Setting;
 use App\Student;
@@ -100,11 +101,18 @@ class StudentsController extends Controller
     /**
      * Display the specified student research profile.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function show(Student $student)
+    public function show(Request $request, Student $student)
     {
+        if ($request->user() && $request->user()->userOrDelegatorhasRole('faculty')) {
+            StudentViewed::dispatch($student);
+        }
+
+        $student->load(['research_profile', 'stats', 'faculty', 'user']);
+
         return view('students.show', [
             'student' => $student,
             'schools' => $this->participatingSchools(),

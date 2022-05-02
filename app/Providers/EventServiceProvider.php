@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\StudentViewed;
+use App\Listeners\IncrementStudentViews;
+use App\Listeners\UpdateUserLastAccess;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -13,7 +16,7 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $subscribe = [
-        'App\Listeners\UpdateUserLastAccess',
+        UpdateUserLastAccess::class,
     ];
 
     /**
@@ -22,8 +25,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\Event' => [
-            'App\Listeners\EventListener',
+        StudentViewed::class => [
+            IncrementStudentViews::class,
         ],
     ];
 

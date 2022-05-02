@@ -25,6 +25,7 @@ class StudentFiler extends Component
         ]);
 
         if ($updated) {
+            $this->student->updateStatusStats($this->status, $new_status, $this->profile);
             $this->status = $new_status;
             $this->emit('alert', "{$this->student->full_name} filed as {$new_status_name}", 'success');
             $this->emit('profileStudentStatusUpdated');
