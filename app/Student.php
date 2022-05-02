@@ -88,8 +88,31 @@ class Student extends Model implements Auditable
             'old_status' => $old_status,
             'new_status' => $new_status,
             'profile' => $profile->id,
+            'profile_name' => $profile->full_name,
             'updated_at' => now()->toDateTimeString(),
         ]]]);
+    }
+
+    public function updateAcceptedStats(Profile $profile, $accepted = true)
+    {
+        $stats = $this->firstStats();
+
+        if ($accepted) {
+            $stats->insertData([
+                'accepted_by' => [
+                    "profile_{$profile->id}" => [
+                        'profile' => $profile->id,
+                        'profile_name' => $profile->full_name,
+                    ],
+                ],
+                'accepted_on' => now()->toDateTimeString(),
+            ]);
+        } else {
+            $stats->removeData("accepted_by.profile_{$profile->id}");
+            if (isset($stats->accepted_by) && empty($stats->accepted_by)) {
+                $stats->removeData('accepted_by');
+            }
+        }
     }
 
     /**

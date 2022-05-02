@@ -19,13 +19,20 @@ class StudentFiler extends Component
     public function updateStatus(string $new_status, string $new_status_name): void
     {
         $this->authorize('update', [ProfileStudent::class, $this->profile]);
+
+        $old_status = $this->status;
     
         $updated = $this->profile->students()->updateExistingPivot($this->student->id, [
             'status' => $new_status ?: null,
         ]);
 
         if ($updated) {
-            $this->student->updateStatusStats($this->status, $new_status, $this->profile);
+            $this->student->updateStatusStats($old_status, $new_status, $this->profile);
+            if ($new_status === 'accepted') {
+                $this->student->updateAcceptedStats($this->profile);
+            } elseif ($old_status === 'accepted') {
+                $this->student->updateAcceptedStats($this->profile, false);
+            }
             $this->status = $new_status;
             $this->emit('alert', "{$this->student->full_name} filed as {$new_status_name}", 'success');
             $this->emit('profileStudentStatusUpdated');

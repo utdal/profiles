@@ -74,6 +74,17 @@
                         @endforeach
                     </dd>
                     @endif
+
+                    @if($student->stats->accepted_by && !empty($student->stats->accepted_by))
+                    <dt class="col-sm-4" title="Accepted to research with these labs" data-toggle="tooltip">
+                        accepted by
+                    </dt>
+                    <dd class="col-sm-8">
+                        @foreach($student->stats->accepted_by as $accepted_record)
+                            <div>{{ $accepted_record['profile_name'] ?? 'n/a' }}</div>
+                        @endforeach
+                    </dd>
+                    @endif
                 @endif
             </dl>
         </div>

@@ -15,7 +15,7 @@ class ProfileStudent extends Pivot implements Auditable
     public static $statuses = [
         '' => 'New',
         'follow up' => 'Follow Up',
-        'selected' => 'Selected',
+        'accepted' => 'Accepted to Lab',
         'maybe later' => 'Maybe Later',
         'not interested' => 'Not Interested',
     ];
@@ -24,7 +24,7 @@ class ProfileStudent extends Pivot implements Auditable
     public static $icons = [
         '' => 'fas fa-inbox',
         'follow up' => 'fas fa-info',
-        'selected' => 'fas fa-check',
+        'accepted' => 'fas fa-check',
         'maybe later' => 'fas fa-pause',
         'not interested' => 'fas fa-times',
     ];
