@@ -40,7 +40,9 @@
                         <livewire:accepting-students-toggle :profile="$profile">
                     </div>
                 </span>
-                <a class="btn btn-primary ml-3 py-1" href="{{ route('users.delegations.show', ['user' => $profile->user]) }}" title="View/Edit {{ $profile->full_name }} Delegations"><i class="fas fa-user-friends fa-fw"></i> Let someone else do this</a>
+                @can('viewDelegations', $profile->user)
+                    <a class="btn btn-primary ml-3 py-1" href="{{ route('users.delegations.show', ['user' => $profile->user]) }}" title="View/Edit {{ $profile->full_name }} Delegations"><i class="fas fa-user-friends fa-fw"></i> Let someone else do this</a>
+                @endcan
             </li>
         </ul>
         <p class="text-center mb-0">
