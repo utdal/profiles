@@ -8,6 +8,7 @@ use App\Setting;
 use App\Student;
 use App\StudentData;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class StudentsController extends Controller
 {
@@ -34,7 +35,13 @@ class StudentsController extends Controller
      */
     public function index()
     {
-        return view('students.index');
+        $user = Auth::user();
+        $user->loadMissing(['profiles', 'currentDelegators.profiles']);
+
+        return view('students.index', [
+            'user_profile' => $user->profiles->first(),
+            'delegator_profiles' => $user->currentDelegators->pluck('profiles')->flatten(),
+        ]);
     }
 
     /**
