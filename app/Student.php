@@ -54,6 +54,67 @@ class Student extends Model implements Auditable
         return $this->updated_at->greaterThan($this->created_at);
     }
 
+    /**
+     * Get or create the stats record
+     *
+     * @return StudentData
+     */
+    public function firstStats()
+    {
+        return $this->stats()->firstOrCreate(['type' => 'stats'], ['data' => []]);
+    }
+
+    /**
+     * Updates the Student Application status stats
+     *
+     * @param string|null $old_status
+     * @param string|null $new_status
+     * @param Profile $profile
+     * @return void
+     */
+    public function updateStatusStats($old_status, $new_status, Profile $profile): void
+    {
+        $stats = $this->firstStats();
+
+        if ($new_status) {
+            $stats->incrementDatum("status.$new_status");
+        }
+
+        if ($old_status) {
+            $stats->decrementDatum("status.$old_status", 1, false);
+        }
+
+        $stats->insertData(['status_history' => [[
+            'old_status' => $old_status,
+            'new_status' => $new_status,
+            'profile' => $profile->id,
+            'updated_at' => now()->toDateTimeString(),
+        ]]]);
+    }
+
+    /**
+     * Increments the Student Application view count
+     *
+     * @return void
+     */
+    public function incrementViews()
+    {
+        $this->firstStats()->incrementDatum('views');
+    }
+
+    /**
+     * Updates the Student Application last viewed stat
+     *
+     * @param string $datetime
+     * @return void
+     */
+    public function updateLastViewed($datetime = '')
+    {
+        $this->firstStats()->updateData([
+            'last_viewed' => $datetime ?: now()->toDateTimeString(),
+        ]);
+    }
+
     ////////////////////////////////////
     // Mutators and Virtual Attributes//
     ////////////////////////////////////
@@ -260,6 +321,16 @@ class Student extends Model implements Auditable
     public function research_profile()
     {
         return $this->hasOne(StudentData::class)->where('type', 'research_profile');
+    }
+
+    /**
+     * Student has one research profile.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function stats()
+    {
+        return $this->hasOne(StudentData::class)->where('type', 'stats');
     }
 
     /**

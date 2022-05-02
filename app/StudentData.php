@@ -53,6 +53,17 @@ class StudentData extends ProfileData
         return $query->where('type', 'research_profile');
     }
 
+    /**
+     * Query scope for research profile
+     *
+     * @param  Illuminate\Database\Query\Builder $query
+     * @return Illuminate\Database\Query\Builder
+     */
+    public function scopeStats($query)
+    {
+        return $query->where('type', 'stats');
+    }
+
     ///////////////
     // Relations //
     ///////////////
