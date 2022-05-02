@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title', 'Student Research Profiles')
+@section('title', 'All Student Research Applications')
 @section('header')
 	@include('nav')
 @stop
@@ -7,7 +7,7 @@
 
 <div class="container">
 
-    <h1>Student Research Profiles</h1>
+    <h1>All Student Research Applications</h1>
 
     <livewire:students-table>
 

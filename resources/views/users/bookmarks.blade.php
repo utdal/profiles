@@ -25,7 +25,7 @@
 
     @if(config('app.enable_students'))
         @can('viewAny', App\Student::class)
-            <h3>Bookmarked Student Research Profiles</h3>
+            <h3>Bookmarked Student Research Applications</h3>
             <ul class="fa-ul">
             @forelse ($student_bookmarks as $student)
                 <li>
@@ -35,7 +35,7 @@
             @empty
                 <li>
                     <span class="fa-li"><i class="fas fa-bookmark"></i></span>
-                    No bookmarks. Visit a student research profile and click on the <button class="btn btn-primary btn-sm" disabled><i class="far fa-bookmark"></i> bookmark</button> button to bookmark it.
+                    No bookmarks. Visit a student research application and click on the <button class="btn btn-primary btn-sm" disabled><i class="far fa-bookmark"></i> bookmark</button> button to bookmark it.
                 </li> 
             @endforelse
             </ul>

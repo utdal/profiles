@@ -51,7 +51,7 @@ class StudentsController extends Controller
             return redirect()->route('students.edit', ['student' => $student]);
         }
 
-        return back()->with('flash_message', "Unable to create Student Research Profile. Please try again later.");
+        return back()->with('flash_message', "Unable to create Student Research Application. Please try again later.");
     }
 
     /**

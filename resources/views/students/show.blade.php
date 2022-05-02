@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title', "Student Research Profile for {$student->full_name}")
+@section('title', "Student Research Application for {$student->full_name}")
 @section('header')
 	@include('nav')
 @stop
@@ -10,7 +10,7 @@
     <div class="row mt-4 mt-md-5">
         <div class="col-md-8">
             <h1 class="my-0">
-                Student Research Profile @if($student->status === 'drafted')<span class="badge rounded-pill badge-secondary">drafted</span>@endif
+                Student Research Application @if($student->status === 'drafted')<span class="badge rounded-pill badge-secondary">drafted</span>@endif
             </h1>
             <h2 class="mt-0 text-muted">
                 for {{ $student->full_name }}
@@ -24,9 +24,9 @@
                 @can('update', $student)
                     <a class="btn btn-primary btn-sm" href="{{ route('students.edit', [$student]) }}"><i class="fas fa-edit"></i> Edit</a>
                     @if($student->status === 'drafted')
-                        <a class="btn btn-secondary btn-sm" href="{{ route('students.status', ['student' => $student, 'status' => 'submitted']) }}" data-toggle="tooltip" data-placement="auto" title="Submit this student profile for consideration"><i class="fas fa-check"></i> Submit</a>
+                        <a class="btn btn-secondary btn-sm" href="{{ route('students.status', ['student' => $student, 'status' => 'submitted']) }}" data-toggle="tooltip" data-placement="auto" title="Submit this student application for consideration"><i class="fas fa-check"></i> Submit</a>
                     @else
-                        <a class="btn btn-secondary btn-sm" href="{{ route('students.status', ['student' => $student, 'status' => 'drafted']) }}" data-toggle="tooltip" data-placement="auto" title="Un-submit if you've already joined a research group or want to remove your profile from consideration"><i class="fas fa-undo"></i> Un-submit</a>
+                        <a class="btn btn-secondary btn-sm" href="{{ route('students.status', ['student' => $student, 'status' => 'drafted']) }}" data-toggle="tooltip" data-placement="auto" title="Un-submit if you've already joined a research group or want to remove your application from future consideration"><i class="fas fa-undo"></i> Un-submit</a>
                     @endif
                 @endcan
                 @if(!auth()->user()->owns($student))

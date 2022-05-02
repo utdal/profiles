@@ -49,7 +49,7 @@ return [
     /** analytics id */
     'analytics_id' => env('GOOGLE_ANALYTICS_ID', false),
 
-    /** enable student research match feature */
+    /** enable student research application feature */
     'enable_students' => env('ENABLE_STUDENTS', false),
 
     /** enable scheduled backup */

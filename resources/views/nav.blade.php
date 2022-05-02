@@ -53,7 +53,7 @@ $can_create_users = $user && $user->can('create', 'App\User');
           <div class="dropdown-menu" aria-labelledby="studentNavDropdown">
             <a href="{{ route('students.about') }}" class="dropdown-item"><i class="fas fa-rocket"></i> Get Started with Research</a>
             @can('viewAny', App\Student::class)
-              <a href="{{ route('students.index') }}" class="dropdown-item"><i class="fas fa-users"></i> Student Research Profiles</a>
+              <a href="{{ route('students.index') }}" class="dropdown-item"><i class="fas fa-users"></i> All Student Research Applications</a>
             @endcan
           </div>
         </li>
@@ -124,7 +124,7 @@ $can_create_users = $user && $user->can('create', 'App\User');
               <a class="dropdown-item" href="{{ route('profiles.create', ['user' => $user]) }}"><span class="fa fa-plus fa-fw"></span> Create Profile</a>
             @endif
             @if(config('app.enable_students') && $user_student_profile)
-              <a class="dropdown-item" href="{{ route('students.show', ['student' => $user_student_profile]) }}"><span class="fa fa-user fa-fw"></span> Student Research Profile</a>
+              <a class="dropdown-item" href="{{ route('students.show', ['student' => $user_student_profile]) }}"><span class="fa fa-user fa-fw"></span> Student Research Application</a>
             @endif
             @if(config('app.enable_students') && $user_profile && true) {{-- @todo:implement permissions --}}
               <a class="dropdown-item" href="{{ route('profiles.students', ['profile' => $user_profile]) }}"><span class="fa fa-users fa-fw"></span> Student Applications</a>

@@ -19,7 +19,7 @@
                 <span class="fa-li"><i class="fas fa-cog"></i></span> Related tasks: 
                 <span class="dropdown student-filer">
                     <button
-                        class="btn dropdown-toggle py-0 pl-0 text-primary font-weight-bold"
+                        class="btn btn-primary dropdown-toggle py-1"
                         type="button"
                         id="notAcceptingStudentsButton"
                         data-toggle="dropdown"
@@ -40,7 +40,7 @@
                         <livewire:accepting-students-toggle :profile="$profile">
                     </div>
                 </span>
-                <a class="ml-3 font-weight-bold" href="{{ route('users.delegations.show', ['user' => $profile->user]) }}" title="View/Edit {{ $profile->full_name }} Delegations"><i class="fas fa-user-friends fa-fw"></i> Let someone else do this</a>
+                <a class="btn btn-primary ml-3 py-1" href="{{ route('users.delegations.show', ['user' => $profile->user]) }}" title="View/Edit {{ $profile->full_name }} Delegations"><i class="fas fa-user-friends fa-fw"></i> Let someone else do this</a>
             </li>
         </ul>
         <p class="text-center mb-0">
