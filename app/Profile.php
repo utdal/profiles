@@ -423,6 +423,7 @@ class Profile extends Model implements HasMedia, Auditable
     public function scopeEagerStudentsPendingReviewWithSemester($query, $semester)
     {
         return $query->with(['students' => function($eager_students) use ($semester) {
+            $eager_students->submitted();
             $eager_students->withSemester($semester);
             $eager_students->WithStatusPendingReview();
         }]);
@@ -439,6 +440,7 @@ class Profile extends Model implements HasMedia, Auditable
     public function scopeStudentsPendingReviewWithSemester($query, $semester)
     {
         return $query->whereHas('students', function($query_students) use ($semester) {
+            $query_students->submitted();
             $query_students->withSemester($semester);
             $query_students->WithStatusPendingReview();
         });

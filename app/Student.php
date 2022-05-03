@@ -302,7 +302,7 @@ class Student extends Model implements Auditable
      */
     public function scopeWithStatusNotInterested($query)
     {
-        return $query->Where('profile_student.status', '=', 'not interested');
+        return $query->where('profile_student.status', '=', 'not interested');
     }
 
     ///////////////
