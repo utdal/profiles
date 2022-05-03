@@ -96,19 +96,22 @@ class Student extends Model implements Auditable
     public function updateAcceptedStats(Profile $profile, $accepted = true)
     {
         $stats = $this->firstStats();
+        $accepted_key = "profile_{$profile->id}";
 
         if ($accepted) {
-            $stats->insertData([
-                'accepted_by' => [
-                    "profile_{$profile->id}" => [
-                        'profile' => $profile->id,
-                        'profile_name' => $profile->full_name,
+            if (!isset($stats->accepted_by[$accepted_key])) {
+                $stats->insertData([
+                    'accepted_by' => [
+                        $accepted_key => [
+                            'profile' => $profile->id,
+                            'profile_name' => $profile->full_name,
+                        ],
                     ],
-                ],
-                'accepted_on' => now()->toDateTimeString(),
-            ]);
+                    'accepted_on' => now()->toDateTimeString(),
+                ]);
+            }
         } else {
-            $stats->removeData("accepted_by.profile_{$profile->id}");
+            $stats->removeData("accepted_by.{$accepted_key}");
             if (isset($stats->accepted_by) && empty($stats->accepted_by)) {
                 $stats->removeData('accepted_by');
             }
