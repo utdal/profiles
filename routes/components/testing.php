@@ -23,6 +23,12 @@ Route::name('testing.')->prefix('/testing')->group(function () {
 
     });
 
+    Route::name('email.')->prefix('/email-preview')->group(function () {
+
+        Route::name('preview')->match(['get', 'post'], '/{view}', [TestingController::class, 'previewEmail']);
+
+    });
+
     Route::name('exception')->get('/throw-exception', [TestingController::class, 'throwException']);
 
 });

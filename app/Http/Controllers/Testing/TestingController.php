@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Testing;
 
+use App\Helpers\Semester;
 use App\Role;
 use App\User;
 use App\Http\Controllers\Controller;
+use App\Profile;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -79,6 +81,33 @@ class TestingController extends Controller
         auth()->loginUsingId($id);
 
         return redirect('/');
+    }
+
+    /**
+     * Preview an email template
+     *
+     * @param Request $request
+     * @param string $view The Blade email view
+     * @return \Illuminate\Http\Response
+     */
+    public function previewEmail(Request $request, $view)
+    {
+        $default_params = [];
+
+        if ($view === 'reviewstudents') {
+            $semester = $request->semester ?: Semester::current();
+            $faculty = $request->has('faculty') ? Profile::firstWhere('slug', '=', $request->faculty) : Profile::factory()->make();
+            $count = $request->count ?? ($request->has('faculty') ? Profile::EagerStudentsPendingReviewWithSemester($semester)->find($faculty->id)->students->count() : '10');
+            $default_params = [
+                'count' => $count,
+                'faculty' => $faculty,
+                'name' => $faculty->full_name,
+                'semester' => Semester::current(),
+                'delegate' => false,
+            ];
+        }
+
+        return view("emails.$view", array_merge($default_params, $request->all()));
     }
 
     /**

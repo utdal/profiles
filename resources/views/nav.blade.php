@@ -153,6 +153,9 @@ $can_create_users = $user && $user->can('create', 'App\User');
                     <a class="dropdown-item" href="{{ route('testing.roles.add', ['name' => $role->name]) }}" title="add role"><i class="fa fa-fw fa-times text-danger"></i> {{ $role->name }}</a>
                   @endif
                 @endforeach
+                <div class="dropdown-divider"></div>
+                <h6 class="dropdown-header">Preview Emails:</h6>
+                <a class="dropdown-item" href="{{ route('testing.email.preview', ['view' => 'reviewstudents', 'name' => 'Test User',]) }}"><span class="fas fa-envelope fa-fw"></span> Review Students</a>
               </div>
             </li>
           @endif
