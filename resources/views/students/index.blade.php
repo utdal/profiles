@@ -14,7 +14,7 @@
             <li>
                 <span class="fa-li"><i class="fas fa-info-circle"></i></span> This page includes <em>all</em> student research applications created on this site.
             </li>
-            @if($user_profile || $delegator_profiles)
+            @if($user_profile || $delegator_profiles->isNotEmpty())
                 <li class="mt-2">
                     <span class="fa-li"><i class="fas fa-cog"></i></span> Related: 
                     @if($user_profile)
