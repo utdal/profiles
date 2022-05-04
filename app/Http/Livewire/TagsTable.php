@@ -2,39 +2,50 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Livewire\Concerns\HasFilters;
+use App\Http\Livewire\Concerns\HasPagination;
+use App\Http\Livewire\Concerns\HasSorting;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
-use Livewire\WithPagination;
 use Spatie\Tags\Tag;
 
 class TagsTable extends Component
 {
-    use AuthorizesRequests, WithPagination;
+    use AuthorizesRequests;
+    use HasFilters;
+    use HasPagination;
+    use HasSorting;
 
-    protected $paginationTheme = 'bootstrap';
-
-    public $search = '';
+    public $search_filter = '';
 
     public $tag_type_filter = '';
 
-    public $per_page = 10;
-
-    public $sort_field = 'id';
-
-    public $sort_descending = true;
-
-    public function sortBy($field)
+    public function mount()
     {
-        $this->sort_descending = ($this->sort_field === $field) ? !$this->sort_descending : false;
-        $this->sort_field = $field;
+        $this->per_page = 10;
+    }
+
+    public function getTagsProperty()
+    {
+        return Tag::query()
+            ->when($this->tag_type_filter, function ($q) {
+                $q->where('type', $this->tag_type_filter);
+            })
+            ->when($this->search_filter, function ($q) {
+                $q->containing($this->search_filter);
+            })
+            ->orderBy($this->sort_field, $this->sort_descending ? 'desc' : 'asc')
+            ->paginate($this->per_page);
     }
 
     public function updating($name)
     {
-        // reset pagination when searching or filtering
-        if (in_array($name, ['search', 'tag_type_filter', 'per_page'])) {
-            $this->resetPage();
-        }
+        $this->resetPageOnChange($name);
+    }
+
+    public function updated($name, $value)
+    {
+        $this->emitFilterUpdatedEvent($name, $value);
     }
 
     public function destroy(Tag $tag)
@@ -50,17 +61,8 @@ class TagsTable extends Component
 
     public function render()
     {
-        $tags_query = Tag::query()
-            ->when($this->tag_type_filter, function($q) {
-                $q->where('type', $this->tag_type_filter);
-            })
-            ->when($this->search, function($q) {
-                $q->containing($this->search);
-            })
-            ->orderBy($this->sort_field, $this->sort_descending ? 'desc' : 'asc');
-
         return view('livewire.tags-table', [
-            'tags' => $tags_query->paginate($this->per_page),
+            'filter_names' => $this->availableFilters(),
             'tag_types' => Tag::groupBy('type')->pluck('type'),
         ]);
     }

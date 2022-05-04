@@ -1,9 +1,9 @@
 <div class="livewire-datatable">
 
     <div class="form-row">
-        <div class="form-group col-lg-6">
+        <div class="form-group col-lg-4">
             <label for="profileSearch">Search</label>
-            <input wire:model.debounce.250ms="search" type="text" id="profileSearch" class="form-control" placeholder="Search...">
+            <input wire:model.debounce.250ms="search_filter" type="text" id="profileSearch" class="form-control" placeholder="Search...">
         </div>
         <div class="form-group col-lg-2">
             <label for="profileSchoolFilter">School</label>
@@ -31,7 +31,15 @@
                 <option value="100">100 per page</option>
             </select>
         </div>
+        <div class="form-group col-lg-2 text-center">
+            <div class="mb-2">&nbsp;</div>
+            <button type="button" class="btn btn-block btn-outline-primary" wire:click="resetFilters">
+                Clear All Filters
+            </button>
+        </div>
     </div>
+
+    @include('livewire.partials._applied-filters', ['filter_value_names' => ['schools_filter' => $schools->pluck('short_name', 'id')->all()]])
 
     <table class="table table-sm table-striped table-live table-responsive-lg" aria-live="polite" wire:loading.attr="aria-busy">
         <caption class="sr-only">List of profiles</caption>
@@ -48,7 +56,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($profiles as $profile)
+            @foreach ($this->profiles as $profile)
             <tr>
                 <td>{{ $profile->id }}</td>
                 <td>{{ $profile->full_name }}</td>
@@ -76,7 +84,7 @@
 
     <div class="row mt-5">
         <div class="col-lg-10">
-            {{ $profiles->links() }}
+            {{ $this->profiles->links() }}
         </div>
     </div>
 </div>

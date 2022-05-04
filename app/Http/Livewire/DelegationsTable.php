@@ -2,17 +2,18 @@
 
 namespace App\Http\Livewire;
 
-use App\User;
+use App\Http\Livewire\Concerns\HasFilters;
+use App\Http\Livewire\Concerns\HasPagination;
+use App\Http\Livewire\Concerns\HasSorting;
 use App\UserDelegation;
 use Illuminate\Support\Str;
 use Livewire\Component;
-use Livewire\WithPagination;
 
 class DelegationsTable extends Component
 {
-    use WithPagination;
-
-    protected $paginationTheme = 'bootstrap';
+    use HasFilters;
+    use HasPagination;
+    use HasSorting;
 
     protected $search_fields = [
         'display_name',
@@ -22,32 +23,21 @@ class DelegationsTable extends Component
         'pea',
     ];
 
-    public $search = '';
+    public $search_filter = '';
 
-    public $per_page = 25;
+    public $notify_filter = '';
 
-    public $sort_field = 'created_at';
-
-    public $sort_descending = true;
-
-    public function sortBy($field)
+    public function mount()
     {
-        $this->sort_descending = ($this->sort_field === $field) ? !$this->sort_descending : false;
-        $this->sort_field = $field;
+        $this->sort_field = 'created_at';
+        $this->sort_descending = true;
     }
 
-    public function updating($name)
+    public function getDelegationsProperty()
     {
-        // reset pagination when searching or filtering
-        if (in_array($name, ['search', 'per_page'])) {
-            $this->resetPage();
-        }
-    }
-
-    public function render()
-    {
-        $delegations_query = UserDelegation::query()
-            ->search($this->search, $this->search_fields)
+        return UserDelegation::query()
+            ->search($this->search_filter, $this->search_fields)
+            ->shouldNotify($this->notify_filter)
             ->when($this->sort_field, function ($q) {
                 $sort_by = $this->sort_field;
 
@@ -68,10 +58,24 @@ class DelegationsTable extends Component
                 }
 
                 $q->orderBy($sort_by, $this->sort_descending ? 'desc' : 'asc');
-            });
+            })
+            ->paginate($this->per_page);
+    }
 
+    public function updating($name)
+    {
+        $this->resetPageOnChange($name);
+    }
+
+    public function updated($name, $value)
+    {
+        $this->emitFilterUpdatedEvent($name, $value);
+    }
+
+    public function render()
+    {
         return view('livewire.delegations-table', [
-            'delegations' => $delegations_query->paginate($this->per_page),
+            'filter_names' => $this->availableFilters(),
         ]);
     }
 }

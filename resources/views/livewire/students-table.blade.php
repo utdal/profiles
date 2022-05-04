@@ -133,8 +133,11 @@
                                 <option value="drafted">drafted</option>
                             </select>
                         </div>
-                        <div class="form-group col-lg-2 d-flex justify-content-center align-items-center">
-                            <button type="button" class="btn btn-primary" wire:click="resetFilters">Clear All Filters</button>
+                        <div class="form-group col-lg-2">
+                            <div class="mb-2">&nbsp;</div>
+                            <button type="button" class="btn btn-block btn-outline-primary" wire:click="resetFilters">
+                                Clear All Filters
+                            </button>
                         </div>
                     </div>
                 </div>

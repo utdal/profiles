@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Helpers\Semester;
+use App\Http\Livewire\Concerns\HasFilters;
 use App\ProfileStudent;
 use App\Student;
 use App\StudentData;
@@ -11,6 +12,8 @@ use Spatie\Tags\Tag;
 
 class ProfileStudents extends Component
 {
+    use HasFilters;
+
     public $profile;
 
     public $animals_filter = '';
@@ -74,40 +77,12 @@ class ProfileStudents extends Component
 
     public function updated($name, $value)
     {
-        if ($this->isAFilter($name)) {
-            $this->emit('alert', ($value === '') ? "Cleared filter." : "Applied filter.", 'success');
-            $this->refreshStudents();
-        }
+        $this->emitFilterUpdatedEvent($name, $value);
     }
 
     public function refreshStudents()
     {
         $this->students = $this->getStudentsProperty();
-    }
-
-    public function resetFilters()
-    {
-        $this->reset($this->availableFilters());
-        $this->refreshStudents();
-        $this->emit('alert', "Cleared all filters.", 'success');
-    }
-
-    public function resetFilter($filter_name)
-    {
-        $this->reset($filter_name);
-        $this->updated($filter_name, '');
-    }
-
-    protected function availableFilters(): array
-    {
-        return array_filter(array_keys(get_class_vars(self::class)), function($property_name) {
-            return $this->isAFilter($property_name);
-        });
-    }
-
-    protected function isAFilter($name)
-    {
-        return strpos($name, '_filter') !== false;
     }
 
     public function render()

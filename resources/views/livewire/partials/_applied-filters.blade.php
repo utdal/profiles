@@ -3,7 +3,13 @@
         @if($this->$filter_name !== '')
             <span wire:key="filter_badge_{{ $filter_name }}" class="badge badge-primary mr-1 mb-3">
                 {{ Str::before($filter_name, '_filter') }}: 
-                {{ ['0' => 'No', '1' => 'Yes']["{$this->$filter_name}"] ?? $this->$filter_name }}
+                @if(isset($filter_value_names[$filter_name][$this->$filter_name]))
+                    {{ $filter_value_names[$filter_name][$this->$filter_name] }}
+                @elseif(in_array("{$this->$filter_name}", ['0', '1']))
+                    {{ ['0' => 'No', '1' => 'Yes']["{$this->$filter_name}"] }}
+                @else
+                    {{ $this->$filter_name }}
+                @endif
                 <button
                     wire:click="resetFilter('{{ $filter_name }}')"
                     type="button"

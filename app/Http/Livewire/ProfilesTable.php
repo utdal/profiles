@@ -2,16 +2,18 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Livewire\Concerns\HasFilters;
+use App\Http\Livewire\Concerns\HasPagination;
+use App\Http\Livewire\Concerns\HasSorting;
 use App\Profile;
 use App\School;
 use Livewire\Component;
-use Livewire\WithPagination;
 
 class ProfilesTable extends Component
 {
-    use WithPagination;
-
-    protected $paginationTheme = 'bootstrap';
+    use HasFilters;
+    use HasPagination;
+    use HasSorting;
 
     protected $search_fields = [
         'id',
@@ -21,40 +23,26 @@ class ProfilesTable extends Component
         'slug',
     ];
 
-    public $search = '';
+    public $search_filter = '';
 
     public $public_filter = '';
 
     public $schools_filter = '';
 
-    public $per_page = 25;
-
-    public $sort_field = 'last_name';
-
-    public $sort_descending = false;
-
-    public function sortBy($field)
+    public function mount()
     {
-        $this->sort_descending = ($this->sort_field === $field) ? !$this->sort_descending : false;
-        $this->sort_field = $field;
+        $this->sort_field = 'last_name';
+        $this->sort_descending = false;
     }
 
-    public function updating($name)
+    public function getProfilesProperty()
     {
-        // reset pagination when searching or filtering
-        if (in_array($name, ['search', 'public_filter', 'per_page'])) {
-            $this->resetPage();
-        }
-    }
-
-    public function render()
-    {
-        $profiles_query = Profile::query()
+        return Profile::query()
             ->with(['user.school', 'user.setting'])
-            ->when($this->search, function ($q) {
+            ->when($this->search_filter, function ($q) {
                 $q->where(function ($search_q) {
                     foreach ($this->search_fields as $field) {
-                        $search_q->orWhere($field, 'LIKE', "%{$this->search}%");
+                        $search_q->orWhere($field, 'LIKE', "%{$this->search_filter}%");
                     }
                 });
             })
@@ -64,10 +52,24 @@ class ProfilesTable extends Component
             ->when($this->public_filter !== '', function ($q) {
                 $q->where('public', '=', $this->public_filter);
             })
-            ->orderBy($this->sort_field, $this->sort_descending ? 'desc' : 'asc');
+            ->orderBy($this->sort_field, $this->sort_descending ? 'desc' : 'asc')
+            ->paginate($this->per_page);
+    }
 
+    public function updating($name)
+    {
+        $this->resetPageOnChange($name);
+    }
+
+    public function updated($name, $value)
+    {
+        $this->emitFilterUpdatedEvent($name, $value);
+    }
+
+    public function render()
+    {
         return view('livewire.profiles-table', [
-            'profiles' => $profiles_query->paginate($this->per_page),
+            'filter_names' => $this->availableFilters(),
             'schools' => School::all(),
         ]);
     }
