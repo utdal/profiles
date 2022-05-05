@@ -3,6 +3,7 @@
 namespace App;
 
 use App\ProfileData;
+use App\Setting;
 use App\Student;
 use Illuminate\Database\Eloquent\Model;
 
@@ -37,6 +38,19 @@ class StudentData extends ProfileData
         'ru' => 'Russian',
         'other' => 'Other',
     ];
+
+    /**
+     * Student majors choices
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public static function majors()
+    {
+        $setting_majors = optional(Setting::whereName('student_majors')->first())->value;
+        $majors = $setting_majors ? explode(';', $setting_majors) : [];
+
+        return collect($majors)->combine($majors);
+    }
 
     //////////////////
     // Query Scopes //

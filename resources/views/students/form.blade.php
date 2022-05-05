@@ -5,7 +5,11 @@
 
 <div class="mb-3">
     {!! Form::label('major', 'Major', ['class' => 'form-label']) !!}
-    {!! Form::text('research_profile[major]', $student->research_profile->major ?? '', ['class' => 'form-control', 'required']) !!}
+    @if($majors->isNotEmpty())
+        {!! Form::select('research_profile[major]', collect(['' => 'Select a major'])->merge($majors)->merge(['Other' => 'Other']), $student->research_profile->major ?? '', ['class' => 'form-control']); !!}
+    @else
+        {!! Form::text('research_profile[major]', $student->research_profile->major ?? '', ['class' => 'form-control', 'required']) !!}
+    @endif
 </div>
 
 <div class="mb-3">
