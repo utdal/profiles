@@ -5,8 +5,8 @@
                 {{ Str::before($filter_name, '_filter') }}: 
                 @if(isset($filter_value_names[$filter_name][$this->$filter_name]))
                     {{ $filter_value_names[$filter_name][$this->$filter_name] }}
-                @elseif(in_array("{$this->$filter_name}", ['0', '1']))
-                    {{ ['0' => 'No', '1' => 'Yes']["{$this->$filter_name}"] }}
+                @elseif(in_array("{$this->$filter_name}", ['0', '1', '-1']))
+                    {{ ['0' => 'No', '1' => 'Yes', '-1' => 'n/a']["{$this->$filter_name}"] }}
                 @else
                     {{ $this->$filter_name }}
                 @endif

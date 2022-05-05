@@ -186,6 +186,10 @@
             {!! Form::radio("research_profile[credit]", '0', $student->research_profile->credit === '0', ['id' => "credit_no", 'class' => 'form-check-input']) !!}
             {!! Form::label("credit_no", "No, I just want to volunteer", ['class' => 'form-check-label']) !!}
         </div>
+        <div class="form-check form-check-inline">
+            {!! Form::radio("research_profile[credit]", '-1', $student->research_profile->credit === '-1', ['id' => "credit_na", 'class' => 'form-check-input']) !!}
+            {!! Form::label("credit_na", "No preference", ['class' => 'form-check-label']) !!}
+        </div>
     </div>
 </div>
 

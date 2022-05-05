@@ -131,6 +131,7 @@
                                     <option value="" selected>All</option>
                                     <option value="1">Yes</option>
                                     <option value="0">No</option>
+                                    <option value="-1">No Preference</option>
                                 </select>
                             </div>
                             <div class="form-group">
