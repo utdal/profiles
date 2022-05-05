@@ -169,7 +169,7 @@
                 <td>{{ $student->id }}</td>
                 <td><a href="{{ route('students.show', ['student' => $student]) }}">{{ $student->full_name }}</a></td>
                 <td>{{ $student->tags->implode('name', ', ') }}</td>
-                <td>{{ implode(', ', $student->research_profile->faculty ?? []) }}</td>
+                <td>{{ $student->faculty->implode('full_name', ', ') }}</td>
                 <td>{{ implode(', ', $student->research_profile->schools ?? []) }}</td>
                 <td>{{ implode(', ', $student->research_profile->semesters ?? []) }}</td>
                 <td>{{ $student->research_profile->graduation_date }}</td>

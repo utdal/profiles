@@ -52,7 +52,7 @@ class StudentsTable extends Component
     public function getStudentsProperty()
     {
         return Student::query()
-            ->with(['research_profile', 'tags'])
+            ->with(['research_profile', 'tags', 'faculty'])
             ->search($this->search_filter)
             ->withTag($this->tag_filter)
             ->withStatus($this->status_filter)
