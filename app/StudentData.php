@@ -53,7 +53,7 @@ class StudentData extends ProfileData
     public static function majors()
     {
         $setting_majors = optional(Setting::whereName('student_majors')->first())->value;
-        $majors = $setting_majors ? explode(';', $setting_majors) : [];
+        $majors = $setting_majors ? preg_split("/[\r\n]+/", $setting_majors) : [];
 
         return collect($majors)->combine($majors);
     }

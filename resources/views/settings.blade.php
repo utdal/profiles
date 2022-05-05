@@ -186,7 +186,7 @@
         </div>
         <div class="col col-12">
             <label for="rte_student_info">Student Majors</label>
-            <small class="form-text text-muted">Semicolon-delimited. Used on student application form. Leave blank to allow free input.</small>
+            <small class="form-text text-muted">One per line. Used on student application form. Leave blank to allow free input.</small>
             <textarea class="form-control" id="rte_student_majors" name="setting[student_majors]">{{ $settings['student_majors'] ?? '' }}</textarea>
         </div>
     </div>
