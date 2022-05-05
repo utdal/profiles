@@ -12,6 +12,8 @@ class BookmarkButton extends Component
 
     public $mini = false;
 
+    public $simple = false;
+
     public function mount()
     {
         $this->user = auth()->user();
