@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\StudentViewed;
 use App\School;
 use App\Setting;
 use App\Student;
 use App\StudentData;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class StudentsController extends Controller
 {
@@ -33,7 +35,14 @@ class StudentsController extends Controller
      */
     public function index()
     {
-        return view('students.index');
+        $user = Auth::user();
+        $user->loadMissing(['profiles', 'currentDelegators.profiles']);
+
+        return view('students.index', [
+            'user' => $user,
+            'user_profile' => $user->profiles->first(),
+            'delegator_profiles' => $user->currentDelegators->pluck('profiles')->flatten(),
+        ]);
     }
 
     /**
@@ -50,7 +59,7 @@ class StudentsController extends Controller
             return redirect()->route('students.edit', ['student' => $student]);
         }
 
-        return back()->with('flash_message', "Unable to create Student Research Profile. Please try again later.");
+        return back()->with('flash_message', "Unable to create Student Research Application. Please try again later.");
     }
 
     /**
@@ -100,14 +109,23 @@ class StudentsController extends Controller
     /**
      * Display the specified student research profile.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function show(Student $student)
+    public function show(Request $request, Student $student)
     {
+        if ($request->user() && $request->user()->userOrDelegatorhasRole('faculty')) {
+            StudentViewed::dispatch($student);
+        }
+
+        $student->load(['research_profile', 'stats', 'faculty', 'user']);
+
         return view('students.show', [
             'student' => $student,
             'schools' => $this->participatingSchools(),
+            'languages' => StudentData::$languages,
+            'majors' => StudentData::majors(),
         ]);
     }
 
@@ -122,6 +140,8 @@ class StudentsController extends Controller
         return view('students.edit', [
             'student' => $student,
             'schools' => $this->participatingSchools(),
+            'languages' => StudentData::$languages,
+            'majors' => StudentData::majors(),
         ]);
     }
 
@@ -143,6 +163,8 @@ class StudentsController extends Controller
             'type' => 'research_profile',
             'data' => $request->research_profile,
         ]);
+
+        $student->faculty()->sync($request->faculty ?? []);
 
         return redirect()->route('students.show', ['student' => $student])
             ->with('flash_message', ($updated && $research_profile_updated) ? 'Submitted!' : 'Sorry, unable to save.');

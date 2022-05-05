@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Profile;
+use App\ProfileStudent;
 use App\StudentData;
 use App\StudentFeedback;
 use App\User;
@@ -52,6 +54,93 @@ class Student extends Model implements Auditable
         return $this->updated_at->greaterThan($this->created_at);
     }
 
+    /**
+     * Get or create the stats record
+     *
+     * @return StudentData
+     */
+    public function firstStats()
+    {
+        return $this->stats()->firstOrCreate(['type' => 'stats'], ['data' => []]);
+    }
+
+    /**
+     * Updates the Student Application status stats
+     *
+     * @param string|null $old_status
+     * @param string|null $new_status
+     * @param Profile $profile
+     * @return void
+     */
+    public function updateStatusStats($old_status, $new_status, Profile $profile): void
+    {
+        $stats = $this->firstStats();
+
+        if ($new_status) {
+            $stats->incrementDatum("status.$new_status");
+        }
+
+        if ($old_status) {
+            $stats->decrementDatum("status.$old_status", 1, false);
+        }
+
+        $stats->insertData(['status_history' => [[
+            'old_status' => $old_status,
+            'new_status' => $new_status,
+            'profile' => $profile->id,
+            'profile_name' => $profile->full_name,
+            'updated_at' => now()->toDateTimeString(),
+        ]]]);
+    }
+
+    public function updateAcceptedStats(Profile $profile, $accepted = true)
+    {
+        $stats = $this->firstStats();
+        $accepted_key = "profile_{$profile->id}";
+
+        if ($accepted) {
+            if (!isset($stats->accepted_by[$accepted_key])) {
+                $stats->insertData([
+                    'accepted_by' => [
+                        $accepted_key => [
+                            'profile' => $profile->id,
+                            'profile_name' => $profile->full_name,
+                        ],
+                    ],
+                    'accepted_on' => now()->toDateTimeString(),
+                ]);
+            }
+        } else {
+            $stats->removeData("accepted_by.{$accepted_key}");
+            if (isset($stats->accepted_by) && empty($stats->accepted_by)) {
+                $stats->removeData('accepted_by');
+            }
+        }
+    }
+
+    /**
+     * Increments the Student Application view count
+     *
+     * @return void
+     */
+    public function incrementViews()
+    {
+        $this->firstStats()->incrementDatum('views');
+    }
+
+    /**
+     * Updates the Student Application last viewed stat
+     *
+     * @param string $datetime
+     * @return void
+     */
+    public function updateLastViewed($datetime = '')
+    {
+        $this->firstStats()->updateData([
+            'last_viewed' => $datetime ?: now()->toDateTimeString(),
+        ]);
+    }
+
     ////////////////////////////////////
     // Mutators and Virtual Attributes//
     ////////////////////////////////////
@@ -92,7 +181,7 @@ class Student extends Model implements Auditable
     public function scopeWithStatus($query, $status)
     {
         if ($status) {
-            $query->where('status', '=', $status);
+            $query->where('students.status', '=', $status);
         }
 
         return $query;
@@ -113,8 +202,8 @@ class Student extends Model implements Auditable
     public function scopeWithFaculty($query, $faculty)
     {
         if ($faculty) {
-            $query->whereHas('research_profile', function ($q) use ($faculty) {
-                $q->whereJsonContains('data->faculty', $faculty);
+            $query->whereHas('faculty', function ($q) use ($faculty) {
+                $q->where('profiles.id', '=', $faculty);
             });
         }
 
@@ -123,20 +212,65 @@ class Student extends Model implements Auditable
     
     public function scopeWithSchool($query, $school)
     {
-        if ($school) {
-            $query->whereHas('research_profile', function ($q) use ($school) {
-                $q->whereJsonContains('data->schools', $school);
+        return $this->scopeDataContains($query, 'schools', $school);
+    }
+
+    public function scopeWithSemester($query, $semester)
+    {
+        return $this->scopeDataContains($query, 'semesters', $semester);
+    }
+
+    public function scopeWithLanguage($query, $language)
+    {
+        return $this->scopeDataContains($query, 'languages', $language);
+    }
+
+    public function scopeWithMajor($query, $major)
+    {
+        return $this->scopeDataContains($query, 'major', $major);
+    }
+
+    public function scopeWillTravel($query, $travel)
+    {
+        return $this->scopeDataEquals($query, 'travel', $travel);
+    }
+
+    public function scopeWillTravelOther($query, $travel)
+    {
+        return $this->scopeDataEquals($query, 'travel_other', $travel);
+    }
+
+    public function scopeWillWorkWithAnimals($query, $animals)
+    {
+        return $this->scopeDataEquals($query, 'animals', $animals);
+    }
+
+    public function scopeNeedsResearchCredit($query, $credit)
+    {
+        return $this->scopeDataEquals($query, 'credit', $credit);
+    }
+
+    public function scopeGraduatesOn($query, $graduation_date)
+    {
+        return $this->scopeDataEquals($query, 'graduation_date', $graduation_date);
+    }
+
+    public function scopeDataContains($query, $key, $value)
+    {
+        if ($value !== '') {
+            $query->whereHas('research_profile', function ($q) use ($key, $value) {
+                $q->whereJsonContains("data->{$key}", $value);
             });
         }
 
         return $query;
     }
 
-    public function scopeWithSemester($query, $semester)
+    public function scopeDataEquals($query, $key, $value)
     {
-        if ($semester) {
-            $query->whereHas('research_profile', function ($q) use ($semester) {
-                $q->whereJsonContains('data->semesters', $semester);
+        if ($value !== '') {
+            $query->whereHas('research_profile', function ($q) use ($key, $value) {
+                $q->where("data->{$key}", "=", $value);
             });
         }
 
@@ -146,6 +280,29 @@ class Student extends Model implements Auditable
     public function scopeEverUpdated($query)
     {
         return $query->whereColumn('updated_at', '>', 'created_at');
+    }
+
+    /**
+     * Query scope for Students whose application status is 'maybe later' or Null. To be used through the Profile relation.
+     * 
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeWithStatusPendingReview($query) 
+    {
+        return $query->whereNull('profile_student.status')
+                     ->orWhere('profile_student.status', '=', 'maybe later');
+    }
+
+    /**
+     * Query scope for Students whose application status is 'not interested'. To be used through the Profile relation.
+     * 
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeWithStatusNotInterested($query)
+    {
+        return $query->where('profile_student.status', '=', 'not interested');
     }
 
     ///////////////
@@ -190,5 +347,29 @@ class Student extends Model implements Auditable
     public function research_profile()
     {
         return $this->hasOne(StudentData::class)->where('type', 'research_profile');
+    }
+
+    /**
+     * Student has one research profile.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function stats()
+    {
+        return $this->hasOne(StudentData::class)->where('type', 'stats');
+    }
+
+    /**
+     * Student has many faculty profiles (many-to-many).
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function faculty()
+    {
+        return $this->belongsToMany(Profile::class)
+            ->using(ProfileStudent::class)
+            ->withPivot('status')
+            ->as('applicaton')
+            ->withTimestamps();
     }
 }

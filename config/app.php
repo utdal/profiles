@@ -49,7 +49,7 @@ return [
     /** analytics id */
     'analytics_id' => env('GOOGLE_ANALYTICS_ID', false),
 
-    /** enable student research match feature */
+    /** enable student research application feature */
     'enable_students' => env('ENABLE_STUDENTS', false),
 
     /** enable scheduled backup */
@@ -271,6 +271,7 @@ return [
         'Schema' => Illuminate\Support\Facades\Schema::class,
         'Session' => Illuminate\Support\Facades\Session::class,
         'Storage' => Illuminate\Support\Facades\Storage::class,
+        'Str' => Illuminate\Support\Str::class,
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,

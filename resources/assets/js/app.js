@@ -195,14 +195,17 @@ var profiles = (function ($, undefined) {
           }
         },
         freeInput: false,
-        itemValue: (profile) => profile.full_name,
+        itemValue: (profile) => profile.id,
         itemText: (profile) => profile.full_name,
         onTagExists: (item, $tag) => $tag.css({opacity: 0}).animate({opacity: 1}, 500), // blink once
         afterSelect: () => $select.tagsinput('input').val(''),
       });
 
       // add back existing options
-      $select.find('option').each((i, option) => $select.tagsinput('add', {'full_name': option.value}));
+      $select.find('option').each((i, option) => $select.tagsinput('add', {
+          'id': option.value,
+          'full_name': option.text,
+        }));
 
       $select.tagsinput('input')
         .on('typeahead:asyncrequest', function () {
@@ -391,7 +394,7 @@ $(document).ready(function() {
   }, 5000);
 
   //animate anchor clicks on page
-  $('a[href^="#"]:not([href="#"])').on('click', function(event) {
+  $('a[href^="#"]:not([href="#"]):not([data-scrollto-anchor="false"])').on('click', function(event) {
 
       var target = $( $(this).attr('href') );
       if( target.length ) {
@@ -415,6 +418,17 @@ $(document).ready(function() {
   $('[data-evaluate=profile-eml]').each(profiles.deobfuscate_mail_links);
   $('[data-toggle="tooltip"]').tooltip();
 
+  /**
+ * Load html element as content into a popover
+ */
+  $('[data-toggle="popover"]').popover({
+    html: true,
+    content: function () {
+      const content = $(this).data("popover-content");
+      return (typeof content === 'string' && $(content).length) ? $(content).html() : '';
+    }
+  });
+
 });
 
 // Livewire global hooks
@@ -425,4 +439,11 @@ if (typeof Livewire === 'object') {
     });
   }
   Livewire.on('alert', (message, type) => profiles.toast(message, type));
+  Livewire.onError((status, response) => {
+    // show a toast instead of a modal for 403 responses
+    if (status === 403) {
+      profiles.toast('⛔️ Sorry, you are not authorized to do that.', 'danger');
+        return false;
+    }
+  });
 }

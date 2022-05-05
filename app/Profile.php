@@ -3,6 +3,8 @@
 namespace App;
 
 use App\ProfileData;
+use App\ProfileStudent;
+use App\Student;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Auditable as HasAudits;
@@ -413,6 +415,39 @@ class Profile extends Model implements HasMedia, Auditable
             $user_query->withSchool($school_id);
         });
     }
+    /**
+     * Query scope for Profiles and eager load students whose application is pending review 
+     * for a given semester.
+     * 
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $semester
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeEagerStudentsPendingReviewWithSemester($query, $semester)
+    {
+        return $query->with(['students' => function($eager_students) use ($semester) {
+            $eager_students->submitted();
+            $eager_students->withSemester($semester);
+            $eager_students->WithStatusPendingReview();
+        }]);
+    }
+
+    /**
+     * Query scope for Profiles with students whose application is pending review 
+     * for a given semester.
+     * 
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $semester
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeStudentsPendingReviewWithSemester($query, $semester)
+    {
+        return $query->whereHas('students', function($query_students) use ($semester) {
+            $query_students->submitted();
+            $query_students->withSemester($semester);
+            $query_students->WithStatusPendingReview();
+        });
+    }
 
     ///////////////////////////////////
     // Mutators & Virtual Attributes //
@@ -523,6 +558,20 @@ class Profile extends Model implements HasMedia, Auditable
         return $this->hasMany(ProfileData::class)
                     ->orderBy('data->year', 'desc')
                     ->orderBy('sort_order', 'desc');
+    }
+
+    /**
+     * This has many students (many-to-many).
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function students()
+    {
+        return $this->belongsToMany(Student::class)
+            ->using(ProfileStudent::class)
+            ->withPivot('status')
+            ->as('application')
+            ->withTimestamps();
     }
 
     ///////////////////

@@ -40,7 +40,7 @@
     @endcan
 
     {{-- Feedback list --}}
-    @forelse($feedback as $feedback_item)
+    @forelse($this->feedback as $feedback_item)
         <div class="card mb-3">
             <div class="card-header text-right">
                 <em>{{ $feedback_item->created_at->toFormattedDateString() }}</em>

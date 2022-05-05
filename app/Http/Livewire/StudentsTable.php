@@ -5,21 +5,24 @@ namespace App\Http\Livewire;
 use App\Student;
 use App\StudentData;
 use App\Helpers\Semester;
+use App\Http\Livewire\Concerns\HasFilters;
+use App\Http\Livewire\Concerns\HasPagination;
+use App\Http\Livewire\Concerns\HasSorting;
+use App\Profile;
 use Livewire\Component;
-use Livewire\WithPagination;
 use Spatie\Tags\Tag;
 
 class StudentsTable extends Component
 {
-    use WithPagination;
+    use HasFilters;
+    use HasSorting;
+    use HasPagination;
 
-    protected $paginationTheme = 'bootstrap';
-
-    public $search = '';
+    public $search_filter = '';
 
     public $tag_filter = '';
 
-    public $status_filter = 'submitted';
+    public $status_filter = '';
 
     public $faculty_filter = '';
 
@@ -27,43 +30,66 @@ class StudentsTable extends Component
 
     public $semester_filter = '';
 
-    public $per_page = 25;
+    public $major_filter = '';
 
-    public $sort_field = 'id';
+    public $language_filter = '';
 
-    public $sort_descending = true;
+    public $animals_filter = '';
 
-    public function sortBy($field)
+    public $credit_filter = '';
+
+    public $graduation_filter = '';
+
+    public $travel_filter = '';
+
+    public $travel_other_filter = '';
+
+    public function mount()
     {
-        $this->sort_descending = ($this->sort_field === $field) ? !$this->sort_descending : false;
-        $this->sort_field = $field;
+        $this->status_filter = 'submitted';
     }
 
-    public function updating($name)
+    public function getStudentsProperty()
     {
-        // reset pagination when searching or filtering
-        if (in_array($name, ['search', 'tag_filter', 'status_filter', 'faculty_filter', 'schools_filter', 'semester_filter', 'per_page'])) {
-            $this->resetPage();
-        }
-    }
-
-    public function render()
-    {
-        $students_query = Student::query()
-            ->with(['research_profile', 'tags'])
-            ->search($this->search)
+        return Student::query()
+            ->with(['research_profile', 'tags', 'faculty'])
+            ->search($this->search_filter)
             ->withTag($this->tag_filter)
             ->withStatus($this->status_filter)
             ->withFaculty($this->faculty_filter)
             ->withSchool($this->schools_filter)
+            ->graduatesOn($this->graduation_filter)
+            ->withLanguage($this->language_filter)
+            ->withMajor($this->major_filter)
+            ->willTravel($this->travel_filter)
+            ->willTravelOther($this->travel_other_filter)
+            ->willWorkWithAnimals($this->animals_filter)
+            ->needsResearchCredit($this->credit_filter)
             ->withSemester($this->semester_filter)
-            ->orderBy($this->sort_field, $this->sort_descending ? 'desc' : 'asc');
+            ->orderBy($this->sort_field, $this->sort_descending ? 'desc' : 'asc')
+            ->paginate($this->per_page);
+    }
 
+    public function updating($name)
+    {
+        $this->resetPageOnChange($name);
+    }
+
+    public function updated($name, $value)
+    {
+        $this->emitFilterUpdatedEvent($name, $value);
+    }
+
+    public function render()
+    {
         return view('livewire.students-table', [
-            'students' => $students_query->paginate($this->per_page),
+            'filter_names' => $this->availableFilters(),
             'tags' => Tag::getWithType(Student::class),
-            'faculty' => StudentData::whereType('research_profile')->pluck('data')->pluck('faculty')->flatten()->unique()->filter()->sort()->values(),
+            'faculty' => Profile::whereHas('students')->pluck('full_name', 'id'),
             'schools' => StudentData::whereType('research_profile')->pluck('data')->pluck('schools')->flatten()->unique()->filter()->sort()->values(),
+            'languages' => StudentData::$languages,
+            'graduation_dates' => StudentData::uniqueValuesFor('research_profile', 'graduation_date')->sort()->values(),
+            'majors' => StudentData::uniqueValuesFor('research_profile', 'major')->sort()->values(),
             'semesters' => StudentData::whereType('research_profile')->pluck('data')->pluck('semesters')->flatten()->unique()->filter()
                 ->sortBy(function($semester, $key) {
                     return Semester::date($semester)->toDateString();

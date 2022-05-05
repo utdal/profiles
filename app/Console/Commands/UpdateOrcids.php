@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use App\Profile;
-use App\ProfileData;
 
 
 class UpdateOrcids extends Command
@@ -15,14 +14,14 @@ class UpdateOrcids extends Command
      *
      * @var string
      */
-    protected $signature = 'orcid:update';
+    protected $signature = 'profiles:update-orcid';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Loop through the profiles with orcid managed publications to sync the info';
+    protected $description = 'Update ORCID publications for sync-enabled profiles';
 
     /**
      * Create a new command instance.

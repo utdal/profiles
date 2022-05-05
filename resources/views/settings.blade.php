@@ -184,6 +184,11 @@
             <small class="form-text text-muted">Hold down control/command when clicking to select multiple.</small>
             {!! Form::select('setting[student_participating_schools][]', App\School::pluck('display_name', 'short_name'), json_decode($settings['student_participating_schools'] ?? "[]"), ['class' => 'form-control', 'multiple', 'size' => App\School::count()]); !!}
         </div>
+        <div class="col col-12">
+            <label for="rte_student_info">Student Majors</label>
+            <small class="form-text text-muted">One per line. Used on student application form. Leave blank to allow free input.</small>
+            <textarea class="form-control" id="rte_student_majors" name="setting[student_majors]">{{ $settings['student_majors'] ?? '' }}</textarea>
+        </div>
     </div>
     @endif
    	

@@ -2,16 +2,18 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Livewire\Concerns\HasFilters;
+use App\Http\Livewire\Concerns\HasPagination;
+use App\Http\Livewire\Concerns\HasSorting;
 use App\School;
 use App\User;
 use Livewire\Component;
-use Livewire\WithPagination;
 
 class UsersTable extends Component
 {
-    use WithPagination;
-
-    protected $paginationTheme = 'bootstrap';
+    use HasFilters;
+    use HasPagination;
+    use HasSorting;
 
     protected $search_fields = [
         'id',
@@ -22,7 +24,7 @@ class UsersTable extends Component
         'pea',
     ];
 
-    public $search = '';
+    public $search_filter = '';
 
     public $title_filter = '';
 
@@ -30,34 +32,20 @@ class UsersTable extends Component
 
     public $department_filter = '';
 
-    public $per_page = 25;
-
-    public $sort_field = 'lastname';
-
-    public $sort_descending = false;
-
-    public function sortBy($field)
+    public function mount()
     {
-        $this->sort_descending = ($this->sort_field === $field) ? !$this->sort_descending : false;
-        $this->sort_field = $field;
+        $this->sort_field = 'lastname';
+        $this->sort_descending = false;
     }
 
-    public function updating($name)
+    public function getUsersProperty()
     {
-        // reset pagination when searching or filtering
-        if (in_array($name, ['search', 'title_filter', 'schools_filter', 'department_filter', 'per_page'])) {
-            $this->resetPage();
-        }
-    }
-
-    public function render()
-    {
-        $users_query = User::query()
+        return User::query()
             ->with(['school', 'profiles', 'setting'])
-            ->when($this->search, function ($q) {
+            ->when($this->search_filter, function ($q) {
                 $q->where(function ($search_q) {
                     foreach ($this->search_fields as $field) {
-                        $search_q->orWhere($field, 'LIKE', "%{$this->search}%");
+                        $search_q->orWhere($field, 'LIKE', "%{$this->search_filter}%");
                     }
                 });
             })
@@ -70,10 +58,24 @@ class UsersTable extends Component
             ->when($this->department_filter, function ($q) {
                 $q->where('department', '=', $this->department_filter);
             })
-            ->orderBy($this->sort_field, $this->sort_descending ? 'desc' : 'asc');
+            ->orderBy($this->sort_field, $this->sort_descending ? 'desc' : 'asc')
+            ->paginate($this->per_page);
+    }
 
+    public function updating($name)
+    {
+        $this->resetPageOnChange($name);
+    }
+
+    public function updated($name, $value)
+    {
+        $this->emitFilterUpdatedEvent($name, $value);
+    }
+
+    public function render()
+    {
         return view('livewire.users-table', [
-            'users' => $users_query->paginate($this->per_page),
+            'filter_names' => $this->availableFilters(),
             'schools' => School::all(),
             'titles' => User::pluck('title')->unique()->filter()->sort(),
             'departments' => User::pluck('department')->unique()->filter()->sort(),

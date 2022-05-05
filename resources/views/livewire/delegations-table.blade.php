@@ -1,9 +1,17 @@
 <div class="livewire-datatable">
 
     <div class="form-row">
-        <div class="form-group col-lg-4">
+        <div class="form-group col-lg-6">
             <label for="userSearch">Search</label>
-            <input wire:model.debounce.250ms="search" type="text" id="userSearch" class="form-control" placeholder="Search...">
+            <input wire:model.debounce.250ms="search_filter" type="text" id="userSearch" class="form-control" placeholder="Search...">
+        </div>
+        <div class="form-group col-lg-2">
+            <label for="delegationNotifyFilter">Notify</label>
+            <select wire:model="notify_filter" id="delegationNotifyFilter" class="form-control">
+                <option value="" selected>All</option>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
         </div>
         <div class="form-group col-lg-2">
             <label for="perPage">Per Page</label>
@@ -14,7 +22,15 @@
                 <option value="100">100 per page</option>
             </select>
         </div>
+        <div class="form-group col-lg-2 text-center">
+            <div class="mb-2">&nbsp;</div>
+            <button type="button" class="btn btn-block btn-outline-primary" wire:click="resetFilters">
+                Clear All Filters
+            </button>
+        </div>
     </div>
+
+    @include('livewire.partials._applied-filters')
 
     <table class="table table-sm table-striped table-live table-responsive-lg" aria-live="polite" wire:loading.attr="aria-busy">
         <caption class="sr-only">List of user delegations</caption>
@@ -30,10 +46,10 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($delegations as $delegation)
+            @foreach ($this->delegations as $delegation)
             <tr>
-                <td><a href="{{ route('users.show', ['user' => $delegation->delegator]) }}">{{ $delegation->delegator->display_name }}</a></td>
-                <td><a href="{{ route('users.show', ['user' => $delegation->delegate]) }}">{{ $delegation->delegate->display_name }}</a></td>
+                <td><a href="{{ route('users.delegations.show', ['user' => $delegation->delegator]) }}">{{ $delegation->delegator->display_name }}</a></td>
+                <td><a href="{{ route('users.delegations.show', ['user' => $delegation->delegate]) }}">{{ $delegation->delegate->display_name }}</a></td>
                 <td>{{ optional($delegation->starting)->toFormattedDateString() ?? '∞' }}</td>
                 <td>{{ optional($delegation->until)->toFormattedDateString() ?? '∞' }}</td>
                 <td>{{ $delegation->gets_reminders ? 'yes' : 'no' }}</td>
@@ -47,7 +63,7 @@
 
     <div class="row mt-5">
         <div class="col-lg-10">
-            {{ $delegations->links() }}
+            {{ $this->delegations->links() }}
         </div>
     </div>
 </div>

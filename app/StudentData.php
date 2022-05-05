@@ -3,6 +3,7 @@
 namespace App;
 
 use App\ProfileData;
+use App\Setting;
 use App\Student;
 use Illuminate\Database\Eloquent\Model;
 
@@ -24,6 +25,39 @@ class StudentData extends ProfileData
         'sort_order',
     ];
 
+    /** @var array Language choices */
+    public static $languages = [
+        'ar' => 'Arabic',
+        'bn' => 'Bengali',
+        'zh' => 'Chinese',
+        'en' => 'English',
+        'fr' => 'French',
+        'de' => 'German',
+        'hi' => 'Hindi',
+        'it' => 'Italian',
+        'ja' => 'Japanese',
+        'ko' => 'Korean',
+        'pt' => 'Portugese',
+        'ru' => 'Russian',
+        'es' => 'Spanish',
+        'tl' => 'Tagalog',
+        'vi' => 'Vietnamese',
+        'other' => 'Other',
+    ];
+
+    /**
+     * Student majors choices
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public static function majors()
+    {
+        $setting_majors = optional(Setting::whereName('student_majors')->first())->value;
+        $majors = $setting_majors ? preg_split("/[\r\n]+/", $setting_majors) : [];
+
+        return collect($majors)->combine($majors);
+    }
+
     //////////////////
     // Query Scopes //
     //////////////////
@@ -39,6 +73,17 @@ class StudentData extends ProfileData
         return $query->where('type', 'research_profile');
     }
 
+    /**
+     * Query scope for research profile
+     *
+     * @param  Illuminate\Database\Query\Builder $query
+     * @return Illuminate\Database\Query\Builder
+     */
+    public function scopeStats($query)
+    {
+        return $query->where('type', 'stats');
+    }
+
     ///////////////
     // Relations //
     ///////////////
@@ -52,4 +97,5 @@ class StudentData extends ProfileData
     {
         return $this->belongsTo(Student::class, 'student_id');
     }
+
 }

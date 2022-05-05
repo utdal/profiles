@@ -100,6 +100,22 @@ class UserDelegation extends Pivot implements Auditable
         return $query;
     }
 
+    /**
+     * Query scope for delegations that should notify
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param bool|string $should_notify
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeShouldNotify($query, $should_notify = true)
+    {
+        if ($should_notify === '') {
+            return $query;
+        }
+
+        return $query->where('gets_reminders', '=', $should_notify);
+    }
+
     ////////////////
     // Relations  //
     ////////////////

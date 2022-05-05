@@ -20,7 +20,7 @@ $can_create_users = $user && $user->can('create', 'App\User');
   <div class="container">
     <a class="navbar-brand" href="{{ url('/') }}" title="{{ $settings['site_title'] ?? 'Profiles' }}">
       @if(isset($settings['logo']))
-        <img class="profiles-logo" src="{{ $settings['logo'] ?? asset('img/UTDmono_rev.svg') }}" alt="Logo">
+        <img class="profiles-logo" src="{{ $settings['logo'] }}" alt="Logo">
         <span class="vertical-line"></span>
       @endif
       <span class="profiles-wordmark">Profiles</span>
@@ -53,7 +53,7 @@ $can_create_users = $user && $user->can('create', 'App\User');
           <div class="dropdown-menu" aria-labelledby="studentNavDropdown">
             <a href="{{ route('students.about') }}" class="dropdown-item"><i class="fas fa-rocket"></i> Get Started with Research</a>
             @can('viewAny', App\Student::class)
-              <a href="{{ route('students.index') }}" class="dropdown-item"><i class="fas fa-users"></i> Student Research Profiles</a>
+              <a href="{{ route('students.index') }}" class="dropdown-item"><i class="fas fa-users"></i> All Student Research Applications</a>
             @endcan
           </div>
         </li>
@@ -124,7 +124,10 @@ $can_create_users = $user && $user->can('create', 'App\User');
               <a class="dropdown-item" href="{{ route('profiles.create', ['user' => $user]) }}"><span class="fa fa-plus fa-fw"></span> Create Profile</a>
             @endif
             @if(config('app.enable_students') && $user_student_profile)
-              <a class="dropdown-item" href="{{ route('students.show', ['student' => $user_student_profile]) }}"><span class="fa fa-user fa-fw"></span> Student Research Profile</a>
+              <a class="dropdown-item" href="{{ route('students.show', ['student' => $user_student_profile]) }}"><span class="fa fa-user fa-fw"></span> Student Research Application</a>
+            @endif
+            @if(config('app.enable_students') && $user_profile && true) {{-- @todo:implement permissions --}}
+              <a class="dropdown-item" href="{{ route('profiles.students', ['profile' => $user_profile]) }}"><span class="fa fa-users fa-fw"></span> Student Applications</a>
             @endif
             <a class="dropdown-item" href="{{ route('users.bookmarks.show', ['user' => $user->pea]) }}"><span class="fas fa-bookmark fa-fw"></span> Bookmarks</a>
             <a class="dropdown-item" href="{{ route('users.delegations.show', ['user' => $user->pea]) }}"><span class="fas fa-user-friends fa-fw"></span> Delegations</a>
@@ -150,6 +153,9 @@ $can_create_users = $user && $user->can('create', 'App\User');
                     <a class="dropdown-item" href="{{ route('testing.roles.add', ['name' => $role->name]) }}" title="add role"><i class="fa fa-fw fa-times text-danger"></i> {{ $role->name }}</a>
                   @endif
                 @endforeach
+                <div class="dropdown-divider"></div>
+                <h6 class="dropdown-header">Preview Emails:</h6>
+                <a class="dropdown-item" href="{{ route('testing.email.preview', ['view' => 'reviewstudents', 'name' => 'Test User',]) }}"><span class="fas fa-envelope fa-fw"></span> Review Students</a>
               </div>
             </li>
           @endif

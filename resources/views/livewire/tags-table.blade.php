@@ -1,9 +1,9 @@
 <div class="livewire-datatable">
 
     <div class="form-row">
-        <div class="form-group col-lg-8">
+        <div class="form-group col-lg-6">
             <label for="tagNameSearch">Tag Name</label>
-            <input wire:model.debounce.250ms="search" type="text" id="studentNameSearch" class="form-control" placeholder="Search...">
+            <input wire:model.debounce.250ms="search_filter" type="text" id="studentNameSearch" class="form-control" placeholder="Search...">
         </div>
         <div class="form-group col-lg-2">
             <label for="tagTypeFilter">Tag Type</label>
@@ -23,7 +23,15 @@
                 <option value="100">100</option>
             </select>
         </div>
+        <div class="form-group col-lg-2">
+            <div class="mb-2">&nbsp;</div>
+            <button type="button" class="btn btn-block btn-outline-primary" wire:click="resetFilters">
+                Clear All Filters
+            </button>
+        </div>
     </div>
+
+    @include('livewire.partials._applied-filters')
 
     <table class="table table-sm table-striped table-live table-responsive-lg" aria-live="polite" wire:loading.attr="aria-busy">
         <caption class="sr-only">List of tags</caption>
@@ -39,7 +47,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($tags as $tag)
+            @foreach ($this->tags as $tag)
             <tr>
                 <td>{{ $tag->id }}</td>
                 <td><a href="{{ route('profiles.index', ['search' => $tag->name]) }}">{{ $tag->name }}</a></td>
@@ -58,7 +66,7 @@
         </tbody>
     </table>
 
-    {{ $tags->links() }}
+    {{ $this->tags->links() }}
 
     @can('create', Spatie\Tags\Tag::class)
         <a href="{{ route('tags.create') }}" class="btn btn-primary" role="button"><i class="fa fa-plus"></i> Add Tags</a>
