@@ -39,6 +39,7 @@ class StudentsController extends Controller
         $user->loadMissing(['profiles', 'currentDelegators.profiles']);
 
         return view('students.index', [
+            'user' => $user,
             'user_profile' => $user->profiles->first(),
             'delegator_profiles' => $user->currentDelegators->pluck('profiles')->flatten(),
         ]);
@@ -124,6 +125,7 @@ class StudentsController extends Controller
             'student' => $student,
             'schools' => $this->participatingSchools(),
             'languages' => StudentData::$languages,
+            'majors' => StudentData::majors(),
         ]);
     }
 
@@ -139,6 +141,7 @@ class StudentsController extends Controller
             'student' => $student,
             'schools' => $this->participatingSchools(),
             'languages' => StudentData::$languages,
+            'majors' => StudentData::majors(),
         ]);
     }
 

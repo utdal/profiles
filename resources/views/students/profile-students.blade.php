@@ -13,9 +13,12 @@
     <div class="alert alert-info">
         <ul class="fa-ul mb-0">
             <li>
-                <span class="fa-li"><i class="fas fa-info-circle"></i></span> The student research applications on this page include <em>only</em> those who have expressed interest in working with you. You can organize these applications by selecting a folder from the <strong><i class="fas fa-folder-open"></i> Move To…</strong> menu.
+                <span class="fa-li"><i class="fas fa-info-circle"></i></span> The student research applications on this page include <strong>only</strong> those who have expressed interest in working with you. You can organize these applications by selecting a folder from the <strong><i class="fas fa-folder-open"></i> Move To…</strong> menu.
             </li>
-            <li class="mt-2">
+            <li>
+                <span class="fa-li"><i class="fas fa-info-circle"></i></span> To see <strong>all</strong> student applications (including those on which you were not expressly listed), go to the <a href="{{ route('students.index') }}"><i class="fas fa-users"></i> All Student Research Applications</a> page.
+            </li>
+            <li class="mt-3">
                 <span class="fa-li"><i class="fas fa-cog"></i></span> Related tasks: 
                 <span class="dropdown student-filer">
                     <button

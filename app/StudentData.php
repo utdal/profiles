@@ -31,11 +31,17 @@ class StudentData extends ProfileData
         'bn' => 'Bengali',
         'zh' => 'Chinese',
         'en' => 'English',
+        'fr' => 'French',
+        'de' => 'German',
         'hi' => 'Hindi',
+        'it' => 'Italian',
         'ja' => 'Japanese',
+        'ko' => 'Korean',
         'pt' => 'Portugese',
-        'es' => 'Spanish',
         'ru' => 'Russian',
+        'es' => 'Spanish',
+        'tl' => 'Tagalog',
+        'vi' => 'Vietnamese',
         'other' => 'Other',
     ];
 

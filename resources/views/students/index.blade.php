@@ -12,10 +12,10 @@
     <div class="alert alert-info mb-5">
         <ul class="fa-ul mb-0">
             <li>
-                <span class="fa-li"><i class="fas fa-info-circle"></i></span> This page includes <em>all</em> student research applications created on this site.
+                <span class="fa-li"><i class="fas fa-info-circle"></i></span> This page includes <strong>all</strong> student research applications created on this site.
             </li>
             @if($user_profile || $delegator_profiles->isNotEmpty())
-                <li class="mt-2">
+                <li class="mt-3">
                     <span class="fa-li"><i class="fas fa-cog"></i></span> Related: 
                     @if($user_profile)
                         <a href="{{ route('profiles.students', ['profile' => $user_profile]) }}" class="btn btn-primary py-1">Applications for {{ $user_profile->full_name }}</a>

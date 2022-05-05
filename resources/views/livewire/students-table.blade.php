@@ -112,12 +112,13 @@
                             <label for="studentCreditSearch">Research Credit</label>
                             <select wire:model="credit_filter" id="studentCreditSearch" class="form-control">
                                 <option value="" selected>All</option>
-                                <option value="1">Yes</option>
-                                <option value="0">No</option>
+                                <option value="1">Credit</option>
+                                <option value="0">Volunteer</option>
+                                <option value="-1">No Preference</option>
                             </select>
                         </div>
                         <div class="form-group col-lg-2">
-                            <label for="studentGraduatesSearch">Graduates</label>
+                            <label for="studentGraduatesSearch">Expected Graduation</label>
                             <select wire:model="graduation_filter" id="studentGraduatesSearch" class="form-control">
                                 <option value="" selected>All</option>
                                 @foreach($graduation_dates as $graduation_date)
@@ -145,7 +146,7 @@
         </div>
     </div>
 
-    @include('livewire.partials._applied-filters')
+    @include('livewire.partials._applied-filters', ['filter_value_names' => ['credit_filter' => ['0' => 'Volunteer', '1' => 'Credit', '-1' => 'No preference']]])
 
     <table class="table table-sm table-striped table-live table-responsive-lg" aria-live="polite" wire:loading.attr="aria-busy">
         <caption class="sr-only">List of student research applications</caption>
@@ -157,9 +158,9 @@
                 <th>Faculty Interest</th>
                 <th>Schools</th>
                 <th>Applying For</th>
-                <th>Graduates</th>
+                <th>Expected Graduation</th>
                 @include('livewire.partials._th-sortable', ['title' => 'Status', 'field' => 'status'])
-                <th>Actions</th>
+                <th class="pl-4">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -173,17 +174,23 @@
                 <td>{{ implode(', ', $student->research_profile->semesters ?? []) }}</td>
                 <td>{{ $student->research_profile->graduation_date }}</td>
                 <td>{{ $student->status }}</td>
-                <td class="text-center text-nowrap">
-                    <a href="{{ route('students.show', ['student' => $student]) }}" target="_blank" title="View in new tab/window">
-                        <i class="far fa-fw fa-window-restore"></i><span class="sr-only">View</span>
-                    </a>
-                    <livewire:bookmark-button :model="$student" :mini="true" :wire:key="$student->id">
-                    <a href="{{ route('students.show', ['student' => $student]) }}#student_feedback" target="_blank" title="Add or view feedback">
-                        <i class="fas fa-fw fa-comment"></i><span class="sr-only">Feedback</span>
-                    </a>
-                    <a href="mailto:{{ optional($student->user)->email }}" title="Email the student">
-                        <i class="fas fa-fw fa-envelope"></i><span class="sr-only">Email</span>
-                    </a>
+                <td class="text-nowrap pl-4 pr-3">
+                    <div>
+                        <a href="{{ route('students.show', ['student' => $student]) }}" target="_blank" title="View in new tab/window">
+                            <i class="far fa-fw fa-window-restore"></i> View
+                        </a>
+                    </div>
+                    <div>
+                        <a href="mailto:{{ optional($student->user)->email }}" title="Email the student">
+                            <i class="far fa-fw fa-envelope"></i> Email
+                        </a>
+                    </div>
+                    <div>
+                        <a href="{{ route('students.show', ['student' => $student]) }}#student_feedback" target="_blank" title="Add or view feedback">
+                            <i class="far fa-fw fa-comment"></i> Feedback
+                        </a>
+                    </div>
+                    <livewire:bookmark-button :model="$student" :simple="true" :wire:key="$student->id">
                 </td>
             </tr>
             @endforeach

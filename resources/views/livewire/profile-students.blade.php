@@ -129,13 +129,13 @@
                                 <label for="studentCreditSearch">Research Credit</label>
                                 <select wire:model="credit_filter" id="studentCreditSearch" class="form-control">
                                     <option value="" selected>All</option>
-                                    <option value="1">Yes</option>
-                                    <option value="0">No</option>
+                                    <option value="1">Credit</option>
+                                    <option value="0">Volunteer</option>
                                     <option value="-1">No Preference</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="studentGraduatesSearch">Graduates</label>
+                                <label for="studentGraduatesSearch">Expected Graduation</label>
                                 <select wire:model="graduation_filter" id="studentGraduatesSearch" class="form-control">
                                     <option value="" selected>All</option>
                                     @foreach($graduation_dates as $graduation_date)
@@ -151,7 +151,7 @@
         </div>
     </div>
     <div class="col-md-9">
-        @include('livewire.partials._applied-filters')
+        @include('livewire.partials._applied-filters', ['filter_value_names' => ['credit_filter' => ['0' => 'Volunteer', '1' => 'Credit', '-1' => 'No preference']]])
         <div class="tab-content h-100" id="profileStudentTabContent">
             @foreach($statuses as $status => $status_name)
                 <div
@@ -176,7 +176,7 @@
                                             <small class="text-muted font-weight-bold">Major</small>
                                         </div>
                                         <div class="col-lg-2">
-                                            <small class="text-muted font-weight-bold">Graduates</small>
+                                            <small class="text-muted font-weight-bold">Expected Graduation</small>
                                         </div>
                                         <div class="col-lg-3">
                                             <small class="text-muted font-weight-bold">Actions</small>
