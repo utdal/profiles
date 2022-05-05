@@ -14,6 +14,14 @@ class StudentFeedback extends Component
 
     public $new_feedback = [];
 
+    public function getFeedbackProperty()
+    {
+        return $this->student
+            ->feedback()
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
+
     public function add()
     {
         $this->authorize('create', StudentFeedbackEntry::class);
@@ -42,7 +50,6 @@ class StudentFeedback extends Component
     public function render()
     {
         return view('livewire.student-feedback', [
-            'feedback' => $this->student->feedback()->orderBy('created_at', 'desc')->get(),
             'reasons' => StudentFeedbackEntry::REASONS,
         ]);
     }

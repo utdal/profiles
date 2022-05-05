@@ -11,10 +11,11 @@ class StudentFeedback extends StudentData
     use HasJsonRelationships;
 
     public const REASONS = [
-        'availability' => "Availability doesn't match my needs",
-        'interests' => "Interests don't match my research",
-        'qualifications' => "Qualifications or experience doesn't match my needs",
-        'preferences' => "Preferences (travel, credit, and etc.) don't match my needs",
+        'availability' => "Availability doesn't match current lab needs",
+        'interests' => "Research interests are incompatible or not fully aligned with current projects",
+        'qualifications' => "Qualifications or experience doesn't match current lab needs",
+        'preferences' => "Preferences (travel, credit, and etc.) don't match current lab needs",
+        'no_openings' => "I am not accepting students at this time and/or all lab positions have been filled",
     ];
 
     protected static function boot()
