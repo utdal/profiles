@@ -75,6 +75,16 @@ class LdapAttributeHandler
         if (!$user->display_name && $user->name) {
             $user->display_name = $user->name;
         }
+
+        // If they don't have a firstname, set it to their display_name
+        if (!$user->firstname && $user->display_name) {
+            $user->firstname = $user->display_name;
+        }
+
+        // If they don't have a lastname, set it to .
+        if (!$user->lastname) {
+            $user->lastname = '.';
+        }
     }
 
     /**
