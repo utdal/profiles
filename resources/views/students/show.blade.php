@@ -42,7 +42,7 @@
                 <dt class="col-sm-4">
                     last updated
                 </dt>
-                <dd class="col-sm-8">{{ $student->updated_at->toFormattedDateString() }}</dd>
+                <dd class="col-sm-8">{{ $student->research_profile->updated_at->toFormattedDateString() }}</dd>
 
                 @if($student->stats)
                     @if($student->stats->last_viewed)
