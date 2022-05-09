@@ -26,31 +26,31 @@ class ProfilesApiController extends Controller
         return Cache::remember($request->fullUrl(), 3600, function() use ($request) {
             $profile = Profile::select(Profile::apiAttributes());
 
-            if ($request->has('person')) {
+            if ($request->filled('person')) {
                 $profile = $profile->whereIn('slug', explode(';', $request->person));
             }
 
-            if ($request->has('search')) {
+            if ($request->filled('search')) {
                 $profile = $profile->containing($request->search, $request->search_section);
             }
 
-            if ($request->has('search_names')) {
+            if ($request->filled('search_names')) {
                 $profile = $profile->withName($request->search_names);
             }
 
-            if ($request->has('info_contains')) {
+            if ($request->filled('info_contains')) {
                 $profile = $profile->containing($request->info_contains, 'information');
             }
 
-            if ($request->has('from_school')) {
+            if ($request->filled('from_school')) {
                 $profile = $profile->fromSchool(explode(';', $request->from_school));
             }
 
-            if ($request->has('tag')) {
+            if ($request->filled('tag')) {
                 $profile = $profile->withAnyTags(explode(';', $request->tag), Profile::class);
             }
 
-            if ($request->input('with_data')) {
+            if ($request->boolean('with_data')) {
                 if(count(array_filter($request->query())) <=1){
                     return response()->json(['error' => 'Please use a filter when pulling data.'], 400);
                 }
@@ -61,7 +61,7 @@ class ProfilesApiController extends Controller
             $count = $profile->count();
 
             // iterate over all data and strip tags
-            if ($request->input('with_data') && !$request->input('raw_data')){
+            if ($request->boolean('with_data') && !$request->boolean('raw_data')){
                 $profile->map(function($single_profile) {
                     $single_profile->stripTagsFromData(['publications'], 'title', true);
                     $single_profile->stripTagsFromData([
