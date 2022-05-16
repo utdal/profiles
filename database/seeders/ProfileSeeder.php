@@ -17,14 +17,14 @@ class ProfileSeeder extends Seeder
     {
         // Create a random User, Profile, and ProfileData
 
-        $profile = factory(Profile::class)->create();
+        $profile = Profile::factory()->hasData()->create();
 
-        $profile_data = factory(ProfileData::class)->make();
+        // Echo the result
 
-        $profile_data->profile_id = $profile->id;
-        $profile_data->setAttribute('data->email', $profile->user->email);
-        $profile_data->setAttribute('data->title', $profile->user->title);
-
-        $profile_data->save();
+        $this->command->line(
+            "✅ Created 🪪 Profile (id: {$profile->id}, full_name: {$profile->full_name}), 
+            👤 User (id: {$profile->user->id}, name: {$profile->user->name}), 
+            💾 ProfileData (id: {$profile->data->first()->id}, type: {$profile->data->first()->type})"
+        );
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Profile;
 use App\ProfileData;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -15,33 +16,43 @@ class ProfileDataFactory extends Factory
     protected $model = ProfileData::class;
 
     /**
+     * Building name suffix choices
+     *
+     * @var array
+     */
+    protected $building_suffixes = [
+        'Hall',
+        'Building',
+        'Center',
+        'Lab',
+        'Library',
+    ];
+
+    /**
      * Define the model's default state.
      *
      * @return array
      */
     public function definition()
     {
-        $building_suffixes = [
-            'Hall',
-            'Building',
-            'Center',
-            'Lab',
-            'Library',
-        ];
-
         return [
+            'profile_id' => Profile::factory(),
             'type' => 'information',
             'sort_order' => 1,
-            'data' => [
-                'email' => $this->faker->safeEmail,
-                'phone' => $this->faker->phoneNumber,
-                'title' => $this->faker->jobTitle,
-                'secondary_title' => '',
-                'tertiary_title' => '',
-                'location' => $this->faker->lastName . ' ' .
-                    $this->faker->randomElement($building_suffixes) . ' ' .
-                    $this->faker->unique()->randomNumber(4),
-            ],
+            'data' => function($attributes) {
+                return [
+                    'email' => Profile::find($attributes['profile_id'])->user->email,
+                    'title' => Profile::find($attributes['profile_id'])->user->title,
+                    'phone' => $this->faker->phoneNumber(),
+                    'secondary_title' => '',
+                    'tertiary_title' => '',
+                    'location' => $this->faker->lastName() . ' ' .
+                        $this->faker->randomElement($this->building_suffixes) . ' ' .
+                        $this->faker->unique()->randomNumber(4),
+                    'url' => $this->faker->url(),
+                    'url_name' => 'My Website',
+                ];
+            },
             'public' => 1,
         ];
     }
