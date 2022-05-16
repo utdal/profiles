@@ -37,8 +37,8 @@ class ProfileTest extends TestCase
      */
     public function testProfileCreation()
     {
-        $profile = Profile::factory()->create();
-        $profile_data = ProfileData::factory()->for($profile)->create();
+        $profile = Profile::factory()->hasData()->create();
+        $profile_data = $profile->data->first();
 
         $this->assertDatabaseHas('profiles', $profile->getAttributes());
         $this->assertDatabaseHas('profile_data', array_merge($profile_data->getAttributes(), [
@@ -66,8 +66,8 @@ class ProfileTest extends TestCase
      */
     public function testProfileInformationEdit()
     {
-        $profile = Profile::factory()->create();
-        $profile_data = ProfileData::factory()->for($profile)->create();
+        $profile = Profile::factory()->hasData()->create();
+        $profile_data = $profile->data->first();
 
         $information_edit_route = route('profiles.edit', [
             'profile' => $profile,
