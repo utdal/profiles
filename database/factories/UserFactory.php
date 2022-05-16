@@ -22,8 +22,8 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-        $firstname = $this->faker->firstName;
-        $lastname = $this->faker->lastName;
+        $firstname = $this->faker->firstName();
+        $lastname = $this->faker->lastName();
         $initials = substr(strtolower($firstname), 0, 1) . 'x' . substr(strtolower($lastname), 0, 1);
         $firstlast = Str::slug($firstname . $lastname);
         $username = $this->faker->unique()->numerify("{$initials}######");
@@ -58,7 +58,7 @@ class UserFactory extends Factory
             'password' => null, // LDAP auth: we're not storing passwords in the DB
             'pea' => $pea,
             'email' => "{$pea}@example.org",
-            'guid' => $this->faker->uuid,
+            'guid' => $this->faker->uuid(),
             'department' => $this->faker->randomElement($departments),
             'title' => $this->faker->randomElement($titles),
         ];
