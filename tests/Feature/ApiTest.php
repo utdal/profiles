@@ -46,14 +46,11 @@ class ApiTest extends TestCase
         // With profiles//
         //////////////////
 
-        $profiles = [];
-        $profile_data = [];
+        /** @var int Number of profiles (minimum 3 for testing) */
         $number_of_profiles = 10;
 
-        for ($i=1; $i <= $number_of_profiles; $i++) { 
-            $profiles[$i] = Profile::factory()->create();
-            $profile_data[$profiles[$i]->id] = ProfileData::factory()->for($profiles[$i])->create();
-        }
+        /** @var \Illuminate\Database\Eloquent\Collection */
+        $profiles = Profile::factory()->hasData()->count($number_of_profiles)->create();
 
         Cache::flush();
 
@@ -61,12 +58,12 @@ class ApiTest extends TestCase
 
         $response
             ->assertStatus(200)
-            ->assertJsonCount(10, 'profile')
+            ->assertJsonCount($number_of_profiles, 'profile')
             ->assertJson([
-                'count' => 10,
+                'count' => $number_of_profiles,
             ]);
 
-        for ($i = 1; $i <= $number_of_profiles; $i++) {
+        for ($i = 0; $i < $number_of_profiles; $i++) {
             $response->assertJsonFragment($this->profileJsonFragment($profiles[$i]));
         }
 
@@ -100,24 +97,24 @@ class ApiTest extends TestCase
                 'count' => 2,
             ])
             ->assertJsonFragment($this->profileJsonFragment($profiles[1]))
-            ->assertJsonFragment($this->profileInfoJsonFragment($profile_data[$profiles[1]->id]))
+            ->assertJsonFragment($this->profileInfoJsonFragment($profiles[1]->data->first()))
             ->assertJsonFragment($this->profileJsonFragment($profiles[2]))
-            ->assertJsonFragment($this->profileInfoJsonFragment($profile_data[$profiles[2]->id]));
+            ->assertJsonFragment($this->profileInfoJsonFragment($profiles[2]->data->first()));
 
         ////////////////////
         // Single profile //
         ////////////////////
 
         // profiles.test/api/v1/person3slug
-        $response = $this->get(route('api.show', ['profile' => $profiles[3]]));
+        $response = $this->get(route('api.show', ['profile' => $profiles[0]]));
 
         $response
             ->assertStatus(200)
             ->assertJsonCount(1)
             ->assertJson([
-                'profile' => $this->profileJsonFragment($profiles[3]),
+                'profile' => $this->profileJsonFragment($profiles[0]),
             ])
-            ->assertJsonFragment($this->profileInfoJsonFragment($profile_data[$profiles[3]->id]));
+            ->assertJsonFragment($this->profileInfoJsonFragment($profiles[0]->data->first()));
     }
 
     /**
@@ -158,6 +155,8 @@ class ApiTest extends TestCase
                 'secondary_title' => $profile_datum->secondary_title,
                 'tertiary_title' => $profile_datum->tertiary_title,
                 'location' => $profile_datum->location,
+                'url' => $profile_datum->url,
+                'url_name' => $profile_datum->url_name,
             ],
         ];
     }
