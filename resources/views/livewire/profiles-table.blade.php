@@ -67,7 +67,11 @@
             <tr>
                 <td>{{ $profile->id }}</td>
                 <td>{{ $profile->full_name }}</td>
-                <td><a href="{{ $profile->url }}">{{ $profile->slug }}</a></td>
+                @if($profile->trashed())
+                    <td>{{ $profile->slug }}</td>
+                @else
+                    <td><a href="{{ $profile->url }}">{{ $profile->slug }}</a></td>
+                @endif
                 <td>{{ optional($profile->user->school)->short_name }}</td>
                 @if($profile->trashed())
                     <td class="text-center"><span class="fas fa-archive" title="Archived"></span></td>
