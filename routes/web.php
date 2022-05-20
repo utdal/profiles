@@ -14,6 +14,10 @@
 /******************
  * Auth
  ******************/
+
+use App\Http\Controllers\ProfilesController;
+use App\Http\Controllers\UsersController;
+
 Route::name('login.show')->get('/login', 'Auth\LoginController@showLoginForm');
 Route::name('login')->post('/login', 'Auth\LoginController@login');
 Route::name('logout')->get('/logout', 'Auth\LoginController@logout');
@@ -46,8 +50,8 @@ Route::name('users.')->prefix('/users')->group(function() {
         Route::name('update')->patch('/', 'UsersController@update');
         Route::name('bookmarks.show')->get('/bookmarks', 'UsersController@showBookmarks');
         Route::name('delegations.show')->get('/delegations', 'UserDelegationsController@show');
-        Route::name('confirm-destroy')->get('/confirm-destroy', 'UsersController@confirmDestroy');
-        Route::name('destroy')->delete('/', 'UsersController@destroy');
+        Route::get('confirm-delete', [UsersController::class, 'confirmDelete'])->name('confirm-delete');
+        Route::delete('delete', [UsersController::class, 'destroy'])->name('delete');
     });
 
 });
@@ -99,6 +103,9 @@ Route::name('profiles.')->prefix('/')->group(function() {
         Route::name('show')->get('/', 'ProfilesController@show');
         Route::name('edit')->get('/edit/{section}', 'ProfilesController@edit');
         Route::name('update')->post('/update/{section}', 'ProfilesController@update');
+        Route::get('confirm-delete', [ProfilesController::class, 'confirmDelete'])->withTrashed()->name('confirm-delete');
+        Route::delete('archive', [ProfilesController::class, 'archive'])->name('archive');
+        Route::post('restore', [ProfilesController::class, 'restore'])->withTrashed()->name('restore');
         Route::name('update-image')->post('/image', 'ProfilesController@updateImage');
         Route::name('update-banner')->post('/banner', 'ProfilesController@updateBanner');
         Route::name('orcid')->get('/orcid', 'ProfilesController@orcid');

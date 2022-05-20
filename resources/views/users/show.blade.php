@@ -21,7 +21,7 @@ $current_user = Auth::user();
         </a>
       @endif
       @if ($current_user->can('delete', $user))
-        <a class="btn btn-danger" href="{{ route('users.confirm-destroy', [$user->pea]) }}" title="Delete">
+        <a class="btn btn-danger" href="{{ route('users.confirm-delete', [ $user ]) }}" title="Delete">
           <span class="fas fa-trash"></span> Delete User
         </a>
       @endif

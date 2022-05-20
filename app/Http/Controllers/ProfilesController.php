@@ -259,4 +259,45 @@ class ProfilesController extends Controller
     {
         return redirect()->route('profiles.edit', [$profile->slug, 'information'])->with('flash_message', $profile->processImage($request->file('banner_image'), 'banners'));
     }
+
+    /**
+     * Confirm deletion of a profile.
+     *
+     * @param  \App\Profile $profile
+     * @return \Illuminate\Http\Response
+     */
+    public function confirmDelete(Profile $profile)
+    {
+        if ($profile->trashed()) {
+            
+        }
+        return view('profiles/delete', compact('profile'));
+    }
+
+    /**
+     * Remove the profile from the database.
+     * 
+     * @param  Profile $profile
+     * @return \Illuminate\Http\Response
+     */
+    public function archive(Profile $profile)
+    {
+        $profile->delete();
+
+        return redirect()->route('profiles.table')
+        ->with('flash_message', 'The profile of ' . $profile->full_name . ' has been archived.');    }
+
+    /**
+     * Restore a soft deleted profile.
+     *
+     * @param Profile $profile
+     * @return \Illuminate\Http\Response
+     */
+    public function restore(Profile $profile)
+    {
+        $profile->restore();
+
+        return redirect()->route('profiles.table')
+        ->with('flash_message', 'The profile of ' . $profile->full_name . ' has been restored.');
+    } 
 }

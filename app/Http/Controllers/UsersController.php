@@ -168,24 +168,25 @@ class UsersController extends Controller
     }
 
     /**
-     * Confirm deletion of the user.
+     * Confirm deletion of a user.
      *
      * @param  \App\User $user
      * @return \Illuminate\Http\Response
      */
-    public function confirmDestroy(User $user)
+    public function confirmDelete(User $user)
     {
-        return view('users.delete', compact('user'));
+        return view('users/delete', compact('user'));
     }
 
     /**
      * Remove the User from the database.
      * 
-     * @param  User   $user
+     * @param  User $user
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $user)
     {
+       
         $user->delete();
 
         return redirect()->route('users.index')
