@@ -168,7 +168,7 @@ class UsersController extends Controller
     }
 
     /**
-     * Confirm deletion of a user.
+     * Confirm deletion of a user
      *
      * @param  \App\User $user
      * @return \Illuminate\Http\Response
@@ -179,18 +179,16 @@ class UsersController extends Controller
     }
 
     /**
-     * Remove the User from the database.
+     * Remove the user from the database
      * 
      * @param  User $user
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $user)
     {
-       
         $user->delete();
 
-        return redirect()->route('users.index')
-            ->with('flash_message', 'The user has been removed.');
+        return redirect()->route('users.index')->with('flash_message', 'The user has been removed.');
     }
 
 }

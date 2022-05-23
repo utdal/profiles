@@ -261,21 +261,18 @@ class ProfilesController extends Controller
     }
 
     /**
-     * Confirm deletion of a profile.
+     * Confirm deletion of a profile
      *
      * @param  \App\Profile $profile
      * @return \Illuminate\Http\Response
      */
     public function confirmDelete(Profile $profile)
     {
-        if ($profile->trashed()) {
-            
-        }
         return view('profiles/delete', compact('profile'));
     }
 
     /**
-     * Remove the profile from the database.
+     * Remove the profile from the database
      * 
      * @param  Profile $profile
      * @return \Illuminate\Http\Response
@@ -284,11 +281,11 @@ class ProfilesController extends Controller
     {
         $profile->delete();
 
-        return redirect()->route('profiles.table')
-        ->with('flash_message', 'The profile of ' . $profile->full_name . ' has been archived.');    }
+        return redirect()->route('profiles.table')->with('flash_message', 'The profile of ' . $profile->full_name . ' has been archived.');
+    }
 
     /**
-     * Restore a soft deleted profile.
+     * Restore a soft deleted profile
      *
      * @param Profile $profile
      * @return \Illuminate\Http\Response
@@ -297,7 +294,6 @@ class ProfilesController extends Controller
     {
         $profile->restore();
 
-        return redirect()->route('profiles.table')
-        ->with('flash_message', 'The profile of ' . $profile->full_name . ' has been restored.');
+        return redirect()->route('profiles.table')->with('flash_message', 'The profile of ' . $profile->full_name . ' has been restored.');
     } 
 }

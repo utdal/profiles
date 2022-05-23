@@ -78,15 +78,4 @@ class ProfilesTable extends Component
             'schools' => School::all(),
         ]);
     }
-
-    public function delete($id)
-    {
-        $profile = Profile::withTrashed()->find($id)->delete();
-    }
-
-    public function restore($id)
-    {
-        $profile = Profile::withTrashed()->find($id)->restore();
-    } 
-
 }
