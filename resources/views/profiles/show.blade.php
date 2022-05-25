@@ -23,7 +23,7 @@
 			<div class="row d-flex align-items-center @if($information->fancy_header_right)justify-content-end @endif">
 				@if(!$information->fancy_header)
 					<div class="col-md-5 col-sm-6">
-						<img class="profile_photo" src="{{ $profile->image_url }}">
+						<img class="profile_photo" src="{{ $profile->image_url }}" atl="{{ $profile->full_name }}">
 					</div>
 				@endif
 				<div class="@if($information->fancy_header)col-lg-5 @else col-md-7 col-sm-6 @endif">
