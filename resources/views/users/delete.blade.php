@@ -6,7 +6,8 @@
 
 @section('form')
 	{!! Form::open(['route' => ['users.delete', $user ], 'method' => 'DELETE']) !!}
-		<p>Are you sure to delete the user of <strong>{{ $user->display_name }}</strong>?</p>
+		<p>Are you sure you want permanently to delete the user of <strong>{{ $user->display_name }}</strong>?</p>
+		<p>This action will also delete the user's profile if they have one.</p>
 		<button type="button" class="btn btn-light" id="cancel">
 			<i class="fas fa-fw fa-times"></i> Cancel
 		</button>

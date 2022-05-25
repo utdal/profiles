@@ -175,7 +175,7 @@ class UsersController extends Controller
      */
     public function confirmDelete(User $user)
     {
-        return view('users/delete', compact('user'));
+        return view('users.delete', compact('user'));
     }
 
     /**

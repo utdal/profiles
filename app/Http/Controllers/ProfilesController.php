@@ -268,7 +268,7 @@ class ProfilesController extends Controller
      */
     public function confirmDelete(Profile $profile)
     {
-        return view('profiles/delete', compact('profile'));
+        return view('profiles.delete', compact('profile'));
     }
 
     /**

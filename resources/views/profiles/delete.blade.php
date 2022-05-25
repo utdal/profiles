@@ -12,7 +12,7 @@
 			Confirm Archive Profile
 		@stop
 		{!! Form::open(['route' => ['profiles.archive', $profile ], 'method' => 'DELETE']) !!}
-			<p>Are you sure to archive the profile of <strong>{{ $profile->full_name }}</strong>?</p>
+			<p>Are you sure you want to archive the profile <strong>{{ $profile->full_name }}</strong>?</p>
 				@yield('cancel_button')
 				<button type="submit" class="btn btn-danger">
 					<i class="fas fa-fw fa-trash"></i> Archive
@@ -23,7 +23,7 @@
 			Confirm Restore Profile
 		@stop
 		{!! Form::open(['route' => ['profiles.restore', $profile ], 'method' => 'POST']) !!}
-			<p>Are you sure to restore the profile of <strong>{{ $profile->full_name }}</strong>?</p>
+			<p>Are you sure you want to restore the profile <strong>{{ $profile->full_name }}</strong>?</p>
 				@yield('cancel_button')
 				<button type="submit" class="btn btn-danger">
 					<i class="fas fa-trash-restore"></i> Restore
