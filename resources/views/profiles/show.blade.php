@@ -28,7 +28,10 @@
 				@endif
 				<div class="@if($information->fancy_header)col-lg-5 @else col-md-7 col-sm-6 @endif">
 					<div class="contact_info">
-						<h2>{{ $profile->name }} @if($editable)<a class="btn btn-primary btn-sm" href="{{ route('profiles.edit', [$profile->slug, 'information']) }}"><i class="fas fa-edit"></i> Edit</a>@endif <livewire:bookmark-button :model="$profile"></h2>
+						<h2>{{ $profile->name }}
+							@if($editable)<a class="btn btn-primary btn-sm" href="{{ route('profiles.edit', [$profile->slug, 'information']) }}" title="Edit"><i class="fas fa-edit"></i> Edit</a>@endif
+							<span title="Bookmark"><livewire:bookmark-button :model="$profile"></span>
+						</h2>
 						@if($information->distinguished_title) <h6>{{ $information->distinguished_title }}</h6> @endif
 						@if($information->title) <h6>{{ $information->title }}</h6> @endif
 						@if($information->secondary_title) <h6>{{ $information->secondary_title }}</h6> @endif
