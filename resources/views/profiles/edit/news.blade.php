@@ -16,15 +16,15 @@
 				<div class="col col-lg-6 col-12">
 					<label for="rte_{{$news->id}}">Description</label>
 					<input id="rte_{{$news->id}}" type="hidden" class="clearable" name="data[{{$news->id}}][data][description]" value="{{$news->description}}">
-					<trix-editor input="rte_{{$news->id}}"></trix-editor>
+					<trix-editor aria-label="Description" input="rte_{{$news->id}}"></trix-editor>
 				</div>
 				<div class="col col-lg-3 col-12">
 					<label for="file-{{$news->id}}">Image</label>
 					<img class="profile_photo" id="data[{{$news->id}}][image]-img" src="@if($news->imageUrl != asset('/img/default.png')){{$news->imageUrl}}@endif">
 				</div>
 				<div class="col col-lg-3 col-12">
-					<input type="file" id="data[{{$news->id}}][image]" name="data[{{$news->id}}][image]" accept="image/*" class="d-none">
-					<label for="data[{{$news->id}}][image]" class="btn btn-secondary btn-block">Select Image</label>
+					<input type="file" id="data[{{$news->id}}][image]" name="data[{{$news->id}}][image]" accept="image/*" class="d-none" >
+					<label id="label-{{$news->id}}" for="data[{{$news->id}}][image]" class="btn btn-secondary btn-block" tabindex="0" type="button">Select Image</label>
 					@foreach($errors->get("data.{$news->id}.image") as $image_error)
 						@include('alert', ['message' => $image_error, 'type' => 'danger'])
 						<p class="d-block invalid-feedback"><i class="fas fa-asterisk"></i> {!! $image_error !!}</p>
@@ -47,3 +47,16 @@
 	@include('profiles.edit._buttons')
 
 {!! Form::close() !!}
+
+
+@push('scripts')
+	<script>
+		$('[id^="label"]').each(function (){
+			$(this).on('keypress', function(e) {
+				if(e.which === 13) {
+					$(this).prev('input').trigger('click');
+				}
+			});
+		});
+	</script>
+@endpush
