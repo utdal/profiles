@@ -4526,7 +4526,7 @@ input[type=button].btn-block {
   color: #fff;
 }
 .navbar-dark .navbar-nav .nav-link {
-  color: rgba(255, 255, 255, 0.8);
+  color: white;
 }
 .navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-nav .nav-link:focus {
   color: #fff;
@@ -4541,14 +4541,14 @@ input[type=button].btn-block {
   color: #fff;
 }
 .navbar-dark .navbar-toggler {
-  color: rgba(255, 255, 255, 0.8);
+  color: white;
   border-color: rgba(255, 255, 255, 0.1);
 }
 .navbar-dark .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 .navbar-dark .navbar-text {
-  color: rgba(255, 255, 255, 0.8);
+  color: white;
 }
 .navbar-dark .navbar-text a {
   color: #fff;
@@ -10835,8 +10835,11 @@ footer > ul {
   }
 }
 
-.profile .profile-header {
+.profile {
   background-color: #f8f9fa;
+}
+.profile .profile-header {
+  background-color: #fff;
   padding: 60px 40px 40px;
   margin-bottom: 30px;
   box-shadow: 2px 2px 4px #dee2e6;
@@ -10934,7 +10937,7 @@ footer > ul {
   margin: 15px 2px;
 }
 .profile .links ul li a {
-  background-color: #f8f9fa;
+  background-color: #fff;
   padding: 15px 12px;
   box-shadow: 1px 1px 2px #dee2e6;
 }
@@ -10943,7 +10946,7 @@ footer > ul {
 }
 .profile .links ul li::before {
   content: " | ";
-  color: #dee2e6;
+  color: #fff;
 }
 .profile .links ul li:first-of-type:before {
   content: "";
@@ -10966,7 +10969,7 @@ footer > ul {
 }
 .profile .card {
   border: none;
-  background-color: #f8f9fa;
+  background-color: #fff;
   padding: 35px 60px 60px;
   margin-bottom: 30px;
   box-shadow: 2px 2px 4px #dee2e6;
