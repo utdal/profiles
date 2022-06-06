@@ -7,6 +7,7 @@ use App\ProfileStudent;
 use App\StudentData;
 use App\StudentFeedback;
 use App\User;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Auditable as HasAudits;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -14,7 +15,9 @@ use Spatie\Tags\HasTags;
 
 class Student extends Model implements Auditable
 {
-    use HasAudits, HasTags;
+    use HasAudits;
+    use HasFactory;
+    use HasTags;
 
     /** @var string The database table used by the model */
     protected $table = 'students';
