@@ -122,10 +122,11 @@ class Semester
         ];
     }
 
-    public static function date(string $name)
+    public static function date(string $name, bool $start_of_season = true)
     {
         $parsed = static::parseName($name);
+        $month_and_day = $start_of_season ? static::startOfSeason($parsed['season']) : static::endOfSeason($parsed['season']);
 
-        return Carbon::parse(static::startOfSeason($parsed['season']) . ' ' . $parsed['year']->year);
+        return Carbon::parse($month_and_day . ' ' . $parsed['year']->year);
     }
 }
