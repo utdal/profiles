@@ -9,7 +9,7 @@ trait HasJson
     /**
      * Generate a raw DB query to search for a JSON field.
      *
-     * @param  array|json  $json
+     * @param  array|string  $json
      *
      * @throws \Exception
      *
