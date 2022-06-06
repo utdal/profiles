@@ -23,8 +23,8 @@
             </select>
         </div>
         <div class="form-group col-lg-1">
-            <label for="deletedFilter">Archived</label>
-            <select wire:model="deleted_filter" id="deletedFilter" class="form-control">
+            <label for="archivedFilter">Archived</label>
+            <select wire:model="archived_filter" id="archivedFilter" class="form-control">
                 <option value="0" selected>No</option>
                 <option value="1" selected>Yes</option>
             </select>

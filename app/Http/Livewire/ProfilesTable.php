@@ -29,7 +29,7 @@ class ProfilesTable extends Component
 
     public $schools_filter = '';
 
-    public $deleted_filter = '';
+    public $archived_filter = '';
 
     public function mount()
     {
@@ -54,8 +54,8 @@ class ProfilesTable extends Component
             ->when($this->public_filter !== '', function ($q) {
                 $q->where('public', '=', $this->public_filter);
             })
-            ->when($this->deleted_filter == '1', function ($q) {
-                $q->withTrashed();
+            ->when($this->archived_filter == '1', function ($q) {
+                $q->onlyTrashed();
             })
             ->orderBy($this->sort_field, $this->sort_descending ? 'desc' : 'asc')
             ->paginate($this->per_page);
