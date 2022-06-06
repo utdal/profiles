@@ -175,6 +175,13 @@ class UsersController extends Controller
      */
     public function confirmDelete(User $user)
     {
+        if (Auth::user()->is($user)) {
+            return back()->with([
+                'flash_message' => 'Sorry, you cannot remove yourself. To remove this user, first log in as a different site admin.',
+                'flash_message_type' => 'danger',
+            ]);
+        }
+
         return view('users.delete', compact('user'));
     }
 
