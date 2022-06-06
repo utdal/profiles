@@ -30,6 +30,7 @@ class StudentFactory extends Factory
             'first_name' => function (array $attributes) {
                 return User::find($attributes['user_id'])->firstname;
             },
+            'middle_name' => null,
             'last_name' => function (array $attributes) {
                 return User::find($attributes['user_id'])->lastname;
             },
