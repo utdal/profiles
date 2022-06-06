@@ -47,7 +47,7 @@ class UsersController extends Controller
 
         $this->middleware('can:delete,user')->only([
             'destroy',
-            'confirmDestroy',
+            'confirmDelete',
         ]);
     }
 

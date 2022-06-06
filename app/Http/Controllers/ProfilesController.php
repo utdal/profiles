@@ -41,6 +41,12 @@ class ProfilesController extends Controller
         $this->middleware('can.create.profile')->only('create');
 
         $this->middleware('can:viewAdminIndex,App\Profile')->only('table');
+
+        $this->middleware('can:delete,profile')->only([
+            'confirmDelete',
+            'archive',
+            'restore',
+        ]);
     }
 
     /**
