@@ -1,7 +1,7 @@
 <div class="livewire-datatable">
 
     <div class="form-row">
-        <div class="form-group col-lg-4">
+        <div class="form-group col-lg-3">
             <label for="profileSearch">Search</label>
             <input wire:model.debounce.250ms="search_filter" type="text" id="profileSearch" class="form-control" placeholder="Search...">
         </div>
@@ -22,6 +22,13 @@
                 <option value="0" selected>Not Public</option>
             </select>
         </div>
+        <div class="form-group col-lg-1">
+            <label for="archivedFilter">Archived</label>
+            <select wire:model="archived_filter" id="archivedFilter" class="form-control">
+                <option value="0" selected>No</option>
+                <option value="1" selected>Yes</option>
+            </select>
+        </div>        
         <div class="form-group col-lg-2">
             <label for="perPage">Per Page</label>
             <select wire:model="per_page" id="perPage" class="form-control">
@@ -49,7 +56,7 @@
                 @include('livewire.partials._th-sortable', ['title' => 'Full Name', 'field' => 'full_name'])
                 @include('livewire.partials._th-sortable', ['title' => 'Slug', 'field' => 'slug'])
                 <th>School</th>
-                @include('livewire.partials._th-sortable', ['title' => 'Public', 'field' => 'public'])
+                <th>Visibility</th>
                 @include('livewire.partials._th-sortable', ['title' => 'Created', 'field' => 'created_at'])
                 @include('livewire.partials._th-sortable', ['title' => 'Updated', 'field' => 'updated_at'])
                 <th>Actions</th>
@@ -60,12 +67,20 @@
             <tr>
                 <td>{{ $profile->id }}</td>
                 <td>{{ $profile->full_name }}</td>
-                <td><a href="{{ $profile->url }}">{{ $profile->slug }}</a></td>
+                @if($profile->trashed())
+                    <td>{{ $profile->slug }}</td>
+                @else
+                    <td><a href="{{ $profile->url }}">{{ $profile->slug }}</a></td>
+                @endif
                 <td>{{ optional($profile->user->school)->short_name }}</td>
-                <td><span class="fas {{ $profile->public ? 'fa-eye' : 'fa-eye-slash text-muted' }}"></span></td>
+                @if($profile->trashed())
+                    <td class="text-center"><span class="fas fa-archive" title="Archived"></span></td>
+                @else
+                    <td class="text-center"><span class="fas {{ $profile->public ? 'fa-eye' : 'fa-eye-slash text-muted' }}" title="{{ $profile->public ? 'Public' : 'Not public' }}"></span></td>
+                @endif
                 <td>{{ $profile->created_at->toFormattedDateString() }}</td>
                 <td>{{ $profile->updated_at->toFormattedDateString() }}</td>
-                <td class="text-center text-nowrap">
+                <td>
                     <a href="{{ $profile->url }}" title="View">
                         <i class="fas fa-fw fa-link"></i><span class="sr-only">View</span>
                     </a>
@@ -74,7 +89,14 @@
                         <i class="fas fa-fw fa-edit"></i><span class="sr-only">Edit</span>
                     </a>
                     @endcan
-                    <span><livewire:bookmark-button :model="$profile" :mini="true" :wire:key="$profile->id"></span>
+                    <livewire:bookmark-button :model="$profile" :mini="true" :wire:key="$profile->id">
+                    <span>
+                        @can('delete', $profile)
+                            <a href="{{ route('profiles.confirm-delete', [ $profile ]) }}" title="{{ $profile->trashed() ? 'Restore' : 'Archive' }}" role="button" aria-pressed="true">
+                                <i class="{{ $profile->trashed() ? 'fas fa-trash-restore' : 'fas fa-archive' }}"></i><span class="sr-only">archived!</span>
+                            </a>
+                        @endcan
+                    </span>                
                 </td>
             </tr>
             @endforeach

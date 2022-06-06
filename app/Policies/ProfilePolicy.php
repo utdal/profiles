@@ -152,6 +152,6 @@ class ProfilePolicy
      */
     public function delete(User $user, Profile $profile)
     {
-        return $user->owns($profile);
+        return false;
     }
 }

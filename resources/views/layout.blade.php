@@ -44,7 +44,7 @@
 		</div>
 	@endif
 	@if (Session::has('flash_message'))
-		@include('alert', ['message' => session('flash_message'), 'type' => 'success'])
+		@include('alert', ['message' => session('flash_message'), 'type' => session('flash_message_type', 'success')])
 	@endif
 	@yield('content')
 	@yield('footer')
