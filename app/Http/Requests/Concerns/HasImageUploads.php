@@ -28,7 +28,7 @@ trait HasImageUploads
      */
     public function maxFilesize()
     {
-        return config('medialibrary.max_file_size') / (1024 * 1024);
+        return config('media-library.max_file_size') / (1024 * 1024);
     }
 
     /**
@@ -40,7 +40,7 @@ trait HasImageUploads
      */
     public function supportedMimes(): array
     {
-        $image_driver = config('medialibrary.image_driver', 'gd');
+        $image_driver = config('media-library.image_driver', 'gd');
         $mimes = [];
 
         if ($image_driver === 'gd' && extension_loaded('gd') && function_exists('imagetypes')) {

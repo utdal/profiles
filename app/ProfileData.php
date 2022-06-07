@@ -8,13 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use OwenIt\Auditing\Auditable as HasAudits;
 use OwenIt\Auditing\Contracts\Auditable;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\Models\Media;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class ProfileData extends Model implements HasMedia, Auditable
 {
-    use HasFactory, HasAudits, HasMediaTrait;
+    use HasFactory;
+    use HasAudits;
+    use InteractsWithMedia;
 
     /** @var string The database table used by the model */
     protected $table = 'profile_data';
@@ -53,7 +55,7 @@ class ProfileData extends Model implements HasMedia, Auditable
      *
      * @param  Media|null $media
      */
-    public function registerMediaConversions(Media $media = null)
+    public function registerMediaConversions(Media $media = null): void
     {
         $this->registerImageThumbnails($media, 'thumb', 150);
         $this->registerImageThumbnails($media, 'medium', 350);
@@ -66,11 +68,14 @@ class ProfileData extends Model implements HasMedia, Auditable
      * @param  string     $name       Name of the thumbnail
      * @param  int        $size       Max dimension in pixels
      * @param  string     $collection Name of the collection for the thumbnails
-     * @return Spatie\MediaLibrary\Conversion\Conversion
+     * @return void
      */
-    protected function registerImageThumbnails(Media $media = null, $name, $size, $collection = 'images')
+    protected function registerImageThumbnails(Media $media = null, $name, $size, $collection = 'images'): void
     {
-        return $this->addMediaConversion($name)->width($size)->height($size)->performOnCollections($collection);
+        $this->addMediaConversion($name)
+            ->width($size)
+            ->height($size)
+            ->performOnCollections($collection);
     }
 
     /**

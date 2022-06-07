@@ -4,13 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Image\Manipulations;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\Models\Media;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Setting extends Model implements HasMedia
 {
-    use HasMediaTrait;
+    use InteractsWithMedia;
 
     /** @var array The attributes that are mass-assignable */
     protected $fillable = [
@@ -20,10 +20,8 @@ class Setting extends Model implements HasMedia
 
     /**
      * Registers Setting media collections
-     *
-     * @return void
      */
-    public function registerMediaCollections()
+    public function registerMediaCollections(): void
     {
         $this->addMediaCollection('logo')->singleFile();
         $this->addMediaCollection('favicon')->singleFile();
@@ -35,7 +33,7 @@ class Setting extends Model implements HasMedia
      *
      * @param  Media|null $media
      */
-    public function registerMediaConversions(Media $media = null)
+    public function registerMediaConversions(Media $media = null): void
     {
         $this->registerImageThumbnails($media, 'thumb', 150);
         $this->registerImageThumbnails($media, 'medium', 450);
@@ -48,14 +46,19 @@ class Setting extends Model implements HasMedia
      * @param  Media|null $media
      * @param  string     $name       Name of the thumbnail
      * @param  int        $size       Max dimension in pixels
-     * @return Spatie\MediaLibrary\Conversion\Conversion
+     * @return void
      */
-    protected function registerImageThumbnails(Media $media = null, $name, $width, $height = null)
+    protected function registerImageThumbnails(Media $media = null, $name, $width, $height = null): void
     {
         if (!$height) {
             $height = $width;
         }
-        return $this->addMediaConversion($name)->width($width)->height($height)->crop(Manipulations::CROP_TOP, $width, $height)->performOnCollections('logo');
+
+        $this->addMediaConversion($name)
+            ->width($width)
+            ->height($height)
+            ->crop(Manipulations::CROP_TOP, $width, $height)
+            ->performOnCollections('logo');
     }
 
 }

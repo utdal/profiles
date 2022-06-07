@@ -10,9 +10,9 @@ use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Auditable as HasAudits;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Image\Manipulations;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\Models\Media;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Tags\HasTags;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
@@ -24,7 +24,7 @@ class Profile extends Model implements HasMedia, Auditable
 {
     use HasAudits; 
     use HasFactory; 
-    use HasMediaTrait; 
+    use InteractsWithMedia; 
     use HasTags;
     use SoftDeletes;
 
@@ -305,7 +305,7 @@ class Profile extends Model implements HasMedia, Auditable
      *
      * @param  Media|null $media
      */
-    public function registerMediaConversions(Media $media = null)
+    public function registerMediaConversions(Media $media = null): void
     {
         $this->registerImageThumbnails($media, 'thumb', 150);
         $this->registerImageThumbnails($media, 'medium', 450);
@@ -319,14 +319,19 @@ class Profile extends Model implements HasMedia, Auditable
      * @param  string     $name       Name of the thumbnail
      * @param  int        $size       Max dimension in pixels
      * @param  string     $collection Name of the collection for the thumbnails
-     * @return Spatie\MediaLibrary\Conversion\Conversion
+     * @return void
      */
-    protected function registerImageThumbnails(Media $media = null, $name, $width, $height = null, $collection = 'images')
+    protected function registerImageThumbnails(Media $media = null, $name, $width, $height = null, $collection = 'images'): void
     {
         if(!$height) {
             $height = $width;
         }
-        return $this->addMediaConversion($name)->width($width)->height($height)->crop(Manipulations::CROP_TOP, $width, $height)->performOnCollections($collection);
+
+        $this->addMediaConversion($name)
+            ->width($width)
+            ->height($height)
+            ->crop(Manipulations::CROP_TOP, $width, $height)
+            ->performOnCollections($collection);
     }
 
     //////////////////
