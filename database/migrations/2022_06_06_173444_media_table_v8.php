@@ -20,7 +20,10 @@ class MediaTableV8 extends Migration
         });
 
         Media::cursor()->each(
-            fn (Media $media) => $media->update(['uuid' => Str::uuid()])
+            fn (Media $media) => $media->update([
+                'uuid' => Str::uuid(),
+                'conversions_disk' => DB::raw('disk'),
+            ])
         );
     }
 

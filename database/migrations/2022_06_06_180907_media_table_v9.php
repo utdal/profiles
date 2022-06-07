@@ -16,7 +16,7 @@ class MediaTableV9 extends Migration
     {
         if (!Schema::hasColumn('media', 'generated_conversions')) {
             Schema::table('media', function (Blueprint $table) {
-                $table->json('generated_conversions')->nullable();
+                $table->json('generated_conversions')->after('custom_properties')->nullable();
             });
         }
 
@@ -30,7 +30,7 @@ class MediaTableV9 extends Migration
             ->update([
                 'generated_conversions' => DB::raw('custom_properties->"$.generated_conversions"'),
                 // OPTIONAL: Remove the generated conversions from the custom_properties field as well:
-                // 'custom_properties'     => DB::raw("JSON_REMOVE(custom_properties, '$.generated_conversions')")
+                'custom_properties'     => DB::raw("JSON_REMOVE(custom_properties, '$.generated_conversions')")
             ]);
     }
 
@@ -41,13 +41,12 @@ class MediaTableV9 extends Migration
      */
     public function down()
     {
-        /* Restore the 'generated_conversions' field in the 'custom_properties' column if you removed them in this migration
+        /* Restore the 'generated_conversions' field in the 'custom_properties' column if you removed them in this migration */
         Media::query()
                 ->whereRaw("JSON_TYPE(generated_conversions) != 'NULL'")
                 ->update([
                     'custom_properties' => DB::raw("JSON_SET(custom_properties, '$.generated_conversions', generated_conversions)")
                 ]);
-        */
 
         Schema::table('media', function (Blueprint $table) {
             $table->dropColumn('generated_conversions');
