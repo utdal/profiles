@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b006e0fab22d04c6cdbd81104dd8d98b",
+    "content-hash": "fba31c431c0ee3d5af4125d5383c01ed",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -181,16 +181,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.224.4",
+            "version": "3.224.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "8c8a713b8c1e1a20f66a801f9d2cd7fd80d8d3f8"
+                "reference": "00719404b6a7f29d7fb183211dfbef7f7f22a0c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/8c8a713b8c1e1a20f66a801f9d2cd7fd80d8d3f8",
-                "reference": "8c8a713b8c1e1a20f66a801f9d2cd7fd80d8d3f8",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/00719404b6a7f29d7fb183211dfbef7f7f22a0c0",
+                "reference": "00719404b6a7f29d7fb183211dfbef7f7f22a0c0",
                 "shasum": ""
             },
             "require": {
@@ -266,9 +266,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.224.4"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.224.5"
             },
-            "time": "2022-06-06T18:32:10+00:00"
+            "time": "2022-06-07T18:15:41+00:00"
         },
         {
             "name": "brick/math",
@@ -1816,16 +1816,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v9.16.0",
+            "version": "v9.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "dbad869e737542734c48d36d4cb87ee90455c4b8"
+                "reference": "091e287678ac723c591509ca6374e4ded4a99b1c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/dbad869e737542734c48d36d4cb87ee90455c4b8",
-                "reference": "dbad869e737542734c48d36d4cb87ee90455c4b8",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/091e287678ac723c591509ca6374e4ded4a99b1c",
+                "reference": "091e287678ac723c591509ca6374e4ded4a99b1c",
                 "shasum": ""
             },
             "require": {
@@ -1991,7 +1991,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-06-02T18:13:11+00:00"
+            "time": "2022-06-07T15:09:32+00:00"
         },
         {
             "name": "laravel/serializable-closure",
@@ -2255,16 +2255,16 @@
         },
         {
             "name": "league/commonmark",
-            "version": "2.3.2",
+            "version": "2.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "6eddb90a9e4a1a8c5773226068fcfb48cb36812a"
+                "reference": "0da1dca5781dd3cfddbe328224d9a7a62571addc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/6eddb90a9e4a1a8c5773226068fcfb48cb36812a",
-                "reference": "6eddb90a9e4a1a8c5773226068fcfb48cb36812a",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/0da1dca5781dd3cfddbe328224d9a7a62571addc",
+                "reference": "0da1dca5781dd3cfddbe328224d9a7a62571addc",
                 "shasum": ""
             },
             "require": {
@@ -2357,7 +2357,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-06-03T14:07:39+00:00"
+            "time": "2022-06-07T21:28:26+00:00"
         },
         {
             "name": "league/config",
@@ -3458,29 +3458,29 @@
         },
         {
             "name": "owen-it/laravel-auditing",
-            "version": "v12.2.1",
+            "version": "v13.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/owen-it/laravel-auditing.git",
-                "reference": "98f1cfddbc4ed257e5644fe02e97db5674c7571a"
+                "reference": "332d136a7d67a2c06ee85aa17efeafb3ba25c972"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/owen-it/laravel-auditing/zipball/98f1cfddbc4ed257e5644fe02e97db5674c7571a",
-                "reference": "98f1cfddbc4ed257e5644fe02e97db5674c7571a",
+                "url": "https://api.github.com/repos/owen-it/laravel-auditing/zipball/332d136a7d67a2c06ee85aa17efeafb3ba25c972",
+                "reference": "332d136a7d67a2c06ee85aa17efeafb3ba25c972",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "illuminate/console": "^6.0|^7.0|^8.0|^9.0",
-                "illuminate/database": "^6.0|^7.0|^8.0|^9.0",
-                "illuminate/filesystem": "^6.0|^7.0|^8.0|^9.0",
+                "illuminate/console": "^7.0|^8.0|^9.0",
+                "illuminate/database": "^7.0|^8.0|^9.0",
+                "illuminate/filesystem": "^7.0|^8.0|^9.0",
                 "php": "^7.3|^8.0"
             },
             "require-dev": {
                 "laravel/legacy-factories": "*",
                 "mockery/mockery": "^1.0",
-                "orchestra/testbench": "^4.0|^5.0|^6.0|^7.0",
+                "orchestra/testbench": "^5.0|^6.0|^7.0",
                 "phpunit/phpunit": "^9.0"
             },
             "suggest": {
@@ -3514,6 +3514,10 @@
                 {
                     "name": "Raphael França",
                     "email": "raphaelfrancabsb@gmail.com"
+                },
+                {
+                    "name": "Morten D. Hansen",
+                    "email": "morten@visia.dk"
                 }
             ],
             "description": "Audit changes of your Eloquent models in Laravel/Lumen",
@@ -3538,7 +3542,7 @@
                 "issues": "https://github.com/owen-it/laravel-auditing/issues",
                 "source": "https://github.com/owen-it/laravel-auditing"
             },
-            "time": "2022-02-22T13:39:06+00:00"
+            "time": "2022-04-20T14:28:57+00:00"
         },
         {
             "name": "php-http/client-common",
