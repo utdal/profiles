@@ -41,7 +41,7 @@ class Role extends Model
     /**
      * Role has many Users.
      * 
-     * @return App\User
+     * @return User
      */
     public function users()
     {

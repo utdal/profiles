@@ -8,7 +8,7 @@ use Spatie\Tags\Tag;
 
 class TagsModal extends Component
 {
-    /** @var Illuminate\Database\Eloquent\Model */
+    /** @var \Illuminate\Database\Eloquent\Model */
     public $model;
 
     public $model_slug;

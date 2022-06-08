@@ -80,7 +80,7 @@ class TagsController extends Controller
     /**
      * Search for Tags.
      * 
-     * @param  TagSearchRequest $request
+     * @param  Request $request
      * @return array of tag names
      */
     public function search(Request $request)
@@ -93,7 +93,7 @@ class TagsController extends Controller
     /**
      * Update the tags on a model.
      *
-     * @param  TagRequest  $request
+     * @param  Request  $request
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)

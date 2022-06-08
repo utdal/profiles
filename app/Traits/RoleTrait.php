@@ -242,7 +242,7 @@ trait RoleTrait
     /**
      * Get the user's cached roles
      *
-     * @return Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function cachedRoles()
     {
@@ -272,8 +272,9 @@ trait RoleTrait
     /**
      *Filtering users according to their role 
      *
-     *@param string $role
-     *@return users collection
+     * @param \Illuminate\Database\Query\Builder $query
+     * @param string $role
+     * @return \Illuminate\Database\Query\Builder
      */
     public function scopeWithRole($query, $role)
     {

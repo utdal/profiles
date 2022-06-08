@@ -145,7 +145,7 @@ class UsersController extends Controller
      * Update the User in the database.
      * 
      * @param  User        $user
-     * @param  UserRequest $request
+     * @param  Request $request
      * @return \Illuminate\Http\Response
      */
     public function update(User $user, Request $request)

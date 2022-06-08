@@ -7,6 +7,7 @@ use App\School;
 use App\Setting;
 use App\Student;
 use App\StudentData;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -70,7 +71,7 @@ class StudentsController extends Controller
      */
     public function store(Request $request)
     {
-        /** @var App\User */
+        /** @var User */
         $user = $request->user();
 
         $student = $user->studentProfiles()->create([

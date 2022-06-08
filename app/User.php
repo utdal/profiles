@@ -78,7 +78,7 @@ class User extends Authenticatable implements Auditable
     /**
      * Determine if this User owns the given model.
      * 
-     * @param  Illuminate\Database\Eloquent\Model $model
+     * @param  \Illuminate\Database\Eloquent\Model $model
      * @param  bool $check_delegators also check if the delegator(s) owns the given model
      * @return bool
      */
@@ -108,7 +108,7 @@ class User extends Authenticatable implements Auditable
     /**
      * Determine if this User has bookmarked the given model
      *
-     * @param  Illuminate\Database\Eloquent\Model $model
+     * @param  \Illuminate\Database\Eloquent\Model $model
      * @return bool
      */
     public function hasBookmarked($model)
@@ -126,7 +126,7 @@ class User extends Authenticatable implements Auditable
     /**
      * Bookmark the given model
      *
-     * @param  Illuminate\Database\Eloquent\Model $model
+     * @param  \Illuminate\Database\Eloquent\Model $model
      * @return void
      */
     public function bookmark($model)
@@ -137,7 +137,7 @@ class User extends Authenticatable implements Auditable
     /**
      * Un-bookmark the given model
      *
-     * @param  Illuminate\Database\Eloquent\Model $model
+     * @param  \Illuminate\Database\Eloquent\Model $model
      * @return void
      */
     public function unbookmark($model)

@@ -121,7 +121,7 @@ class LdapAttributeHandler
      */
     protected function syncUserSchool(LdapUser $ldap_user, User $user)
     {
-        /** @var App\Ldap\Schemas\InstitutionActiveDirectory */
+        /** @var \App\Ldap\Schemas\InstitutionActiveDirectory */
         $ldap_user_schema = $ldap_user->getSchema();
 
         $ldap_user_primary_role = $ldap_user->getFirstAttribute($ldap_user_schema->primaryRole());

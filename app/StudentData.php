@@ -73,8 +73,8 @@ class StudentData extends ProfileData
     /**
      * Query scope for research profile
      *
-     * @param  Illuminate\Database\Query\Builder $query
-     * @return Illuminate\Database\Query\Builder
+     * @param  \Illuminate\Database\Query\Builder $query
+     * @return \Illuminate\Database\Query\Builder
      */
     public function scopeResearchProfile($query)
     {
@@ -84,8 +84,8 @@ class StudentData extends ProfileData
     /**
      * Query scope for research profile
      *
-     * @param  Illuminate\Database\Query\Builder $query
-     * @return Illuminate\Database\Query\Builder
+     * @param  \Illuminate\Database\Query\Builder $query
+     * @return \Illuminate\Database\Query\Builder
      */
     public function scopeStats($query)
     {

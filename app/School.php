@@ -99,7 +99,7 @@ class School extends Model implements Auditable
     /**
      * School has many Users
      *
-     * @return Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function users()
     {
@@ -109,7 +109,7 @@ class School extends Model implements Auditable
     /**
      * School has many Profiles (through Users)
      *
-     * @return Illuminate\Database\Eloquent\Relations\HasManyThrough
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
     public function profiles()
     {
