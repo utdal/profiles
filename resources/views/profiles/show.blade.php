@@ -240,7 +240,7 @@
 						@else
 							<h5>{{$article->title}}</h5>
 						@endif
-						@if($article->image)<img src="{{ $article->imageUrl }}" class="news_image"/>@endif
+						@if($article->image)<img src="{{ $article->imageUrl }}" class="news_image" alt="{{ $article->image_alt ?? $article->title }}"/>@endif
 						{!! Purify::clean($article->description) !!}
 					</div>
 				@endforeach
