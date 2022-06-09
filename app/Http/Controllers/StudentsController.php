@@ -36,6 +36,7 @@ class StudentsController extends Controller
      */
     public function index()
     {
+        /** @var User */
         $user = Auth::user();
         $user->loadMissing(['profiles', 'currentDelegators.profiles']);
 
@@ -67,7 +68,7 @@ class StudentsController extends Controller
      * Store a newly created student research profile in storage.
      *
      * @param  Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|false
      */
     public function store(Request $request)
     {

@@ -15,7 +15,7 @@ class SettingPolicy
      *
      * @param \App\User $user
      * @param string $ability
-     * @return bool
+     * @return void|bool
      */
     public function before($user, $ability)
     {

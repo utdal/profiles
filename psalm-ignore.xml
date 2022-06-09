@@ -16,6 +16,17 @@
       <code>Profile::factory()-&gt;make()</code>
     </TooManyTemplateParams>
   </file>
+  <file src="app/Http/Livewire/ProfileStudents.php">
+    <UndefinedThisPropertyAssignment occurrences="1">
+      <code>$this-&gt;students</code>
+    </UndefinedThisPropertyAssignment>
+  </file>
+  <file src="app/Http/Middleware/AuthorizeCreateProfile.php">
+    <UndefinedInterfaceMethod occurrences="2">
+      <code>authenticate</code>
+      <code>user</code>
+    </UndefinedInterfaceMethod>
+  </file>
   <file src="app/Student.php">
     <InvalidReturnStatement occurrences="3">
       <code>$this-&gt;hasMany(StudentFeedback::class)-&gt;where('type', 'feedback')</code>

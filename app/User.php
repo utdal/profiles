@@ -220,7 +220,7 @@ class User extends Authenticatable implements Auditable
     /**
      * Virtual attribute to get additional schools for a user
      *
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Database\Eloquent\Collection|null
      */
     public function getAdditionalSchoolsAttribute()
     {
@@ -230,7 +230,7 @@ class User extends Authenticatable implements Auditable
     /**
      * Virtual attribute to get additional departments for a user
      *
-     * @return \Illuminate\Support\Collection
+     * @return array|null
      */
     public function getAdditionalDepartmentsAttribute()
     {

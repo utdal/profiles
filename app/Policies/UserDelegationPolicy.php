@@ -15,7 +15,7 @@ class UserDelegationPolicy
      *
      * @param \App\User $user
      * @param string $ability
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @return void|bool
      */
     public function before($user, $ability)
     {
