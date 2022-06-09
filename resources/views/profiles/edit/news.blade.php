@@ -19,17 +19,20 @@
 					<trix-editor aria-label="Description" input="rte_{{$news->id}}"></trix-editor>
 				</div>
 				<div class="col col-lg-4 col-12">
-					<label for="file-{{$news->id}}">Image</label>
-					<img class="profile_photo" id="data[{{$news->id}}][image]-img" src="@if($news->imageUrl != asset('/img/default.png')){{$news->imageUrl}}@endif">
-					<input type="file" id="data[{{$news->id}}][image]" name="data[{{$news->id}}][image]" accept="image/*" class="d-none" >
-					@if($news->image)<br /><br />@endif
-					<label id="label-{{$news->id}}" for="data[{{$news->id}}][image]" class="btn btn-secondary btn-block" tabindex="0" type="button">Select Image</label>
+					<label for="data[{{$news->id}}][image]-img">Image</label>
+					<img class="profile_photo d-flex" id="data[{{$news->id}}][image]-img" src="@if($news->imageUrl != asset('/img/default.png')){{$news->imageUrl}}@endif">
+					<div class="custom-file form-control">
+						<input type="file" id="data[{{$news->id}}][image]" name="data[{{$news->id}}][image]" accept="image/*" class="custom-file-input clickable">
+						<label id="label-{{$news->id}}" for="data[{{$news->id}}][image]" class="custom-file-label">
+							{{ $news->image->file_name ?? 'Select an image' }}
+						</label>
+					</div>
 					@foreach($errors->get("data.{$news->id}.image") as $image_error)
 						@include('alert', ['message' => $image_error, 'type' => 'danger'])
 						<p class="d-block invalid-feedback"><i class="fas fa-asterisk"></i> {!! $image_error !!}</p>
 					@endforeach
 				</div>
-				<div class="{{ $news->image ? 'col-lg-8' : 'col-lg-12' }} col col-12">
+				<div class="col-lg-8 col col-12">
 					<label for="data[{{$news->id}}][data][image_alt]">Image Description (Alt)</label>
 					<input class="form-control" id="data[{{$news->id}}][data][image_alt]" name="data[{{$news->id}}][data][image_alt]" value="{{$news->image_alt}}" />
 				</div>
@@ -50,16 +53,3 @@
 	@include('profiles.edit._buttons')
 
 {!! Form::close() !!}
-
-
-@push('scripts')
-	<script>
-		$('[id^="label"]').each(function (){
-			$(this).on('keypress', function(e) {
-				if(e.which === 13) {
-					$(this).prev('input').trigger('click');
-				}
-			});
-		});
-	</script>
-@endpush
