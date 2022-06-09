@@ -37,7 +37,7 @@ class Setting extends Model implements HasMedia
     {
         $this->registerImageThumbnails($media, 'thumb', 150);
         $this->registerImageThumbnails($media, 'medium', 450);
-        $this->registerImageThumbnails($media, 'large', 1800, 1200, '*');
+        $this->registerImageThumbnails($media, 'large', 1800, 1200);
     }
 
     /**

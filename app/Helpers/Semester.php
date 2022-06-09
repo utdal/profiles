@@ -93,7 +93,7 @@ class Semester
         $current_season_key = array_search($current_semester['season'], $seasons, true);
 
         if ($current_season_key !== false) {
-            $next_season = $seasons[$current_season_key + 1] ?? false;
+            $next_season = $seasons[(int)$current_season_key + 1] ?? false;
 
             if ($next_season === false) { // next semester is next calendar year
                 return static::formatName($seasons[0], $current_semester['year']->addYear()->year);

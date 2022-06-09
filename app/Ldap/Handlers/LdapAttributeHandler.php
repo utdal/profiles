@@ -176,7 +176,7 @@ class LdapAttributeHandler
     /**
      * Get the mapping of Ldap role to App role
      * 
-     * @return array : ['ldap role' => 'app role']
+     * @return array in the format ['ldap role' => 'app role']
      */
     protected function getRoleMap()
     {
@@ -186,7 +186,7 @@ class LdapAttributeHandler
     /**
      * Get the mapping of User attribute to Ldap attribute
      * 
-     * @return array : ['user attribute' => 'ldap attribute']
+     * @return array in the format ['user attribute' => 'ldap attribute']
      */
     protected function getAttributeMap()
     {

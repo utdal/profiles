@@ -20,7 +20,7 @@ class UserDelegationsController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of all delegations.
      *
      * @return \Illuminate\View\View
      */
@@ -30,7 +30,7 @@ class UserDelegationsController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified user's delegations.
      *
      * @param  User  $user
      * @return \Illuminate\View\View

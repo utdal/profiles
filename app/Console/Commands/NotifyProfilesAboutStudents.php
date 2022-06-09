@@ -43,8 +43,8 @@ class NotifyProfilesAboutStudents extends Command
      */
     public function handle()
     {
-        $season = $this->argument('season');
-        $year = $this->argument('year');
+        $season = (string)$this->argument('season');
+        $year = (int)$this->argument('year');
 
         $semester = ($season && $year) ? Semester::formatName($season, $year) : Semester::current();
         $faculty_list = Profile::StudentsPendingReviewWithSemester($semester)

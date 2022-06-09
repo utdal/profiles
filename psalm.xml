@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <psalm
-    errorLevel="5"
+    errorLevel="4"
     resolveFromConfigFile="true"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
@@ -22,7 +22,9 @@
         <PossiblyInvalidArgument errorLevel="suppress" />
         <RedundantCondition errorLevel="suppress" />
         <MissingClosureParamType errorLevel="suppress" />
+        <NoInterfaceProperties errorLevel="suppress" />
         <InvalidGlobal errorLevel="suppress" />
+        <UndefinedMagicPropertyFetch errorLevel="suppress" />
         <UndefinedPropertyAssignment errorLevel="suppress" />
     </issueHandlers>
 </psalm>

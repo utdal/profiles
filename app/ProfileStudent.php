@@ -11,7 +11,7 @@ class ProfileStudent extends Pivot implements Auditable
 {
     use HasAudits;
 
-    /** @var array[string] Possible profile-student statuses */
+    /** @var array Possible profile-student statuses */
     public static $statuses = [
         '' => 'New',
         'follow up' => 'Follow Up',
@@ -20,7 +20,7 @@ class ProfileStudent extends Pivot implements Auditable
         'not interested' => 'Not Interested',
     ];
 
-    /** @var array[string] Possible profile-student status icons */
+    /** @var array Possible profile-student status icons */
     public static $icons = [
         '' => 'fas fa-inbox',
         'follow up' => 'fas fa-info',
