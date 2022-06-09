@@ -131,14 +131,14 @@ class User extends Authenticatable implements Auditable
      */
     public function bookmark($model)
     {
-        return $this->bookmarked($model)->attach($model);
+        $this->bookmarked($model)->attach($model);
     }
 
     /**
      * Un-bookmark the given model
      *
      * @param  \Illuminate\Database\Eloquent\Model $model
-     * @return void
+     * @return int
      */
     public function unbookmark($model)
     {
@@ -372,7 +372,7 @@ class User extends Authenticatable implements Auditable
     /**
      * User's current delegates that get reminders.
      *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function currentReminderDelegates()
     {

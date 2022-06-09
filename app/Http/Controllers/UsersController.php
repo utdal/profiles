@@ -90,7 +90,7 @@ class UsersController extends Controller
     /**
      * Show the view to add a new user
      *
-     * @return void
+     * @return \Illuminate\View\View
      */
     public function create()
     {
@@ -100,8 +100,8 @@ class UsersController extends Controller
     /**
      * Store a new user
      *
-     * @param Request $request
-     * @return void
+     * @param UserStoreRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(UserStoreRequest $request, LdapHelperContract $ldap)
     {
@@ -146,7 +146,7 @@ class UsersController extends Controller
      * 
      * @param  User        $user
      * @param  Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(User $user, Request $request)
     {
@@ -170,8 +170,8 @@ class UsersController extends Controller
     /**
      * Confirm deletion of a user
      *
-     * @param  \App\User $user
-     * @return \Illuminate\Http\Response
+     * @param  User $user
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function confirmDelete(User $user)
     {
@@ -189,7 +189,7 @@ class UsersController extends Controller
      * Remove the user from the database
      * 
      * @param  User $user
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(User $user)
     {

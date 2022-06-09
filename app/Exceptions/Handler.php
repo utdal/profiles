@@ -8,10 +8,12 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
 use Sentry\State\Scope;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
 
@@ -66,8 +68,8 @@ class Handler extends ExceptionHandler
      * Render an exception into an HTTP response.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $e
-     * @return \Illuminate\Http\Response
+     * @param  \Throwable  $e
+     * @return SymfonyResponse|JsonResponse;
      */
     public function render($request, Throwable $e)
     {
@@ -83,8 +85,12 @@ class Handler extends ExceptionHandler
                 ], Response::HTTP_UNAUTHORIZED);
             }
             if ($e instanceof ModelNotFoundException) {
+                /** @var string */
+                $modelname = $e->getModel();
+                $model_basename = str_replace('App\\', '', $modelname);
+
                 return response()->json([
-                    'errors' => ['Entry for ' . str_replace('App\\', '', $e->getModel()) . ' not found']
+                    'errors' => ["Entry for {$model_basename} not found"]
                 ], Response::HTTP_NOT_FOUND);
             }
             if ($e instanceof ValidationException) {

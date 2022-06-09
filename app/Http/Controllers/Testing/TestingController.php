@@ -88,7 +88,7 @@ class TestingController extends Controller
      *
      * @param Request $request
      * @param string $view The Blade email view
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function previewEmail(Request $request, $view)
     {

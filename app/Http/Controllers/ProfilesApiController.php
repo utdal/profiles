@@ -19,7 +19,7 @@ class ProfilesApiController extends Controller
     /**
      * Get a listing of all Profiles.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request)
     {
@@ -84,7 +84,7 @@ class ProfilesApiController extends Controller
      * Get a Profile with it's data.
      *
      * @param  Profile $profile
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(Profile $profile)
     {

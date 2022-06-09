@@ -22,7 +22,7 @@ class UserDelegationsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function index()
     {
@@ -32,8 +32,8 @@ class UserDelegationsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
+     * @param  User  $user
+     * @return \Illuminate\View\View
      */
     public function show(User $user)
     {

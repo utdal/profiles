@@ -52,7 +52,7 @@ class ProfilesController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function index(Request $request)
     {
@@ -78,8 +78,13 @@ class ProfilesController extends Controller
         return view('profiles.index', compact('profiles', 'keyword_profiles', 'tag_profiles', 'schools', 'search'));
     }
 
-    public function home(){
-
+    /**
+     * Display the home page
+     *
+     * @return \Illuminate\View\View
+     */
+    public function home()
+    {
         $random_profile = Cache::remember('home-random-profiles', 86400, function(){
             $profiles = Profile::public()->get();
             return !$profiles->isEmpty() ? $profiles->random(min(2, $profiles->count())) : collect([]);
@@ -121,7 +126,7 @@ class ProfilesController extends Controller
     }
 
     /**
-     * Show the user info.
+     * Show the profile.
      *
      * @param  User   $user
      * @return \Illuminate\View\View
@@ -134,7 +139,7 @@ class ProfilesController extends Controller
 
         //don't show unless profile is public or we can edit it
         if(!$profile->public && !$editable){
-            return response()->view('errors.404', [], 404);
+            abort(404);
         }
 
         $information = $profile->data()->information()->first();
@@ -167,6 +172,13 @@ class ProfilesController extends Controller
         return redirect()->route('profiles.show', $profile);
     }
 
+    /**
+     * Create a Profile
+     *
+     * @param User $user
+     * @param LdapHelperContract $ldap
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function create(User $user, LdapHelperContract $ldap)
     {
         //redirect to edit page if user already has a profile
@@ -217,6 +229,13 @@ class ProfilesController extends Controller
 
     }
 
+    /**
+     * Show the view for editing a profile section
+     *
+     * @param Profile $profile
+     * @param string $section
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
     public function edit(Profile $profile, $section)
     {
 
@@ -240,15 +259,29 @@ class ProfilesController extends Controller
         return view('profiles.edit', compact('profile', 'section', 'data'));
     }
 
+    /**
+     * Update a Profile's ORCID
+     *
+     * @param Profile $profile
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function orcid(Profile $profile)
     {
-      if($profile->updateORCID()){
+      if ($profile->updateORCID()) {
           return redirect()->route('profiles.show', $profile->slug)->with('flash_message', 'Publications updated via ORCID.');
-      }else{
+      } else {
           return redirect()->route('profiles.show', $profile->slug)->with('flash_message', 'Error updating your ORCID publications.');
       }
     }
 
+    /**
+     * Update a Profile
+     *
+     * @param Profile $profile
+     * @param string $section
+     * @param ProfileUpdateRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(Profile $profile, $section, ProfileUpdateRequest $request)
     {
         $profile->updateDatum($section, $request);
@@ -261,6 +294,13 @@ class ProfilesController extends Controller
         return redirect()->route('profiles.edit', [$profile->slug, 'information'])->with('flash_message', $profile->processImage($request->file('image'), 'images'));
     }
 
+    /**
+     * Update a Profile's banner image
+     *
+     * @param Profile $profile
+     * @param ProfileBannerImageRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function updateBanner(Profile $profile, ProfileBannerImageRequest $request)
     {
         return redirect()->route('profiles.edit', [$profile->slug, 'information'])->with('flash_message', $profile->processImage($request->file('banner_image'), 'banners'));
@@ -269,8 +309,8 @@ class ProfilesController extends Controller
     /**
      * Confirm deletion of a profile
      *
-     * @param  \App\Profile $profile
-     * @return \Illuminate\Http\Response
+     * @param  Profile $profile
+     * @return \Illuminate\View\View
      */
     public function confirmDelete(Profile $profile)
     {
@@ -281,7 +321,7 @@ class ProfilesController extends Controller
      * Remove the profile from the database
      * 
      * @param  Profile $profile
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function archive(Profile $profile)
     {
@@ -294,7 +334,7 @@ class ProfilesController extends Controller
      * Restore a soft deleted profile
      *
      * @param Profile $profile
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function restore(Profile $profile)
     {

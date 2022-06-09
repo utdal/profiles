@@ -49,7 +49,7 @@ class LdapHelper implements LdapHelperContract
      * 
      * @param  string $displayname name to search for
      * @param  array  $fields fields to retrieve
-     * @return array
+     * @return \Illuminate\Support\Collection|array
      */
     public function search($displayname, array $fields = [], $to_array = false)
     {

@@ -32,7 +32,7 @@ class StudentsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function index()
     {
@@ -49,8 +49,8 @@ class StudentsController extends Controller
     /**
      * Create a new student research profile.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function create(Request $request)
     {
@@ -66,7 +66,7 @@ class StudentsController extends Controller
     /**
      * Store a newly created student research profile in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -110,9 +110,9 @@ class StudentsController extends Controller
     /**
      * Display the specified student research profile.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Student  $student
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @param  Student  $student
+     * @return \Illuminate\View\View
      */
     public function show(Request $request, Student $student)
     {
@@ -133,8 +133,8 @@ class StudentsController extends Controller
     /**
      * Show the form for editing the specified student research profile.
      *
-     * @param  \App\Student  $student
-     * @return \Illuminate\Http\Response
+     * @param  Student  $student
+     * @return \Illuminate\View\View
      */
     public function edit(Student $student)
     {
@@ -149,9 +149,9 @@ class StudentsController extends Controller
     /**
      * Update the specified student research profile in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Student  $student
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @param  Student  $student
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Student $student)
     {
@@ -181,16 +181,5 @@ class StudentsController extends Controller
 
         return back()
             ->with('flash_message', ($updated ?? false) ? 'Student profile status updated' : 'Not updated');
-    }
-
-    /**
-     * Remove the specified student research profile from storage.
-     *
-     * @param  \App\Student  $student
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Student $student)
-    {
-        //
     }
 }
