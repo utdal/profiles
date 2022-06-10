@@ -194,10 +194,21 @@ $container-max-widths: (
 //##
 
 // Dark navbar
-$navbar-dark-color:                 rgba($white, 0.8) !default;
+$navbar-dark-color:                 rgba($white, 1) !default;
 $navbar-dark-hover-color:           $white !default;
 $navbar-dark-active-color:          $white !default;
 $navbar-dark-disabled-color:        rgba($white, .5) !default;
+
+//== Forms
+//
+//##
+
+$input-btn-focus-width:       .1rem !default;
+$input-btn-focus-color:       $primary !default;
+$input-focus-border-color:    $primary !default;
+
+$custom-file-button-color: $white !default;
+$custom-file-button-bg: $secondary !default;
 
 //== Form states and alerts
 //

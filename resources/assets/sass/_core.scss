@@ -71,14 +71,15 @@ label.completed {
 
 // BOOTSTRAP Overrides
 
-// Override the default Bootstrap style for file inputs, which is messed up in Firefox
-input[type="file"].form-control {
-	height: auto;
-	box-shadow: unset;
-}
-.form-control{
+.form-control {
 	margin-bottom: 20px;
+
+	&.custom-file {
+		border: 0;
+		padding: 0;
+	}
 }
+
 .clear, .clear:before, .clear:after {
     clear:both;
 }
@@ -280,6 +281,13 @@ textarea.form-control{
 //rich text editor
 trix-editor{
 	margin-bottom: 15px;
+	border-color: $input-border-color;
+	border-radius: $border-radius;
+
+	&:focus {
+		box-shadow: 0 0 0 $input-btn-focus-width $input-btn-focus-color;
+		border-color: $input-btn-focus-color;
+	}
 }
 trix-toolbar .trix-button-row{
 	flex-wrap: wrap;
