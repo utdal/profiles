@@ -17,11 +17,16 @@ use Spatie\Tags\HasTags;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
 
 class Profile extends Model implements HasMedia, Auditable
 {
-    use HasFactory, HasAudits, HasMediaTrait, HasTags;
+    use HasAudits; 
+    use HasFactory; 
+    use HasMediaTrait; 
+    use HasTags;
+    use SoftDeletes;
 
     /** @var string The database table used by the model. */
     protected $table = 'profiles';

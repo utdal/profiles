@@ -45,6 +45,14 @@ class StudentData extends ProfileData
         'other' => 'Other',
     ];
 
+    /** @var array Language proficiency levels */
+    public static $language_proficiencies = [
+        'limited' => 'Limited Working',
+        'basic' => 'Professional Working',
+        'professional' => 'Full Professional',
+        'native' => 'Native / Bilingual',
+    ];
+
     /**
      * Student majors choices
      *

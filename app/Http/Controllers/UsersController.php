@@ -47,7 +47,7 @@ class UsersController extends Controller
 
         $this->middleware('can:delete,user')->only([
             'destroy',
-            'confirmDestroy',
+            'confirmDelete',
         ]);
     }
 
@@ -168,28 +168,34 @@ class UsersController extends Controller
     }
 
     /**
-     * Confirm deletion of the user.
+     * Confirm deletion of a user
      *
      * @param  \App\User $user
      * @return \Illuminate\Http\Response
      */
-    public function confirmDestroy(User $user)
+    public function confirmDelete(User $user)
     {
+        if (Auth::user()->is($user)) {
+            return back()->with([
+                'flash_message' => 'Sorry, you cannot remove yourself. To remove this user, first log in as a different site admin.',
+                'flash_message_type' => 'danger',
+            ]);
+        }
+
         return view('users.delete', compact('user'));
     }
 
     /**
-     * Remove the User from the database.
+     * Remove the user from the database
      * 
-     * @param  User   $user
+     * @param  User $user
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $user)
     {
         $user->delete();
 
-        return redirect()->route('users.index')
-            ->with('flash_message', 'The user has been removed.');
+        return redirect()->route('users.index')->with('flash_message', 'The user has been removed.');
     }
 
 }
