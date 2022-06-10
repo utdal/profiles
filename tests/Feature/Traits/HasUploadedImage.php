@@ -16,11 +16,6 @@ trait HasUploadedImage
     {
         Storage::fake('images');
 
-        config()->set('filesystems.disks.images', [
-            'driver' => 'local',
-            'root' => Storage::disk('images')->getAdapter()->getPathPrefix(),
-        ]);
-
         return UploadedFile::fake()->image('fake_image.jpg', 300, 300);
     }
 }
