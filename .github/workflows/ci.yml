@@ -7,6 +7,8 @@ jobs:
     name: Laravel (PHP ${{ matrix.php-versions }})
     runs-on: ubuntu-latest
     env:
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
       DB_DATABASE: laravel
       DB_USERNAME: root
       DB_PASSWORD: password
@@ -18,7 +20,7 @@ jobs:
     # Docs: https://docs.github.com/en/actions/using-containerized-services
     services:
       mysql:
-        image: mysql:latest
+        image: mysql:8.0
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: false
           MYSQL_ROOT_PASSWORD: password
@@ -45,7 +47,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
-          extensions: mbstring, dom, fileinfo, mysql
+          extensions: bcmath, curl, dom, exif, gd, iconv, imagick, intl, ldap, libxml, mbstring, fileinfo, mysqli, mysqlnd, pdo, pdo_mysql, xml, zip
           coverage: xdebug
 
       # Local MySQL service in GitHub hosted environments is disabled by default.
