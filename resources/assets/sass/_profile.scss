@@ -3,7 +3,7 @@
 .profile {
 
 	.profile-header {
-		background-color: $light;
+		background-color: $white;
 		padding: 60px 40px 40px;
 		margin-bottom: 30px;
 		box-shadow: 2px 2px 4px $gray-300;
@@ -113,7 +113,7 @@
 				margin: 15px 2px;
 			}
 			li a {
-				background-color: $light;
+				background-color: $white;
 				padding: 15px 12px;
 				box-shadow: 1px 1px 2px $gray-300;
 				&:hover{
@@ -123,7 +123,7 @@
 			li::before {
 				// font-style: italic;
 				content: ' | ';
-				color: $gray-300;
+				color: $white;
 			}
 			li:first-of-type {
 				// margin-bottom: 40px;
@@ -156,7 +156,7 @@
 
 	.card{
 		border: none;
-		background-color: $light;
+		background-color: $white;
 		padding: 35px 60px 60px;
 		margin-bottom: 30px;
 		box-shadow: 2px 2px 4px $gray-300;
@@ -187,6 +187,9 @@
 		margin-right: 15px;
 		margin-bottom: 5px;
 	}
+
+	background-color: $light;
+	
 }
 
 //general
