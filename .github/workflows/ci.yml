@@ -7,8 +7,8 @@ on:
       - develop
 
 jobs:
-  profiles_ci:
-    name: Profiles CI (PHP ${{ matrix.php-versions }})
+  profiles_tests:
+    name: Profiles Tests (PHP ${{ matrix.php-versions }})
     runs-on: ubuntu-latest
     env:
       DB_CONNECTION: mysql
@@ -45,11 +45,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 14
 
       # Docs: https://github.com/shivammathur/setup-php
       - name: Setup PHP
@@ -102,6 +97,27 @@ jobs:
 
       - name: Static analyze code (PSALM)
         run: vendor/bin/psalm
+
+  profiles_security:
+    name: Profiles Security Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+
+      - name: Cache PHP security DB
+        uses: actions/cache@v2
+        id: cache-symfony-db
+        with:
+            path: ~/.symfony/cache
+            key: ${{ runner.os }}-symfony-${{ hashFiles('**/composer.lock') }}
+            restore-keys: ${{ runner.os }}-symfony-
 
       - name: Check PHP security
         uses: symfonycorp/security-checker-action@v2
