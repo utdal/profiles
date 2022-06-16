@@ -1,15 +1,19 @@
 name: Profiles CI Workflow
 on:
   workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+      - develop
 
 jobs:
-  laravel:
-    name: Laravel (PHP ${{ matrix.php-versions }})
+  profiles_ci:
+    name: Profiles CI (PHP ${{ matrix.php-versions }})
     runs-on: ubuntu-latest
     env:
       DB_CONNECTION: mysql
       DB_HOST: 127.0.0.1
-      DB_DATABASE: laravel
+      DB_DATABASE: profiles_ci
       DB_USERNAME: root
       DB_PASSWORD: password
       BROADCAST_DRIVER: log
@@ -24,7 +28,7 @@ jobs:
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: false
           MYSQL_ROOT_PASSWORD: password
-          MYSQL_DATABASE: laravel
+          MYSQL_DATABASE: profiles_ci
         ports:
           - 3306/tcp
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
@@ -41,6 +45,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
 
       # Docs: https://github.com/shivammathur/setup-php
       - name: Setup PHP
@@ -90,3 +99,12 @@ jobs:
         env:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
           REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
+
+      - name: Static analyze code (PSALM)
+        run: vendor/bin/psalm
+
+      - name: Check PHP security
+        uses: symfonycorp/security-checker-action@v2
+
+      - name: Check JS security
+        run: npm audit
