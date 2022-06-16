@@ -13,9 +13,9 @@ class UserDelegationPolicy
     /**
      * Runs before any other authorization checks
      *
-     * @param \App\User $user
+     * @param User $user
      * @param string $ability
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @return void|bool
      */
     public function before($user, $ability)
     {
@@ -27,7 +27,7 @@ class UserDelegationPolicy
     /**
      * Determine whether the user can view any models.
      *
-     * @param  \App\User  $user
+     * @param  User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function viewAdminIndex(User $user)
@@ -38,7 +38,7 @@ class UserDelegationPolicy
     /**
      * Determine whether the user can view any models.
      *
-     * @param  \App\User  $user
+     * @param  User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function viewAny(User $user)
@@ -49,11 +49,11 @@ class UserDelegationPolicy
     /**
      * Determine whether the user can view the model.
      *
-     * @param  \App\User  $user
-     * @param  \App\UserDelegation  $userDelegation
+     * @param  User  $user
+     * @param  UserDelegation  $userDelegation
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, User $userDelegation)
+    public function view(User $user, UserDelegation $userDelegation)
     {
         return $userDelegation->delegatorIs($user);
     }
@@ -61,8 +61,8 @@ class UserDelegationPolicy
     /**
      * Determine whether the user can view the model.
      *
-     * @param  \App\User  $user
-     * @param  \App\UserDelegation  $userDelegation
+     * @param  User  $user
+     * @param  User  $delegator
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function viewForDelegator(User $user, User $delegator)

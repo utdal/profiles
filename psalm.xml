@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<psalm
+    errorLevel="4"
+    resolveFromConfigFile="true"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    errorBaseline="psalm-ignore.xml"
+>
+    <plugins>
+        <pluginClass class="Psalm\LaravelPlugin\Plugin"/>
+    </plugins>
+    <projectFiles>
+        <directory name="app"/>
+        <ignoreFiles>
+            <directory name="vendor"/>
+        </ignoreFiles>
+    </projectFiles>
+    <issueHandlers>
+        <PossiblyFalseArgument errorLevel="suppress" />
+        <PossiblyNullArgument errorLevel="suppress" />
+        <PossiblyInvalidArgument errorLevel="suppress" />
+        <RedundantCondition errorLevel="suppress" />
+        <MissingClosureParamType errorLevel="suppress" />
+        <NoInterfaceProperties errorLevel="suppress" />
+        <InvalidGlobal errorLevel="suppress" />
+        <UndefinedMagicPropertyFetch errorLevel="suppress" />
+        <UndefinedPropertyAssignment errorLevel="suppress" />
+    </issueHandlers>
+</psalm>

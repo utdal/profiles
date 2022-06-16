@@ -12,7 +12,7 @@ class StudentViewed
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    /** @var App\Student the student application that was viewed */
+    /** @var \App\Student the student application that was viewed */
     public $student;
 
     /**

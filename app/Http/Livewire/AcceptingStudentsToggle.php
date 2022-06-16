@@ -9,7 +9,7 @@ class AcceptingStudentsToggle extends Component
 {
     use AuthorizesRequests;
 
-    /** @var App\Profile */
+    /** @var \App\Profile */
     public $profile;
 
     /** @var bool If the profile is not accepting students */
@@ -24,7 +24,7 @@ class AcceptingStudentsToggle extends Component
     {
         $this->authorize('update', $this->profile);
 
-        /** @var App\ProfileData fresh copy of the profile info */
+        /** @var \App\ProfileData fresh copy of the profile info */
         $info = $this->profile->information()->first();
 
         $updated = $info->updateData(['not_accepting_students' => $toggled_on ? '1' : '0']);

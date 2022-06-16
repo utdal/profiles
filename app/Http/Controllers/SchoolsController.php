@@ -8,7 +8,9 @@ use Illuminate\Http\Request;
 
 class SchoolsController extends Controller
 {
-
+    /**
+     * Controller constructor. Middleware can be defined here.
+     */
     public function __construct()
     {
         $this->middleware('auth')->except('show');
@@ -30,7 +32,7 @@ class SchoolsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function index()
     {
@@ -42,7 +44,7 @@ class SchoolsController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function create()
     {
@@ -52,8 +54,8 @@ class SchoolsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -67,8 +69,8 @@ class SchoolsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\School  $school
-     * @return \Illuminate\Http\Response
+     * @param  School  $school
+     * @return \Illuminate\View\View
      */
     public function show(School $school)
     {
@@ -80,8 +82,8 @@ class SchoolsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\School  $school
-     * @return \Illuminate\Http\Response
+     * @param  School  $school
+     * @return \Illuminate\View\View
      */
     public function edit(School $school)
     {
@@ -91,9 +93,9 @@ class SchoolsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\School  $school
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @param  School  $school
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, School $school)
     {
@@ -104,14 +106,4 @@ class SchoolsController extends Controller
         return redirect()->route('schools.index')->with('flash_message', $message);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\School  $school
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(School $school)
-    {
-        //
-    }
 }

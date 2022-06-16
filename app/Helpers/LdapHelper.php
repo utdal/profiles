@@ -7,20 +7,21 @@ use Adldap\Connections\ProviderInterface;
 use Adldap\Models\User as LdapUser;
 use App\Helpers\Contracts\LdapHelperContract;
 use App\Ldap\Handlers\LdapAttributeHandler;
+use App\Ldap\Schemas\InstitutionActiveDirectory;
 use App\User;
 
 class LdapHelper implements LdapHelperContract
 {
-    /** @var Adldap instance */
+    /** @var \Adldap\AdldapInterface instance */
     protected $adldap;
 
-    /** @var App\Ldap\Handlers\LdapAttributeHandler */
+    /** @var \App\Ldap\Handlers\LdapAttributeHandler */
     public $handler;
 
     /** @var ProviderInterface the LDAP provider */
     public $provider;
 
-    /** @var Schema the LDAP server schema */
+    /** @var InstitutionActiveDirectory the LDAP server schema */
     public $schema;
 
     /** @var string the displayname attribute name */
@@ -36,7 +37,7 @@ class LdapHelper implements LdapHelperContract
     {
         $this->adldap = $adldap;
         $this->provider = $this->adldap->getDefaultProvider();
-        /** @var Schema */
+        /** @var InstitutionActiveDirectory */
         $this->schema = $this->provider->getSchema();
         $this->handler = app(LdapAttributeHandler::class);
         $this->username_attribute = $this->schema->loginName();
@@ -46,13 +47,13 @@ class LdapHelper implements LdapHelperContract
     /**
      * Search for users in LDAP.
      * 
-     * @param  string $query_string name to search for
+     * @param  string $displayname name to search for
      * @param  array  $fields fields to retrieve
-     * @return array
+     * @return \Illuminate\Support\Collection|array
      */
-    public function search($query_string, array $fields = [], $to_array = false)
+    public function search($displayname, array $fields = [], $to_array = false)
     {
-        if (empty($query_string)) {
+        if (empty($displayname)) {
             return [];
         }
         if (empty($fields)) {
@@ -63,10 +64,10 @@ class LdapHelper implements LdapHelperContract
         }
 
         $query = $this->provider->search()
-            ->where($this->schema->anr(), '=', $query_string)
+            ->where($this->schema->anr(), '=', $displayname)
             ->select($fields);
 
-        $users = $this->sortUsers($query->get(), $query_string);
+        $users = $this->sortUsers($query->get(), $displayname);
 
         if ($to_array) {
             return $this->flattenUserAttributes($users, $fields);
@@ -80,9 +81,9 @@ class LdapHelper implements LdapHelperContract
      *
      * Orders by location of the query string in the user's displayname, and then by displayname.
      * 
-     * @param  Illuminate\Support\Collection $users
+     * @param  \Illuminate\Support\Collection $users
      * @param  string $query_string
-     * @return Illuminate\Support\Collection
+     * @return \Illuminate\Support\Collection
      */
     protected function sortUsers($users, $query_string)
     {
@@ -96,7 +97,7 @@ class LdapHelper implements LdapHelperContract
     /**
      * Flattens the nested array of user attributes into one level.
      * 
-     * @param  Illuminate\Support\Collection $users
+     * @param  \Illuminate\Support\Collection $users
      * @param  array $fields
      * @return array
      */
@@ -115,7 +116,7 @@ class LdapHelper implements LdapHelperContract
      * @param  string $display_name The user's display name
      * @param  string $name         The user's name/uid
      *
-     * @return App\User|boolean
+     * @return User|boolean
      */
     public function getUser($name)
     {
@@ -132,8 +133,8 @@ class LdapHelper implements LdapHelperContract
     /**
      * Finds or creates a new local User based on an LDAP user.
      * 
-     * @param  Adldap\Models\User $ldap_user
-     * @return App\User
+     * @param  LdapUser $ldap_user
+     * @return User
      */
     protected function getUserFromLdapUser($ldap_user)
     {

@@ -9,7 +9,7 @@ class AppController extends Controller
     /**
      * Display the App Homepage.
      *
-     * @return index view
+     * @return \Illuminate\View\View view
      */
     public function index()
     {
@@ -19,7 +19,7 @@ class AppController extends Controller
     /**
      * Display the FAQ page.
      *
-     * @return index view
+     * @return \Illuminate\View\View view
      */
     public function faq()
     {

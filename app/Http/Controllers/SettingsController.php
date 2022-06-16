@@ -20,12 +20,13 @@ class SettingsController extends Controller
     /**
      * Show the settings for editing.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function edit()
     {
-        $settings = Setting::pluck('value', 'name')->toArray();
-        return view('settings', compact('settings'));
+        return view('settings', [
+            'settings' => Setting::pluck('value', 'name')->toArray(),
+        ]);
     }
 
     public function update(Request $request)
@@ -43,6 +44,13 @@ class SettingsController extends Controller
         return redirect()->route('app.settings.edit')->with('flash_message', 'Settings updated.');
     }
 
+    /**
+     * Update a setting image
+     *
+     * @param Request $request
+     * @param string $setting_name
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function updateImage(Request $request, $setting_name)
     {
         if ($request->hasFile($setting_name)) {

@@ -78,7 +78,7 @@ class User extends Authenticatable implements Auditable
     /**
      * Determine if this User owns the given model.
      * 
-     * @param  Illuminate\Database\Eloquent\Model $model
+     * @param  \Illuminate\Database\Eloquent\Model $model
      * @param  bool $check_delegators also check if the delegator(s) owns the given model
      * @return bool
      */
@@ -108,7 +108,7 @@ class User extends Authenticatable implements Auditable
     /**
      * Determine if this User has bookmarked the given model
      *
-     * @param  Illuminate\Database\Eloquent\Model $model
+     * @param  \Illuminate\Database\Eloquent\Model $model
      * @return bool
      */
     public function hasBookmarked($model)
@@ -126,19 +126,19 @@ class User extends Authenticatable implements Auditable
     /**
      * Bookmark the given model
      *
-     * @param  Illuminate\Database\Eloquent\Model $model
+     * @param  \Illuminate\Database\Eloquent\Model $model
      * @return void
      */
     public function bookmark($model)
     {
-        return $this->bookmarked($model)->attach($model);
+        $this->bookmarked($model)->attach($model);
     }
 
     /**
      * Un-bookmark the given model
      *
-     * @param  Illuminate\Database\Eloquent\Model $model
-     * @return void
+     * @param  \Illuminate\Database\Eloquent\Model $model
+     * @return int
      */
     public function unbookmark($model)
     {
@@ -220,7 +220,7 @@ class User extends Authenticatable implements Auditable
     /**
      * Virtual attribute to get additional schools for a user
      *
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Database\Eloquent\Collection|null
      */
     public function getAdditionalSchoolsAttribute()
     {
@@ -230,7 +230,7 @@ class User extends Authenticatable implements Auditable
     /**
      * Virtual attribute to get additional departments for a user
      *
-     * @return \Illuminate\Support\Collection
+     * @return array|null
      */
     public function getAdditionalDepartmentsAttribute()
     {
@@ -372,7 +372,7 @@ class User extends Authenticatable implements Auditable
     /**
      * User's current delegates that get reminders.
      *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function currentReminderDelegates()
     {

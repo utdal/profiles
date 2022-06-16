@@ -26,12 +26,14 @@
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.6",
         "beyondcode/laravel-dump-server": "^1.0",
-        "spatie/laravel-ignition": "^1.0",
         "fakerphp/faker": "^1.9.1",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.1",
         "phpunit/phpunit": "^9.5.10",
-        "sunra/php-simple-html-dom-parser": "1.5.1"
+        "psalm/plugin-laravel": "^2.0",
+        "spatie/laravel-ignition": "^1.0",
+        "sunra/php-simple-html-dom-parser": "1.5.1",
+        "vimeo/psalm": "^4.23"
     },
     "autoload": {
         "psr-4": {

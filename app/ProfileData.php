@@ -220,8 +220,8 @@ class ProfileData extends Model implements HasMedia, Auditable
     /**
      * Query scope for information
      *
-     * @param  Illuminate\Database\Query\Builder $query
-     * @return Illuminate\Database\Query\Builder
+     * @param  \Illuminate\Database\Query\Builder $query
+     * @return \Illuminate\Database\Query\Builder
      */
     public function scopeInformation($query)
     {
@@ -231,8 +231,8 @@ class ProfileData extends Model implements HasMedia, Auditable
     /**
      * Query scope for preparation
      *
-     * @param  Illuminate\Database\Query\Builder $query
-     * @return Illuminate\Database\Query\Builder
+     * @param  \Illuminate\Database\Query\Builder $query
+     * @return \Illuminate\Database\Query\Builder
      */
     public function scopePreparation($query)
     {
@@ -242,8 +242,8 @@ class ProfileData extends Model implements HasMedia, Auditable
     /**
      * Query scope for awards
      *
-     * @param  Illuminate\Database\Query\Builder $query
-     * @return Illuminate\Database\Query\Builder
+     * @param  \Illuminate\Database\Query\Builder $query
+     * @return \Illuminate\Database\Query\Builder
      */
     public function scopeAwards($query)
     {
@@ -253,8 +253,8 @@ class ProfileData extends Model implements HasMedia, Auditable
     /**
      * Query scope for
      *
-     * @param  Illuminate\Database\Query\Builder $query
-     * @return Illuminate\Database\Query\Builder
+     * @param  \Illuminate\Database\Query\Builder $query
+     * @return \Illuminate\Database\Query\Builder
      */
     public function scopeAreas($query)
     {
@@ -264,8 +264,8 @@ class ProfileData extends Model implements HasMedia, Auditable
     /**
      * Query scope for activities
      *
-     * @param  Illuminate\Database\Query\Builder $query
-     * @return Illuminate\Database\Query\Builder
+     * @param  \Illuminate\Database\Query\Builder $query
+     * @return \Illuminate\Database\Query\Builder
      */
     public function scopeActivities($query)
     {
@@ -275,8 +275,8 @@ class ProfileData extends Model implements HasMedia, Auditable
     /**
      * Query scope for news
      *
-     * @param  Illuminate\Database\Query\Builder $query
-     * @return Illuminate\Database\Query\Builder
+     * @param  \Illuminate\Database\Query\Builder $query
+     * @return \Illuminate\Database\Query\Builder
      */
     public function scopeNews($query)
     {
@@ -286,8 +286,8 @@ class ProfileData extends Model implements HasMedia, Auditable
     /**
      * Query scope for appointments
      *
-     * @param  Illuminate\Database\Query\Builder $query
-     * @return Illuminate\Database\Query\Builder
+     * @param  \Illuminate\Database\Query\Builder $query
+     * @return \Illuminate\Database\Query\Builder
      */
     public function scopeAppointments($query)
     {
@@ -297,8 +297,8 @@ class ProfileData extends Model implements HasMedia, Auditable
     /**
      * Query scope for publications
      *
-     * @param  Illuminate\Database\Query\Builder $query
-     * @return Illuminate\Database\Query\Builder
+     * @param  \Illuminate\Database\Query\Builder $query
+     * @return \Illuminate\Database\Query\Builder
      */
     public function scopePublications($query)
     {
@@ -308,8 +308,8 @@ class ProfileData extends Model implements HasMedia, Auditable
     /**
      * Query scope for affiliations
      *
-     * @param  Illuminate\Database\Query\Builder $query
-     * @return Illuminate\Database\Query\Builder
+     * @param  \Illuminate\Database\Query\Builder $query
+     * @return \Illuminate\Database\Query\Builder
      */
     public function scopeAffiliations($query)
     {
@@ -319,8 +319,8 @@ class ProfileData extends Model implements HasMedia, Auditable
     /**
      * Query scope for support
      *
-     * @param  Illuminate\Database\Query\Builder $query
-     * @return Illuminate\Database\Query\Builder
+     * @param  \Illuminate\Database\Query\Builder $query
+     * @return \Illuminate\Database\Query\Builder
      */
     public function scopeSupport($query)
     {
@@ -330,8 +330,8 @@ class ProfileData extends Model implements HasMedia, Auditable
     /**
      * Query scope for projects
      *
-     * @param  Illuminate\Database\Query\Builder $query
-     * @return Illuminate\Database\Query\Builder
+     * @param  \Illuminate\Database\Query\Builder $query
+     * @return \Illuminate\Database\Query\Builder
      */
     public function scopeProjects($query)
     {
@@ -341,8 +341,8 @@ class ProfileData extends Model implements HasMedia, Auditable
     /**
      * Query scope for presentations
      *
-     * @param  Illuminate\Database\Query\Builder $query
-     * @return Illuminate\Database\Query\Builder
+     * @param  \Illuminate\Database\Query\Builder $query
+     * @return \Illuminate\Database\Query\Builder
      */
     public function scopePresentations($query)
     {
@@ -352,8 +352,8 @@ class ProfileData extends Model implements HasMedia, Auditable
     /**
      * Query scope for additionals
      *
-     * @param  Illuminate\Database\Query\Builder $query
-     * @return Illuminate\Database\Query\Builder
+     * @param  \Illuminate\Database\Query\Builder $query
+     * @return \Illuminate\Database\Query\Builder
      */
     public function scopeAdditionals($query)
     {

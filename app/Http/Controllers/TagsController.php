@@ -27,7 +27,7 @@ class TagsController extends Controller
     /**
      * Show the index of all associated tags.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function index()
     {
@@ -67,7 +67,7 @@ class TagsController extends Controller
     /**
      * Save the tag in the database.
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -80,7 +80,7 @@ class TagsController extends Controller
     /**
      * Search for Tags.
      * 
-     * @param  TagSearchRequest $request
+     * @param  Request $request
      * @return array of tag names
      */
     public function search(Request $request)
@@ -93,8 +93,8 @@ class TagsController extends Controller
     /**
      * Update the tags on a model.
      *
-     * @param  TagRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
     public function update(Request $request)
     {

@@ -21,7 +21,7 @@ class IncrementStudentViews
     /**
      * Handle the event.
      *
-     * @param  object  $event
+     * @param  StudentViewed  $event
      * @return void
      */
     public function handle(StudentViewed $event)

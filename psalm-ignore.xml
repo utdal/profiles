@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.23.0@f1fe6ff483bf325c803df9f510d09a03fd796f88">
+  <file src="app/Exceptions/Handler.php">
+    <ForbiddenCode occurrences="1">
+      <code>shell_exec('git rev-parse --verify HEAD')</code>
+    </ForbiddenCode>
+    <InvalidDocblock occurrences="1">
+      <code>public function render($request, Throwable $e)</code>
+    </InvalidDocblock>
+  </file>
+  <file src="app/Helpers/LdapHelper.php">
+    <InvalidReturnStatement occurrences="1">
+      <code>$user</code>
+    </InvalidReturnStatement>
+    <InvalidReturnType occurrences="1">
+      <code>User</code>
+    </InvalidReturnType>
+  </file>
+  <file src="app/Http/Controllers/Testing/TestingController.php">
+    <InvalidTemplateParam occurrences="1">
+      <code>Profile::factory()-&gt;make()</code>
+    </InvalidTemplateParam>
+    <TooManyTemplateParams occurrences="1">
+      <code>Profile::factory()-&gt;make()</code>
+    </TooManyTemplateParams>
+  </file>
+  <file src="app/Http/Livewire/ProfileStudents.php">
+    <UndefinedThisPropertyAssignment occurrences="1">
+      <code>$this-&gt;students</code>
+    </UndefinedThisPropertyAssignment>
+  </file>
+  <file src="app/Http/Middleware/AuthorizeCreateProfile.php">
+    <UndefinedInterfaceMethod occurrences="2">
+      <code>authenticate</code>
+      <code>user</code>
+    </UndefinedInterfaceMethod>
+  </file>
+  <file src="app/Student.php">
+    <InvalidReturnStatement occurrences="3">
+      <code>$this-&gt;hasMany(StudentFeedback::class)-&gt;where('type', 'feedback')</code>
+      <code>$this-&gt;hasOne(StudentData::class)-&gt;where('type', 'research_profile')</code>
+      <code>$this-&gt;hasOne(StudentData::class)-&gt;where('type', 'stats')</code>
+    </InvalidReturnStatement>
+    <InvalidReturnType occurrences="3">
+      <code>\Illuminate\Database\Eloquent\Relations\HasMany</code>
+      <code>\Illuminate\Database\Eloquent\Relations\HasOne</code>
+      <code>\Illuminate\Database\Eloquent\Relations\HasOne</code>
+    </InvalidReturnType>
+  </file>
+  <file src="app/User.php">
+    <InvalidReturnStatement occurrences="5">
+      <code>$this-&gt;currentDelegates()-&gt;where('gets_reminders', '=', true)</code>
+      <code>$this-&gt;currentDelegators()-&gt;where('gets_reminders', '=', true)</code>
+    </InvalidReturnStatement>
+    <InvalidReturnType occurrences="5">
+      <code>\Illuminate\Database\Eloquent\Relations\BelongsToMany</code>
+      <code>\Illuminate\Database\Eloquent\Relations\BelongsToMany</code>
+      <code>\Illuminate\Database\Eloquent\Relations\BelongsToMany</code>
+      <code>\Illuminate\Database\Eloquent\Relations\BelongsToMany</code>
+      <code>\Illuminate\Database\Query\Builder</code>
+    </InvalidReturnType>
+  </file>
+</files>

@@ -8,10 +8,12 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
 use Sentry\State\Scope;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
 
@@ -47,54 +49,58 @@ class Handler extends ExceptionHandler
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param  \Exception  $exception
+     * @param  \Throwable  $e
      * @return void
      */
-    public function report(Throwable $exception)
+    public function report(Throwable $e)
     {
-        if ($this->shouldReport($exception)) {
+        if ($this->shouldReport($e)) {
             // Send reports to Sentry.io
             if ($this->shouldReportToSentry()) {
-                $this->reportToSentry($exception);
+                $this->reportToSentry($e);
             }
         }
 
-        parent::report($exception);
+        parent::report($e);
     }
 
     /**
      * Render an exception into an HTTP response.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
-     * @return \Illuminate\Http\Response
+     * @param  \Throwable  $e
+     * @return SymfonyResponse|JsonResponse;
      */
-    public function render($request, Throwable $exception)
+    public function render($request, Throwable $e)
     {
         // Show the LDAP error view if we can't bind to the LDAP server
-        if ($exception instanceof BindException) {
+        if ($e instanceof BindException) {
             return response()->view('errors.ldap', [], 500);
         }
 
         if ($request->is('api/*')) {
-            if ($exception instanceof AuthenticationException) {
+            if ($e instanceof AuthenticationException) {
                 return response()->json([
                     'errors' => ["Unauthorized."],
                 ], Response::HTTP_UNAUTHORIZED);
             }
-            if ($exception instanceof ModelNotFoundException) {
+            if ($e instanceof ModelNotFoundException) {
+                /** @var string */
+                $modelname = $e->getModel();
+                $model_basename = str_replace('App\\', '', $modelname);
+
                 return response()->json([
-                    'errors' => ['Entry for ' . str_replace('App\\', '', $exception->getModel()) . ' not found']
+                    'errors' => ["Entry for {$model_basename} not found"]
                 ], Response::HTTP_NOT_FOUND);
             }
-            if ($exception instanceof ValidationException) {
+            if ($e instanceof ValidationException) {
                 return response()->json([
-                    'errors' => $exception->errors()
+                    'errors' => $e->errors()
                 ], Response::HTTP_UNPROCESSABLE_ENTITY);
             }
         }
 
-        return parent::render($request, $exception);
+        return parent::render($request, $e);
     }
 
     /**
