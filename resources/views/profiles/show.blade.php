@@ -38,6 +38,7 @@
 						@if($information->title) <h6>{{ $information->title }}</h6> @endif
 						@if($information->secondary_title) <h6>{{ $information->secondary_title }}</h6> @endif
 						@if($information->tertiary_title) <h6>{{ $information->tertiary_title }}</h6> @endif
+						@if($information->profile_summary) <p class="profile_summary">{{ $information->profile_summary }}</p> @endif
 							<div>
 								@if($information->email)<i class="fa fa-fw fa-envelope" aria-label="Email address"></i> <a href="#" id="{{ Utils::obfuscateEmailAddress($information->email) }}" data-evaluate="profile-eml">&nbsp;</a><br>@endif
 								@if($information->phone)<i class="fa fa-fw fa-phone" aria-label="Phone number"></i> {{ $information->phone }}<br />@endif

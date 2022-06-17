@@ -37,6 +37,7 @@ class ProfileUpdateRequest extends FormRequest
             'public' => 'required|boolean',
             'data.*.data.title' => 'required|string',
             'data.*.data.email' => 'nullable|email',
+            'data.*.data.profile_summary' => 'nullable|between:1,280',
             'data.*.data.url' => 'nullable|url',
             'data.*.data.secondary_url' => 'nullable|url',
             'data.*.data.tertiary_url' => 'nullable|url',

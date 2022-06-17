@@ -64,6 +64,10 @@
 				<label for="data[{{$info->id}}][data][tertiary_title]">Tertiary Title</label>
 				<input type="text" class="form-control" name="data[{{$info->id}}][data][tertiary_title]" id="data[{{$info->id}}][data][tertiary_title]" value="{{$info->tertiary_title}}"  />
 			</div>
+			<div class="form-group">
+				<label for="data[{{$info->id}}][data][profile_summary]">Profile Summary</label><small class="gray"> (Limit 280 Characters) </small>
+				<textarea type="text" class="form-control" name="data[{{$info->id}}][data][profile_summary]" id="data[{{$info->id}}][data][profile_summary]" maxlength="280">{{$info->profile_summary}}</textarea>
+			</div>
 			<div class="row">
 					<div class="form-group col col-sm-6 col-12">
 						<label for="data[{{$info->id}}][data][email]">Email</label>
