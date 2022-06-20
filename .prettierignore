@@ -1,0 +1,23 @@
+# Ignore vendors and settings
+composer.json
+composer.lock
+package.json
+package-lock.json
+.github
+.vscode
+.idea
+_ide_helper*
+**/vendor
+
+# compiled assets
+public/css
+public/js
+
+# app storage
+**/storage
+
+# framework and tool files
+**/bootstrap
+server.php
+deploy.php
+public/index.php
