@@ -23,6 +23,30 @@ window.this_url = window.this_url || '';
 var profiles = function ($, undefined) {
   /** @type {string} the current URL */
   var this_url = window.this_url;
+  /** @type {Object} config settings */
+
+  var config = {
+    datepicker: {
+      year: {
+        autoclose: true,
+        assumeNearbyYear: true,
+        clearBtn: true,
+        forceParse: false,
+        keepEmptyValues: true,
+        minViewMode: 2,
+        format: 'yyyy'
+      },
+      month: {
+        autoclose: true,
+        assumeNearbyYear: true,
+        clearBtn: true,
+        forceParse: false,
+        keepEmptyValues: true,
+        minViewMode: 1,
+        format: 'yyyy/mm'
+      }
+    }
+  };
   /**
    * Checks to see if an input is empty.
    *
@@ -74,7 +98,7 @@ var profiles = function ($, undefined) {
     var item_template = document.querySelector('form .record');
 
     if (item_template) {
-      var _new_item$querySelect, _new_item$querySelect2, _new_item$querySelect3, _new_item$querySelect4, _new_item$querySelect5, _new_item$querySelect6, _new_item$querySelect7, _new_item$querySelect8;
+      var _new_item$querySelect, _new_item$querySelect2, _new_item$querySelect3, _new_item$querySelect4, _new_item$querySelect5, _new_item$querySelect6, _new_item$querySelect7, _new_item$querySelect8, _new_item$querySelect9, _new_item$querySelect10;
 
       var old_id = item_template.dataset.rowId;
       var new_id = String(item_template.parentElement.dataset.nextRowId--);
@@ -115,6 +139,12 @@ var profiles = function ($, undefined) {
         $(el).on('change', function (event) {
           return preview_selected_image(event);
         });
+      });
+      (_new_item$querySelect9 = new_item.querySelectorAll('.datepicker.year')) === null || _new_item$querySelect9 === void 0 ? void 0 : _new_item$querySelect9.forEach(function (el) {
+        $(el).datepicker(config.datepicker.year);
+      });
+      (_new_item$querySelect10 = new_item.querySelectorAll('.datepicker.month')) === null || _new_item$querySelect10 === void 0 ? void 0 : _new_item$querySelect10.forEach(function (el) {
+        $(el).datepicker(config.datepicker.month);
       });
       $(new_item).hide();
 
@@ -447,16 +477,17 @@ var profiles = function ($, undefined) {
   };
 
   return {
-    toast: toast,
     add_row: add_row,
     clear_row: clear_row,
-    preview_selected_image: preview_selected_image,
-    toggle_class: toggle_class,
-    toggle_show: toggle_show,
-    replace_icon: replace_icon,
+    config: config,
     deobfuscate_mail_links: deobfuscate_mail_links,
+    preview_selected_image: preview_selected_image,
+    replace_icon: replace_icon,
     registerTagEditors: registerTagEditors,
-    registerProfilePickers: registerProfilePickers
+    registerProfilePickers: registerProfilePickers,
+    toast: toast,
+    toggle_class: toggle_class,
+    toggle_show: toggle_show
   };
 }(jQuery);
 
@@ -465,24 +496,8 @@ $(function () {
   // date-picker
   __webpack_require__(/*! bootstrap-datepicker */ "./node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.js");
 
-  $('.datepicker.year').datepicker({
-    autoclose: true,
-    assumeNearbyYear: true,
-    clearBtn: true,
-    forceParse: false,
-    keepEmptyValues: true,
-    minViewMode: 2,
-    format: 'yyyy'
-  });
-  $('.datepicker.month').datepicker({
-    autoclose: true,
-    assumeNearbyYear: true,
-    clearBtn: true,
-    forceParse: false,
-    keepEmptyValues: true,
-    minViewMode: 1,
-    format: 'yyyy/mm'
-  }); //show preview of uploaded image
+  $('.datepicker.year').datepicker(profiles.config.datepicker.year);
+  $('.datepicker.month').datepicker(profiles.config.datepicker.month); //show preview of uploaded image
 
   $('input[type="file"]').on('change', function (e) {
     return profiles.preview_selected_image(e);

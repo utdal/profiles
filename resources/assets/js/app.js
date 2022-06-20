@@ -14,6 +14,30 @@ var profiles = (function ($, undefined) {
     /** @type {string} the current URL */
     var this_url = window.this_url;
 
+    /** @type {Object} config settings */
+    let config = {
+        datepicker: {
+            year: {
+                autoclose: true,
+                assumeNearbyYear: true,
+                clearBtn: true,
+                forceParse: false,
+                keepEmptyValues: true,
+                minViewMode: 2,
+                format: 'yyyy',
+            },
+            month: {
+                autoclose: true,
+                assumeNearbyYear: true,
+                clearBtn: true,
+                forceParse: false,
+                keepEmptyValues: true,
+                minViewMode: 1,
+                format: 'yyyy/mm',
+            },
+        },
+    };
+
     /**
      * Checks to see if an input is empty.
      *
@@ -95,6 +119,12 @@ var profiles = (function ($, undefined) {
             });
             new_item.querySelectorAll('input[type="file"][accept^="image"]')?.forEach((el) => {
                 $(el).on('change', (event) => preview_selected_image(event));
+            });
+            new_item.querySelectorAll('.datepicker.year')?.forEach((el) => {
+                $(el).datepicker(config.datepicker.year);
+            });
+            new_item.querySelectorAll('.datepicker.month')?.forEach((el) => {
+                $(el).datepicker(config.datepicker.month);
             });
 
             $(new_item).hide();
@@ -393,16 +423,17 @@ var profiles = (function ($, undefined) {
     }
 
     return {
-        toast: toast,
         add_row: add_row,
         clear_row: clear_row,
-        preview_selected_image: preview_selected_image,
-        toggle_class: toggle_class,
-        toggle_show: toggle_show,
-        replace_icon: replace_icon,
+        config: config,
         deobfuscate_mail_links: deobfuscate_mail_links,
+        preview_selected_image: preview_selected_image,
+        replace_icon: replace_icon,
         registerTagEditors: registerTagEditors,
         registerProfilePickers: registerProfilePickers,
+        toast: toast,
+        toggle_class: toggle_class,
+        toggle_show: toggle_show,
     };
 
 })(jQuery);
@@ -413,26 +444,8 @@ $(function() {
 
     // date-picker
     require('bootstrap-datepicker');
-
-  $('.datepicker.year').datepicker({
-      autoclose: true,
-      assumeNearbyYear: true,
-      clearBtn: true,
-      forceParse: false,
-      keepEmptyValues: true,
-      minViewMode: 2,
-      format: 'yyyy'
-  });
-
-  $('.datepicker.month').datepicker({
-      autoclose: true,
-      assumeNearbyYear: true,
-      clearBtn: true,
-      forceParse: false,
-      keepEmptyValues: true,
-      minViewMode: 1,
-      format: 'yyyy/mm'
-  });
+    $('.datepicker.year').datepicker(profiles.config.datepicker.year);
+    $('.datepicker.month').datepicker(profiles.config.datepicker.month);
 
     //show preview of uploaded image
     $('input[type="file"]').on('change', (e) => profiles.preview_selected_image(e));
