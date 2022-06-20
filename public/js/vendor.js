@@ -9,17 +9,17 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "icon": () => (/* binding */ icon),
-/* harmony export */   "noAuto": () => (/* binding */ noAuto),
 /* harmony export */   "config": () => (/* binding */ config),
-/* harmony export */   "toHtml": () => (/* binding */ toHtml),
-/* harmony export */   "layer": () => (/* binding */ layer),
-/* harmony export */   "text": () => (/* binding */ text),
 /* harmony export */   "counter": () => (/* binding */ counter),
-/* harmony export */   "library": () => (/* binding */ library),
 /* harmony export */   "dom": () => (/* binding */ dom),
+/* harmony export */   "findIconDefinition": () => (/* binding */ findIconDefinition),
+/* harmony export */   "icon": () => (/* binding */ icon),
+/* harmony export */   "layer": () => (/* binding */ layer),
+/* harmony export */   "library": () => (/* binding */ library),
+/* harmony export */   "noAuto": () => (/* binding */ noAuto),
 /* harmony export */   "parse": () => (/* binding */ parse),
-/* harmony export */   "findIconDefinition": () => (/* binding */ findIconDefinition)
+/* harmony export */   "text": () => (/* binding */ text),
+/* harmony export */   "toHtml": () => (/* binding */ toHtml)
 /* harmony export */ });
 /*!
  * Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com
@@ -2469,8 +2469,6 @@ var autoReplace = function autoReplace() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "fab": () => (/* binding */ _iconsCache),
-/* harmony export */   "prefix": () => (/* binding */ prefix),
 /* harmony export */   "fa500px": () => (/* binding */ fa500px),
 /* harmony export */   "faAccessibleIcon": () => (/* binding */ faAccessibleIcon),
 /* harmony export */   "faAccusoft": () => (/* binding */ faAccusoft),
@@ -2927,7 +2925,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "faYoast": () => (/* binding */ faYoast),
 /* harmony export */   "faYoutube": () => (/* binding */ faYoutube),
 /* harmony export */   "faYoutubeSquare": () => (/* binding */ faYoutubeSquare),
-/* harmony export */   "faZhihu": () => (/* binding */ faZhihu)
+/* harmony export */   "faZhihu": () => (/* binding */ faZhihu),
+/* harmony export */   "fab": () => (/* binding */ _iconsCache),
+/* harmony export */   "prefix": () => (/* binding */ prefix)
 /* harmony export */ });
 /*!
  * Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com
@@ -5693,8 +5693,6 @@ var _iconsCache = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "far": () => (/* binding */ _iconsCache),
-/* harmony export */   "prefix": () => (/* binding */ prefix),
 /* harmony export */   "faAddressBook": () => (/* binding */ faAddressBook),
 /* harmony export */   "faAddressCard": () => (/* binding */ faAddressCard),
 /* harmony export */   "faAngry": () => (/* binding */ faAngry),
@@ -5846,7 +5844,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "faWindowClose": () => (/* binding */ faWindowClose),
 /* harmony export */   "faWindowMaximize": () => (/* binding */ faWindowMaximize),
 /* harmony export */   "faWindowMinimize": () => (/* binding */ faWindowMinimize),
-/* harmony export */   "faWindowRestore": () => (/* binding */ faWindowRestore)
+/* harmony export */   "faWindowRestore": () => (/* binding */ faWindowRestore),
+/* harmony export */   "far": () => (/* binding */ _iconsCache),
+/* harmony export */   "prefix": () => (/* binding */ prefix)
 /* harmony export */ });
 /*!
  * Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com
@@ -6782,8 +6782,6 @@ var _iconsCache = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "fas": () => (/* binding */ _iconsCache),
-/* harmony export */   "prefix": () => (/* binding */ prefix),
 /* harmony export */   "faAd": () => (/* binding */ faAd),
 /* harmony export */   "faAddressBook": () => (/* binding */ faAddressBook),
 /* harmony export */   "faAddressCard": () => (/* binding */ faAddressCard),
@@ -7785,7 +7783,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "faWrench": () => (/* binding */ faWrench),
 /* harmony export */   "faXRay": () => (/* binding */ faXRay),
 /* harmony export */   "faYenSign": () => (/* binding */ faYenSign),
-/* harmony export */   "faYinYang": () => (/* binding */ faYinYang)
+/* harmony export */   "faYinYang": () => (/* binding */ faYinYang),
+/* harmony export */   "fas": () => (/* binding */ _iconsCache),
+/* harmony export */   "prefix": () => (/* binding */ prefix)
 /* harmony export */ });
 /*!
  * Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com
@@ -39146,7 +39146,7 @@ Popper.Defaults = Defaults;
 
 /* provided dependency */ var __webpack_provided_window_dot_jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/src/jquery.js");
 /**!
- * Sortable 1.14.0
+ * Sortable 1.15.0
  * @author	RubaXa   <trash@rubaxa.org>
  * @author	owenm    <owen23355@gmail.com>
  * @license MIT
@@ -39312,7 +39312,7 @@ Popper.Defaults = Defaults;
     throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
 
-  var version = "1.14.0";
+  var version = "1.15.0";
 
   function userAgent(pattern) {
     if (typeof window !== 'undefined' && window.navigator) {
@@ -40319,7 +40319,7 @@ Popper.Defaults = Defaults;
   }; // #1184 fix - Prevent click event on fallback if dragged but item not changed position
 
 
-  if (documentExists) {
+  if (documentExists && !ChromeForAndroid) {
     document.addEventListener('click', function (evt) {
       if (ignoreNextClick) {
         evt.preventDefault();
@@ -40938,6 +40938,7 @@ Popper.Defaults = Defaults;
 
       if (!Sortable.eventCanceled) {
         cloneEl = clone(dragEl);
+        cloneEl.removeAttribute("id");
         cloneEl.draggable = false;
         cloneEl.style['will-change'] = '';
 
@@ -41179,7 +41180,14 @@ Popper.Defaults = Defaults;
 
           if (_onMove(rootEl, el, dragEl, dragRect, target, targetRect, evt, !!target) !== false) {
             capture();
-            el.appendChild(dragEl);
+
+            if (elLastChild && elLastChild.nextSibling) {
+              // the last draggable element is not the last node
+              el.insertBefore(dragEl, elLastChild.nextSibling);
+            } else {
+              el.appendChild(dragEl);
+            }
+
             parentEl = el; // actualization
 
             changed();
@@ -42324,11 +42332,13 @@ Popper.Defaults = Defaults;
         }
       }
 
-      if (sortable.options.supportPointer) {
-        on(document, 'pointerup', this._deselectMultiDrag);
-      } else {
-        on(document, 'mouseup', this._deselectMultiDrag);
-        on(document, 'touchend', this._deselectMultiDrag);
+      if (!sortable.options.avoidImplicitDeselect) {
+        if (sortable.options.supportPointer) {
+          on(document, 'pointerup', this._deselectMultiDrag);
+        } else {
+          on(document, 'mouseup', this._deselectMultiDrag);
+          on(document, 'touchend', this._deselectMultiDrag);
+        }
       }
 
       on(document, 'keydown', this._checkKeyDown);
@@ -42336,6 +42346,7 @@ Popper.Defaults = Defaults;
       this.defaults = {
         selectedClass: 'sortable-selected',
         multiDragKey: null,
+        avoidImplicitDeselect: false,
         setData: function setData(dataTransfer, dragEl) {
           var data = '';
 
@@ -42626,7 +42637,7 @@ Popper.Defaults = Defaults;
               rootEl: rootEl,
               name: 'select',
               targetEl: dragEl$1,
-              originalEvt: evt
+              originalEvent: evt
             }); // Modifier activated, select from last to dragEl
 
             if (evt.shiftKey && lastMultiDragSelect && sortable.el.contains(lastMultiDragSelect)) {
@@ -42655,7 +42666,7 @@ Popper.Defaults = Defaults;
                     rootEl: rootEl,
                     name: 'select',
                     targetEl: children[i],
-                    originalEvt: evt
+                    originalEvent: evt
                   });
                 }
               }
@@ -42672,7 +42683,7 @@ Popper.Defaults = Defaults;
               rootEl: rootEl,
               name: 'deselect',
               targetEl: dragEl$1,
-              originalEvt: evt
+              originalEvent: evt
             });
           }
         } // Multi-drag drop
@@ -42783,7 +42794,7 @@ Popper.Defaults = Defaults;
             rootEl: this.sortable.el,
             name: 'deselect',
             targetEl: el,
-            originalEvt: evt
+            originalEvent: evt
           });
         }
       },

@@ -36,13 +36,85 @@ var profiles = (function ($, undefined) {
     }
 
     /**
+     * Sets img src to selected file object
+     *
+     * @param {Event} event the triggered event
+     */
+    const preview_selected_image = function (event) {
+        const file_input = event.target;
+        let id = file_input.id.replace(/\[/g, '\\[').replace(/\]/g, '\\]');
+        $(`label[for="${id}"]`)
+            .addClass('active')
+            .text(file_input.files[0].name);
+        $(`#${id}-img`).attr('src', window.URL.createObjectURL(file_input.files[0]));
+        $(file_input).siblings('.invalid-feedback').removeClass('d-block');
+    };
+
+    /**
+     * Adds a new item input row
+     *
+     * @param {Event} event the triggered event
+     * @this {HTMLElement} the DOM element that was clicked
+     */
+    const add_row = function(event) {
+        const options = event.target.dataset;
+        const item_template = document.querySelector('form .record');
+
+        if (item_template) {
+            const old_id = item_template.dataset.rowId;
+            const new_id = String(item_template.parentElement.dataset.nextRowId--);
+            let new_item = item_template.cloneNode(true);
+            new_item.dataset.rowId = new_id;
+
+            new_item.querySelectorAll('input:not([type="button"]), textarea, select')?.forEach((el) => {
+                el.id = el.id.replace(old_id, new_id);
+                el.setAttribute('name', el.name.replace(old_id, new_id));
+                el.setAttribute('value', '');
+                el.value = '';
+            });
+            new_item.querySelectorAll(`input[type="hidden"][name$="\[id\]"]`)?.forEach((el) => {
+                el.id = el.name;
+                el.value = new_id;
+            });
+            new_item.querySelectorAll('label')?.forEach((el) => {
+                el.setAttribute('for', el.getAttribute('for')?.replace(old_id, new_id));
+            });
+            new_item.querySelectorAll('trix-editor')?.forEach((el) => {
+                el.setAttribute('input', el.getAttribute('input').replace(old_id, new_id));
+            });
+            new_item.querySelectorAll('img')?.forEach((el) => {
+                el.id = el.id.replace(old_id, new_id);
+                el.src = '';
+            });
+            new_item.querySelectorAll('.custom-file-label')?.forEach((el) => {
+                el.id = el.id.replace(old_id, new_id);
+                el.innerHTML = 'Select an image';
+            });
+            new_item.querySelectorAll('.actions .trash')?.forEach((el) => {
+                $(el).on('click', () => clear_row(el));
+            });
+            new_item.querySelectorAll('input[type="file"][accept^="image"]')?.forEach((el) => {
+                $(el).on('change', (event) => preview_selected_image(event));
+            });
+
+            $(new_item).hide();
+            if ('insertType' in options && options.insertType === 'prepend') {
+                item_template.parentElement.prepend(new_item);
+            } else {
+                item_template.parentElement.append(new_item);
+            }
+            $(new_item).slideDown();
+        }
+    }
+
+    /**
      * Clears an input text or textarea row
      *
      * @param {HTMLElement} elem
      */
     var clear_row = function (elem) {
         parent_elem = $(elem).parent().parent();
-        parent_elem.hide().find("input[type=text], input[type=url], input[type=month], input.clearable, textarea, select").val('');
+        parent_elem.slideUp().find("input[type=text], input[type=url], input[type=month], input.clearable, textarea, select").val('');
     };
 
     /**
@@ -322,7 +394,9 @@ var profiles = (function ($, undefined) {
 
     return {
         toast: toast,
+        add_row: add_row,
         clear_row: clear_row,
+        preview_selected_image: preview_selected_image,
         toggle_class: toggle_class,
         toggle_show: toggle_show,
         replace_icon: replace_icon,
@@ -335,7 +409,7 @@ var profiles = (function ($, undefined) {
 
 window.profiles = profiles;
 
-$(document).ready(function() {
+$(function() {
 
     // date-picker
     require('bootstrap-datepicker');
@@ -361,12 +435,7 @@ $(document).ready(function() {
   });
 
     //show preview of uploaded image
-    $('input[type="file"]').on('change', function() {
-        let id = this.id.replace(/\[/g, '\\[').replace(/\]/g, '\\]');
-        $('label[for="' + id + '"]').addClass('active').text(this.files[0].name);
-        $('#' + id + '-img').attr('src', window.URL.createObjectURL(this.files[0]));
-        $(this).siblings('.invalid-feedback').removeClass('d-block');
-    });
+    $('input[type="file"]').on('change', (e) => profiles.preview_selected_image(e));
 
   //enable drag and drop sorting for items with sotable class
 	if($('.sortable').length > 0){
@@ -382,6 +451,8 @@ $(document).ready(function() {
 	$('.actions .trash').on('click', function(e) {
 		  profiles.clear_row(this);
 	});
+
+    $('[data-toggle="add_row"]').on('click', (e) => profiles.add_row(e));
 
 	$('.back.btn').on('click', function(e) {
 		  window.history.go(-1);
