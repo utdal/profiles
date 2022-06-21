@@ -8,9 +8,11 @@
 		margin-bottom: 30px;
 		box-shadow: 2px 2px 4px $gray-300;
 
-		.profile_summary{
-			color: $gray-600;
-			font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+		.profile_summary {
+			color: $gray;
+			font-weight: 300;
+			font-size: 1.05rem;
+			margin-top: 1.7rem;
 		}
 	}
 

@@ -29,7 +29,7 @@
 				<div class="@if($information->fancy_header)col-lg-5 @else col-md-7 col-sm-6 @endif">
 					<div class="contact_info">
 
-						<h2>{{ $profile->name }}
+						<h2 class="mt-sm-0">{{ $profile->name }}
 							@can('delete', $profile)<a class="btn btn-danger btn-sm" href="{{ route('profiles.confirm-delete', [ $profile ]) }}" title="Archive"><i class="fas fa-archive"></i> Archive</a>@endcan 
 							@if($editable)<a class="btn btn-primary btn-sm" href="{{ route('profiles.edit', [$profile->slug, 'information']) }}" title="Edit"><i class="fas fa-edit"></i> Edit</a>@endif
 							<span title="Bookmark"><livewire:bookmark-button :model="$profile"></span>

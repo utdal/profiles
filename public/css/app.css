@@ -10850,8 +10850,10 @@ footer > ul {
   box-shadow: 2px 2px 4px #dee2e6;
 }
 .profile .profile-header .profile_summary {
-  color: #6c757d;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  color: #555555;
+  font-weight: 300;
+  font-size: 1.05rem;
+  margin-top: 1.7rem;
 }
 .profile .profile_photo {
   width: 100%;
