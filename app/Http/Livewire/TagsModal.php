@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use Spatie\Tags\Tag;
@@ -40,13 +41,22 @@ class TagsModal extends Component
         $this->tags = $this->selected_tags->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE);
     }
 
+    /**
+     * Possible tags.
+     * 
+     * This is a computed property because Livewire doesn't
+     * handle groupBy well in native properties.
+     *
+     * @return EloquentCollection
+     */
     public function getPossibleTagsProperty()
     {
-        // This is a computed property because Livewire doesn't
-        // handle groupBy well in native properties.
-        return Tag::where('type', $this->tags_type)
+        /** @var EloquentCollection */
+        $tags = Tag::where('type', $this->tags_type)
             ->orderBy('name->en')
-            ->get()
+            ->get();
+
+        return $tags
             ->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)
             ->groupBy(function ($tag, $key) {
                 return strtoupper($tag->name[0]);
