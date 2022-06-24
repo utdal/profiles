@@ -6,6 +6,7 @@
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
     errorBaseline="psalm-ignore.xml"
+    cacheDirectory="/tmp/psalm"
 >
     <plugins>
         <pluginClass class="Psalm\LaravelPlugin\Plugin"/>

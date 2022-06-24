@@ -8,7 +8,7 @@
         "php": "^8.0.2",
         "adldap2/adldap2-laravel": "^6.0.8",
         "doctrine/dbal": "^2.10.0",
-        "guzzlehttp/guzzle": "^7.2",
+        "guzzlehttp/guzzle": "^7.4.5",
         "laravel/framework": "^9.2",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^3.0",

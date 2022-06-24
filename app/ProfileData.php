@@ -160,7 +160,7 @@ class ProfileData extends Model implements HasMedia, Auditable
      *
      * @param string $type
      * @param string $key
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Support\Collection<int, string>
      */
     public static function uniqueValuesFor(string $type, string $key)
     {

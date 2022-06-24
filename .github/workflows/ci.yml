@@ -65,6 +65,7 @@ jobs:
 
       - name: Cache composer dependencies
         uses: actions/cache@v3
+        id: cache-composer-dependencies
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           # Use composer.json for key, if composer.lock is not committed.
@@ -95,8 +96,16 @@ jobs:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
           REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
 
+      - name: Cache PSALM
+        uses: actions/cache@v3
+        id: cache-psalm
+        with:
+            path: /tmp/psalm
+            key: ${{ runner.os }}-psalm-${{ hashFiles('**/app/**', '**/config/**', '**/database/**', '**/resources/views/**', '**/routes/**', '**/tests/**') }}
+            restore-keys: ${{ runner.os }}-symfony-
+
       - name: Static analyze code (PSALM)
-        run: vendor/bin/psalm
+        run: vendor/bin/psalm --long-progress
 
   profiles_security:
     name: Profiles Security Checks
@@ -109,7 +118,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 16
 
       - name: Cache PHP security DB
         uses: actions/cache@v2
