@@ -102,7 +102,7 @@ jobs:
         with:
             path: /tmp/psalm
             key: ${{ runner.os }}-psalm-${{ hashFiles('**/app/**', '**/config/**', '**/database/**', '**/resources/views/**', '**/routes/**', '**/tests/**') }}
-            restore-keys: ${{ runner.os }}-symfony-
+            restore-keys: ${{ runner.os }}-psalm-
 
       - name: Static analyze code (PSALM)
         run: vendor/bin/psalm --long-progress
