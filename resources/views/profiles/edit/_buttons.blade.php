@@ -1,6 +1,10 @@
 <div class="row">
-  <div class="col">
-    {!! Form::submit('Save', array('class' => 'btn btn-primary edit-button')) !!}
-    <a href="{{ $profile->url }}" class='btn btn-light edit-button'>Cancel</a>
-  </div>
+    <div class="col text-right">
+        <a href="{{ $profile->url }}" class="btn btn-light mt-4 mr-3">
+            <i class="fas fa-times"></i> Cancel
+        </a>
+        <button type="submit" class="btn btn-primary mt-4 mr-3">
+            <i class="fas fa-fw fa-save"></i> Save
+        </button>
+    </div>
 </div>

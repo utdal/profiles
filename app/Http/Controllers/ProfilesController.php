@@ -240,20 +240,21 @@ class ProfilesController extends Controller
     {
 
         //dont manage auto-managed publications
-        if($section == 'publications' && $profile->hasOrcidManagedPublications()){
+        if ($section == 'publications' && $profile->hasOrcidManagedPublications()) {
             $profile->updateORCID();
-            return redirect()->route('profiles.show', $profile->slug)->with('flash_message', 'Publications updated via ORCID.');
+            return redirect()
+                ->route('profiles.show', $profile->slug)
+                ->with('flash_message', 'Publications updated via ORCID.');
         }
-
 
         $data = $profile->data()->$section()->get();
 
-        if($section != 'information'){
-            for($i = -1; $i > -10; $i--){
-                $record = new ProfileData;
-                $record->id = $i;
-                $data->add($record);
-            }
+        // if no data, include one item to use as a template
+        if ($section != 'information' && $data->isEmpty()) {
+            $record = new ProfileData();
+            $record->id = 0;
+            $record->public = true;
+            $data->push($record);
         }
 
         return view('profiles.edit', compact('profile', 'section', 'data'));

@@ -8,7 +8,7 @@
 
 /* provided dependency */ var jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/src/jquery.js");
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/src/jquery.js");
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -23,6 +23,30 @@ window.this_url = window.this_url || '';
 var profiles = function ($, undefined) {
   /** @type {string} the current URL */
   var this_url = window.this_url;
+  /** @type {Object} config settings */
+
+  var config = {
+    datepicker: {
+      year: {
+        autoclose: true,
+        assumeNearbyYear: true,
+        clearBtn: true,
+        forceParse: false,
+        keepEmptyValues: true,
+        minViewMode: 2,
+        format: 'yyyy'
+      },
+      month: {
+        autoclose: true,
+        assumeNearbyYear: true,
+        clearBtn: true,
+        forceParse: false,
+        keepEmptyValues: true,
+        minViewMode: 1,
+        format: 'yyyy/mm'
+      }
+    }
+  };
   /**
    * Checks to see if an input is empty.
    *
@@ -48,6 +72,92 @@ var profiles = function ($, undefined) {
     }
   };
   /**
+   * Sets img src to selected file object
+   *
+   * @param {Event} event the triggered event
+   */
+
+
+  var preview_selected_image = function preview_selected_image(event) {
+    var file_input = event.target;
+    var id = file_input.id.replace(/\[/g, '\\[').replace(/\]/g, '\\]');
+    $("label[for=\"".concat(id, "\"]")).addClass('active').text(file_input.files[0].name);
+    $("#".concat(id, "-img")).attr('src', window.URL.createObjectURL(file_input.files[0]));
+    $(file_input).siblings('.invalid-feedback').removeClass('d-block');
+  };
+  /**
+   * Adds a new item input row
+   *
+   * @param {Event} event the triggered event
+   * @this {HTMLElement} the DOM element that was clicked
+   */
+
+
+  var add_row = function add_row(event) {
+    var options = event.target.dataset;
+    var item_template = document.querySelector('form .record');
+
+    if (item_template) {
+      var _new_item$querySelect, _new_item$querySelect2, _new_item$querySelect3, _new_item$querySelect4, _new_item$querySelect5, _new_item$querySelect6, _new_item$querySelect7, _new_item$querySelect8, _new_item$querySelect9, _new_item$querySelect10;
+
+      var old_id = item_template.dataset.rowId;
+      var new_id = String(item_template.parentElement.dataset.nextRowId--);
+      var new_item = item_template.cloneNode(true);
+      new_item.dataset.rowId = new_id;
+      (_new_item$querySelect = new_item.querySelectorAll('input:not([type="button"]), textarea, select')) === null || _new_item$querySelect === void 0 ? void 0 : _new_item$querySelect.forEach(function (el) {
+        el.id = el.id.replace(old_id, new_id);
+        el.setAttribute('name', el.name.replace(old_id, new_id));
+        el.setAttribute('value', '');
+        el.value = '';
+      });
+      (_new_item$querySelect2 = new_item.querySelectorAll("input[type=\"hidden\"][name$=\"[id]\"]")) === null || _new_item$querySelect2 === void 0 ? void 0 : _new_item$querySelect2.forEach(function (el) {
+        el.id = el.name;
+        el.value = new_id;
+      });
+      (_new_item$querySelect3 = new_item.querySelectorAll('label')) === null || _new_item$querySelect3 === void 0 ? void 0 : _new_item$querySelect3.forEach(function (el) {
+        var _el$getAttribute;
+
+        el.setAttribute('for', (_el$getAttribute = el.getAttribute('for')) === null || _el$getAttribute === void 0 ? void 0 : _el$getAttribute.replace(old_id, new_id));
+      });
+      (_new_item$querySelect4 = new_item.querySelectorAll('trix-editor')) === null || _new_item$querySelect4 === void 0 ? void 0 : _new_item$querySelect4.forEach(function (el) {
+        el.setAttribute('input', el.getAttribute('input').replace(old_id, new_id));
+      });
+      (_new_item$querySelect5 = new_item.querySelectorAll('img')) === null || _new_item$querySelect5 === void 0 ? void 0 : _new_item$querySelect5.forEach(function (el) {
+        el.id = el.id.replace(old_id, new_id);
+        el.src = '';
+      });
+      (_new_item$querySelect6 = new_item.querySelectorAll('.custom-file-label')) === null || _new_item$querySelect6 === void 0 ? void 0 : _new_item$querySelect6.forEach(function (el) {
+        el.id = el.id.replace(old_id, new_id);
+        el.innerHTML = 'Select an image';
+      });
+      (_new_item$querySelect7 = new_item.querySelectorAll('.actions .trash')) === null || _new_item$querySelect7 === void 0 ? void 0 : _new_item$querySelect7.forEach(function (el) {
+        $(el).on('click', function () {
+          return clear_row(el);
+        });
+      });
+      (_new_item$querySelect8 = new_item.querySelectorAll('input[type="file"][accept^="image"]')) === null || _new_item$querySelect8 === void 0 ? void 0 : _new_item$querySelect8.forEach(function (el) {
+        $(el).on('change', function (event) {
+          return preview_selected_image(event);
+        });
+      });
+      (_new_item$querySelect9 = new_item.querySelectorAll('.datepicker.year')) === null || _new_item$querySelect9 === void 0 ? void 0 : _new_item$querySelect9.forEach(function (el) {
+        $(el).datepicker(config.datepicker.year);
+      });
+      (_new_item$querySelect10 = new_item.querySelectorAll('.datepicker.month')) === null || _new_item$querySelect10 === void 0 ? void 0 : _new_item$querySelect10.forEach(function (el) {
+        $(el).datepicker(config.datepicker.month);
+      });
+      $(new_item).hide();
+
+      if ('insertType' in options && options.insertType === 'prepend') {
+        item_template.parentElement.prepend(new_item);
+      } else {
+        item_template.parentElement.append(new_item);
+      }
+
+      $(new_item).slideDown();
+    }
+  };
+  /**
    * Clears an input text or textarea row
    *
    * @param {HTMLElement} elem
@@ -56,7 +166,7 @@ var profiles = function ($, undefined) {
 
   var clear_row = function clear_row(elem) {
     parent_elem = $(elem).parent().parent();
-    parent_elem.hide().find("input[type=text], input[type=url], input[type=month], input.clearable, textarea, select").val('');
+    parent_elem.slideUp().find("input[type=text], input[type=url], input[type=month], input.clearable, textarea, select").val('');
   };
   /**
    * Toggles a class on an element or specified target.
@@ -367,46 +477,30 @@ var profiles = function ($, undefined) {
   };
 
   return {
-    toast: toast,
+    add_row: add_row,
     clear_row: clear_row,
-    toggle_class: toggle_class,
-    toggle_show: toggle_show,
-    replace_icon: replace_icon,
+    config: config,
     deobfuscate_mail_links: deobfuscate_mail_links,
+    preview_selected_image: preview_selected_image,
+    replace_icon: replace_icon,
     registerTagEditors: registerTagEditors,
-    registerProfilePickers: registerProfilePickers
+    registerProfilePickers: registerProfilePickers,
+    toast: toast,
+    toggle_class: toggle_class,
+    toggle_show: toggle_show
   };
 }(jQuery);
 
 window.profiles = profiles;
-$(document).ready(function () {
+$(function () {
   // date-picker
   __webpack_require__(/*! bootstrap-datepicker */ "./node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.js");
 
-  $('.datepicker.year').datepicker({
-    autoclose: true,
-    assumeNearbyYear: true,
-    clearBtn: true,
-    forceParse: false,
-    keepEmptyValues: true,
-    minViewMode: 2,
-    format: 'yyyy'
-  });
-  $('.datepicker.month').datepicker({
-    autoclose: true,
-    assumeNearbyYear: true,
-    clearBtn: true,
-    forceParse: false,
-    keepEmptyValues: true,
-    minViewMode: 1,
-    format: 'yyyy/mm'
-  }); //show preview of uploaded image
+  $('.datepicker.year').datepicker(profiles.config.datepicker.year);
+  $('.datepicker.month').datepicker(profiles.config.datepicker.month); //show preview of uploaded image
 
-  $('input[type="file"]').on('change', function () {
-    var id = this.id.replace(/\[/g, '\\[').replace(/\]/g, '\\]');
-    $('label[for="' + id + '"]').addClass('active').text(this.files[0].name);
-    $('#' + id + '-img').attr('src', window.URL.createObjectURL(this.files[0]));
-    $(this).siblings('.invalid-feedback').removeClass('d-block');
+  $('input[type="file"]').on('change', function (e) {
+    return profiles.preview_selected_image(e);
   }); //enable drag and drop sorting for items with sotable class
 
   if ($('.sortable').length > 0) {
@@ -421,6 +515,9 @@ $(document).ready(function () {
 
   $('.actions .trash').on('click', function (e) {
     profiles.clear_row(this);
+  });
+  $('[data-toggle="add_row"]').on('click', function (e) {
+    return profiles.add_row(e);
   });
   $('.back.btn').on('click', function (e) {
     window.history.go(-1);
