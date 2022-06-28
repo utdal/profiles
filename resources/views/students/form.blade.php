@@ -4,7 +4,7 @@
 </div>
 
 <div class="mb-3">
-    {!! Form::label('major', 'Major', ['class' => 'form-label']) !!}
+    {!! Form::label('research_profile[major]', 'Major', ['class' => 'form-label']) !!}
     @if($majors->isNotEmpty())
         {!! Form::select('research_profile[major]', collect(['' => 'Select a major'])->merge($majors)->merge(['Other' => 'Other']), $student->research_profile->major ?? '', ['class' => 'form-control']); !!}
     @else
