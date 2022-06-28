@@ -13,6 +13,9 @@ class ProfilesApiController extends Controller
      */
     public function __construct()
     {
+        // Set the response Cache-Control headers
+        $this->middleware('cache.headers:' . config('app.api_cache_control'));
+
         // CORS middleware is auto-applied to all API routes
     }
 
