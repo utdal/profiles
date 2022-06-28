@@ -108,12 +108,14 @@
         <strong class="mr-5">Select your spoken languages:</strong>
     </div>
     <div class="mb-3">
-        @foreach($languages as $key => $value)
-            <div class="form-check form-check-inline">
-                {!! Form::checkbox("research_profile[languages][]", $key, in_array($key, $student->research_profile->languages ?? []), ['id' => "data_language_$key", 'class' => 'form-check-input', 'data-toggle' => 'show', 'data-toggle-target' => "#language_{$key}_subform"]) !!}
-                {!! Form::label("data_language_$key", $value, ['class' => 'form-check-label']) !!}
-            </div>
-        @endforeach
+        <fieldset>
+            @foreach($languages as $key => $value)
+                <div class="form-check form-check-inline">
+                    {!! Form::checkbox("research_profile[languages][]", $key, in_array($key, $student->research_profile->languages ?? []), ['id' => "data_language_$key", 'class' => 'form-check-input', 'data-toggle' => 'show', 'data-toggle-target' => "#language_{$key}_subform"]) !!}
+                    {!! Form::label("data_language_$key", $value, ['class' => 'form-check-label']) !!}
+                </div>
+            @endforeach
+        </fieldset>
     </div>
     <div class="mb-4">
         <strong class="mr-5">Please indicate your proficiency level for each selected language</strong>
