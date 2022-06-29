@@ -161,7 +161,7 @@ class UsersController extends Controller
 
         $user->roles()->sync($request->input('role_list') ?: []);
 
-        Cache::flush();
+        Cache::tags(['profiles'])->flush();
 
         return redirect()->route('users.show', [$user->pea])
             ->with('flash_message', 'The user has been updated.');

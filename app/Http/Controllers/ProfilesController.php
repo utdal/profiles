@@ -13,6 +13,7 @@ use App\Http\Requests\ProfileBannerImageRequest;
 use App\Http\Requests\ProfileImageRequest;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\School;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
@@ -58,6 +59,7 @@ class ProfilesController extends Controller
     {
         $search = $request->input('search');
 
+        /** @var EloquentCollection */
         $profiles = Profile::where('full_name', 'LIKE', "%$search%")->public()->paginate(24);
 
         if ((Cache::get('settings')['profile_search_shortcut'] ?? false) && ($profiles->count() === 1) && ($profiles->first()->full_name === $search)) {
@@ -85,24 +87,24 @@ class ProfilesController extends Controller
      */
     public function home()
     {
-        $random_profile = Cache::remember('home-random-profiles', 86400, function(){
+        $random_profile = Cache::tags(['home', 'profiles'])->remember('home-random-profiles', 86400, function() {
             $profiles = Profile::public()->get();
             return !$profiles->isEmpty() ? $profiles->random(min(2, $profiles->count())) : collect([]);
-        }); 
+        });
 
-        $num_profiles = Cache::remember('home-profile-count', 86400, function(){
+        $num_profiles = Cache::tags(['home', 'profiles'])->remember('home-profile-count', 86400, function() {
             return Profile::public()->get()->count();
         });
 
-        $num_publications = Cache::remember('home-publication-count', 86400, function(){
+        $num_publications = Cache::tags(['home', 'profile_data'])->remember('home-publication-count', 86400, function() {
             return ProfileData::all()->where('type', 'publications')->count();
         });
 
-        $num_datum = Cache::remember('home-datum-count', 86400, function(){
+        $num_datum = Cache::tags(['home', 'profile_data'])->remember('home-datum-count', 86400, function() {
             return ProfileData::all()->count();
         });
 
-        $tags = Cache::remember('home-tags', 86400, function(){
+        $tags = Cache::tags(['home', 'profile_tags'])->remember('home-tags', 86400, function() {
             $tags = Tag::whereExists(function ($query) {
                 $query->select(DB::raw(1))->from('taggables')->whereRaw('tags.id = taggables.tag_id');
             })->inRandomOrder()->get();
@@ -223,7 +225,7 @@ class ProfilesController extends Controller
 
         $profile->data()->save($information);
 
-        Cache::flush();
+        Cache::tags(['profiles', 'profile_data'])->flush();
 
         return redirect()->route('profiles.edit', [$profile->slug, 'information'])->with('flash_message', 'Profile created.');
 

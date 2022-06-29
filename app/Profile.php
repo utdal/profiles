@@ -187,8 +187,8 @@ class Profile extends Model implements HasMedia, Auditable
               ],
           ]);
       }
-      //TODO: cache key invalidation
-      Cache::flush();
+
+      Cache::tags(['profile_data'])->flush();
 
       //ran through process successfully
       return true;
@@ -262,7 +262,7 @@ class Profile extends Model implements HasMedia, Auditable
             ]);
         }
 
-        Cache::flush();
+        Cache::tags(['profile_data'])->flush();
     }
 
     /**

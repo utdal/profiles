@@ -26,7 +26,7 @@ class ProfilesApiController extends Controller
      */
     public function index(Request $request)
     {
-        return Cache::remember($request->fullUrl(), 3600, function() use ($request) {
+        return Cache::tags(['profiles', 'profile_data', 'profile_tags'])->remember($request->fullUrl(), 3600, function() use ($request) {
             $profile = Profile::select(Profile::apiAttributes());
 
             if ($request->filled('person')) {
