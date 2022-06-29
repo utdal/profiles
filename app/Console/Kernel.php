@@ -36,6 +36,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('profiles:update-orcid')->weekly()->sundays()->at('05:00')->when(function() {
             return config('app.enable_orcid_update');
         });
+
+        $schedule->command('telescope:prune')->daily();
     }
 
     /**
