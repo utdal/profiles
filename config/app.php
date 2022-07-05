@@ -65,7 +65,7 @@ return [
     'sentry_public_dsn' => env('SENTRY_PUBLIC_DSN', false),
 
     /** API response cache-control headers */
-    'api_cache_control' => env('API_CACHE_CONTROL', 'public;max_age=300;etag'),
+    'api_cache_control' => env('API_CACHE_CONTROL', 'public;no_cache;etag'),
 
     /*
     |--------------------------------------------------------------------------
