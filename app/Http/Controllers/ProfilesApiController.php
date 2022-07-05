@@ -27,7 +27,7 @@ class ProfilesApiController extends Controller
     public function index(Request $request)
     {
         return Cache::tags(['profiles', 'profile_data', 'profile_tags'])->remember($request->fullUrl(), 3600, function() use ($request) {
-            $profile = Profile::select(Profile::apiAttributes());
+            $profile = Profile::select(Profile::apiAttributes())->with(['media']);
 
             if ($request->filled('person')) {
                 $profile = $profile->whereIn('slug', explode(';', $request->person));

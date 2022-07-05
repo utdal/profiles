@@ -60,14 +60,14 @@ class ProfilesController extends Controller
         $search = $request->input('search');
 
         /** @var EloquentCollection */
-        $profiles = Profile::where('full_name', 'LIKE', "%$search%")->public()->paginate(24);
+        $profiles = Profile::where('full_name', 'LIKE', "%$search%")->public()->with(['information', 'media'])->paginate(24);
 
         if ((Cache::get('settings')['profile_search_shortcut'] ?? false) && ($profiles->count() === 1) && ($profiles->first()->full_name === $search)) {
             return redirect()->route('profiles.show', ['profile' => $profiles->first()]);
         }
 
-        $keyword_profiles = Profile::containing($search)
-            ->where('full_name', 'NOT LIKE', "%$search%")->public()->paginate(24, ['*'], 'key');
+        $keyword_profiles = !empty($search) ? Profile::containing($search)
+            ->where('full_name', 'NOT LIKE', "%$search%")->public()->paginate(24, ['*'], 'key') : collect();
 
         $tag_profiles = !empty($search) ? Profile::taggedWith($search)->public()->paginate(24, ['*'], 'tag') : null;
 
@@ -88,27 +88,25 @@ class ProfilesController extends Controller
     public function home()
     {
         $random_profile = Cache::tags(['home', 'profiles'])->remember('home-random-profiles', 86400, function() {
-            $profiles = Profile::public()->get();
-            return !$profiles->isEmpty() ? $profiles->random(min(2, $profiles->count())) : collect([]);
+            return Profile::public()->inRandomOrder()->limit(2)->get();
         });
 
         $num_profiles = Cache::tags(['home', 'profiles'])->remember('home-profile-count', 86400, function() {
-            return Profile::public()->get()->count();
+            return Profile::public()->count();
         });
 
         $num_publications = Cache::tags(['home', 'profile_data'])->remember('home-publication-count', 86400, function() {
-            return ProfileData::all()->where('type', 'publications')->count();
+            return ProfileData::where('type', 'publications')->count();
         });
 
         $num_datum = Cache::tags(['home', 'profile_data'])->remember('home-datum-count', 86400, function() {
-            return ProfileData::all()->count();
+            return ProfileData::count();
         });
 
         $tags = Cache::tags(['home', 'profile_tags'])->remember('home-tags', 86400, function() {
-            $tags = Tag::whereExists(function ($query) {
+            return Tag::whereExists(function ($query) {
                 $query->select(DB::raw(1))->from('taggables')->whereRaw('tags.id = taggables.tag_id');
-            })->inRandomOrder()->get();
-            return !$tags->isEmpty() ? $tags->random(min(20, $tags->count())) : collect([]);
+            })->whereType(Profile::class)->inRandomOrder()->limit(20)->get();
         });
 
         return view('home', compact('random_profile', 'num_profiles', 'num_publications', 'num_datum', 'tags'));
