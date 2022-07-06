@@ -145,6 +145,28 @@ class User extends Authenticatable implements Auditable
         return $this->bookmarked($model)->detach($model);
     }
 
+    /**
+     * Get whether the user's attributes should be synced
+     *
+     * @param string $attribute
+     * @return boolean
+     */
+    public function shouldSync($attribute)
+    {
+        return ! $this->shouldntSync($attribute);
+    }
+
+    /**
+     * Get whether the user's attributes should not be synced
+     *
+     * @param string $attribute
+     * @return boolean
+     */
+    public function shouldntSync($attribute)
+    {
+        return (bool)($this->setting->no_sync[$attribute] ?? false);
+    }
+
     //////////////////
     // Query Scopes //
     //////////////////

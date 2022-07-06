@@ -17,18 +17,18 @@ class LdapAttributeHandler
      */
     public function handle(LdapUser $ldap_user, User $user)
     {
-        if ($this->shouldSyncAttributes()) {
+        if ($this->shouldSyncAttributes() && $user->shouldSync('attributes')) {
             $this->syncUserAttributes($ldap_user, $user);
         }
 
         $this->normalizeUserAttributes($ldap_user, $user);
         $user->save();
 
-        if ($this->shouldSyncRoles()) {
+        if ($this->shouldSyncRoles() && $user->shouldSync('roles')) {
             $this->syncUserRoles($ldap_user, $user);
         }
 
-        if ($this->shouldSyncSchool()) {
+        if ($this->shouldSyncSchool() && $user->shouldSync('school')) {
             $this->syncUserSchool($ldap_user, $user);
         }
 

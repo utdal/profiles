@@ -17,6 +17,7 @@ class UserSetting extends Model implements Auditable
     protected $fillable = [
         'additional_departments',
         'additional_schools',
+        'no_sync',
     ];
 
     /** @var array Attributes that should be mutated to dates. */
@@ -26,6 +27,7 @@ class UserSetting extends Model implements Auditable
     protected $casts = [
         'additional_departments' => 'array',
         'additional_schools' => 'array',
+        'no_sync' => 'array',
     ];
 
     ///////////////
