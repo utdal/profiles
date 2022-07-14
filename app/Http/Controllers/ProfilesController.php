@@ -145,18 +145,18 @@ class ProfilesController extends Controller
         $information = $profile->data()->information()->first();
         $preparations = $profile->data()->preparation()->get();
         $research_areas = $profile->data()->areas()->get();
-        $publications = $profile->data()->publications()->paginate(10, ['*'], 'pub');
-        $appointments = $profile->data()->appointments()->paginate(10, ['*'], 'appt');
-        $awards = $profile->data()->awards()->paginate(10, ['*'], 'awd');
-        $activites = $profile->data()->activities()->get();
-        $support = $profile->data()->support()->paginate(5, ['*'], 'sppt');
-        $news = $profile->data()->news()->public()->paginate(5, ['*'], 'news');
-        $projects = $profile->data()->projects()->paginate(5, ['*'], 'proj');
-        $presentations = $profile->data()->presentations()->paginate(5, ['*'], 'pres');
-        $affiliations = $profile->data()->affiliations()->paginate(10, ['*'], 'affl');
-        $additionals = $profile->data()->additionals()->paginate(3, ['*'], 'addl');
+        $activities = $profile->data()->activities()->get();
+        $publications = $profile->data()->publications()->get();
+        $appointments = $profile->data()->appointments()->get();
+        $awards = $profile->data()->awards()->get();
+        $support = $profile->data()->support()->get();
+        $news = $profile->data()->news()->public()->get();
+        $projects = $profile->data()->projects()->get();
+        $presentations = $profile->data()->presentations()->get();
+        $affiliations = $profile->data()->affiliations()->get();
+        $additionals = $profile->data()->additionals()->get();
 
-        return view('profiles.show', compact('profile', 'editable', 'information', 'preparations', 'publications', 'research_areas', 'activites', 'support', 'appointments', 'awards', 'news', 'projects', 'presentations', 'affiliations', 'additionals'));
+        return view('profiles.show', compact('profile', 'editable', 'information', 'preparations', 'publications', 'research_areas', 'activities', 'support', 'appointments', 'awards', 'news', 'projects', 'presentations', 'affiliations', 'additionals'));
     }
 
     /**

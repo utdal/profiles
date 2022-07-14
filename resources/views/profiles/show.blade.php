@@ -95,24 +95,24 @@
 			@if(!$presentations->isEmpty())<li><a href="#presentations">Presentations</a></li>@endif
 			@if(!$additionals->isEmpty())<li><a href="#additional">Additional Information</a></li>@endif
 			@if(!$news->isEmpty())<li><a href="#news">News</a></li>@endif
-			@if(!$activites->isEmpty())<li><a href="#activities">Activities</a></li>@endif
+			@if(!$activities->isEmpty())<li><a href="#activities">Activities</a></li>@endif
 			@if(!$affiliations->isEmpty())<li><a href="#affiliations">Affiliations</a></li>@endif
 			@if(!$support->isEmpty())<li><a href="#funding">Support</a></li>@endif
 		</ul>
 	</div>
 	<div class="container card-columns main_areas">
-		@if(!$preparations->isEmpty() || $editable)
-			<div class="card">
-				<h3 id="preparation"><i class="fas fa-graduation-cap" aria-hidden="true"></i> Professional Preparation @if($editable)<a class="btn btn-primary btn-sm" href="{{ route('profiles.edit', [$profile->slug, 'preparation']) }}"><i class="fas fa-edit"></i> Edit</a>@endif</h3>
-				@foreach($preparations as $prep)
-					<div class="entry">
-						{{$prep->degree}} @if($prep->major)- {{$prep->major}}@endif
-						<br>
-						<strong>{{$prep->institution}}</strong>@if($prep->year) - {{$prep->year}}@endif
-					</div>
-				@endforeach
-			</div>
-		@endif
+	@if(!$preparations->isEmpty() || $editable)
+		<div class="card">
+			<h3 id="preparation"><i class="fas fa-graduation-cap" aria-hidden="true"></i> Professional Preparation @if($editable)<a class="btn btn-primary btn-sm" href="{{ route('profiles.edit', [$profile->slug, 'preparation']) }}"><i class="fas fa-edit"></i> Edit</a>@endif</h3>
+			@foreach($preparations as $prep)
+				<div class="entry">
+					{{$prep->degree}} @if($prep->major)- {{$prep->major}}@endif
+					<br>
+					<strong>{{$prep->institution}}</strong>@if($prep->year) - {{$prep->year}}@endif
+				</div>
+			@endforeach
+		</div>
+	@endif
 	@if(!$research_areas->isEmpty() || $editable)
 			<div class="card">
 				<h3 id="areas"><i class="fas fa-flask" aria-hidden="true"></i> Research Areas @if($editable)<a class="btn btn-primary btn-sm" href="{{ route('profiles.edit', [$profile->slug, 'areas']) }}"><i class="fas fa-edit"></i> Edit</a>@endif</h3>
@@ -126,134 +126,17 @@
 				@endforeach
 			</div>
 	@endif
-		@if(!$publications->isEmpty() || $editable)
-			<div class="card">
-				<h3 id="publications"><i class="fa fa-book" aria-hidden="true"></i> Publications
-					@if($editable)
-					<a class="btn btn-primary btn-sm" href="{{ route('profiles.edit', [$profile->slug, 'publications']) }}" data-toggle="class" data-toggle-class="fa-spin" data-target="#publications .fa-sync">
-						@if($profile->hasOrcidManagedPublications())
-							<i class="fas fa-sync"></i> Sync
-						@else
-							<i class="fas fa-edit"></i> Edit
-						@endif
-					</a>
-					@endif
-				</h3>
-				@foreach($publications as $pub)
-					<div class="entry">
-						{!! Purify::clean($pub->title) !!} {{$pub->year}} - <strong>{{$pub->type}}</strong>
-						@if($pub->url)
-							<a target="_blank" href="{{$pub->url}}">
-								<span class="fas fa-external-link-alt" title="external link to publication"></span>
-							</a>
-						@endif
-					</div>
-				@endforeach
-				{!! $publications->fragment('publications')->appends(Request::except('pub'))->render() !!}
-			</div>
-		@endif
-		@if(!$appointments->isEmpty() || $editable)
-			<div class="card">
-				<h3 id="appointments"><i class="fa fa-calendar" aria-hidden="true"></i> Appointments @if($editable)<a class="btn btn-primary btn-sm" href="{{ route('profiles.edit', [$profile->slug, 'appointments']) }}"><i class="fas fa-edit"></i> Edit</a>@endif</h3>
-				@foreach($appointments as $appt)
-					<div class="entry">
-						<strong>{{$appt->appointment}}</strong>
-						<br>
-						<em>{{$appt->organization}}</em> [{{$appt->start_date}}@if($appt->end_date)&ndash;{{$appt->end_date}}@else<span>&ndash;Present</span>@endif]<br />
-						@if($appt->description)
-							{!! Purify::clean($appt->description) !!}
-						@endif
-					</div>
-				@endforeach
-				{!! $appointments->fragment('appointments')->appends(Request::except('appt'))->render() !!}
-			</div>
-		@endif
-		@if(!$awards->isEmpty() || $editable)
-			<div class="card">
-				<h3 id="awards"><i class="fa fa-trophy" aria-hidden="true"></i> Awards @if($editable)<a class="btn btn-primary btn-sm" href="{{ route('profiles.edit', [$profile->slug, 'awards']) }}"><i class="fas fa-edit"></i> Edit</a>@endif</h3>
-				@foreach($awards as $award)
-					<div class="entry">
-						<strong>{{$award->name}}</strong> - <em>{{$award->organization}}</em> @if($award->year)[{{$award->year}}]@endif<br />
-					</div>
-				@endforeach
-				{!! $awards->fragment('awards')->appends(Request::except('awd'))->render() !!}
-			</div>
-		@endif
-		@if(!$projects->isEmpty() || $editable)
-			<div class="card">
-				<h3 id="projects"><i class="fas fa-tasks" aria-hidden="true"></i> Projects @if($editable)<a class="btn btn-primary btn-sm" href="{{ route('profiles.edit', [$profile->slug, 'projects']) }}"><i class="fas fa-edit"></i> Edit</a>@endif</h3>
-				@foreach($projects as $project)
-					<div class="entry">
-						@if($project->url)
-							<h5><a href="{{$project->url}}">{{$project->title}} <i class="fas fa-link" aria-hidden="true"></i></a></h5>
-						@else
-							<h5>{{$project->title}}</h5>
-						@endif
-						@if($project->start_date)<strong>{{$project->start_date}}@if($project->end_date)&ndash;{{$project->end_date}}@endif</strong>@endif
-						@if($project->description)
-							<em>{!! Purify::clean($project->description) !!}</em>
-						@endif
-					</div>
-				@endforeach
-				{!! $projects->fragment('projects')->appends(Request::except('proj'))->render() !!}
-			</div>
-		@endif
-		@if(!$presentations->isEmpty() || $editable)
-			<div class="card">
-				<h3 id="presentations"><i class="fas fa-laptop" aria-hidden="true"></i> Presentations @if($editable)<a class="btn btn-primary btn-sm" href="{{ route('profiles.edit', [$profile->slug, 'presentations']) }}"><i class="fas fa-edit"></i> Edit</a>@endif</h3>
-				@foreach($presentations as $presentation)
-					<div class="entry">
-						@if($presentation->url)
-							<h5><a href="{{$presentation->url}}">{{$presentation->title}} <i class="fas fa-link" aria-hidden="true"></i></a></h5>
-						@else
-							<h5>{{$presentation->title}}</h5>
-						@endif
-						@if($presentation->start_date)<strong>{{$presentation->start_date}}@if($presentation->end_date)&ndash;{{$presentation->end_date}}@endif</strong>@endif
-						@if($presentation->description)
-							<em>{!! Purify::clean($presentation->description) !!}</em>
-						@endif
-					</div>
-				@endforeach
-				{!! $presentations->fragment('presentations')->appends(Request::except('pres'))->render() !!}
-			</div>
-		@endif
-		@if(!$additionals->isEmpty() || $editable)
-			<div class="card">
-				<h3 id="additional"><i class="fas fa-sticky-note" aria-hidden="true"></i> Additional Information @if($editable)<a class="btn btn-primary btn-sm" href="{{ route('profiles.edit', [$profile->slug, 'additionals']) }}"><i class="fas fa-edit"></i> Edit</a>@endif</h3>
-				@foreach($additionals as $additional)
-					<div class="entry">
-						<h5><i class="far fa-sticky-note" aria-hidden="true"></i> {{$additional->title}}</h5>
-							{!! Purify::clean($additional->description) !!}
-					</div>
-				@endforeach
-				{!! $additionals->fragment('additional')->appends(Request::except('addl'))->render() !!}
-			</div>
-		@endif
-		@if(!$news->isEmpty() || $editable)
-			<div class="card">
-				<h3 id="news"><i class="fas fa-newspaper" aria-hidden="true"></i> News Articles @if($editable)<a class="btn btn-primary btn-sm" href="{{ route('profiles.edit', [$profile->slug, 'news']) }}"><i class="fas fa-edit"></i> Edit</a>@endif</h3>
-				@foreach($news as $article)
-					<div class="entry">
-						@if($article->url)
-							<h5>
-								<a href="{{$article->url}}" target="_blank" title="link to article">
-									{{$article->title}} <i class="fas fa-external-link-alt" aria-hidden="true"></i>
-								</a>
-							</h5>
-						@else
-							<h5>{{$article->title}}</h5>
-						@endif
-						@if($article->image)<img src="{{ $article->imageUrl }}" class="news_image" alt="{{ $article->image_alt ?? $article->title }}"/>@endif
-						{!! Purify::clean($article->description) !!}
-					</div>
-				@endforeach
-				{!! $news->fragment('news')->appends(Request::except('news'))->render() !!}
-			</div>
-		@endif
-		@if(!$activites->isEmpty() || $editable)
+		<livewire:paginated-data :editable="$editable" :profile="$profile" :per_page=8 data_type="publications">
+		<livewire:paginated-data :editable="$editable" :profile="$profile" :per_page=10 data_type="awards">
+		<livewire:paginated-data :editable="$editable" :profile="$profile" :per_page=10 data_type="appointments">
+		<livewire:paginated-data :editable="$editable" :profile="$profile" :per_page=5 data_type="projects">
+		<livewire:paginated-data :editable="$editable" :profile="$profile" :per_page=5 data_type="presentations">
+		<livewire:paginated-data :editable="$editable" :profile="$profile" :per_page=3 data_type="additionals">
+		<livewire:paginated-data :editable="$editable" :profile="$profile" :per_page=5 data_type="news">
+		@if(!$activities->isEmpty() || $editable)
 			<div class="card">
 				<h3 id="activities"><i class="fas fa-chart-line" aria-hidden="true"></i> Activities @if($editable)<a class="btn btn-primary btn-sm" href="{{ route('profiles.edit', [$profile->slug, 'activities']) }}"><i class="fas fa-edit"></i> Edit</a>@endif</h3>
-				@foreach($activites as $activity)
+				@foreach($activities as $activity)
 					<div class="entry">
 						<h5>{{$activity->title}}</h5>
 						{!! Purify::clean($activity->description) !!}
@@ -262,36 +145,8 @@
 				@endforeach
 			</div>
 		@endif
-		@if(!$affiliations->isEmpty() || $editable)
-			<div class="card">
-				<h3 id="affiliations"><i class="fas fa-users" aria-hidden="true"></i> Affiliations @if($editable)<a class="btn btn-primary btn-sm" href="{{ route('profiles.edit', [$profile->slug, 'affiliations']) }}"><i class="fas fa-edit"></i> Edit</a>@endif</h3>
-				@foreach($affiliations as $affiliation)
-					<div class="entry">
-						<h5>{{$affiliation->title}}</h5>
-						@if($affiliation->start_date)<strong>{{$affiliation->start_date}}@if($affiliation->end_date)&ndash;{{$affiliation->end_date}}@endif</strong><br>@endif
-						{!! Purify::clean($affiliation->description) !!}
-					</div>
-				@endforeach
-				{!! $affiliations->fragment('affiliations')->appends(Request::except('affl'))->render() !!}
-			</div>
-		@endif
-		@if(!$support->isEmpty() || $editable)
-			<div class="card">
-				<h3 id="funding"><i class="fas fa-dollar-sign" aria-hidden="true"></i> Funding @if($editable)<a class="btn btn-primary btn-sm" href="{{ route('profiles.edit', [$profile->slug, 'support']) }}"><i class="fas fa-edit"></i> Edit</a>@endif</h3>
-				@foreach($support as $funding)
-					<div class="entry">
-						@if($funding->url)
-							<h5><a href="{{$funding->url}}">{{$funding->title}} <i class="fas fa-link" aria-hidden="true"></i></a></h5>
-						@else
-							<h5>{{$funding->title}}</h5>
-						@endif
-						<h6>{{$funding->amount}} - {{$funding->sponsor}} [{{$funding->start_date}}@if($funding->end_date)&ndash;{{$funding->end_date}}@endif]</h6>
-						{{ $funding->description }}
-					</div>
-				@endforeach
-				{!! $support->fragment('funding')->appends(Request::except('sppt'))->render() !!}
-			</div>
-		@endif
+		<livewire:paginated-data :editable="$editable" :profile="$profile" :per_page=10 data_type="affiliations">
+		<livewire:paginated-data :editable="$editable" :profile="$profile" :per_page=5 data_type="support">
 	</div>
 </div>
 @stop
