@@ -88,16 +88,16 @@
 		<ul>
 			@if(!$preparations->isEmpty())<li><a href="#preparation">Professional Preparation</a></li>@endif
 			@if(!$research_areas->isEmpty())<li><a href="#areas">Research Areas</a></li>@endif
-			@if(!$publications->isEmpty())<li><a href="#publications">Publications</a></li>@endif
-			@if(!$appointments->isEmpty())<li><a href="#appointments">Appointments</a></li>@endif
-			@if(!$awards->isEmpty())<li><a href="#awards">Awards</a></li>@endif
-			@if(!$projects->isEmpty())<li><a href="#projects">Projects</a></li>@endif
-			@if(!$presentations->isEmpty())<li><a href="#presentations">Presentations</a></li>@endif
-			@if(!$additionals->isEmpty())<li><a href="#additional">Additional Information</a></li>@endif
-			@if(!$news->isEmpty())<li><a href="#news">News</a></li>@endif
+			@if($publications_exists)<li><a href="#publications">Publications</a></li>@endif
+			@if($appointments_exists)<li><a href="#appointments">Appointments</a></li>@endif
+			@if($awards_exists)<li><a href="#awards">Awards</a></li>@endif
+			@if($projects_exists)<li><a href="#projects">Projects</a></li>@endif
+			@if($presentations_exists)<li><a href="#presentations">Presentations</a></li>@endif
+			@if($additionals_exists)<li><a href="#additional">Additional Information</a></li>@endif
+			@if($news_exists)<li><a href="#news">News</a></li>@endif
 			@if(!$activities->isEmpty())<li><a href="#activities">Activities</a></li>@endif
-			@if(!$affiliations->isEmpty())<li><a href="#affiliations">Affiliations</a></li>@endif
-			@if(!$support->isEmpty())<li><a href="#funding">Support</a></li>@endif
+			@if($affiliations_exists)<li><a href="#affiliations">Affiliations</a></li>@endif
+			@if($support_exists)<li><a href="#funding">Support</a></li>@endif
 		</ul>
 	</div>
 	<div class="container card-columns main_areas">
