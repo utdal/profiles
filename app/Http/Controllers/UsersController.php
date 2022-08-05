@@ -69,7 +69,12 @@ class UsersController extends Controller
      */
     public function show(User $user)
     {
-        return view('users.show', compact('user'));
+        return view('users.show', [
+            'user' => $user,
+            'shouldnt_sync_attributes' => $user->shouldntSync('attributes'),
+            'shouldnt_sync_roles' => $user->shouldntSync('roles'),
+            'shouldnt_sync_school' => $user->shouldntSync('school'),
+        ]);
     }
 
     /**
@@ -152,10 +157,11 @@ class UsersController extends Controller
     {
         $user->update($request->all());
 
-        if ($request->additional_departments || $request->additional_schools || $user->setting()->exists()) {
+        if ($request->no_sync || $request->additional_departments || $request->additional_schools || $user->setting()->exists()) {
             $user->setting()->updateOrCreate(['user_id' => $user->id,], [
                 'additional_departments' => $request->additional_departments ? explode(',', $request->additional_departments) : null,
                 'additional_schools' => $request->additional_schools ?? null,
+                'no_sync' => $request->no_sync ?? null,
             ]);
         }
 

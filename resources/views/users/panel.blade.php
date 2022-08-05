@@ -17,22 +17,58 @@
         <div class="col-sm-4">
           <dl class="">
             <dt>{{ $settings['account_name'] ?? 'Username' }}</dt><dd>{{ $user->name }}</dd>
-            <dt>First / Last</dt><dd>{{ $user->firstname }} / {{ $user->lastname }}</dd>
-            <dt>URL name</dt><dd>{{ $user->pea }}</dd>
-            <dt>Email</dt><dd>{{ $user->email }}</dd>
+            <dt>
+              First / Last
+              @if($shouldnt_sync_attributes)
+                <span class="badge badge-warning">shouldn't sync</span>
+              @endif
+            </dt>
+            <dd>{{ $user->firstname }} / {{ $user->lastname }}</dd>
+            <dt>
+              URL name
+              @if($shouldnt_sync_attributes)
+                <span class="badge badge-warning">shouldn't sync</span>
+              @endif
+            </dt>
+            <dd>{{ $user->pea }}</dd>
+            <dt>
+              Email
+              @if($shouldnt_sync_attributes)
+                <span class="badge badge-warning">shouldn't sync</span>
+              @endif
+            </dt>
+            <dd>{{ $user->email }}</dd>
           </dl>
         </div>
         <div class="col-sm-4">
           <dl class="">
-            <dt>Department</dt><dd>
+            <dt>
+              Department
+              @if($shouldnt_sync_attributes)
+                <span class="badge badge-warning">shouldn't sync</span>
+              @endif
+            </dt>
+            <dd>
               {{ $user->department }}
               @if($user->additional_departments)
                 / {{ implode(' / ', $user->additional_departments) }}
               @endif
             </dd>
-            <dt>Title</dt><dd>{{ $user->title }}</dd>
-            <dt>School</dt><dd>
-              {{  ($user->school_id) ? $user->school->short_name : 'none' }}
+            <dt>
+              Title
+              @if($shouldnt_sync_attributes)
+                <span class="badge badge-warning">shouldn't sync</span>
+              @endif
+            </dt>
+            <dd>{{ $user->title }}</dd>
+            <dt>
+              School
+              @if($shouldnt_sync_school)
+                <span class="badge badge-warning">shouldn't sync</span>
+              @endif
+            </dt>
+            <dd>
+              {{ ($user->school_id) ? $user->school->short_name : 'none' }}
               @if($additional_schools = $user->additional_schools)
                 / {{ implode(' / ', $additional_schools->pluck('short_name')->all()) }}
               @endif
@@ -41,7 +77,12 @@
         </div>
         <div class="col-sm-3 d-flex flex-column">
           <dl class="">
-            <dt>Roles</dt>
+            <dt>
+              Roles
+              @if($shouldnt_sync_roles)
+                <span class="badge badge-warning">shouldn't sync</span>
+              @endif
+            </dt>
             <dd>
               <ul>
                 @foreach($user->roles as $role)

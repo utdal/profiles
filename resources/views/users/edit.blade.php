@@ -119,8 +119,36 @@
 			</div>
 		</div>
 	</div>
+	<!-- Sync -->
+	<div class="form-group">
+		<button type="button" class="btn btn-link" data-toggle="collapse" data-target="#synchronization" aria-expanded="false" aria-controls="other">
+			<strong>Additional synchronization settings <i class="fas fa-caret-right"></i></strong>
+		</button>
+		<div class="collapse col-sm-9" id="synchronization">
+			<div class="form-group {{ ($errors->has('no_sync') ?  'has-error' : '') }}">
+				{!! Form::label('no_sync', 'Exclude from sync on login:', ['class' => 'col-sm-4 control-label']) !!}
+				<div class="col-sm-8">
+					<div class="checkbox-inline">
+						<label class="checkbox-inline" title="User no-sync setting">
+							{!! Form::checkbox("no_sync[attributes]", 1, $user->setting->no_sync['attributes'] ?? false) !!}
+							User attributes
+						</label>
+						<label class="checkbox-inline" title="User no-sync setting">
+							{!! Form::checkbox("no_sync[roles]", 1, $user->setting->no_sync['roles'] ?? false) !!}
+							User roles
+						</label>
+						<label class="checkbox-inline" title="User no-sync setting">
+							{!! Form::checkbox("no_sync[school]", 1, $user->setting->no_sync['school'] ?? false) !!}
+							User school
+						</label>
+					</div>
+					<span class="text-danger">{!! $errors->first('no_sync') !!}</span>
+				</div>
+			</div>
+		</div>
+	</div>
 	<!-- Roles -->
-	<div class="form-group{{ ($errors->has('roles') ?  'has-error' : '') }}">
+	<div class="form-group {{ ($errors->has('roles') ?  'has-error' : '') }}">
 		{!! Form::label('roles', 'Roles:', ['class' => 'col-sm-2 control-label']) !!}
 		<div class="col-sm-9">
 			<div class="checkbox">
