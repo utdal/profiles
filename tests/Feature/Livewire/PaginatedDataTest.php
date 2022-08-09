@@ -73,7 +73,11 @@ class PaginatedDataTest extends TestCase
                         ->assertViewHas('data')
                         ->assertSeeHtmlInOrder(['<div class="card">', '<h3 id="'.$section.'">', '<div class="entry">'] );
             
-            $section == 'additionals' ? $component->assertSee('Additional Information') : $component->assertSee(ucwords($section));
+            if ($section === 'additionals') {
+                $component->assertSee('Additional Information');
+            } else {
+                $component->assertSee(ucwords($section));
+            }
 
             $first_page_items_count = $data_count >= $per_page ? $per_page : $data_count;
             
