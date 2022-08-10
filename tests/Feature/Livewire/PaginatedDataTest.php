@@ -31,12 +31,7 @@ class PaginatedDataTest extends TestCase
     */
     public function testPaginatedItemsOnFirstAndLastPage()
     {
-        $sections = [
-            'publications' => 8,
-            'presentations' => 4,
-            'projects' => 1,
-            'additionals' => 6,
-        ];
+        $sections = [ 'publications', 'presentations', 'projects', 'additionals' ];
 
         $profile = Profile::factory()
                             ->hasData()
@@ -54,7 +49,7 @@ class PaginatedDataTest extends TestCase
         $user = $this->loginAsUser();
         $editable = $user && $user->can('update', $profile);
         
-        foreach ($sections as $section => $per_page) {
+        foreach ($sections as $section) {
             
             $this->assertTrue(
                 method_exists($profile, $section),
@@ -63,12 +58,13 @@ class PaginatedDataTest extends TestCase
             
             $section_data = $profile->$section;
             $data_count = $section_data->count();
+            $per_page = PaginatedData::SECTIONS[$section];
 
             $this->assertDatabaseHas('profile_data', ['type' => $section]);
             $this->assertIsIterable($section_data);
             $this->assertGreaterThanOrEqual($per_page, $data_count);
 
-            $component = Livewire::test(PaginatedData::class, ['profile' => $profile, 'editable' => $editable, 'data_type' => $section, 'per_page' => $per_page ])
+            $component = Livewire::test(PaginatedData::class, ['profile' => $profile, 'editable' => $editable, 'data_type' => $section ])
                         ->assertSet('data_type', $section)
                         ->assertViewHas('data')
                         ->assertSeeHtmlInOrder(['<div class="card">', '<h3 id="'.$section.'">', '<div class="entry">'] );
@@ -120,13 +116,7 @@ class PaginatedDataTest extends TestCase
                                 ->news(),'data')
                             ->create();
 
-        $sections = [
-            'awards' => 10,
-            'appointments' => 10,
-            'news' => 5,
-            'affiliations' => 10,
-            'support' => 3,
-        ];
+        $sections = [ 'awards', 'appointments', 'news', 'affiliations', 'support' ];
 
         $route = route('profiles.show', array_merge(['profile' => $profile->slug], $sections));
         $user = $this->loginAsUser();
@@ -137,9 +127,8 @@ class PaginatedDataTest extends TestCase
             ->assertStatus(200)
             ->assertViewIs('profiles.show');
         
-        foreach ($sections as $section => $per_page) {
-
-            $component = Livewire::test(PaginatedData::class, ['profile' => $profile, 'editable' => $editable, 'data_type' => $section, 'per_page' => $per_page ])
+        foreach ($sections as $section) {
+            $component = Livewire::test(PaginatedData::class, ['profile' => $profile, 'editable' => $editable, 'data_type' => $section ])
             ->assertHasNoErrors()
             ->assertViewIs("livewire.profile-data.".$section)
             ->call('nextPage');

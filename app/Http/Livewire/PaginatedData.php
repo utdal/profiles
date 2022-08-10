@@ -10,31 +10,35 @@ class PaginatedData extends Component
 {
     use WithPagination;
 
+    const SECTIONS = [
+        'publications' => 8,
+        'appointments' => 10,
+        'awards' => 10,
+        'news' => 5,
+        'support' => 5,
+        'presentations' => 5,
+        'projects' => 5,
+        'additionals' => 3,
+        'affiliations' => 10
+    ];
+
     protected $paginationTheme = 'bootstrap';
     public $data_type;
+    public $per_page;
 
-    public function mount(Profile $profile, $editable, $data_type, $per_page)
+    public function mount(Profile $profile, $editable, $data_type)
     {
         $this->profile = $profile;
         $this->editable = $editable;
         $this->data_type = $data_type;
-        $this->per_page = $per_page;
     }
 
     public function data()
     {
-        return match($this->data_type)
-        {
-            'publications' => $this->profile->data()->publications()->paginate($this->per_page, ['*'], $this->data_type),
-            'appointments' => $this->profile->data()->appointments()->paginate($this->per_page, ['*'], $this->data_type),
-            'awards' => $this->profile->data()->awards()->paginate($this->per_page, ['*'], $this->data_type),
-            'news' => $this->profile->data()->news()->paginate($this->per_page, ['*'], $this->data_type),
-            'support' => $this->profile->data()->support()->paginate($this->per_page, ['*'], $this->data_type),
-            'presentations' => $this->profile->data()->presentations()->paginate($this->per_page, ['*'], $this->data_type),
-            'projects' => $this->profile->data()->projects()->paginate($this->per_page, ['*'], $this->data_type),
-            'additionals' => $this->profile->data()->additionals()->paginate($this->per_page, ['*'], $this->data_type),
-            'affiliations' => $this->profile->data()->affiliations()->paginate($this->per_page, ['*'], $this->data_type),
-        };
+        $section = $this->data_type;
+        $per_page = $this::SECTIONS[$section];
+        
+        return $this->profile->$section()->paginate($per_page, ['*'], $section);
     }
     
     public function render()
