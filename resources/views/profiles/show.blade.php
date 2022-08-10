@@ -126,13 +126,13 @@
 				@endforeach
 			</div>
 	@endif
-		<livewire:paginated-data :editable="$editable" :profile="$profile" data_type="publications">
-		<livewire:paginated-data :editable="$editable" :profile="$profile" data_type="awards">
-		<livewire:paginated-data :editable="$editable" :profile="$profile" data_type="appointments">
-		<livewire:paginated-data :editable="$editable" :profile="$profile" data_type="projects">
-		<livewire:paginated-data :editable="$editable" :profile="$profile" data_type="presentations">
-		<livewire:paginated-data :editable="$editable" :profile="$profile" data_type="additionals">
-		<livewire:paginated-data :editable="$editable" :profile="$profile" data_type="news">
+		<livewire:paginated-data :editable="$editable" :profile="$profile" :paginated=$paginated data_type="publications">
+		<livewire:paginated-data :editable="$editable" :profile="$profile" :paginated=$paginated data_type="awards">
+		<livewire:paginated-data :editable="$editable" :profile="$profile" :paginated=$paginated data_type="appointments">
+		<livewire:paginated-data :editable="$editable" :profile="$profile" :paginated=$paginated data_type="projects">
+		<livewire:paginated-data :editable="$editable" :profile="$profile" :paginated=$paginated data_type="presentations">
+		<livewire:paginated-data :editable="$editable" :profile="$profile" :paginated=$paginated data_type="additionals">
+		<livewire:paginated-data :editable="$editable" :profile="$profile" :paginated=$paginated data_type="news">
 		@if(!$activities->isEmpty() || $editable)
 			<div class="card">
 				<h3 id="activities"><i class="fas fa-chart-line" aria-hidden="true"></i> Activities @if($editable)<a class="btn btn-primary btn-sm" href="{{ route('profiles.edit', [$profile->slug, 'activities']) }}"><i class="fas fa-edit"></i> Edit</a>@endif</h3>
@@ -145,8 +145,8 @@
 				@endforeach
 			</div>
 		@endif
-		<livewire:paginated-data :editable="$editable" :profile="$profile" data_type="affiliations">
-		<livewire:paginated-data :editable="$editable" :profile="$profile" data_type="support">
+		<livewire:paginated-data :editable="$editable" :profile="$profile" :paginated=$paginated data_type="affiliations">
+		<livewire:paginated-data :editable="$editable" :profile="$profile" :paginated=$paginated data_type="support">
 	</div>
 </div>
 @stop

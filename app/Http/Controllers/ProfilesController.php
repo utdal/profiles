@@ -131,7 +131,7 @@ class ProfilesController extends Controller
      * @param  User   $user
      * @return \Illuminate\View\View
      */
-    public function show(Profile $profile)
+    public function show(Profile $profile, $paginated = true)
     {
         /** @var User the logged-in user */
         $user = Auth::user();
@@ -157,7 +157,7 @@ class ProfilesController extends Controller
         $affiliations_exists = $profile->data()->affiliations()->exists();
         $additionals_exists = $profile->data()->additionals()->exists(); 
         
-       return view('profiles.show', compact('profile', 'editable', 'information', 'preparations', 'publications_exists', 'research_areas', 'activities', 'support_exists', 'appointments_exists', 'awards_exists', 'news_exists', 'projects_exists', 'presentations_exists', 'affiliations_exists', 'additionals_exists'));
+       return view('profiles.show', compact('profile', 'editable', 'information', 'preparations', 'publications_exists', 'research_areas', 'activities', 'support_exists', 'appointments_exists', 'awards_exists', 'news_exists', 'projects_exists', 'presentations_exists', 'affiliations_exists', 'additionals_exists', 'paginated'));
     }
 
     /**

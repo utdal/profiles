@@ -26,11 +26,12 @@ class PaginatedData extends Component
     public $data_type;
     public $per_page;
 
-    public function mount(Profile $profile, $editable, $data_type)
+    public function mount(Profile $profile, $editable, $data_type, $paginated)
     {
         $this->profile = $profile;
         $this->editable = $editable;
         $this->data_type = $data_type;
+        $this->paginated = $paginated;
     }
 
     public function data()
@@ -38,7 +39,11 @@ class PaginatedData extends Component
         $section = $this->data_type;
         $per_page = $this::SECTIONS[$section];
         
-        return $this->profile->$section()->paginate($per_page, ['*'], $section);
+        if ($this->paginated) {
+            return $this->profile->$section()->paginate($per_page, ['*'], $section);
+        } else {
+            return $this->profile->$section;
+        }
     }
     
     public function render()
