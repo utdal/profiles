@@ -131,11 +131,12 @@ class ProfilesController extends Controller
      * @param  User   $user
      * @return \Illuminate\View\View
      */
-    public function show(Profile $profile, $paginated = true)
+    public function show(Request $request, Profile $profile)
     {
         /** @var User the logged-in user */
         $user = Auth::user();
         $editable = $user && $user->can('update', $profile);
+        $paginated = $request->headers->get('paginated') ?: true;
 
         //don't show unless profile is public or we can edit it
         if(!$profile->public && !$editable){
