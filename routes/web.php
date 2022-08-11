@@ -100,7 +100,7 @@ Route::name('profiles.')->prefix('/')->group(function() {
 
     // Individual Profile
     Route::prefix('/{profile}')->group(function() {
-        Route::name('show')->get('/', 'ProfilesController@show');
+        Route::name('show')->get('/', [ProfilesController::class, 'show']);
         Route::name('edit')->get('/edit/{section}', 'ProfilesController@edit');
         Route::name('update')->post('/update/{section}', 'ProfilesController@update');
         Route::name('confirm-delete')->get('confirm-delete', [ProfilesController::class, 'confirmDelete'])->withTrashed();
@@ -109,6 +109,7 @@ Route::name('profiles.')->prefix('/')->group(function() {
         Route::name('update-image')->post('/image', 'ProfilesController@updateImage');
         Route::name('update-banner')->post('/banner', 'ProfilesController@updateBanner');
         Route::name('orcid')->get('/orcid', 'ProfilesController@orcid');
+        Route::name('pdf-export')->get('/pdf', [ProfilesController::class, 'pfdExport']);
     });
 
 });

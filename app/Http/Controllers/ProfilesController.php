@@ -16,6 +16,7 @@ use App\School;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Spatie\Browsershot\Browsershot;
 
 class ProfilesController extends Controller
 {
@@ -342,5 +343,20 @@ class ProfilesController extends Controller
         $profile->restore();
 
         return redirect()->route('profiles.table')->with('flash_message', 'The profile of ' . $profile->full_name . ' has been restored.');
-    } 
+    }
+
+    /**
+     * Generate PFD Export
+     *
+     * @param  Profile $profile
+     * @return pdf
+     */
+    public function pdfExport(Profile $profile) {
+       $pdf_content =  Browsershot::url($profile->url)
+            ->setIncludePath("/Users/bxc180019/.nvm/versions/node/v16.15.1/bin")
+            ->setExtraHttpHeaders(['Paginated' => false ])
+            ->pdf();
+
+        return response($pdf_content)->header('Content-Type', 'application/pdf');
+    }
 }
