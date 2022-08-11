@@ -132,11 +132,12 @@ class ProfilesController extends Controller
      * @param  User   $user
      * @return \Illuminate\View\View
      */
-    public function show(Profile $profile)
+    public function show(Request $request, Profile $profile)
     {
         /** @var User the logged-in user */
         $user = Auth::user();
         $editable = $user && $user->can('update', $profile);
+        $paginated = $request->headers->get('paginated') ?: true;
 
         //don't show unless profile is public or we can edit it
         if(!$profile->public && !$editable){
@@ -146,18 +147,19 @@ class ProfilesController extends Controller
         $information = $profile->data()->information()->first();
         $preparations = $profile->data()->preparation()->get();
         $research_areas = $profile->data()->areas()->get();
-        $publications = $profile->data()->publications()->paginate(10, ['*'], 'pub');
-        $appointments = $profile->data()->appointments()->paginate(10, ['*'], 'appt');
-        $awards = $profile->data()->awards()->paginate(10, ['*'], 'awd');
-        $activites = $profile->data()->activities()->get();
-        $support = $profile->data()->support()->paginate(5, ['*'], 'sppt');
-        $news = $profile->data()->news()->public()->paginate(5, ['*'], 'news');
-        $projects = $profile->data()->projects()->paginate(5, ['*'], 'proj');
-        $presentations = $profile->data()->presentations()->paginate(5, ['*'], 'pres');
-        $affiliations = $profile->data()->affiliations()->paginate(10, ['*'], 'affl');
-        $additionals = $profile->data()->additionals()->paginate(3, ['*'], 'addl');
-
-        return view('profiles.show', compact('profile', 'editable', 'information', 'preparations', 'publications', 'research_areas', 'activites', 'support', 'appointments', 'awards', 'news', 'projects', 'presentations', 'affiliations', 'additionals'));
+        $activities = $profile->data()->activities()->get();
+        
+        $publications_exists = $profile->data()->publications()->exists();
+        $appointments_exists = $profile->data()->appointments()->exists();
+        $awards_exists = $profile->data()->awards()->exists();
+        $support_exists = $profile->data()->support()->exists();
+        $news_exists = $profile->data()->news()->public()->exists();
+        $projects_exists = $profile->data()->projects()->exists();
+        $presentations_exists = $profile->data()->presentations()->exists();
+        $affiliations_exists = $profile->data()->affiliations()->exists();
+        $additionals_exists = $profile->data()->additionals()->exists(); 
+        
+       return view('profiles.show', compact('profile', 'editable', 'information', 'preparations', 'publications_exists', 'research_areas', 'activities', 'support_exists', 'appointments_exists', 'awards_exists', 'news_exists', 'projects_exists', 'presentations_exists', 'affiliations_exists', 'additionals_exists', 'paginated'));
     }
 
     /**
