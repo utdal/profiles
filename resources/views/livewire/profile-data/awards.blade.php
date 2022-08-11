@@ -6,6 +6,8 @@
                 <strong>{{$award->name}}</strong> - <em>{{$award->organization}}</em> @if($award->year)[{{$award->year}}]@endif<br />
             </div>
         @endforeach
-        {{ $data->links() }}
+        @if($paginated)
+            {{ $data->links() }}
+        @endif
     </div>
 @endif

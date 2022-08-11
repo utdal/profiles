@@ -47,6 +47,7 @@ class PaginatedData extends Component
             'data' => $this->data(),
             'editable' => $this->editable,
             'profile' => $this->profile,
+            'paginated' => true,
         ]);
     }
 }
