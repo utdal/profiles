@@ -3,7 +3,7 @@
 @section('head')
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="UT Dallas Profiles">
-<meta name="twitter:title" content="{{ $profile->name }}">
+<meta name="twitter:titl e" content="{{ $profile->name }}">
 <meta name="twitter:description" content="View the full research profile.">
 <meta name="twitter:image" content="{{ $profile->image_url }}">
 <meta property="og:title" content="{{ $profile->name }}" />
@@ -89,16 +89,16 @@
 		<ul>
 			@if(!$preparations->isEmpty())<li><a href="#preparation">Professional Preparation</a></li>@endif
 			@if(!$research_areas->isEmpty())<li><a href="#areas">Research Areas</a></li>@endif
-			@if($publications_exists)<li><a href="#publications">Publications</a></li>@endif
-			@if($appointments_exists)<li><a href="#appointments">Appointments</a></li>@endif
-			@if($awards_exists)<li><a href="#awards">Awards</a></li>@endif
-			@if($projects_exists)<li><a href="#projects">Projects</a></li>@endif
-			@if($presentations_exists)<li><a href="#presentations">Presentations</a></li>@endif
-			@if($additionals_exists)<li><a href="#additional">Additional Information</a></li>@endif
-			@if($news_exists)<li><a href="#news">News</a></li>@endif
+			@if(!$publications->isEmpty())<li><a href="#publications">Publications</a></li>@endif
+			@if(!$appointments->isEmpty())<li><a href="#appointments">Appointments</a></li>@endif
+			@if(!$awards->isEmpty())<li><a href="#awards">Awards</a></li>@endif
+			@if(!$projects->isEmpty())<li><a href="#projects">Projects</a></li>@endif
+			@if(!$presentations->isEmpty())<li><a href="#presentations">Presentations</a></li>@endif
+			@if(!$additionals->isEmpty())<li><a href="#additional">Additional Information</a></li>@endif
+			@if(!$news->isEmpty())<li><a href="#news">News</a></li>@endif
 			@if(!$activities->isEmpty())<li><a href="#activities">Activities</a></li>@endif
-			@if($affiliations_exists)<li><a href="#affiliations">Affiliations</a></li>@endif
-			@if($support_exists)<li><a href="#funding">Support</a></li>@endif
+			@if(!$affiliations->isEmpty())<li><a href="#affiliations">Affiliations</a></li>@endif
+			@if(!$support->isEmpty())<li><a href="#funding">Support</a></li>@endif
 		</ul>
 	</div>
 	<div class="container card-columns main_areas">
@@ -127,27 +127,42 @@
 				@endforeach
 			</div>
 	@endif
-		<livewire:paginated-data :editable="$editable" :profile="$profile" :paginated=$paginated data_type="publications">
-		<livewire:paginated-data :editable="$editable" :profile="$profile" :paginated=$paginated data_type="awards">
-		<livewire:paginated-data :editable="$editable" :profile="$profile" :paginated=$paginated data_type="appointments">
-		<livewire:paginated-data :editable="$editable" :profile="$profile" :paginated=$paginated data_type="projects">
-		<livewire:paginated-data :editable="$editable" :profile="$profile" :paginated=$paginated data_type="presentations">
-		<livewire:paginated-data :editable="$editable" :profile="$profile" :paginated=$paginated data_type="additionals">
-		<livewire:paginated-data :editable="$editable" :profile="$profile" :paginated=$paginated data_type="news">
-		@if(!$activities->isEmpty() || $editable)
-			<div class="card">
-				<h3 id="activities"><i class="fas fa-chart-line" aria-hidden="true"></i> Activities @if($editable)<a class="btn btn-primary btn-sm" href="{{ route('profiles.edit', [$profile->slug, 'activities']) }}"><i class="fas fa-edit"></i> Edit</a>@endif</h3>
-				@foreach($activities as $activity)
-					<div class="entry">
-						<h5>{{$activity->title}}</h5>
-						{!! Purify::clean($activity->description) !!}
-						@if($activity->start_date)[{{$activity->start_date}}&ndash;{{$activity->end_date}}] @endif
-					</div>
-				@endforeach
-			</div>
-		@endif
-		<livewire:paginated-data :editable="$editable" :profile="$profile" :paginated=$paginated data_type="affiliations">
-		<livewire:paginated-data :editable="$editable" :profile="$profile" :paginated=$paginated data_type="support">
+	@if($paginated)
+		<livewire:paginated-data :editable="$editable" :profile="$profile" data_type="publications">
+		<livewire:paginated-data :editable="$editable" :profile="$profile" data_type="awards">
+		<livewire:paginated-data :editable="$editable" :profile="$profile" data_type="appointments">
+		<livewire:paginated-data :editable="$editable" :profile="$profile" data_type="projects">
+		<livewire:paginated-data :editable="$editable" :profile="$profile" data_type="presentations">
+		<livewire:paginated-data :editable="$editable" :profile="$profile" data_type="additionals">
+		<livewire:paginated-data :editable="$editable" :profile="$profile" data_type="news">
+	@else
+		@include('livewire/profile-data/publications', ['data' => $publications, 'paginated' => $paginated])
+		@include('livewire/profile-data/awards', ['data' => $awards, 'paginated' => $paginated])
+		@include('livewire/profile-data/appointments', ['data' => $appointments, 'paginated' => $paginated])
+		@include('livewire/profile-data/projects', ['data' => $projects, 'paginated' => $paginated])
+		@include('livewire/profile-data/presentations', ['data' => $presentations, 'paginated' => $paginated])
+		@include('livewire/profile-data/additionals', ['data' => $additionals, 'paginated' => $paginated])
+		@include('livewire/profile-data/news', ['data' => $news, 'paginated' => $paginated])
+	@endif
+	@if(!$activities->isEmpty() || $editable)
+		<div class="card">
+			<h3 id="activities"><i class="fas fa-chart-line" aria-hidden="true"></i> Activities @if($editable)<a class="btn btn-primary btn-sm" href="{{ route('profiles.edit', [$profile->slug, 'activities']) }}"><i class="fas fa-edit"></i> Edit</a>@endif</h3>
+			@foreach($activities as $activity)
+				<div class="entry">
+					<h5>{{$activity->title}}</h5>
+					{!! Purify::clean($activity->description) !!}
+					@if($activity->start_date)[{{$activity->start_date}}&ndash;{{$activity->end_date}}] @endif
+				</div>
+			@endforeach
+		</div>
+	@endif
+	@if($paginated)
+		<livewire:paginated-data :editable="$editable" :profile="$profile" data_type="affiliations">
+		<livewire:paginated-data :editable="$editable" :profile="$profile" data_type="support">
+	@else
+		@include('livewire/profile-data/affiliations', ['data' => $affiliations, 'paginated' => $paginated])
+		@include('livewire/profile-data/support', ['data' => $support, 'paginated' => $paginated])
+	@endif
 	</div>
 </div>
 @stop

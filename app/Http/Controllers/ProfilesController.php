@@ -144,22 +144,21 @@ class ProfilesController extends Controller
             abort(404);
         }
 
-        $information = $profile->data()->information()->first();
-        $preparations = $profile->data()->preparation()->get();
-        $research_areas = $profile->data()->areas()->get();
-        $activities = $profile->data()->activities()->get();
+        $information = $profile->information->first();
+        $preparations = $profile->preparation;
+        $research_areas = $profile->areas;
+        $activities = $profile->activities;
+        $publications = $profile->publications;
+        $appointments = $profile->appointments;
+        $awards = $profile->awards;
+        $support = $profile->support;
+        $news =  $profile->news()->public()->get();
+        $projects = $profile->projects;
+        $presentations = $profile->presentations;
+        $affiliations = $profile->affiliations;
+        $additionals = $profile->additionals;
         
-        $publications_exists = $profile->data()->publications()->exists();
-        $appointments_exists = $profile->data()->appointments()->exists();
-        $awards_exists = $profile->data()->awards()->exists();
-        $support_exists = $profile->data()->support()->exists();
-        $news_exists = $profile->data()->news()->public()->exists();
-        $projects_exists = $profile->data()->projects()->exists();
-        $presentations_exists = $profile->data()->presentations()->exists();
-        $affiliations_exists = $profile->data()->affiliations()->exists();
-        $additionals_exists = $profile->data()->additionals()->exists(); 
-        
-       return view('profiles.show', compact('profile', 'editable', 'information', 'preparations', 'publications_exists', 'research_areas', 'activities', 'support_exists', 'appointments_exists', 'awards_exists', 'news_exists', 'projects_exists', 'presentations_exists', 'affiliations_exists', 'additionals_exists', 'paginated'));
+       return view('profiles.show', compact('profile', 'editable', 'information', 'preparations', 'publications', 'research_areas', 'activities', 'support', 'appointments', 'awards', 'news', 'projects', 'presentations', 'affiliations', 'additionals', 'paginated'));
     }
 
     /**

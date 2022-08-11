@@ -21,6 +21,8 @@
                 @endif
             </div>
         @endforeach
-        {{ $data->links() }}
+        @if($paginated)
+            {{ $data->links() }}
+        @endif
     </div>
 @endif

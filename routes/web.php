@@ -109,7 +109,8 @@ Route::name('profiles.')->prefix('/')->group(function() {
         Route::name('update-image')->post('/image', 'ProfilesController@updateImage');
         Route::name('update-banner')->post('/banner', 'ProfilesController@updateBanner');
         Route::name('orcid')->get('/orcid', 'ProfilesController@orcid');
-        Route::name('pdf-export')->get('/pdf', [ProfilesController::class, 'pfdExport']);
+        Route::name('pdf-export')->get('/pdf', [ProfilesController::class, 'pdfExport']);
+        
     });
 
 });

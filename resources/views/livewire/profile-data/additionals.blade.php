@@ -7,6 +7,8 @@
                     {!! Purify::clean($additional->description) !!}
             </div>
         @endforeach
-        {{ $data->links() }}
+        @if($paginated)
+            {{ $data->links() }}
+        @endif
     </div>
 @endif
