@@ -137,7 +137,7 @@ class ProfilesController extends Controller
         /** @var User the logged-in user */
         $user = Auth::user();
         $editable = $user && $user->can('update', $profile);
-        $paginated = $request->headers->get('paginated') ?: true;
+        $paginated = $request->headers->get('paginated') === "0" ? false : true;
 
         //don't show unless profile is public or we can edit it
         if(!$profile->public && !$editable){
@@ -355,7 +355,7 @@ class ProfilesController extends Controller
     public function pdfExport(Profile $profile) {
        $pdf_content =  Browsershot::url($profile->url)
             ->setIncludePath("/Users/bxc180019/.nvm/versions/node/v16.15.1/bin")
-            ->setExtraHttpHeaders(['Paginated' => false ])
+            ->setExtraHttpHeaders(['Paginated' => '0'])
             ->pdf();
 
         return response($pdf_content)->header('Content-Type', 'application/pdf');
