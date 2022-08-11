@@ -64,7 +64,7 @@ class PaginatedDataTest extends TestCase
             $this->assertIsIterable($section_data);
             $this->assertGreaterThanOrEqual($per_page, $data_count);
 
-            $component = Livewire::test(PaginatedData::class, ['profile' => $profile, 'editable' => $editable, 'data_type' => $section, 'paginated' => true ])
+            $component = Livewire::test(PaginatedData::class, ['profile' => $profile, 'editable' => $editable, 'data_type' => $section ])
                         ->assertSet('data_type', $section)
                         ->assertViewHas('data')
                         ->assertSeeHtmlInOrder(['<div class="card">', '<h3 id="'.$section.'">', '<div class="entry">'] );
@@ -128,7 +128,7 @@ class PaginatedDataTest extends TestCase
             ->assertViewIs('profiles.show');
         
         foreach ($sections as $section) {
-            $component = Livewire::test(PaginatedData::class, ['profile' => $profile, 'editable' => $editable, 'data_type' => $section, 'paginated' => true ])
+            $component = Livewire::test(PaginatedData::class, ['profile' => $profile, 'editable' => $editable, 'data_type' => $section ])
             ->assertHasNoErrors()
             ->assertViewIs("livewire.profile-data.".$section)
             ->call('nextPage');
