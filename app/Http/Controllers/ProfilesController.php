@@ -13,13 +13,19 @@ use App\Http\Requests\ProfileBannerImageRequest;
 use App\Http\Requests\ProfileImageRequest;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\School;
+use Exception;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Spatie\Browsershot\Browsershot;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Throwable;
 
 class ProfilesController extends Controller
 {
+    protected $dontReport = [
+        ProcessFailedException::class,
+    ];
     /**
      * Controller constructor. Middleware can be defined here.
      */
@@ -352,12 +358,20 @@ class ProfilesController extends Controller
      * @param  Profile $profile
      * @return pdf
      */
-    public function pdfExport(Profile $profile) {
-       $pdf_content =  Browsershot::url($profile->url)
-            ->setIncludePath("/Users/bxc180019/.nvm/versions/node/v16.15.1/bin")
-            ->setExtraHttpHeaders(['Paginated' => '0'])
-            ->pdf();
-
+    public function pdfExport(Profile $profile, $include_path = false) {
+        if (!$include_path) {
+            try {
+                $pdf_content = Browsershot::url($profile->url)
+                                ->setExtraHttpHeaders(['Paginated' => '0'])
+                                ->pdf();
+            } catch (ProcessFailedException $e) {
+                $this->pdfExport($profile, true);
+            } 
+        }
+        $pdf_content = Browsershot::url($profile->url)
+                        ->setIncludePath(env('BROWSERSHOT_NODE_MODULES'))
+                        ->setExtraHttpHeaders(['Paginated' => '0'])
+                        ->pdf();
         return response($pdf_content)->header('Content-Type', 'application/pdf');
     }
 }
