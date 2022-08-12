@@ -143,7 +143,7 @@ class ProfilesController extends Controller
         /** @var User the logged-in user */
         $user = Auth::user();
         $editable = $user && $user->can('update', $profile);
-        $paginated = $request->headers->get('paginated') === "0" ? false : true;
+        $paginated = $request->headers->get('paginated') === "false" ? false : true;
 
         //don't show unless profile is public or we can edit it
         if(!$profile->public && !$editable){
@@ -362,7 +362,7 @@ class ProfilesController extends Controller
         if (!$include_path) {
             try {
                 $pdf_content = Browsershot::url($profile->url)
-                                ->setExtraHttpHeaders(['Paginated' => '0'])
+                                ->setExtraHttpHeaders(['Paginated' => 'false'])
                                 ->pdf();
             } catch (ProcessFailedException $e) {
                 $this->pdfExport($profile, true);
@@ -370,7 +370,7 @@ class ProfilesController extends Controller
         }
         $pdf_content = Browsershot::url($profile->url)
                         ->setIncludePath(env('BROWSERSHOT_NODE_MODULES'))
-                        ->setExtraHttpHeaders(['Paginated' => '0'])
+                        ->setExtraHttpHeaders(['Paginated' => 'false'])
                         ->pdf();
         return response($pdf_content)->header('Content-Type', 'application/pdf');
     }
