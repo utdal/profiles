@@ -13,13 +13,10 @@ use App\Http\Requests\ProfileBannerImageRequest;
 use App\Http\Requests\ProfileImageRequest;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\School;
-use Exception;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Spatie\Browsershot\Browsershot;
-use Symfony\Component\Process\Exception\ProcessFailedException;
-use Throwable;
 
 class ProfilesController extends Controller
 {
@@ -143,7 +140,7 @@ class ProfilesController extends Controller
         /** @var User the logged-in user */
         $user = Auth::user();
         $editable = $user && $user->can('update', $profile);
-        $paginated = $request->headers->get('paginated') === "false" ? false : true;
+        $paginated = $request->headers->get('Paginated') === "false" ? false : true;
 
         //don't show unless profile is public or we can edit it
         if(!$profile->public && !$editable){
@@ -358,20 +355,17 @@ class ProfilesController extends Controller
      * @param  Profile $profile
      * @return pdf
      */
-    public function pdfExport(Profile $profile, $include_path = false) {
-        if (!$include_path) {
-            try {
-                $pdf_content = Browsershot::url($profile->url)
-                                ->setExtraHttpHeaders(['Paginated' => 'false'])
-                                ->pdf();
-            } catch (ProcessFailedException $e) {
-                $this->pdfExport($profile, true);
-            } 
-        }
+    public function pdfExport(Profile $profile) {
+        
         $pdf_content = Browsershot::url($profile->url)
-                        ->setIncludePath(env('BROWSERSHOT_NODE_MODULES'))
                         ->setExtraHttpHeaders(['Paginated' => 'false'])
-                        ->pdf();
-        return response($pdf_content)->header('Content-Type', 'application/pdf');
+                        ->margins(30, 15, 30, 15);
+
+        if (config('app.node_path')) {
+            $pdf_content = $pdf_content->setIncludePath(config('app.node_path'));
+        }
+
+        return response($pdf_content->pdf())
+                ->header('Content-Type', 'application/pdf');
     }
 }

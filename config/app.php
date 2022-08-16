@@ -67,6 +67,9 @@ return [
     /** API response cache-control headers */
     'api_cache_control' => env('API_CACHE_CONTROL', 'public;no_cache;etag'),
 
+    /** Node Modules */
+    'node_path' => env('NODE_MODULES_PATH'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
