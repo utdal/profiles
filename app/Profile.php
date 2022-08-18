@@ -363,11 +363,27 @@ class Profile extends Model implements HasMedia, Auditable
     // Query Scopes //
     //////////////////
 
-    public function scopePublic($query){
-
+    /**
+     * Query scope for public Profiles
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePublic($query)
+    {
         return $query->where('public', 1);
     }
 
+    /**
+     * Query scope for non-public Profiles
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePrivate($query)
+    {
+        return $query->where('public', 0);
+    }
 
     /**
      * Query scope to eager load the Profiles along with their API-accessible data.

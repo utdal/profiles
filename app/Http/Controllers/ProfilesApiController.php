@@ -54,6 +54,14 @@ class ProfilesApiController extends Controller
                 $profile = $profile->withAnyTags(explode(';', $request->tag), Profile::class);
             }
 
+            if ($request->filled('public')) {
+                if ($request->boolean('public')) {
+                    $profile = $profile->public();
+                } elseif ((bool)$request->input('public') === false) {
+                    $profile = $profile->private();
+                }
+            }
+
             if ($request->boolean('with_data')) {
                 if(count(array_filter($request->query())) <=1){
                     return response()->json(['error' => 'Please use a filter when pulling data.'], 400);
