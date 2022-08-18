@@ -33,6 +33,7 @@ class ProfilesApiRequest extends FormRequest
             'info_contains' => 'sometimes|string',
             'from_school' => 'sometimes|string',
             'tag' => 'sometimes|string',
+            'public' => 'sometimes|boolean',
             'with_data' => 'sometimes|boolean',
             'raw_data' => 'sometimes|boolean',
             'data_type' => [
