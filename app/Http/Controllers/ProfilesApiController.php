@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProfilesApiRequest;
 use App\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -24,7 +25,7 @@ class ProfilesApiController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(Request $request)
+    public function index(ProfilesApiRequest $request)
     {
         return Cache::tags(['profiles', 'profile_data', 'profile_tags'])->remember($request->fullUrl(), 3600, function() use ($request) {
             $profile = Profile::select(Profile::apiAttributes())->with(['media']);
