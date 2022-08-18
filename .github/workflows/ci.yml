@@ -80,6 +80,8 @@ jobs:
         run: |
           php -r "file_exists('.env') || copy('.env.ci', '.env');"
           php artisan key:generate
+          php artisan storage:link
+          chmod -R 777 storage bootstrap/cache
 
       - name: Clear Config
         run: php artisan config:clear
