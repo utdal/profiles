@@ -1,7 +1,16 @@
 @extends('layout')
 @section('title', 'Edit Settings')
 @section('header')
-  @include('nav')
+    @include('nav')
+    @push('breadcrumbs')
+        <li class="breadcrumb-item active">
+            Admin
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Edit Site Settings
+        </li>
+    @endpush
+    @include('breadcrumbs')
 @stop
 
 @section('content')

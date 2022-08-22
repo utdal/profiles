@@ -2,6 +2,12 @@
 @section('title', "$school->display_name")
 @section('header')
 	@include('nav')
+    @push('breadcrumbs')
+        <li class="breadcrumb-item active" aria-current="page">
+            {{ $school->display_name }}
+        </li>
+    @endpush
+    @include('breadcrumbs')
 @stop
 @section('content')
 <div class="container">

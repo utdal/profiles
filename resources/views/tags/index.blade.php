@@ -2,6 +2,12 @@
 @section('title', 'All Tags')
 @section('header')
 	@include('nav')
+	@push('breadcrumbs')
+		<li class="breadcrumb-item active" aria-current="page">
+			All Tags
+		</li>
+	@endpush
+	@include('breadcrumbs')
 @stop
 @section('content')
 

@@ -2,6 +2,15 @@
 @section('title', 'All Student Research Applications')
 @section('header')
 	@include('nav')
+    @push('breadcrumbs')
+        <li class="breadcrumb-item">
+            <a href="{{ route('students.about') }}">Student Research</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            All Applications
+        </li>
+    @endpush
+    @include('breadcrumbs')
 @stop
 @section('content')
 
