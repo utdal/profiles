@@ -4545,9 +4545,9 @@ input[type=button].btn-block {
   display: flex;
   flex-wrap: wrap;
   padding: 0.75rem 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0;
   list-style: none;
-  background-color: #e9ecef;
+  background-color: #f8f9fa;
 }
 
 .breadcrumb-item + .breadcrumb-item {
@@ -4556,7 +4556,7 @@ input[type=button].btn-block {
 .breadcrumb-item + .breadcrumb-item::before {
   float: left;
   padding-right: 0.5rem;
-  color: #6c757d;
+  color: #6a737b;
   content: "/";
 }
 .breadcrumb-item + .breadcrumb-item:hover::before {
@@ -4566,7 +4566,7 @@ input[type=button].btn-block {
   text-decoration: none;
 }
 .breadcrumb-item.active {
-  color: #6c757d;
+  color: #6a737b;
 }
 
 .pagination {
@@ -10078,6 +10078,10 @@ footer > ul {
   border: none;
 }
 
+.breadcrumb .breadcrumb-item a {
+  color: #008441;
+}
+
 .profile-card {
   margin-bottom: 2rem;
   width: 16rem;
@@ -10101,12 +10105,13 @@ footer > ul {
 
 .profile {
   background-color: #f8f9fa;
+  padding-top: 3px;
 }
 .profile .profile-header {
   background-color: #fff;
   padding: 60px 40px 40px;
   margin-bottom: 30px;
-  box-shadow: 2px 2px 4px #dee2e6;
+  box-shadow: 0px 0px 6px #dee2e6;
 }
 .profile .profile-header .profile_summary {
   color: #555555;
