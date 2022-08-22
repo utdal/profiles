@@ -1,7 +1,13 @@
 @extends('layout')
 @section('title', 'FAQ')
 @section('header')
-  @include('nav')
+    @include('nav')
+    @push('breadcrumbs')
+        <li class="breadcrumb-item active" aria-current="page">
+            FAQ
+        </li>
+    @endpush
+    @include('breadcrumbs')
 @stop
 
 @section('content')

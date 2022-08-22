@@ -2,6 +2,22 @@
 @section('title', "Student Research Applications for {$profile->full_name}")
 @section('header')
 	@include('nav')
+    @push('breadcrumbs')
+        <li class="breadcrumb-item">
+            <a href="{{ route('students.about') }}">Student Research</a>
+        </li>
+        <li class="breadcrumb-item">
+            @can('viewAny', App\Student::class)
+                <a href="{{ route('students.index') }}">All Applications</a>
+            @else
+                Applications
+            @endcan
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Applications for {{ $profile->full_name }}
+        </li>
+    @endpush
+    @include('breadcrumbs')
 @stop
 @section('content')
 

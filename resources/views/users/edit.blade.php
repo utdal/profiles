@@ -2,6 +2,29 @@
 @section('title', 'Edit User - ' . $user->name)
 @section('header')
 	@include('nav')
+	@push('breadcrumbs')
+		<li class="breadcrumb-item active">
+			Admin
+		</li>
+		<li class="breadcrumb-item active">
+			@can('viewAdminIndex', App\User::class)
+				<a href="{{ route('users.index') }}">All Users</a>
+			@else
+				Users
+			@endcan
+		</li>
+		<li class="breadcrumb-item active">
+			@can('view', $user)
+				<a href="{{ route('users.show', ['user' => $user]) }}">{{ $user->display_name }}</a>
+			@else
+				{{ $user->display_name }}
+			@endcan
+		</li>
+		<li class="breadcrumb-item active" aria-current="page">
+			Edit
+		</li>
+	@endpush
+	@include('breadcrumbs')
 @stop
 @section('content')
 <div class="container">

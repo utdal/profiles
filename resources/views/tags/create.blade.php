@@ -2,6 +2,20 @@
 @section('title', 'Create a new tag')
 @section('header')
     @include('nav')
+    @push('breadcrumbs')
+        <li class="breadcrumb-item active">
+            Admin
+        </li>
+        @can('viewAdminIndex', Spatie\Tags\Tag::class)
+            <li class="breadcrumb-item active">
+                <a href="{{ route('tags.table') }}">All Tags</a>
+            </li>
+        @endcan
+        <li class="breadcrumb-item active" aria-current="page">
+            Add Tags
+        </li>
+    @endpush
+    @include('breadcrumbs')
 @stop
 @section('content')
 

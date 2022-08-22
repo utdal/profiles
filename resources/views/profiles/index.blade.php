@@ -2,6 +2,12 @@
 @section('title', $search ? 'Search Results' : 'All Profiles')
 @section('header')
 	@include('nav')
+	@push('breadcrumbs')
+		<li class="breadcrumb-item active" aria-current="page">
+			@if(!empty($search)) Search Results @else All Profiles @endif
+		</li>
+	@endpush
+	@include('breadcrumbs')
 @stop
 @section('content')
 

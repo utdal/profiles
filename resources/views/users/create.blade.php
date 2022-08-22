@@ -1,7 +1,23 @@
 @extends('layout')
 @section('title', 'Add a New User')
 @section('header')
-  @include('nav')
+    @include('nav')
+    @push('breadcrumbs')
+        <li class="breadcrumb-item active">
+            Admin
+        </li>
+        <li class="breadcrumb-item active">
+            @can('viewAdminIndex', App\User::class)
+                <a href="{{ route('users.index') }}">All Users</a>
+            @else
+                Users
+            @endcan
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Add a New User
+        </li>
+    @endpush
+    @include('breadcrumbs')
 @stop
 
 @section('content')
