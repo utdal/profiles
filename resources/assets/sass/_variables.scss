@@ -1,3 +1,5 @@
+@use "sass:color";
+
 //== Variables
 
 // Options
@@ -198,6 +200,17 @@ $navbar-dark-color:                 rgba($white, 1) !default;
 $navbar-dark-hover-color:           $white !default;
 $navbar-dark-active-color:          $white !default;
 $navbar-dark-disabled-color:        rgba($white, .5) !default;
+
+//== Breadcrumbs
+//
+//## Increase contrast for WCAG AA
+
+$breadcrumb-bg:                     $gray-100 !default;
+$breadcrumb-active-color:           color.scale($gray-600, $lightness: -2%) !default;
+$breadcrumb-divider-color:          $breadcrumb-active-color !default;
+$breadcrumb-link-color:             color.scale($primary, $lightness: -1%) !default;
+
+$breadcrumb-margin-bottom:          0 !default;
 
 //== Forms
 //
