@@ -131,7 +131,7 @@ class ProfilesController extends Controller
      * @param  User   $user
      * @return \Illuminate\View\View
      */
-    public function show(Profile $profile)
+    public function show(Request $request, Profile $profile)
     {
         /** @var User the logged-in user */
         $user = Auth::user();
@@ -142,21 +142,12 @@ class ProfilesController extends Controller
             abort(404);
         }
 
-        $information = $profile->data()->information()->first();
-        $preparations = $profile->data()->preparation()->get();
-        $research_areas = $profile->data()->areas()->get();
-        $publications = $profile->data()->publications()->paginate(10, ['*'], 'pub');
-        $appointments = $profile->data()->appointments()->paginate(10, ['*'], 'appt');
-        $awards = $profile->data()->awards()->paginate(10, ['*'], 'awd');
-        $activites = $profile->data()->activities()->get();
-        $support = $profile->data()->support()->paginate(5, ['*'], 'sppt');
-        $news = $profile->data()->news()->public()->paginate(5, ['*'], 'news');
-        $projects = $profile->data()->projects()->paginate(5, ['*'], 'proj');
-        $presentations = $profile->data()->presentations()->paginate(5, ['*'], 'pres');
-        $affiliations = $profile->data()->affiliations()->paginate(10, ['*'], 'affl');
-        $additionals = $profile->data()->additionals()->paginate(3, ['*'], 'addl');
-
-        return view('profiles.show', compact('profile', 'editable', 'information', 'preparations', 'publications', 'research_areas', 'activites', 'support', 'appointments', 'awards', 'news', 'projects', 'presentations', 'affiliations', 'additionals'));
+        return view('profiles.show', [
+            'profile' => $profile,
+            'editable' => $editable,
+            'paginated' => $request->boolean('paginated', true),
+            'information' => $profile->information->first(),
+        ]);
     }
 
     /**
