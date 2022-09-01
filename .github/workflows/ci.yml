@@ -131,7 +131,7 @@ jobs:
             restore-keys: ${{ runner.os }}-symfony-
 
       - name: Check PHP security
-        uses: symfonycorp/security-checker-action@v2
+        uses: symfonycorp/security-checker-action@v3
 
       - name: Check JS security
         run: npm audit
