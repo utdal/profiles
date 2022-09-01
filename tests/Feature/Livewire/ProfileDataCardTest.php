@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Livewire;
 
-use App\Http\Livewire\PaginatedData;
+use App\Http\Livewire\ProfileDataCard;
 use App\Profile;
 use App\ProfileData;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -11,7 +11,7 @@ use Livewire\Livewire;
 use Tests\Feature\Traits\LoginWithRole;
 use Tests\TestCase;
 
-class PaginatedDataTest extends TestCase
+class ProfileDataCardTest extends TestCase
 {
     use LoginWithRole;
     use RefreshDatabase;
@@ -58,17 +58,17 @@ class PaginatedDataTest extends TestCase
             
             $section_data = $profile->$section;
             $data_count = $section_data->count();
-            $per_page = PaginatedData::SECTIONS[$section];
+            $per_page = ProfileDataCard::PER_PAGE_FOR_SECTION[$section];
 
             $this->assertDatabaseHas('profile_data', ['type' => $section]);
             $this->assertIsIterable($section_data);
             $this->assertGreaterThanOrEqual($per_page, $data_count);
 
-            $component = Livewire::test(PaginatedData::class, ['profile' => $profile, 'editable' => $editable, 'data_type' => $section ])
+            $component = Livewire::test(ProfileDataCard::class, ['profile' => $profile, 'editable' => $editable, 'data_type' => $section ])
                         ->assertSet('data_type', $section)
                         ->assertViewHas('data')
-                        ->assertSeeHtmlInOrder(['<div class="card">', '<h3 id="'.$section.'">', '<div class="entry">'] );
-            
+                        ->assertSeeHtmlInOrder(["<section id=\"$section\" class=\"card\">", '<h3>', '<div class="entry">'] );
+
             if ($section === 'additionals') {
                 $component->assertSee('Additional Information');
             } else {
@@ -128,9 +128,9 @@ class PaginatedDataTest extends TestCase
             ->assertViewIs('profiles.show');
         
         foreach ($sections as $section) {
-            $component = Livewire::test(PaginatedData::class, ['profile' => $profile, 'editable' => $editable, 'data_type' => $section ])
+            $component = Livewire::test(ProfileDataCard::class, ['profile' => $profile, 'editable' => $editable, 'data_type' => $section ])
             ->assertHasNoErrors()
-            ->assertViewIs("livewire.profile-data.".$section)
+            ->assertViewIs("livewire.profile-data-cards.{$section}")
             ->call('nextPage');
 
             $this->assertDatabaseHas('profile_data', ['type' => $section]);
