@@ -4,6 +4,9 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Concerns\HasImageUploads;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+use App\Rules\ProfileDataExists;
 
 class ProfileUpdateRequest extends FormRequest
 {
@@ -27,7 +30,7 @@ class ProfileUpdateRequest extends FormRequest
     {
         $rulesMethod = $this->route()->parameter('section') . 'Rules';
 
-        return method_exists($this, $rulesMethod) ? $this->$rulesMethod() : [];
+        return method_exists($this, $rulesMethod) ? $this->$rulesMethod() : $this->dataPresenceRules();
     }
 
     public function informationRules(): array
@@ -57,6 +60,7 @@ class ProfileUpdateRequest extends FormRequest
     {
         return [
             'data.*.image.max' => $this->uploadedImageMessages('max'),
+            'data.*.id.exists' => 'The profile data you are attempting to update could not be found. It might have been removed in a different tab or browser.'
         ];
     }
 
@@ -76,5 +80,24 @@ class ProfileUpdateRequest extends FormRequest
             'data.*.data.tertiary_url' => 'Tertiary URL',
             'data.*.data.orc_id' => 'ORCID',
         ];
+    }
+
+    public function dataPresenceRules(): array
+    {
+        return [
+            'data.*.id' => 
+                Rule::forEach(function ($value, $attribute) {
+                    if ($value > 0) {
+                        return [
+                            Rule::exists('profile_data', 'id')->where(function($query) {
+                                return $query->where([
+                                    'profile_id' => $this->route()->parameters['profile']->id
+                                ]);
+                            }),
+                        ];
+                    }
+                    return [];
+                })
+            ];
     }
 }
