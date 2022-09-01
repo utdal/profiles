@@ -4,9 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Concerns\HasImageUploads;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use App\Rules\ProfileDataExists;
 
 class ProfileUpdateRequest extends FormRequest
 {
