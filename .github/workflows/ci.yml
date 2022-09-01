@@ -81,6 +81,7 @@ jobs:
           php -r "file_exists('.env') || copy('.env.ci', '.env');"
           php artisan key:generate
           php artisan storage:link
+          mkdir -p -m 777 storage/app/purify/HTML
           chmod -R 777 storage bootstrap/cache
 
       - name: Clear Config
