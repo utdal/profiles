@@ -136,28 +136,18 @@ class ProfilesController extends Controller
         /** @var User the logged-in user */
         $user = Auth::user();
         $editable = $user && $user->can('update', $profile);
-        $paginated = $request->headers->get('paginated') ?: true;
 
         //don't show unless profile is public or we can edit it
         if(!$profile->public && !$editable){
             abort(404);
         }
 
-        $information = $profile->information->first();
-        $preparations = $profile->preparation;
-        $research_areas = $profile->areas;
-        $activities = $profile->activities;
-        $publications = $profile->publications;
-        $appointments = $profile->appointments;
-        $awards = $profile->awards;
-        $support = $profile->support;
-        $news =  $profile->news()->public()->get();
-        $projects = $profile->projects;
-        $presentations = $profile->presentations;
-        $affiliations = $profile->affiliations;
-        $additionals = $profile->additionals;
-        
-       return view('profiles.show', compact('profile', 'editable', 'information', 'preparations', 'publications', 'research_areas', 'activities', 'support', 'appointments', 'awards', 'news', 'projects', 'presentations', 'affiliations', 'additionals', 'paginated'));
+        return view('profiles.show', [
+            'profile' => $profile,
+            'editable' => $editable,
+            'paginated' => $request->boolean('paginated', true),
+            'information' => $profile->information->first(),
+        ]);
     }
 
     /**
