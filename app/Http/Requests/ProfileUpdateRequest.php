@@ -21,6 +21,10 @@ class ProfileUpdateRequest extends FormRequest
             'data.*.image' => $this->uploadedImageRules(),
         ];
 
+        if ($this->route()->parameter('section') !== 'information') {
+            $common_rules = array_merge($common_rules, $this->dataPresenceRules());
+        }
+        
         return array_merge($common_rules, $this->sectionRules());
     }
 
@@ -28,7 +32,7 @@ class ProfileUpdateRequest extends FormRequest
     {
         $rulesMethod = $this->route()->parameter('section') . 'Rules';
 
-        return method_exists($this, $rulesMethod) ? $this->$rulesMethod() : $this->dataPresenceRules();
+        return method_exists($this, $rulesMethod) ? $this->$rulesMethod() : [];
     }
 
     public function informationRules(): array
