@@ -104,7 +104,7 @@ class TagsController extends Controller
         $modelname = $request->model;
 
         if ($model = $modelname::find($request->id)) {
-            $model->syncTagsWithType($request->tags, $modelname);
+            $model->syncTagsWithType($request->tags ?? [], $modelname);
             $message = "Tags updated.";
             $view = view('tags.badge', ['tags' => $model->tags()->get()])->render();
         }
