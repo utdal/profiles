@@ -1,12 +1,14 @@
 // profile.show
 
 .profile {
+	background-color: $light;
+	padding-top: 3px;
 
 	.profile-header {
 		background-color: $white;
 		padding: 60px 40px 40px;
 		margin-bottom: 30px;
-		box-shadow: 2px 2px 4px $gray-300;
+		box-shadow: 0px 0px 6px $gray-300;
 
 		.profile_summary {
 			color: $gray;
@@ -185,6 +187,7 @@
 		margin-top: 15px;
 		z-index: 100;
 		position: relative;
+		flex-wrap: wrap;
   	}
 
 	.news_image {
@@ -194,9 +197,6 @@
 		margin-right: 15px;
 		margin-bottom: 5px;
 	}
-
-	background-color: $light;
-	
 }
 
 //general

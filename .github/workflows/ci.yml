@@ -80,6 +80,9 @@ jobs:
         run: |
           php -r "file_exists('.env') || copy('.env.ci', '.env');"
           php artisan key:generate
+          php artisan storage:link
+          mkdir -p -m 777 storage/app/purify/HTML
+          chmod -R 777 storage bootstrap/cache
 
       - name: Clear Config
         run: php artisan config:clear
@@ -129,7 +132,7 @@ jobs:
             restore-keys: ${{ runner.os }}-symfony-
 
       - name: Check PHP security
-        uses: symfonycorp/security-checker-action@v2
+        uses: symfonycorp/security-checker-action@v3
 
       - name: Check JS security
         run: npm audit

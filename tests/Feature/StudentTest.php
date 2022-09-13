@@ -108,8 +108,11 @@ class StudentTest extends TestCase
         $this->followingRedirects()->get($unsubmit_route)
             ->assertStatus(200)
             ->assertSee('Student profile status updated');
-        
-        $this->assertDatabaseHas('students', array_merge($student->getAttributes(), ['status' => 'drafted']));
+
+        $this->assertDatabaseHas('students', [
+            'id' => $student->id,
+            'status' => 'drafted',
+        ]);
 
         $this->loginAsUserWithRole('site_admin');
 

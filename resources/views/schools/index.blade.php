@@ -2,6 +2,15 @@
 @section('title', 'All Schools Table')
 @section('header')
 	@include('nav')
+    @push('breadcrumbs')
+        <li class="breadcrumb-item active">
+            Admin
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            All Schools
+        </li>
+    @endpush
+    @include('breadcrumbs')
 @stop
 @section('content')
 <div class="container">

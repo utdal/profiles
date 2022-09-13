@@ -9,7 +9,13 @@
 </style>
 @stop
 @section('header')
-	@include('nav')
+    @include('nav')
+    @push('breadcrumbs')
+		<li class="breadcrumb-item active" aria-current="page">
+			Student Research
+		</li>
+	@endpush
+	@include('breadcrumbs')
 @stop
 @section('content')
 

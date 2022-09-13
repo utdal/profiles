@@ -2,6 +2,25 @@
 @section('title', 'Edit Student Research Application')
 @section('header')
 	@include('nav')
+    @push('breadcrumbs')
+        <li class="breadcrumb-item">
+            <a href="{{ route('students.about') }}">Student Research</a>
+        </li>
+        <li class="breadcrumb-item active">
+            @can('viewAny', App\Student::class)
+                <a href="{{ route('students.index') }}">All Applications</a>
+            @else
+                Applications
+            @endcan
+        </li>
+        <li class="breadcrumb-item">
+            <a href="{{ route('students.show', ['student' => $student]) }}">{{ $student->full_name }}</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Edit
+        </li>
+    @endpush
+    @include('breadcrumbs')
 @stop
 @section('content')
 

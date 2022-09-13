@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Profile;
 use App\ProfileData;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Arr;
 
 class ProfileDataFactory extends Factory
 {
@@ -55,5 +56,127 @@ class ProfileDataFactory extends Factory
             },
             'public' => 1,
         ];
+    }
+    
+    /**
+     * Data Type "presentations"/"publications"/"projects"/"additionals"
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function general()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'data' => [
+                    'url' => $this->faker->url(),
+                    'title' => $this->faker->sentence(),
+                    'year' => $this->faker->year(),
+                ],
+            ];
+        });
+    }
+
+    /**
+     * Data Type "awards"
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function awards()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'type' => 'awards',
+                'data' => [
+                    'name' => $this->faker->catchPhrase(),
+                    'organization' => $this->faker->company(),
+                    'year' => $this->faker->year(),
+                    'category' => Arr::random(['Research', 'Teaching', 'Service', 'Additional']),
+                ],
+            ];
+        });
+    }
+
+    /**
+     * Data Type "appointments"
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function appointments()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'type' => 'appointments',
+                'data' => [
+                    'appointment' => $this->faker->jobTitle(),
+                    'organization' => $this->faker->company(),
+                    'description' => $this->faker->sentence(),
+                    'start_date' => $this->faker->year(),
+                    'end_date' => $this->faker->year(),
+                ],
+            ];
+        });
+    }
+
+    /**
+     * Data Type "affiliations"
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function affiliations()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'type' => 'affiliations',
+                'data' => [
+                    'tittle' => $this->faker->sentence(),
+                    'description' => $this->faker->sentence(),
+                    'start_date' => $this->faker->year(),
+                    'end_date' => $this->faker->year(),
+                ],
+            ];
+        });
+    }
+
+    /**
+     * Data Type "support"
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function support()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'type' => 'support',
+                'data' => [
+                    'tittle' => $this->faker->sentence(),
+                    'sponsor' => $this->faker->company(),
+                    'amount' => $this->faker->randomNumber(5, true),
+                    'description' => $this->faker->sentence(),
+                    'start_date' => $this->faker->year(),
+                    'end_date' => $this->faker->year(),
+                ],
+            ];
+        });
+    }
+
+    /**
+     * Data Type "news"
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function news()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'type' => 'news',
+                'data' => [
+                    'tittle' => $this->faker->sentence(),
+                    'url' => $this->faker->url(),
+                    'description' => $this->faker->sentence(),
+                    'start_date' => $this->faker->year(),
+                    'end_date' => $this->faker->year(),
+                ],
+            ];
+        });
     }
 }

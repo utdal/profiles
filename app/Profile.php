@@ -92,6 +92,31 @@ class Profile extends Model implements HasMedia, Auditable
     }
 
     /**
+     * Get the relations that can be exposed via the API
+     *
+     * @return array
+     */
+    public static function apiRelations()
+    {
+        return [
+            'information',
+            'activities',
+            'additionals',
+            'affiliations',
+            'appointments',
+            'areas',
+            'awards',
+            'news',
+            'preparation',
+            'presentations',
+            'projects',
+            'publications',
+            'support',
+            'tags',
+        ];
+    }
+
+    /**
      * Get the attributes that can be exposed via the API.
      *
      * @return array
@@ -338,11 +363,27 @@ class Profile extends Model implements HasMedia, Auditable
     // Query Scopes //
     //////////////////
 
-    public function scopePublic($query){
-
+    /**
+     * Query scope for public Profiles
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePublic($query)
+    {
         return $query->where('public', 1);
     }
 
+    /**
+     * Query scope for non-public Profiles
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePrivate($query)
+    {
+        return $query->where('public', 0);
+    }
 
     /**
      * Query scope to eager load the Profiles along with their API-accessible data.
@@ -355,7 +396,7 @@ class Profile extends Model implements HasMedia, Auditable
     {
         //add each meta-section to API eager load payload
         if ($sections === null) {
-            $sections = ['information', 'tags', 'preparation', 'awards', 'areas', 'activities', 'news', 'appointments', 'publications', 'affiliations', 'support', 'projects', 'additionals', 'presentations'];
+            $sections = self::apiRelations();
         } elseif (is_string($sections)) {
             $sections = explode(';', $sections);
         }

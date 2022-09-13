@@ -4,7 +4,20 @@ $current_user = Auth::user();
 @extends('layout')
 @section('title', 'User Account - ' . $user->display_name)
 @section('header')
-  @include('nav')
+    @include('nav')
+    @push('breadcrumbs')
+        <li class="breadcrumb-item active">
+            @can('viewAdminIndex', App\User::class)
+                <a href="{{ route('users.index') }}">All Users</a>
+            @else
+                Users
+            @endcan
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            {{ $user->display_name }}
+        </li>
+    @endpush
+    @include('breadcrumbs')
 @stop
 @section('content')
 <div class="container">
