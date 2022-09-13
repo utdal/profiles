@@ -10229,6 +10229,15 @@ footer > ul {
 .profile .entry {
   margin-bottom: 12px;
 }
+@media print {
+  .profile .entry {
+    clear: both;
+    page-break-inside: auto !important;
+    margin-bottom: 10px !important;
+    -moz-column-break-before: always;
+         break-before: always;
+  }
+}
 .profile .entry:last-of-type {
   margin-bottom: 0px;
 }
@@ -10252,6 +10261,14 @@ footer > ul {
 @media (max-width: 576px) {
   .profile .card {
     padding: 25px 40px 40px;
+  }
+}
+@media print {
+  .profile .card {
+    clear: both;
+    page-break-inside: avoid !important;
+    display: block;
+    page-break-after: always;
   }
 }
 @media (max-width: 992px) {
