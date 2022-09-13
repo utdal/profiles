@@ -340,7 +340,7 @@ class ProfilesController extends Controller
      * Generate PFD Export
      *
      * @param  Profile $profile
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\Response&static
      */
     public function pdfExport(Profile $profile) {
         
