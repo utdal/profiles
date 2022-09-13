@@ -20,9 +20,6 @@ use Spatie\Browsershot\Browsershot;
 
 class ProfilesController extends Controller
 {
-    protected $dontReport = [
-        ProcessFailedException::class,
-    ];
     /**
      * Controller constructor. Middleware can be defined here.
      */
@@ -343,7 +340,7 @@ class ProfilesController extends Controller
      * Generate PFD Export
      *
      * @param  Profile $profile
-     * @return pdf
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function pdfExport(Profile $profile) {
         
