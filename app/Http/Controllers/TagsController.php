@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Spatie\Tags\Tag;
+use Illuminate\Support\Facades\Validator;
 
 class TagsController extends Controller
 {
@@ -103,12 +104,27 @@ class TagsController extends Controller
         $message = 'ERROR: Cannot update tags.';
         $modelname = $request->model;
 
-        if ($model = $modelname::find($request->id)) {
-            $model->syncTagsWithType($request->tags ?? [], $modelname);
-            $message = "Tags updated.";
-            $view = view('tags.badge', ['tags' => $model->tags()->get()])->render();
-        }
+        $validator = Validator::make($request->all(), [
+            'model' => 'required|in:App\Profile,App\Student',
+            'id' => 'gt:0',
+            'tags' => 
+                    function ($attribute, $value, $fail) {
+                        if (!is_string($value) && !is_array($value)) {
+                            $fail('The '.$attribute.' is invalid. Press the "enter" key or type a comma (,) after each new tag.');
+                        }
+                    },
+        ]);
 
+        if ($validator->fails() && $request->ajax()) {
+            return response()->json(['errors'=>$validator->errors()], 500);
+        } else {
+            if ($model = $modelname::find($request->id)) {
+                $model->syncTagsWithType($request->tags ?? [], $modelname);
+                $message = "Tags updated.";
+                $view = view('tags.badge', ['tags' => $model->tags()->get()])->render();
+            }
+        }
+        
         Cache::tags(['profile_tags'])->flush();
 
         if ($request->ajax()) {
