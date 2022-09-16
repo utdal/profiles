@@ -21,6 +21,10 @@ $random_tags = Spatie\Tags\Tag::whereType($model_class)->inRandomOrder()->limit(
             <p>Please type your desired tags, e.g. <strong>{{ $random_tags->implode(', ') }}</strong>, and etc.</p>
             <p>Press the 'enter' key or type a comma (,) after each new tag.</p>
           </div>
+          <div class="alert alert-danger" style="display:none">
+            <p>The tags could not be updated. Please review the following error(s):
+            <ul class="errors"></ul>
+          </div>
           {!! Form::select($id.'_tags[]', $tags->pluck('name','name')->all(), null, ['id' => $id.'_tags[]', 'multiple', 'data-token' => csrf_token(), 'data-model-name' => $id, 'data-url' => route('tags.api.update'), 'data-model-id' => $model->getKey(), 'data-model' => $model_class]) !!}
         </div>
       </div>

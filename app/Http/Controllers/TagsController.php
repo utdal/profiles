@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Spatie\Tags\Tag;
+use App\Http\Requests\TagsUpdateRequest;
 
 class TagsController extends Controller
 {
@@ -96,7 +97,7 @@ class TagsController extends Controller
      * @param  Request  $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
-    public function update(Request $request)
+    public function update(TagsUpdateRequest $request)
     {
         $model = null;
         $view = '';
@@ -108,7 +109,7 @@ class TagsController extends Controller
             $message = "Tags updated.";
             $view = view('tags.badge', ['tags' => $model->tags()->get()])->render();
         }
-
+        
         Cache::tags(['profile_tags'])->flush();
 
         if ($request->ajax()) {
