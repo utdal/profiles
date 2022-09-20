@@ -94,7 +94,7 @@ class TagsController extends Controller
     /**
      * Update the tags on a model.
      *
-     * @param  Request  $request
+     * @param  TagsUpdateRequest  $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
     public function update(TagsUpdateRequest $request)
