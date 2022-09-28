@@ -24,7 +24,7 @@
 
     <div class="card student-info-card border-0 bg-dark text-white" style="z-index: 0;">
         @isset($settings['student_info_image'])
-        <img class="card-img @if(($settings['student_info_image'] ?? false) && ($settings['student_info_overlay'] ?? false)) student-card-img-overlay @endif" src="{{ $settings['student_info_image'] }}" alt="Student info background">
+        <img class="card-img @if(($settings['student_info_image'] ?? false) && ($settings['student_info_overlay'] ?? false))student-card-img-overlay @endif" src="{{ $settings['student_info_image'] }}" alt="Student info background">
         @endisset
         <div class="p-5 d-flex align-items-center" style="background-color:{{ $settings['primary_color'] ?? '#008542' }}e0">
             <div class="lead">
