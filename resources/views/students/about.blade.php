@@ -5,7 +5,6 @@
     .student-info-card a {
         color: white;
         text-decoration: underline;
-        z-index: 0;
     }
 </style>
 @stop
