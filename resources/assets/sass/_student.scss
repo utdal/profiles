@@ -10,3 +10,12 @@
 	height: 100%;
 	object-fit: cover;
 }
+
+.student-info-card {
+    z-index: 0;
+}
+
+.student-info-card a {
+	color: white;
+	text-decoration: underline;
+}

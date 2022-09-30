@@ -1,13 +1,5 @@
 @extends('layout')
 @section('title', 'About Undergraduate Student Research')
-@section('head')
-<style>
-    .student-info-card a {
-        color: white;
-        text-decoration: underline;
-    }
-</style>
-@stop
 @section('header')
     @include('nav')
     @push('breadcrumbs')
@@ -22,7 +14,7 @@
 <div class="container">
     <h1><i class="fas fa-rocket"></i> Get Started with Student Research</h1>
 
-    <div class="card student-info-card border-0 bg-dark text-white" style="z-index: 0;">
+    <div class="card student-info-card border-0 bg-dark text-white">
         @isset($settings['student_info_image'])
         <img class="card-img @if(($settings['student_info_image'] ?? false) && ($settings['student_info_overlay'] ?? false))student-card-img-overlay @endif" src="{{ $settings['student_info_image'] }}" alt="Student info background">
         @endisset
