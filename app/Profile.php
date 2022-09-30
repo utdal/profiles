@@ -195,6 +195,7 @@ class Profile extends Model implements HasMedia, Auditable
             }
             else if($ref['external-id-type'] == "doi"){
               $url = "http://doi.org/" . $ref['external-id-value'];
+              $doi = $ref['external-id-value'];
             }
           }
           $record = ProfileData::firstOrCreate([
@@ -205,6 +206,7 @@ class Profile extends Model implements HasMedia, Auditable
           ],[
               'data' => [
                   'url' => $url,
+                  'doi' => $doi,
                   'title' => $record['work-summary'][0]['title']['title']['value'],
                   'year' => $record['work-summary'][0]['publication-date']['year']['value'] ?? null,
                   'type' => ucwords(strtolower(str_replace('_', ' ', $record['work-summary'][0]['type']))),
@@ -217,6 +219,87 @@ class Profile extends Model implements HasMedia, Auditable
 
       //ran through process successfully
       return true;
+    }
+
+    /**
+     * Checks if this profile has publications managed by ORCID
+     *
+     * @return bool
+     *  mhj
+     */
+    public function hasAcademicsAnalyticsManagedPublications()
+    {
+        if ($this->relationLoaded('information')) {
+            return (bool) ($this->information->first()->data['academics_analytics_managed'] ?? false);
+        }
+
+        return $this->information()->where('data->academics_analytics_managed', '1')->exists();
+    }
+
+    public function updateAcademicsAnalytics()
+    {
+      $academics_analytics_id = $this->information()->get(array('data'))->toArray()[0]['data']['academics_analytics_id'];
+      
+      if(is_null($academics_analytics_id)){
+        //can't update if we don't know your ID
+        return false;
+      }
+
+      $aa_url = "https://api.academicanalytics.com/person/$academics_analytics_id/articles";
+
+      $client = new Client();
+
+      $res = $client->get($aa_url, [
+        'headers' => [
+          'apikey' => "***REMOVED***",//config('ACADEMICS_ANALYTICS_KEY'),
+          'Accept' => 'application/json'
+        ],
+        'http_errors' => false, // don't throw exceptions for 4xx,5xx responses
+      ]);
+
+      //an error of some sort
+      if($res->getStatusCode() != 200){
+        return false;
+      }
+
+      $datum = json_decode($res->getBody()->getContents(), true);
+      $current_publications_dois = $this->publications->pluck('data.doi')->filter()->values();
+      $datum = collect($datum)->whereNotIn('DOI', $current_publications_dois);
+      $publications = collect();
+
+      foreach($datum as $key => $record){
+        $url = NULL;
+        
+        if(isset($record['DOI'])) {
+            $doi = $record['DOI'];
+            $url = "http://doi.org/$doi";
+        }
+
+
+          $record = ProfileData::firstOrNew([
+            'profile_id' => $this->id,
+            'type' => 'publications',
+            'data->doi' => $doi,
+            'sort_order' => $record['ArticleYear'] ?? null,
+          ], [
+              'data' => [
+                  'url' => $url,
+                  'title' => $record['ArticleTitle'],
+                  'doi' => $record['DOI'],
+                  'year' => $record['ArticleYear'] ?? null,
+                  'type' => "JOURNAL_ARTICLE", //ucwords(strtolower(str_replace('_', ' ', $record['work-summary'][0]['type']))),
+                  'status' => 'Published'
+              ],
+          ]);
+
+          $publications->push($record);
+        }
+
+        Cache::put('profile_publications', $publications,  now()->addMinutes(40));
+        
+      Cache::tags(['profile_data'])->flush();
+      //¸¸ran through process successfully
+      return $publications;
     }
 
     public function updateDatum($section, $request)

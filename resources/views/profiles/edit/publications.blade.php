@@ -6,6 +6,10 @@
     @include('profiles.edit._autosort_info')
 @endsection
 
+@section('academics_analitycs')
+    @include('profiles.edit._import_academics_analytics_data')
+@endsection
+
 @section('form')
     @foreach ($data as $pub)
         <div class="record lower-border" data-row-id="{{ $pub->id }}">
