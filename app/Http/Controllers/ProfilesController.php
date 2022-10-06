@@ -237,12 +237,6 @@ class ProfilesController extends Controller
                 ->route('profiles.show', $profile->slug)
                 ->with('flash_message', 'Publications updated via ORCID.');
         }
-
-        $publications = Cache::get('profile_publications', $profile->updateAcademicsAnalytics());
-
-        //Cache::tags(['profile_publications'])->add('profile_publications', $profile->updateAcademicsAnalytics(), 86400);
-
-
         $data = $profile->data()->$section()->get();
 
         // if no data, include one item to use as a template
@@ -253,7 +247,7 @@ class ProfilesController extends Controller
             $data->push($record);
         }
 
-        return view('profiles.edit', compact('profile', 'section', 'data', 'publications'));
+        return view('profiles.edit', compact('profile', 'section', 'data'));
     }
 
     /**

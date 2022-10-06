@@ -236,7 +236,7 @@ class Profile extends Model implements HasMedia, Auditable
         return $this->information()->where('data->academics_analytics_managed', '1')->exists();
     }
 
-    public function updateAcademicsAnalytics()
+    public function getAcademicsAnalyticsPublications()
     {
       $academics_analytics_id = $this->information()->get(array('data'))->toArray()[0]['data']['academics_analytics_id'];
       
@@ -264,7 +264,7 @@ class Profile extends Model implements HasMedia, Auditable
 
       $datum = json_decode($res->getBody()->getContents(), true);
       $current_publications_dois = $this->publications->pluck('data.doi')->filter()->values();
-      $datum = collect($datum)->whereNotIn('DOI', $current_publications_dois);
+      $datum = collect($datum )->whereNotIn('DOI', $current_publications_dois);
       $publications = collect();
 
       foreach($datum as $key => $record){
@@ -278,11 +278,10 @@ class Profile extends Model implements HasMedia, Auditable
 
           $record = ProfileData::firstOrNew([
             'profile_id' => $this->id,
-            'type' => 'publications',
-            'data->doi' => $doi,
             'sort_order' => $record['ArticleYear'] ?? null,
           ], [
               'data' => [
+                  'doi' => $doi,
                   'url' => $url,
                   'title' => $record['ArticleTitle'],
                   'doi' => $record['DOI'],
@@ -291,15 +290,10 @@ class Profile extends Model implements HasMedia, Auditable
                   'status' => 'Published'
               ],
           ]);
-
+          $record->id = strval(rand(-100000, -1));
           $publications->push($record);
         }
-
-        Cache::put('profile_publications', $publications,  now()->addMinutes(40));
-        
-      Cache::tags(['profile_data'])->flush();
-      //¸¸ran through process successfully
-      return $publications;
+        return $publications;
     }
 
     public function updateDatum($section, $request)

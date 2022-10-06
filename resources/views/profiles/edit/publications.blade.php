@@ -6,8 +6,8 @@
     @include('profiles.edit._autosort_info')
 @endsection
 
-@section('academics_analitycs')
-    @include('profiles.edit._import_academics_analytics_data')
+@section('academics_analytics_publications_modal')
+    @include('profiles.edit._academics_analytics_publications_modal')
 @endsection
 
 @section('form')

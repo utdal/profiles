@@ -9,5 +9,12 @@
             <span class="fa-li"><i class="fas fa-info-circle"></i></span> To manually sort <em>all</em> entries, leave
             the <b>Year</b> field empty (and include it as a part of @if(isset($suggestion)) <b>{{ $suggestion }}</b> @else another field @endisset instead).
         </li>
+        <li>
+            <span class="fa-li"><i class="fas fa-info-circle"></i></span> To review your publications available for import from external sources use the buttons:
+            </br>
+            <button class="btn btn-primary ml-1 mt-1 py-1" data-target="#academics_analytics_modal" data-toggle="modal"
+                <i class="fas fa-book"></i> Academics Analytics
+            </button>
+        </li>
     </ul>
 </div>

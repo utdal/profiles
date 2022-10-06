@@ -1,9 +1,8 @@
 <h1>Edit <a href="{{ action('ProfilesController@show', [$profile->slug]) }}">{{ $profile->name }}</a>'s
     @yield('section_name', ucfirst($section))</h1>
 
-@yield('academics_analitycs')
-
 @yield('info')
+@yield('academics_analytics_publications_modal')
 
 {!! Form::open(['url' => route('profiles.update', [$profile->slug, $section]), 'files' => $files ?? false]) !!}
 
