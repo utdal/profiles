@@ -3,29 +3,30 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
+use Livewire\WithPagination;
 use App\Profile;
 
 class AcademicsAnalyticsPublications extends Component
 {
-    //public bool $modal_visible;
+    use WithPagination;
+
+    protected $paginationTheme = 'bootstrap';
     public Profile $profile;
-    public $publications;
 
-    protected $listeners = ['loadPublications' => 'loadPublications()'];
-
-    public function mount()
-    {
-        //$this->modal_visible = true;
-        $this->publications = $this->profile->getAcademicsAnalyticsPublications();
+    public function data()
+    {   
+        $per_page = 10;
+        return $this->profile
+                    ->getAcademicsAnalyticsPublications()
+                    ->sortByDesc('sort_order')        
+                    ->paginate($per_page);
     }
 
     public function render()
     {
-       // dd($this->profile, $this->publications);
         return view('livewire.academics-analytics-publications', [
             'profile' => $this->profile,
-            //'modal_visible' => $this->modal_visible,
-            'publications' => $this->publications,
+            'publications' => $this->data(),
         ]);
     }
 }

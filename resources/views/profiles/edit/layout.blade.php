@@ -2,6 +2,7 @@
     @yield('section_name', ucfirst($section))</h1>
 
 @yield('info')
+
 @yield('academics_analytics_publications_modal')
 
 {!! Form::open(['url' => route('profiles.update', [$profile->slug, $section]), 'files' => $files ?? false]) !!}

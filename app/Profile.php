@@ -275,8 +275,7 @@ class Profile extends Model implements HasMedia, Auditable
             $url = "http://doi.org/$doi";
         }
 
-
-          $record = ProfileData::firstOrNew([
+          $record = ProfileData::firstorNew([
             'profile_id' => $this->id,
             'sort_order' => $record['ArticleYear'] ?? null,
           ], [
@@ -402,7 +401,7 @@ class Profile extends Model implements HasMedia, Auditable
         }]);
     }
 
-    /**
+    /** 
      * Registers media conversions.
      *
      * @param  Media|null $media
