@@ -8,10 +8,8 @@
                 <h4 class="modal-title" id="myModalLabel">Academics Analytics Publications</h4>
             </div>
             
-            <!-- Modal Body -->
-                <livewire:academics-analytics-publications :profile="$profile">
-            <!-- -->
             
+
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary">Save changes</button>

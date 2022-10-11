@@ -1,9 +1,6 @@
 <div>
-    <button wire:click="$set('modalVisible', true)" type="button" class="btn btn-primary ml-1 mt-1 py-1" data-target="#academics_analytics_modal" data-toggle="modal">
-        <i class="fas fa-book"></i> Academics Analytics
-    </button>
-    @if($modalVisible)
-        <div class="modal fade" id="academics_analytics_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" wire:ignore.self>
+@if($modalVisible)
+        <div class="modal fade" id="academics_analytics_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog modal-dialog-scrollable modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">

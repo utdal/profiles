@@ -12,9 +12,7 @@
         <li>
             <span class="fa-li"><i class="fas fa-info-circle"></i></span> To review your publications available for import from external sources use the buttons:
             </br>
-            <button class="btn btn-primary ml-1 mt-1 py-1" data-target="#academics_analytics_modal" data-toggle="modal"
-                <i class="fas fa-book"></i> Academics Analytics
-            </button>
+            <livewire:academics-analytics-publications :profile="$profile">
         </li>
     </ul>
 </div>

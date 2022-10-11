@@ -11,12 +11,23 @@ class AcademicsAnalyticsPublications extends Component
     use WithPagination;
 
     protected $paginationTheme = 'bootstrap';
-    public Profile $profile;
 
-    public function data()
+    public bool $modalVisible = false;
+    //public $publications;
+    public Profile $profile;
+    protected $listeners = ['showModal'];
+
+
+
+    public function showModal()
     {   
+        $this->modalVisible = true;
+    }
+
+    public function getPublications()
+    {
         $per_page = 10;
-        return $this->profile
+        return $this->publications = $this->profile
                     ->getAcademicsAnalyticsPublications()
                     ->sortByDesc('sort_order')        
                     ->paginate($per_page);
@@ -24,9 +35,21 @@ class AcademicsAnalyticsPublications extends Component
 
     public function render()
     {
-        return view('livewire.academics-analytics-publications', [
-            'profile' => $this->profile,
-            'publications' => $this->data(),
-        ]);
+        if ($this->modalVisible) {
+            //dd($this->profile);
+            $data = [
+                'profile' =>  $this->profile,
+                'publications' => $this->getPublications(),
+                'modalVisible' => $this->modalVisible,
+            ];
+        }
+        else {
+            $data = [ 'modalVisible' =>   $this->modalVisible,
+                     //'publications' => [],
+                     'profile' => $this->profile ];
+
+        }
+
+        return view('livewire.academics-analytics-publications', $data);
     }
 }
