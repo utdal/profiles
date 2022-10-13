@@ -238,60 +238,61 @@ class Profile extends Model implements HasMedia, Auditable
 
     public function getAcademicAnalyticsPublications()
     {
-      $academic_analytics_id = $this->information->first()?->academic_analytics_id;
+        $academic_analytics_id = $this->information->first()?->academic_analytics_id;
 
-      if(is_null($academic_analytics_id)){
-        //can't update if we don't know your ID
-        return false;
-      }
-
-      $aa_url = "https://api.academicanalytics.com/person/$academic_analytics_id/articles";
-
-      $client = new Client();
-
-      $res = $client->get($aa_url, [
-        'headers' => [
-          'apikey' => config('app.academic_analytics_key'),
-          'Accept' => 'application/json'
-        ],
-        'http_errors' => false, // don't throw exceptions for 4xx,5xx responses
-      ]);
-
-      //an error of some sort
-      if($res->getStatusCode() != 200){
-        return false;
-      }
-
-      $datum = json_decode($res->getBody()->getContents(), true);
-      $current_publications_dois = $this->publications->pluck('data.doi')->filter()->values();
-      $datum = collect($datum )->whereNotIn('DOI', $current_publications_dois);
-      $publications = collect();
-
-      foreach($datum as $key => $record){
-        $url = NULL;
-        
-        if(isset($record['DOI'])) {
-            $doi = $record['DOI'];
-            $url = "http://doi.org/$doi";
+        if(is_null($academic_analytics_id)){
+            //can't update if we don't know your ID
+            return false;
         }
 
-          $record = ProfileData::firstorNew([
-            'profile_id' => $this->id,
-            'sort_order' => $record['ArticleYear'] ?? null,
-          ], [
-              'data' => [
-                  'doi' => $doi,
-                  'url' => $url,
-                  'title' => $record['ArticleTitle'],
-                  'doi' => $record['DOI'],
-                  'year' => $record['ArticleYear'] ?? null,
-                  'type' => "JOURNAL_ARTICLE", //ucwords(strtolower(str_replace('_', ' ', $record['work-summary'][0]['type']))),
-                  'status' => 'Published'
-              ],
-          ]);
+        $aa_url = "https://api.academicanalytics.com/person/$academic_analytics_id/articles";
+
+        $client = new Client();
+
+        $res = $client->get($aa_url, [
+            'headers' => [
+            'apikey' => config('app.academic_analytics_key'),
+            'Accept' => 'application/json'
+            ],
+            'http_errors' => false, // don't throw exceptions for 4xx,5xx responses
+        ]);
+
+        //an error of some sort
+        if($res->getStatusCode() != 200){
+            return false;
+        }
+
+        $datum = json_decode($res->getBody()->getContents(), true);
+        $current_publications_dois = $this->publications->pluck('data.doi')->filter()->values();
+        $datum = collect($datum )->whereNotIn('DOI', $current_publications_dois);
+        $publications = collect();
+
+        foreach($datum as $key => $record) {
+            $url = NULL;
+            
+            if(isset($record['DOI'])) {
+                $doi = $record['DOI'];
+                $url = "http://doi.org/$doi";
+            }
+
+            $record = ProfileData::firstorNew([
+                'profile_id' => $this->id,
+                'sort_order' => $record['ArticleYear'] ?? null,
+            ], [
+                'data' => [
+                    'doi' => $doi,
+                    'url' => $url,
+                    'title' => $record['ArticleTitle'],
+                    'doi' => $record['DOI'],
+                    'year' => $record['ArticleYear'] ?? null,
+                    'type' => "JOURNAL_ARTICLE", //ucwords(strtolower(str_replace('_', ' ', $record['work-summary'][0]['type']))),
+                    'status' => 'Published'
+                ],
+            ]);
         //   $record->id = strval(rand(-100000, -1));
-          $publications->push($record);
+            $publications->push($record);
         }
+
         return $publications;
     }
 
