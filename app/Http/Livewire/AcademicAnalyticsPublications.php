@@ -13,43 +13,25 @@ class AcademicAnalyticsPublications extends Component
     protected $paginationTheme = 'bootstrap';
 
     public bool $modalVisible = false;
-    //public $publications;
     public Profile $profile;
-    protected $listeners = ['showModal'];
-
-
+    protected $listeners = ['AAPublicationsModalShown' => 'showModal'];
 
     public function showModal()
-    {   
+    {
         $this->modalVisible = true;
     }
 
-    public function getPublications()
+    public function getPublicationsProperty()
     {
         $per_page = 10;
-        return $this->publications = $this->profile
-                    ->getAcademicAnalyticsPublications()
-                    ->sortByDesc('sort_order')        
-                    ->paginate($per_page);
+        return $this->profile
+                ->getAcademicAnalyticsPublications()
+                ->sortByDesc('sort_order')        
+                ->paginate($per_page);
     }
 
     public function render()
     {
-        if ($this->modalVisible) {
-            //dd($this->profile);
-            $data = [
-                'profile' =>  $this->profile,
-                'publications' => $this->getPublications(),
-                'modalVisible' => $this->modalVisible,
-            ];
-        }
-        else {
-            $data = [ 'modalVisible' =>   $this->modalVisible,
-                     //'publications' => [],
-                     'profile' => $this->profile ];
-
-        }
-
-        return view('livewire.academic-analytics-publications', $data);
+        return view('livewire.academic-analytics-publications');
     }
 }
