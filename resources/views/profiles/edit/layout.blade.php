@@ -3,8 +3,6 @@
 
 @yield('info')
 
-@yield('academics_analytics_publications_modal')
-
 {!! Form::open(['url' => route('profiles.update', [$profile->slug, $section]), 'files' => $files ?? false]) !!}
 
 @include('profiles.edit._insert_button', ['type' => 'prepend'])

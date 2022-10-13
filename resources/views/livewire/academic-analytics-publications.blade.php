@@ -1,14 +1,14 @@
 <div>
-    <button wire:click="$set('modalVisible', true)" type="button" class="btn btn-primary ml-1 mt-1 py-1" data-target="#academics_analytics_modal" data-toggle="modal">
-        <i class="fas fa-book"></i> Academics Analytics
+    <button wire:click="$set('modalVisible', true)" type="button" class="btn btn-primary ml-1 mt-1 py-1" data-target="#academic_analytics_modal" data-toggle="modal">
+        <i class="fas fa-book"></i> Academic Analytics
     </button>
     @if($modalVisible)
-        <div class="modal fade" id="academics_analytics_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" wire:ignore.self>
+        <div class="modal fade" id="academic_analytics_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" wire:ignore.self>
             <div class="modal-dialog modal-dialog-scrollable modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Academics Analytics Publications</h4>
+                        <h4 class="modal-title" id="myModalLabel">Academic Analytics Publications</h4>
                     </div>
 
                     <div class="modal-body" wire:loading.attr="aria-busy">

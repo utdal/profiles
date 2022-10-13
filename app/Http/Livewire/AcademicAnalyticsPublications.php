@@ -6,7 +6,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Profile;
 
-class AcademicsAnalyticsPublications extends Component
+class AcademicAnalyticsPublications extends Component
 {
     use WithPagination;
 
@@ -28,7 +28,7 @@ class AcademicsAnalyticsPublications extends Component
     {
         $per_page = 10;
         return $this->publications = $this->profile
-                    ->getAcademicsAnalyticsPublications()
+                    ->getAcademicAnalyticsPublications()
                     ->sortByDesc('sort_order')        
                     ->paginate($per_page);
     }
@@ -50,6 +50,6 @@ class AcademicsAnalyticsPublications extends Component
 
         }
 
-        return view('livewire.academics-analytics-publications', $data);
+        return view('livewire.academic-analytics-publications', $data);
     }
 }

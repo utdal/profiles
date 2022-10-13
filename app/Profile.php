@@ -227,31 +227,31 @@ class Profile extends Model implements HasMedia, Auditable
      * @return bool
      *  mhj
      */
-    public function hasAcademicsAnalyticsManagedPublications()
+    public function hasAcademicAnalyticsManagedPublications()
     {
         if ($this->relationLoaded('information')) {
-            return (bool) ($this->information->first()->data['academics_analytics_managed'] ?? false);
+            return (bool) ($this->information->first()->data['academic_analytics_managed'] ?? false);
         }
 
-        return $this->information()->where('data->academics_analytics_managed', '1')->exists();
+        return $this->information()->where('data->academic_analytics_managed', '1')->exists();
     }
 
-    public function getAcademicsAnalyticsPublications()
+    public function getAcademicAnalyticsPublications()
     {
-      $academics_analytics_id = $this->information()->get(array('data'))->toArray()[0]['data']['academics_analytics_id'];
-      
-      if(is_null($academics_analytics_id)){
+      $academic_analytics_id = $this->information->first()?->academic_analytics_id;
+
+      if(is_null($academic_analytics_id)){
         //can't update if we don't know your ID
         return false;
       }
 
-      $aa_url = "https://api.academicanalytics.com/person/$academics_analytics_id/articles";
+      $aa_url = "https://api.academicanalytics.com/person/$academic_analytics_id/articles";
 
       $client = new Client();
 
       $res = $client->get($aa_url, [
         'headers' => [
-          'apikey' => "***REMOVED***",//config('ACADEMICS_ANALYTICS_KEY'),
+          'apikey' => config('app.academic_analytics_key'),
           'Accept' => 'application/json'
         ],
         'http_errors' => false, // don't throw exceptions for 4xx,5xx responses
@@ -289,7 +289,7 @@ class Profile extends Model implements HasMedia, Auditable
                   'status' => 'Published'
               ],
           ]);
-          $record->id = strval(rand(-100000, -1));
+        //   $record->id = strval(rand(-100000, -1));
           $publications->push($record);
         }
         return $publications;

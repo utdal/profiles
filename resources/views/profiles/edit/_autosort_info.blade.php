@@ -12,7 +12,7 @@
         <li>
             <span class="fa-li"><i class="fas fa-info-circle"></i></span> To review your publications available for import from external sources use the buttons:
             </br>
-            <livewire:academics-analytics-publications :profile="$profile">
+            <livewire:academic-analytics-publications :profile="$profile">
         </li>
     </ul>
 </div>
