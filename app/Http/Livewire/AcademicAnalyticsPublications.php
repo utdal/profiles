@@ -2,9 +2,10 @@
 
 namespace App\Http\Livewire;
 
+use App\Profile;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Profile;
 
 class AcademicAnalyticsPublications extends Component
 {
@@ -24,10 +25,16 @@ class AcademicAnalyticsPublications extends Component
     public function getPublicationsProperty()
     {
         $per_page = 10;
-        return $this->profile
-                ->getAcademicAnalyticsPublications()
-                ->sortByDesc('sort_order')        
-                ->paginate($per_page);
+
+        $aa_publications = Cache::remember(
+            "profile{$this->profile->id}-AA-pubs",
+            15 * 60,
+            fn() => $this->profile
+                    ->getAcademicAnalyticsPublications()
+                    ->sortByDesc('sort_order')
+        );
+
+        return $aa_publications->paginate($per_page);
     }
 
     public function render()
