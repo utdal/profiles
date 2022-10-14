@@ -275,21 +275,18 @@ class Profile extends Model implements HasMedia, Auditable
                 $url = "http://doi.org/$doi";
             }
 
-            $record = ProfileData::firstorNew([
-                'profile_id' => $this->id,
+            $record = ProfileData::newModelInstance([
+                'type' => 'publications',
                 'sort_order' => $record['ArticleYear'] ?? null,
-            ], [
                 'data' => [
-                    'doi' => $doi,
-                    'url' => $url,
+                    'doi' => $doi ?? null,
+                    'url' => $url ?? null,
                     'title' => $record['ArticleTitle'],
-                    'doi' => $record['DOI'],
                     'year' => $record['ArticleYear'] ?? null,
                     'type' => "JOURNAL_ARTICLE", //ucwords(strtolower(str_replace('_', ' ', $record['work-summary'][0]['type']))),
                     'status' => 'Published'
                 ],
             ]);
-        //   $record->id = strval(rand(-100000, -1));
             $publications->push($record);
         }
 
