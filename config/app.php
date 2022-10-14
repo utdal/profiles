@@ -67,6 +67,9 @@ return [
     /** API response cache-control headers */
     'api_cache_control' => env('API_CACHE_CONTROL', 'public;no_cache;etag'),
 
+    /** ACADEMIC ANALYTICS API KEY */
+    'academic_analytics_key' => env('ACADEMIC_ANALYTICS_KEY', false),
+
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
@@ -91,6 +94,7 @@ return [
             'PUSHER_APP_KEY',
             'PUSHER_APP_SECRET',
             'AWS_SECRET',
+            'ACADEMIC_ANALYTICS_KEY'
         ],
         '_SERVER' => [
             'APP_KEY',

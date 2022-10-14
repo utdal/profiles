@@ -22,9 +22,9 @@ use Illuminate\Support\Facades\Cache;
 
 class Profile extends Model implements HasMedia, Auditable
 {
-    use HasAudits; 
-    use HasFactory; 
-    use InteractsWithMedia; 
+    use HasAudits;
+    use HasFactory;
+    use InteractsWithMedia;
     use HasTags;
     use SoftDeletes;
 
@@ -195,6 +195,7 @@ class Profile extends Model implements HasMedia, Auditable
             }
             else if($ref['external-id-type'] == "doi"){
               $url = "http://doi.org/" . $ref['external-id-value'];
+              $doi = $ref['external-id-value'];
             }
           }
           $record = ProfileData::firstOrCreate([
@@ -205,6 +206,7 @@ class Profile extends Model implements HasMedia, Auditable
           ],[
               'data' => [
                   'url' => $url,
+                  'doi' => $doi,
                   'title' => $record['work-summary'][0]['title']['title']['value'],
                   'year' => $record['work-summary'][0]['publication-date']['year']['value'] ?? null,
                   'type' => ucwords(strtolower(str_replace('_', ' ', $record['work-summary'][0]['type']))),
@@ -217,6 +219,77 @@ class Profile extends Model implements HasMedia, Auditable
 
       //ran through process successfully
       return true;
+    }
+
+    /**
+     * Checks if this profile has publications managed by ORCID
+     *
+     * @return bool
+     *  mhj
+     */
+    public function hasAcademicAnalyticsManagedPublications()
+    {
+        if ($this->relationLoaded('information')) {
+            return (bool) ($this->information->first()->data['academic_analytics_managed'] ?? false);
+        }
+
+        return $this->information()->where('data->academic_analytics_managed', '1')->exists();
+    }
+
+    public function getAcademicAnalyticsPublications()
+    {
+        $academic_analytics_id = $this->information->first()?->academic_analytics_id;
+
+        if(is_null($academic_analytics_id)){
+            //can't update if we don't know your ID
+            return false;
+        }
+
+        $aa_url = "https://api.academicanalytics.com/person/$academic_analytics_id/articles";
+
+        $client = new Client();
+
+        $res = $client->get($aa_url, [
+            'headers' => [
+            'apikey' => config('app.academic_analytics_key'),
+            'Accept' => 'application/json'
+            ],
+            'http_errors' => false, // don't throw exceptions for 4xx,5xx responses
+        ]);
+
+        //an error of some sort
+        if($res->getStatusCode() != 200){
+            return false;
+        }
+        $datum = json_decode($res->getBody()->getContents(), true);
+        $current_publications_dois = $this->publications->pluck('data.doi')->filter()->values();
+        $datum = collect($datum )->whereNotIn('DOI', $current_publications_dois);
+        $publications = collect();
+
+        foreach($datum as $key => $record) {
+            $url = NULL;
+
+            if(isset($record['DOI'])) {
+                $doi = $record['DOI'];
+                $url = "http://doi.org/$doi";
+            }
+
+            $record = ProfileData::newModelInstance([
+                'type' => 'publications',
+                'sort_order' => $record['ArticleYear'] ?? null,
+                'data' => [
+                    'doi' => $doi ?? null,
+                    'url' => $url ?? null,
+                    'title' => $record['ArticleTitle'],
+                    'year' => $record['ArticleYear'] ?? null,
+                    'type' => "JOURNAL_ARTICLE", //ucwords(strtolower(str_replace('_', ' ', $record['work-summary'][0]['type']))),
+                    'status' => 'Published'
+                ],
+            ]);
+            $publications->push($record);
+        }
+
+        return $publications;
     }
 
     public function updateDatum($section, $request)
@@ -292,7 +365,7 @@ class Profile extends Model implements HasMedia, Auditable
 
     /**
      * Strips HTML tags from the specified data field.
-     * 
+     *
      * This is only for output purposes and does not save.
      *
      * @param array $data_names : the names of data properties to strip tags from
@@ -427,7 +500,7 @@ class Profile extends Model implements HasMedia, Auditable
 
     /**
      * Query scope for Profiles that have the given tag (case-insensitive)
-     * 
+     *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param string $tag
      * @return \Illuminate\Database\Eloquent\Builder
@@ -467,9 +540,9 @@ class Profile extends Model implements HasMedia, Auditable
         });
     }
     /**
-     * Query scope for Profiles and eager load students whose application is pending review 
+     * Query scope for Profiles and eager load students whose application is pending review
      * for a given semester.
-     * 
+     *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param string $semester
      * @return \Illuminate\Database\Eloquent\Builder
@@ -484,9 +557,9 @@ class Profile extends Model implements HasMedia, Auditable
     }
 
     /**
-     * Query scope for Profiles with students whose application is pending review 
+     * Query scope for Profiles with students whose application is pending review
      * for a given semester.
-     * 
+     *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param string $semester
      * @return \Illuminate\Database\Eloquent\Builder
