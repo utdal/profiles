@@ -11,7 +11,6 @@
 <div class="sortable" data-next-row-id="-1">
 
     @yield('form')
-
 </div>
 
 @include('profiles.edit._insert_button', ['type' => 'append'])

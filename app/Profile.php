@@ -274,7 +274,7 @@ class Profile extends Model implements HasMedia, Auditable
                 $url = "http://doi.org/$doi";
             }
 
-            $record = ProfileData::newModelInstance([
+            $new_record = ProfileData::newModelInstance([
                 'type' => 'publications',
                 'sort_order' => $record['ArticleYear'] ?? null,
                 'data' => [
@@ -286,9 +286,10 @@ class Profile extends Model implements HasMedia, Auditable
                     'status' => 'Published'
                 ],
             ]);
-            $publications->push($record);
+            $new_record->id = $record['ArticleId'];
+            $new_record->imported = false;
+            $publications->push($new_record);
         }
-
         return $publications;
     }
 

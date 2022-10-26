@@ -13,9 +13,13 @@ class AcademicAnalyticsPublications extends Component
 
     protected $paginationTheme = 'bootstrap';
 
-    public bool $modalVisible = false;
+    protected $listeners = ['AAPublicationsModalShown' => 'showModal', 'addToEditor', 'removeFromEditor'];
+
     public Profile $profile;
-    protected $listeners = ['AAPublicationsModalShown' => 'showModal'];
+
+    public bool $modalVisible = false;
+
+    public $imported_publications = [];
 
     public function showModal()
     {
@@ -29,12 +33,20 @@ class AcademicAnalyticsPublications extends Component
         $aa_publications = Cache::remember(
             "profile{$this->profile->id}-AA-pubs",
             15 * 60,
-            fn() => $this->profile
-                    ->getAcademicAnalyticsPublications()
-                    ->sortByDesc('sort_order')
+            fn() => $this->profile->getAcademicAnalyticsPublications()
         );
 
-        return $aa_publications->paginate($per_page);
+        $aa_publications->whereIn('id', $this->imported_publications)->transform(function ($elem, $key) {
+            return $elem->imported = true;
+        });
+
+        return $aa_publications->sortByDesc('sort_order')->paginate($per_page);
+    }
+
+    public function addToEditor($publication_id)
+    {
+        array_push($this->imported_publications, $publication_id);
+        $this->emit( 'alert', "Added to the Editor!", 'success');
     }
 
     public function render()

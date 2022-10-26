@@ -17,36 +17,28 @@
 
                 <div class="modal-body" wire:loading.attr="aria-busy">
                     @if($this->modalVisible)
+                    {{ count($this->imported_publications) }}
                     <table class="table table-sm table-borderless table-striped table-live table-responsive-lg" aria-live="polite">
                         <thead>
                             <tr>
-                                <th>Import</th>
                                 <th>Year</th>
                                 <th>Title</th>
+                                <th>Import</th>
                             </tr>
                         </thead>
 
                         <tbody>
                             @foreach ($this->publications as $pub)
-                                <tr>
-                                    <td>
-                                        <input
-                                            class="form-check-input"
-                                            type="checkbox"
-                                            value=""
-                                            data-title="{{ $pub->title }}"
-                                            data-year="{{ $pub->year }}"
-                                            data-url="{{ $pub->url }}"
-                                            data-type="{{ $pub->type }}"
-                                            data-doi="{{ $pub->doi }}"
-                                        >
-                                    </td>
+                                <tr id="{{ $pub->id }}">
                                     <td> {{ $pub->year }}</td>
                                     <td> {{ $pub->title }}</td>
+                                    <td>
+                                        @include('livewire.partials._import-aa-publication', ['publication' => $pub])
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
-                    </table>    
+                    </table>
 
                     <div class="paginator">
                         {{ $this->publications->links() }}
@@ -68,4 +60,5 @@
         }
     </script>
     @endpush
+    @stack('row-scripts')
 </div>

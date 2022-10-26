@@ -90,6 +90,10 @@ var profiles = (function ($, undefined) {
             let new_item = item_template.cloneNode(true);
             new_item.dataset.rowId = new_id;
 
+            if('customId' in options) {
+                new_item.dataset.customId = options.customId;
+            }
+
             new_item.querySelectorAll('input:not([type="button"]), textarea, select')?.forEach((el) => {
                 el.id = el.id.replace(old_id, new_id);
                 el.setAttribute('name', el.name.replace(old_id, new_id));
@@ -134,6 +138,8 @@ var profiles = (function ($, undefined) {
                 item_template.parentElement.append(new_item);
             }
             $(new_item).slideDown();
+
+            return new_item;
         }
     }
 
@@ -190,7 +196,7 @@ var profiles = (function ($, undefined) {
 
     /**
      * Display a dynamic toast alert
-     * 
+     *
      * @param {String} message - the message to display
      * @param {String} type - alert type, e.g. primary, success, warning, danger, and etc.
      */
@@ -211,7 +217,7 @@ var profiles = (function ($, undefined) {
       flash_message.innerHTML = message;
 
       flash_container.appendChild(flash_message);
-      
+
       flash_message.addEventListener('click', (e) => {e.target.style.display = 'none'});
       $(flash_message).animate({opacity: 0}, {
           duration: 5000,
@@ -221,7 +227,7 @@ var profiles = (function ($, undefined) {
 
     /**
      * Deobfuscate an email address
-     * 
+     *
      * @param {String} obfuscated_mail_address - the obfuscated
      * @see App\Helpers\Utils for obfuscation strategy
      */
@@ -320,7 +326,7 @@ var profiles = (function ($, undefined) {
 
     /**
      * Registers and enables any profile pickers on the page
-     * 
+     *
      * @return {void}
      */
     let registerProfilePickers = () => {
@@ -333,7 +339,7 @@ var profiles = (function ($, undefined) {
 
     /**
 	 * Registers and enables any tag editors on the page.
-	 * 
+	 *
 	 * @return {void}
 	 */
     var registerTagEditors = function () {
@@ -391,7 +397,7 @@ var profiles = (function ($, undefined) {
 
 	/**
 	 * Posts updated tags to the API URL.
-	 * 
+	 *
 	 * @param  {jQuery} $select the select element containing the tags
 	 * @return {void}
 	 */
