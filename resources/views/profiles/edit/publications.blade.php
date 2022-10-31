@@ -8,7 +8,7 @@
 
 @section('form')
     @foreach ($data as $pub)
-        <div class="record publication lower-border" data-row-id="{{ $pub->id }}">
+        <div class="record lower-border" data-row-id="{{ $pub->id }}">
             @include('profiles.edit._actions')
             <div class="row form-group level">
                 <div class="col col-lg-9 col-12">

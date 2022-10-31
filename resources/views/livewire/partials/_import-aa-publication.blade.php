@@ -1,19 +1,12 @@
 <div>
-    @if($publication->imported)
-        <button class="btn btn-primary btn-sm active remove-publication" aria-pressed="true">
-            <i class="fas fa-bookmark"></i> Remove from Editor
+    @if($pub->imported)
+        <button id="{{ $pub->id }}" class="btn btn-primary btn-sm active remove-publication" aria-pressed="true">
+            <i class="fas fa-times"></i> Remove
         </button>
     @else
         <button
-            class="btn btn-primary btn-sm add-publication" aria-pressed="false"
-            data-publication-id="{{ $publication->id }}"
-            data-title="{{ $publication->title }}"
-            data-year="{{ $publication->year }}"
-            data-url="{{ $publication->url }}"
-            data-type="{{ $publication->type }}"
-            data-doi="{{ $publication->doi }}"
-            >
-            <i class="far fa-bookmark"></i> Add to Editor
+            id="{{ $pub->id }}" class="btn btn-primary btn-sm add-publication" aria-pressed="false">
+            <i class="fas fa-check"></i> Add
         </button>
     @endif
 
@@ -22,8 +15,8 @@
         $(document).ready( function(){
 
             $(document).on("click", "button.add-publication", function(e) {
-
-                let publication_id = $(this).data('publication-id');
+                let publication_id = $(this).attr('id');
+                let data_selector = $(this).parent().siblings('input#data_'+ publication_id);
 
                 livewire.emit('addToEditor',  publication_id);
 
@@ -36,17 +29,16 @@
 
                     let elem_id = 'data['+$(form).data('row-id')+'][data]';
 
-                    $(form).find('input[id="'+elem_id+'[doi]"]').val( $(this).data('doi'));
-                    $(form).find('input[id="'+elem_id+'[title]"]').val( $(this).data('title'));
-                    $(form).find('trix-editor[input="'+elem_id+'[title]"]').text( $(this).data('title'));
-                    $(form).find('input[id="'+elem_id+'[year]"]').val( $(this).data('year'));
-                    $(form).find('input[id="'+elem_id+'[url]"]').val( $(this).data('url'));
-                    $(form).find('input[id="'+elem_id+'[status]"]').val( $(this).data('status'));
-                    $(form).find('input[id="'+elem_id+'[type]"]').val( $(this).data('type'));
+                    $(form).find('input[id="'+elem_id+'[doi]"]').val( $(data_selector).data('doi'));
+                    $(form).find('input[id="'+elem_id+'[title]"]').val( $(data_selector).data('title'));
+                    $(form).find('trix-editor[input="'+elem_id+'[title]"]').text( $(data_selector).data('title'));
+                    $(form).find('input[id="'+elem_id+'[year]"]').val( $(data_selector).data('year'));
+                    $(form).find('input[id="'+elem_id+'[url]"]').val( $(data_selector).data('url'));
+                    $(form).find('input[id="'+elem_id+'[status]"]').val( $(data_selector).data('status'));
+                    $(form).find('input[id="'+elem_id+'[type]"]').val( $(data_selector).data('type'));
                 }
 
             });
-
         });
     </script>
     @endPushOnce

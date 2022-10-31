@@ -5,7 +5,6 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>@yield('title') - {{ $settings['site_title'] ?? 'Profiles' }}</title>
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 	@if(isset($settings['favicon']))
 		<!--[if lt IE 11]>
 			<link rel="shortcut icon" href="{{ $settings['logo'] ?? '' }}">
