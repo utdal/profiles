@@ -29,7 +29,7 @@
                             <tr>
                                 <th>Year</th>
                                 <th>Title</th>
-                                <th>Import</th>
+                                <th style="text-align: center !important">Import</th>
                             </tr>
                         </thead>
 

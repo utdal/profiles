@@ -1,11 +1,11 @@
 <div>
     @if($pub->imported)
-        <button id="{{ $pub->id }}" class="btn btn-primary btn-sm active remove-publication" aria-pressed="true">
+        <button id="{{ $pub->id }}" class="btn btn-primary btn-sm active remove-publication" aria-pressed="true" style="width: 100%">
             <i class="fas fa-times"></i> Remove
         </button>
     @else
         <button
-            id="{{ $pub->id }}" class="btn btn-primary btn-sm add-publication" aria-pressed="false">
+            id="{{ $pub->id }}" class="btn btn-primary btn-sm add-publication" aria-pressed="false" style="width: 100%">
             <i class="fas fa-check"></i> Add
         </button>
     @endif
