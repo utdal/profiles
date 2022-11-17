@@ -62,7 +62,7 @@ class ProfileUpdateRequest extends FormRequest
     {
         return [
             'data.*.image.max' => $this->uploadedImageMessages('max'),
-            'data.*.id.exists' => 'The profile data you are attempting to update could not be found. It might have been removed in a different tab or browser.'
+            'data.*.id.exists' => 'Some of the profile entries you are attempting to update might have been modified since you loaded this page. Please reload this page and try again.'
         ];
     }
 
