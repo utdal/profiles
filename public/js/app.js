@@ -471,12 +471,7 @@ var profiles = function ($, undefined) {
         $('#' + $select.data('model-name') + '_current_tags').html(data.view);
       },
       error: function error(xHr, textStatus, errorThrown) {
-        //alert(textStatus + ': ' + errorThrown);
-        $('#' + $select.data('model-name') + '_tags_editor').find('div.alert-info').hide();
-        $.each(xHr.responseJSON.errors, function (index, value) {
-          $('#' + $select.data('model-name') + '_tags_editor').find('div.alert-danger ul.errors').append('<li>' + value + '</li>');
-        });
-        $('#' + $select.data('model-name') + '_tags_editor').find('div.alert-danger').show();
+        toast("Error updating tags: ".concat(errorThrown), 'danger');
       }
     });
   };
@@ -587,12 +582,6 @@ if ((typeof Livewire === "undefined" ? "undefined" : _typeof(Livewire)) === 'obj
     }
   });
 }
-
-$('.tags-editor .modal-footer .btn-default').on('click', function (evt) {
-  $('.tags-editor div.alert-danger ul.errors').children().remove();
-  $('.tags-editor div.alert-danger').hide();
-  $('.tags-editor div.alert-info').show();
-});
 
 /***/ }),
 

@@ -109,7 +109,7 @@ class TagsController extends Controller
             $message = "Tags updated.";
             $view = view('tags.badge', ['tags' => $model->tags()->get()])->render();
         }
-        
+
         Cache::tags(['profile_tags'])->flush();
 
         if ($request->ajax()) {
