@@ -440,14 +440,14 @@ footer > ul{
 }
 
 //flash messages
-.flash-container{
+.flash-container {
 	position: fixed;
 	right: 20px;
 	bottom: 20px;
 	cursor: pointer;
-	z-index: 100;
+	z-index: 1200;
 }
-.flash-container .flash-message{
+.flash-container .flash-message {
 	padding: 30px;
 }
 
