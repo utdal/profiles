@@ -471,7 +471,7 @@ var profiles = function ($, undefined) {
         $('#' + $select.data('model-name') + '_current_tags').html(data.view);
       },
       error: function error(xHr, textStatus, errorThrown) {
-        alert(textStatus + ': ' + errorThrown);
+        toast("Error updating tags: ".concat(errorThrown), 'danger');
       }
     });
   };
