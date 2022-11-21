@@ -342,13 +342,29 @@ class ProfilesController extends Controller
      * @param  Profile $profile
      * @return \Illuminate\Http\Response&static
      */
-    public function pdfExport(Profile $profile) {
-        
+    public function pdfExport(Profile $profile)
+    {
         $pdf_content = Browsershot::url("{$profile->url}?paginated=false")
                         ->margins(30, 15, 30, 15);
 
-        if (config('app.node_path')) {
-            $pdf_content = $pdf_content->setIncludePath(config('app.node_path'));
+        if (config('pdf.node')) {
+            $pdf_content = $pdf_content->setNodeBinary(config('pdf.node'));
+        }
+
+        if (config('pdf.npm')) {
+            $pdf_content = $pdf_content->setNpmBinary(config('pdf.npm'));
+        }
+
+        if (config('pdf.modules')) {
+            $pdf_content = $pdf_content->setIncludePath(config('pdf.modules'));
+        }
+
+        if (config('pdf.chrome')) {
+            $pdf_content = $pdf_content->setChromePath(config('pdf.chrome'));
+        }
+
+        if (config('pdf.chrome_arguments')) {
+            $pdf_content = $pdf_content->addChromiumArguments(config('pdf.chrome_arguments'));
         }
 
         return response($pdf_content->pdf())
