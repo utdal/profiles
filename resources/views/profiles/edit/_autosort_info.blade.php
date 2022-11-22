@@ -10,8 +10,7 @@
             the <b>Year</b> field empty (and include it as a part of @if(isset($suggestion)) <b>{{ $suggestion }}</b> @else another field @endisset instead).
         </li>
         <li>
-            <span class="fa-li"><i class="fas fa-info-circle"></i></span> To review your publications available for import from external sources use the buttons:
-            </br>
+            <span class="fa-li"><i class="fas fa-info-circle"></i></span> To review your publications available for import from external sources:
             <livewire:academic-analytics-publications :profile="$profile">
         </li>
     </ul>

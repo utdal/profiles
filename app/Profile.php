@@ -221,28 +221,15 @@ class Profile extends Model implements HasMedia, Auditable
       return true;
     }
 
-    /**
-     * Checks if this profile has publications managed by ORCID
-     *
-     * @return bool
-     *  mhj
-     */
-    public function hasAcademicAnalyticsManagedPublications()
-    {
-        if ($this->relationLoaded('information')) {
-            return (bool) ($this->information->first()->data['academic_analytics_managed'] ?? false);
-        }
-
-        return $this->information()->where('data->academic_analytics_managed', '1')->exists();
-    }
-
     public function getAcademicAnalyticsPublications()
     {
-        $academic_analytics_id = $this->information->first()?->academic_analytics_id;
-
-        if(is_null($academic_analytics_id)){
-            //can't update if we don't know your ID
-            return false;
+        if(isset($this->information()->first()->data['academic_analytics_id'])) {
+            $academic_analytics_id = $this->information()->first()->data['academic_analytics_id'];
+        }
+        else {
+            $academic_analytics_id = $this->getAAPersonId();
+            $this->information()->update(['data->academic_analytics_id' => $academic_analytics_id]);
+            $this->save();
         }
 
         $aa_url = "https://api.academicanalytics.com/person/$academic_analytics_id/articles";
@@ -262,8 +249,7 @@ class Profile extends Model implements HasMedia, Auditable
             return false;
         }
         $datum = json_decode($res->getBody()->getContents(), true);
-        $current_publications_dois = $this->publications->pluck('data.doi')->filter()->values();
-        $datum = collect($datum )->whereNotIn('DOI', $current_publications_dois);
+
         $publications = collect();
 
         foreach($datum as $key => $record) {
@@ -291,6 +277,31 @@ class Profile extends Model implements HasMedia, Auditable
             $publications->push($new_record);
         }
         return $publications;
+    }
+
+    public function getAAPersonId(){
+
+        $client_faculty_id = "{$this->user->name}@utdallas.edu";
+
+        $aa_url = "https://api.academicanalytics.com/person/GetPersonIdByClientFacultyId?clientFacultyId=$client_faculty_id";
+
+        $client = new Client();
+
+        $res = $client->get($aa_url, [
+            'headers' => [
+            'apikey' => config('app.academic_analytics_key'),
+            'Accept' => 'application/json'
+            ],
+            'http_errors' => false, // don't throw exceptions for 4xx,5xx responses
+        ]);
+
+        //an error of some sort
+        if($res->getStatusCode() != 200){
+            return false;
+        }
+        $datum = json_decode($res->getBody()->getContents(), true);
+
+        return $datum['PersonId'];
     }
 
     public function updateDatum($section, $request)
