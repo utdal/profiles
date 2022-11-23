@@ -42,24 +42,20 @@
             });
 
             //Add ALL the Publications to the Editor
-            $(document).on("click", "button#addAll", function(e) {
-
-                $(this).hide();
-
-                $('button#addAllSpinner').show();
-
+            $(document).on("click", "button#addAll", (e) => {
+                $(this).children('i').toggleClass("fa fa-spinner fa-pulse fa-lg");
             });
 
             livewire.on('JSAddAllToEditor', (publications) => {
 
-                $(publications).each(function(publication){
+                publications.forEach((publication) => {
 
                     let row_selector = $('div.record[data-custom-id='+publication.id+']');
 
                     if (row_selector.length == 0) {
                         $('div.sortable').append('<button type="button" id="all_rows_'+publication.id+'" data-toggle="add_row"></button>');
                         let temp_button = $('div.sortable button#all_rows_'+publication.id).first();
-                        $(temp_button).on('click', publication, function(e){
+                        $(temp_button).on('click', publication, (e) => {
                             render_row(e, publication);
                         });
                         $(temp_button).click().remove();
@@ -69,11 +65,9 @@
             });
 
             //Remove ALL the Publications From the Editor
-            $(document).on("click", "button#removeAll", function(e) {
+            $(document).on("click", "button#removeAll", (e) => {
 
-                $(this).hide();
-
-                $('button#removeAllSpinner').show();
+                $(this).children('i').toggleClass("fa fa-spinner fa-pulse fa-lg");
 
                 $('div.record[data-custom-id]').remove();
 

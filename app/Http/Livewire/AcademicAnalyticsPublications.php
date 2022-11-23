@@ -88,9 +88,9 @@ class AcademicAnalyticsPublications extends Component
         $this->allPublicationsCount = count($aaPublications);
 
         if ($this->transform) {
-            $aaPublications->whereIn('id', $this->importedPublications)->transform(function ($elem, $key) {
-                return $elem->imported = true;
-            });
+            $aaPublications
+                ->whereIn('id', $this->importedPublications)
+                ->transform(fn($elem, $key) => $elem->imported = true);
         }
 
         return $aaPublications->sortByDesc('sort_order')->paginate($this->perPage);

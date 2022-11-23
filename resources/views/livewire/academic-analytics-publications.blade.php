@@ -19,22 +19,12 @@
                         <li>
                             <span class="fa-li"><i class="fas fa-info-circle"></i></span> Select any publications you would like to import. Then, return to the editor to review and save your changes.
                         </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-cog"></i></span> Related tasks:
-                            @if(!$this->allChecked)
-                                <button id="addAll" type="button" class="btn btn-primary btn-sm" wire:click="addAllToEditor"><i class="fas fa-check-square fa-fw"></i> Add All</button>
-                                <button id="addAllSpinner" type="button" style="display:none" class="btn btn-primary btn-sm"><i class="fas fa-spinner fa-fw"></i></button>
-                            @else
-                                <button id="removeAll" type="button" class="btn btn-secondary btn-sm"><i class="fas fa-minus-square fa-fw"></i> Remove All</button>
-                                <button id="removeAllSpinner" type="button" style="display:none" class="btn btn-secondary btn-sm"><i class="fas fa-spinner fa-fw"></i></button>
-                            @endif
-                        </li>
                     </ul>
                 </div>
 
                 <div class="modal-body" wire:loading.attr="aria-busy">
                     @if($this->modalVisible)
-                        <div class="col col-lg-11 col-12 text-right">
+                        <div class="col col-lg-12 col-12 text-right">
 
                         </div>
                         <table class="table table-sm table-borderless table-striped table-live table-responsive-lg" aria-live="polite">
@@ -42,7 +32,14 @@
                                 <tr>
                                     <th>Year</th>
                                     <th>Title</th>
-                                    <th>Import</th>
+                                    <th>
+                                        @if(!$this->allChecked)
+                                            <button id="addAll" type="button" class="btn btn-link" wire:click="addAllToEditor"><i class="fa fa-toggle-off fa-lg" aria-hidden="true" aria-label="Select all"></i></button>
+                                        @else
+                                            <button id="removeAll" type="button" class="btn btn-link" aria-label="Remove all"><i class="fa fa-toggle-on fa-lg" aria-hidden="true"></i></button>
+                                        @endif
+                                        Select
+                                    </th>
                                 </tr>
                             </thead>
 
