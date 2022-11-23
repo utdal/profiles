@@ -9948,7 +9948,7 @@ footer > ul {
   right: 20px;
   bottom: 20px;
   cursor: pointer;
-  z-index: 100;
+  z-index: 1200;
 }
 
 .flash-container .flash-message {
@@ -10276,6 +10276,27 @@ footer > ul {
 
 .profile_photo {
   width: 100%;
+}
+
+.student-card-img-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.student-info-card {
+  z-index: 0;
+}
+
+.student-info-card a {
+  color: white;
+  text-decoration: underline;
 }
 
 .tags-badge {

@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Concerns\HasImageUploads;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ProfileUpdateRequest extends FormRequest
 {
@@ -20,6 +21,10 @@ class ProfileUpdateRequest extends FormRequest
             'data.*.image' => $this->uploadedImageRules(),
         ];
 
+        if ($this->route()->parameter('section') !== 'information') {
+            $common_rules = array_merge($common_rules, $this->dataPresenceRules());
+        }
+        
         return array_merge($common_rules, $this->sectionRules());
     }
 
@@ -57,6 +62,7 @@ class ProfileUpdateRequest extends FormRequest
     {
         return [
             'data.*.image.max' => $this->uploadedImageMessages('max'),
+            'data.*.id.exists' => 'Some of the profile entries you are attempting to update might have been modified since you loaded this page. Please reload this page and try again.'
         ];
     }
 
@@ -76,5 +82,24 @@ class ProfileUpdateRequest extends FormRequest
             'data.*.data.tertiary_url' => 'Tertiary URL',
             'data.*.data.orc_id' => 'ORCID',
         ];
+    }
+
+    public function dataPresenceRules(): array
+    {
+        return [
+            'data.*.id' => 
+                Rule::forEach(function ($value, $attribute) {
+                    if ($value > 0) {
+                        return [
+                            Rule::exists('profile_data', 'id')->where(function($query) {
+                                return $query->where([
+                                    'profile_id' => $this->route()->parameters['profile']->id
+                                ]);
+                            }),
+                        ];
+                    }
+                    return [];
+                })
+            ];
     }
 }

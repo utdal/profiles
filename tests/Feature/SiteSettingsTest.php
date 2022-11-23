@@ -211,7 +211,7 @@ class SiteSettingsTest extends TestCase
 
         $this->get(route('students.about'))
             ->assertStatus(200)
-            ->assertSee("<img class=\"card-img\" src=\"{$setting->value}\"", false);
+            ->assertSee("<img class=\"card-img \" src=\"{$setting->value}\"", false);
     }
 
 }
