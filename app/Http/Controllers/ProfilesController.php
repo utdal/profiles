@@ -320,6 +320,8 @@ class ProfilesController extends Controller
     {
         $profile->delete();
 
+        Cache::tags(['profiles', 'profile_data'])->flush();
+
         return redirect()->route('profiles.table')->with('flash_message', 'The profile of ' . $profile->full_name . ' has been archived.');
     }
 
@@ -332,6 +334,8 @@ class ProfilesController extends Controller
     public function restore(Profile $profile)
     {
         $profile->restore();
+
+        Cache::tags(['profiles', 'profile_data'])->flush();
 
         return redirect()->route('profiles.table')->with('flash_message', 'The profile of ' . $profile->full_name . ' has been restored.');
     }
