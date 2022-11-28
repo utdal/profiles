@@ -3,7 +3,7 @@
 @section('head')
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="UT Dallas Profiles">
-<meta name="twitter:titl e" content="{{ $profile->name }}">
+<meta name="twitter:title" content="{{ $profile->name }}">
 <meta name="twitter:description" content="View the full research profile.">
 <meta name="twitter:image" content="{{ $profile->image_url }}">
 <meta property="og:title" content="{{ $profile->name }}" />
