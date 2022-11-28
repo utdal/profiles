@@ -46,17 +46,19 @@
                 $(this).children('i').toggleClass("fa fa-spinner fa-pulse fa-lg");
             });
 
-            livewire.on('JSAddAllToEditor', (publications) => {
+            livewire.on('JSAddAllToEditor', publications => {
 
-                publications.forEach((publication) => {
+                let publications_keys = Object.keys(publications);
 
-                    let row_selector = $('div.record[data-custom-id='+publication.id+']');
+                publications_keys.forEach(key => {
+
+                    let row_selector = $('div.record[data-custom-id='+publications[key].id+']');
 
                     if (row_selector.length == 0) {
-                        $('div.sortable').append('<button type="button" id="all_rows_'+publication.id+'" data-toggle="add_row"></button>');
-                        let temp_button = $('div.sortable button#all_rows_'+publication.id).first();
-                        $(temp_button).on('click', publication, (e) => {
-                            render_row(e, publication);
+                        $('div.sortable').append('<button type="button" id="all_rows_'+publications[key].id+'" data-toggle="add_row"></button>');
+                        let temp_button = $('div.sortable button#all_rows_'+publications[key].id).first();
+                        $(temp_button).on('click', publications[key], (e) => {
+                            render_row(e, publications[key]);
                         });
                         $(temp_button).click().remove();
                     }
