@@ -3,6 +3,11 @@
 return [
 
     /**
+     * Enable the PDF exporter
+     */
+    'enabled' => env('ENABLE_PDF', false),
+
+    /**
      * Path to the chromium executable
      */
     'chrome' => env('CHROME_PATH'),
