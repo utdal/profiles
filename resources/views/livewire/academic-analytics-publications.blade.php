@@ -31,26 +31,24 @@
                             <thead>
                                 <tr>
                                     <th>Year</th>
-                                    <th>Title</th>
-                                    <th>
+                                    <th style="width:85%">Title</th>
+                                    <th class="text-center" style="width:15%">
                                         @if(!$this->allChecked)
-                                            <button id="addAll" type="button" class="btn btn-link" wire:click="addAllToEditor"><i class="fa fa-toggle-off fa-lg" aria-hidden="true" aria-label="Select all"></i></button>
+                                            <button id="addAll" type="button" style="display:contents !important" class="btn btn-link" wire:click="addAllToEditor"><i id="addAllButton" class="fa fa-toggle-off fa-lg" aria-hidden="true" aria-label="Select all"></i></button>
                                         @else
-                                            <button id="removeAll" type="button" class="btn btn-link" aria-label="Remove all"><i class="fa fa-toggle-on fa-lg" aria-hidden="true"></i></button>
+                                            <button id="removeAll" type="button" style="display:contents !important" class="btn btn-link" aria-label="Remove all"><i id="removeAllButton" class="fa fa-toggle-on fa-lg" aria-hidden="true"></i></button>
                                         @endif
-                                        Select
+                                        Select All
                                     </th>
                                 </tr>
                             </thead>
 
                             <tbody>
                                 @foreach ($this->publications as $pub)
-                                    <tr>
-                                        <td style="vertical-align: middle !important"> {{ $pub->year }}</td>
-                                        <td style="width:85%"> {{ $pub->title }} </td>
-                                        <td style="vertical-align: middle !important"
-                                            data-publication="{{ $pub }}"
-                                            >
+                                    <tr style="vertical-align: middle !important">
+                                        <td> {{ $pub->year }}</td>
+                                        <td> {{ $pub->title }} </td>
+                                        <td class="text-center" data-publication="{{ $pub }}">
                                             @include('livewire.partials._import-aa-publication')
                                         </td>
                                     </tr>

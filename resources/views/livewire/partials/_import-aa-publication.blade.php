@@ -43,7 +43,7 @@
 
             //Add ALL the Publications to the Editor
             $(document).on("click", "button#addAll", (e) => {
-                $(this).children('i').toggleClass("fa fa-spinner fa-pulse fa-lg");
+                $(this).find('i#addAllButton').toggleClass("fa fa-spinner fa-pulse fa-lg");
             });
 
             livewire.on('JSAddAllToEditor', publications => {
@@ -69,7 +69,7 @@
             //Remove ALL the Publications From the Editor
             $(document).on("click", "button#removeAll", (e) => {
 
-                $(this).children('i').toggleClass("fa fa-spinner fa-pulse fa-lg");
+                $(this).find('i#removeAllButton').toggleClass("fa fa-spinner fa-pulse fa-lg");
 
                 $('div.record[data-custom-id]').remove();
 
