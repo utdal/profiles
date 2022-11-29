@@ -35,5 +35,8 @@
     "sortablejs": "^1.15.0",
     "trix": "^0.11.2",
     "vue-template-compiler": "^2.6.14"
+  },
+  "dependencies": {
+    "puppeteer": "^16.1.0"
   }
 }

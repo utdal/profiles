@@ -16,6 +16,7 @@ use App\School;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Spatie\Browsershot\Browsershot;
 
 class ProfilesController extends Controller
 {
@@ -38,6 +39,8 @@ class ProfilesController extends Controller
             'update',
             'updateImage',
         ]);
+
+        $this->middleware('can:export,profile')->only('pdfExport');
 
         $this->middleware('can.create.profile')->only('create');
 
@@ -337,5 +340,40 @@ class ProfilesController extends Controller
         Cache::tags(['profiles', 'profile_data'])->flush();
 
         return redirect()->route('profiles.table')->with('flash_message', 'The profile of ' . $profile->full_name . ' has been restored.');
-    } 
+    }
+
+    /**
+     * Generate PFD Export
+     *
+     * @param  Profile $profile
+     * @return \Illuminate\Http\Response&static
+     */
+    public function pdfExport(Profile $profile)
+    {
+        $pdf_content = Browsershot::url("{$profile->url}?paginated=false")
+                        ->margins(30, 15, 30, 15);
+
+        if (config('pdf.node')) {
+            $pdf_content = $pdf_content->setNodeBinary(config('pdf.node'));
+        }
+
+        if (config('pdf.npm')) {
+            $pdf_content = $pdf_content->setNpmBinary(config('pdf.npm'));
+        }
+
+        if (config('pdf.modules')) {
+            $pdf_content = $pdf_content->setIncludePath(config('pdf.modules'));
+        }
+
+        if (config('pdf.chrome')) {
+            $pdf_content = $pdf_content->setChromePath(config('pdf.chrome'));
+        }
+
+        if (config('pdf.chrome_arguments')) {
+            $pdf_content = $pdf_content->addChromiumArguments(config('pdf.chrome_arguments'));
+        }
+
+        return response($pdf_content->pdf())
+                ->header('Content-Type', 'application/pdf');
+    }
 }

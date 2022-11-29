@@ -144,6 +144,18 @@ class ProfilePolicy
     }
 
     /**
+     * Determine whether the user can export the profile
+     *
+     * @param User $user
+     * @param Profile $profile
+     * @return mixed
+     */
+    public function export(User $user, Profile $profile)
+    {
+        return $this->update($user, $profile);
+    }
+
+    /**
      * Determine whether the user can delete the profile.
      *
      * @param  \App\User  $user
