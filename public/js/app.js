@@ -9,22 +9,21 @@
 /* provided dependency */ var jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/src/jquery.js");
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/src/jquery.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+
 __webpack_require__(/*! ./bootstrap */ "./resources/assets/js/bootstrap.js");
-
 window.this_url = window.this_url || '';
-/** Global Profiles Module */
 
+/** Global Profiles Module */
 var profiles = function ($, undefined) {
   /** @type {string} the current URL */
   var this_url = window.this_url;
-  /** @type {Object} config settings */
 
+  /** @type {Object} config settings */
   var config = {
     datepicker: {
       year: {
@@ -47,37 +46,33 @@ var profiles = function ($, undefined) {
       }
     }
   };
+
   /**
    * Checks to see if an input is empty.
    *
    * @param {HTMLElement} input
    * @return {boolean}
    */
-
   var _input_is_empty = function _input_is_empty(input) {
     if (!(input instanceof HTMLInputElement)) {
       return true;
     }
-
     switch (input.getAttribute('type')) {
       case 'file':
         return input.files.length == 0;
-
       case 'checkbox':
         return !input.checked;
       // @todo: other input types
-
       default:
         return input.value == null || input.value == '';
     }
   };
+
   /**
    * Sets img src to selected file object
    *
    * @param {Event} event the triggered event
    */
-
-
   var preview_selected_image = function preview_selected_image(event) {
     var file_input = event.target;
     var id = file_input.id.replace(/\[/g, '\\[').replace(/\]/g, '\\]');
@@ -85,21 +80,18 @@ var profiles = function ($, undefined) {
     $("#".concat(id, "-img")).attr('src', window.URL.createObjectURL(file_input.files[0]));
     $(file_input).siblings('.invalid-feedback').removeClass('d-block');
   };
+
   /**
    * Adds a new item input row
    *
    * @param {Event} event the triggered event
    * @this {HTMLElement} the DOM element that was clicked
    */
-
-
   var add_row = function add_row(event) {
     var options = event.target.dataset;
     var item_template = document.querySelector('form .record');
-
     if (item_template) {
       var _new_item$querySelect, _new_item$querySelect2, _new_item$querySelect3, _new_item$querySelect4, _new_item$querySelect5, _new_item$querySelect6, _new_item$querySelect7, _new_item$querySelect8, _new_item$querySelect9, _new_item$querySelect10;
-
       var old_id = item_template.dataset.rowId;
       var new_id = String(item_template.parentElement.dataset.nextRowId--);
       var new_item = item_template.cloneNode(true);
@@ -116,7 +108,6 @@ var profiles = function ($, undefined) {
       });
       (_new_item$querySelect3 = new_item.querySelectorAll('label')) === null || _new_item$querySelect3 === void 0 ? void 0 : _new_item$querySelect3.forEach(function (el) {
         var _el$getAttribute;
-
         el.setAttribute('for', (_el$getAttribute = el.getAttribute('for')) === null || _el$getAttribute === void 0 ? void 0 : _el$getAttribute.replace(old_id, new_id));
       });
       (_new_item$querySelect4 = new_item.querySelectorAll('trix-editor')) === null || _new_item$querySelect4 === void 0 ? void 0 : _new_item$querySelect4.forEach(function (el) {
@@ -147,27 +138,25 @@ var profiles = function ($, undefined) {
         $(el).datepicker(config.datepicker.month);
       });
       $(new_item).hide();
-
       if ('insertType' in options && options.insertType === 'prepend') {
         item_template.parentElement.prepend(new_item);
       } else {
         item_template.parentElement.append(new_item);
       }
-
       $(new_item).slideDown();
     }
   };
+
   /**
    * Clears an input text or textarea row
    *
    * @param {HTMLElement} elem
    */
-
-
   var clear_row = function clear_row(elem) {
     parent_elem = $(elem).parent().parent();
     parent_elem.slideUp().find("input[type=text], input[type=url], input[type=month], input.clearable, textarea, select").val('');
   };
+
   /**
    * Toggles a class on an element or specified target.
    *
@@ -177,13 +166,12 @@ var profiles = function ($, undefined) {
    * @param {Event} evt - jQuery event object
    * @this {HTMLElement} - the DOM element that was clicked
    */
-
-
   var toggle_class = function toggle_class(evt) {
     var $this = $(this);
     var $target = $this.data('target') ? $($this.data('target')) : $this;
     $target.toggleClass($this.data('toggle-class'));
   };
+
   /**
    * Replaces an existing FontAwesome icon with another.
    *
@@ -194,38 +182,33 @@ var profiles = function ($, undefined) {
    * @param {Event} evt - jQuery event object
    * @this {HTMLElement} - the DOM element for which the event was registered
    */
-
-
   var replace_icon = function replace_icon(evt) {
     if (this.dataset.inputrequired && _input_is_empty(document.querySelector(this.dataset.inputrequired))) {
       return;
     }
-
     var target = this.dataset.target ? document.querySelector(this.dataset.target) : this;
-    target.querySelector('[data-fa-i2svg]').className = this.dataset.newicon; // this shouldn't be needed, but for some reason Chrome occasionally fails
-    // to propogate when a submit button is clicked.
+    target.querySelector('[data-fa-i2svg]').className = this.dataset.newicon;
 
+    // this shouldn't be needed, but for some reason Chrome occasionally fails
+    // to propogate when a submit button is clicked.
     if (this.getAttribute('type') === 'submit') {
       $(this).closest('form').submit();
     }
   };
+
   /**
    * Display a dynamic toast alert
    * 
    * @param {String} message - the message to display
    * @param {String} type - alert type, e.g. primary, success, warning, danger, and etc.
    */
-
-
   var toast = function toast(message, type) {
     var flash_container = document.querySelector('.flash-container');
-
     if (!flash_container) {
       flash_container = document.createElement('div');
       flash_container.classList = 'flash-container';
       document.body.appendChild(flash_container);
     }
-
     var flash_message = document.createElement('div');
     flash_message.classList = 'flash-message alert-dismissable alert-' + (type || 'success');
     flash_message.setAttribute('role', 'alert');
@@ -245,48 +228,44 @@ var profiles = function ($, undefined) {
       }
     });
   };
+
   /**
    * Deobfuscate an email address
    * 
    * @param {String} obfuscated_mail_address - the obfuscated
    * @see App\Helpers\Utils for obfuscation strategy
    */
-
-
   var deobfuscate_mail = function deobfuscate_mail(obfuscated_mail_address) {
     return obfuscated_mail_address.replace(/[a-z]/gi, function (c) {
       return String.fromCharCode((c <= "Z" ? 90 : 122) >= (c = c.charCodeAt(0) + 13) ? c : c - 26);
     }).replace('☄️', '@').split('@').reverse().join('@');
   };
+
   /**
    * Deobfuscate email address HTML links
    *
    * @param {HTMLElement} i - the element index
    * @param {HTMLElement} el - the DOM element
    */
-
-
   var deobfuscate_mail_links = function deobfuscate_mail_links(i, el) {
     el.innerText = deobfuscate_mail(el.id);
     el.href = "mailto:" + el.innerText;
   };
-
   var toggle_show = function toggle_show(evt) {
     var $this = $(this);
     var target = $this.data('toggle-target') || this;
     var toggle_value = $this.data('toggle-value') || true;
     var current_value = $this.val();
-
     if ($this.is('input[type=radio], input[type=checkbox]')) {
       current_value = $this.prop('checked');
     }
-
     if (current_value == toggle_value) {
       $(target).slideDown(200).find(':input').prop('disabled', false);
     } else {
       $(target).slideUp(200).find(':input').prop('disabled', true);
     }
   };
+
   /**
    * Creates and initializes Bootstrap-Tagsinput / Typeahead.js Profile Picker.
    *
@@ -294,17 +273,13 @@ var profiles = function ($, undefined) {
    * @param  {String} api      : URL to the profile API
    * @return {void}
    */
-
-
   var registerProfilePicker = function registerProfilePicker(selector, api) {
     if (typeof api === 'undefined') api = this_url + '/api/v1?with_data=1&data_type=information';
     var $select = $(selector);
     if ($select.length === 0) return;
-
     if ($select.data('school')) {
       api += '&from_school=' + $select.data('school');
     }
-
     var profileSearch = new Bloodhound({
       datumTokenizer: function datumTokenizer(profiles) {
         return Bloodhound.tokenizers.whitespace(profiles.value);
@@ -349,8 +324,9 @@ var profiles = function ($, undefined) {
       afterSelect: function afterSelect() {
         return $select.tagsinput('input').val('');
       }
-    }); // add back existing options
+    });
 
+    // add back existing options
     $select.find('option').each(function (i, option) {
       return $select.tagsinput('add', {
         'id': option.value,
@@ -363,13 +339,12 @@ var profiles = function ($, undefined) {
       $(this).closest('.twitter-typeahead').css('background-image', 'none');
     });
   };
+
   /**
    * Registers and enables any profile pickers on the page
    * 
    * @return {void}
    */
-
-
   var registerProfilePickers = function registerProfilePickers() {
     $('.profile-picker').each(function (i, picker) {
       if (picker.querySelector('select')) {
@@ -377,18 +352,18 @@ var profiles = function ($, undefined) {
       }
     });
   };
+
   /**
   * Registers and enables any tag editors on the page.
   * 
   * @return {void}
   */
-
-
   var registerTagEditors = function registerTagEditors() {
     $('.tags-editor').each(function (i, editor) {
       registerTagPicker('#' + editor.querySelector('select').id.replace('[]', '\\[\\]'));
     });
   };
+
   /**
    * Creates and initializes Bootstrap-Tagsinput / Typeahead.js Tag Picker.
    *
@@ -396,8 +371,6 @@ var profiles = function ($, undefined) {
    * @param  {String} api      : URL to the tag API
    * @return {void}
    */
-
-
   var registerTagPicker = function registerTagPicker(selector, api) {
     if (typeof api === 'undefined') api = this_url + '/tags/api';
     var $select = $(selector);
@@ -440,25 +413,22 @@ var profiles = function ($, undefined) {
       postTags($select);
     });
   };
+
   /**
    * Posts updated tags to the API URL.
    * 
    * @param  {jQuery} $select the select element containing the tags
    * @return {void}
    */
-
-
   var postTags = function postTags($select) {
     var tags = $select.tagsinput('items');
     var formData = new FormData();
     formData.append('_token', $select.data('token'));
     formData.append('model', $select.data('model'));
     formData.append('id', $select.data('model-id'));
-
     for (var i = 0; i < tags.length; i++) {
       formData.append('tags[]', tags[i]);
     }
-
     $.ajax({
       method: "POST",
       url: $select.data('url'),
@@ -475,7 +445,6 @@ var profiles = function ($, undefined) {
       }
     });
   };
-
   return {
     add_row: add_row,
     clear_row: clear_row,
@@ -490,19 +459,19 @@ var profiles = function ($, undefined) {
     toggle_show: toggle_show
   };
 }(jQuery);
-
 window.profiles = profiles;
 $(function () {
   // date-picker
   __webpack_require__(/*! bootstrap-datepicker */ "./node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.js");
-
   $('.datepicker.year').datepicker(profiles.config.datepicker.year);
-  $('.datepicker.month').datepicker(profiles.config.datepicker.month); //show preview of uploaded image
+  $('.datepicker.month').datepicker(profiles.config.datepicker.month);
 
+  //show preview of uploaded image
   $('input[type="file"]').on('change', function (e) {
     return profiles.preview_selected_image(e);
-  }); //enable drag and drop sorting for items with sotable class
+  });
 
+  //enable drag and drop sorting for items with sotable class
   if ($('.sortable').length > 0) {
     Sortable.create($('.sortable')[0], {
       handle: '.handle',
@@ -510,9 +479,9 @@ $(function () {
       scrollSpeed: 50,
       ghostClass: "sortable-ghost"
     });
-  } //trigger clearing of elements when trash is clicked
+  }
 
-
+  //trigger clearing of elements when trash is clicked
   $('.actions .trash').on('click', function (e) {
     profiles.clear_row(this);
   });
@@ -526,33 +495,33 @@ $(function () {
     $(this).hide();
   }).animate({
     opacity: 0
-  }, 5000); //animate anchor clicks on page
+  }, 5000);
 
+  //animate anchor clicks on page
   $('a[href^="#"]:not([href="#"]):not([data-scrollto-anchor="false"])').on('click', function (event) {
     var target = $($(this).attr('href'));
-
     if (target.length) {
       event.preventDefault();
       $('html, body').animate({
         scrollTop: target.offset().top
       }, 1000);
     }
-  }); // register tag editors if tagsinput is loaded
+  });
 
+  // register tag editors if tagsinput is loaded
   if (typeof $.fn.tagsinput === 'function' && typeof Bloodhound === 'function') {
     profiles.registerTagEditors();
     profiles.registerProfilePickers();
   }
-
   $('[data-toggle=class]').on('click', profiles.toggle_class);
   $('[data-toggle=replace-icon]').on('click', profiles.replace_icon);
   $('[data-toggle=show]').on('change page_up', profiles.toggle_show).trigger('change');
   $('[data-evaluate=profile-eml]').each(profiles.deobfuscate_mail_links);
   $('[data-toggle="tooltip"]').tooltip();
+
   /**
   * Load html element as content into a popover
   */
-
   $('[data-toggle="popover"]').popover({
     html: true,
     content: function content() {
@@ -560,8 +529,9 @@ $(function () {
       return typeof content === 'string' && $(content).length ? $(content).html() : '';
     }
   });
-}); // Livewire global hooks
+});
 
+// Livewire global hooks
 if ((typeof Livewire === "undefined" ? "undefined" : _typeof(Livewire)) === 'object') {
   if ((typeof FontAwesomeDom === "undefined" ? "undefined" : _typeof(FontAwesomeDom)) === 'object') {
     document.addEventListener('DOMContentLoaded', function () {
@@ -570,7 +540,6 @@ if ((typeof Livewire === "undefined" ? "undefined" : _typeof(Livewire)) === 'obj
       });
     });
   }
-
   Livewire.on('alert', function (message, type) {
     return profiles.toast(message, type);
   });
@@ -599,7 +568,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/free-brands-svg-icons */ "./node_modules/@fortawesome/free-brands-svg-icons/index.es.js");
 /* provided dependency */ var __webpack_provided_window_dot_jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/src/jquery.js");
 /** Load JavaScript dependencies */
+
 window.Popper = (__webpack_require__(/*! popper.js */ "./node_modules/popper.js/dist/esm/popper.js")["default"]);
+
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
  * for JavaScript based Bootstrap features such as modals and tabs. This
@@ -608,11 +579,10 @@ window.Popper = (__webpack_require__(/*! popper.js */ "./node_modules/popper.js/
 
 try {
   window.$ = __webpack_provided_window_dot_jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/src/jquery.js");
-
   __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.js");
-
   __webpack_require__(/*! bootstrap4-tagsinput */ "./node_modules/bootstrap4-tagsinput/tagsinput.js");
 } catch (e) {}
+
 /**
  * Font Awesome 5
  */
@@ -620,18 +590,19 @@ try {
 
 
 
-
-
 _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_0__.config.autoReplaceSvg = 'nest';
-_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_0__.library.add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.fas, _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_2__.far, _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_3__.fab); // Kicks off the process of finding <i> tags and replacing with <svg>
-
+_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_0__.library.add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.fas, _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_2__.far, _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_3__.fab);
+// Kicks off the process of finding <i> tags and replacing with <svg>
 _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_0__.dom.watch();
-window.FontAwesomeDom = _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_0__.dom; // Sortable
+window.FontAwesomeDom = _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_0__.dom;
 
-window.Sortable = __webpack_require__(/*! sortablejs/Sortable */ "./node_modules/sortablejs/Sortable.js"); // Typeahead Bloodhound
+// Sortable
+window.Sortable = __webpack_require__(/*! sortablejs/Sortable */ "./node_modules/sortablejs/Sortable.js");
 
-window.Bloodhound = __webpack_require__(/*! corejs-typeahead */ "./node_modules/corejs-typeahead/dist/typeahead.bundle.js"); // Trix editor
+// Typeahead Bloodhound
+window.Bloodhound = __webpack_require__(/*! corejs-typeahead */ "./node_modules/corejs-typeahead/dist/typeahead.bundle.js");
 
+// Trix editor
 __webpack_require__(/*! trix */ "./node_modules/trix/dist/trix.js");
 
 /***/ }),
