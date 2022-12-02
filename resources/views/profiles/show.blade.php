@@ -46,6 +46,9 @@
 							@can('delete', $profile)<a class="btn btn-danger btn-sm" href="{{ route('profiles.confirm-delete', [ $profile ]) }}" title="Archive"><i class="fas fa-archive"></i> Archive</a>@endcan 
 							@if($editable)<a class="btn btn-primary btn-sm" href="{{ route('profiles.edit', [$profile->slug, 'information']) }}" title="Edit"><i class="fas fa-edit"></i> Edit</a>@endif
 							<span title="Bookmark"><livewire:bookmark-button :model="$profile"></span>
+							@if(config('pdf.enabled'))
+								@can('export', $profile)<a class="btn btn-primary btn-sm" href="{{ route('profiles.export.pdf', [ $profile ]) }}" title="Export as PDF"><i class="fas fa-download"></i> PDF</a>@endcan
+							@endif
 						</h2>
 						@if($information->distinguished_title) <h6>{{ $information->distinguished_title }}</h6> @endif
 						@if($information->title) <h6>{{ $information->title }}</h6> @endif

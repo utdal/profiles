@@ -65,6 +65,11 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->group(base_path('routes/components/students.php'));
         }
+
+        if (config('pdf.enabled')) {
+            Route::middleware('web')
+                ->group(base_path('routes/components/pdf.php'));
+        }
     }
 
     /**

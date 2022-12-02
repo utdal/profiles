@@ -145,7 +145,14 @@
 
 	.entry {
 		margin-bottom: 12px;
+		@media print { 
+			  clear: both;
+			  page-break-inside: auto !important;
+			  margin-bottom: 10px !important;
+			  break-before: always;
+		  } 
     }
+
 	.entry:last-of-type{
 		margin-bottom: 0px;
 	}
@@ -172,6 +179,12 @@
 		@media (max-width: map-get($grid-breakpoints, sm)){
 			padding: 25px 40px 40px;
 		}
+		@media print { 
+			  clear: both;
+			  page-break-inside: avoid !important;
+			  display: block;
+			  page-break-after: always;
+		  } 
 	}
 
 	.main_areas {
