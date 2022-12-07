@@ -120,12 +120,9 @@ class ProfilesController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function table(Request $request)
+    public function table()
     {
-        return view('profiles.table', [
-            'profiles' => Profile::where('full_name', 'LIKE', "%{$request->profile_search}%")->orderBy('last_name')->paginate(50),
-            'profile_search' => $request->profile_search,
-        ]);
+        return view('profiles.table');
     }
 
     /**
