@@ -45,36 +45,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
-      # Docs: https://github.com/shivammathur/setup-php
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php-versions }}
-          extensions: bcmath, curl, dom, exif, gd, iconv, imagick, intl, ldap, libxml, mbstring, fileinfo, mysqli, mysqlnd, pdo, pdo_mysql, xml, zip
-          coverage: xdebug
-
-      # Local MySQL service in GitHub hosted environments is disabled by default.
-      # If you are using it instead of service containers, make sure you start it.
-      # - name: Start mysql service
-      #   run: sudo systemctl start mysql.service
-
-      - name: Get composer cache directory
-        id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-
-      - name: Cache composer dependencies
-        uses: actions/cache@v3
-        id: cache-composer-dependencies
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          # Use composer.json for key, if composer.lock is not committed.
-          # key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-composer-
-
-      - name: Install Composer dependencies
-        run: composer install --no-progress --prefer-dist --optimize-autoloader
+      
+      - name: Setup PHP and install Composer dependencies
+        uses: ./.github/actions/composer-install
 
       - name: Prepare the application
         run: |
@@ -114,9 +87,17 @@ jobs:
     name: Profiles Security Checks
     runs-on: ubuntu-latest
 
+    strategy:
+      fail-fast: false
+      matrix:
+        php-versions: ['8.0']
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      
+      - name: Setup PHP and install Composer dependencies
+        uses: ./.github/actions/composer-install
       
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -131,8 +112,11 @@ jobs:
             key: ${{ runner.os }}-symfony-${{ hashFiles('**/composer.lock') }}
             restore-keys: ${{ runner.os }}-symfony-
 
-      - name: Check PHP security
+      - name: Check PHP security with Symfony checker
         uses: symfonycorp/security-checker-action@v3
+
+      - name: Check PHP security with Composer audit
+        run: composer audit
 
       - name: Check JS security
         run: npm audit
