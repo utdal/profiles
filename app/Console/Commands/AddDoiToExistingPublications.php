@@ -199,7 +199,7 @@ class AddDoiToExistingPublications extends Command
         $this->lineAndLog("{$publications_found_in_aa} DOI found in Academic Analytics and added successfully.");
         $this->lineAndLog("{$doi_not_found_counter} PUBLICATIONS NOT FOUND.", 'error');
         $this->lineAndLog("***************** End of Report for {$profile_full_name}  ********************");
-        $this->lineAndLog("{$profiles_processed_count} Profiles scanned out of {$profiles_count()}.");
+        $this->lineAndLog("{$profiles_processed_count} Profiles scanned out of {$profiles_count}.");
     }
 
     /**
