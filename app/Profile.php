@@ -198,11 +198,12 @@ class Profile extends Model implements HasMedia, Auditable
               $doi = $ref['external-id-value'];
             }
           }
-          $record = ProfileData::firstOrCreate([
+          $new_record = ProfileData::firstOrCreate([
             'profile_id' => $this->id,
             'type' => 'publications',
             'data->title' => $record['work-summary'][0]['title']['title']['value'],
             'sort_order' => $record['work-summary'][0]['publication-date']['year']['value'] ?? null,
+            'data->doi' => $doi,
           ],[
               'data' => [
                   'url' => $url,
@@ -219,6 +220,15 @@ class Profile extends Model implements HasMedia, Auditable
 
       //ran through process successfully
       return true;
+    }
+
+    public function cachedAAPublications()
+    {
+        return Cache::remember(
+            "profile{$this->id}-AA-pubs",
+            15 * 60,
+            fn() => $this->getAcademicAnalyticsPublications()
+        );
     }
 
     public function getAcademicAnalyticsPublications()

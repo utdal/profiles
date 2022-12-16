@@ -66,18 +66,9 @@ class AcademicAnalyticsPublications extends Component
         $this->transform = false;
     }
 
-    public function cachedAAPublications()
-    {
-        return Cache::remember(
-            "profile{$this->profile->id}-AA-pubs",
-            15 * 60,
-            fn() => $this->profile->getAcademicAnalyticsPublications()
-        );
-    }
-
     public function getNewAAPublications()
     {
-        return $this->cachedAAPublications()
+        return $this->profile->cachedAAPublications()
             ->whereNotIn('doi', $this->profile->publications->pluck('data.doi')->filter()->values());
     }
 
