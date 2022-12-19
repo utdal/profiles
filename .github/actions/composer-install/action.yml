@@ -1,0 +1,47 @@
+name: 'Run Composer install'
+description: 'Install PHP and run composer install'
+
+inputs:
+  php-version:
+    description: 'PHP version'
+    required: false
+    default: '8.0'
+  php-extensions:
+    description: 'PHP extensions to install'
+    required: false
+    default: bcmath, curl, dom, exif, gd, iconv, imagick, intl, ldap, libxml, mbstring, fileinfo, mysqli, mysqlnd, pdo, pdo_mysql, xml, zip
+  php-coverage:
+    description: 'PHP coverage options'
+    required: false
+    default: none
+
+runs:
+  using: 'composite'
+  steps:
+
+    # Docs: https://github.com/shivammathur/setup-php
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ inputs.php-version }}
+        extensions: ${{ inputs.php-extensions }}
+        coverage: ${{ inputs.php-coverage }}
+
+    - name: Get composer cache directory
+      id: composer-cache
+      run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+      shell: bash
+
+    - name: Cache composer dependencies
+      uses: actions/cache@v3
+      id: cache-composer-dependencies
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        # Use composer.json for key, if composer.lock is not committed.
+        # key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: ${{ runner.os }}-composer-
+
+    - name: Install Composer dependencies
+      run: composer install --no-progress --prefer-dist --optimize-autoloader
+      shell: bash
