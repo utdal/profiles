@@ -222,7 +222,7 @@ class Profile extends Model implements HasMedia, Auditable
 
                 if (!$existing_publication) {
 
-                    $publications_found = Profile::searchAAPublicationByTitleAndYear($record['work-summary'][0]['title']['title']['value'], $record['work-summary'][0]['publication-date']['year']['value'], $current_publications);
+                    $publications_found = Profile::searchPublicationByTitleAndYear($record['work-summary'][0]['title']['title']['value'], $record['work-summary'][0]['publication-date']['year']['value'], $current_publications);
 
                     $existing_publication = empty($publications_found[1]) ? false : true;
                 }
@@ -258,7 +258,7 @@ class Profile extends Model implements HasMedia, Auditable
      *  Return DOI and matching title for testing purposes
      * @return Array
      */
-    public static function searchAAPublicationByTitleAndYear($title, $year, $publications)
+    public static function searchPublicationByTitleAndYear($title, $year, $publications)
     {
         $title = strip_tags(html_entity_decode($title));
         $year = $year;
