@@ -22,9 +22,9 @@ use Illuminate\Support\Facades\Cache;
 
 class Profile extends Model implements HasMedia, Auditable
 {
-    use HasAudits; 
-    use HasFactory; 
-    use InteractsWithMedia; 
+    use HasAudits;
+    use HasFactory;
+    use InteractsWithMedia;
     use HasTags;
     use SoftDeletes;
 
@@ -159,64 +159,127 @@ class Profile extends Model implements HasMedia, Auditable
         return $this->information()->where('data->orc_id_managed', '1')->exists();
     }
 
+    /**
+     * Iterate over the publications retrieved from the ORCID API for a given profile and import the publication if it doesn't exist in the db already
+     */
     public function updateORCID()
     {
-      $orc_id = $this->information()->get(array('data'))->toArray()[0]['data']['orc_id'];
+        $orc_id = $this->information()->get(array('data'))->toArray()[0]['data']['orc_id'];
 
-      if(is_null($orc_id)){
+        if(is_null($orc_id)){
         //can't update if we don't know your ID
         return false;
-      }
+        }
 
-      $orc_url = "https://pub.orcid.org/v2.0/" . $orc_id .  "/activities";
+        $orc_url = "https://pub.orcid.org/v2.0/" . $orc_id .  "/activities";
 
-      $client = new Client();
+        $client = new Client();
 
-      $res = $client->get($orc_url, [
-        'headers' => [
-          'Authorization' => 'Bearer ' . config('ORCID_TOKEN'),
-          'Accept' => 'application/json'
-        ],
-        'http_errors' => false, // don't throw exceptions for 4xx,5xx responses
-      ]);
+        $res = $client->get($orc_url, [
+            'headers' => [
+                'Authorization' => 'Bearer ' . config('ORCID_TOKEN'),
+                'Accept' => 'application/json'
+            ],
+            'http_errors' => false, // don't throw exceptions for 4xx,5xx responses
+        ]);
 
-      //an error of some sort
-      if($res->getStatusCode() != 200){
-        return false;
-      }
+        //an error of some sort
+        if($res->getStatusCode() != 200){
+            return false;
+        }
 
-      $datum = json_decode($res->getBody()->getContents(), true);
+        $datum = json_decode($res->getBody()->getContents(), true);
 
-      foreach($datum['works']['group'] as $record){
-          $url = NULL;
-          foreach($record['external-ids']['external-id'] as $ref){
-            if($ref['external-id-type'] == "eid"){
-              $url = "https://www.scopus.com/record/display.uri?origin=resultslist&eid=" . $ref['external-id-value'];
+        $sort_order = count($datum['works']['group'] ?? []) + 1;
+
+        Cache::tags(['profile-{$this->id}-current_publications'])->flush();
+            $current_publications = Cache::remember(
+            "profile-{$this->id}-current_publications",
+            15 * 60,
+            fn() => $this->publications()->get()
+        );
+
+        foreach($datum['works']['group'] as $record) {
+            $url = null;
+            $publications_found = null;
+            $existing_publication = false;
+
+            foreach($record['external-ids']['external-id'] as $ref){
+                if($ref['external-id-type'] == "eid"){
+                    $url = "https://www.scopus.com/record/display.uri?origin=resultslist&eid=" . $ref['external-id-value'];
+                }
+                else if($ref['external-id-type'] == "doi"){
+                    $url = "http://doi.org/" . $ref['external-id-value'];
+                    $doi = $ref['external-id-value'];
+                }
             }
-            else if($ref['external-id-type'] == "doi"){
-              $url = "http://doi.org/" . $ref['external-id-value'];
+
+            if ($current_publications->count() > 0) {
+
+                $publications_found = $current_publications->filter(function ($elem) use ($ref) { return (isset($elem->data['doi'])) && ($elem->data['doi'] == $ref['external-id-value']); });
+
+                $existing_publication = $publications_found->count() > 0 ? true : false;
+
+                if (!$existing_publication) {
+
+                    $publications_found = Profile::searchAAPublicationByTitleAndYear($record['work-summary'][0]['title']['title']['value'], $record['work-summary'][0]['publication-date']['year']['value'], $current_publications);
+
+                    $existing_publication = empty($publications_found[1]) ? false : true;
+                }
             }
-          }
-          $record = ProfileData::firstOrCreate([
-            'profile_id' => $this->id,
-            'type' => 'publications',
-            'data->title' => $record['work-summary'][0]['title']['title']['value'],
-            'sort_order' => $record['work-summary'][0]['publication-date']['year']['value'] ?? null,
-          ],[
-              'data' => [
-                  'url' => $url,
-                  'title' => $record['work-summary'][0]['title']['title']['value'],
-                  'year' => $record['work-summary'][0]['publication-date']['year']['value'] ?? null,
-                  'type' => ucwords(strtolower(str_replace('_', ' ', $record['work-summary'][0]['type']))),
-                  'status' => 'Published'
-              ],
-          ]);
-      }
 
-      Cache::tags(['profile_data'])->flush();
+            if (!$existing_publication) {
+                $record = ProfileData::create([
+                    'profile_id' => $this->id,
+                    'type' => 'publications',
+                    'sort_order' => $sort_order--,
+                    'data' => [
+                        'url' => $url,
+                        'title' => $record['work-summary'][0]['title']['title']['value'],
+                        'year' => $record['work-summary'][0]['publication-date']['year']['value'] ?? null,
+                        'type' => ucwords(strtolower(str_replace('_', ' ', $record['work-summary'][0]['type']))),
+                        'status' => 'Published',
+                        'doi' => $doi,
+                    ],
+                ]);
+            }
 
-      //ran through process successfully
-      return true;
+        }
+
+        Cache::tags(['profile-{$this->id}-current_publications'])->flush();
+        Cache::tags(['profile_data'])->flush();
+
+        //ran through process successfully
+        return true;
+    }
+
+    /**
+     *  Search for the publication in the cached academic analytics publications collection by year and title
+     *  Return DOI and matching title for testing purposes
+     * @return Array
+     */
+    public static function searchAAPublicationByTitleAndYear($title, $year, $publications)
+    {
+        $title = strip_tags(html_entity_decode($title));
+        $year = $year;
+        $publication_found = $aa_doi = $aa_title = null;
+
+        $publication_found = $publications->filter(function ($item) use ($title, $year) {
+            if (str_contains(strtolower($title), strtolower(strip_tags(html_entity_decode($item['data']['title'])))) and $year==$item['data']['year']) return true;
+            similar_text(strtolower($title), strtolower(strip_tags(html_entity_decode($item['data']['title']))), $percent);
+            if (($percent > 80) and ($year==$item['data']['year'])) return true;
+        });
+
+        if ($publication_found->count() == 1) {
+            //echo "Searching for: $title \n";
+            foreach($publication_found as $publi){
+                //echo "Publication matching found in AA: $publi \n";
+            }
+            $aa_doi = $publication_found->first()->doi;
+            $aa_title = $publication_found->first()->title;
+        }
+
+        return [$aa_doi, $aa_title];
     }
 
     public function updateDatum($section, $request)
@@ -292,7 +355,7 @@ class Profile extends Model implements HasMedia, Auditable
 
     /**
      * Strips HTML tags from the specified data field.
-     * 
+     *
      * This is only for output purposes and does not save.
      *
      * @param array $data_names : the names of data properties to strip tags from
@@ -427,7 +490,7 @@ class Profile extends Model implements HasMedia, Auditable
 
     /**
      * Query scope for Profiles that have the given tag (case-insensitive)
-     * 
+     *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param string $tag
      * @return \Illuminate\Database\Eloquent\Builder
@@ -467,9 +530,9 @@ class Profile extends Model implements HasMedia, Auditable
         });
     }
     /**
-     * Query scope for Profiles and eager load students whose application is pending review 
+     * Query scope for Profiles and eager load students whose application is pending review
      * for a given semester.
-     * 
+     *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param string $semester
      * @return \Illuminate\Database\Eloquent\Builder
@@ -484,9 +547,9 @@ class Profile extends Model implements HasMedia, Auditable
     }
 
     /**
-     * Query scope for Profiles with students whose application is pending review 
+     * Query scope for Profiles with students whose application is pending review
      * for a given semester.
-     * 
+     *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param string $semester
      * @return \Illuminate\Database\Eloquent\Builder
