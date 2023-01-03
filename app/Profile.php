@@ -193,7 +193,8 @@ class Profile extends Model implements HasMedia, Auditable
         $sort_order = count($datum['works']['group'] ?? []) + 1;
 
         Cache::tags(['profile-{$this->id}-current_publications'])->flush();
-            $current_publications = Cache::remember(
+
+        $current_publications = Cache::remember(
             "profile-{$this->id}-current_publications",
             15 * 60,
             fn() => $this->publications()->get()
@@ -254,8 +255,8 @@ class Profile extends Model implements HasMedia, Auditable
     }
 
     /**
-     *  Search for the publication in the cached academic analytics publications collection by year and title
-     *  Return DOI and matching title for testing purposes
+     *  Search for a publication by year and title within a given publications collection
+     *  Return array with DOI and matching title
      * @return Array
      */
     public static function searchPublicationByTitleAndYear($title, $year, $publications)
@@ -271,10 +272,6 @@ class Profile extends Model implements HasMedia, Auditable
         });
 
         if ($publication_found->count() == 1) {
-            //echo "Searching for: $title \n";
-            foreach($publication_found as $publi){
-                //echo "Publication matching found in AA: $publi \n";
-            }
             $aa_doi = $publication_found->first()->doi;
             $aa_title = $publication_found->first()->title;
         }
