@@ -80,8 +80,9 @@ class AddDoiToExistingPublications extends Command
                 }
 
                 if (is_null($doi)) { // Match the AA Publication
-                    $aa_pub_found = $this->searchAAPublicationByTitleAndYear(
-                            $publication,
+                    $aa_pub_found = $profile->searchPublicationByTitleAndYear(
+                            $publication->title,
+                            $publication->year,
                             $aa_publications ?? $profile->cachedAAPublications()
                     );
                     $doi = $aa_pub_found[0];
@@ -132,35 +133,6 @@ class AddDoiToExistingPublications extends Command
         }
 
         return $doi;
-    }
-
-    /**
-     *  Search for the publication in the cached academic analytics publications collection by year and title
-     *  Return DOI and matching title for testing purposes
-     * @return Array
-     */
-    public function searchAAPublicationByTitleAndYear($publication, $aa_publications)
-    {
-        $title = strip_tags(html_entity_decode($publication->title));
-        $year = $publication->year;
-        $aa_publication_found = $aa_doi = $aa_title = null;
-
-        $aa_publication_found = $aa_publications->filter(function ($item) use ($title, $year) {
-            similar_text(strtolower($title), strtolower($item['data']['title']), $percent);
-            return ((str_contains(strtolower($title), strtolower($item['data']['title'])) and $year==$item['data']['year']) or
-                    (($percent > 60) and $year==$item['data']['year']));
-        });
-
-        if ($aa_publication_found->count() == 1 ) {
-            echo "Searching for: $title \n";
-            foreach($aa_publication_found as $publi){
-                echo "Publication matching found in AA: $publi \n";
-            }
-            $aa_doi = $aa_publication_found->first()->doi;
-            $aa_title = $aa_publication_found->first()->title;
-        }
-
-        return [$aa_doi, $aa_title];
     }
 
     /**

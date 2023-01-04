@@ -222,6 +222,10 @@ class Profile extends Model implements HasMedia, Auditable
       return true;
     }
 
+    /**
+     * Cache Academic Analytics publications for the current profile
+     * @return Collection
+     */
     public function cachedAAPublications()
     {
         return Cache::remember(
@@ -229,6 +233,28 @@ class Profile extends Model implements HasMedia, Auditable
             15 * 60,
             fn() => $this->getAcademicAnalyticsPublications()
         );
+    }
+
+    /**
+     *  Search for a publication by year and title within a given publications collection
+     *  Return array with DOI and matching title
+     * @return Array
+     */
+    public static function searchPublicationByTitleAndYear($title, $year, $publications)
+    {
+        $title = strip_tags(html_entity_decode($title));
+        $year = $year;
+        $publication_found = $aa_doi = $aa_title = null;
+        $publication_found = $publications->filter(function ($item) use ($title, $year) {
+            if (str_contains(strtolower($title), strtolower(strip_tags(html_entity_decode($item['data']['title'])))) and $year==$item['data']['year']) return true;
+            similar_text(strtolower($title), strtolower(strip_tags(html_entity_decode($item['data']['title']))), $percent);
+            if (($percent > 80) and ($year==$item['data']['year'])) return true;
+        });
+        if ($publication_found->count() == 1) {
+            $aa_doi = $publication_found->first()->doi;
+            $aa_title = $publication_found->first()->title;
+        }
+        return [$aa_doi, $aa_title];
     }
 
     public function getAcademicAnalyticsPublications()
