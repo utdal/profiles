@@ -65,7 +65,7 @@ class AddDoiToExistingPublications extends Command
 
                     $this->lineAndlogDoiResult($doi, "url");
 
-                    $publications_found_in_url = is_null($doi) ? $publications_found_in_url : ++$publications_found_in_url;;
+                    $publications_found_in_url = is_null($doi) ? $publications_found_in_url : ++$publications_found_in_url;
                 }
 
                 if (!empty($publication->title) and (is_null($doi))) { // Search in the title
@@ -75,7 +75,7 @@ class AddDoiToExistingPublications extends Command
 
                     $this->lineAndlogDoiResult($doi, "title");
 
-                    $publications_found_in_title = is_null($doi) ? $publications_found_in_title : ++$publications_found_in_title;;
+                    $publications_found_in_title = is_null($doi) ? $publications_found_in_title : ++$publications_found_in_title;
 
                 }
 
@@ -90,12 +90,13 @@ class AddDoiToExistingPublications extends Command
 
                     $this->lineAndlogDoiResult($doi, "Academic Analytics");
 
-                    $publications_found_in_aa = is_null($doi) ? $publications_found_in_aa : ++$publications_found_in_aa;;
+                    $publications_found_in_aa = is_null($doi) ? $publications_found_in_aa : ++$publications_found_in_aa;
 
                 }
 
                 if (is_null($doi)) { // Update and save publication
                     $doi_not_found_counter++;
+                    echo "Entro aqui y no hago mas nada";
                 }
                 else {
                     $publication->updateData(['doi' => $doi]);

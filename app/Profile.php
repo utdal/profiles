@@ -246,9 +246,9 @@ class Profile extends Model implements HasMedia, Auditable
         $year = $year;
         $publication_found = $aa_doi = $aa_title = null;
         $publication_found = $publications->filter(function ($item) use ($title, $year) {
-            if (str_contains(strtolower($title), strtolower(strip_tags(html_entity_decode($item['data']['title'])))) and $year==$item['data']['year']) return true;
+            if (str_contains(strtolower($title), strtolower(strip_tags(html_entity_decode($item['data']['title'])))) && $year==$item['data']['year']) return true;
             similar_text(strtolower($title), strtolower(strip_tags(html_entity_decode($item['data']['title']))), $percent);
-            if (($percent > 80) and ($year==$item['data']['year'])) return true;
+            if (($percent > 80) && ($year==$item['data']['year'])) return true;
         });
         if ($publication_found->count() == 1) {
             $aa_doi = $publication_found->first()->doi;
