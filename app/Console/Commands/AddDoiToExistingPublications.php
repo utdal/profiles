@@ -96,7 +96,6 @@ class AddDoiToExistingPublications extends Command
 
                 if (is_null($doi)) { // Update and save publication
                     $doi_not_found_counter++;
-                    echo "Entro aqui y no hago mas nada";
                 }
                 else {
                     $publication->updateData(['doi' => $doi]);
