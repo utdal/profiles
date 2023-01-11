@@ -4,8 +4,10 @@ namespace App;
 
 use App\ProfileData;
 use App\ProfileStudent;
+use App\Providers\AcademicAnalyticsAPIServiceProvider;
 use App\Student;
 use App\User;
+use Doctrine\DBAL\Types\IntegerType;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Auditable as HasAudits;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -243,12 +245,11 @@ class Profile extends Model implements HasMedia, Auditable
     public static function searchPublicationByTitleAndYear($title, $year, $publications)
     {
         $title = strip_tags(html_entity_decode($title));
-        $year = $year;
         $publication_found = $aa_doi = $aa_title = null;
         $publication_found = $publications->filter(function ($item) use ($title, $year) {
-            if (str_contains(strtolower($title), strtolower(strip_tags(html_entity_decode($item['data']['title'])))) && $year==$item['data']['year']) return true;
+            return (str_contains(strtolower($title), strtolower(strip_tags(html_entity_decode($item['data']['title'])))) && $year==$item['data']['year']);
             similar_text(strtolower($title), strtolower(strip_tags(html_entity_decode($item['data']['title']))), $percent);
-            if (($percent > 80) && ($year==$item['data']['year'])) return true;
+            return (($percent > 80) && ($year==$item['data']['year']));
         });
         if ($publication_found->count() == 1) {
             $aa_doi = $publication_found->first()->doi;
