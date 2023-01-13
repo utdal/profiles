@@ -49,7 +49,7 @@ class AddDoiToExistingPublications extends Command
             $profile_publications = $profile->data;
 
             $publications_bar = $this->output->createProgressBar(count($profile->data));
-            $publications_bar->setFormat('debug', '\n');
+            $publications_bar->setFormat('debug');
             $publications_bar->start();
 
             $aa_publications = $profile->cachedAAPublications();
@@ -119,8 +119,7 @@ class AddDoiToExistingPublications extends Command
     {
 
         if (is_null($doi)) {
-            $this->line("Not Found");
-            $this->log("DOI not found in {$search_field}.");
+            $this->lineAndLog("DOI not found in {$search_field}.");
         }
         else {
 
