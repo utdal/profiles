@@ -237,7 +237,6 @@ class ProfilesController extends Controller
                 ->route('profiles.show', $profile->slug)
                 ->with('flash_message', 'Publications updated via ORCID.');
         }
-
         $data = $profile->data()->$section()->get();
 
         // if no data, include one item to use as a template

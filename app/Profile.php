@@ -4,8 +4,10 @@ namespace App;
 
 use App\ProfileData;
 use App\ProfileStudent;
+use App\Providers\AcademicAnalyticsAPIServiceProvider;
 use App\Student;
 use App\User;
+use Doctrine\DBAL\Types\IntegerType;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Auditable as HasAudits;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -22,9 +24,9 @@ use Illuminate\Support\Facades\Cache;
 
 class Profile extends Model implements HasMedia, Auditable
 {
-    use HasAudits; 
-    use HasFactory; 
-    use InteractsWithMedia; 
+    use HasAudits;
+    use HasFactory;
+    use InteractsWithMedia;
     use HasTags;
     use SoftDeletes;
 
@@ -195,16 +197,19 @@ class Profile extends Model implements HasMedia, Auditable
             }
             else if($ref['external-id-type'] == "doi"){
               $url = "http://doi.org/" . $ref['external-id-value'];
+              $doi = $ref['external-id-value'];
             }
           }
-          $record = ProfileData::firstOrCreate([
+          $new_record = ProfileData::firstOrCreate([
             'profile_id' => $this->id,
             'type' => 'publications',
             'data->title' => $record['work-summary'][0]['title']['title']['value'],
             'sort_order' => $record['work-summary'][0]['publication-date']['year']['value'] ?? null,
+            'data->doi' => $doi,
           ],[
               'data' => [
                   'url' => $url,
+                  'doi' => $doi,
                   'title' => $record['work-summary'][0]['title']['title']['value'],
                   'year' => $record['work-summary'][0]['publication-date']['year']['value'] ?? null,
                   'type' => ucwords(strtolower(str_replace('_', ' ', $record['work-summary'][0]['type']))),
@@ -217,6 +222,123 @@ class Profile extends Model implements HasMedia, Auditable
 
       //ran through process successfully
       return true;
+    }
+
+    /**
+     * Cache Academic Analytics publications for the current profile
+     * @return Collection
+     */
+    public function cachedAAPublications()
+    {
+        return Cache::remember(
+            "profile{$this->id}-AA-pubs",
+            15 * 60,
+            fn() => $this->getAcademicAnalyticsPublications()
+        );
+    }
+
+    /**
+     *  Search for a publication by year and title within a given publications collection
+     *  Return array with DOI and matching title
+     * @return Array
+     */
+    public static function searchPublicationByTitleAndYear($title, $year, $publications)
+    {
+        $title = strip_tags(html_entity_decode($title));
+        $publication_found = $aa_doi = $aa_title = null;
+        $publication_found = $publications->filter(function ($item) use ($title, $year) {
+            return (str_contains(strtolower($title), strtolower(strip_tags(html_entity_decode($item['data']['title'])))) && $year==$item['data']['year']);
+            similar_text(strtolower($title), strtolower(strip_tags(html_entity_decode($item['data']['title']))), $percent);
+            return (($percent > 80) && ($year==$item['data']['year']));
+        });
+        if ($publication_found->count() == 1) {
+            $aa_doi = $publication_found->first()->doi;
+            $aa_title = $publication_found->first()->title;
+        }
+        return [$aa_doi, $aa_title];
+    }
+
+    public function getAcademicAnalyticsPublications()
+    {
+        if(isset($this->information()->first()->data['academic_analytics_id'])) {
+            $academic_analytics_id = $this->information()->first()->data['academic_analytics_id'];
+        }
+        else {
+            $academic_analytics_id = $this->getAAPersonId();
+            $this->information()->update(['data->academic_analytics_id' => $academic_analytics_id]);
+            $this->save();
+        }
+
+        $aa_url = "https://api.academicanalytics.com/person/$academic_analytics_id/articles";
+
+        $client = new Client();
+
+        $res = $client->get($aa_url, [
+            'headers' => [
+            'apikey' => config('app.academic_analytics_key'),
+            'Accept' => 'application/json'
+            ],
+            'http_errors' => false, // don't throw exceptions for 4xx,5xx responses
+        ]);
+
+        //an error of some sort
+        if($res->getStatusCode() != 200){
+            return false;
+        }
+        $datum = json_decode($res->getBody()->getContents(), true);
+
+        $publications = collect();
+
+        foreach($datum as $key => $record) {
+            $url = NULL;
+
+            if(isset($record['DOI'])) {
+                $doi = $record['DOI'];
+                $url = "http://doi.org/$doi";
+            }
+
+            $new_record = ProfileData::newModelInstance([
+                'type' => 'publications',
+                'sort_order' => $record['ArticleYear'] ?? null,
+                'data' => [
+                    'doi' => $doi ?? null,
+                    'url' => $url ?? null,
+                    'title' => $record['ArticleTitle'],
+                    'year' => $record['ArticleYear'] ?? null,
+                    'type' => "JOURNAL_ARTICLE", //ucwords(strtolower(str_replace('_', ' ', $record['work-summary'][0]['type']))),
+                    'status' => 'Published'
+                ],
+            ]);
+            $new_record->id = $record['ArticleId'];
+            $new_record->imported = false;
+            $publications->push($new_record);
+        }
+        return $publications;
+    }
+
+    public function getAAPersonId(){
+
+        $client_faculty_id = "{$this->user->name}@utdallas.edu";
+
+        $aa_url = "https://api.academicanalytics.com/person/GetPersonIdByClientFacultyId?clientFacultyId=$client_faculty_id";
+
+        $client = new Client();
+
+        $res = $client->get($aa_url, [
+            'headers' => [
+            'apikey' => config('app.academic_analytics_key'),
+            'Accept' => 'application/json'
+            ],
+            'http_errors' => false, // don't throw exceptions for 4xx,5xx responses
+        ]);
+
+        //an error of some sort
+        if($res->getStatusCode() != 200){
+            return false;
+        }
+        $datum = json_decode($res->getBody()->getContents(), true);
+
+        return $datum['PersonId'];
     }
 
     public function updateDatum($section, $request)
@@ -292,7 +414,7 @@ class Profile extends Model implements HasMedia, Auditable
 
     /**
      * Strips HTML tags from the specified data field.
-     * 
+     *
      * This is only for output purposes and does not save.
      *
      * @param array $data_names : the names of data properties to strip tags from
@@ -427,7 +549,7 @@ class Profile extends Model implements HasMedia, Auditable
 
     /**
      * Query scope for Profiles that have the given tag (case-insensitive)
-     * 
+     *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param string $tag
      * @return \Illuminate\Database\Eloquent\Builder
@@ -467,9 +589,9 @@ class Profile extends Model implements HasMedia, Auditable
         });
     }
     /**
-     * Query scope for Profiles and eager load students whose application is pending review 
+     * Query scope for Profiles and eager load students whose application is pending review
      * for a given semester.
-     * 
+     *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param string $semester
      * @return \Illuminate\Database\Eloquent\Builder
@@ -484,9 +606,9 @@ class Profile extends Model implements HasMedia, Auditable
     }
 
     /**
-     * Query scope for Profiles with students whose application is pending review 
+     * Query scope for Profiles with students whose application is pending review
      * for a given semester.
-     * 
+     *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param string $semester
      * @return \Illuminate\Database\Eloquent\Builder
