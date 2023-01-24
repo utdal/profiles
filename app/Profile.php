@@ -5,6 +5,7 @@ namespace App;
 use App\ProfileData;
 use App\ProfileStudent;
 use App\Providers\AcademicAnalyticsAPIServiceProvider;
+use App\Providers\PublicationsApiServiceProvider;
 use App\Student;
 use App\User;
 use Doctrine\DBAL\Types\IntegerType;
@@ -230,10 +231,13 @@ class Profile extends Model implements HasMedia, Auditable
      */
     public function cachedAAPublications()
     {
+        $publications_provider = new PublicationsApiServiceProvider($this);
+        $academic_analytics_publications = $publications_provider->getAcademicAnalyticsPublications();
+
         return Cache::remember(
             "profile{$this->id}-AA-pubs",
             15 * 60,
-            fn() => $this->getAcademicAnalyticsPublications()
+            fn() => $academic_analytics_publications
         );
     }
 
@@ -256,89 +260,6 @@ class Profile extends Model implements HasMedia, Auditable
             $aa_title = $publication_found->first()->title;
         }
         return [$aa_doi, $aa_title];
-    }
-
-    public function getAcademicAnalyticsPublications()
-    {
-        if(isset($this->information()->first()->data['academic_analytics_id'])) {
-            $academic_analytics_id = $this->information()->first()->data['academic_analytics_id'];
-        }
-        else {
-            $academic_analytics_id = $this->getAAPersonId();
-            $this->information()->update(['data->academic_analytics_id' => $academic_analytics_id]);
-            $this->save();
-        }
-
-        $aa_url = "https://api.academicanalytics.com/person/$academic_analytics_id/articles";
-
-        $client = new Client();
-
-        $res = $client->get($aa_url, [
-            'headers' => [
-            'apikey' => config('app.academic_analytics_key'),
-            'Accept' => 'application/json'
-            ],
-            'http_errors' => false, // don't throw exceptions for 4xx,5xx responses
-        ]);
-
-        //an error of some sort
-        if($res->getStatusCode() != 200){
-            return false;
-        }
-        $datum = json_decode($res->getBody()->getContents(), true);
-
-        $publications = collect();
-
-        foreach($datum as $key => $record) {
-            $url = NULL;
-
-            if(isset($record['DOI'])) {
-                $doi = $record['DOI'];
-                $url = "http://doi.org/$doi";
-            }
-
-            $new_record = ProfileData::newModelInstance([
-                'type' => 'publications',
-                'sort_order' => $record['ArticleYear'] ?? null,
-                'data' => [
-                    'doi' => $doi ?? null,
-                    'url' => $url ?? null,
-                    'title' => $record['ArticleTitle'],
-                    'year' => $record['ArticleYear'] ?? null,
-                    'type' => "JOURNAL_ARTICLE", //ucwords(strtolower(str_replace('_', ' ', $record['work-summary'][0]['type']))),
-                    'status' => 'Published'
-                ],
-            ]);
-            $new_record->id = $record['ArticleId'];
-            $new_record->imported = false;
-            $publications->push($new_record);
-        }
-        return $publications;
-    }
-
-    public function getAAPersonId(){
-
-        $client_faculty_id = "{$this->user->name}@utdallas.edu";
-
-        $aa_url = "https://api.academicanalytics.com/person/GetPersonIdByClientFacultyId?clientFacultyId=$client_faculty_id";
-
-        $client = new Client();
-
-        $res = $client->get($aa_url, [
-            'headers' => [
-            'apikey' => config('app.academic_analytics_key'),
-            'Accept' => 'application/json'
-            ],
-            'http_errors' => false, // don't throw exceptions for 4xx,5xx responses
-        ]);
-
-        //an error of some sort
-        if($res->getStatusCode() != 200){
-            return false;
-        }
-        $datum = json_decode($res->getBody()->getContents(), true);
-
-        return $datum['PersonId'];
     }
 
     public function updateDatum($section, $request)

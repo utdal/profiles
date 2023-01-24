@@ -20,8 +20,8 @@ class PublicationsApiServiceProvider extends ServiceProvider implements Publicat
     public function __construct(Profile $profile)
     {
         $this->profile = $profile;
-        $this->academic_analytics_id = $this->getAcademicAnalyticsId($this->profile);
         $this->client = new Client();
+        $this->academic_analytics_id = $this->getAcademicAnalyticsId($this->profile);
     }
 
     public function getAcademicAnalyticsId()
