@@ -2,12 +2,10 @@
 
 namespace App\Providers;
 
-//use App\ApiClientInterface;
 use App\Profile;
 use Illuminate\Support\ServiceProvider;
 
-
-class OrcidApiService extends ServiceProvider //implements ApiClientInterface
+class OrcidApiServiceProvider extends ServiceProvider
 {
     protected $orc_id, $authorization;
 
@@ -32,5 +30,7 @@ class OrcidApiService extends ServiceProvider //implements ApiClientInterface
 
         return json_decode($res->getBody()->getContents(), true);
     }
+
+
 
 }

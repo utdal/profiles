@@ -44,6 +44,7 @@ class ProfileDataFactory extends Factory
                 return [
                     'email' => Profile::find($attributes['profile_id'])->user->email,
                     'title' => Profile::find($attributes['profile_id'])->user->title,
+                    'academic_analytics_id' => $this->faker->optional->randomNumber(4),
                     'phone' => $this->faker->phoneNumber(),
                     'secondary_title' => '',
                     'tertiary_title' => '',
@@ -57,7 +58,7 @@ class ProfileDataFactory extends Factory
             'public' => 1,
         ];
     }
-    
+
     /**
      * Data Type "presentations"/"publications"/"projects"/"additionals"
      *

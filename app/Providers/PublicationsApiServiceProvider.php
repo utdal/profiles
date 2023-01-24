@@ -2,23 +2,26 @@
 
 namespace App\Providers;
 
-//use App\ApiClientInterface;
 use App\Profile;
 use App\ProfileData;
-use App\Providers\HttpClientServiceProvider;
+use App\Interfaces\PublicationsApiInterface;
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\ServiceProvider;
 
-class AcademicAnalyticsApiService extends ServiceProvider //implements ApiClientInterface
+
+class PublicationsApiServiceProvider extends ServiceProvider implements PublicationsApiInterface
 {
     protected $academic_analytics_id;
-    protected $apikey;
-    protected Profile $profile;
+
+    public $profile;
+    public Client $client;
 
     public function __construct(Profile $profile)
     {
         $this->profile = $profile;
-        $this->apikey = config('app.academic_analytics_key');
         $this->academic_analytics_id = $this->getAcademicAnalyticsId($this->profile);
+        $this->client = new Client();
     }
 
     public function getAcademicAnalyticsId()
@@ -27,21 +30,20 @@ class AcademicAnalyticsApiService extends ServiceProvider //implements ApiClient
             return $this->profile->information()->first()->data['academic_analytics_id'];
         }
         else {
-            $academic_analytics_id = $this->profile->getAAPersonId();
+            $academic_analytics_id = $this->getAAPersonId();
             $this->profile->information()->update(['data->academic_analytics_id' => $academic_analytics_id]);
             $this->profile->save();
+            return $academic_analytics_id;
         }
     }
 
-    public function getAAPersonId()
+    public function getAAPersonId(): int|false
     {
         $client_faculty_id = "{$this->profile->user->name}@utdallas.edu";
 
-        $aa_url = "https://api.academicanalytics.com/person/GetPersonIdByClientFacultyId?clientFacultyId=$client_faculty_id";
+        $url = "https://api.academicanalytics.com/person/GetPersonIdByClientFacultyId?clientFacultyId=$client_faculty_id";
 
-        $client = new HttpClientServiceProvider;
-
-        $res = $client->send_request(['url' => $aa_url, 'apikey' => $this->apikey]);
+        $res = $this->sendRequest($url);
 
         //an error of some sort
         if($res->getStatusCode() != 200){
@@ -54,11 +56,9 @@ class AcademicAnalyticsApiService extends ServiceProvider //implements ApiClient
 
     public function getAcademicAnalyticsPublications()
     {
-        $client = new HttpClientServiceProvider;
+        $url = "https://api.academicanalytics.com/person/" . $this->academic_analytics_id . "/articles";
 
-        $aa_url = "https://api.academicanalytics.com/person/" . $this->academic_analytics_id . "/articles";
-
-        $res = $client->send_request(['url' => $aa_url, 'apikey' => $this->apikey]);
+        $res = $this->sendRequest($url);
 
         //an error of some sort
         if($res->getStatusCode() != 200){
@@ -93,6 +93,22 @@ class AcademicAnalyticsApiService extends ServiceProvider //implements ApiClient
             $publications->push($new_record);
         }
         return $publications;
+    }
+
+    public function sendRequest($url): Response
+    {
+        return $this->getHttpClient()->get($url, [
+          'headers' => [
+            'apikey' => config('app.academic_analytics_key'),
+            'Accept' => 'application/json'
+          ],
+          'http_errors' => false, // don't throw exceptions for 4xx,5xx responses
+        ]);
+    }
+
+    public function getHttpClient()
+    {
+        return $this->client;
     }
 
 }
