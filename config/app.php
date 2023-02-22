@@ -67,8 +67,14 @@ return [
     /** API response cache-control headers */
     'api_cache_control' => env('API_CACHE_CONTROL', 'public;no_cache;etag'),
 
-    /** ACADEMIC ANALYTICS API KEY */
+    /** academic analytics api key */
     'academic_analytics_key' => env('ACADEMIC_ANALYTICS_KEY', false),
+
+    /** email address domain */
+    'email_address_domain' => env('EMAIL_ADDRESS_DOMAIN'),
+
+    /** DOI - DIGITAL OBJECT IDENTIFIER REGULAR EXPRESSION  */
+    'doi_regex' => env('DOI_REGEX', false),
 
     /*
     |--------------------------------------------------------------------------

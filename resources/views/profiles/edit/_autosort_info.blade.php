@@ -11,7 +11,7 @@
         </li>
         <li>
             <span class="fa-li"><i class="fas fa-info-circle"></i></span> To review your publications available for import from external sources:
-            <livewire:academic-analytics-publications :profile="$profile">
+            <livewire:publications-import-modal :profile="$profile">
         </li>
     </ul>
 </div>

@@ -9,8 +9,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\View;
 use App\Setting;
-use App\Interfaces\PublicationsApiInterface;
-use App\Profile;
 use Collective\Html\FormFacade as Form;
 use Illuminate\Support\Facades\Cache;
 
@@ -76,8 +74,8 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment(['local', 'dev'])) {
             $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
             $this->app->register(TelescopeServiceProvider::class);
-            $this->app->bind(PublicationsApiInterface::class, function() {
-                return PublicationsApiServiceProvider::class;
+            $this->app->register(AAPublicationsApiServiceProvider::class, function() {
+                return AAPublicationsApiServiceProvider::class;
             });
         }
     }

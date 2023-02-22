@@ -3,8 +3,11 @@
 namespace App\Console\Commands;
 
 use App\Profile;
+use App\ProfileData;
+use App\Providers\AAPublicationsApiServiceProvider;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 
 class AddDoiToExistingPublications extends Command
@@ -52,7 +55,9 @@ class AddDoiToExistingPublications extends Command
             $publications_bar->setFormat('debug');
             $publications_bar->start();
 
-            $aa_publications = $profile->cachedAAPublications();
+            $pubs_service_provider = App::make(AAPublicationsApiServiceProvider::class);
+            $aa_publications = $pubs_service_provider
+                                    ->getCachedPublications($profile->id, $profile->academic_analytics_id);
 
             $publications_found_in_url = $publications_found_in_title = $publications_found_in_aa = $doi_not_found_counter = 0;
 
@@ -86,7 +91,11 @@ class AddDoiToExistingPublications extends Command
                     if (is_null($doi)) {
                         $this->lineAndLog("Searching for DOI in Academic Analytics...");
 
-                        $aa_pub_found = $profile->searchPublicationByTitleAndYear($publication->title, $publication->year,  $aa_publications ?? $profile->cachedAAPublications());
+                        $aa_pub_found = ProfileData::searchPublicationByTitleAndYear(
+                                                $publication->title,
+                                                $publication->year,
+                                                $aa_publications ??
+                                                $pubs_service_provider->getCachedPublications($profile->id, $profile->academic_analytics_id));
 
                         $doi = $aa_pub_found[0];
                         $aa_title = $aa_pub_found[1];
@@ -159,10 +168,10 @@ class AddDoiToExistingPublications extends Command
 
         $doi = null;
 
-        preg_match($doi_regex, $doi_expression, $result);
+        preg_match($doi_regex, $doi_expression, $matches);
 
-        if (!empty($result[1])) {
-            $doi = rtrim(trim($result[1], "\xC2\xA0"), '.');
+        if (!empty($matches[1])) {
+            $doi = rtrim(trim($matches[1], "\xC2\xA0"), '.');
         }
 
         return $doi;
@@ -175,8 +184,7 @@ class AddDoiToExistingPublications extends Command
      */
     public function profilesMissingDoi(string $starting_character)
     {
-        return Profile::where('last_name', 'like', strtolower($starting_character).'%')
-                        ->orWhere('last_name', 'like', strtoupper($starting_character).'%')
+        return Profile::LastNameStartWithCharacter($starting_character)
                         ->withWhereHas('data', function($q) {
                                       $q->where('type', 'publications')
                                         ->whereNull('data->doi');

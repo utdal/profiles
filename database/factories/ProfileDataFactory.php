@@ -44,7 +44,7 @@ class ProfileDataFactory extends Factory
                 return [
                     'email' => Profile::find($attributes['profile_id'])->user->email,
                     'title' => Profile::find($attributes['profile_id'])->user->title,
-                    'academic_analytics_id' => $this->faker->optional->randomNumber(4),
+                    'academic_analytics_id' => $this->faker->optional()->randomNumber(4),
                     'phone' => $this->faker->phoneNumber(),
                     'secondary_title' => '',
                     'tertiary_title' => '',
@@ -72,6 +72,7 @@ class ProfileDataFactory extends Factory
                     'url' => $this->faker->url(),
                     'title' => $this->faker->sentence(),
                     'year' => $this->faker->year(),
+                    'doi' => $this->faker->optional()->regexify(config('app.doi_regex')),
                 ],
             ];
         });

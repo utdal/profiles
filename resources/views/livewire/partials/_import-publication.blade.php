@@ -1,12 +1,12 @@
 <div>
     @if($pub->imported == true)
         <label class="switch">
-            <input type="checkbox" class="remove-publication" id="{{ $pub->id }}" value="1" checked>
+            <input type="checkbox" class="remove-publication" id="{{ $pub->id }}" value="1" checked data-publication="{{ $pub }}">
             <span class="slider round"></span>
         </label>
     @else
         <label class="switch">
-            <input type="checkbox" class="add-publication" id="{{ $pub->id }}" value="0">
+            <input type="checkbox" class="add-publication" id="{{ $pub->id }}" value="0" data-publication="{{ $pub }}">
             <span class="slider round"></span>
         </label>
     @endif
@@ -19,7 +19,7 @@
             //Add a Single Publication to the Editor
             $(document).on("click", "input.add-publication", function(e) {
 
-                let publication = $(this).parents('td').data('publication');
+                let publication = $(this).data('publication');
 
                 livewire.emit('addToEditor',  publication.id);
 
@@ -29,7 +29,7 @@
             //Remove a Single Publication From the Editor
             $(document).on("click", "input.remove-publication", function(e) {
 
-                let publication = $(this).parents('td').data('publication');
+                let publication = $(this).data('publication');
 
                 livewire.emit('removeFromEditor',  publication.id);
 
@@ -83,7 +83,7 @@
 
             //Render a new row and populate it with the publication data
             function render_row(e, publication){
-                e.target.dataset.customId =  publication.id;
+                e.target.dataset.customId = publication.id;
                 e.target.dataset.insertType = 'append';
 
                 let form = profiles.add_row(e);

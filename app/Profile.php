@@ -4,11 +4,9 @@ namespace App;
 
 use App\ProfileData;
 use App\ProfileStudent;
-use App\Providers\AcademicAnalyticsAPIServiceProvider;
-use App\Providers\PublicationsApiServiceProvider;
+use App\Providers\AAPublicationsApiServiceProvider;
 use App\Student;
 use App\User;
-use Doctrine\DBAL\Types\IntegerType;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Auditable as HasAudits;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -17,10 +15,10 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Tags\HasTags;
-use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 
 class Profile extends Model implements HasMedia, Auditable
@@ -40,6 +38,7 @@ class Profile extends Model implements HasMedia, Auditable
         'name',
         'image_url',
         'api_url',
+        'academic_analytics_id'
     ];
 
     /**
@@ -223,43 +222,6 @@ class Profile extends Model implements HasMedia, Auditable
 
       //ran through process successfully
       return true;
-    }
-
-    /**
-     * Cache Academic Analytics publications for the current profile
-     * @return Collection
-     */
-    public function cachedAAPublications()
-    {
-        $publications_provider = new PublicationsApiServiceProvider($this);
-        $academic_analytics_publications = $publications_provider->getAcademicAnalyticsPublications();
-
-        return Cache::remember(
-            "profile{$this->id}-AA-pubs",
-            15 * 60,
-            fn() => $academic_analytics_publications
-        );
-    }
-
-    /**
-     *  Search for a publication by year and title within a given publications collection
-     *  Return array with DOI and matching title
-     * @return Array
-     */
-    public static function searchPublicationByTitleAndYear($title, $year, $publications)
-    {
-        $title = strip_tags(html_entity_decode($title));
-        $publication_found = $aa_doi = $aa_title = null;
-        $publication_found = $publications->filter(function ($item) use ($title, $year) {
-            return (str_contains(strtolower($title), strtolower(strip_tags(html_entity_decode($item['data']['title'])))) && $year==$item['data']['year']);
-            similar_text(strtolower($title), strtolower(strip_tags(html_entity_decode($item['data']['title']))), $percent);
-            return (($percent > 80) && ($year==$item['data']['year']));
-        });
-        if ($publication_found->count() == 1) {
-            $aa_doi = $publication_found->first()->doi;
-            $aa_title = $publication_found->first()->title;
-        }
-        return [$aa_doi, $aa_title];
     }
 
     public function updateDatum($section, $request)
@@ -543,6 +505,17 @@ class Profile extends Model implements HasMedia, Auditable
         });
     }
 
+    /**
+     * Query Scope for Profiles with last name starting with a given character.
+     *
+     * @param string $starting_character
+     */
+    public function scopeLastNameStartWithCharacter($query, string $starting_character)
+    {
+        return $query->where('last_name', 'like', strtolower($starting_character).'%')
+                     ->orWhere('last_name', 'like', strtoupper($starting_character).'%');
+    }
+
     ///////////////////////////////////
     // Mutators & Virtual Attributes //
     ///////////////////////////////////
@@ -626,6 +599,25 @@ class Profile extends Model implements HasMedia, Auditable
     public function getApiUrlAttribute()
     {
         return route('api.index', ['person' => $this->slug, 'with_data' => true]);
+    }
+
+    /**
+     * Get the academic_analytics_id. ($this->academic_analytics_id)
+     *
+     * @return int
+     */
+    public function getAcademicAnalyticsIdAttribute()
+    {
+        if (!isset($this->information->first()->data['academic_analytics_id'])) {
+            $domain = config('app.email_address_domain');
+            $client_faculty_id = "{$this->user->name}@{$domain}";
+            $academic_analytics_id = App::make(AAPublicationsApiServiceProvider::class)->getPersonId($client_faculty_id);
+            $this->information()->first()->updateData(['academic_analytics_id' => $academic_analytics_id]);
+            return $academic_analytics_id;
+        }
+        else {
+            return $this->information->first()->data['academic_analytics_id'];
+        }
     }
 
     ///////////////

@@ -25,7 +25,6 @@
                 <div class="modal-body" wire:loading.attr="aria-busy">
                     @if($this->modalVisible)
                         <div class="col col-lg-12 col-12 text-right">
-
                         </div>
                         <table class="table table-sm table-borderless table-striped table-live table-responsive-lg" aria-live="polite">
                             <thead>
@@ -48,8 +47,8 @@
                                     <tr style="vertical-align: middle !important">
                                         <td> {{ $pub->year }}</td>
                                         <td> {{ $pub->title }} </td>
-                                        <td class="text-center" data-publication="{{ $pub }}">
-                                            @include('livewire.partials._import-aa-publication')
+                                        <td class="text-center">
+                                            @include('livewire.partials._import-publication')
                                         </td>
                                     </tr>
                                 @endforeach

@@ -96,11 +96,9 @@ var profiles = function ($, undefined) {
       var new_id = String(item_template.parentElement.dataset.nextRowId--);
       var new_item = item_template.cloneNode(true);
       new_item.dataset.rowId = new_id;
-
       if ('customId' in options) {
         new_item.dataset.customId = options.customId;
       }
-
       (_new_item$querySelect = new_item.querySelectorAll('input:not([type="button"]), textarea, select')) === null || _new_item$querySelect === void 0 ? void 0 : _new_item$querySelect.forEach(function (el) {
         el.id = el.id.replace(old_id, new_id);
         el.setAttribute('name', el.name.replace(old_id, new_id));
