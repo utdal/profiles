@@ -71,7 +71,7 @@ class AcademicAnalyticsTest extends TestCase
     {
         $title = "ABC Hello, how is it going ? 123";
         $year = 2018;
-        $doi_regex = config('app.doi_regex');
+        $doi_regex = config('app.doi_regex') ?? '/(10[.][0-9]{4,}[^\s"\/<>]*\/[^\s"<>]+)/';
 
         $mock_aa_publications = $this->mockPublications(5, $title, $year);
 
