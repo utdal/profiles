@@ -164,7 +164,7 @@ class AddDoiToExistingPublications extends Command
      */
     public function validateDoiRegex($doi_expression)
     {
-        $doi_regex = config('app.doi_regex') ?? '/(10[.][0-9]{4,}[^\s"\/<>]*\/[^\s"<>]+)/';
+        $doi_regex = config('app.doi_regex');
 
         $doi = null;
 

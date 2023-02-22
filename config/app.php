@@ -73,8 +73,8 @@ return [
     /** email address domain */
     'email_address_domain' => env('EMAIL_ADDRESS_DOMAIN'),
 
-    /** DOI - DIGITAL OBJECT IDENTIFIER REGULAR EXPRESSION  */
-    'doi_regex' => env('DOI_REGEX', false),
+    /** DOI - Digital Object Identifier regex  */
+    'doi_regex' => env('DOI_REGEX', '/(10[.][0-9]{4,}[^\s"\/<>]*\/[^\s"<>]+)/'),
 
     /*
     |--------------------------------------------------------------------------
