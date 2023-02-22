@@ -57,7 +57,7 @@ class AcademicAnalyticsTest extends TestCase
 
         foreach($profiles_with_missing_doi as $profile) {
             if (!isset($profile->information()->first()->data['academic_analytics_id'])) {
-                $mock_aa_id = $this->mockPublicationsServiceProvider($profile, $expected_aa_id)->getPersonId($profile->email);
+                $mock_aa_id = $this->mockPublicationsServiceProvider($profile, $expected_aa_id)->getPersonId($profile->user->email);
                 $this->assertEquals($profile->information()->first()->data['academic_analytics_id'], $mock_aa_id);
             }
             $this->assertNotNull($profile->information()->first()->data['academic_analytics_id']);
