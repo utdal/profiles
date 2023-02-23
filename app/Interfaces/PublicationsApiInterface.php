@@ -35,12 +35,7 @@ interface PublicationsApiInterface
     /**
      * Make a get request to the API
      */
-    public function sendRequest(string $url): Response;
-
-    /**
-     * Return the decoded the given http response
-     */
-    public function getResponse(Response $response);
+    public function sendRequest(string $url): array|false;
 
     /**
      * Return the service provider http client

@@ -26,9 +26,9 @@ class AAPublicationsApiServiceProvider extends ServiceProvider implements Public
     {
         $url = "https://api.academicanalytics.com/person/GetPersonIdByClientFacultyId?clientFacultyId=$client_faculty_id";
 
-        $datum = $this->getResponse($this->sendRequest($url));
+        $datum = $this->sendRequest($url);
 
-        return $datum['PersonId'];
+        return !$datum ?: $datum['PersonId'];
     }
 
     /**
@@ -40,33 +40,38 @@ class AAPublicationsApiServiceProvider extends ServiceProvider implements Public
 
         $url = "https://api.academicanalytics.com/person/" . $faculty_id . "/articles";
 
-        $datum = $this->getResponse($this->sendRequest($url));
+        $datum = $this->sendRequest($url);
 
-        foreach($datum as $record) {
-            $url = NULL;
-
-            if(isset($record['DOI'])) {
-                $doi = $record['DOI'];
-                $url = "http://doi.org/$doi";
-            }
-
-            $new_record = ProfileData::newModelInstance([
-                'type' => 'publications',
-                'sort_order' => $record['ArticleYear'] ?? null,
-                'data' => [
-                    'doi' => $doi ?? null,
-                    'url' => $url ?? null,
-                    'title' => $record['ArticleTitle'],
-                    'year' => $record['ArticleYear'] ?? null,
-                    'type' => "JOURNAL_ARTICLE", //ucwords(strtolower(str_replace('_', ' ', $record['work-summary'][0]['type']))),
-                    'status' => 'Published'
-                ],
-            ]);
-            $new_record->id = $record['ArticleId'];
-            $new_record->imported = false;
-            $publications->push($new_record);
+        if (!$datum) {
+            return false;
         }
-        return $publications;
+        else {
+            foreach($datum as $record) {
+                $url = NULL;
+
+                if(isset($record['DOI'])) {
+                    $doi = $record['DOI'];
+                    $url = "http://doi.org/$doi";
+                }
+
+                $new_record = ProfileData::newModelInstance([
+                    'type' => 'publications',
+                    'sort_order' => $record['ArticleYear'] ?? null,
+                    'data' => [
+                        'doi' => $doi ?? null,
+                        'url' => $url ?? null,
+                        'title' => $record['ArticleTitle'],
+                        'year' => $record['ArticleYear'] ?? null,
+                        'type' => "JOURNAL_ARTICLE", //ucwords(strtolower(str_replace('_', ' ', $record['work-summary'][0]['type']))),
+                        'status' => 'Published'
+                    ],
+                ]);
+                $new_record->id = $record['ArticleId'];
+                $new_record->imported = false;
+                $publications->push($new_record);
+            }
+            return $publications;
+        }
     }
 
     /**
@@ -84,22 +89,16 @@ class AAPublicationsApiServiceProvider extends ServiceProvider implements Public
     /**
      * {@inheritdoc}
      */
-    public function sendRequest(string $url): Response
+    public function sendRequest(string $url): array|false
     {
-        return $this->getHttpClient()->get($url, [
-          'headers' => [
-            'apikey' => config('app.academic_analytics_key'),
-            'Accept' => 'application/json'
-          ],
-          'http_errors' => false, // don't throw exceptions for 4xx,5xx responses
+        $response = $this->getHttpClient()->get($url, [
+            'headers' => [
+                'apikey' => config('app.academic_analytics_key'),
+                'Accept' => 'application/json'
+            ],
+            'http_errors' => false, // don't throw exceptions for 4xx,5xx responses
         ]);
-    }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getResponse(Response $response)
-    {
         if($response->getStatusCode() != 200){
             return false;
         }
