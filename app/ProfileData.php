@@ -205,7 +205,7 @@ class ProfileData extends Model implements HasMedia, Auditable
     /**
      * Get the image URL. ($this->image_url)
      *
-     * @return string
+     * @return Illuminate\Contracts\Routing\UrlGenerator|string
      */
     public function getImageUrlAttribute()
     {

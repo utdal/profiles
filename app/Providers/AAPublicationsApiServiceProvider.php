@@ -5,7 +5,6 @@ namespace App\Providers;
 use App\ProfileData;
 use App\Interfaces\PublicationsApiInterface;
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Response;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
@@ -19,10 +18,13 @@ class AAPublicationsApiServiceProvider extends ServiceProvider implements Public
     {
         $this->client = New Client();
     }
+
     /**
-     *
+     * Receive an attribute to get from the API the identifier necessary to retrieve the publications
+     * @param string
+     * @return mixed|true
      */
-    public function getPersonId($client_faculty_id): int|false
+    public function getPersonId($client_faculty_id)
     {
         $url = "https://api.academicanalytics.com/person/GetPersonIdByClientFacultyId?clientFacultyId=$client_faculty_id";
 
@@ -32,9 +34,11 @@ class AAPublicationsApiServiceProvider extends ServiceProvider implements Public
     }
 
     /**
-     * {@inheritdoc}
+     * Retrieve the publications from the API to return a ProfileData model collection
+     *  @param int
+     *  @return Illuminate\Database\Eloquent\Collection|false
      */
-    public function getPublications(int $faculty_id): Collection
+    public function getPublications(int $faculty_id)
     {
         $publications = new Collection();
 
@@ -75,7 +79,8 @@ class AAPublicationsApiServiceProvider extends ServiceProvider implements Public
     }
 
     /**
-     *  {@inheritdoc}
+     * Cache publications for the current profile
+     * @return Illuminate\Database\Eloquent\Collection
      */
     public function getCachedPublications($profile_id, $academic_analytics_id): Collection
     {
@@ -87,7 +92,7 @@ class AAPublicationsApiServiceProvider extends ServiceProvider implements Public
     }
 
     /**
-     * {@inheritdoc}
+     * Make a get request to the API
      */
     public function sendRequest(string $url): array|false
     {
@@ -106,6 +111,9 @@ class AAPublicationsApiServiceProvider extends ServiceProvider implements Public
         return json_decode($response->getBody()->getContents(), true);
     }
 
+    /**
+     * Return the service provider http client
+     */
     public function getHttpClient(): Client
     {
         return $this->client;

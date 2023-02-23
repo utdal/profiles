@@ -74,7 +74,7 @@ class TestingController extends Controller
      *
      * @param Request $request
      * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return Illuminate\Http\RedirectResponse|Illuminate\Routing\Redirector
      */
     public function loginAs(Request $request, $id)
     {

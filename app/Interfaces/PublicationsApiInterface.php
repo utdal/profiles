@@ -4,7 +4,6 @@ namespace App\Interfaces;
 
 use App\Profile;
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Response;
 use Illuminate\Database\Eloquent\Collection;
 
 interface PublicationsApiInterface
@@ -19,16 +18,21 @@ interface PublicationsApiInterface
 
     /**
      * Receive an attribute to get from the API the identifier necessary to retrieve the publications
+     * @param string
+     * @return mixed|true
      */
-    public function getPersonId(string $client_faculty_id): int|false;
+    public function getPersonId(string $client_faculty_id);
 
     /**
      * Retrieve the publications from the API to return a ProfileData model collection
+     *  @param int
+     *  @return Illuminate\Database\Eloquent\Collection|false
      */
-    public function getPublications(int $faculty_id): Collection;
+    public function getPublications(int $faculty_id);
 
     /**
      * Cache publications for the current profile
+     * @return Illuminate\Database\Eloquent\Collection
      */
     public function getCachedPublications(int $profile_id, int $academic_analytics_id): Collection;
 

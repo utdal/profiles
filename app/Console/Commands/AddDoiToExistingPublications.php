@@ -7,6 +7,7 @@ use App\ProfileData;
 use App\Providers\AAPublicationsApiServiceProvider;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 
@@ -160,7 +161,9 @@ class AddDoiToExistingPublications extends Command
 
     /**
      * Validate DOI regex
-     * @return String
+     *
+     * @param string
+     * @return string|null
      */
     public function validateDoiRegex($doi_expression)
     {
@@ -180,6 +183,7 @@ class AddDoiToExistingPublications extends Command
     /**
      * Retrieves profiles with publications that have DOI missing
      *
+     * @param string
      * @return Collection
      */
     public function profilesMissingDoi(string $starting_character)
@@ -194,7 +198,7 @@ class AddDoiToExistingPublications extends Command
     /**
      * Output total numbers for each profile processed to the console and log file
      */
-    public function lineAndLogResults($publications_found_in_url, $publications_found_in_title, $publications_found_in_aa, $doi_not_found_counter, $profile_full_name)
+    public function lineAndLogResults($publications_found_in_url, $publications_found_in_title, $publications_found_in_aa, $doi_not_found_counter, $profile_full_name): void
     {
         $this->lineAndLog("TOTAL:");
         if ($publications_found_in_url > 0 ) { $this->lineAndLog("{$publications_found_in_url} DOI found by url and added successfully."); }
