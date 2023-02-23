@@ -610,7 +610,7 @@ class Profile extends Model implements HasMedia, Auditable
     {
         if (!isset($this->information->first()->data['academic_analytics_id'])) {
             $domain = config('app.email_address_domain');
-            $client_faculty_id = "{$this->user->name}@{$domain}";
+            $client_faculty_id = isset($this->user) ? "{$this->user->name}@{$domain}" : '';
             $academic_analytics_id = App::make(AAPublicationsApiServiceProvider::class)->getPersonId($client_faculty_id);
             $this->information()->first()->updateData(['academic_analytics_id' => $academic_analytics_id]);
             return $academic_analytics_id;
