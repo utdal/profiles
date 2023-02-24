@@ -11,6 +11,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Illuminate\Contracts\Routing\UrlGenerator;
 
 class ProfileData extends Model implements HasMedia, Auditable
 {
@@ -205,7 +206,7 @@ class ProfileData extends Model implements HasMedia, Auditable
     /**
      * Get the image URL. ($this->image_url)
      *
-     * @return Illuminate\Contracts\Routing\UrlGenerator|string
+     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
      */
     public function getImageUrlAttribute()
     {

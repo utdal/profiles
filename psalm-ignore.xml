@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.23.0@f1fe6ff483bf325c803df9f510d09a03fd796f88">
+<files psalm-version="4.24.0@06dd975cb55d36af80f242561738f16c5f58264f">
   <file src="app/Exceptions/Handler.php">
     <ForbiddenCode occurrences="1">
       <code>shell_exec('git rev-parse --verify HEAD')</code>
@@ -34,6 +34,17 @@
       <code>authenticate</code>
       <code>user</code>
     </UndefinedInterfaceMethod>
+  </file>
+  <file src="app/Providers/AAPublicationsApiServiceProvider.php">
+    <InvalidArgument occurrences="1">
+      <code>$new_record</code>
+    </InvalidArgument>
+  </file>
+  <file src="app/Providers/AppServiceProvider.php">
+    <UndefinedMethod occurrences="2">
+      <code>count</code>
+      <code>forPage</code>
+    </UndefinedMethod>
   </file>
   <file src="app/Student.php">
     <InvalidReturnStatement occurrences="3">

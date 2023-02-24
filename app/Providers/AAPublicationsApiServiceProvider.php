@@ -21,7 +21,7 @@ class AAPublicationsApiServiceProvider extends ServiceProvider implements Public
 
     /**
      * Receive an attribute to get from the API the identifier necessary to retrieve the publications
-     * @param string
+     * @param string $client_faculty_id
      * @return mixed|true
      */
     public function getPersonId($client_faculty_id)
@@ -35,8 +35,8 @@ class AAPublicationsApiServiceProvider extends ServiceProvider implements Public
 
     /**
      * Retrieve the publications from the API to return a ProfileData model collection
-     *  @param int
-     *  @return Illuminate\Database\Eloquent\Collection|false
+     *  @param int $faculty_id
+     *  @return \Illuminate\Database\Eloquent\Collection|false
      */
     public function getPublications(int $faculty_id)
     {
@@ -80,9 +80,9 @@ class AAPublicationsApiServiceProvider extends ServiceProvider implements Public
 
     /**
      * Cache publications for the current profile
-     * @return Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function getCachedPublications($profile_id, $academic_analytics_id): Collection
+    public function getCachedPublications($profile_id, $academic_analytics_id)
     {
         return Cache::remember(
             "profile{$profile_id}-AA-pubs",

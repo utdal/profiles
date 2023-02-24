@@ -162,7 +162,7 @@ class AddDoiToExistingPublications extends Command
     /**
      * Validate DOI regex
      *
-     * @param string
+     * @param string $doi_expression
      * @return string|null
      */
     public function validateDoiRegex($doi_expression)
@@ -183,7 +183,7 @@ class AddDoiToExistingPublications extends Command
     /**
      * Retrieves profiles with publications that have DOI missing
      *
-     * @param string
+     * @param string $starting_character
      * @return Collection
      */
     public function profilesMissingDoi(string $starting_character)

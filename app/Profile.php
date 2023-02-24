@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Contracts\Routing\UrlGenerator;
 
 class Profile extends Model implements HasMedia, Auditable
 {
@@ -534,7 +535,7 @@ class Profile extends Model implements HasMedia, Auditable
     /**
      * Get the full image URL. ($this->full_image_url)
      *
-     * @return Illuminate\Contracts\Routing\UrlGenerator|string
+     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
      */
     public function getFullImageUrlAttribute()
     {
@@ -544,7 +545,7 @@ class Profile extends Model implements HasMedia, Auditable
     /**
      * Get the full image URL. ($this->large_image_url)
      *
-     * @return Illuminate\Contracts\Routing\UrlGenerator|string
+     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
      */
     public function getLargeImageUrlAttribute()
     {
@@ -554,7 +555,7 @@ class Profile extends Model implements HasMedia, Auditable
     /**
      * Get the image URL. ($this->image_url)
      *
-     * @return Illuminate\Contracts\Routing\UrlGenerator|string
+     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
      */
     public function getImageUrlAttribute()
     {
@@ -564,7 +565,7 @@ class Profile extends Model implements HasMedia, Auditable
     /**
      * Get the image thumbnail URL. ($this->image_thumb_url)
      *
-     * @return Illuminate\Contracts\Routing\UrlGenerator|string
+     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
      */
     public function getImageThumbUrlAttribute()
     {
@@ -574,7 +575,7 @@ class Profile extends Model implements HasMedia, Auditable
     /**
      * Get the banner image thumbnail. ($this->banner_url)
      *
-     * @return Illuminate\Contracts\Routing\UrlGenerator|string
+     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
      */
     public function getBannerUrlAttribute()
     {

@@ -53,7 +53,10 @@ class PublicationsImportModal extends Component
         $this->reset('importedPublications');
         $this->reset('allChecked');
     }
-
+    /**
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public function getNewPublications(AAPublicationsApiServiceProvider $pubServiceProvider)
     {
         $aaPublications = $pubServiceProvider->getCachedPublications($this->profile->id, $this->profile->academic_analytics_id);
