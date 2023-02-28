@@ -46,36 +46,31 @@ class AAPublicationsApiServiceProvider extends ServiceProvider implements Public
 
         $datum = $this->sendRequest($url);
 
-        if (!$datum) {
-            return false;
-        }
-        else {
-            foreach($datum as $record) {
-                $url = NULL;
+        foreach($datum as $record) {
+            $url = NULL;
 
-                if(isset($record['DOI'])) {
-                    $doi = $record['DOI'];
-                    $url = "http://doi.org/$doi";
-                }
-
-                $new_record = ProfileData::newModelInstance([
-                    'type' => 'publications',
-                    'sort_order' => $record['ArticleYear'] ?? null,
-                    'data' => [
-                        'doi' => $doi ?? null,
-                        'url' => $url ?? null,
-                        'title' => $record['ArticleTitle'],
-                        'year' => $record['ArticleYear'] ?? null,
-                        'type' => "JOURNAL_ARTICLE", //ucwords(strtolower(str_replace('_', ' ', $record['work-summary'][0]['type']))),
-                        'status' => 'Published'
-                    ],
-                ]);
-                $new_record->id = $record['ArticleId'];
-                $new_record->imported = false;
-                $publications->push($new_record);
+            if(isset($record['DOI'])) {
+                $doi = $record['DOI'];
+                $url = "http://doi.org/$doi";
             }
-            return $publications;
+
+            $new_record = ProfileData::newModelInstance([
+                'type' => 'publications',
+                'sort_order' => $record['ArticleYear'] ?? null,
+                'data' => [
+                    'doi' => $doi ?? null,
+                    'url' => $url ?? null,
+                    'title' => $record['ArticleTitle'],
+                    'year' => $record['ArticleYear'] ?? null,
+                    'type' => "JOURNAL_ARTICLE", //ucwords(strtolower(str_replace('_', ' ', $record['work-summary'][0]['type']))),
+                    'status' => 'Published'
+                ],
+            ]);
+            $new_record->id = $record['ArticleId'];
+            $new_record->imported = false;
+            $publications->push($new_record);
         }
+        return $publications;
     }
 
     /**

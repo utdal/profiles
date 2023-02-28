@@ -23,7 +23,7 @@
                 </div>
 
                 <div class="modal-body" wire:loading.attr="aria-busy">
-                    @if($this->modalVisible)
+                    @if($this->modalVisible &&$this->publications->count() > 0)
                         <div class="col col-lg-12 col-12 text-right">
                         </div>
                         <table class="table table-sm table-borderless table-striped table-live table-responsive-lg" aria-live="polite">
@@ -57,6 +57,8 @@
                         <div class="paginator">
                             {{ $this->publications->links() }}
                         </div>
+                    @else
+                        <p> No Publications Found </p>
                     @endif
                 </div>
                 <div class="level mt-2 mb-4 ml-2">
