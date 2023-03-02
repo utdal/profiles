@@ -40,6 +40,7 @@ class AAPublicationsApiServiceProvider extends ServiceProvider implements Public
      */
     public function getPublications(int $faculty_id)
     {
+        /** @var Collection<ProfileData> */
         $publications = new Collection();
 
         $url = "https://api.academicanalytics.com/person/" . $faculty_id . "/articles";

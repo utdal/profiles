@@ -35,11 +35,6 @@
       <code>user</code>
     </UndefinedInterfaceMethod>
   </file>
-  <file src="app/Providers/AAPublicationsApiServiceProvider.php">
-    <InvalidArgument occurrences="1">
-      <code>$new_record</code>
-    </InvalidArgument>
-  </file>
   <file src="app/Providers/AppServiceProvider.php">
     <UndefinedMethod occurrences="2">
       <code>count</code>
