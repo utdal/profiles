@@ -36,11 +36,11 @@ class AAPublicationsApiServiceProvider extends ServiceProvider implements Public
     /**
      * Retrieve the publications from the API to return a ProfileData model collection
      *  @param int $faculty_id
-     *  @return \Illuminate\Database\Eloquent\Collection<ProfileData>|false
+     *  @return \Illuminate\Database\Eloquent\Collection|false
      */
     public function getPublications(int $faculty_id)
     {
-        ///** @var Collection<ProfileData> $publications */
+        /** @var Collection<ProfileData> */
         $publications = new Collection();
 
         $url = "https://api.academicanalytics.com/person/" . $faculty_id . "/articles";
