@@ -96,6 +96,9 @@ var profiles = function ($, undefined) {
       var new_id = String(item_template.parentElement.dataset.nextRowId--);
       var new_item = item_template.cloneNode(true);
       new_item.dataset.rowId = new_id;
+      if ('customId' in options) {
+        new_item.dataset.customId = options.customId;
+      }
       (_new_item$querySelect = new_item.querySelectorAll('input:not([type="button"]), textarea, select')) === null || _new_item$querySelect === void 0 ? void 0 : _new_item$querySelect.forEach(function (el) {
         el.id = el.id.replace(old_id, new_id);
         el.setAttribute('name', el.name.replace(old_id, new_id));
@@ -144,6 +147,7 @@ var profiles = function ($, undefined) {
         item_template.parentElement.append(new_item);
       }
       $(new_item).slideDown();
+      return new_item;
     }
   };
 
@@ -198,7 +202,7 @@ var profiles = function ($, undefined) {
 
   /**
    * Display a dynamic toast alert
-   * 
+   *
    * @param {String} message - the message to display
    * @param {String} type - alert type, e.g. primary, success, warning, danger, and etc.
    */
@@ -231,7 +235,7 @@ var profiles = function ($, undefined) {
 
   /**
    * Deobfuscate an email address
-   * 
+   *
    * @param {String} obfuscated_mail_address - the obfuscated
    * @see App\Helpers\Utils for obfuscation strategy
    */
@@ -342,7 +346,7 @@ var profiles = function ($, undefined) {
 
   /**
    * Registers and enables any profile pickers on the page
-   * 
+   *
    * @return {void}
    */
   var registerProfilePickers = function registerProfilePickers() {
@@ -355,7 +359,7 @@ var profiles = function ($, undefined) {
 
   /**
   * Registers and enables any tag editors on the page.
-  * 
+  *
   * @return {void}
   */
   var registerTagEditors = function registerTagEditors() {
@@ -416,7 +420,7 @@ var profiles = function ($, undefined) {
 
   /**
    * Posts updated tags to the API URL.
-   * 
+   *
    * @param  {jQuery} $select the select element containing the tags
    * @return {void}
    */

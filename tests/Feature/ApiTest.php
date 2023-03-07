@@ -149,6 +149,7 @@ class ApiTest extends TestCase
             'profile_id' => $profile_datum->profile_id,
             'sort_order' => $profile_datum->sort_order,
             'data' => [
+                'academic_analytics_id' => $profile_datum->academic_analytics_id,
                 'email' => $profile_datum->email,
                 'phone' => $profile_datum->phone,
                 'title' => $profile_datum->title,

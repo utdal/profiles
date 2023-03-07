@@ -9,5 +9,9 @@
             <span class="fa-li"><i class="fas fa-info-circle"></i></span> To manually sort <em>all</em> entries, leave
             the <b>Year</b> field empty (and include it as a part of @if(isset($suggestion)) <b>{{ $suggestion }}</b> @else another field @endisset instead).
         </li>
+        <li>
+            <span class="fa-li"><i class="fas fa-info-circle"></i></span> To review your publications available for import from external sources:
+            <livewire:publications-import-modal :profile="$profile">
+        </li>
     </ul>
 </div>

@@ -4,6 +4,7 @@ namespace App;
 
 use App\ProfileData;
 use App\ProfileStudent;
+use App\Providers\AAPublicationsApiServiceProvider;
 use App\Student;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
@@ -14,17 +15,18 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Tags\HasTags;
-use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Contracts\Routing\UrlGenerator;
 
 class Profile extends Model implements HasMedia, Auditable
 {
-    use HasAudits; 
-    use HasFactory; 
-    use InteractsWithMedia; 
+    use HasAudits;
+    use HasFactory;
+    use InteractsWithMedia;
     use HasTags;
     use SoftDeletes;
 
@@ -37,6 +39,7 @@ class Profile extends Model implements HasMedia, Auditable
         'name',
         'image_url',
         'api_url',
+        'academic_analytics_id'
     ];
 
     /**
@@ -195,16 +198,19 @@ class Profile extends Model implements HasMedia, Auditable
             }
             else if($ref['external-id-type'] == "doi"){
               $url = "http://doi.org/" . $ref['external-id-value'];
+              $doi = $ref['external-id-value'];
             }
           }
-          $record = ProfileData::firstOrCreate([
+          $new_record = ProfileData::firstOrCreate([
             'profile_id' => $this->id,
             'type' => 'publications',
             'data->title' => $record['work-summary'][0]['title']['title']['value'],
             'sort_order' => $record['work-summary'][0]['publication-date']['year']['value'] ?? null,
+            'data->doi' => $doi,
           ],[
               'data' => [
                   'url' => $url,
+                  'doi' => $doi,
                   'title' => $record['work-summary'][0]['title']['title']['value'],
                   'year' => $record['work-summary'][0]['publication-date']['year']['value'] ?? null,
                   'type' => ucwords(strtolower(str_replace('_', ' ', $record['work-summary'][0]['type']))),
@@ -292,7 +298,7 @@ class Profile extends Model implements HasMedia, Auditable
 
     /**
      * Strips HTML tags from the specified data field.
-     * 
+     *
      * This is only for output purposes and does not save.
      *
      * @param array $data_names : the names of data properties to strip tags from
@@ -427,7 +433,7 @@ class Profile extends Model implements HasMedia, Auditable
 
     /**
      * Query scope for Profiles that have the given tag (case-insensitive)
-     * 
+     *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param string $tag
      * @return \Illuminate\Database\Eloquent\Builder
@@ -467,9 +473,9 @@ class Profile extends Model implements HasMedia, Auditable
         });
     }
     /**
-     * Query scope for Profiles and eager load students whose application is pending review 
+     * Query scope for Profiles and eager load students whose application is pending review
      * for a given semester.
-     * 
+     *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param string $semester
      * @return \Illuminate\Database\Eloquent\Builder
@@ -484,9 +490,9 @@ class Profile extends Model implements HasMedia, Auditable
     }
 
     /**
-     * Query scope for Profiles with students whose application is pending review 
+     * Query scope for Profiles with students whose application is pending review
      * for a given semester.
-     * 
+     *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param string $semester
      * @return \Illuminate\Database\Eloquent\Builder
@@ -498,6 +504,17 @@ class Profile extends Model implements HasMedia, Auditable
             $query_students->withSemester($semester);
             $query_students->WithStatusPendingReview();
         });
+    }
+
+    /**
+     * Query Scope for Profiles with last name starting with a given character.
+     *
+     * @param string $starting_character
+     */
+    public function scopeLastNameStartWithCharacter($query, string $starting_character)
+    {
+        return $query->where('last_name', 'like', strtolower($starting_character).'%')
+                     ->orWhere('last_name', 'like', strtoupper($starting_character).'%');
     }
 
     ///////////////////////////////////
@@ -518,7 +535,7 @@ class Profile extends Model implements HasMedia, Auditable
     /**
      * Get the full image URL. ($this->full_image_url)
      *
-     * @return string
+     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
      */
     public function getFullImageUrlAttribute()
     {
@@ -528,7 +545,7 @@ class Profile extends Model implements HasMedia, Auditable
     /**
      * Get the full image URL. ($this->large_image_url)
      *
-     * @return string
+     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
      */
     public function getLargeImageUrlAttribute()
     {
@@ -538,7 +555,7 @@ class Profile extends Model implements HasMedia, Auditable
     /**
      * Get the image URL. ($this->image_url)
      *
-     * @return string
+     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
      */
     public function getImageUrlAttribute()
     {
@@ -548,7 +565,7 @@ class Profile extends Model implements HasMedia, Auditable
     /**
      * Get the image thumbnail URL. ($this->image_thumb_url)
      *
-     * @return string
+     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
      */
     public function getImageThumbUrlAttribute()
     {
@@ -558,7 +575,7 @@ class Profile extends Model implements HasMedia, Auditable
     /**
      * Get the banner image thumbnail. ($this->banner_url)
      *
-     * @return string
+     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
      */
     public function getBannerUrlAttribute()
     {
@@ -583,6 +600,25 @@ class Profile extends Model implements HasMedia, Auditable
     public function getApiUrlAttribute()
     {
         return route('api.index', ['person' => $this->slug, 'with_data' => true]);
+    }
+
+    /**
+     * Get the academic_analytics_id. ($this->academic_analytics_id)
+     *
+     * @return int
+     */
+    public function getAcademicAnalyticsIdAttribute()
+    {
+        if (!isset($this->information->first()->data['academic_analytics_id'])) {
+            $domain = config('app.email_address_domain');
+            $client_faculty_id = isset($this->user) ? "{$this->user->name}@{$domain}" : '';
+            $academic_analytics_id = App::make(AAPublicationsApiServiceProvider::class)->getPersonId($client_faculty_id);
+            $this->information()->first()->updateData(['academic_analytics_id' => $academic_analytics_id]);
+            return $academic_analytics_id;
+        }
+        else {
+            return $this->information->first()->data['academic_analytics_id'];
+        }
     }
 
     ///////////////

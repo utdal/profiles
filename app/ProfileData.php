@@ -11,6 +11,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Illuminate\Contracts\Routing\UrlGenerator;
 
 class ProfileData extends Model implements HasMedia, Auditable
 {
@@ -172,6 +173,27 @@ class ProfileData extends Model implements HasMedia, Auditable
             ->filter();
     }
 
+     /**
+     *  Search for a publication by year and title within a given publications collection
+     *  Return array with DOI and matching title
+     * @return Array
+     */
+    public static function searchPublicationByTitleAndYear($title, $year, $publications)
+    {
+        $title = strip_tags(html_entity_decode($title));
+        $publication_found = $aa_doi = $aa_title = null;
+        $publication_found = $publications->filter(function ($item) use ($title, $year) {
+            return (str_contains(strtolower($title), strtolower(strip_tags(html_entity_decode($item['data']['title'])))) && $year==$item['data']['year']);
+            similar_text(strtolower($title), strtolower(strip_tags(html_entity_decode($item['data']['title']))), $percent);
+            return (($percent > 80) && ($year==$item['data']['year']));
+        });
+        if ($publication_found->count() == 1) {
+            $aa_doi = $publication_found->first()->doi;
+            $aa_title = $publication_found->first()->title;
+        }
+        return [$aa_doi, $aa_title];
+    }
+
     ///////////////////////////////////
     // Mutators & Virtual Attributes //
     ///////////////////////////////////
@@ -184,7 +206,7 @@ class ProfileData extends Model implements HasMedia, Auditable
     /**
      * Get the image URL. ($this->image_url)
      *
-     * @return string
+     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
      */
     public function getImageUrlAttribute()
     {
