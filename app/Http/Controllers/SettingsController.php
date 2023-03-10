@@ -20,7 +20,7 @@ class SettingsController extends Controller
     /**
      * Show the settings for editing.
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\View\View|\Illuminate\View\View
      */
     public function edit()
     {
@@ -58,9 +58,9 @@ class SettingsController extends Controller
             $setting->addMedia($request->file($setting_name))->toMediaCollection($setting_name);
             // $message = $setting->processImage($request->file($image_name), 'settings');
             // $url = $setting->getFullImageUrlAttribute();
-    
+
             $setting->value = url($setting->getFirstMediaUrl($setting_name) ?: '/img/default.png');
-    
+
             $setting->save();
             $message = 'Settings image has been updated.';
         } else {

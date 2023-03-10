@@ -32,7 +32,7 @@ class StudentsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\View\View|\Illuminate\View\View
      */
     public function index()
     {
@@ -113,7 +113,7 @@ class StudentsController extends Controller
      *
      * @param  Request  $request
      * @param  Student  $student
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\View\View|\Illuminate\View\View
      */
     public function show(Request $request, Student $student)
     {
@@ -135,7 +135,7 @@ class StudentsController extends Controller
      * Show the form for editing the specified student research profile.
      *
      * @param  Student  $student
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\View\View|\Illuminate\View\View
      */
     public function edit(Student $student)
     {

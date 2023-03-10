@@ -21,7 +21,7 @@ class ProfileStudentsController extends Controller
      * Show students associated with a profile.
      *
      * @param Profile $profile
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\View\View|\Illuminate\View\View
      */
     public function show(Profile $profile)
     {

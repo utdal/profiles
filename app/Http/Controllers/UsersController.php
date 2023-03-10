@@ -39,7 +39,7 @@ class UsersController extends Controller
             'create',
             'store',
         ]);
-        
+
         $this->middleware('can:update,user')->only([
             'edit',
             'update',
@@ -54,7 +54,7 @@ class UsersController extends Controller
     /**
      * Display a listing of Users.
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\View\View|\Illuminate\View\View
      */
     public function index(Request $request)
     {
@@ -65,7 +65,7 @@ class UsersController extends Controller
      * Show the User info.
      *
      * @param  User   $user
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\View\View|\Illuminate\View\View
      */
     public function show(User $user)
     {
@@ -81,7 +81,7 @@ class UsersController extends Controller
      * Show the User info.
      *
      * @param  User   $user
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\View\View|\Illuminate\View\View
      */
     public function showBookmarks(User $user)
     {
@@ -95,7 +95,7 @@ class UsersController extends Controller
     /**
      * Show the view to add a new user
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\View\View|\Illuminate\View\View
      */
     public function create()
     {
@@ -126,9 +126,9 @@ class UsersController extends Controller
 
     /**
      * Show the view to edit the User
-     * 
+     *
      * @param  User   $user
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\View\View|\Illuminate\View\View
      */
     public function edit(User $user)
     {
@@ -148,7 +148,7 @@ class UsersController extends Controller
 
     /**
      * Update the User in the database.
-     * 
+     *
      * @param  User        $user
      * @param  Request $request
      * @return \Illuminate\Http\RedirectResponse
@@ -177,7 +177,7 @@ class UsersController extends Controller
      * Confirm deletion of a user
      *
      * @param  User $user
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse&static|\Illuminate\View\View
      */
     public function confirmDelete(User $user)
     {
@@ -196,7 +196,7 @@ class UsersController extends Controller
 
     /**
      * Remove the user from the database
-     * 
+     *
      * @param  User $user
      * @return \Illuminate\Http\RedirectResponse
      */

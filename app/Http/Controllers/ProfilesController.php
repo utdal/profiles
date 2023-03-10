@@ -56,7 +56,7 @@ class ProfilesController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function index(Request $request)
     {
@@ -86,7 +86,7 @@ class ProfilesController extends Controller
     /**
      * Display the home page
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\View\View|\Illuminate\View\View
      */
     public function home()
     {
@@ -118,7 +118,7 @@ class ProfilesController extends Controller
     /**
      * Display an admin table of profiles.
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\View\View|\Illuminate\View\View
      */
     public function table()
     {
@@ -129,7 +129,7 @@ class ProfilesController extends Controller
      * Show the profile.
      *
      * @param  User   $user
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\View\View|\Illuminate\View\View
      */
     public function show(Request $request, Profile $profile)
     {
@@ -225,7 +225,7 @@ class ProfilesController extends Controller
      *
      * @param Profile $profile
      * @param string $section
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse&static|\Illuminate\View\View
      */
     public function edit(Profile $profile, $section)
     {
@@ -302,7 +302,7 @@ class ProfilesController extends Controller
      * Confirm deletion of a profile
      *
      * @param  Profile $profile
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\View\View|\Illuminate\View\View
      */
     public function confirmDelete(Profile $profile)
     {
@@ -311,7 +311,7 @@ class ProfilesController extends Controller
 
     /**
      * Remove the profile from the database
-     * 
+     *
      * @param  Profile $profile
      * @return \Illuminate\Http\RedirectResponse
      */

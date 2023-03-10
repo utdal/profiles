@@ -28,7 +28,7 @@ class TagsController extends Controller
     /**
      * Show the index of all associated tags.
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\View\View|\Illuminate\View\View
      */
     public function index()
     {
@@ -48,7 +48,7 @@ class TagsController extends Controller
     /**
      * Show the index table of all associated tags.
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\View\View|\Illuminate\View\View
      */
     public function table()
     {
@@ -58,7 +58,7 @@ class TagsController extends Controller
     /**
      * Show the index table of all associated tags.
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\View\View|\Illuminate\View\View
      */
     public function create()
     {
@@ -80,7 +80,7 @@ class TagsController extends Controller
 
     /**
      * Search for Tags.
-     * 
+     *
      * @param  Request $request
      * @return array of tag names
      */

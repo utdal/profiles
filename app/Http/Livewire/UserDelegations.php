@@ -88,7 +88,7 @@ class UserDelegations extends Component
         $this->emit('alert', "Removed delegation", 'success');
     }
 
-    public function render(): View
+    public function render(): \Illuminate\Contracts\View\View|\Illuminate\View\View
     {
         return view('livewire.user-delegations', [
             'delegations' => $this->user->delegations()->with('delegate')->get(),

@@ -32,7 +32,7 @@ class SchoolsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\View\View|\Illuminate\View\View
      */
     public function index()
     {
@@ -44,7 +44,7 @@ class SchoolsController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\View\View|\Illuminate\View\View
      */
     public function create()
     {
@@ -70,7 +70,7 @@ class SchoolsController extends Controller
      * Display the specified resource.
      *
      * @param  School  $school
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\View\View|\Illuminate\View\View
      */
     public function show(School $school)
     {
@@ -83,7 +83,7 @@ class SchoolsController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  School  $school
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\View\View|\Illuminate\View\View
      */
     public function edit(School $school)
     {

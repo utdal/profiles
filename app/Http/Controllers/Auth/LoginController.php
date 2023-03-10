@@ -50,7 +50,7 @@ class LoginController extends Controller
     /**
      * Show the login form.
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\View\View|\Illuminate\View\View
      */
     public function showLoginForm()
     {

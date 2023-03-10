@@ -22,7 +22,7 @@ class UserDelegationsController extends Controller
     /**
      * Display a listing of all delegations.
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\View\View|\Illuminate\View\View
      */
     public function index()
     {
@@ -33,7 +33,7 @@ class UserDelegationsController extends Controller
      * Display the specified user's delegations.
      *
      * @param  User  $user
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\View\View|\Illuminate\View\View
      */
     public function show(User $user)
     {
