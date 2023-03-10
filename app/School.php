@@ -8,6 +8,9 @@ use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ *  @method exists()
+ **/
 class School extends Model implements Auditable
 {
     use HasAudits;

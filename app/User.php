@@ -16,6 +16,9 @@ use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ *  @method exists()
+ **/
 class User extends Authenticatable implements Auditable
 {
     use HasFactory, HasAudits, RoleTrait, Notifiable;
@@ -77,7 +80,7 @@ class User extends Authenticatable implements Auditable
 
     /**
      * Determine if this User owns the given model.
-     * 
+     *
      * @param  \Illuminate\Database\Eloquent\Model $model
      * @param  bool $check_delegators also check if the delegator(s) owns the given model
      * @return bool
@@ -281,7 +284,7 @@ class User extends Authenticatable implements Auditable
 
     /**
      * Sets the user's pea without the '@domain' part.
-     * 
+     *
      * @param string $pea
      */
     public function setPeaAttribute($pea)
@@ -292,7 +295,7 @@ class User extends Authenticatable implements Auditable
 
     /**
      * Sets the user's school_id.
-     * 
+     *
      * @param string $id
      */
     public function setSchoolIdAttribute($id)
@@ -334,7 +337,7 @@ class User extends Authenticatable implements Auditable
 
     /**
      * User has many bookmarks (one to many)
-     * 
+     *
      * This is for direct access to the pivot class (i.e. all bookmarks of any type),
      * and also allows us to eager-load bookmarks in order to check existence.
      *
@@ -378,7 +381,7 @@ class User extends Authenticatable implements Auditable
 
     /**
      * Current user delegates.
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function currentDelegates()
@@ -427,7 +430,7 @@ class User extends Authenticatable implements Auditable
 
     /**
      * Current user delegators.
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function currentDelegators()
@@ -448,8 +451,8 @@ class User extends Authenticatable implements Auditable
     public function currentReminderDelegators()
     {
         return $this->currentDelegators()->where('gets_reminders', '=', true);
-    }  
-    
+    }
+
     /**
      * Additional roles currently delegated to the user.
      *

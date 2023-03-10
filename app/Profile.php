@@ -20,11 +20,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
 
+/**
+ *  @method EagerStudentsPendingReviewWithSemester(string $semester)
+ *  @method public()
+ *  @method inRandomOrder()
+ **/
 class Profile extends Model implements HasMedia, Auditable
 {
-    use HasAudits; 
-    use HasFactory; 
-    use InteractsWithMedia; 
+    use HasAudits;
+    use HasFactory;
+    use InteractsWithMedia;
     use HasTags;
     use SoftDeletes;
 
@@ -292,7 +297,7 @@ class Profile extends Model implements HasMedia, Auditable
 
     /**
      * Strips HTML tags from the specified data field.
-     * 
+     *
      * This is only for output purposes and does not save.
      *
      * @param array $data_names : the names of data properties to strip tags from
@@ -427,7 +432,7 @@ class Profile extends Model implements HasMedia, Auditable
 
     /**
      * Query scope for Profiles that have the given tag (case-insensitive)
-     * 
+     *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param string $tag
      * @return \Illuminate\Database\Eloquent\Builder
@@ -467,9 +472,8 @@ class Profile extends Model implements HasMedia, Auditable
         });
     }
     /**
-     * Query scope for Profiles and eager load students whose application is pending review 
+     * Query scope for Profiles and eager load students whose application is pending review
      * for a given semester.
-     * 
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param string $semester
      * @return \Illuminate\Database\Eloquent\Builder
@@ -484,9 +488,9 @@ class Profile extends Model implements HasMedia, Auditable
     }
 
     /**
-     * Query scope for Profiles with students whose application is pending review 
+     * Query scope for Profiles with students whose application is pending review
      * for a given semester.
-     * 
+     *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param string $semester
      * @return \Illuminate\Database\Eloquent\Builder
