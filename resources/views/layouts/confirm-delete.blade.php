@@ -18,6 +18,9 @@
 						<h3 class="text-white bold">@yield('delete_title')</h3>
 					</div>
 					<div class="card-body bg-white">
+                        @if($create_attempt)
+                            <p>The profile you are attempting to create already exists. Please confirm to restore it.</p>
+                        @endif
 						@yield('form')
 					</div>
 				</div>

@@ -188,6 +188,21 @@ class ProfilesController extends Controller
             $ldap->schema->physicalDeliveryOfficeName(),
         ])->first();
 
+
+        $profile = Profile::withTrashed()->where('slug', $user->pea)->get();
+
+        if ($profile->count() > 0 and $profile->first()->trashed()) {
+            if ($user->hasRole(['site_admin',
+                                'profiles_editor',
+                                'school_profiles_editor',
+                                'department_profiles_editor'])) {
+                return redirect()->route('profiles.confirm-delete', ['profile' => $profile->first(), 'create_attempt' => true]);
+            }
+            else {
+                $message = "The profile you are attempting to create already exists. Please contact your school/department profile editor to restore the profile. ";
+                return back()->with('flash_message', $message)->with('flash_message_type', 'danger');
+            }
+        }
         //create profile
         $profile = Profile::create([
             'full_name' => $user->display_name,
@@ -304,14 +319,17 @@ class ProfilesController extends Controller
      * @param  Profile $profile
      * @return \Illuminate\View\View
      */
-    public function confirmDelete(Profile $profile)
+    public function confirmDelete(Request $request, Profile $profile)
     {
-        return view('profiles.delete', compact('profile'));
+        return view('profiles.delete', [
+                'profile' => $profile,
+                'create_attempt' => $request->create_attempt
+            ]);
     }
 
     /**
      * Remove the profile from the database
-     * 
+
      * @param  Profile $profile
      * @return \Illuminate\Http\RedirectResponse
      */

@@ -28,7 +28,7 @@
                 <option value="0" selected>No</option>
                 <option value="1" selected>Yes</option>
             </select>
-        </div>        
+        </div>
         <div class="form-group col-lg-2">
             <label for="perPage">Per Page</label>
             <select wire:model="per_page" id="perPage" class="form-control">
@@ -96,7 +96,7 @@
                                 <i class="{{ $profile->trashed() ? 'fas fa-trash-restore' : 'fas fa-archive' }}"></i><span class="sr-only">archived!</span>
                             </a>
                         @endcan
-                    </span>                
+                    </span>
                 </td>
             </tr>
             @endforeach
