@@ -10,6 +10,7 @@ use App\StudentData;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Collection;
 
 class StudentsController extends Controller
 {
@@ -109,6 +110,18 @@ class StudentsController extends Controller
     }
 
     /**
+     * Get any custom questions for the student application form
+     *
+     * @return \Illuminate\Support\Collection<string, Collection>
+     */
+    protected function customQuestions(): Collection
+    {
+        $questions = json_decode(Setting::whereName('student_questions')->first()?->value ?? "[]", true);
+
+        return collect($questions)->groupBy('school');
+    }
+
+    /**
      * Display the specified student research profile.
      *
      * @param  Request  $request
@@ -126,6 +139,7 @@ class StudentsController extends Controller
         return view('students.show', [
             'student' => $student,
             'schools' => $this->participatingSchools(),
+            'custom_questions' => $this->customQuestions(),
             'languages' => StudentData::$languages,
             'majors' => StudentData::majors(),
         ]);
@@ -142,6 +156,7 @@ class StudentsController extends Controller
         return view('students.edit', [
             'student' => $student,
             'schools' => $this->participatingSchools(),
+            'custom_questions' => $this->customQuestions(),
             'languages' => StudentData::$languages,
             'majors' => StudentData::majors(),
         ]);
