@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use App\LogEntry;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\View\View as ViewContract;
+use Illuminate\View\View;
 
 class LogsController extends Controller
 {
@@ -20,10 +21,8 @@ class LogsController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Contracts\View\View|\Illuminate\View\View
      */
-    public function index(Request $request)
+    public function index(Request $request): View|ViewContract
     {
         return view('logs.index', [
             'logs' => LogEntry::with('user')

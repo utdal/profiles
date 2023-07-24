@@ -6,6 +6,7 @@ use App\Helpers\Contracts\LdapHelperContract;
 use App\Http\Livewire\Concerns\ConvertEmptyStringsToNull;
 use App\User;
 use App\UserDelegation;
+use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -88,7 +89,7 @@ class UserDelegations extends Component
         $this->emit('alert', "Removed delegation", 'success');
     }
 
-    public function render(): \Illuminate\Contracts\View\View|\Illuminate\View\View
+    public function render(): View|ViewContract
     {
         return view('livewire.user-delegations', [
             'delegations' => $this->user->delegations()->with('delegate')->get(),

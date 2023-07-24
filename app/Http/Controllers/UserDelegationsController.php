@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class UserDelegationsController extends Controller
 {
@@ -21,21 +23,16 @@ class UserDelegationsController extends Controller
 
     /**
      * Display a listing of all delegations.
-     *
-     * @return \Illuminate\Contracts\View\View|\Illuminate\View\View
      */
-    public function index()
+    public function index(): View|ViewContract
     {
         return view('users.delegations.index');
     }
 
     /**
      * Display the specified user's delegations.
-     *
-     * @param  User  $user
-     * @return \Illuminate\Contracts\View\View|\Illuminate\View\View
      */
-    public function show(User $user)
+    public function show(User $user): View|ViewContract
     {
         return view('users.delegations.show', [
             'user' => $user,
