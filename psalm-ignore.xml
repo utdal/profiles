@@ -16,6 +16,11 @@
       <code>User</code>
     </InvalidReturnType>
   </file>
+  <file src="app/Http/Controllers/ProfilesController.php">
+    <UndefinedMagicMethod occurrences="1">
+      <code>inRandomOrder</code>
+    </UndefinedMagicMethod>
+  </file>
   <file src="app/Http/Livewire/ProfileStudents.php">
     <UndefinedThisPropertyAssignment occurrences="1">
       <code>$this-&gt;students</code>
@@ -31,6 +36,11 @@
       <code>authenticate</code>
       <code>user</code>
     </UndefinedInterfaceMethod>
+  </file>
+  <file src="app/Ldap/Handlers/LdapAttributeHandler.php">
+    <UndefinedMagicMethod occurrences="1">
+      <code>exists</code>
+    </UndefinedMagicMethod>
   </file>
   <file src="app/Student.php">
     <InvalidReturnStatement occurrences="3">

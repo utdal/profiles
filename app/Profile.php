@@ -14,17 +14,24 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Tags\HasTags;
-use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
 
 /**
- *  @method EagerStudentsPendingReviewWithSemester(string $semester)
- *  @method public()
- *  @method inRandomOrder()
- **/
+ * @method Builder<static> public()
+ * @method Builder<static> private()
+ * @method Builder<static> withApiData(array|string|null $sections)
+ * @method Builder<static> containing(string $search, string $type = null)
+ * @method Builder<static> taggedWith(string $tag, string $type = null)
+ * @method Builder<static> withName(string $search)
+ * @method Builder<static> fromSchool(string $school)
+ * @method Builder<static> fromSchoolId(int $id)
+ * @method Builder<static> eagerStudentsPendingReviewWithSemester(string $semester)
+ * @method Builder<static> studentsPendingReviewWithSemester(string $semester)
+ */
 class Profile extends Model implements HasMedia, Auditable
 {
     use HasAudits;

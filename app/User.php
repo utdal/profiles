@@ -16,9 +16,6 @@ use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-/**
- *  @method exists()
- **/
 class User extends Authenticatable implements Auditable
 {
     use HasFactory, HasAudits, RoleTrait, Notifiable;
