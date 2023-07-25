@@ -8,7 +8,11 @@ use App\Setting;
 use App\Student;
 use App\StudentData;
 use App\User;
+use Illuminate\Contracts\View\View as ViewContract;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
 
 class StudentsController extends Controller
@@ -30,11 +34,9 @@ class StudentsController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\View\View
+     * Display the list of student research applications.
      */
-    public function index()
+    public function index(): View|ViewContract
     {
         /** @var User */
         $user = Auth::user();
@@ -48,12 +50,9 @@ class StudentsController extends Controller
     }
 
     /**
-     * Create a new student research profile.
-     *
-     * @param  Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * Create a new student research application.
      */
-    public function create(Request $request)
+    public function create(Request $request): RedirectResponse
     {
         $student = $request->user()->studentProfiles->first() ?? $this->store($request);
 
@@ -65,12 +64,9 @@ class StudentsController extends Controller
     }
 
     /**
-     * Store a newly created student research profile in storage.
-     *
-     * @param  Request  $request
-     * @return \Illuminate\Http\Response|false
+     * Store a newly created student research application in the database.
      */
-    public function store(Request $request)
+    public function store(Request $request): Student|false
     {
         /** @var User */
         $user = $request->user();
@@ -98,10 +94,8 @@ class StudentsController extends Controller
 
     /**
      * Get the list of schools participating in student research
-     *
-     * @return \Illuminate\Support\Collection
      */
-    protected function participatingSchools()
+    protected function participatingSchools(): Collection
     {
         $names = json_decode(optional(Setting::whereName('student_participating_schools')->first())->value ?? "[]");
 
@@ -109,13 +103,9 @@ class StudentsController extends Controller
     }
 
     /**
-     * Display the specified student research profile.
-     *
-     * @param  Request  $request
-     * @param  Student  $student
-     * @return \Illuminate\View\View
+     * Display the specified student research application.
      */
-    public function show(Request $request, Student $student)
+    public function show(Request $request, Student $student): View|ViewContract
     {
         if ($request->user() && $request->user()->userOrDelegatorhasRole('faculty')) {
             StudentViewed::dispatch($student);
@@ -132,12 +122,9 @@ class StudentsController extends Controller
     }
 
     /**
-     * Show the form for editing the specified student research profile.
-     *
-     * @param  Student  $student
-     * @return \Illuminate\View\View
+     * Show the form for editing the specified student research application.
      */
-    public function edit(Student $student)
+    public function edit(Student $student): View|ViewContract
     {
         return view('students.edit', [
             'student' => $student,
@@ -148,13 +135,9 @@ class StudentsController extends Controller
     }
 
     /**
-     * Update the specified student research profile in storage.
-     *
-     * @param  Request  $request
-     * @param  Student  $student
-     * @return \Illuminate\Http\RedirectResponse
+     * Update the specified student research application in the database.
      */
-    public function update(Request $request, Student $student)
+    public function update(Request $request, Student $student): RedirectResponse
     {
         $updated = $student->update([
             'full_name' => $request->full_name,
@@ -172,7 +155,10 @@ class StudentsController extends Controller
             ->with('flash_message', ($updated && $research_profile_updated) ? 'Submitted!' : 'Sorry, unable to save.');
     }
 
-    public function setStatus(Request $request, Student $student)
+    /**
+     * Update the status of the specified student research application.
+     */
+    public function setStatus(Request $request, Student $student): RedirectResponse
     {
         if ($request->status === 'drafted') {
             $updated = $student->update(['status' => 'drafted']);

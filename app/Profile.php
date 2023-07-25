@@ -14,17 +14,29 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Tags\HasTags;
-use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
 
+/**
+ * @method Builder<static> public()
+ * @method Builder<static> private()
+ * @method Builder<static> withApiData(array|string|null $sections)
+ * @method Builder<static> containing(string $search, string $type = null)
+ * @method Builder<static> taggedWith(string $tag, string $type = null)
+ * @method Builder<static> withName(string $search)
+ * @method Builder<static> fromSchool(string $school)
+ * @method Builder<static> fromSchoolId(int $id)
+ * @method Builder<static> eagerStudentsPendingReviewWithSemester(string $semester)
+ * @method Builder<static> studentsPendingReviewWithSemester(string $semester)
+ */
 class Profile extends Model implements HasMedia, Auditable
 {
-    use HasAudits; 
-    use HasFactory; 
-    use InteractsWithMedia; 
+    use HasAudits;
+    use HasFactory;
+    use InteractsWithMedia;
     use HasTags;
     use SoftDeletes;
 
@@ -292,7 +304,7 @@ class Profile extends Model implements HasMedia, Auditable
 
     /**
      * Strips HTML tags from the specified data field.
-     * 
+     *
      * This is only for output purposes and does not save.
      *
      * @param array $data_names : the names of data properties to strip tags from
@@ -427,7 +439,7 @@ class Profile extends Model implements HasMedia, Auditable
 
     /**
      * Query scope for Profiles that have the given tag (case-insensitive)
-     * 
+     *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param string $tag
      * @return \Illuminate\Database\Eloquent\Builder
@@ -467,9 +479,8 @@ class Profile extends Model implements HasMedia, Auditable
         });
     }
     /**
-     * Query scope for Profiles and eager load students whose application is pending review 
+     * Query scope for Profiles and eager load students whose application is pending review
      * for a given semester.
-     * 
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param string $semester
      * @return \Illuminate\Database\Eloquent\Builder
@@ -484,9 +495,9 @@ class Profile extends Model implements HasMedia, Auditable
     }
 
     /**
-     * Query scope for Profiles with students whose application is pending review 
+     * Query scope for Profiles with students whose application is pending review
      * for a given semester.
-     * 
+     *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param string $semester
      * @return \Illuminate\Database\Eloquent\Builder

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.23.0@f1fe6ff483bf325c803df9f510d09a03fd796f88">
+<files psalm-version="4.30.0@d0bc6e25d89f649e4f36a534f330f8bb4643dd69">
   <file src="app/Exceptions/Handler.php">
     <ForbiddenCode occurrences="1">
       <code>shell_exec('git rev-parse --verify HEAD')</code>
@@ -16,24 +16,31 @@
       <code>User</code>
     </InvalidReturnType>
   </file>
-  <file src="app/Http/Controllers/Testing/TestingController.php">
-    <InvalidTemplateParam occurrences="1">
-      <code>Profile::factory()-&gt;make()</code>
-    </InvalidTemplateParam>
-    <TooManyTemplateParams occurrences="1">
-      <code>Profile::factory()-&gt;make()</code>
-    </TooManyTemplateParams>
+  <file src="app/Http/Controllers/ProfilesController.php">
+    <UndefinedMagicMethod occurrences="1">
+      <code>inRandomOrder</code>
+    </UndefinedMagicMethod>
   </file>
   <file src="app/Http/Livewire/ProfileStudents.php">
     <UndefinedThisPropertyAssignment occurrences="1">
       <code>$this-&gt;students</code>
     </UndefinedThisPropertyAssignment>
   </file>
+  <file src="app/Http/Livewire/StudentFeedback.php">
+    <TypeDoesNotContainType occurrences="1">
+      <code>auth()-&gt;user()-&gt;id</code>
+    </TypeDoesNotContainType>
+  </file>
   <file src="app/Http/Middleware/AuthorizeCreateProfile.php">
     <UndefinedInterfaceMethod occurrences="2">
       <code>authenticate</code>
       <code>user</code>
     </UndefinedInterfaceMethod>
+  </file>
+  <file src="app/Ldap/Handlers/LdapAttributeHandler.php">
+    <UndefinedMagicMethod occurrences="1">
+      <code>exists</code>
+    </UndefinedMagicMethod>
   </file>
   <file src="app/Student.php">
     <InvalidReturnStatement occurrences="3">

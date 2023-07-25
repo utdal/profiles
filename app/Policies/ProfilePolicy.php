@@ -126,7 +126,7 @@ class ProfilePolicy
     public function createOwn(User $user)
     {
         // Faculty can create a profile if they don't already have one
-        return $user->exists() && $user->hasRole('faculty') && !$user->profiles()->exists();
+        return $user->hasRole('faculty') && !$user->profiles()->exists();
     }
 
     /**
