@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Profile;
 use App\School;
+use Illuminate\Contracts\View\View as ViewContract;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class SchoolsController extends Controller
 {
@@ -30,11 +33,9 @@ class SchoolsController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\View\View
+     * Display a list of schools.
      */
-    public function index()
+    public function index(): View|ViewContract
     {
         $schools = School::get();
 
@@ -42,22 +43,17 @@ class SchoolsController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\View\View
+     * Show the form for creating a new school.
      */
-    public function create()
+    public function create(): View|ViewContract
     {
         return view('schools.create');
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * Store a newly created school in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $school = School::create($request->all());
 
@@ -67,12 +63,9 @@ class SchoolsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  School  $school
-     * @return \Illuminate\View\View
+     * Display all profiles from the specified school.
      */
-    public function show(School $school)
+    public function show(School $school): View|ViewContract
     {
         $profiles = Profile::fromSchoolId($school->id)->public()->paginate(24);
 
@@ -80,24 +73,17 @@ class SchoolsController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  School  $school
-     * @return \Illuminate\View\View
+     * Show the form for editing the specified school.
      */
-    public function edit(School $school)
+    public function edit(School $school): View|ViewContract
     {
         return view('schools.edit', compact('school'));
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  Request  $request
-     * @param  School  $school
-     * @return \Illuminate\Http\RedirectResponse
+     * Update the specified school in storage.
      */
-    public function update(Request $request, School $school)
+    public function update(Request $request, School $school): RedirectResponse
     {
         $updated = $school->update($request->all());
 
