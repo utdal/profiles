@@ -1,33 +1,19 @@
-@extends('layouts.confirm-delete')
+@extends('layouts.confirm')
 
-@section('cancel_button')
-	<button type="button" class="btn btn-light" id="cancel">
-		<i class="fas fa-fw fa-times"></i> Cancel
-	</button>
+@section('confirm_title')
+    Confirm Archive Profile
 @stop
 
 @section('form')
-	@if (!$profile->trashed())
-		@section('delete_title')
-			Confirm Archive Profile
-		@stop
-		{!! Form::open(['route' => ['profiles.archive', $profile ], 'method' => 'DELETE']) !!}
-			<p>Are you sure you want to archive the profile <strong>{{ $profile->full_name }}</strong>?</p>
-				@yield('cancel_button')
-				<button type="submit" class="btn btn-danger">
-					<i class="fas fa-fw fa-trash"></i> Archive
-				</button>
-		{!! Form::close() !!}
-	@else
-		@section('delete_title')
-			Confirm Restore Profile
-		@stop
-		{!! Form::open(['route' => ['profiles.restore', $profile ], 'method' => 'POST']) !!}
-			<p>Are you sure you want to restore the profile <strong>{{ $profile->full_name }}</strong>?</p>
-				@yield('cancel_button')
-				<button type="submit" class="btn btn-danger">
-					<i class="fas fa-trash-restore"></i> Restore
-				</button>
-		{!! Form::close() !!}
-	@endif
+    <form action="{{ route('profiles.archive', ['profile' => $profile]) }}" method="POST" accept-charset="UTF-8">
+        @csrf
+        @method('DELETE')
+        <p>Are you sure you want to archive the profile <strong>{{ $profile->full_name }}</strong>?</p>
+        <button type="button" class="btn btn-light" id="cancel">
+            <i class="fas fa-fw fa-times"></i> Cancel
+        </button>
+        <button type="submit" class="btn btn-danger">
+            <i class="fas fa-fw fa-trash"></i> Archive
+        </button>
+    </form>
 @stop

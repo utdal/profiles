@@ -53,6 +53,10 @@ class ProfilesController extends Controller
         $this->middleware('can:delete,profile')->only([
             'confirmDelete',
             'archive',
+        ]);
+
+        $this->middleware('can:restore,profile')->only([
+            'confirmRestore',
             'restore',
         ]);
     }
@@ -158,11 +162,19 @@ class ProfilesController extends Controller
     /**
      * Create a Profile
      */
-    public function create(User $user, LdapHelperContract $ldap): RedirectResponse
+    public function create(Request $request, User $user, LdapHelperContract $ldap): View|ViewContract|RedirectResponse
     {
-        //redirect to edit page if user already has a profile
-        if($user->profiles()->count() > 0){
-            return redirect()->route('profiles.edit', [$user->profiles()->first()->slug, 'information'])->with('flash_message', 'Profile already exists.');
+        $existing_profile = $user->profiles()->withTrashed()->first();
+
+        if ($existing_profile?->trashed()) {
+            session()->flash('flash_message', "That profile already exists, but is archived.");
+            return $this->confirmRestore($request, $existing_profile);
+        }
+
+        if ($existing_profile) {
+            return redirect()
+                ->route('profiles.edit', ['profile' => $existing_profile, 'section' => 'information'])
+                ->with('flash_message', 'That profile already exists.');
         }
 
         //get fresh information for creating profile stub
@@ -176,21 +188,6 @@ class ProfilesController extends Controller
             $ldap->schema->physicalDeliveryOfficeName(),
         ])->first();
 
-
-        $profile = Profile::withTrashed()->where('slug', $user->pea)->get();
-
-        if ($profile->count() > 0 and $profile->first()->trashed()) {
-            if ($user->hasRole(['site_admin',
-                                'profiles_editor',
-                                'school_profiles_editor',
-                                'department_profiles_editor'])) {
-                return redirect()->route('profiles.confirm-delete', ['profile' => $profile->first(), 'create_attempt' => true]);
-            }
-            else {
-                $message = "The profile you are attempting to create already exists. Please contact your school/department profile editor to restore the profile. ";
-                return back()->with('flash_message', $message)->with('flash_message_type', 'danger');
-            }
-        }
         //create profile
         $profile = Profile::create([
             'full_name' => $user->display_name,
@@ -287,12 +284,25 @@ class ProfilesController extends Controller
     /**
      * Confirm deletion of a profile
      */
-    public function confirmDelete(Request $request, Profile $profile): View|ViewContract
+    public function confirmDelete(Profile $profile): View|ViewContract
     {
-        return view('profiles.delete', [
-                'profile' => $profile,
-                'create_attempt' => $request->create_attempt
+        return view('profiles.delete', ['profile' => $profile]);
+    }
+
+    /**
+     * Confirm restoration of a soft-deleted profile
+     */
+    public function confirmRestore(Request $request, Profile $profile): View|ViewContract|RedirectResponse
+    {
+        // this message is in case someone tries to create an already archived profile
+        if ($request->user()->cannot('restore', $profile)) {
+            return back()->withInput()->with([
+                'flash_message' => "The profile {$profile->full_name} is archived. Contact a site admin to restore it.",
+                'flash_message_type' => 'danger',
             ]);
+        }
+    
+        return view('profiles.restore', ['profile' => $profile]);
     }
 
     /**

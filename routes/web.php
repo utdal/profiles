@@ -103,7 +103,8 @@ Route::name('profiles.')->prefix('/')->group(function() {
         Route::name('show')->get('/', 'ProfilesController@show');
         Route::name('edit')->get('/edit/{section}', 'ProfilesController@edit');
         Route::name('update')->post('/update/{section}', 'ProfilesController@update');
-        Route::name('confirm-delete')->get('confirm-delete/{create_attempt?}', [ProfilesController::class, 'confirmDelete'])->withTrashed();
+        Route::name('confirm-delete')->get('confirm-delete', [ProfilesController::class, 'confirmDelete'])->withTrashed();
+        Route::name('confirm-restore')->get('confirm-restore', [ProfilesController::class, 'confirmRestore'])->withTrashed();
         Route::name('archive')->delete('archive', [ProfilesController::class, 'archive']);
         Route::name('restore')->post('restore', [ProfilesController::class, 'restore'])->withTrashed();
         Route::name('update-image')->post('/image', 'ProfilesController@updateImage');
