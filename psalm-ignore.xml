@@ -17,6 +17,10 @@
     </InvalidReturnType>
   </file>
   <file src="app/Http/Controllers/ProfilesController.php">
+    <TypeDoesNotContainType occurrences="2">
+      <code>$existing_profile</code>
+      <code>$existing_profile</code>
+    </TypeDoesNotContainType>
     <UndefinedMagicMethod occurrences="1">
       <code>inRandomOrder</code>
     </UndefinedMagicMethod>
