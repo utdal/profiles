@@ -28,7 +28,7 @@
                 <option value="0" selected>No</option>
                 <option value="1" selected>Yes</option>
             </select>
-        </div>        
+        </div>
         <div class="form-group col-lg-2">
             <label for="perPage">Per Page</label>
             <select wire:model="per_page" id="perPage" class="form-control">
@@ -91,12 +91,20 @@
                     @endcan
                     <livewire:bookmark-button :model="$profile" :mini="true" :wire:key="$profile->id">
                     <span>
-                        @can('delete', $profile)
-                            <a href="{{ route('profiles.confirm-delete', [ $profile ]) }}" title="{{ $profile->trashed() ? 'Restore' : 'Archive' }}" role="button" aria-pressed="true">
-                                <i class="{{ $profile->trashed() ? 'fas fa-trash-restore' : 'fas fa-archive' }}"></i><span class="sr-only">archived!</span>
+                    @if($profile->trashed())
+                        @can('restore', $profile)
+                            <a href="{{ route('profiles.confirm-restore', [ $profile ]) }}" title="Restore" role="button">
+                                <i class="fas fa-trash-restore"></i><span class="sr-only">restore archived profile</span>
                             </a>
                         @endcan
-                    </span>                
+                    @else
+                        @can('delete', $profile)
+                            <a href="{{ route('profiles.confirm-delete', [ $profile ]) }}" title="Archive" role="button">
+                                <i class="fas fa-archive"></i><span class="sr-only">archive profile</span>
+                            </a>
+                        @endcan
+                    @endif
+                    </span>
                 </td>
             </tr>
             @endforeach

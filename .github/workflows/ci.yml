@@ -113,7 +113,7 @@ jobs:
             restore-keys: ${{ runner.os }}-symfony-
 
       - name: Check PHP security with Symfony checker
-        uses: symfonycorp/security-checker-action@v3
+        uses: symfonycorp/security-checker-action@v4
 
       - name: Check PHP security with Composer audit
         run: composer audit
