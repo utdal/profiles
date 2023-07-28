@@ -12,9 +12,8 @@ use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Collection;
+use Illuminate\View\View;
 
 class StudentsController extends Controller
 {
