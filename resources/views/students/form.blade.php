@@ -188,7 +188,7 @@
                     @case('text')              
                         <div class="col">
                             {!! Form::label("research_profile[{$question['name']}]", $question['label'], ['class' => 'form-label']) !!}
-                            {!! Form::text("research_profile[{$question['name']}]", $student->{$question['name']}, ['class' => 'form-control']) !!}
+                            {!! Form::text("research_profile[{$question['name']}]", $student->research_profile->{$question['name']}, ['class' => 'form-control']) !!}
                         </div>
                         @break
                     @case('textarea')
