@@ -166,4 +166,12 @@ class ProfilePolicy
     {
         return false;
     }
+
+    /**
+     * Determine whether the user can restore the soft-deleted profile.
+     */
+    public function restore(User $user, Profile $profile): bool
+    {
+        return false;
+    }
 }

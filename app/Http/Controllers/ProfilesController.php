@@ -53,6 +53,10 @@ class ProfilesController extends Controller
         $this->middleware('can:delete,profile')->only([
             'confirmDelete',
             'archive',
+        ]);
+
+        $this->middleware('can:restore,profile')->only([
+            'confirmRestore',
             'restore',
         ]);
     }
@@ -158,11 +162,19 @@ class ProfilesController extends Controller
     /**
      * Create a Profile
      */
-    public function create(User $user, LdapHelperContract $ldap): RedirectResponse
+    public function create(Request $request, User $user, LdapHelperContract $ldap): View|ViewContract|RedirectResponse
     {
-        //redirect to edit page if user already has a profile
-        if($user->profiles()->count() > 0){
-            return redirect()->route('profiles.edit', [$user->profiles()->first()->slug, 'information'])->with('flash_message', 'Profile already exists.');
+        $existing_profile = $user->profiles()->withTrashed()->first();
+
+        if ($existing_profile?->trashed()) {
+            session()->flash('flash_message', "That profile already exists, but is archived.");
+            return $this->confirmRestore($request, $existing_profile);
+        }
+
+        if ($existing_profile) {
+            return redirect()
+                ->route('profiles.edit', ['profile' => $existing_profile, 'section' => 'information'])
+                ->with('flash_message', 'That profile already exists.');
         }
 
         //get fresh information for creating profile stub
@@ -274,7 +286,23 @@ class ProfilesController extends Controller
      */
     public function confirmDelete(Profile $profile): View|ViewContract
     {
-        return view('profiles.delete', compact('profile'));
+        return view('profiles.delete', ['profile' => $profile]);
+    }
+
+    /**
+     * Confirm restoration of a soft-deleted profile
+     */
+    public function confirmRestore(Request $request, Profile $profile): View|ViewContract|RedirectResponse
+    {
+        // this message is in case someone tries to create an already archived profile
+        if ($request->user()->cannot('restore', $profile)) {
+            return back()->withInput()->with([
+                'flash_message' => "The profile {$profile->full_name} is archived. Contact a site admin to restore it.",
+                'flash_message_type' => 'danger',
+            ]);
+        }
+    
+        return view('profiles.restore', ['profile' => $profile]);
     }
 
     /**
