@@ -104,8 +104,6 @@ class StudentsController extends Controller
 
     /**
      * Get any custom questions for the student application form
-     *
-     * @return \Illuminate\Support\Collection<string, Collection>
      */
     protected function customQuestions(): Collection
     {
