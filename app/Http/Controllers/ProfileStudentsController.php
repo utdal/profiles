@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Profile;
+use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class ProfileStudentsController extends Controller
 {
@@ -18,12 +20,9 @@ class ProfileStudentsController extends Controller
     }
 
     /**
-     * Show students associated with a profile.
-     *
-     * @param Profile $profile
-     * @return \Illuminate\View\View
+     * Show student applications associated with a profile.
      */
-    public function show(Profile $profile)
+    public function show(Profile $profile): View|ViewContract
     {
         return view('students.profile-students', [
             'profile' => $profile,

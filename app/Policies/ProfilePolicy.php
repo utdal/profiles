@@ -126,7 +126,7 @@ class ProfilePolicy
     public function createOwn(User $user)
     {
         // Faculty can create a profile if they don't already have one
-        return $user->exists() && $user->hasRole('faculty') && !$user->profiles()->exists();
+        return $user->hasRole('faculty') && !$user->profiles()->exists();
     }
 
     /**
@@ -163,6 +163,14 @@ class ProfilePolicy
      * @return mixed
      */
     public function delete(User $user, Profile $profile)
+    {
+        return false;
+    }
+
+    /**
+     * Determine whether the user can restore the soft-deleted profile.
+     */
+    public function restore(User $user, Profile $profile): bool
     {
         return false;
     }

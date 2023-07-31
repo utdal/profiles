@@ -8,7 +8,11 @@ use App\User;
 use App\Http\Controllers\Controller;
 use App\Profile;
 use Exception;
+use Illuminate\Contracts\View\View as ViewContract;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\View\View;
 
 class TestingController extends Controller
 {
@@ -22,12 +26,8 @@ class TestingController extends Controller
 
     /**
      * Attach the specified role to the user.
-     *
-     * @param Request $request
-     * @param string $name Name of the Role to attach
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function attachRole(Request $request, $name)
+    public function attachRole(Request $request, string $name): RedirectResponse
     {
         $role = Role::whereName($name)->firstOrFail();
         $request->user()->attachRole($role);
@@ -37,12 +37,8 @@ class TestingController extends Controller
 
     /**
      * Detach the specified role from the user.
-     *
-     * @param Request $request
-     * @param string $name Name of the Role to attach
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function detachRole(Request $request, $name)
+    public function detachRole(Request $request, string $name): RedirectResponse
     {
         $role = Role::whereName($name)->firstOrFail();
         $request->user()->detachRole($role);
@@ -52,11 +48,8 @@ class TestingController extends Controller
 
     /**
      * Show a list of possible users to login as
-     *
-     * @param Request $request
-     * @return string
      */
-    public function showLoginAsList(Request $request)
+    public function showLoginAsList(): Response
     {
         $output = "<h1>Log in as a Different User</h1>\n";
         $output .= "<ul>\n";
@@ -66,31 +59,23 @@ class TestingController extends Controller
         }
         $output .= "</ul>";
 
-        return $output;
+        return response($output);
     }
 
     /**
      * Login as the specified user
-     *
-     * @param Request $request
-     * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function loginAs(Request $request, $id)
+    public function loginAs(int $id): RedirectResponse
     {
         auth()->loginUsingId($id);
 
-        return redirect('/');
+        return redirect()->route('profiles.home');
     }
 
     /**
      * Preview an email template
-     *
-     * @param Request $request
-     * @param string $view The Blade email view
-     * @return \Illuminate\View\View
      */
-    public function previewEmail(Request $request, $view)
+    public function previewEmail(Request $request, string $view): View|ViewContract
     {
         $default_params = [];
 
@@ -112,10 +97,8 @@ class TestingController extends Controller
 
     /**
      * Throw a test exception
-     *
-     * @return void
      */
-    public function throwException()
+    public function throwException(): void
     {
         throw new Exception('Just testing. This is a test exception.');
     }

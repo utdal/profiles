@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Contracts\View\View as ViewContract;
+use Illuminate\View\View;
 
 class LoginController extends Controller
 {
@@ -49,10 +51,8 @@ class LoginController extends Controller
 
     /**
      * Show the login form.
-     *
-     * @return \Illuminate\View\View
      */
-    public function showLoginForm()
+    public function showLoginForm(): View|ViewContract
     {
         if (!session()->has('url.intended')) {
             session(['url.intended' => url()->previous()]);

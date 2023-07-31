@@ -13,9 +13,13 @@ use App\Http\Requests\ProfileBannerImageRequest;
 use App\Http\Requests\ProfileImageRequest;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\School;
+use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 use Spatie\Browsershot\Browsershot;
 
 class ProfilesController extends Controller
@@ -49,16 +53,18 @@ class ProfilesController extends Controller
         $this->middleware('can:delete,profile')->only([
             'confirmDelete',
             'archive',
+        ]);
+
+        $this->middleware('can:restore,profile')->only([
+            'confirmRestore',
             'restore',
         ]);
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     * Display a listing of profiles.
      */
-    public function index(Request $request)
+    public function index(Request $request): View|ViewContract|RedirectResponse
     {
         $search = $request->input('search');
 
@@ -85,10 +91,8 @@ class ProfilesController extends Controller
 
     /**
      * Display the home page
-     *
-     * @return \Illuminate\View\View
      */
-    public function home()
+    public function home(): View|ViewContract
     {
         $random_profile = Cache::tags(['home', 'profiles'])->remember('home-random-profiles', 86400, function() {
             return Profile::public()->inRandomOrder()->limit(2)->get();
@@ -117,21 +121,16 @@ class ProfilesController extends Controller
 
     /**
      * Display an admin table of profiles.
-     *
-     * @return \Illuminate\View\View
      */
-    public function table()
+    public function table(): View|ViewContract
     {
         return view('profiles.table');
     }
 
     /**
-     * Show the profile.
-     *
-     * @param  User   $user
-     * @return \Illuminate\View\View
+     * Show the specified profile.
      */
-    public function show(Request $request, Profile $profile)
+    public function show(Request $request, Profile $profile): View|ViewContract
     {
         /** @var User the logged-in user */
         $user = Auth::user();
@@ -152,11 +151,8 @@ class ProfilesController extends Controller
 
     /**
      * Redirect from ID to slug.
-     *
-     * @param  User   $user
-     *
      */
-    public function redirectById($id)
+    public function redirectById(int $id): RedirectResponse
     {
         $profile = Profile::findOrFail($id);
 
@@ -165,16 +161,20 @@ class ProfilesController extends Controller
 
     /**
      * Create a Profile
-     *
-     * @param User $user
-     * @param LdapHelperContract $ldap
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function create(User $user, LdapHelperContract $ldap)
+    public function create(Request $request, User $user, LdapHelperContract $ldap): View|ViewContract|RedirectResponse
     {
-        //redirect to edit page if user already has a profile
-        if($user->profiles()->count() > 0){
-            return redirect()->route('profiles.edit', [$user->profiles()->first()->slug, 'information'])->with('flash_message', 'Profile already exists.');
+        $existing_profile = $user->profiles()->withTrashed()->first();
+
+        if ($existing_profile?->trashed()) {
+            session()->flash('flash_message', "That profile already exists, but is archived.");
+            return $this->confirmRestore($request, $existing_profile);
+        }
+
+        if ($existing_profile) {
+            return redirect()
+                ->route('profiles.edit', ['profile' => $existing_profile, 'section' => 'information'])
+                ->with('flash_message', 'That profile already exists.');
         }
 
         //get fresh information for creating profile stub
@@ -222,14 +222,9 @@ class ProfilesController extends Controller
 
     /**
      * Show the view for editing a profile section
-     *
-     * @param Profile $profile
-     * @param string $section
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function edit(Profile $profile, $section)
+    public function edit(Profile $profile, string $section): View|ViewContract|RedirectResponse
     {
-
         //dont manage auto-managed publications
         if ($section == 'publications' && $profile->hasOrcidManagedPublications()) {
             $profile->updateORCID();
@@ -253,11 +248,8 @@ class ProfilesController extends Controller
 
     /**
      * Update a Profile's ORCID
-     *
-     * @param Profile $profile
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function orcid(Profile $profile)
+    public function orcid(Profile $profile): RedirectResponse
     {
       if ($profile->updateORCID()) {
           return redirect()->route('profiles.show', $profile->slug)->with('flash_message', 'Publications updated via ORCID.');
@@ -268,54 +260,55 @@ class ProfilesController extends Controller
 
     /**
      * Update a Profile
-     *
-     * @param Profile $profile
-     * @param string $section
-     * @param ProfileUpdateRequest $request
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Profile $profile, $section, ProfileUpdateRequest $request)
+    public function update(Profile $profile, string $section, ProfileUpdateRequest $request): RedirectResponse
     {
         $profile->updateDatum($section, $request);
 
         return redirect()->route('profiles.show', $profile->slug)->with('flash_message', 'Profile updated.');
     }
 
-    public function updateImage(Profile $profile, ProfileImageRequest $request)
+    public function updateImage(Profile $profile, ProfileImageRequest $request): RedirectResponse
     {
         return redirect()->route('profiles.edit', [$profile->slug, 'information'])->with('flash_message', $profile->processImage($request->file('image'), 'images'));
     }
 
     /**
      * Update a Profile's banner image
-     *
-     * @param Profile $profile
-     * @param ProfileBannerImageRequest $request
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function updateBanner(Profile $profile, ProfileBannerImageRequest $request)
+    public function updateBanner(Profile $profile, ProfileBannerImageRequest $request): RedirectResponse
     {
         return redirect()->route('profiles.edit', [$profile->slug, 'information'])->with('flash_message', $profile->processImage($request->file('banner_image'), 'banners'));
     }
 
     /**
      * Confirm deletion of a profile
-     *
-     * @param  Profile $profile
-     * @return \Illuminate\View\View
      */
-    public function confirmDelete(Profile $profile)
+    public function confirmDelete(Profile $profile): View|ViewContract
     {
-        return view('profiles.delete', compact('profile'));
+        return view('profiles.delete', ['profile' => $profile]);
+    }
+
+    /**
+     * Confirm restoration of a soft-deleted profile
+     */
+    public function confirmRestore(Request $request, Profile $profile): View|ViewContract|RedirectResponse
+    {
+        // this message is in case someone tries to create an already archived profile
+        if ($request->user()->cannot('restore', $profile)) {
+            return back()->withInput()->with([
+                'flash_message' => "The profile {$profile->full_name} is archived. Contact a site admin to restore it.",
+                'flash_message_type' => 'danger',
+            ]);
+        }
+    
+        return view('profiles.restore', ['profile' => $profile]);
     }
 
     /**
      * Remove the profile from the database
-     * 
-     * @param  Profile $profile
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function archive(Profile $profile)
+    public function archive(Profile $profile): RedirectResponse
     {
         $profile->delete();
 
@@ -326,11 +319,8 @@ class ProfilesController extends Controller
 
     /**
      * Restore a soft deleted profile
-     *
-     * @param Profile $profile
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function restore(Profile $profile)
+    public function restore(Profile $profile): RedirectResponse
     {
         $profile->restore();
 
@@ -340,12 +330,9 @@ class ProfilesController extends Controller
     }
 
     /**
-     * Generate PFD Export
-     *
-     * @param  Profile $profile
-     * @return \Illuminate\Http\Response&static
+     * Generate PDF Export
      */
-    public function pdfExport(Profile $profile)
+    public function pdfExport(Profile $profile): Response
     {
         $pdf_content = Browsershot::url("{$profile->url}?paginated=false")
                         ->margins(30, 15, 30, 15);
