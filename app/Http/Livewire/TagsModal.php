@@ -10,9 +10,9 @@ use Spatie\Tags\Tag;
 class TagsModal extends Component
 {
     /** @var \Illuminate\Database\Eloquent\Model */
-    protected $listeners = ['addTagType', 'removeTagType'];
-
     public $model;
+
+    protected $listeners = ['addTagType', 'removeTagType'];
 
     public $model_slug;
 
