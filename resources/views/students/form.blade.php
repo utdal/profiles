@@ -4,13 +4,14 @@
 </div>
 
 <div class="mb-3">
-    {!! Form::label('research_profile[schools][]', 'Which schools would you like to do research within?', ['class' => 'form-label']) !!}
+    {!! Form::label('research_profile[schools][]', 'Which school(s) would you like to do research within?', ['class' => 'form-label']) !!}
+    <small class="form-text text-muted mb-2">Selecting a school here allows this form to include any specific questions that researchers from that school might have for you.</small>
     <fieldset class="ml-3">
         @foreach($schools as $school_shortname => $school_displayname)
             <div class="form-check">
                 {!! Form::checkbox(
                     "research_profile[schools][]",
-                    $school_shortname,
+                    "$school_shortname",
                     in_array($school_shortname, $student->research_profile->schools ?? []),
                     [
                         'id' => "data_school_$school_shortname",
@@ -19,7 +20,7 @@
                         'data-toggle-target' => "#school_custom_questions_{$school_shortname}"
                     ]
                 ) !!}
-                {!! Form::label("data_school_$school_shortname", $school_displayname, ['class' => 'form-check-label ml-1']) !!}
+                {!! Form::label("data_school_$school_shortname", "$school_displayname ($school_shortname)", ['class' => 'form-check-label ml-1']) !!}
             </div>
         @endforeach
     </fieldset>

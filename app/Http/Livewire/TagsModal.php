@@ -40,8 +40,9 @@ class TagsModal extends Component
         } else {
             $this->selected_tags->push($tag);
         }
-
-        $this->model->syncTagsWithType($this->selected_tags, $this->tags_type);
+        foreach ($this->tags_type as $tag_type) {
+            $this->model->syncTagsWithType($this->selected_tags, $tag_type);
+        }
         $this->tags = $this->selected_tags->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE);
     }
 
