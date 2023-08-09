@@ -60,7 +60,10 @@
         <a class="btn btn-success btn-sm" href="#" data-target="#{{ Illuminate\Support\Str::slug($student->getRouteKey()) }}_tags_editor" data-toggle="modal" role="button"><i class="fas fa-tags"></i> Select Tags&hellip;</a>
     @endif
     <div class="tags my-2">
-        <livewire:tags-modal :model="$student">
+        @php
+            $tags_type = collect($student->research_profile->schools ?? [])->map(fn($shortname) => "App\\Student\\$shortname")->all();
+        @endphp
+        <livewire:tags-modal :model="$student" :tags_type="$tags_type" :include_view="'students.school-tags-switch-js'">
     </div>
 </div>
 

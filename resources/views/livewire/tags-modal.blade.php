@@ -21,20 +21,24 @@
                 </div>
                 <div class="modal-body">
                     <div class="container-fluid">
-                        @foreach ($this->possible_tags as $letter => $letter_tags)
-                            <div class="row">
-                                <div class="col-sm-2 col-lg-1">
-                                    <h4>{{ $letter }}</h4>
+                        @if ($this->possible_tags->count() > 0 )
+                            @foreach ($this->possible_tags as $letter => $letter_tags)
+                                <div class="row">
+                                    <div class="col-sm-2 col-lg-1">
+                                        <h4>{{ $letter }}</h4>
+                                    </div>
+                                    <div class="col-sm py-sm-3">
+                                        @foreach($letter_tags as $possible_tag)
+                                            <button type="button" role="button" class="btn btn-outline-primary btn-sm rounded-pill my-1 @if($selected_tags->contains($possible_tag)) active @endif" wire:click="toggleTag({{ $possible_tag->id }})">
+                                                {{ ucwords($possible_tag->name) }}
+                                            </button>
+                                        @endforeach
+                                    </div>
                                 </div>
-                                <div class="col-sm py-sm-3">
-                                    @foreach($letter_tags as $possible_tag)
-                                        <button type="button" role="button" class="btn btn-outline-primary btn-sm rounded-pill my-1 @if($selected_tags->contains($possible_tag)) active @endif" wire:click="toggleTag({{ $possible_tag->id }})">
-                                            {{ ucwords($possible_tag->name) }}
-                                        </button>
-                                    @endforeach
-                                </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        @else
+                            <p>Please select your school(s) to see the available tags.</p>
+                        @endif
                     </div>
                 </div>
 
@@ -47,3 +51,8 @@
         </div>
     </div>
 </span>
+
+@if($this->include_view)
+    @include($this->include_view)
+@endif
+
