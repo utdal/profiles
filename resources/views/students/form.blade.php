@@ -14,7 +14,7 @@
 
 <div class="mb-3">
     {!! Form::label('research_profile[schools][]', 'Which school(s) would you like to do research within?', ['class' => 'form-label']) !!}
-    <small class="form-text text-muted mb-2">Selecting a school here allows this form to include any specific questions that researchers from that school might have for you.</small>
+    <small class="form-text text-muted mb-2">Selecting a school here allows this form to include any specific questions that professors from that school might have for you.</small>
     <fieldset class="ml-3">
         @foreach($schools as $school_shortname => $school_displayname)
             <div class="form-check">
