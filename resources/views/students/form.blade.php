@@ -55,15 +55,12 @@
 
 <div class="mb-3">
     <label for="topics" class="form-label mr-3">Select the research topics that most interest you:</label>
-    <small class="form-text text-muted">Give this some thought and be intentional. You may select 1-4 topics.</small>
+    <small class="form-text text-muted">Give this some thought and be intentional. You may select 1-5 topics. The possible topics may change depending on your school selection above. </small>
     @if($editable)
         <a class="btn btn-success btn-sm" href="#" data-target="#{{ Illuminate\Support\Str::slug($student->getRouteKey()) }}_tags_editor" data-toggle="modal" role="button"><i class="fas fa-tags"></i> Select Tags&hellip;</a>
     @endif
     <div class="tags my-2">
-        @php
-            $tags_type = collect($student->research_profile->schools ?? [])->map(fn($shortname) => "App\\Student\\$shortname")->all();
-        @endphp
-        <livewire:tags-modal :model="$student" :tags_type="$tags_type" :include_view="'students.school-tags-switch-js'">
+        <livewire:tags-modal :model="$student" :tags_type="$student->tagTypes()" :include_view="'students.school-tags-switch-js'">
     </div>
 </div>
 

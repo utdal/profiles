@@ -4,14 +4,18 @@ namespace App;
 
 use App\Profile;
 use App\ProfileStudent;
+use App\Setting;
 use App\StudentData;
 use App\StudentFeedback;
 use App\User;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use OwenIt\Auditing\Auditable as HasAudits;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Tags\HasTags;
+use Spatie\Tags\Tag;
 
 class Student extends Model implements Auditable
 {
@@ -142,6 +146,46 @@ class Student extends Model implements Auditable
         $this->firstStats()->updateData([
             'last_viewed' => $datetime ?: now()->toDateTimeString(),
         ]);
+    }
+
+    /**
+     * Get the list of schools participating in student research
+     */
+    public static function participatingSchools(): Collection|EloquentCollection
+    {
+        $names = json_decode(Setting::whereName('student_participating_schools')->first()?->value ?? "[]");
+
+        return empty($names) ? collect([]) : School::withNames($names)->pluck('display_name', 'short_name');
+    }
+
+    /**
+     * Get the list of possible tag types
+     */
+    public static function possibleTagTypes(): Collection
+    {
+        return static::participatingSchools()
+            ->map(fn($display_name, $short_name) => "App\\Student\\{$short_name}");
+    }
+
+    /**
+     * Get the list of possible tags
+     */
+    public static function possibleTags(): EloquentCollection
+    {
+        return Tag::whereIn('type', static::possibleTagTypes())
+            ->orderBy('name->en')
+            ->get();
+    }
+
+    /**
+     * Get the list of tag types for this student application
+     * based on its selected schools
+     */
+    public function tagTypes(): array
+    {
+        return collect($this->research_profile->schools ?? [])
+            ->map(fn($shortname) => "App\\Student\\{$shortname}")
+            ->all();
     }
 
     ////////////////////////////////////

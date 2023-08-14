@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Events\StudentViewed;
-use App\School;
-use App\Setting;
 use App\Student;
 use App\StudentData;
 use App\User;
@@ -93,26 +91,6 @@ class StudentsController extends Controller
     }
 
     /**
-     * Get the list of schools participating in student research
-     */
-    protected function participatingSchools(): Collection
-    {
-        $names = json_decode(optional(Setting::whereName('student_participating_schools')->first())->value ?? "[]");
-
-        return empty($names) ? collect([]) : School::withNames($names)->pluck('display_name', 'short_name');
-    }
-
-    /**
-     * Get any custom questions for the student application form
-     */
-    protected function customQuestions(): Collection
-    {
-        $questions = json_decode(Setting::whereName('student_questions')->first()?->value ?? "[]", true);
-
-        return collect($questions)->groupBy('school');
-    }
-
-    /**
      * Display the specified student research application.
      */
     public function show(Request $request, Student $student): View|ViewContract
@@ -125,8 +103,8 @@ class StudentsController extends Controller
 
         return view('students.show', [
             'student' => $student,
-            'schools' => $this->participatingSchools(),
-            'custom_questions' => $this->customQuestions(),
+            'schools' => Student::participatingSchools(),
+            'custom_questions' => StudentData::customQuestions(),
             'languages' => StudentData::$languages,
             'majors' => StudentData::majors(),
         ]);
@@ -139,8 +117,8 @@ class StudentsController extends Controller
     {
         return view('students.edit', [
             'student' => $student,
-            'schools' => $this->participatingSchools(),
-            'custom_questions' => $this->customQuestions(),
+            'schools' => Student::participatingSchools(),
+            'custom_questions' => StudentData::customQuestions(),
             'languages' => StudentData::$languages,
             'majors' => StudentData::majors(),
         ]);
