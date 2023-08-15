@@ -21,38 +21,30 @@
                 </div>
                 <div class="modal-body">
                     <div class="container-fluid">
-                        @if ($this->possible_tags->count() > 0 )
-                            @foreach ($this->possible_tags as $letter => $letter_tags)
-                                <div class="row">
-                                    <div class="col-sm-2 col-lg-1">
-                                        <h4>{{ $letter }}</h4>
-                                    </div>
-                                    <div class="col-sm py-sm-3">
-                                        @foreach($letter_tags as $possible_tag)
-                                            <button type="button" role="button" class="btn btn-outline-primary btn-sm rounded-pill my-1 @if($selected_tags->contains($possible_tag)) active @endif" wire:click="toggleTag({{ $possible_tag->id }})">
-                                                {{ ucwords($possible_tag->name) }}
-                                            </button>
-                                        @endforeach
-                                    </div>
+                        @forelse($this->possible_tags as $letter => $letter_tags)
+                            <div class="row">
+                                <div class="col-sm-2 col-lg-1">
+                                    <h4>{{ $letter }}</h4>
                                 </div>
-                            @endforeach
-                        @else
-                            <p>Please select your school(s) to see the available tags.</p>
-                        @endif
+                                <div class="col-sm py-sm-3">
+                                    @foreach($letter_tags as $possible_tag)
+                                        <button type="button" role="button" class="btn btn-outline-primary btn-sm rounded-pill my-1 @if($selected_tags->contains($possible_tag)) active @endif" wire:click="toggleTag({{ $possible_tag->id }})">
+                                            {{ ucwords($possible_tag->name) }}
+                                        </button>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @empty
+                            <p>{{ $this->empty_message }}</p>
+                        @endforelse
                     </div>
                 </div>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-success" data-dismiss="modal"><i class="fas fa-check"></i> I'm done selecting tags</button>
-                    {{-- <button type="button" class="btn btn-primary" wire:click="updateTags()" data-dismiss="modal">Update Tags</button> --}}
                 </div>
 
             </div>
         </div>
     </div>
 </span>
-
-@if($this->include_view)
-    @include($this->include_view)
-@endif
-

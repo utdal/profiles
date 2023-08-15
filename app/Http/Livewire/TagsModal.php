@@ -22,7 +22,7 @@ class TagsModal extends Component
 
     public $tags_type;
 
-    public $include_view;
+    public $empty_message = 'There are no tags to choose from.';
 
     public function mount()
     {
