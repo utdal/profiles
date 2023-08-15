@@ -12,6 +12,8 @@ class TagsModal extends Component
     /** @var \Illuminate\Database\Eloquent\Model */
     public $model;
 
+    protected $listeners = ['addTagType', 'removeTagType'];
+
     public $model_slug;
 
     public $tags;
@@ -20,13 +22,15 @@ class TagsModal extends Component
 
     public $tags_type;
 
+    public $empty_message = 'There are no tags to choose from.';
+
     public function mount()
     {
         $this->model_slug = Str::slug($this->model->getRouteKey());
         $this->tags = $this->model->tags ?? collect();
         $this->tags = $this->tags->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE);
         $this->selected_tags = $this->selected_tags ?? $this->tags;
-        $this->tags_type = $this->tags_type ?? get_class($this->model);
+        $this->tags_type = $this->tags_type ?? [get_class($this->model)];
     }
 
     public function toggleTag(Tag $tag)
@@ -36,14 +40,29 @@ class TagsModal extends Component
         } else {
             $this->selected_tags->push($tag);
         }
-
-        $this->model->syncTagsWithType($this->selected_tags, $this->tags_type);
+        foreach ($this->tags_type as $tag_type) {
+            $this->model->syncTagsWithType($this->selected_tags, $tag_type);
+        }
         $this->tags = $this->selected_tags->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE);
+    }
+
+    public function addTagType($tag_type)
+    {
+        if (!in_array($tag_type, $this->tags_type)) {
+            $this->tags_type[] = $tag_type;
+        }
+    }
+
+    public function removeTagType($tag_type)
+    {
+        if (($key = array_search($tag_type, $this->tags_type)) !== false) {
+            unset($this->tags_type[$key]);
+        }
     }
 
     /**
      * Possible tags.
-     * 
+     *
      * This is a computed property because Livewire doesn't
      * handle groupBy well in native properties.
      *
@@ -52,7 +71,7 @@ class TagsModal extends Component
     public function getPossibleTagsProperty()
     {
         /** @var EloquentCollection */
-        $tags = Tag::where('type', $this->tags_type)
+        $tags = Tag::whereIn('type', $this->tags_type)
             ->orderBy('name->en')
             ->get();
 

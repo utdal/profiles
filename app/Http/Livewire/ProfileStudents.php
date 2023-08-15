@@ -97,7 +97,7 @@ class ProfileStudents extends Component
                 ->sortBy(function ($semester, $key) {
                     return Semester::date($semester)->toDateString();
                 })->values(),
-            'tags' => Tag::getWithType(Student::class),
+            'tags' => Student::possibleTags(),
             'statuses' => ProfileStudent::$statuses,
             'status_icons' => ProfileStudent::$icons,
         ]);

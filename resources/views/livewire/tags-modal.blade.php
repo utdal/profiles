@@ -21,7 +21,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="container-fluid">
-                        @foreach ($this->possible_tags as $letter => $letter_tags)
+                        @forelse($this->possible_tags as $letter => $letter_tags)
                             <div class="row">
                                 <div class="col-sm-2 col-lg-1">
                                     <h4>{{ $letter }}</h4>
@@ -34,13 +34,14 @@
                                     @endforeach
                                 </div>
                             </div>
-                        @endforeach
+                        @empty
+                            <p>{{ $this->empty_message }}</p>
+                        @endforelse
                     </div>
                 </div>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-success" data-dismiss="modal"><i class="fas fa-check"></i> I'm done selecting tags</button>
-                    {{-- <button type="button" class="btn btn-primary" wire:click="updateTags()" data-dismiss="modal">Update Tags</button> --}}
                 </div>
 
             </div>

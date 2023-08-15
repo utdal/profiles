@@ -75,6 +75,50 @@ var profiles = (function ($, undefined) {
     };
 
     /**
+     * Reindex numbers in field ids, names, and labels to match sort order,
+     * e.g. if the first item's name is "thing[3]", rename it to "thing[0]"
+     * 
+     * @param {NodeList} list_items - the ordered list of items to reindex
+     */
+    const reindex_sorted_list = (list_items) => {
+        for (let i = 0; i < list_items.length; i++) {
+            if (list_items[i].dataset.rowId) {
+                list_items[i].dataset.rowId = i;
+            }
+            const search_for = /\[\d+\]/g;
+            const replace_with = `[${i}]`;
+            for (const field of list_items[i].querySelectorAll('[name]')) {
+                field.name = field.name.replace(search_for, replace_with);
+            }
+            for (const field of list_items[i].querySelectorAll('[id]')) {
+                field.id = field.id.replace(search_for, replace_with);
+            }
+            for (const field of list_items[i].querySelectorAll('label[for]')) {
+                field.htmlFor = field.htmlFor.replace(search_for, replace_with);
+            }
+        }
+    };
+
+    /**
+     * Actions to take after updating a list
+     * 
+     * @param {HTMLElement} el - the container for the sorted elements
+     * @param {string} actions - the action(s) to take, comma-separated
+     * @return {void}
+     */
+    const on_list_updated = (el, actions) => {
+        for (const action of actions.split(',').map(i => i.trim())) {
+            if (action === 'reindex') {
+                reindex_sorted_list(el.children);
+            }
+    
+            if (action === 'reset-next-row-id') {
+                el.dataset.nextRowId = String((Number(el.dataset.nextRowId) > 0) ? el.children.length : -1);
+            }
+        }
+    }
+
+    /**
      * Adds a new item input row
      *
      * @param {Event} event the triggered event
@@ -82,11 +126,17 @@ var profiles = (function ($, undefined) {
      */
     const add_row = function(event) {
         const options = event.target.dataset;
-        const item_template = document.querySelector('form .record');
+        const item_template = document.querySelector(options.template ?? 'form .record');
+        const item_container = document.querySelector(options.insertInto) ?? item_template.parentElement;
 
         if (item_template) {
             const old_id = item_template.dataset.rowId;
-            const new_id = String(item_template.parentElement.dataset.nextRowId--);
+            let new_id;
+            if (Number(item_container.dataset.nextRowId) >= 0) {
+                new_id = String(item_container.dataset.nextRowId++);
+            } else {
+                new_id = String(item_container.dataset.nextRowId--);
+            }
             let new_item = item_template.cloneNode(true);
             new_item.dataset.rowId = new_id;
 
@@ -129,9 +179,9 @@ var profiles = (function ($, undefined) {
 
             $(new_item).hide();
             if ('insertType' in options && options.insertType === 'prepend') {
-                item_template.parentElement.prepend(new_item);
+                item_container.prepend(new_item);
             } else {
-                item_template.parentElement.append(new_item);
+                item_container.append(new_item);
             }
             $(new_item).slideDown();
         }
@@ -145,6 +195,16 @@ var profiles = (function ($, undefined) {
     var clear_row = function (elem) {
         parent_elem = $(elem).parent().parent();
         parent_elem.slideUp().find("input[type=text], input[type=url], input[type=month], input.clearable, textarea, select").val('');
+
+        const list_container = parent_elem[0].parentElement;
+
+        if (elem.dataset.remove === 'true') {
+            parent_elem.remove();
+        }
+
+        if (elem.dataset.onRemove) {
+            on_list_updated(list_container, elem.dataset.onRemove);
+        }
     };
 
     /**
@@ -427,6 +487,7 @@ var profiles = (function ($, undefined) {
         clear_row: clear_row,
         config: config,
         deobfuscate_mail_links: deobfuscate_mail_links,
+        on_list_updated: on_list_updated,
         preview_selected_image: preview_selected_image,
         replace_icon: replace_icon,
         registerTagEditors: registerTagEditors,
@@ -450,15 +511,16 @@ $(function() {
     //show preview of uploaded image
     $('input[type="file"]').on('change', (e) => profiles.preview_selected_image(e));
 
-  //enable drag and drop sorting for items with sotable class
-	if($('.sortable').length > 0){
-		  Sortable.create($('.sortable')[0], {
-    			handle: '.handle',
-    			scroll: true,
-    			scrollSpeed: 50,
-    			ghostClass: "sortable-ghost"
-		  });
-	}
+    // enable drag and drop sorting for items with sortable class
+    if ($('.sortable').length > 0) {
+        Sortable.create($('.sortable')[0], {
+            handle: '.handle',
+            scroll: true,
+            scrollSpeed: 50,
+            ghostClass: 'sortable-ghost',
+            onUpdate: (evt) => profiles.on_list_updated(evt.target, evt.target.dataset.onsort),
+        });
+    }
 
   //trigger clearing of elements when trash is clicked
 	$('.actions .trash').on('click', function(e) {

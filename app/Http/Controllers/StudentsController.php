@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Events\StudentViewed;
-use App\School;
-use App\Setting;
 use App\Student;
 use App\StudentData;
 use App\User;
@@ -12,8 +10,8 @@ use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class StudentsController extends Controller
 {
@@ -93,16 +91,6 @@ class StudentsController extends Controller
     }
 
     /**
-     * Get the list of schools participating in student research
-     */
-    protected function participatingSchools(): Collection
-    {
-        $names = json_decode(optional(Setting::whereName('student_participating_schools')->first())->value ?? "[]");
-
-        return empty($names) ? collect([]) : School::withNames($names)->pluck('display_name', 'short_name');
-    }
-
-    /**
      * Display the specified student research application.
      */
     public function show(Request $request, Student $student): View|ViewContract
@@ -115,7 +103,8 @@ class StudentsController extends Controller
 
         return view('students.show', [
             'student' => $student,
-            'schools' => $this->participatingSchools(),
+            'schools' => Student::participatingSchools(),
+            'custom_questions' => StudentData::customQuestions(),
             'languages' => StudentData::$languages,
             'majors' => StudentData::majors(),
         ]);
@@ -128,7 +117,8 @@ class StudentsController extends Controller
     {
         return view('students.edit', [
             'student' => $student,
-            'schools' => $this->participatingSchools(),
+            'schools' => Student::participatingSchools(),
+            'custom_questions' => StudentData::customQuestions(),
             'languages' => StudentData::$languages,
             'majors' => StudentData::majors(),
         ]);
