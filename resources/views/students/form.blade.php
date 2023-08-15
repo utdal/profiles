@@ -14,7 +14,7 @@
 
 <div class="mb-3">
     {!! Form::label('research_profile[schools][]', 'Which school(s) would you like to do research within?', ['class' => 'form-label']) !!}
-    <small class="form-text text-muted mb-2">Selecting a school here allows this form to include any specific questions that professors from that school might have for you.</small>
+    <small class="form-text text-muted mb-2">Selecting a school here allows this form to include any school-specific questions that professors might have for you.</small>
     <fieldset class="ml-3">
         @foreach($schools as $school_shortname => $school_displayname)
             <div class="form-check">
@@ -55,7 +55,7 @@
 
 <div class="mb-3">
     <label for="topics" class="form-label mr-3">Select the research topics that most interest you:</label>
-    <small class="form-text text-muted">Give this some thought and be intentional. You may select 1-5 topics. The possible topics may change depending on your school selection above. </small>
+    <small class="form-text text-muted mb-1">Give this some thought and be intentional. You may select 1-5 topics. The possible topics may change depending on your school selection above. </small>
     @if($editable)
         <a class="btn btn-success btn-sm" href="#" data-target="#{{ Illuminate\Support\Str::slug($student->getRouteKey()) }}_tags_editor" data-toggle="modal" role="button"><i class="fas fa-tags"></i> Select Tags&hellip;</a>
     @endif
