@@ -172,20 +172,106 @@
 					</label>
 				</div>
 			</div>
-			<div class="form-group row">
-				<div class="col col-4">
-					<label for="visibility">Not Accepting Students</label><br>
-					<label class="switch pull-left">
-						<input type="hidden" name="data[{{$info->id}}][data][not_accepting_students]" id="data[{{$info->id}}][data][not_accepting_students]" value="0">
-						<input type="checkbox" name="data[{{$info->id}}][data][not_accepting_students]" id="data[{{$info->id}}][data][not_accepting_students]" value="1" @if($info->not_accepting_students) checked @endif>
-						<span class="slider round"></span>
-					</label>
+			<fieldset class="form-group row my-3 py-4 border-top">
+				<div class="col col-12 col-xl-7">
+					<div class="form-group form-check p-0">
+						<input type="hidden" name="data[{{$info->id}}][data][show_accepting_students]" value="0">
+						<input
+							type="checkbox"
+							name="data[{{$info->id}}][data][show_accepting_students]"
+							id="data[{{$info->id}}][data][show_accepting_students]"
+							@checked(old('data.show_accepting_students', $info->show_accepting_students))
+							value="1"
+							data-toggle="show"
+							data-toggle-target="#accepting_student_types"
+						>
+						<label class="form-check-label" for="data[{{$info->id}}][data][show_accepting_students]">Show that I'm accepting students</label>
+					</div>
+					<div
+						id="accepting_student_types"
+						class="border-left ml-3"
+						@style([
+							'display: none' => !old('data.show_accepting_students', $info->show_accepting_students)
+						])
+					>
+						<div class="form-group form-check">
+							<input type="hidden" name="data[{{$info->id}}][data][accepting_students]" value="0">
+							<input
+								type="checkbox"
+								name="data[{{$info->id}}][data][accepting_students]"
+								id="data[{{$info->id}}][data][accepting_students]"
+								@checked(old('data.accepting_students', $info->accepting_students))
+								value="1"
+							>
+							<label class="form-check-label" for="data[{{$info->id}}][data][accepting_students]">Accepting undergrad students</label>
+						</div>
+						<div class="form-group form-check">
+							<input type="hidden" name="data[{{$info->id}}][data][accepting_grad_students]" value="0">
+							<input
+								type="checkbox"
+								name="data[{{$info->id}}][data][accepting_grad_students]"
+								id="data[{{$info->id}}][data][accepting_grad_students]"
+								@checked(old('data.accepting_grad_students', $info->accepting_grad_students))
+								value="1"
+							>
+							<label class="form-check-label" for="data[{{$info->id}}][data][accepting_grad_students]">Accepting grad students</label>
+						</div>
+					</div>
 				</div>
-				<div class="col col-8">
-					<br>
-					<p>Turning this on will show a standard note on your profile that you're not currently accepting students.</p>
+				<div class="col col-8 col-xl-5">
+					<p class="text-muted">This will show a standard note on your profile that you're currently accepting students of the specified type(s).</p>
 				</div>
-			</div>
+			</fieldset>
+			<fieldset class="form-group row my-3 py-4 border-top">
+				<div class="col col-12 col-xl-7">
+					<div class="form-group form-check p-0">
+						<input type="hidden" name="data[{{$info->id}}][data][show_not_accepting_students]" value="0">
+						<input
+							type="checkbox"
+							name="data[{{$info->id}}][data][show_not_accepting_students]"
+							id="data[{{$info->id}}][data][show_not_accepting_students]"
+							@checked(old('data.show_not_accepting_students', $info->show_not_accepting_students))
+							value="1"
+							data-toggle="show"
+							data-toggle-target="#not_accepting_student_types"
+						>
+						<label class="form-check-label" for="data[{{$info->id}}][data][show_not_accepting_students]">Show that I'm not accepting students</label>
+					</div>
+					<div
+						id="not_accepting_student_types"
+						class="border-left ml-3"
+						@style([
+							'display: none' => !old('data.show_not_accepting_students', $info->show_not_accepting_students)
+						])
+					>
+						<div class="form-group form-check">
+							<input type="hidden" name="data[{{$info->id}}][data][not_accepting_students]" value="0">
+							<input
+								type="checkbox"
+								name="data[{{$info->id}}][data][not_accepting_students]"
+								id="data[{{$info->id}}][data][not_accepting_students]"
+								@checked(old('data.not_accepting_students', $info->not_accepting_students))
+								value="1"
+							>
+							<label class="form-check-label" for="data[{{$info->id}}][data][not_accepting_students]">Not accepting undergrad students</label>
+						</div>
+						<div class="form-group form-check">
+							<input type="hidden" name="data[{{$info->id}}][data][not_accepting_grad_students]" value="0">
+							<input
+								type="checkbox"
+								name="data[{{$info->id}}][data][not_accepting_grad_students]"
+								id="data[{{$info->id}}][data][not_accepting_grad_students]"
+								@checked(old('data.not_accepting_grad_students', $info->not_accepting_grad_students))
+								value="1"
+							>
+							<label class="form-check-label" for="data[{{$info->id}}][data][not_accepting_grad_students]">Not accepting grad students</label>
+						</div>
+					</div>
+				</div>
+				<div class="col col-8 col-xl-5">
+					<p class="text-muted">This will show a standard note on your profile that you're <em>not</em> currently accepting students of the specified type(s).</p>
+				</div>
+			</fieldset>
 			<div class="form-group row">
 				<div class="col col-4">
 					<label for="visibility">Profile Visible</label><br>
