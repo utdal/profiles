@@ -5,8 +5,8 @@
             type="checkbox"
             id="notAcceptingStudentsCheckbox"
         >
-        <label class="form-check-label font-weight-bold text-primary clickable" for="notAcceptingStudentsCheckbox">
-            <i class="fas fa-user-slash fa-fw"></i> I'm not accepting students
+        <label class="d-inline form-check-label font-weight-bold text-primary clickable" for="notAcceptingStudentsCheckbox">
+            <i class="fas fa-user-slash fa-fw"></i> I'm not accepting undergraduate students
         </label>
     </div>
     @include('livewire.partials._loading-fixed', ['loading_target' => 'not_accepting_students'])

@@ -54,7 +54,7 @@
                         aria-labelledby="notAcceptingStudentsButton"
                     >
                         <p>
-                            <small class="form-text text-muted">Checking the box below will show a standard note on your profile that you're not currently accepting students.</small>
+                            <small class="form-text text-muted">Checking the box below will show a standard note on your profile that you're not currently accepting undergraduate students for research.</small>
                         </p>
                         <livewire:accepting-students-toggle :profile="$profile">
                     </div>
