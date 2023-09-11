@@ -335,7 +335,9 @@ class ProfilesController extends Controller
     public function pdfExport(Profile $profile): Response
     {
         $pdf_content = Browsershot::url("{$profile->url}?paginated=false")
-                        ->margins(30, 15, 30, 15);
+            ->waitUntilNetworkIdle()
+            ->ignoreHttpsErrors()
+            ->margins(30, 15, 30, 15);
 
         if (config('pdf.node')) {
             $pdf_content = $pdf_content->setNodeBinary(config('pdf.node'));
