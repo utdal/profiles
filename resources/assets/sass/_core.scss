@@ -391,9 +391,15 @@ input:checked + .slider:before {
 	box-shadow: 0 0 0 0.1rem $utd-eco-green;
 	border-color: $utd-eco-green;
 }
+
 input:required:invalid, input:focus:invalid {
 	box-shadow: 0 0 0 0.1rem red;
 }
+
+textarea:required:invalid, textarea:focus:invalid {
+	box-shadow: 0 0 0 0.1rem red;
+}
+
 input[type="file"]:invalid{
 	border: none;
 	box-shadow: none;
