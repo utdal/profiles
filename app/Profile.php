@@ -6,6 +6,7 @@ use App\ProfileData;
 use App\ProfileStudent;
 use App\Student;
 use App\User;
+use AWS\CRT\HTTP\Response;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Auditable as HasAudits;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -18,6 +19,7 @@ use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 
 /**
@@ -58,6 +60,7 @@ class Profile extends Model implements HasMedia, Auditable
         */
        protected $casts = [
            'public' => 'boolean',
+           'contributors' => 'array',
        ];
 
     /**
@@ -171,59 +174,98 @@ class Profile extends Model implements HasMedia, Auditable
         return $this->information()->where('data->orc_id_managed', '1')->exists();
     }
 
+    public function makeApiRequest($url) {
+        $client = new Client();
+
+        $res = $client->get($url, [
+                                'headers' => [
+                                    'Authorization' => 'Bearer ' . config('ORCID_TOKEN'),
+                                    'Accept' => 'application/json'
+                                ],
+                                'http_errors' => false, // don't throw exceptions for 4xx,5xx responses
+                            ]);
+        
+        //Return false if the response returns an error
+        if ($res->getStatusCode() != 200) {
+            return false;
+        }
+
+        return $res;
+    }
+
     public function updateORCID()
     {
-      $orc_id = $this->information()->get(array('data'))->toArray()[0]['data']['orc_id'];
+        $orc_id = $this->information()->get(array('data'))->toArray()[0]['data']['orc_id'];
+        
+        if (is_null($orc_id)) {
+            return false;
+        }
 
-      if(is_null($orc_id)){
-        //can't update if we don't know your ID
-        return false;
-      }
+        $orc_url = "https://pub.orcid.org/v2.0/" . $orc_id .  "/works";
 
-      $orc_url = "https://pub.orcid.org/v2.0/" . $orc_id .  "/activities";
+        $res = $this->makeApiRequest($orc_url);
 
-      $client = new Client();
+        $putcodes = [];
+       
+        $grouped_works = collect(json_decode($res->getBody()->getContents(), true)['group'])->pluck('work-summary');
 
-      $res = $client->get($orc_url, [
-        'headers' => [
-          'Authorization' => 'Bearer ' . config('ORCID_TOKEN'),
-          'Accept' => 'application/json'
-        ],
-        'http_errors' => false, // don't throw exceptions for 4xx,5xx responses
-      ]);
+        $putcodes = $grouped_works->map(function ($item, $key) {
+                                        return collect($item)->sortByDesc('display-index')->value('put-code');
+                                    })->toArray();
 
-      //an error of some sort
-      if($res->getStatusCode() != 200){
-        return false;
-      }
+        $split_putcodes = array_chunk($putcodes, 100);
 
-      $datum = json_decode($res->getBody()->getContents(), true);
+        foreach ($split_putcodes as $putcodes_set) {
 
-      foreach($datum['works']['group'] as $record){
-          $url = NULL;
-          foreach($record['external-ids']['external-id'] as $ref){
-            if($ref['external-id-type'] == "eid"){
-              $url = "https://www.scopus.com/record/display.uri?origin=resultslist&eid=" . $ref['external-id-value'];
+            $string_put_codes = implode(',', $putcodes_set);
+
+            $multiple_works_url = "https://pub.orcid.org/v2.0/" . $orc_id .  "/works/". $string_put_codes;
+
+            $res2 = $this->makeApiRequest($multiple_works_url);
+
+            $works_data = json_decode($res2->getBody()->getContents(), true)['bulk'];
+
+             return $works_data;
+
+            foreach ($works_data as $record) {
+
+                foreach ($record['work']['external-ids']['external-id'] as $ref) {
+                    if ($ref['external-id-type'] == "eid") {
+                        $eid = $ref['external-id-value'];
+                    }
+                    elseif ($ref['external-id-type'] == "doi") {
+                        $doi = $ref['external-id-value'];
+                    }
+                }
+
+                $authors = collect($record['work']['contributors'])
+                                ->flatten(1)
+                                ->map(fn($author) => $author['credit-name']['value']);
+                
+                $profile_data = ProfileData::firstOrCreate([
+                    'profile_id' => $this->id,
+                    'type' => 'publications',
+                    'data->title' => $record['work']['title']['title']['value'],
+                    'sort_order' => $record['work']['publication-date']['year']['value'] ?? null,
+                ],[
+                    'data' => [
+                        'put-code' => $record['work']['put-code'],
+                        'url' => $record['work']['url']['value'],
+                        'title' => $record['work']['title']['title']['value'],
+                        'year' => $record['work']['publication-date']['year']['value'] ?? null,
+                        'month' => $record['work']['publication-date']['month']['value'] ?? null,
+                        'day' => $record['work']['publication-date']['day']['value'] ?? null,
+                        'type' => ucwords(strtolower(str_replace('_', ' ', $record['work']['type']))),
+                        'journal_title' => $record['work']['journal-title']['value'],
+                        'doi'  => $doi,
+                        'eid' => $eid,
+                        'authors' => implode('; ', $authors->toArray()),
+                        'status' => 'Published',
+                        'visibility' => $record['work']['visibility'],
+                    ],
+                ]);
             }
-            else if($ref['external-id-type'] == "doi"){
-              $url = "http://doi.org/" . $ref['external-id-value'];
-            }
-          }
-          $record = ProfileData::firstOrCreate([
-            'profile_id' => $this->id,
-            'type' => 'publications',
-            'data->title' => $record['work-summary'][0]['title']['title']['value'],
-            'sort_order' => $record['work-summary'][0]['publication-date']['year']['value'] ?? null,
-          ],[
-              'data' => [
-                  'url' => $url,
-                  'title' => $record['work-summary'][0]['title']['title']['value'],
-                  'year' => $record['work-summary'][0]['publication-date']['year']['value'] ?? null,
-                  'type' => ucwords(strtolower(str_replace('_', ' ', $record['work-summary'][0]['type']))),
-                  'status' => 'Published'
-              ],
-          ]);
-      }
+        }
 
       Cache::tags(['profile_data'])->flush();
 
@@ -374,6 +416,21 @@ class Profile extends Model implements HasMedia, Auditable
     //////////////////
     // Query Scopes //
     //////////////////
+
+    /**
+     * Profiles with orcid sync on
+     * 
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     * 
+     */
+     public function scopeWithOrcidSyncOn($query) : Builder {
+        return $query->whereHas('data', function ($data) {
+                        $data
+                            ->where('type', 'information')
+                            ->where('data', 'like', '%"orc_id_managed": "1"%');
+        });
+     }
 
     /**
      * Query scope for public Profiles
