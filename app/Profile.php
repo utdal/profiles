@@ -4,6 +4,7 @@ namespace App;
 
 use App\ProfileData;
 use App\ProfileStudent;
+use App\Repositories\OrcidPublicationsRepository;
 use App\Student;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
@@ -18,6 +19,7 @@ use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 
 /**
@@ -58,6 +60,8 @@ class Profile extends Model implements HasMedia, Auditable
         */
        protected $casts = [
            'public' => 'boolean',
+           'contributors' => 'array',
+           'authors' => 'array',
        ];
 
     /**
@@ -173,64 +177,12 @@ class Profile extends Model implements HasMedia, Auditable
 
     public function updateORCID()
     {
-      $orc_id = $this->information()->get(array('data'))->toArray()[0]['data']['orc_id'];
+        $publicationsManager = new OrcidPublicationsRepository($this);
 
-      if(is_null($orc_id)){
-        //can't update if we don't know your ID
-        return false;
-      }
-
-      $orc_url = "https://pub.orcid.org/v2.0/" . $orc_id .  "/activities";
-
-      $client = new Client();
-
-      $res = $client->get($orc_url, [
-        'headers' => [
-          'Authorization' => 'Bearer ' . config('ORCID_TOKEN'),
-          'Accept' => 'application/json'
-        ],
-        'http_errors' => false, // don't throw exceptions for 4xx,5xx responses
-      ]);
-
-      //an error of some sort
-      if($res->getStatusCode() != 200){
-        return false;
-      }
-
-      $datum = json_decode($res->getBody()->getContents(), true);
-
-      foreach($datum['works']['group'] as $record){
-          $url = NULL;
-          foreach($record['external-ids']['external-id'] as $ref){
-            if($ref['external-id-type'] == "eid"){
-              $url = "https://www.scopus.com/record/display.uri?origin=resultslist&eid=" . $ref['external-id-value'];
-            }
-            else if($ref['external-id-type'] == "doi"){
-              $url = "http://doi.org/" . $ref['external-id-value'];
-            }
-          }
-          $record = ProfileData::firstOrCreate([
-            'profile_id' => $this->id,
-            'type' => 'publications',
-            'data->title' => $record['work-summary'][0]['title']['title']['value'],
-            'sort_order' => $record['work-summary'][0]['publication-date']['year']['value'] ?? null,
-          ],[
-              'data' => [
-                  'url' => $url,
-                  'title' => $record['work-summary'][0]['title']['title']['value'],
-                  'year' => $record['work-summary'][0]['publication-date']['year']['value'] ?? null,
-                  'type' => ucwords(strtolower(str_replace('_', ' ', $record['work-summary'][0]['type']))),
-                  'status' => 'Published'
-              ],
-          ]);
-      }
-
-      Cache::tags(['profile_data'])->flush();
-
-      //ran through process successfully
-      return true;
+        return $publicationsManager->syncPublications();
     }
 
+    
     public function updateDatum($section, $request)
     {
       $sort_order = count($request->data ?? []) + 1;
@@ -374,6 +326,21 @@ class Profile extends Model implements HasMedia, Auditable
     //////////////////
     // Query Scopes //
     //////////////////
+
+    /**
+     * Profiles with orcid sync on
+     * 
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     * 
+     */
+     public function scopeWithOrcidSyncOn($query) : Builder {
+        return $query->whereHas('data', function ($data) {
+                        $data
+                            ->where('type', 'information')
+                            ->where('data', 'like', '%"orc_id_managed": "1"%');
+        });
+     }
 
     /**
      * Query scope for public Profiles
@@ -594,6 +561,16 @@ class Profile extends Model implements HasMedia, Auditable
     public function getApiUrlAttribute()
     {
         return route('api.index', ['person' => $this->slug, 'with_data' => true]);
+    }
+
+    /**
+     * Get the profile ORCID ID
+     */
+    public function getOrcidAttribute()
+    {
+        $orc_id = $this->information()->get(array('data'))->toArray()[0]['data']['orc_id'];
+
+        return $orc_id ?? null;
     }
 
     ///////////////
