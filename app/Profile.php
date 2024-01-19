@@ -22,6 +22,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 
+use function PHPUnit\Framework\isNull;
+
 /**
  * @method public()
  * @method private()
@@ -61,6 +63,7 @@ class Profile extends Model implements HasMedia, Auditable
        protected $casts = [
            'public' => 'boolean',
            'contributors' => 'array',
+           'authors' => 'array',
        ];
 
     /**
@@ -225,23 +228,30 @@ class Profile extends Model implements HasMedia, Auditable
 
             $works_data = json_decode($res2->getBody()->getContents(), true)['bulk'];
 
-             return $works_data;
-
             foreach ($works_data as $record) {
+
+                $url = $doi_url = $eid_url = null;
 
                 foreach ($record['work']['external-ids']['external-id'] as $ref) {
                     if ($ref['external-id-type'] == "eid") {
                         $eid = $ref['external-id-value'];
+                        $eid_url = "https://www.scopus.com/record/display.uri?origin=resultslist&eid=" . $ref['external-id-value'];
                     }
                     elseif ($ref['external-id-type'] == "doi") {
                         $doi = $ref['external-id-value'];
+                        $doi_url = "http://doi.org/" . $ref['external-id-value'];
                     }
                 }
 
-                $authors = collect($record['work']['contributors'])
+                $contributors = collect($record['work']['contributors'])
                                 ->flatten(1)
                                 ->map(fn($author) => $author['credit-name']['value']);
                 
+                $contributors_array = count($contributors->toArray()) > 0 ? $contributors->toArray() :[$this->full_name];
+                $authors = $this->formatAuthors($contributors_array);
+
+                $url = $record['work']['url']['value'] ?? ($doi_url ?? ($eid_url ?? null));
+
                 $profile_data = ProfileData::firstOrCreate([
                     'profile_id' => $this->id,
                     'type' => 'publications',
@@ -250,17 +260,20 @@ class Profile extends Model implements HasMedia, Auditable
                 ],[
                     'data' => [
                         'put-code' => $record['work']['put-code'],
-                        'url' => $record['work']['url']['value'],
+                        'url' => $url,
                         'title' => $record['work']['title']['title']['value'],
                         'year' => $record['work']['publication-date']['year']['value'] ?? null,
                         'month' => $record['work']['publication-date']['month']['value'] ?? null,
                         'day' => $record['work']['publication-date']['day']['value'] ?? null,
                         'type' => ucwords(strtolower(str_replace('_', ' ', $record['work']['type']))),
-                        'journal_title' => $record['work']['journal-title']['value'],
-                        'doi'  => $doi,
-                        'eid' => $eid,
-                        'authors' => implode('; ', $authors->toArray()),
+                        'journal_title' => $record['work']['journal-title']['value'] ?? null,
+                        'doi'  => $doi ?? null,
+                        'eid' => $eid ?? null,
+                        'authors' => $authors,
+                        'apa_formatted_authors' => ProfileData::formatAuthorsApa($authors),
                         'status' => 'Published',
+                        'citation-type' => $record['work']['type'] ?? null,
+                        'citation-value' => $record['work']['value'] ?? null,
                         'visibility' => $record['work']['visibility'],
                     ],
                 ]);
@@ -272,6 +285,8 @@ class Profile extends Model implements HasMedia, Auditable
       //ran through process successfully
       return true;
     }
+
+
 
     public function updateDatum($section, $request)
     {
@@ -651,6 +666,16 @@ class Profile extends Model implements HasMedia, Auditable
     public function getApiUrlAttribute()
     {
         return route('api.index', ['person' => $this->slug, 'with_data' => true]);
+    }
+
+    /**
+     * Get the profile ORCID ID
+     */
+    public function getOrcidAttribute() 
+    {
+        $orc_id = $this->information()->get(array('data'))->toArray()[0]['data']['orc_id'];
+
+        return $orc_id ?? false;
     }
 
     ///////////////

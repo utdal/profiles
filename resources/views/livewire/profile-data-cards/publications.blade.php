@@ -12,10 +12,10 @@
     </h3>
     @foreach($data as $pub)
         <div class="entry">
-            {!! Purify::clean($pub->title) !!} {{$pub->year}} - <strong>{{$pub->type}}</strong>
+            {{ $pub->apa_formatted_authors }} ({{ $pub->year }}) {!! Purify::clean($pub->title) !!}. 
             @if($pub->url)
                 <a target="_blank" href="{{$pub->url}}">
-                    <span class="fas fa-external-link-alt" title="external link to publication"></span>
+                    <span title="external link to publication"> {{ $pub->url }}</span>
                 </a>
             @endif
         </div>
