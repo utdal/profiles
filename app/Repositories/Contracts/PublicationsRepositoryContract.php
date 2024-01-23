@@ -21,20 +21,22 @@ interface PublicationsRepositoryContract
      * @param string $faculty_id
      * @return mixed|true
      */
-    public function getPersonId(string $faculty_id);
+    public function getPersonId(string $faculty_id = null);
 
     /**
      * Retrieve the publications from the API to return a ProfileData model collection
      *  @param int $faculty_id
      *  @return \Illuminate\Database\Eloquent\Collection|false
      */
-    public function getPublications(int $faculty_id);
+    public function getPublications();
 
     /**
      * Cache publications for the current profile
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function getCachedPublications(int $profile_id, int $academic_analytics_id);
+    public function getCachedPublications();
+
+    public function syncPublications();
 
     /**
      * Make a get request to the API

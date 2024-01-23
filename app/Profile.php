@@ -4,6 +4,7 @@ namespace App;
 
 use App\ProfileData;
 use App\ProfileStudent;
+use App\Repositories\OrcidPublicationsRepository;
 use App\Student;
 use App\User;
 use AWS\CRT\HTTP\Response;
@@ -198,96 +199,17 @@ class Profile extends Model implements HasMedia, Auditable
 
     public function updateORCID()
     {
-        $orc_id = $this->information()->get(array('data'))->toArray()[0]['data']['orc_id'];
-        
-        if (is_null($orc_id)) {
-            return false;
-        }
+        $publicationsManager = new OrcidPublicationsRepository($this);
 
-        $orc_url = "https://pub.orcid.org/v2.0/" . $orc_id .  "/works";
+        $publicationsManager->syncPublications();
 
-        $res = $this->makeApiRequest($orc_url);
+        Cache::tags(['profile_data'])->flush();
 
-        $putcodes = [];
-       
-        $grouped_works = collect(json_decode($res->getBody()->getContents(), true)['group'])->pluck('work-summary');
-
-        $putcodes = $grouped_works->map(function ($item, $key) {
-                                        return collect($item)->sortByDesc('display-index')->value('put-code');
-                                    })->toArray();
-
-        $split_putcodes = array_chunk($putcodes, 100);
-
-        foreach ($split_putcodes as $putcodes_set) {
-
-            $string_put_codes = implode(',', $putcodes_set);
-
-            $multiple_works_url = "https://pub.orcid.org/v2.0/" . $orc_id .  "/works/". $string_put_codes;
-
-            $res2 = $this->makeApiRequest($multiple_works_url);
-
-            $works_data = json_decode($res2->getBody()->getContents(), true)['bulk'];
-
-            foreach ($works_data as $record) {
-
-                $url = $doi_url = $eid_url = null;
-
-                foreach ($record['work']['external-ids']['external-id'] as $ref) {
-                    if ($ref['external-id-type'] == "eid") {
-                        $eid = $ref['external-id-value'];
-                        $eid_url = "https://www.scopus.com/record/display.uri?origin=resultslist&eid=" . $ref['external-id-value'];
-                    }
-                    elseif ($ref['external-id-type'] == "doi") {
-                        $doi = $ref['external-id-value'];
-                        $doi_url = "http://doi.org/" . $ref['external-id-value'];
-                    }
-                }
-
-                $contributors = collect($record['work']['contributors'])
-                                ->flatten(1)
-                                ->map(fn($author) => $author['credit-name']['value']);
-                
-                $contributors_array = count($contributors->toArray()) > 0 ? $contributors->toArray() :[$this->full_name];
-                $authors = $this->formatAuthors($contributors_array);
-
-                $url = $record['work']['url']['value'] ?? ($doi_url ?? ($eid_url ?? null));
-
-                $profile_data = ProfileData::firstOrCreate([
-                    'profile_id' => $this->id,
-                    'type' => 'publications',
-                    'data->title' => $record['work']['title']['title']['value'],
-                    'sort_order' => $record['work']['publication-date']['year']['value'] ?? null,
-                ],[
-                    'data' => [
-                        'put-code' => $record['work']['put-code'],
-                        'url' => $url,
-                        'title' => $record['work']['title']['title']['value'],
-                        'year' => $record['work']['publication-date']['year']['value'] ?? null,
-                        'month' => $record['work']['publication-date']['month']['value'] ?? null,
-                        'day' => $record['work']['publication-date']['day']['value'] ?? null,
-                        'type' => ucwords(strtolower(str_replace('_', ' ', $record['work']['type']))),
-                        'journal_title' => $record['work']['journal-title']['value'] ?? null,
-                        'doi'  => $doi ?? null,
-                        'eid' => $eid ?? null,
-                        'authors' => $authors,
-                        'apa_formatted_authors' => ProfileData::formatAuthorsApa($authors),
-                        'status' => 'Published',
-                        'citation-type' => $record['work']['type'] ?? null,
-                        'citation-value' => $record['work']['value'] ?? null,
-                        'visibility' => $record['work']['visibility'],
-                    ],
-                ]);
-            }
-        }
-
-      Cache::tags(['profile_data'])->flush();
-
-      //ran through process successfully
-      return true;
+        //ran through process successfully
+        return true;
     }
 
-
-
+    
     public function updateDatum($section, $request)
     {
       $sort_order = count($request->data ?? []) + 1;
