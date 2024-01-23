@@ -12,7 +12,7 @@ class Publication
         'APA',
     ];
 
-    public function formatAuthors(array $author_names): array
+    public static function formatAuthors(array $author_names): array
     {
         $formatted_author_names = [];
         
