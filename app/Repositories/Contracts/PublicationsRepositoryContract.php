@@ -19,33 +19,55 @@ interface PublicationsRepositoryContract
     /**
      * Receive an attribute to get from the API the identifier necessary to retrieve the publications
      * @param string $faculty_id
-     * @return mixed|true
+     * @return string|false
      */
-    public function getPersonId(string $faculty_id = null);
+    public function getPersonId(string $faculty_id = null) :string|false;
 
     /**
-     * Retrieve the publications from the API to return a ProfileData model collection
-     *  @param int $faculty_id
-     *  @return \Illuminate\Database\Eloquent\Collection|false
+     * Get the publications from the API to return a collection of ProfileData
+     *  @return Collection<int, ProfileData>|false
      */
-    public function getPublications();
+    public function getPublications() : Collection|false;
 
     /**
      * Cache publications for the current profile
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function getCachedPublications();
-
-    public function syncPublications();
+    public function getCachedPublications() : Collection|false;
 
     /**
-     * Make a get request to the API
+     * Sync a collection of ProfileData publications
+     * @return bool
      */
-    public function sendRequest(string $url): array|false;
+    public function syncPublications() : bool;
+
+    /**
+     * Get additional publications codes/identifiers from the API
+     * @return array
+     */
+    public function getPublicationsCodes(string $url) : array;
+
+    /**
+     * Get a publication external/additional references
+     * @return array
+     */
+    public function getPublicationReferences(array $record) : array;
+    
+    /**
+     * Return a publication authors names
+     * @return array
+     */
+    public function getPublicationAuthors(array $record) : array;
+
+    /**
+     * Make a get request to the API, returns false if the response returns an error
+     * @param string $url
+     */
+    public function sendRequest(string $url) : array|false;
 
     /**
      * Return the service provider http client
      */
-    public function getHttpClient(): Client;
+    public function getHttpClient() : Client;
 
 }

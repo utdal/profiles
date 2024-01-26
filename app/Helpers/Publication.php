@@ -1,0 +1,219 @@
+<?php
+
+namespace App\Helpers;
+
+use Illuminate\Support\Arr;
+use Spatie\Backup\Tasks\Backup\Zip;
+
+class Publication
+{
+    /** @var array Default citation formats (keyed in order) */
+    const CITATION_FORMAT_AUTHOR_NAMES = [
+        'APA' => ['last_name', 'comma', 'space', 'first_initial', 'space', 'middle_initial'],
+        'MLA' => ['last_name', 'comma', 'space', 'first_name'], // Example ONLY, for testing purposes
+        'Chicago' => ['first_name', 'space', 'last_name'], // Example ONLY, for testing purposes
+    ];
+
+    /** @var array */
+    const CITATION_FORMAT_AUTHOR_NAME_REGEX = [
+        'APA' => "/^[\p{L}ñÑ'., -]+, [\p{Lu}ñÑ]\. ?[\p{Lu}ñÑ]?\.?$/",
+        'MLA' => "/^[\p{L}ñÑ'., -]+, [\p{Lu}ñÑ]\. ?[\p{Lu}ñÑ]?\.?$/", // Example ONLY, for testing purposes
+        'Chicago' => "/^[\p{L}ñÑ'., -]+, [\p{Lu}ñÑ]\. ?[\p{Lu}ñÑ]?\.?$/", // Example ONLY, for testing purposes
+    ];
+
+    /** @var array */
+    const SEPARATORS = [
+        'comma' => ',',
+        'ellipsis' => '...',
+        'ampersand' => '&',
+        'space' => ' ',
+        'period' => '.',
+    ];
+
+    public static function citationFormats(): array
+    {
+        return static::CITATION_FORMAT_AUTHOR_NAMES;
+    }
+
+    public static function citationFormatRegex(): array
+    {
+        return static::CITATION_FORMAT_AUTHOR_NAME_REGEX;
+    }
+
+    public static function matchesRegexPattern($citation_format, $formatted_author_name) : bool 
+    {
+
+        return preg_match(static::citationFormatRegex()[$citation_format], $formatted_author_name);
+    }
+
+    public static function firstName(array $author_name_array) : string
+    {
+        return $author_name_array[0];
+    }
+
+    public static function lastName(array $author_name_array) : string
+    {
+        if (count($author_name_array) == 3) {
+            return $author_name_array[2];
+        }
+        return Arr::last($author_name_array);
+    }
+
+    public static function middleName(array $author_name_array) : string 
+    {
+        if (count($author_name_array) == 3) {
+            return $author_name_array[1];
+        }
+        return '';
+    }
+
+    public static function initial(string $name) : string 
+    {
+        return strlen($name) > 0 ? "{$name[0]}." : '';
+    }
+
+    /** 
+     * Receives an array of author names, assuming each name is either already formatted or in the form of First Name Middle initial. Last Name
+     * Returns an multidimensional array for the authors names with: formatted name for each citation format, first_name, middle_initial and last_name'
+     * 
+     * @param $author_names
+     * @return array
+    */
+    public static function formatAuthorsNames(array $author_names): array
+    {
+        /** @var array<array> */
+        $formatted_author_names = [];
+        
+        foreach ($author_names as $author_name) {
+            $author_name_values = [];
+            $raw_author_name = trim($author_name);
+            
+            foreach (array_keys(static::citationFormats()) as $key => $citation_format) {
+                $formatted = false; 
+
+                if (!static::matchesRegexPattern($citation_format, $raw_author_name)) {
+                    $formatted_author_name[$citation_format] = static::formatAuthorName($citation_format, $author_name);
+                }
+                else {
+                    $formatted = true; //Already formatted
+                    $formatted_author_name[$citation_format] = ucwords($raw_author_name);
+                }
+            }
+            if (!$formatted) {
+                $author_name_values = static::getAuthorNameValues(explode(" ", $author_name));
+            }
+
+            $formatted_author_names[] = $formatted_author_name + $author_name_values;
+        }
+        return $formatted_author_names;
+    }
+
+    /**
+     * Format an author name according to a given citation format
+     * 
+     * @param $citation_format
+     * @param $full_name
+     * @return string
+     */
+    public static function formatAuthorName($citation_format, $full_name) : string
+    {
+        $result = '';
+        $format_components = static::citationFormats()[$citation_format];
+        $full_name_array = explode(" ", $full_name);
+        $first_name = static::firstName($full_name_array);
+        $middle_name = static::middleName($full_name_array);
+        $last_name = static::lastName($full_name_array);
+        $first_initial = static::initial($first_name);
+        $middle_initial = static::initial($middle_name);
+        $comma = static::SEPARATORS['comma'];
+        $space = static::SEPARATORS['space'];
+
+        foreach ($format_components as $key => $value) {
+            $result = $result . array_values(compact($value))[0];
+        }
+
+        return trim($result);
+    }
+
+    /** 
+     * For an author name, returns an array with first_name, middle_name and last_name'
+     * 
+     * @param $author_name_array
+     * @return array
+     */
+    public static function getAuthorNameValues(array $author_name_array) : array
+    {
+        return [
+            'first_name' => static::firstName($author_name_array),
+            'middle_initial' => static::middleName($author_name_array),
+            'last_name' => static::lastName($author_name_array),
+        ];
+    }
+
+    /**
+     * Return a string with the authors names in APA format
+     * @param array
+     * @return string
+     */
+    public static function formatAuthorsApa(array $authors) : string
+    {
+        $string_authors_names = "";
+        $greater_than_20 = false;
+        $authors_count = count($authors);
+
+        if ($authors_count > 1) {
+            $last = $authors[$authors_count - 1];
+
+            if ($authors_count >= 20) {
+                $greater_than_20 = true;
+                array_splice($authors, 20);
+            }
+            else {
+                array_splice($authors, $authors_count - 1);
+            }
+
+            foreach ($authors as $key => $author) {
+                $string_authors_names = $string_authors_names . $author['APA'];
+
+                if ($key < count($authors) - 1) {
+                    $string_authors_names = $string_authors_names . static::SEPARATORS['comma'] . static::SEPARATORS['space'];
+                } 
+                else {
+                    if ($greater_than_20) {
+                        $string_authors_names = $string_authors_names . static::SEPARATORS['space'] . static::SEPARATORS['ellipsis'] . static::SEPARATORS['space'];
+                    } 
+                    else {
+                        $string_authors_names = $string_authors_names . static::SEPARATORS['space'] . static::SEPARATORS['ampersand'] . static::SEPARATORS['space'];
+                    }
+                    $string_authors_names = "{$string_authors_names} {$last['APA']}";
+                }
+            }
+        }
+        else {
+            $string_authors_names = $authors[0]['APA'];
+        }
+
+        return $string_authors_names;
+    }
+
+    /**
+     * Return a string with the authors names in MLA format
+     * @param array
+     * @return string
+     */
+    public static function formatAuthorsMla(array $authors)
+    {
+        
+    }
+
+    /**
+     * Return a string with the authors names in Chicago format
+     * @param array
+     * @return string
+     */
+    public static function formatAuthorsChicago(array $authors)
+    {
+
+    }
+
+}

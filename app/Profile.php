@@ -178,35 +178,11 @@ class Profile extends Model implements HasMedia, Auditable
         return $this->information()->where('data->orc_id_managed', '1')->exists();
     }
 
-    public function makeApiRequest($url) {
-        $client = new Client();
-
-        $res = $client->get($url, [
-                                'headers' => [
-                                    'Authorization' => 'Bearer ' . config('ORCID_TOKEN'),
-                                    'Accept' => 'application/json'
-                                ],
-                                'http_errors' => false, // don't throw exceptions for 4xx,5xx responses
-                            ]);
-        
-        //Return false if the response returns an error
-        if ($res->getStatusCode() != 200) {
-            return false;
-        }
-
-        return $res;
-    }
-
     public function updateORCID()
     {
         $publicationsManager = new OrcidPublicationsRepository($this);
 
-        $publicationsManager->syncPublications();
-
-        Cache::tags(['profile_data'])->flush();
-
-        //ran through process successfully
-        return true;
+        return $publicationsManager->syncPublications();
     }
 
     

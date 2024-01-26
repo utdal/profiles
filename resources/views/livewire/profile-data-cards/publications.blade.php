@@ -12,7 +12,7 @@
     </h3>
     @foreach($data as $pub)
         <div class="entry">
-            {{ $pub->apa_formatted_authors }} ({{ $pub->year }}) {!! Purify::clean($pub->title) !!}. 
+            {{ $pub->authors_formatted['APA'] }} ({{ $pub->year }}) {!! Purify::clean($pub->title) !!}. 
             @if($pub->url)
                 <a target="_blank" href="{{$pub->url}}">
                     <span title="external link to publication"> {{ $pub->url }}</span>
