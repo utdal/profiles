@@ -62,6 +62,7 @@ interface PublicationsRepositoryContract
     /**
      * Make a get request to the API, returns false if the response returns an error
      * @param string $url
+     * @return array|false
      */
     public function sendRequest(string $url) : array|false;
 
