@@ -569,11 +569,11 @@ class Profile extends Model implements HasMedia, Auditable
     /**
      * Get the profile ORCID ID
      */
-    public function getOrcidAttribute() 
+    public function getOrcidAttribute()
     {
         $orc_id = $this->information()->get(array('data'))->toArray()[0]['data']['orc_id'];
 
-        return $orc_id ?? false;
+        return $orc_id ?? null;
     }
 
     ///////////////

@@ -6,9 +6,11 @@ use App\ProfileData;
 use App\Profile;
 use App\Repositories\Contracts\PublicationsRepositoryContract;
 use GuzzleHttp\Client;
-use Illuminate\Database\Eloquent\Collection;
+use \Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use App\Helpers\Publication;
+
+use function PHPUnit\Framework\isEmpty;
 
 class OrcidPublicationsRepository implements PublicationsRepositoryContract
 {
@@ -33,12 +35,12 @@ class OrcidPublicationsRepository implements PublicationsRepositoryContract
 
     /**
      * Get the publications from the Orcid API to return a collection of ProfileData
-     * @return \Illuminate\Database\Eloquent\Collection|false
+     *  @return Collection<array-key, mixed>|false|null
      */
-    public function getPublications() : Collection|false
+    public function getPublications() : Collection|false|null
     {
-        /** @var Collection<int, ProfileData> */
-        $publications = new Collection();
+        /** @var Collection<array-key, mixed> */
+        $publications = collect();
 
         $orc_id = $this->profile->orcid;
         
@@ -54,7 +56,7 @@ class OrcidPublicationsRepository implements PublicationsRepositoryContract
 
             $string_put_codes = implode(',', $putcodes_set);
 
-            $putcodes_works_data = $this->sendRequest("https://pub.orcid.org/v2.0/" . $orc_id .  "/works/". $string_put_codes);
+            $putcodes_works_data = $this->sendRequest("https://pub.orcid.org/v2.0/$orc_id/works/$string_put_codes");
 
             foreach ($putcodes_works_data['bulk'] as $record) {
 
@@ -79,8 +81,6 @@ class OrcidPublicationsRepository implements PublicationsRepositoryContract
                         'authors' => $authors,
                         'authors_formatted' => [
                             'APA' => Publication::formatAuthorsApa($authors),
-                            'MLA' => Publication::formatAuthorsMla($authors),
-                            'Chicago' => Publication::formatAuthorsChicago($authors),
                         ],
                         'status' => 'Published',
                         'citation-type' => $record['work']['type'] ?? null,
@@ -88,12 +88,10 @@ class OrcidPublicationsRepository implements PublicationsRepositoryContract
                         'visibility' => $record['work']['visibility'],
                     ],
                 ]);
-
                 $publications->push($profile_data);
             }
-            
-            return $publications;
         }
+        return $publications;
     }
 
     /**
@@ -141,9 +139,9 @@ class OrcidPublicationsRepository implements PublicationsRepositoryContract
 
     /**
      * Cache publications for the current profile
-     * @return \Illuminate\Database\Eloquent\Collection|false
+    * @return Collection
      */
-    public function getCachedPublications() : Collection|false
+    public function getCachedPublications() : Collection
     {
         return Cache::remember(
             "profile{$this->profile->id}-orcid-pubs",
@@ -184,7 +182,7 @@ class OrcidPublicationsRepository implements PublicationsRepositoryContract
     /** 
      * Auxiliary method to obtain orcid publications putcodes
      * 
-     * @param string
+     * @param string $url
      * @return array
      */
     public function getPublicationsCodes(string $url) : array
@@ -202,20 +200,20 @@ class OrcidPublicationsRepository implements PublicationsRepositoryContract
      * Return a orcid publication external references codes (doi and eid)
      * and, if the pub url is not present, it takes it from either doi or eid
      * 
-     * @param array
+     * @param array $record
      * @return array
      */
     public function getPublicationReferences(array $record) : array {
         $url = $doi_url = $eid_url = null;
 
         foreach ($record['work']['external-ids']['external-id'] as $ref) {
-            if ($ref['external-id-type'] == "eid") {
+            if ($ref['external-id-type'] == "eid" && $ref['external-id-relationship'] === "SELF") {
                 $eid = $ref['external-id-value'];
-                $eid_url = "https://www.scopus.com/record/display.uri?origin=resultslist&eid=" . $ref['external-id-value'];
+                $eid_url = "https://www.scopus.com/record/display.uri?origin=resultslist&eid=$eid";
             }
-            elseif ($ref['external-id-type'] == "doi") {
+            elseif ($ref['external-id-type'] == "doi" && $ref['external-id-relationship'] === "SELF") {
                 $doi = $ref['external-id-value'];
-                $doi_url = "http://doi.org/" . $ref['external-id-value'];
+                $doi_url = "http://doi.org/$doi";
             }
         }
 
@@ -229,21 +227,19 @@ class OrcidPublicationsRepository implements PublicationsRepositoryContract
     }
 
     /** 
-     * Return an array with a publication authors names
-     * including the formatted name in each citation format
-     * and, if available, first name, last name and middle initial
-     * 
-     * @param array
+     * Return the API contributors names in an array
+     * @param array $record
      * @return array
      */ 
     public function getPublicationAuthors(array $record) : array
     {
         $contributors = collect($record['work']['contributors'])
-                            ->flatten(1)
-                            ->map(fn($author) => $author['credit-name']['value']);
+                        ->flatten(1)
+                        ->map(fn($author) => $author['credit-name']['value']);
+        
+        /** @var array */
+        $contributors_array = count($contributors) > 0 ? $contributors->toArray() :[$this->profile->full_name];
 
-        $contributors_array = count($contributors->toArray()) > 0 ? $contributors->toArray() :[$this->profile->full_name];
-
-        return Publication::formatAuthorsNames($contributors_array);
+        return $contributors_array;
     }
 }

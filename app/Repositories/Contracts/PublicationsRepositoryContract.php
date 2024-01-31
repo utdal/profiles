@@ -4,7 +4,7 @@ namespace App\Repositories\Contracts;
 
 use App\Profile;
 use GuzzleHttp\Client;
-use Illuminate\Database\Eloquent\Collection;
+use \Illuminate\Support\Collection;
 
 interface PublicationsRepositoryContract
 {
@@ -25,15 +25,15 @@ interface PublicationsRepositoryContract
 
     /**
      * Get the publications from the API to return a collection of ProfileData
-     *  @return Collection<int, ProfileData>|false
+     *  @return Collection<array-key, mixed>|false
      */
-    public function getPublications() : Collection|false;
+    public function getPublications() : Collection|false|null;
 
     /**
      * Cache publications for the current profile
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
-    public function getCachedPublications() : Collection|false;
+    public function getCachedPublications() : Collection;
 
     /**
      * Sync a collection of ProfileData publications
@@ -52,11 +52,12 @@ interface PublicationsRepositoryContract
      * @return array
      */
     public function getPublicationReferences(array $record) : array;
-    
-    /**
-     * Return a publication authors names
+
+    /** 
+     * Return the publication contributors names in an array
+     * @param array $record
      * @return array
-     */
+     */ 
     public function getPublicationAuthors(array $record) : array;
 
     /**
