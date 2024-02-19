@@ -55,6 +55,7 @@ $utd-warm-gray8:		#8B8178;
 $utd-warm-gray10:		#766A62;
 
 $gray-base:              #000 !default;
+$neutral-gray:           #919191 !default;
 $gray-darker:            lighten($gray-base, 13.5%) !default; // #222
 $gray-dark:              lighten($gray-base, 20%) !default;   // #333
 $gray:                   lighten($gray-base, 33.5%) !default; // #555

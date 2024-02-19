@@ -9480,6 +9480,7 @@ label.completed a {
 
 .form-control {
   margin-bottom: 20px;
+  border-color: #919191;
 }
 .form-control.custom-file {
   border: 0;
