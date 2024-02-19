@@ -46,7 +46,9 @@
 	@if (Session::has('flash_message'))
 		@include('alert', ['message' => session('flash_message'), 'type' => session('flash_message_type', 'success')])
 	@endif
-	@yield('content')
+	<div role="main">
+		@yield('content')
+	</div>
 	@yield('footer')
 	<div id="footer-container" class="full-width" style="background-image:url('{{asset('/img/60-lines.png')}}');">
 		<footer class="container">
