@@ -56,7 +56,7 @@
 
                         <div class="form-group row justify-content-center">
                             <div class="col-md-4 offset-md-3">
-                                <button type="submit" class="btn btn-primary btn-block" style="margin-right: 15px;">
+                                <button type="submit" class="btn btn-success btn-block" style="margin-right: 15px;">
                                     <i class="fas fa-sign-in-alt"></i> Login
                                 </button>
                             </div>
