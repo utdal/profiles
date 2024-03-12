@@ -72,33 +72,34 @@
 	@yield('scripts')
 	@stack('scripts')
 	@if(isset($settings['primary_color']) || isset($settings['secondary_color']) || isset($settings['tertiary_color'] ))
-	<style>
-		.bg-primary, .btn-primary, .dropdown-item:active, .badge-primary, .page-item.active .page-link, input:checked + .slider{
-			background-color: {{ $settings['primary_color'] ?? '#008542' }} !important;
-			border-color: {{ $settings['primary_color'] ?? '#008542' }};
-		}
-		.profile h6{
-			color: {{ $settings['secondary_color'] ?? '#C75B12' }};
-		}
-		h1, h2, h3, h5, .page-link{
-			color: {{ $settings['primary_color'] ?? '#008542' }};
-		}
-		a, #home-top #home-search a:hover, #home-top #home-search a:active{
-			color: {{ $settings['primary_color'] ?? '#008542' }};
-		}
-		#stats{
-			background-color: {{ $settings['secondary_color'] ?? '#C75B12' }};
-		}
-		.btn-success, .btn-success:active, .btn-success:hover, .btn-success:not(:disabled):not(.disabled):active, .btn-success:not(:disabled):not(.disabled).active, .show > .btn-success.dropdown-toggle{
-			background-color: {{ $settings['tertiary_color'] ?? '#69BE28' }};
-		}
-		#home-top #home-search a{
-			color: {{ $settings['secondary_color'] ?? '#C75B12' }};
-		}
-		#footer-container{
-			border-color: {{ $settings['tertiary_color'] ?? '#69BE28' }};
-		}
-	</style>
+		<style>
+			.bg-primary, .btn-primary, .dropdown-item:active, .badge-primary, .page-item.active .page-link, input:checked + .slider {
+				background-color: {{ $settings['primary_color'] ?? '#154734' }} !important;
+				border-color: {{ $settings['primary_color'] ?? '#154734' }};
+			}
+			h1, h2, h3, h5, .page-link {
+				color: {{ $settings['primary_color'] ?? '#154734' }};
+			}
+			.profile h6{
+				/* color: {{ $settings['secondary_color'] ?? '#C75B12' }}; */
+				color: {{ $settings['secondary_color'] ?? '#C95100' }};
+			}
+			a, #home-top #home-search a:hover, #home-top #home-search a:active {
+				color: {{ $settings['primary_color'] ?? '#154734' }};
+			}
+			#stats {
+				background-color: {{ $settings['secondary_color'] ?? '#C95100' }};
+			}
+			.btn-success, .btn-success:active, .btn-success:hover, .btn-success:not(:disabled):not(.disabled):active, .btn-success:not(:disabled):not(.disabled).active, .show > .btn-success.dropdown-toggle {
+				background-color: {{ $settings['tertiary_color'] ?? '#34827A' }};
+			}
+			#home-top #home-search a {
+				color: {{ $settings['secondary_color'] ?? '#C95100' }};
+			}
+			#footer-container {
+				border-color: {{ $settings['tertiary_color'] ?? '#34827A' }};
+			}
+		</style>
 	@endif
 </body>
 </html>

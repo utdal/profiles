@@ -73,7 +73,6 @@ label.completed {
 
 .form-control {
 	margin-bottom: 20px;
-	border-color: $neutral-gray;
 
 	&.custom-file {
 		border: 0;
@@ -184,6 +183,10 @@ input[type="radio"], input[type="checkbox"]{
 	.subform {
 		margin-bottom: 0;
 	}
+
+	.form-control {
+		border: 1px solid #777;
+	}
 }
 
 // Font-Awesome Overrides
@@ -203,10 +206,10 @@ div.container a{
 }
 
 a.edit {
-	color: $utd-sapling-green;
+	color: $utd-eco-green;
 
 	@include hover {
-		color: lighten($utd-sapling-green, 5%);
+		color: lighten($utd-eco-green, 5%);
 	}
 }
 
@@ -411,8 +414,8 @@ input[type="file"]:invalid{
 //footer
 
 #footer-container{
-	background-color: $utd-warm-gray6;
-	border-top: 10px solid $utd-sapling-green;
+	background-color: $gray-neutral;
+	border-top: 10px solid $utd-eco-green;
 	min-height: 350px;
 	margin-top: 100px;
 }
@@ -420,7 +423,7 @@ input[type="file"]:invalid{
 footer{
 	padding: 120px 10px;
 	color: white;
-	font-size: 1.25rem;
+	font-size: 1.2rem;
 	text-align: center;
 
 	a{
@@ -430,7 +433,7 @@ footer{
 			font-size: .75rem;
 		}
 		&:hover{
-			color: $utd-sapling-green;
+			color: $utd-eco-green;
 		}
 	}
 }
@@ -467,7 +470,7 @@ footer > ul{
 	margin-bottom: -100px;
 }
 #stats{
-	background-color: $utd-flame-orange;
+	background-color: $utd-web-orange;
 	color: white;
 	min-height: 200px;
 	opacity: .93;
@@ -500,10 +503,10 @@ footer > ul{
 		}
 
 		a{
-			color: $utd-sapling-green;
+			color: $utd-eco-green;
 		}
 		a:hover, a:active{
-			color: $utd-flame-orange;
+			color: $utd-web-orange;
 		}
 
 		#search-terms{
