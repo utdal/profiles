@@ -13,17 +13,18 @@
 </div>
 
 <div class="mb-3">
-    {!! Form::label('research_profile[schools][]', 'Which school(s) would you like to do research within?', ['class' => 'form-label']) !!}
-    <small class="form-text text-muted mb-2">Selecting a school here allows this form to include any school-specific questions that professors might have for you.</small>
-    <fieldset class="ml-3">
+    <fieldset>
+        <legend class="student-form-legend" id="school-selection">Which school(s) would you like to do research within?</legend>
+        <small class="form-text text-muted mb-2">Selecting a school here allows this form to include any school-specific questions that professors might have for you.</small>
         @foreach($schools as $school_shortname => $school_displayname)
-            <div class="form-check">
+            <div class="form-check ml-3">
                 {!! Form::checkbox(
                     "research_profile[schools][]",
                     "$school_shortname",
                     in_array($school_shortname, $student->research_profile->schools ?? []),
                     [
                         'id' => "data_school_$school_shortname",
+                        'aria-describedby' => "school-selection",
                         'class' => 'form-check-input ml-n3',
                         'data-toggle' => 'show',
                         'data-toggle-target' => "#school_custom_questions_{$school_shortname}"
@@ -122,13 +123,11 @@
 
 <div class="mb-3">
     <div class="mb-3">
-        <strong class="mr-5">Select your spoken languages:</strong>
-    </div>
-    <div class="mb-3">
         <fieldset>
+            <legend class="student-form-legend" id="language-selection">Select your spoken languages:</legend>
             @foreach($languages as $key => $value)
                 <div class="form-check form-check-inline">
-                    {!! Form::checkbox("research_profile[languages][]", $key, in_array($key, $student->research_profile->languages ?? []), ['id' => "data_language_$key", 'class' => 'form-check-input', 'data-toggle' => 'show', 'data-toggle-target' => "#language_{$key}_subform"]) !!}
+                    {!! Form::checkbox("research_profile[languages][]", $key, in_array($key, $student->research_profile->languages ?? []), ['id' => "data_language_$key", 'class' => 'form-check-input', 'aria=describedby' => 'language-selection', 'data-toggle' => 'show', 'data-toggle-target' => "#language_{$key}_subform"]) !!}
                     {!! Form::label("data_language_$key", $value, ['class' => 'form-check-label']) !!}
                 </div>
             @endforeach
