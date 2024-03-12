@@ -2,6 +2,7 @@
 @section('title', 'Home')
 @section('header')
 	@include('nav')
+	<h1 class="sr-only">Profiles</h1>
 @stop
 @section('content')
 
