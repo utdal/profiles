@@ -53,7 +53,7 @@
                 @endcan
             </div>
         </div>
-        <div class="col-md-4 stats alert alert-primary">
+        <div class="col-md-4 stats alert alert-success">
             <dl class="row mb-0">
                 <dt class="col-sm-4">
                     last updated
