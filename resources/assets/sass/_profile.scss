@@ -16,6 +16,17 @@
 			font-size: 1.05rem;
 			margin-top: 1.7rem;
 		}
+
+		.tags {
+			ul {
+				display: inline;
+				padding-inline-start: 0px;
+			}
+
+			li {
+				display: inline;
+			}
+		}
 	}
 
 	.profile_photo {

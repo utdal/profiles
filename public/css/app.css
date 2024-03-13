@@ -10091,6 +10091,13 @@ footer > ul {
   font-size: 1.05rem;
   margin-top: 1.7rem;
 }
+.profile .profile-header .tags ul {
+  display: inline;
+  padding-inline-start: 0px;
+}
+.profile .profile-header .tags li {
+  display: inline;
+}
 .profile .profile_photo {
   width: 100%;
   height: auto;
