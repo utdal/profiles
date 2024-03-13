@@ -71,6 +71,7 @@ class ProfileDataFactory extends Factory
                     'url' => $this->faker->url(),
                     'title' => $this->faker->sentence(),
                     'year' => $this->faker->year(),
+                    'authors_formatted' => ['APA' => $this->faker->paragraph()],
                 ],
             ];
         });
