@@ -654,6 +654,11 @@ if ((typeof Livewire === "undefined" ? "undefined" : _typeof(Livewire)) === 'obj
   });
 }
 
+// Adds aria-label attribute to links that open in a new tab
+$('a[target="_blank"]').each(function () {
+  $(this).attr('aria-label', $(this).text() + ' (opens in new tab)');
+});
+
 /***/ }),
 
 /***/ "./resources/assets/js/bootstrap.js":
