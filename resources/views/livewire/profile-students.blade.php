@@ -54,7 +54,7 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="studentNameSearch">Name</label>
-                                <input wire:model.debounce.250ms="search_filter" type="text" id="studentNameSearch" class="form-control" placeholder="Search...">
+                                <input wire:model.debounce.250ms="search_filter" type="text" id="studentNameSearch" class="form-control" placeholder="Search..." autocomplete="name">
                             </div>
                             <div class="form-group">
                                 <label for="studentSemesterSearch">Semester</label>

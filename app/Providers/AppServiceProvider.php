@@ -23,7 +23,8 @@ class AppServiceProvider extends ServiceProvider
         //register modified paginator view as default
         Paginator::defaultView('vendor.pagination.default');
         Paginator::defaultSimpleView('vendor.pagination.simple-default');
-
+        Paginator::useBootstrap();
+        
         Form::component('inlineErrors', 'errors.inline', ['field_name']);
 
         View::composer([

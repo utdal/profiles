@@ -19,3 +19,19 @@
 	color: white;
 	text-decoration: underline;
 }
+
+.student-form-legend {
+	font-size: medium;
+	font-weight: 700;
+}
+
+fieldset.subform {
+	position: relative !important;
+
+	legend {
+		position: relative;
+		top: 1.25em;
+		margin-bottom: 1.0em;
+		color: $primary;
+	}
+}

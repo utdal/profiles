@@ -2,6 +2,7 @@
 @section('title', 'Login')
 @section('header')
     @include('nav')
+    <h1 class="sr-only">Profiles</h1>
 @stop
 
 @section('content')
@@ -33,7 +34,7 @@
                             </label>
                             <div class="col-md-7">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" aria-label="Username">
+                                    <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" aria-label="Username" autocomplete="username">
                                 </div>
                             </div>
                         </div>
@@ -41,7 +42,7 @@
                         <div class="form-group row justify-content-center">
                             <label class="col-md-3 col-form-label text-md-right" for="password">Password</label>
                             <div class="col-md-7">
-                                <input type="password" class="form-control" id="password" name="password">
+                                <input type="password" class="form-control" id="password" name="password" autocomplete="current-password">
                             </div>
                         </div>
 

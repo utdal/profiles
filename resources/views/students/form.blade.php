@@ -13,17 +13,18 @@
 </div>
 
 <div class="mb-3">
-    {!! Form::label('research_profile[schools][]', 'Which school(s) would you like to do research within?', ['class' => 'form-label']) !!}
-    <small class="form-text text-muted mb-2">Selecting a school here allows this form to include any school-specific questions that professors might have for you.</small>
-    <fieldset class="ml-3">
+    <fieldset>
+        <legend class="student-form-legend" id="school-selection">Which school(s) would you like to do research within?</legend>
+        <small class="form-text text-muted mb-2">Selecting a school here allows this form to include any school-specific questions that professors might have for you.</small>
         @foreach($schools as $school_shortname => $school_displayname)
-            <div class="form-check">
+            <div class="form-check ml-3">
                 {!! Form::checkbox(
                     "research_profile[schools][]",
                     "$school_shortname",
                     in_array($school_shortname, $student->research_profile->schools ?? []),
                     [
                         'id' => "data_school_$school_shortname",
+                        'aria-describedby' => "school-selection",
                         'class' => 'form-check-input ml-n3',
                         'data-toggle' => 'show',
                         'data-toggle-target' => "#school_custom_questions_{$school_shortname}"
@@ -54,7 +55,7 @@
 </div>
 
 <div class="mb-3">
-    <label for="topics" class="form-label mr-3">Select the research topics that most interest you:</label>
+    <strong >Select the research topics that most interest you:</strong>
     <small class="form-text text-muted mb-1">Give this some thought and be intentional. You may select 1-5 topics. The possible topics may change depending on your school selection above. </small>
     @if($editable)
         <a class="btn btn-success btn-sm" href="#" data-target="#{{ Illuminate\Support\Str::slug($student->getRouteKey()) }}_tags_editor" data-toggle="modal" role="button"><i class="fas fa-tags"></i> Select Tags&hellip;</a>
@@ -65,12 +66,19 @@
 </div>
 
 <div class="mb-3">
-    {!! Form::label('research_profile_faculty[]', 'With which ' . $schools->keys()->implode(' / ') . ' faculty members would you most like to work?', ['class' => 'form-label']) !!}
+    {!! Form::label('research_profile_faculty[]', 'With which ' . $schools->keys()->implode(' / ') . ' faculty members would you most like to work?', ['class' => 'form-label', 'id' => 'profiles-picker-label']) !!}
     <div class="profile-picker">
         @if($editable)
-        <small class="form-text text-muted">Required. Start typing the name of a professor, and select from the list. If you are not sure, please take some time to read the faculty profiles and learn about their research areas and current projects. You may click on the tags/research topics you selected above to view a list of faculty whose research interests are aligned with that topic or browse <a href="{{ route('tags.index') }}" target="_blank">all topics <i class="fas fa-external-link-alt"></i></a> or <a href="{{ route('profiles.index') }}" target="_blank">profiles <i class="fas fa-external-link-alt"></i></a>. You can also refer to <a href="{{ route('users.bookmarks.show', ['user' => auth()->user()]) }}" target="_blank">your bookmarks <i class="fas fa-external-link-alt"></i></a>.</small>
-        <small class="form-text text-muted">There are typically more applicants for each lab than there are positions available and not every lab has open positions each semester, so please select at least 4 faculty with whom you would like to work. You may select a maximum of 8.</small>
-        <i class="fas fa-users" aria-hidden="true"></i> {!! Form::select('faculty[]', $student->faculty->pluck('full_name', 'id')->all(), $student->faculty->pluck('id')->all() ?? [], ['id' => 'research_profile_faculty[]', 'multiple', 'required'] + ($schools->isNotEmpty() ? ['data-school' => $schools->keys()->implode(';')] : [])) !!}
+            <small class="form-text text-muted">Required. Start typing the name of a professor, and select from the list. If you are not sure, please take some time to read the faculty profiles and learn about their research areas and current projects. You may click on the tags/research topics you selected above to view a list of faculty whose research interests are aligned with that topic or browse <a href="{{ route('tags.index') }}" target="_blank">all topics <i class="fas fa-external-link-alt"></i></a> or <a href="{{ route('profiles.index') }}" target="_blank">profiles <i class="fas fa-external-link-alt"></i></a>. You can also refer to <a href="{{ route('users.bookmarks.show', ['user' => auth()->user()]) }}" target="_blank">your bookmarks <i class="fas fa-external-link-alt"></i></a>.</small>
+            <small class="form-text text-muted">There are typically more applicants for each lab than there are positions available and not every lab has open positions each semester, so please select at least 4 faculty with whom you would like to work. You may select a maximum of 8.</small>
+            <i class="fas fa-users" aria-hidden="true"></i> 
+            {!! Form::select('faculty[]', $student->faculty->pluck('full_name', 'id')->all(), $student->faculty->pluck('id')->all() ?? [], [
+                'id' => 'research_profile_faculty[]', 
+                'aria-labelledby' => 'profiles-picker-label',
+                'multiple', 
+                'required',
+                ] + ($schools->isNotEmpty() ? ['data-school' => $schools->keys()->implode(';')] : [])) 
+            !!}
         @else
             <i class="fas fa-users" aria-hidden="true"></i><span class="sr-only">Faculty:</span> 
             @foreach($student->faculty as $faculty)
@@ -81,7 +89,7 @@
 </div>
 
 <div class="mb-3">
-    <strong class="mr-5">Which semesters are you applying for?</strong>
+    <strong class="mr-3">Which semesters are you applying for?</strong>
     @php($semesters = $editable ? App\Helpers\Semester::currentAndNext(3) : $student->research_profile->semesters ?? [])
     @foreach($semesters as $i => $semester)
         <div class="form-check form-check-inline">
@@ -122,13 +130,11 @@
 
 <div class="mb-3">
     <div class="mb-3">
-        <strong class="mr-5">Select your spoken languages:</strong>
-    </div>
-    <div class="mb-3">
         <fieldset>
+            <legend class="student-form-legend" id="language-selection">Select your spoken languages:</legend>
             @foreach($languages as $key => $value)
                 <div class="form-check form-check-inline">
-                    {!! Form::checkbox("research_profile[languages][]", $key, in_array($key, $student->research_profile->languages ?? []), ['id' => "data_language_$key", 'class' => 'form-check-input', 'data-toggle' => 'show', 'data-toggle-target' => "#language_{$key}_subform"]) !!}
+                    {!! Form::checkbox("research_profile[languages][]", $key, in_array($key, $student->research_profile->languages ?? []), ['id' => "data_language_$key", 'class' => 'form-check-input', 'aria=describedby' => 'language-selection', 'data-toggle' => 'show', 'data-toggle-target' => "#language_{$key}_subform"]) !!}
                     {!! Form::label("data_language_$key", $value, ['class' => 'form-check-label']) !!}
                 </div>
             @endforeach
@@ -142,7 +148,7 @@
                 <div class="row">
                     @if($key === 'other')
                         <div class="col-lg-2">
-                            {!! Form::text("research_profile[language_other_name]", $student->research_profile->language_other_name, ['class' => 'form-control mb-0', 'placeholder' => 'Please specify...']) !!}
+                            {!! Form::text("research_profile[language_other_name]", $student->research_profile->language_other_name, ['class' => 'form-control mb-0', 'placeholder' => 'Please specify...', 'aria-label' => 'Other language']) !!}
                         </div>
                     @else
                         <strong class="col-lg-2">{{ $value }}</strong>

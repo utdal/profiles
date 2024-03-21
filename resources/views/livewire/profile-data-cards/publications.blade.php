@@ -5,7 +5,7 @@
             @if($profile->hasOrcidManagedPublications())
                 <i class="fas fa-sync"></i> Sync
             @else
-                <i class="fas fa-edit"></i> Edit
+                <i class="fas fa-edit" aria-label="Edit Publications"></i> Edit
             @endif
         </a>
         @endif
