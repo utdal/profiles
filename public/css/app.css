@@ -10007,6 +10007,49 @@ footer > ul {
   z-index: -100;
 }
 
+.control-bt {
+  position: absolute;
+  height: 45px;
+  width: 45px;
+  bottom: 33%;
+  right: 15px;
+  background-color: #D5D2CA;
+  border: 4px solid #000;
+  opacity: 55%;
+  z-index: 1000;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: opacity 0.3s ease-in-out;
+}
+.control-bt span {
+  width: 24px;
+  height: 24px;
+  fill: #fff;
+  margin-top: -0.1rem;
+}
+.control-bt span:first-of-type {
+  margin-left: 0.1rem;
+}
+@media (max-width: 1199.98px) and (hover: none) {
+  .control-bt span {
+    margin-left: -11px;
+  }
+  .control-bt span:first-of-type {
+    margin-left: -9px;
+  }
+}
+.control-bt.pause span:first-of-type {
+  display: none;
+}
+.control-bt.play span:last-of-type {
+  display: none;
+}
+@media (max-width: 991.98px) {
+  .control-bt {
+    display: none;
+  }
+}
+
 .navbar.main-nav .navbar-brand {
   display: flex;
   align-items: center;

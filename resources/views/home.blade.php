@@ -7,12 +7,20 @@
 @section('content')
 
 @if(File::exists(public_path('/storage/video/home.jpg')) && File::exists(public_path('/storage/video/home.mp4')))
-	<video autoplay muted loop
-		id="home-video"
-		poster="{{asset('storage/video/home.jpg')}}"
-	>
-		<source src="{{asset('storage/video/home.mp4')}}" type="video/mp4">
-</video>
+	<div class="video-cover">
+			<button class="control-bt pause" aria-label="Video Playing.">
+				<span><i class="fas fa-play"></i></span>
+				<span><i class="fas fa-pause"></i></span>
+			</button>
+		<p id="video-description" class="sr-only">Scenes of campus buildings</p>
+		<p id="img-description" class="sr-only">Scenes of campus buildings</p>
+		<video autoplay muted loop
+			id="home-video"
+			poster="{{asset('storage/video/home.jpg')}}"
+		>
+			<source src="{{asset('storage/video/home.mp4')}}" type="video/mp4">
+		</video>
+	</div>
 @endif
 
 <div id="home-top" class="full-width d-flex justify-content-around justify-content-md-around align-items-center flex-wrap">
