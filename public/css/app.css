@@ -9932,7 +9932,7 @@ footer > ul {
   position: relative;
   left: 50%;
   margin-left: -50vw;
-  padding: 5px 10px 30px;
+  padding: 10px;
 }
 
 #home-bottom {
@@ -9964,7 +9964,8 @@ footer > ul {
   }
 }
 #home-top #home-search {
-  padding: 40px 65px 70px;
+  padding: 40px 65px 40px;
+  opacity: 0.97;
   width: 42rem;
 }
 #home-top #home-search .search:focus {
@@ -9975,7 +9976,10 @@ footer > ul {
   display: none;
 }
 #home-top #home-search #search-terms {
-  padding-top: 20px;
+  padding: 20px 0;
+}
+#home-top #home-search #search-terms .badge {
+  font-size: 92%;
 }
 #home-top #home-search .terms {
   padding: 10px 0px;

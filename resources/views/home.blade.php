@@ -26,14 +26,14 @@
 <div id="home-top" class="full-width d-flex justify-content-around justify-content-md-around align-items-center flex-wrap">
 
 	<div id="home-search" class="card info">
-		<h3>Find an expert by <a href="/browse" onclick="javascript:$('#home-search form').show(); $('#home-search .search').focus(); return false;">name or keyword</a>&hellip;</h3>
+		<h3><i class="fas fa-search"></i> Find an expert by <a href="/browse" onclick="javascript:$('#home-search form').show(); $('#home-search .search').focus(); return false;">name or keyword</a> <i class="fas fa-caret-right"></i></h3>
 		@include('_search')
 		<div id="search-terms">
-				@foreach($tags as $tag)
-					<a href="{{ route('profiles.index', ['search' => $tag->name]) }}"><span class="badge tags-badge">{{ $tag->name }}</span></a>
-				@endforeach
-					<a href="{{ route('tags.index') }}"><span class="badge tags-badge">more...</span></a>
+			@foreach($tags as $tag)
+				<a href="{{ route('profiles.index', ['search' => $tag->name]) }}"><span class="badge tags-badge">{{ $tag->name }}</span></a>
+			@endforeach
 		</div>
+		<h3><i class="fas fa-lightbulb"></i> Explore our <a href="{{ route('tags.index') }}">expertise</a> <i class="fas fa-caret-right"></i></h3>
 	</div>
 
 </div>

@@ -8,7 +8,7 @@ $home-top-height: 60vh;
     position: relative;
     left: 50%;
     margin-left: -50vw;
-    padding: 5px 10px 30px;
+    padding: 10px;
 }
 
 #home-bottom {
@@ -40,7 +40,8 @@ $home-top-height: 60vh;
     }
 
     #home-search {
-        padding: 40px 65px 70px;
+        padding: 40px 65px 40px;
+        opacity: 0.97;
         width: 42rem;
 
         .search:focus {
@@ -53,9 +54,14 @@ $home-top-height: 60vh;
         }
 
         #search-terms {
-            padding-top: 20px;
+            padding: 20px 0;
+
+            .badge {
+                font-size: 92%;
+            }
         }
-        .terms{
+
+        .terms {
             padding: 10px 0px;
         }
     }
