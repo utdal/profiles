@@ -1,4 +1,8 @@
+@use "sass:map";
+
 // homepage
+$home-top-height: 60vh;
+
 .full-width {
     width: 100vw;
     position: relative;
@@ -29,7 +33,7 @@
 #home-top {
     background-size: cover;
     color: white;
-    min-height: 60vh;
+    min-height: $home-top-height;
 
     @media (max-width: map-get($grid-breakpoints, lg)) {
             min-height: 35vh;
@@ -83,11 +87,13 @@
 }
 
 .control-bt {
+    $video-btn-size: 45px;
+    $video-btn-spacing: map.get($spacers, 3);
     position: absolute;
-    height: 45px;
-    width: 45px;
-    bottom: 33%;
-    right: 15px;
+    height: $video-btn-size;
+    width: $video-btn-size;
+    top: calc(76px + #{$home-top-height} - #{$video-btn-size} - #{$video-btn-spacing});
+    right: $video-btn-spacing;
     background-color: $utd-warm-gray2;
     border: 4px solid $black;
     opacity: 55%;
