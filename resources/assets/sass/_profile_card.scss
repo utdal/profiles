@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .profile-card {
     margin-bottom: 2rem;
     width: 16rem;
@@ -5,6 +7,11 @@
 
     .card-title {
         margin-top: 0;
+    }
+
+    .card-footer {
+        color: color.scale($link-color, $lightness: -4.5%);
+        text-decoration: none;
     }
 
     @media (max-width: map-get($grid-breakpoints, lg)){

@@ -141,11 +141,12 @@ $body-bg:               #fff !default;
 $text-color:            $gray-800 !default;
 
 //** Global textual link color.
-$link-color:            $primary !default;
+$link-color:            $utd-web-orange !default;
+$link-decoration:       underline !default;
 //** Link hover color set via `darken()` function.
 $link-hover-color:      $utd-flame-orange !default;
 //** Link hover decoration.
-$link-hover-decoration: none !default;
+$link-hover-decoration: underline !default;
 
 //** Font family
 $font-family-sans-serif:      Roboto, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;
@@ -240,7 +241,8 @@ $navbar-dark-disabled-color:        rgba($white, .5) !default;
 $breadcrumb-bg:                     $gray-100 !default;
 $breadcrumb-active-color:           color.scale($gray-600, $lightness: -2%) !default;
 $breadcrumb-divider-color:          $breadcrumb-active-color !default;
-$breadcrumb-link-color:             color.scale($primary, $lightness: -1%) !default;
+$breadcrumb-link-color:             color.scale($link-color, $lightness: -3.5%) !default;
+$breadcrumb-link-hover-color:       $link-hover-color !default;
 
 $breadcrumb-margin-bottom:          0 !default;
 

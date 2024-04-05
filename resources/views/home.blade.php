@@ -26,7 +26,7 @@
 <div id="home-top" class="full-width d-flex justify-content-around justify-content-md-around align-items-center flex-wrap">
 
 	<div id="home-search" class="card info">
-		<h3>Find an expert by <a href="/browse" onclick="javascript:$('#home-search form').show(); $('#home-search .search').focus(); return false;">name or keyword...</a></h3>
+		<h3>Find an expert by <a href="/browse" onclick="javascript:$('#home-search form').show(); $('#home-search .search').focus(); return false;">name or keyword</a>&hellip;</h3>
 		@include('_search')
 		<div id="search-terms">
 				@foreach($tags as $tag)
