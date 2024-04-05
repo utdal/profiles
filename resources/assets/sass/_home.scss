@@ -44,11 +44,6 @@ $home-top-height: 60vh;
         opacity: 0.97;
         width: 42rem;
 
-        .search:focus {
-            border-color: $gray-400;
-            box-shadow: none;
-        }
-
         form {
             display: none;
         }

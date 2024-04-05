@@ -22,26 +22,6 @@
         }
     }
 
-    .search {
-
-        input {
-            font-size: 1rem;
-            height: inherit;
-            border-radius: $border-radius-search 0 0 $border-radius-search;
-
-            &:focus {
-                box-shadow: inherit;
-                border: $input-border-width solid $input-border-color;
-                z-index: inherit;
-            }
-        }
-
-        button {
-            border-radius: 0 $border-radius-search $border-radius-search 0;
-            border: 1.1px solid $gray-neutral-darker;
-        }
-    }
-
     .header_thumb {
         max-height: 35px;
         margin: -13px 5px -8px 0;
