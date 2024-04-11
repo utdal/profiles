@@ -1,10 +1,21 @@
-h1, h2 {
+h1, h2, .h1, .h2 {
 	margin-top: $line-height-computed * 2.5;
 	margin-bottom: $line-height-computed * 2;
 }
 h3, h4, h5, h6{
 	margin-top: $line-height-computed * 1;
 	margin-bottom: $line-height-computed * .75;
+}
+
+a {
+	// variant link colors for contrast
+	.bg-light &.nav-link:not(.active) {
+		color: $link-color-on-gray-bg;
+	}
+
+	.alert &:not(.alert-link):not(.btn) {
+		color: $link-color-on-grayest-bg;
+	}
 }
 
 img{
@@ -84,22 +95,41 @@ label.completed {
     clear:both;
 }
 
+.btn-link {
+	text-decoration: none;
+
+	&:hover, &:focus {
+		text-decoration: none;
+	}
+
+	.card-header & {
+		color: $link-color-on-gray-bg;
+	}
+
+	.bg-light .card.bg-transparent .card-header & {
+		color: $link-color-on-grayer-bg;
+	}
+}
 
 // lighten buttons and badges on hover instead of default bootstrap darken
-@each $color, $value in $theme-colors {
+@each $color, $value in $btn-colors {
 	$button_hover_lighten_by: if($color == 'light', 1%, 5%);
 	$button_hover_color: lighten($value, $button_hover_lighten_by);
 	.btn-#{$color} {
-		@include hover {
-			background-color: $button_hover_color;
-			border-color: $button_hover_color;
-		}
+		@include button-variant($value, $value, $button_hover_color, $button_hover_color);
 	}
+}
+@each $color, $value in $badge-colors {
+	$badge_hover_lighten_by: if($color == 'light', 1%, 5%);
+	$badge_hover_color: lighten($value, $badge_hover_lighten_by);
 	.badge-#{$color} {
-		&[href] {
-			@include hover-focus {
-				background-color: $button_hover_color;
-				border-color: $button_hover_color;
+		color: color-yiq($value);
+		background-color: $value;
+
+		@at-root a#{&} {
+			@include hover-focus() {
+				color: color-yiq($badge_hover_color);
+				background-color: $badge_hover_color;
 			}
 		}
 	}
@@ -180,8 +210,16 @@ input[type="radio"], input[type="checkbox"]{
 	margin-bottom: 15px;
 	clear: both;
 
+	a {
+		color: $link-color-on-gray-bg;
+	}
+
 	.subform {
 		margin-bottom: 0;
+	}
+
+	.form-control {
+		border: 1px solid #777;
 	}
 }
 
@@ -202,10 +240,10 @@ div.container a{
 }
 
 a.edit {
-	color: $utd-sapling-green;
+	color: $utd-eco-green;
 
 	@include hover {
-		color: lighten($utd-sapling-green, 5%);
+		color: lighten($utd-eco-green, 5%);
 	}
 }
 
@@ -407,38 +445,6 @@ input[type="file"]:invalid{
 	}
 }
 
-//footer
-
-#footer-container{
-	background-color: $utd-warm-gray6;
-	border-top: 10px solid $utd-sapling-green;
-	min-height: 350px;
-	margin-top: 100px;
-}
-
-footer{
-	padding: 120px 10px;
-	color: white;
-	font-size: 1.25rem;
-	text-align: center;
-
-	a{
-		color: white;
-
-		&.little{
-			font-size: .75rem;
-		}
-		&:hover{
-			color: $utd-sapling-green;
-		}
-	}
-}
-
-
-footer > ul{
-	list-style: none;
-}
-
 //flash messages
 .flash-container {
 	position: fixed;
@@ -449,92 +455,4 @@ footer > ul{
 }
 .flash-container .flash-message {
 	padding: 30px;
-}
-
-//homepage
-.full-width{
-	width: 100vw;
-	position: relative;
-	left: 50%;
-	margin-left: -50vw;
-	padding: 5px 10px 30px;
-}
-#home-bottom{
-  background-size: cover;
-	min-height: 65vh;
-	padding-top: 10vh;
-	margin-bottom: -100px;
-}
-#stats{
-	background-color: $utd-flame-orange;
-	color: white;
-	min-height: 200px;
-	opacity: .93;
-
-	.col{
-		padding: 55px 40px 60px;
-		text-align: center;
-	}
-}
-#home-top{
-	background-size: cover;
-	color: white;
-	min-height: 60vh;
-
-	@media (max-width: map-get($grid-breakpoints, lg)){
-			min-height: 35vh;
-	}
-
-	#home-search{
-		padding: 40px 65px 70px;
-		width: 42rem;
-
-		.search:focus{
-			border-color: $gray-400;
-			box-shadow: none;
-		}
-
-		form{
-			display: none;
-		}
-
-		a{
-			color: $utd-sapling-green;
-		}
-		a:hover, a:active{
-			color: $utd-flame-orange;
-		}
-
-		#search-terms{
-			padding-top: 20px;
-		}
-		.terms{
-			padding: 10px 0px;
-		}
-	}
-}
-
-.info{
-	background-color: white;
-	padding: 10px 40px;
-	border-radius: 5px;
-	width: 24rem;
-	height: 100%;
-}
-
-.num{
-	font-size: 3.5rem;
-}
-
-.form-inline .input-group{
-	width: 100%;
-}
-
-#home-video{
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    min-width: 100%;
-    min-height: 100%;
-		z-index: -100;
 }

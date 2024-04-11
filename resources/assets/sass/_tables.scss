@@ -1,7 +1,15 @@
 table {
 
+  &.table-striped td a {
+    color: $link-color-on-grayer-bg;
+  }
+
   &.table-live {
     position: relative;
+
+    th a {
+      text-decoration: none;
+    }
 
     .loading-indicator {
       background-color: rgba(0, 0, 0, 0.05);

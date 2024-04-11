@@ -21,7 +21,8 @@ $random_tags = Spatie\Tags\Tag::whereType($model_class)->inRandomOrder()->limit(
             <p>Please type your desired tags, e.g. <strong>{{ $random_tags->implode(', ') }}</strong>, and etc.</p>
             <p>Press the 'enter' key or type a comma (,) after each new tag.</p>
           </div>
-          {!! Form::select($id.'_tags[]', $tags->pluck('name','name')->all(), null, ['id' => $id.'_tags[]', 'multiple', 'data-token' => csrf_token(), 'data-model-name' => $id, 'data-url' => route('tags.api.update'), 'data-model-id' => $model->getKey(), 'data-model' => $model_class]) !!}
+          {!! Form::label($id.'_tags[]', 'Tags:', ['class' => 'form-label', 'id' => 'tags-picker-label']) !!}
+          {!! Form::select($id.'_tags[]', $tags->pluck('name','name')->all(), null, ['id' => $id.'_tags[]', 'multiple', 'data-token' => csrf_token(), 'data-model-name' => $id, 'data-url' => route('tags.api.update'), 'data-model-id' => $model->getKey(), 'data-model' => $model_class, 'aria-labelledby' => 'tags-picker-label',]) !!}
         </div>
       </div>
 

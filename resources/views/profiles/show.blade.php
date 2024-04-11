@@ -42,18 +42,20 @@
 				<div class="@if($information->fancy_header)col-lg-5 @else col-md-7 col-sm-6 @endif">
 					<div class="contact_info">
 
-						<h2 class="mt-sm-0">{{ $profile->name }}
+						<h1 class="mt-sm-0">{{ $profile->name }}
 							@can('delete', $profile)<a class="btn btn-danger btn-sm" href="{{ route('profiles.confirm-delete', [ $profile ]) }}" title="Archive"><i class="fas fa-archive"></i> Archive</a>@endcan 
 							@if($editable)<a class="btn btn-primary btn-sm" href="{{ route('profiles.edit', [$profile->slug, 'information']) }}" title="Edit"><i class="fas fa-edit"></i> Edit</a>@endif
 							<span title="Bookmark"><livewire:bookmark-button :model="$profile"></span>
 							@if(config('pdf.enabled'))
 								@can('export', $profile)<a class="btn btn-primary btn-sm" href="{{ route('profiles.export.pdf', [ $profile ]) }}" title="Export as PDF"><i class="fas fa-download"></i> PDF</a>@endcan
 							@endif
-						</h2>
-						@if($information->distinguished_title) <h6>{{ $information->distinguished_title }}</h6> @endif
-						@if($information->title) <h6>{{ $information->title }}</h6> @endif
-						@if($information->secondary_title) <h6>{{ $information->secondary_title }}</h6> @endif
-						@if($information->tertiary_title) <h6>{{ $information->tertiary_title }}</h6> @endif
+						</h1>
+						<div class="profile-titles">
+							@if($information->distinguished_title) <div class="profile-title">{{ $information->distinguished_title }}</div> @endif
+							@if($information->title) <div class="profile-title">{{ $information->title }}</div> @endif
+							@if($information->secondary_title) <div class="profile-title">{{ $information->secondary_title }}</div> @endif
+							@if($information->tertiary_title) <div class="profile-title">{{ $information->tertiary_title }}</div> @endif
+						</div>
 						@if($information->profile_summary) <p class="profile_summary">{{ $information->profile_summary }}</p> @endif
 							<div>
 								@if($information->email)<i class="fa fa-fw fa-envelope" aria-label="Email address"></i> <a href="#" id="{{ Utils::obfuscateEmailAddress($information->email) }}" data-evaluate="profile-eml">&nbsp;</a><br>@endif

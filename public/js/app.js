@@ -8,7 +8,7 @@
 
 /* provided dependency */ var jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/src/jquery.js");
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/src/jquery.js");
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
@@ -187,45 +187,45 @@ var profiles = function ($, undefined) {
       }
       var new_item = item_template.cloneNode(true);
       new_item.dataset.rowId = new_id;
-      (_new_item$querySelect = new_item.querySelectorAll('input:not([type="button"]), textarea, select')) === null || _new_item$querySelect === void 0 ? void 0 : _new_item$querySelect.forEach(function (el) {
+      (_new_item$querySelect = new_item.querySelectorAll('input:not([type="button"]), textarea, select')) === null || _new_item$querySelect === void 0 || _new_item$querySelect.forEach(function (el) {
         el.id = el.id.replace(old_id, new_id);
         el.setAttribute('name', el.name.replace(old_id, new_id));
         el.setAttribute('value', '');
         el.value = '';
       });
-      (_new_item$querySelect2 = new_item.querySelectorAll("input[type=\"hidden\"][name$=\"[id]\"]")) === null || _new_item$querySelect2 === void 0 ? void 0 : _new_item$querySelect2.forEach(function (el) {
+      (_new_item$querySelect2 = new_item.querySelectorAll("input[type=\"hidden\"][name$=\"[id]\"]")) === null || _new_item$querySelect2 === void 0 || _new_item$querySelect2.forEach(function (el) {
         el.id = el.name;
         el.value = new_id;
       });
-      (_new_item$querySelect3 = new_item.querySelectorAll('label')) === null || _new_item$querySelect3 === void 0 ? void 0 : _new_item$querySelect3.forEach(function (el) {
+      (_new_item$querySelect3 = new_item.querySelectorAll('label')) === null || _new_item$querySelect3 === void 0 || _new_item$querySelect3.forEach(function (el) {
         var _el$getAttribute;
         el.setAttribute('for', (_el$getAttribute = el.getAttribute('for')) === null || _el$getAttribute === void 0 ? void 0 : _el$getAttribute.replace(old_id, new_id));
       });
-      (_new_item$querySelect4 = new_item.querySelectorAll('trix-editor')) === null || _new_item$querySelect4 === void 0 ? void 0 : _new_item$querySelect4.forEach(function (el) {
+      (_new_item$querySelect4 = new_item.querySelectorAll('trix-editor')) === null || _new_item$querySelect4 === void 0 || _new_item$querySelect4.forEach(function (el) {
         el.setAttribute('input', el.getAttribute('input').replace(old_id, new_id));
       });
-      (_new_item$querySelect5 = new_item.querySelectorAll('img')) === null || _new_item$querySelect5 === void 0 ? void 0 : _new_item$querySelect5.forEach(function (el) {
+      (_new_item$querySelect5 = new_item.querySelectorAll('img')) === null || _new_item$querySelect5 === void 0 || _new_item$querySelect5.forEach(function (el) {
         el.id = el.id.replace(old_id, new_id);
         el.src = '';
       });
-      (_new_item$querySelect6 = new_item.querySelectorAll('.custom-file-label')) === null || _new_item$querySelect6 === void 0 ? void 0 : _new_item$querySelect6.forEach(function (el) {
+      (_new_item$querySelect6 = new_item.querySelectorAll('.custom-file-label')) === null || _new_item$querySelect6 === void 0 || _new_item$querySelect6.forEach(function (el) {
         el.id = el.id.replace(old_id, new_id);
         el.innerHTML = 'Select an image';
       });
-      (_new_item$querySelect7 = new_item.querySelectorAll('.actions .trash')) === null || _new_item$querySelect7 === void 0 ? void 0 : _new_item$querySelect7.forEach(function (el) {
+      (_new_item$querySelect7 = new_item.querySelectorAll('.actions .trash')) === null || _new_item$querySelect7 === void 0 || _new_item$querySelect7.forEach(function (el) {
         $(el).on('click', function () {
           return clear_row(el);
         });
       });
-      (_new_item$querySelect8 = new_item.querySelectorAll('input[type="file"][accept^="image"]')) === null || _new_item$querySelect8 === void 0 ? void 0 : _new_item$querySelect8.forEach(function (el) {
+      (_new_item$querySelect8 = new_item.querySelectorAll('input[type="file"][accept^="image"]')) === null || _new_item$querySelect8 === void 0 || _new_item$querySelect8.forEach(function (el) {
         $(el).on('change', function (event) {
           return preview_selected_image(event);
         });
       });
-      (_new_item$querySelect9 = new_item.querySelectorAll('.datepicker.year')) === null || _new_item$querySelect9 === void 0 ? void 0 : _new_item$querySelect9.forEach(function (el) {
+      (_new_item$querySelect9 = new_item.querySelectorAll('.datepicker.year')) === null || _new_item$querySelect9 === void 0 || _new_item$querySelect9.forEach(function (el) {
         $(el).datepicker(config.datepicker.year);
       });
-      (_new_item$querySelect10 = new_item.querySelectorAll('.datepicker.month')) === null || _new_item$querySelect10 === void 0 ? void 0 : _new_item$querySelect10.forEach(function (el) {
+      (_new_item$querySelect10 = new_item.querySelectorAll('.datepicker.month')) === null || _new_item$querySelect10 === void 0 || _new_item$querySelect10.forEach(function (el) {
         $(el).datepicker(config.datepicker.month);
       });
       $(new_item).hide();
@@ -652,6 +652,97 @@ if ((typeof Livewire === "undefined" ? "undefined" : _typeof(Livewire)) === 'obj
       return false;
     }
   });
+}
+
+//Reduced motion enabled
+var isReduced = window.matchMedia("(prefers-reduced-motion: reduce)") === true || window.matchMedia("(prefers-reduced-motion: reduce)").matches === true;
+
+//Play/Pause Toggle - on any click inside the cover, if not a link, initiate the play/pause toggle
+var covers = document.querySelectorAll('.video-cover');
+var clickCount;
+if (!isReduced) {
+  clickCount = 0;
+} else {
+  clickCount = 1;
+  var coversWithVideo = document.querySelectorAll('.video-cover');
+  coversWithVideo.forEach(function (el) {
+    var button = el.parentNode.children.item(4);
+    if (button.classList.contains('pause')) {
+      button.classList.remove('pause');
+      button.classList.add('play');
+      button.setAttribute('aria-label', 'Video Paused.');
+      el.pause();
+    }
+  });
+}
+covers.forEach(function (cover) {
+  cover.addEventListener('click', playpause);
+});
+
+//play pause toggle for video covers
+function playpause(el) {
+  //Check to see if the target element is the cover block,
+  var target = typeof el.target !== 'undefined' ? el.target : el;
+  if (target.classList.contains('video-cover')) {
+    // If it is, pull the video and the button elements from the children and put them through the toggle function
+    var tKids = Array.from(target.children);
+    var video = tKids.filter(function (vid) {
+      return vid.localName === 'video';
+    });
+    var button = tKids.filter(function (btn) {
+      return btn.localName === 'button';
+    });
+    if (video.length > 0) {
+      toggle(video, button);
+    }
+  } else {
+    //If it isn't, loop of the elements parent,
+    var parent = target.parentNode;
+    do {
+      //Check if the element's parent is the wp-cover block,
+      if (parent.classList.contains('video-cover')) {
+        // if it is, pull the video and the button elements from the children and put them through the toggle function
+        var pKids = Array.from(parent.children);
+        var _video = pKids.filter(function (vid) {
+          return vid.localName === 'video';
+        });
+        var _button = pKids.filter(function (btn) {
+          return btn.localName === 'button';
+        });
+        if (_video.length > 0) {
+          toggle(_video, _button);
+        }
+        return true;
+      }
+      // if it isn't go up another level and rerun the check
+      parent = parent.parentNode;
+    } while (parent);
+    return false;
+  }
+
+  //controls the video and button attributes
+  function toggle(vid, btn) {
+    if (clickCount == 0) {
+      //Video initial
+      btn[0].setAttribute('aria-label', 'Video Paused.');
+      btn[0].classList.remove('pause');
+      btn[0].classList.add('play');
+      vid[0].pause();
+    } else if (clickCount % 2 == 0) {
+      //From initial to pause
+      btn[0].setAttribute('aria-label', 'Video Paused.');
+      btn[0].classList.remove('pause');
+      btn[0].classList.add('play');
+      vid[0].pause();
+    } else {
+      //From pause to play
+      btn[0].setAttribute('aria-label', 'Video Playing.');
+      btn[0].classList.remove('play');
+      btn[0].classList.add('pause');
+      vid[0].play();
+    }
+    clickCount++;
+  }
 }
 
 /***/ }),

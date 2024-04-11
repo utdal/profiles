@@ -113,7 +113,7 @@ class ProfilesController extends Controller
         $tags = Cache::tags(['home', 'profile_tags'])->remember('home-tags', 86400, function() {
             return Tag::whereExists(function ($query) {
                 $query->select(DB::raw(1))->from('taggables')->whereRaw('tags.id = taggables.tag_id');
-            })->whereType(Profile::class)->inRandomOrder()->limit(20)->get();
+            })->whereType(Profile::class)->inRandomOrder()->limit(16)->get();
         });
 
         return view('home', compact('random_profile', 'num_profiles', 'num_publications', 'num_datum', 'tags'));

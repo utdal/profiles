@@ -1,0 +1,24 @@
+.search {
+    $search-focus-color: $utd-aqua-blue;
+
+    > input[type="search"] {
+        font-size: 1rem;
+        height: inherit;
+        border-radius: $border-radius-search 0 0 $border-radius-search;
+
+        &:focus {
+            box-shadow: 0 0 0 0.1rem $search-focus-color;
+            border-color: $search-focus-color;
+            z-index: inherit;
+        }
+    }
+
+    button {
+        border-radius: 0 $border-radius-search $border-radius-search 0;
+
+        &:focus {
+            box-shadow: 0 0 0 0.1rem $search-focus-color;
+            border-color: $search-focus-color;
+        }
+    }
+}

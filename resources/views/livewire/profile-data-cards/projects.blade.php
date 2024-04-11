@@ -1,5 +1,5 @@
 <section id="projects" class="card">
-    <h3><i class="fas fa-tasks" aria-hidden="true"></i> Projects @if($editable)<a class="btn btn-primary btn-sm" href="{{ route('profiles.edit', [$profile->slug, 'projects']) }}"><i class="fas fa-edit"></i> Edit</a>@endif</h3>
+    <h3><i class="fas fa-tasks" aria-hidden="true"></i> Projects @if($editable)<a class="btn btn-primary btn-sm" href="{{ route('profiles.edit', [$profile->slug, 'projects']) }}" aria-label="Edit Projects"><i class="fas fa-edit"></i> Edit</a>@endif</h3>
     @foreach($data as $project)
         <div class="entry">
             @if($project->url)

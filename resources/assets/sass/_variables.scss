@@ -39,34 +39,66 @@ $green:   #28a745 !default;
 $teal:    #20c997 !default;
 $cyan:    #17a2b8 !default;
 
-$utd-flame-orange:		#C75B12;
-$utd-eco-green:			#008542;
+//## UT Dallas colors
+$utd-flame-orange:		#E87500;
+$utd-web-orange:		  #c95100;
+$utd-eco-green:			  #154734;
 $utd-solar-orange:		#E98300;
 $utd-spark-orange:		#FFB612;
 $utd-seedling-green:	#C9DD03;
 $utd-sapling-green:		#69BE28;
-$utd-sky-blue:			#5BC6E8;
+$utd-aqua-blue:			  #5FE0B7;
+$utd-sky-blue:			  #5BC6E8;
 $utd-stratos-blue:		#00A1DE;
-$utd-space-blue:		#0039A6;
-$utd-warm-gray2:		#D5D2CA;
-$utd-warm-gray4:		#B7B1A9;
-$utd-warm-gray6:		#A59D95;
-$utd-warm-gray8:		#8B8178;
-$utd-warm-gray10:		#766A62;
+$utd-space-blue:		  #0039A6;
+$utd-warm-gray2:		  #D5D2CA;
+$utd-warm-gray4:		  #B7B1A9;
+$utd-warm-gray6:		  #A59D95;
+$utd-warm-gray8:		  #8B8178;
+$utd-warm-gray10:		  #766A62;
+
+//## Custom colors
+$utd-warm-gray1: lighten($utd-warm-gray2, 10%);
+$black: #000;
+$teal:  #34827a;
+
+//## New color palette
+$brunswick-green:        #154734;
+$brunswick-green-medium: #055C53;
+$aquamarine:             #5fe0b7;
+$safety-orange:          #e87500;
+$myrtle-green:           #34827a;
+$sea-green:              #198754;
+$tawny:                  #c95100;
+$yinmin-blue:            #2c497f;
+$cerulean:               #147b9b;
+$raspberry:              #D40F4A;
+$misty-rose:             #ffe3e0;
+$oxford-blue:            #0a122a;
+$lavender-web:           #dfd9e2;
+$coffee:                 #644536;
+$fawn:                   #FFC082;
+$jasmine:                #F7DD72;
+$saffron:                #F2C232;
+$slate-gray:             #6a6969;
 
 $gray-base:              #000 !default;
+$gray-neutral:           #919191 !default;
+$gray-neutral-darker:    #6f6f6f !default;
 $gray-darker:            lighten($gray-base, 13.5%) !default; // #222
 $gray-dark:              lighten($gray-base, 20%) !default;   // #333
 $gray:                   lighten($gray-base, 33.5%) !default; // #555
 $gray-light:             lighten($gray-base, 46.7%) !default; // #777
+$gray-lightish:          lighten($gray-base, 58.5%) !default; // #959595
 $gray-lighter:           lighten($gray-base, 93.5%) !default; // #eee
+$gray-lightest:          lighten($gray-base, 95.3%) !default; // #f3f3f3
 
 $primary:       $utd-eco-green !default;
 $secondary:     $gray-600 !default;
-$success:       $utd-sapling-green !default;
-$info:          $utd-sky-blue !default;
+$success:       $sea-green !default;
+$info:          $cerulean !default;
 $warning:       $utd-spark-orange !default;
-$danger:        $red !default;
+$danger:        $raspberry !default;
 $light:         $gray-100 !default;
 $dark:          $gray-800 !default;
 
@@ -109,11 +141,16 @@ $body-bg:               #fff !default;
 $text-color:            $gray-800 !default;
 
 //** Global textual link color.
-$link-color:            $primary !default;
+$link-color:            $utd-web-orange !default;
+$link-decoration:       underline !default;
 //** Link hover color set via `darken()` function.
 $link-hover-color:      $utd-flame-orange !default;
 //** Link hover decoration.
-$link-hover-decoration: none !default;
+$link-hover-decoration: underline !default;
+//** Darker link color (for use on gray backgrounds)
+$link-color-on-gray-bg:     color.scale($link-color, $lightness: -5%);
+$link-color-on-grayer-bg:     color.scale($link-color, $lightness: -7%);
+$link-color-on-grayest-bg:     color.scale($link-color, $lightness: -13%);
 
 //** Font family
 $font-family-sans-serif:      Roboto, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;
@@ -124,7 +161,7 @@ $line-height-base:            1.5 !default;
 //** Computed "line-height" (`font-size` * `line-height`) for use with `margin`, `padding`, etc.
 $line-height-computed:    floor(($font-size-base * $line-height-base)) !default; // 1.5rem
 
-$headings-color:          $utd-eco-green !default;
+$headings-color:          $sea-green;
 
 $line-height-large:         1.3333333 !default; // extra decimals for Win 8.1 Chrome
 $line-height-small:         1.5 !default;
@@ -138,34 +175,37 @@ $border-radius-search:        1.5rem;
 //
 //## For each of Bootstrap's buttons, define text, background and border color.
 
+$btn-colors: (
+  "primary":    $myrtle-green,
+  "secondary":  $secondary,
+  "success":    $success,
+  "info":       $info,
+  "warning":    $warning,
+  "danger":     $danger,
+  "light":      $light,
+  "dark":       $dark,
+  "search":     $myrtle-green
+);
+
 $btn-font-weight:                normal !default;
-
-$btn-default-color:              #333 !default;
-$btn-default-bg:                 #fff !default;
-$btn-default-border:             #ccc !default;
-
-$btn-primary-color:              #fff !default;
-$btn-primary-bg:                 $primary !default;
-$btn-primary-border:             $btn-primary-bg !default;
-
-$btn-success-color:              #fff !default;
-$btn-success-bg:                 $success !default;
-$btn-success-border:             $btn-success-bg !default;
-
-$btn-info-color:                 #fff !default;
-$btn-info-bg:                    $utd-sapling-green;
-$btn-info-border:                $btn-info-bg !default;
-
-$btn-warning-color:              #fff !default;
-$btn-warning-bg:                 $warning !default;
-$btn-warning-border:             $btn-warning-bg !default;
-
-$btn-danger-color:               #fff !default;
-$btn-danger-bg:                  $danger !default;
-$btn-danger-border:              $btn-danger-bg !default;
-
 $btn-link-disabled-color:        $gray-500 !default;
 
+// Badges
+
+$badge-colors: (
+  "primary":    $myrtle-green,
+  "secondary":  $secondary,
+  "success":    $success,
+  "info":       $info,
+  "warning":    $warning,
+  "danger":     $danger,
+  "light":      $light,
+  "dark":       $dark,
+);
+
+// Tags
+
+$tagsinput-badge-bg: $myrtle-green;
 
 // Grid breakpoints
 //
@@ -208,7 +248,8 @@ $navbar-dark-disabled-color:        rgba($white, .5) !default;
 $breadcrumb-bg:                     $gray-100 !default;
 $breadcrumb-active-color:           color.scale($gray-600, $lightness: -2%) !default;
 $breadcrumb-divider-color:          $breadcrumb-active-color !default;
-$breadcrumb-link-color:             color.scale($primary, $lightness: -1%) !default;
+$breadcrumb-link-color:             $link-color-on-gray-bg !default;
+$breadcrumb-link-hover-color:       $link-hover-color !default;
 
 $breadcrumb-margin-bottom:          0 !default;
 
@@ -219,6 +260,9 @@ $breadcrumb-margin-bottom:          0 !default;
 $input-btn-focus-width:       .1rem !default;
 $input-btn-focus-color:       $primary !default;
 $input-focus-border-color:    $primary !default;
+$input-border-color:          $gray-lightish !default;
+
+$text-muted: $gray-neutral-darker;
 
 $custom-file-button-color: $white !default;
 $custom-file-button-bg: $secondary !default;
@@ -242,3 +286,9 @@ $state-warning-border:           darken(adjust-hue($state-warning-bg, -10), 5%) 
 $state-danger-text:              #a94442 !default;
 $state-danger-bg:                #f2dede !default;
 $state-danger-border:            darken(adjust-hue($state-danger-bg, -10), 5%) !default;
+
+// Alerts
+
+$alert-bg-level:                    -11;
+$alert-border-level:                -9;
+$alert-color-level:                 6;

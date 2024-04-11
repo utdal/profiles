@@ -177,17 +177,17 @@
                 <td class="text-nowrap pl-4 pr-3">
                     <div>
                         <a href="{{ route('students.show', ['student' => $student]) }}" target="_blank" title="View in new tab/window">
-                            <i class="far fa-fw fa-window-restore"></i> View
+                            <i class="far fa-fw mr-1 fa-window-restore"></i>View
                         </a>
                     </div>
                     <div>
                         <a href="mailto:{{ optional($student->user)->email }}" title="Email the student">
-                            <i class="far fa-fw fa-envelope"></i> Email
+                            <i class="far fa-fw mr-1 fa-envelope"></i>Email
                         </a>
                     </div>
                     <div>
                         <a href="{{ route('students.show', ['student' => $student]) }}#student_feedback" target="_blank" title="Add or view feedback">
-                            <i class="far fa-fw fa-comment"></i> Feedback
+                            <i class="far fa-fw mr-1 fa-comment"></i>Feedback
                         </a>
                     </div>
                     <livewire:bookmark-button :model="$student" :simple="true" :wire:key="$student->id">

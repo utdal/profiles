@@ -6,6 +6,7 @@
         display: flex;
         align-items: center;
         margin-right: 2rem;
+        text-decoration: none;
 
         .profiles-logo {
             width: 50px;
@@ -18,25 +19,6 @@
             border-left: 4px dotted rgba($white, 0.5);
             height: 1.85rem;
             margin-right: 1rem;
-        }
-    }
-
-    .search {
-
-        input {
-            font-size: 1rem;
-            height: inherit;
-            border-radius: $border-radius-search 0 0 $border-radius-search;
-
-            &:focus {
-                box-shadow: inherit;
-                border: $input-border-width solid $input-border-color;
-                z-index: inherit;
-            }
-        }
-
-        button {
-            border-radius: 0 $border-radius-search $border-radius-search 0;
         }
     }
 
