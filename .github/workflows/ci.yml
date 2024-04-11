@@ -87,6 +87,9 @@ jobs:
     name: Profiles Security Checks
     runs-on: ubuntu-latest
 
+    env:
+      COMPOSER_AUDIT_ABANDONED: ignore
+
     strategy:
       fail-fast: false
       matrix:
