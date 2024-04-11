@@ -51,7 +51,7 @@
 		@yield('content')
 	</main>
 	@yield('footer')
-	<div id="footer-container" class="full-width" style="background-image:url('{{asset('/img/60-lines.png')}}');">
+	<div id="footer-container" style="background-image:url('{{asset('/img/60-lines.png')}}');">
 		<footer class="container">
 			@if(isset($settings['footer']))
 				{!! $settings['footer'] !!}

@@ -23,7 +23,7 @@
 	</div>
 @endif
 
-<div id="home-top" class="full-width d-flex justify-content-around justify-content-md-around align-items-center flex-wrap">
+<div id="home-top" class="d-flex justify-content-around justify-content-md-around align-items-center flex-wrap">
 
 	<div id="home-search" class="card info">
 		<h3><i class="fas fa-search"></i> Find an expert by <a href="/browse" onclick="javascript:$('#home-search form').show(); $('#home-search .search').focus(); return false;">name or keyword</a> <i class="fas fa-caret-right"></i></h3>
@@ -38,7 +38,7 @@
 
 </div>
 
-<div id="stats" class="full-width" style="background-image:url('{{asset('/img/60-lines.png')}}');">
+<div id="stats" style="background-image:url('{{asset('/img/60-lines.png')}}');">
 	<div class="container">
 	  <div class="row">
 	    <div class="col align-self-start animated bounceInLeft">
@@ -54,7 +54,7 @@
 	</div>
 </div>
 
-<div id="home-bottom" class="full-width">
+<div id="home-bottom">
 	<div class="container profiles d-flex flex-wrap justify-content-around justify-content-md-around animated pulse">
 			@foreach ($random_profile as $profile)
 					@include('profiles.panel')

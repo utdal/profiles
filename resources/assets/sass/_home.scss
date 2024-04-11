@@ -14,13 +14,14 @@ $home-top-height: 60vh;
 #home-bottom {
   background-size: cover;
     min-height: 65vh;
-    padding-top: 10vh;
+    padding: 10vh 10px 10px;
     margin-bottom: -100px;
 }
 
 #stats {
     background-color: $utd-flame-orange;
     color: white;
+    padding: 10px;
     min-height: 200px;
     opacity: .96;
 
@@ -38,6 +39,7 @@ $home-top-height: 60vh;
 #home-top {
     background-size: cover;
     color: white;
+    padding: 10px;
     min-height: $home-top-height;
 
     @media (max-width: map-get($grid-breakpoints, lg)) {
