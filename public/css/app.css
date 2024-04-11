@@ -10173,6 +10173,18 @@ input[type=file]:invalid {
   }
 }
 
+.flash-container {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  cursor: pointer;
+  z-index: 1200;
+}
+
+.flash-container .flash-message {
+  padding: 30px;
+}
+
 #footer-container {
   background-color: #919191;
   border-top: 10px solid #154734;
@@ -10201,18 +10213,6 @@ footer a:hover {
 
 footer > ul {
   list-style: none;
-}
-
-.flash-container {
-  position: fixed;
-  right: 20px;
-  bottom: 20px;
-  cursor: pointer;
-  z-index: 1200;
-}
-
-.flash-container .flash-message {
-  padding: 30px;
 }
 
 .full-width {

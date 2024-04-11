@@ -445,41 +445,6 @@ input[type="file"]:invalid{
 	}
 }
 
-//footer
-
-#footer-container{
-	background-color: $gray-neutral;
-	border-top: 10px solid $utd-eco-green;
-	padding: 10px;
-	min-height: 350px;
-	margin-top: 100px;
-}
-
-footer {
-	padding: 120px 10px;
-	color: white;
-	text-shadow: 1px 1px 2px $primary;
-	font-size: 1.2rem;
-	text-align: center;
-
-	a{
-		color: white;
-
-		&.little{
-			font-size: .75rem;
-		}
-		&:hover {
-			color: white;
-			text-shadow: 2px 2px 3px darken($primary, 5%);
-		}
-	}
-}
-
-
-footer > ul{
-	list-style: none;
-}
-
 //flash messages
 .flash-container {
 	position: fixed;
