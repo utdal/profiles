@@ -1,10 +1,21 @@
-h1, h2 {
+h1, h2, .h1, .h2 {
 	margin-top: $line-height-computed * 2.5;
 	margin-bottom: $line-height-computed * 2;
 }
 h3, h4, h5, h6{
 	margin-top: $line-height-computed * 1;
 	margin-bottom: $line-height-computed * .75;
+}
+
+a {
+	// variant link colors for contrast
+	.bg-light &.nav-link:not(.active) {
+		color: $link-color-on-gray-bg;
+	}
+
+	.alert &:not(.alert-link):not(.btn) {
+		color: $link-color-on-grayest-bg;
+	}
 }
 
 img{
@@ -84,22 +95,41 @@ label.completed {
     clear:both;
 }
 
+.btn-link {
+	text-decoration: none;
+
+	&:hover, &:focus {
+		text-decoration: none;
+	}
+
+	.card-header & {
+		color: $link-color-on-gray-bg;
+	}
+
+	.bg-light .card.bg-transparent .card-header & {
+		color: $link-color-on-grayer-bg;
+	}
+}
 
 // lighten buttons and badges on hover instead of default bootstrap darken
-@each $color, $value in $theme-colors {
+@each $color, $value in $btn-colors {
 	$button_hover_lighten_by: if($color == 'light', 1%, 5%);
 	$button_hover_color: lighten($value, $button_hover_lighten_by);
 	.btn-#{$color} {
-		@include hover {
-			background-color: $button_hover_color;
-			border-color: $button_hover_color;
-		}
+		@include button-variant($value, $value, $button_hover_color, $button_hover_color);
 	}
+}
+@each $color, $value in $badge-colors {
+	$badge_hover_lighten_by: if($color == 'light', 1%, 5%);
+	$badge_hover_color: lighten($value, $badge_hover_lighten_by);
 	.badge-#{$color} {
-		&[href] {
-			@include hover-focus {
-				background-color: $button_hover_color;
-				border-color: $button_hover_color;
+		color: color-yiq($value);
+		background-color: $value;
+
+		@at-root a#{&} {
+			@include hover-focus() {
+				color: color-yiq($badge_hover_color);
+				background-color: $badge_hover_color;
 			}
 		}
 	}
@@ -179,6 +209,10 @@ input[type="radio"], input[type="checkbox"]{
 	padding: 15px;
 	margin-bottom: 15px;
 	clear: both;
+
+	a {
+		color: $link-color-on-gray-bg;
+	}
 
 	.subform {
 		margin-bottom: 0;
@@ -420,9 +454,10 @@ input[type="file"]:invalid{
 	margin-top: 100px;
 }
 
-footer{
+footer {
 	padding: 120px 10px;
 	color: white;
+	text-shadow: 1px 1px 2px $primary;
 	font-size: 1.2rem;
 	text-align: center;
 
@@ -432,8 +467,9 @@ footer{
 		&.little{
 			font-size: .75rem;
 		}
-		&:hover{
-			color: $utd-eco-green;
+		&:hover {
+			color: white;
+			text-shadow: 2px 2px 3px darken($primary, 5%);
 		}
 	}
 }

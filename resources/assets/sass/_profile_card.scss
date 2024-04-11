@@ -10,7 +10,7 @@
     }
 
     .card-footer {
-        color: color.scale($link-color, $lightness: -4.5%);
+        color: $link-color-on-gray-bg;
         text-decoration: none;
     }
 

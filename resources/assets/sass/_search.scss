@@ -5,7 +5,6 @@
         font-size: 1rem;
         height: inherit;
         border-radius: $border-radius-search 0 0 $border-radius-search;
-        border-color: $btn-search-border;
 
         &:focus {
             box-shadow: 0 0 0 0.1rem $search-focus-color;
@@ -15,9 +14,7 @@
     }
 
     button {
-        background-color: $btn-search-color;
         border-radius: 0 $border-radius-search $border-radius-search 0;
-        border: $input-border-width solid $btn-search-border;
 
         &:focus {
             box-shadow: 0 0 0 0.1rem $search-focus-color;

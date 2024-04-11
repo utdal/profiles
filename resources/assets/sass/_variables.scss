@@ -147,6 +147,10 @@ $link-decoration:       underline !default;
 $link-hover-color:      $utd-flame-orange !default;
 //** Link hover decoration.
 $link-hover-decoration: underline !default;
+//** Darker link color (for use on gray backgrounds)
+$link-color-on-gray-bg:     color.scale($link-color, $lightness: -5%);
+$link-color-on-grayer-bg:     color.scale($link-color, $lightness: -7%);
+$link-color-on-grayest-bg:     color.scale($link-color, $lightness: -13%);
 
 //** Font family
 $font-family-sans-serif:      Roboto, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;
@@ -157,7 +161,7 @@ $line-height-base:            1.5 !default;
 //** Computed "line-height" (`font-size` * `line-height`) for use with `margin`, `padding`, etc.
 $line-height-computed:    floor(($font-size-base * $line-height-base)) !default; // 1.5rem
 
-$headings-color:          $utd-eco-green !default;
+$headings-color:          $sea-green;
 
 $line-height-large:         1.3333333 !default; // extra decimals for Win 8.1 Chrome
 $line-height-small:         1.5 !default;
@@ -171,36 +175,37 @@ $border-radius-search:        1.5rem;
 //
 //## For each of Bootstrap's buttons, define text, background and border color.
 
+$btn-colors: (
+  "primary":    $myrtle-green,
+  "secondary":  $secondary,
+  "success":    $success,
+  "info":       $info,
+  "warning":    $warning,
+  "danger":     $danger,
+  "light":      $light,
+  "dark":       $dark,
+  "search":     $myrtle-green
+);
+
 $btn-font-weight:                normal !default;
-
-$btn-default-color:              #333 !default;
-$btn-default-bg:                 #fff !default;
-$btn-default-border:             #ccc !default;
-
-$btn-primary-color:              #fff !default;
-$btn-primary-bg:                 $primary !default;
-$btn-primary-border:             $btn-primary-bg !default;
-
-$btn-success-color:              #fff !default;
-$btn-success-bg:                 $success !default;
-$btn-success-border:             $btn-success-bg !default;
-
-$btn-info-color:                 #fff !default;
-$btn-info-bg:                    $info;
-$btn-info-border:                $btn-info-bg !default;
-
-$btn-warning-color:              #fff !default;
-$btn-warning-bg:                 $warning !default;
-$btn-warning-border:             $btn-warning-bg !default;
-
-$btn-danger-color:               #fff !default;
-$btn-danger-bg:                  $danger !default;
-$btn-danger-border:              $btn-danger-bg !default;
-
 $btn-link-disabled-color:        $gray-500 !default;
 
-$btn-search-color:               $myrtle-green;
-$btn-search-border:              $myrtle-green;
+// Badges
+
+$badge-colors: (
+  "primary":    $myrtle-green,
+  "secondary":  $secondary,
+  "success":    $success,
+  "info":       $info,
+  "warning":    $warning,
+  "danger":     $danger,
+  "light":      $light,
+  "dark":       $dark,
+);
+
+// Tags
+
+$tagsinput-badge-bg: $myrtle-green;
 
 // Grid breakpoints
 //
@@ -243,7 +248,7 @@ $navbar-dark-disabled-color:        rgba($white, .5) !default;
 $breadcrumb-bg:                     $gray-100 !default;
 $breadcrumb-active-color:           color.scale($gray-600, $lightness: -2%) !default;
 $breadcrumb-divider-color:          $breadcrumb-active-color !default;
-$breadcrumb-link-color:             color.scale($link-color, $lightness: -3.5%) !default;
+$breadcrumb-link-color:             $link-color-on-gray-bg !default;
 $breadcrumb-link-hover-color:       $link-hover-color !default;
 
 $breadcrumb-margin-bottom:          0 !default;
@@ -281,3 +286,9 @@ $state-warning-border:           darken(adjust-hue($state-warning-bg, -10), 5%) 
 $state-danger-text:              #a94442 !default;
 $state-danger-bg:                #f2dede !default;
 $state-danger-border:            darken(adjust-hue($state-danger-bg, -10), 5%) !default;
+
+// Alerts
+
+$alert-bg-level:                    -11;
+$alert-border-level:                -9;
+$alert-color-level:                 6;

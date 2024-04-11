@@ -24,7 +24,7 @@
             {!! Form::open(['url' => route('app.settings.update-image', 'logo'), 'method' => 'POST', 'files' => true]) !!}
             <label for="logo">Logo</label>
             @if(isset($settings['logo']))
-                <img id="logo-img" class="profile_photo p-2 border mb-3" src="{{ $settings['logo'] }}" style="background-color:{{ $settings['primary_color'] ?? '#008542' }};">
+                <img id="logo-img" class="profile_photo p-2 border mb-3" src="{{ $settings['logo'] }}" style="background-color:{{ $settings['primary_color'] ?? '#154734' }};">
             @endif
             <div class="control-group">
                 <div class="controls">

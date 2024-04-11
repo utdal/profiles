@@ -18,7 +18,7 @@
         @isset($settings['student_info_image'])
         <img class="card-img @if(($settings['student_info_image'] ?? false) && ($settings['student_info_overlay'] ?? false))student-card-img-overlay @endif" src="{{ $settings['student_info_image'] }}" alt="Student info background">
         @endisset
-        <div class="p-5 d-flex align-items-center" style="background-color:{{ $settings['primary_color'] ?? '#008542' }}e0">
+        <div class="p-5 d-flex align-items-center" style="background-color:{{ $settings['primary_color'] ?? '#136740' }}e0">
             <div class="lead">
                 {!! $settings['student_info'] ?? 'Use the links in the next step to learn about faculty research here.' !!}
             </div>
@@ -35,8 +35,8 @@
         </div>
 
         <div class="col-md-2">
-            <h2 class="d-none d-md-block text-center"><i class="fas fa-arrow-right"></i></h2>
-            <h2 class="d-md-none text-center"><i class="fas fa-arrow-down"></i></h2>
+            <div class="h2 d-none d-md-block text-center"><i class="fas fa-arrow-right"></i></div>
+            <div class="h2 d-md-none text-center"><i class="fas fa-arrow-down"></i></div>
         </div>
         
         <div class="col-md-4">

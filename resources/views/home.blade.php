@@ -28,12 +28,12 @@
 	<div id="home-search" class="card info">
 		<h3><i class="fas fa-search"></i> Find an expert by <a href="/browse" onclick="javascript:$('#home-search form').show(); $('#home-search .search').focus(); return false;">name or keyword</a> <i class="fas fa-caret-right"></i></h3>
 		@include('_search')
-		<div id="search-terms">
+		<ul id="search-terms" class="list-unstyled d-flex flex-wrap justify-content-center m-0" aria-label="some expertise tags">
 			@foreach($tags as $tag)
-				<a href="{{ route('profiles.index', ['search' => $tag->name]) }}"><span class="badge tags-badge">{{ $tag->name }}</span></a>
+				<li><a href="{{ route('profiles.index', ['search' => $tag->name]) }}"><span class="badge tags-badge">{{ ucwords($tag->name) }}</span></a></li>
 			@endforeach
-		</div>
-		<h3><i class="fas fa-lightbulb"></i> Explore our <a href="{{ route('tags.index') }}">expertise</a> <i class="fas fa-caret-right"></i></h3>
+		</ul>
+		<h3><i class="fas fa-lightbulb"></i> Explore more <a href="{{ route('tags.index') }}">expertise</a> <i class="fas fa-caret-right"></i></h3>
 	</div>
 
 </div>
@@ -42,13 +42,13 @@
 	<div class="container">
 	  <div class="row">
 	    <div class="col align-self-start animated bounceInLeft">
-	      <span class="num"><i class="fas fa-users"></i> {{number_format($num_profiles)}}</span><div>profiles</div>
+	      <span class="num"><i class="fas fa-users"></i> {{number_format($num_profiles)}}</span><div class="stats-label">profiles</div>
 	    </div>
 	    <div class="col align-self-center animated bounceInUp">
-	      <span class="num"><i class="fas fa-book"></i> {{number_format($num_publications)}}</span><div>publications</div>
+	      <span class="num"><i class="fas fa-book"></i> {{number_format($num_publications)}}</span><div class="stats-label">publications</div>
 	    </div>
 	    <div class="col align-self-end animated bounceInRight">
-	      <span class="num"><i class="fas fa-database"></i> {{number_format($num_datum)}}</span> <div>records</div>
+	      <span class="num"><i class="fas fa-database"></i> {{number_format($num_datum)}}</span> <div class="stats-label">records</div>
 	    </div>
 	  </div>
 	</div>

@@ -19,10 +19,15 @@ $home-top-height: 60vh;
 }
 
 #stats {
-    background-color: $utd-web-orange;
+    background-color: $utd-flame-orange;
     color: white;
     min-height: 200px;
-    opacity: .93;
+    opacity: .96;
+
+    .stats-label {
+        font-size: 1.5rem;
+        font-weight: 300;
+    }
 
     .col{
         padding: 55px 40px 60px;
@@ -40,7 +45,7 @@ $home-top-height: 60vh;
     }
 
     #home-search {
-        padding: 40px 65px 40px;
+        padding: 30px 40px;
         opacity: 0.97;
         width: 42rem;
 
@@ -50,9 +55,12 @@ $home-top-height: 60vh;
 
         #search-terms {
             padding: 20px 0;
+            gap: 0.8rem;
 
             .badge {
                 font-size: 92%;
+                border: 1px solid $link-color;
+                background-color: white;
             }
         }
 

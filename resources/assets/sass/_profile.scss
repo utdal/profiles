@@ -10,6 +10,17 @@
 		margin-bottom: 30px;
 		box-shadow: 0px 0px 6px $gray-300;
 
+		.profile-title {
+			color: $brunswick-green-medium;
+			font-size: 1.2rem;
+			font-weight: 500;
+			line-height: 1.2em;
+
+			&:not(:first-of-type) {
+				margin-top: 0.7em;
+			}
+		}
+
 		.profile_summary {
 			color: $gray;
 			font-weight: 300;
