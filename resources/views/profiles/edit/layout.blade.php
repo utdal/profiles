@@ -8,7 +8,7 @@
 @include('profiles.edit._insert_button', ['type' => 'prepend'])
 <div class="row mb-4 lower-border"></div>
 
-<div class="sortable" data-onsort="reindex" data-next-row-id="-1">
+<div class="sortable" data-next-row-id="-1">
 
     @yield('form')
 

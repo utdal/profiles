@@ -107,6 +107,7 @@ var profiles = (function ($, undefined) {
      * @return {void}
      */
     const on_list_updated = (el, actions) => {
+        if (typeof actions !== 'string') { return; }
         for (const action of actions.split(',').map(i => i.trim())) {
             if (action === 'reindex') {
                 reindex_sorted_list(el.children);
@@ -518,7 +519,7 @@ $(function() {
             scroll: true,
             scrollSpeed: 50,
             ghostClass: 'sortable-ghost',
-            onUpdate: (evt) => profiles.on_list_updated(evt.target, evt.target.dataset.onsort),
+            onUpdate: (evt) => profiles.on_list_updated(evt.target, evt.target.dataset.onsort ?? ''),
         });
     }
 

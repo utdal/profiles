@@ -144,6 +144,9 @@ var profiles = function ($, undefined) {
    * @return {void}
    */
   var on_list_updated = function on_list_updated(el, actions) {
+    if (typeof actions !== 'string') {
+      return;
+    }
     var _iterator4 = _createForOfIteratorHelper(actions.split(',').map(function (i) {
         return i.trim();
       })),
@@ -578,7 +581,8 @@ $(function () {
       scrollSpeed: 50,
       ghostClass: 'sortable-ghost',
       onUpdate: function onUpdate(evt) {
-        return profiles.on_list_updated(evt.target, evt.target.dataset.onsort);
+        var _evt$target$dataset$o;
+        return profiles.on_list_updated(evt.target, (_evt$target$dataset$o = evt.target.dataset.onsort) !== null && _evt$target$dataset$o !== void 0 ? _evt$target$dataset$o : '');
       }
     });
   }
