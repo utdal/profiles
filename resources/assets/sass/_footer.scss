@@ -27,8 +27,12 @@ footer {
             text-shadow: 2px 2px 3px darken($primary, 5%);
         }
     }
-}
 
-footer > ul {
-    list-style: none;
+    > ul {
+        list-style: none;
+
+        > li {
+            display: inline;
+        }
+    }
 }

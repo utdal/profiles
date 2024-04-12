@@ -19,11 +19,15 @@
 			<h2 class="display-4">{{ $letter }}</h2>
 		</div>
 		<div class="col-sm pt-sm-5">
-		@foreach($tags as $tag)
-			<a href="{{ route('profiles.index', ['search' => $tag->name]) }}" class="badge badge-primary tags-badge large">
-				{{ ucwords($tag->name) }}
-			</a> 
-		@endforeach
+			<ul class="list-inline">
+				@foreach($tags as $tag)
+					<li class="list-inline-item">
+						<a href="{{ route('profiles.index', ['search' => $tag->name]) }}" class="badge badge-primary tags-badge large">
+							{{ ucwords($tag->name) }}
+						</a>
+					</li>
+				@endforeach
+			</ul>
 		</div>
 	</div>
 	@endforeach

@@ -9948,6 +9948,10 @@ input[type=radio], input[type=checkbox] {
   border: 1px solid #777;
 }
 
+.pagination {
+  flex-wrap: wrap;
+}
+
 th .fa {
   display: inline;
 }
@@ -10210,9 +10214,11 @@ footer a:hover {
   color: white;
   text-shadow: 2px 2px 3px #0f3326;
 }
-
 footer > ul {
   list-style: none;
+}
+footer > ul > li {
+  display: inline;
 }
 
 .full-width {
@@ -10398,8 +10404,12 @@ footer > ul {
   text-decoration: underline;
 }
 
-.profile-card {
+.profiles.d-flex {
+  gap: 2rem 1rem;
   margin-bottom: 2rem;
+}
+
+.profile-card {
   width: 16rem;
   border-radius: 5px;
 }
@@ -10413,13 +10423,11 @@ footer > ul {
 @media (max-width: 992px) {
   .profile-card {
     width: 12rem;
-    font-size: 0.9rem;
   }
 }
 @media (max-width: 576px) {
   .profile-card {
-    width: 9rem;
-    font-size: 0.75rem;
+    width: 16rem;
   }
 }
 
@@ -10675,11 +10683,12 @@ fieldset.subform legend {
 
 .tags-badge {
   text-decoration: none;
+  white-space: inherit;
   border-radius: 3px;
   padding: 0.35em 0.5em;
 }
 .tags-badge.large {
-  font-size: 90%;
+  font-size: inherit;
   margin-bottom: 0.5em;
 }
 

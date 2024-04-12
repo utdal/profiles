@@ -223,6 +223,10 @@ input[type="radio"], input[type="checkbox"]{
 	}
 }
 
+.pagination {
+	flex-wrap: wrap;
+}
+
 // Font-Awesome Overrides
 
 th .fa {

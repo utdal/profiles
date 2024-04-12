@@ -23,7 +23,7 @@
 		@endforeach
 	@endif
 		@if(isset($tag_profiles) && $tag_profiles->isNotEmpty())
-		    <h1 id="keyword-profiles">Profiles (by Tag: {{$search}})</h1>
+		    <h1 id="tag-profiles">Profiles (by Tag: {{$search}})</h1>
 
 		    <div class="profiles d-flex flex-wrap justify-content-around justify-content-md-between">
 		        @foreach ($tag_profiles as $profile)
