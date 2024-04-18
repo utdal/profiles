@@ -177,9 +177,10 @@ class Profile extends Model implements HasMedia, Auditable
 
     public function updateORCID()
     {
-        $publicationsManager = new OrcidPublicationsRepository($this);
-
-        return $publicationsManager->syncPublications();
+        $publications_manager = app()->make(OrcidPublicationsRepository::class);
+        $publications_manager->setProfile($this);
+        
+        return $publications_manager->syncPublications();
     }
 
     
