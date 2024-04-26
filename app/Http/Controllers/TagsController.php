@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 use Spatie\Tags\Tag;
 use App\Http\Requests\TagsUpdateRequest;
+use App\Http\Requests\TagUpdateRequest;
 use Illuminate\Http\JsonResponse;
 
 class TagsController extends Controller
@@ -27,6 +28,12 @@ class TagsController extends Controller
             'create',
             'store',
         ]);
+
+        $this->middleware('can:update,tag,'.Tag::class)->only([
+            'editTag',
+            'updateTag',
+        ]);
+
     }
 
     /**
@@ -109,5 +116,25 @@ class TagsController extends Controller
         }
 
         return back()->with('flash_message', $message);
+    }
+
+    /**
+     * Edit a tag record.
+     */
+    public function editTag(Tag $tag)
+    {
+        return view('tags.edit', compact('tag'));
+    }
+
+    /**
+     * Update a single tag record.
+     */
+    public function updateTag(Tag $tag, TagUpdateRequest $request) 
+    {
+        $tag->update($request->all());
+
+        return redirect()
+                ->route('tags.table')
+                ->with('flash_message', 'The tag has been updated.');
     }
 }

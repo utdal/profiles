@@ -16,6 +16,7 @@
  ******************/
 
 use App\Http\Controllers\ProfilesController;
+use App\Http\Controllers\TagsController;
 use App\Http\Controllers\UsersController;
 
 Route::name('login.show')->get('/login', 'Auth\LoginController@showLoginForm');
@@ -66,6 +67,11 @@ Route::name('tags.')->prefix('/tags')->group(function () {
     Route::name('store')->post('/store', 'TagsController@store');
     Route::name('api.search')->get('/api/search', 'TagsController@search');
     Route::name('api.update')->post('/api', 'TagsController@update');
+
+    Route::prefix('/{tag}')->group(function() {
+        Route::name('editTag')->get('editTag', [TagsController::class, 'editTag']);
+        Route::name('updateTag')->patch('updateTag', [TagsController::class, 'updateTag']);
+    });
 
 });
 

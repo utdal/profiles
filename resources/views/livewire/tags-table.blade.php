@@ -43,7 +43,7 @@
                 @include('livewire.partials._th-sortable', ['title' => 'Type', 'field' => 'type'])
                 @include('livewire.partials._th-sortable', ['title' => 'Created', 'field' => 'created_at'])
                 @include('livewire.partials._th-sortable', ['title' => 'Updated', 'field' => 'updated_at'])
-                <th>Actions</th>
+                <th colspan=2 >Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -55,6 +55,13 @@
                 <td>{{ $tag->type }}</td>
                 <td>{{ $tag->created_at->toFormattedDateString() }}</td>
                 <td>{{ $tag->updated_at->toFormattedDateString() }}</td>
+                <td>
+                    @can('updateTag', Spatie\Tags\Tag::class)
+                        <a href="{{ route('tags.editTag', ['tag' => $tag ]) }}" title="Edit" role="button" title="edit" class="">
+                            <i class="far fa-edit"></i><span class="sr-only">Edit</span>
+                        </a>
+                    @endcan
+                </td>
                 <td>
                     <a onclick="confirm('Are you sure you want to remove the {{ $tag->slug }} tag?') || event.stopImmediatePropagation()" wire:click="destroy({{ $tag->id }})" role="button" title="delete">
                         <i class="far fa-trash-alt"></i><span class="sr-only">Trash</span>
