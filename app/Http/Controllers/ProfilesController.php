@@ -225,12 +225,13 @@ class ProfilesController extends Controller
      */
     public function edit(Profile $profile, string $section): View|ViewContract|RedirectResponse
     {
-        //dont manage auto-managed publications
+        //If auto-managed publications
         if ($section == 'publications' && $profile->hasOrcidManagedPublications()) {
-            $profile->updateORCID();
-            return redirect()
-                ->route('profiles.show', $profile->slug)
-                ->with('flash_message', 'Publications updated via ORCID.');
+            if ($profile->updateORCID()) {
+                return redirect()->route('profiles.show', $profile->slug)->with('flash_message', 'Publications updated via ORCID.');
+            } else {
+                return redirect()->route('profiles.show', $profile->slug)->with('flash_message', 'Error updating your ORCID publications.');
+            }
         }
 
         $data = $profile->data()->$section()->get();
@@ -251,11 +252,11 @@ class ProfilesController extends Controller
      */
     public function orcid(Profile $profile): RedirectResponse
     {
-      if ($profile->updateORCID()) {
-          return redirect()->route('profiles.show', $profile->slug)->with('flash_message', 'Publications updated via ORCID.');
-      } else {
-          return redirect()->route('profiles.show', $profile->slug)->with('flash_message', 'Error updating your ORCID publications.');
-      }
+        if ($profile->updateORCID()) {
+            return redirect()->route('profiles.show', $profile->slug)->with('flash_message', 'Publications updated via ORCID.');
+        } else {
+            return redirect()->route('profiles.show', $profile->slug)->with('flash_message', 'Error updating your ORCID publications.');
+        }
     }
 
     /**
