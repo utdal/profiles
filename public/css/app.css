@@ -9302,7 +9302,7 @@ a.text-dark:hover, a.text-dark:focus {
 .bootstrap-tagsinput {
   width: 100%;
   cursor: text;
-  background-color: #fff;
+  background-color: #fafafa;
   border: 1px solid #959595;
   color: #495057;
   font-size: 1rem;
@@ -10189,6 +10189,67 @@ input[type=file]:invalid {
   padding: 30px;
 }
 
+.scaling-circle {
+  position: absolute;
+  top: 0;
+  left: 45%;
+  width: 15%;
+  height: 95%;
+  border-radius: 240px;
+  box-shadow: 0 0 0px 2px #fff inset;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
+.scaling-circle.circle-1 {
+  animation-name: grow-1;
+}
+.scaling-circle.circle-2 {
+  animation-name: grow-2;
+}
+
+.translating-circle {
+  position: absolute;
+  top: -30%;
+  left: 15%;
+  width: 25%;
+  height: 160%;
+  border-radius: 240px;
+  box-shadow: 0 0 2px 1px #fff inset;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
+.translating-circle.circle-3 {
+  animation-name: translate;
+}
+
+#button-animations {
+  display: none;
+}
+
+@keyframes grow-1 {
+  50% {
+    -webkit-transform: scale(50%);
+  }
+  65% {
+    -webkit-transform: scale(200%);
+  }
+  100% {
+    -webkit-transform: scale(95%);
+  }
+}
+@keyframes grow-2 {
+  65% {
+    -webkit-transform: scale(150%);
+  }
+  100% {
+    -webkit-transform: scale(120%);
+  }
+}
+@keyframes translate {
+  50% {
+    -webkit-transform: translate(160px);
+  }
+}
 #footer-container {
   background-color: #919191;
   border-top: 10px solid #154734;
