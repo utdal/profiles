@@ -20239,11 +20239,9 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /* provided dependency */ var jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/src/jquery.js");
 /*
- * bootstrap4-tagsinput v4.2.2
+ * bootstrap4-tagsinput v4.2.3
  * 
  */
-
-const { css } = __webpack_require__(/*! jquery */ "./node_modules/jquery/src/jquery.js");
 
 (function (factory) {
   if ( true && typeof module.exports === "object") {
@@ -20300,7 +20298,6 @@ const { css } = __webpack_require__(/*! jquery */ "./node_modules/jquery/src/jqu
     this.placeholderText = element.hasAttribute('placeholder') ? this.$element.attr('placeholder') : '';
     this.inputSize = Math.max(1, this.placeholderText.length);
     this.ariaLabelledBy = element.hasAttribute('aria-labelledBy') ? this.$element.attr('aria-labelledby') : '';
-    this.addClass = element.hasAttribute('add-class') ? this.$element.attr('add-class') : '';
 
     this.$container = $('<div class="bootstrap-tagsinput"></div>');
     this.$input = $('<input aria-labelledby="' + this.ariaLabelledBy + '" type="text" placeholder="' + this.placeholderText + '"/>').appendTo(this.$container);
@@ -20950,9 +20947,9 @@ const { css } = __webpack_require__(/*! jquery */ "./node_modules/jquery/src/jqu
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
- * typeahead.js 1.3.1
+ * typeahead.js 1.3.3
  * https://github.com/corejavascript/typeahead.js
- * Copyright 2013-2020 Twitter, Inc. and other contributors; Licensed MIT
+ * Copyright 2013-2024 Twitter, Inc. and other contributors; Licensed MIT
  */
 
 
@@ -21107,7 +21104,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __WEBPACK_AM
             noop: function() {}
         };
     }();
-    var VERSION = "1.3.1";
+    var VERSION = "1.3.3";
     var tokenizers = function() {
         "use strict";
         return {
@@ -22391,6 +22388,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __WEBPACK_AM
             });
             this.$input.attr({
                 "aria-owns": id + "_listbox",
+                "aria-controls": id + "_listbox",
                 role: "combobox",
                 "aria-autocomplete": "list",
                 "aria-expanded": false
@@ -26040,7 +26038,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* global Symbol
 
 "use strict";
 
-var version = "3.7.0",
+var version = "3.7.1",
 
 	rhtmlSuffix = /HTML$/i,
 
@@ -26304,9 +26302,14 @@ jQuery.extend( {
 				// Do not traverse comment nodes
 				ret += jQuery.text( node );
 			}
-		} else if ( nodeType === 1 || nodeType === 9 || nodeType === 11 ) {
+		}
+		if ( nodeType === 1 || nodeType === 11 ) {
 			return elem.textContent;
-		} else if ( nodeType === 3 || nodeType === 4 ) {
+		}
+		if ( nodeType === 9 ) {
+			return elem.documentElement.textContent;
+		}
+		if ( nodeType === 3 || nodeType === 4 ) {
 			return elem.nodeValue;
 		}
 
@@ -28243,7 +28246,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 				trChild = document.createElement( "div" );
 
 				table.style.cssText = "position:absolute;left:-11111px;border-collapse:separate";
-				tr.style.cssText = "border:1px solid";
+				tr.style.cssText = "box-sizing:content-box;border:1px solid";
 
 				// Support: Chrome 86+
 				// Height set through cssText does not get applied.
@@ -28255,7 +28258,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 				// In our bodyBackground.html iframe,
 				// display for all div elements is set to "inline",
 				// which causes a problem only in Android 8 Chrome 86.
-				// Ensuring the div is display: block
+				// Ensuring the div is `display: block`
 				// gets around this issue.
 				trChild.style.display = "block";
 
@@ -29516,7 +29519,9 @@ jQuery.fn.extend( {
 	},
 
 	hover: function( fnOver, fnOut ) {
-		return this.mouseenter( fnOver ).mouseleave( fnOut || fnOver );
+		return this
+			.on( "mouseenter", fnOver )
+			.on( "mouseleave", fnOut || fnOver );
 	}
 } );
 
@@ -31998,7 +32003,7 @@ function domManip( collection, args, callback, ignored ) {
 			if ( hasScripts ) {
 				doc = scripts[ scripts.length - 1 ].ownerDocument;
 
-				// Reenable scripts
+				// Re-enable scripts
 				jQuery.map( scripts, restoreScript );
 
 				// Evaluate executable scripts on first document insertion
@@ -33640,12 +33645,17 @@ function setDocument( node ) {
 		documentElement.msMatchesSelector;
 
 	// Support: IE 9 - 11+, Edge 12 - 18+
-	// Accessing iframe documents after unload throws "permission denied" errors (see trac-13936)
-	// Support: IE 11+, Edge 17 - 18+
-	// IE/Edge sometimes throw a "Permission denied" error when strict-comparing
-	// two documents; shallow comparisons work.
-	// eslint-disable-next-line eqeqeq
-	if ( preferredDoc != document &&
+	// Accessing iframe documents after unload throws "permission denied" errors
+	// (see trac-13936).
+	// Limit the fix to IE & Edge Legacy; despite Edge 15+ implementing `matches`,
+	// all IE 9+ and Edge Legacy versions implement `msMatchesSelector` as well.
+	if ( documentElement.msMatchesSelector &&
+
+		// Support: IE 11+, Edge 17 - 18+
+		// IE/Edge sometimes throw a "Permission denied" error when strict-comparing
+		// two documents; shallow comparisons work.
+		// eslint-disable-next-line eqeqeq
+		preferredDoc != document &&
 		( subWindow = document.defaultView ) && subWindow.top !== subWindow ) {
 
 		// Support: IE 9 - 11+, Edge 12 - 18+
@@ -35208,12 +35218,12 @@ jQuery.find = find;
 jQuery.expr[ ":" ] = jQuery.expr.pseudos;
 jQuery.unique = jQuery.uniqueSort;
 
-// These have always been private, but they used to be documented
-// as part of Sizzle so let's maintain them in the 3.x line
-// for backwards compatibility purposes.
+// These have always been private, but they used to be documented as part of
+// Sizzle so let's maintain them for now for backwards compatibility purposes.
 find.compile = compile;
 find.select = select;
 find.setDocument = setDocument;
+find.tokenize = tokenize;
 
 find.escape = jQuery.escapeSelector;
 find.getText = jQuery.text;
@@ -39049,7 +39059,7 @@ Popper.Defaults = Defaults;
 
 /* provided dependency */ var __webpack_provided_window_dot_jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/src/jquery.js");
 /**!
- * Sortable 1.15.0
+ * Sortable 1.15.2
  * @author	RubaXa   <trash@rubaxa.org>
  * @author	owenm    <owen23355@gmail.com>
  * @license MIT
@@ -39061,26 +39071,20 @@ Popper.Defaults = Defaults;
 
   function ownKeys(object, enumerableOnly) {
     var keys = Object.keys(object);
-
     if (Object.getOwnPropertySymbols) {
       var symbols = Object.getOwnPropertySymbols(object);
-
       if (enumerableOnly) {
         symbols = symbols.filter(function (sym) {
           return Object.getOwnPropertyDescriptor(object, sym).enumerable;
         });
       }
-
       keys.push.apply(keys, symbols);
     }
-
     return keys;
   }
-
   function _objectSpread2(target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i] != null ? arguments[i] : {};
-
       if (i % 2) {
         ownKeys(Object(source), true).forEach(function (key) {
           _defineProperty(target, key, source[key]);
@@ -39093,10 +39097,8 @@ Popper.Defaults = Defaults;
         });
       }
     }
-
     return target;
   }
-
   function _typeof(obj) {
     "@babel/helpers - typeof";
 
@@ -39109,10 +39111,8 @@ Popper.Defaults = Defaults;
         return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
       };
     }
-
     return _typeof(obj);
   }
-
   function _defineProperty(obj, key, value) {
     if (key in obj) {
       Object.defineProperty(obj, key, {
@@ -39124,53 +39124,40 @@ Popper.Defaults = Defaults;
     } else {
       obj[key] = value;
     }
-
     return obj;
   }
-
   function _extends() {
     _extends = Object.assign || function (target) {
       for (var i = 1; i < arguments.length; i++) {
         var source = arguments[i];
-
         for (var key in source) {
           if (Object.prototype.hasOwnProperty.call(source, key)) {
             target[key] = source[key];
           }
         }
       }
-
       return target;
     };
-
     return _extends.apply(this, arguments);
   }
-
   function _objectWithoutPropertiesLoose(source, excluded) {
     if (source == null) return {};
     var target = {};
     var sourceKeys = Object.keys(source);
     var key, i;
-
     for (i = 0; i < sourceKeys.length; i++) {
       key = sourceKeys[i];
       if (excluded.indexOf(key) >= 0) continue;
       target[key] = source[key];
     }
-
     return target;
   }
-
   function _objectWithoutProperties(source, excluded) {
     if (source == null) return {};
-
     var target = _objectWithoutPropertiesLoose(source, excluded);
-
     var key, i;
-
     if (Object.getOwnPropertySymbols) {
       var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-
       for (i = 0; i < sourceSymbolKeys.length; i++) {
         key = sourceSymbolKeys[i];
         if (excluded.indexOf(key) >= 0) continue;
@@ -39178,22 +39165,17 @@ Popper.Defaults = Defaults;
         target[key] = source[key];
       }
     }
-
     return target;
   }
-
   function _toConsumableArray(arr) {
     return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
   }
-
   function _arrayWithoutHoles(arr) {
     if (Array.isArray(arr)) return _arrayLikeToArray(arr);
   }
-
   function _iterableToArray(iter) {
     if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
   }
-
   function _unsupportedIterableToArray(o, minLen) {
     if (!o) return;
     if (typeof o === "string") return _arrayLikeToArray(o, minLen);
@@ -39202,27 +39184,22 @@ Popper.Defaults = Defaults;
     if (n === "Map" || n === "Set") return Array.from(o);
     if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
   }
-
   function _arrayLikeToArray(arr, len) {
     if (len == null || len > arr.length) len = arr.length;
-
     for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
-
     return arr2;
   }
-
   function _nonIterableSpread() {
     throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
 
-  var version = "1.15.0";
+  var version = "1.15.2";
 
   function userAgent(pattern) {
     if (typeof window !== 'undefined' && window.navigator) {
       return !! /*@__PURE__*/navigator.userAgent.match(pattern);
     }
   }
-
   var IE11OrLess = userAgent(/(?:Trident.*rv[ :]?11\.|msie|iemobile|Windows Phone)/i);
   var Edge = userAgent(/Edge/i);
   var FireFox = userAgent(/firefox/i);
@@ -39234,23 +39211,15 @@ Popper.Defaults = Defaults;
     capture: false,
     passive: false
   };
-
   function on(el, event, fn) {
     el.addEventListener(event, fn, !IE11OrLess && captureMode);
   }
-
   function off(el, event, fn) {
     el.removeEventListener(event, fn, !IE11OrLess && captureMode);
   }
-
-  function matches(
-  /**HTMLElement*/
-  el,
-  /**String*/
-  selector) {
+  function matches( /**HTMLElement*/el, /**String*/selector) {
     if (!selector) return;
     selector[0] === '>' && (selector = selector.substring(1));
-
     if (el) {
       try {
         if (el.matches) {
@@ -39264,39 +39233,25 @@ Popper.Defaults = Defaults;
         return false;
       }
     }
-
     return false;
   }
-
   function getParentOrHost(el) {
     return el.host && el !== document && el.host.nodeType ? el.host : el.parentNode;
   }
-
-  function closest(
-  /**HTMLElement*/
-  el,
-  /**String*/
-  selector,
-  /**HTMLElement*/
-  ctx, includeCTX) {
+  function closest( /**HTMLElement*/el, /**String*/selector, /**HTMLElement*/ctx, includeCTX) {
     if (el) {
       ctx = ctx || document;
-
       do {
         if (selector != null && (selector[0] === '>' ? el.parentNode === ctx && matches(el, selector) : matches(el, selector)) || includeCTX && el === ctx) {
           return el;
         }
-
         if (el === ctx) break;
         /* jshint boss:true */
       } while (el = getParentOrHost(el));
     }
-
     return null;
   }
-
   var R_SPACE = /\s+/g;
-
   function toggleClass(el, name, state) {
     if (el && name) {
       if (el.classList) {
@@ -39307,10 +39262,8 @@ Popper.Defaults = Defaults;
       }
     }
   }
-
   function css(el, prop, val) {
     var style = el && el.style;
-
     if (style) {
       if (val === void 0) {
         if (document.defaultView && document.defaultView.getComputedStyle) {
@@ -39318,68 +39271,55 @@ Popper.Defaults = Defaults;
         } else if (el.currentStyle) {
           val = el.currentStyle;
         }
-
         return prop === void 0 ? val : val[prop];
       } else {
         if (!(prop in style) && prop.indexOf('webkit') === -1) {
           prop = '-webkit-' + prop;
         }
-
         style[prop] = val + (typeof val === 'string' ? '' : 'px');
       }
     }
   }
-
   function matrix(el, selfOnly) {
     var appliedTransforms = '';
-
     if (typeof el === 'string') {
       appliedTransforms = el;
     } else {
       do {
         var transform = css(el, 'transform');
-
         if (transform && transform !== 'none') {
           appliedTransforms = transform + ' ' + appliedTransforms;
         }
         /* jshint boss:true */
-
       } while (!selfOnly && (el = el.parentNode));
     }
-
     var matrixFn = window.DOMMatrix || window.WebKitCSSMatrix || window.CSSMatrix || window.MSCSSMatrix;
     /*jshint -W056 */
-
     return matrixFn && new matrixFn(appliedTransforms);
   }
-
   function find(ctx, tagName, iterator) {
     if (ctx) {
       var list = ctx.getElementsByTagName(tagName),
-          i = 0,
-          n = list.length;
-
+        i = 0,
+        n = list.length;
       if (iterator) {
         for (; i < n; i++) {
           iterator(list[i], i);
         }
       }
-
       return list;
     }
-
     return [];
   }
-
   function getWindowScrollingElement() {
     var scrollingElement = document.scrollingElement;
-
     if (scrollingElement) {
       return scrollingElement;
     } else {
       return document.documentElement;
     }
   }
+
   /**
    * Returns the "bounding client rect" of given element
    * @param  {HTMLElement} el                       The element whose boundingClientRect is wanted
@@ -39389,12 +39329,9 @@ Popper.Defaults = Defaults;
    * @param  {[HTMLElement]} container              The parent the element will be placed in
    * @return {Object}                               The boundingClientRect of el, with specified adjustments
    */
-
-
   function getRect(el, relativeToContainingBlock, relativeToNonStaticParent, undoScale, container) {
     if (!el.getBoundingClientRect && el !== window) return;
     var elRect, top, left, bottom, right, height, width;
-
     if (el !== window && el.parentNode && el !== getWindowScrollingElement()) {
       elRect = el.getBoundingClientRect();
       top = elRect.top;
@@ -39411,17 +39348,18 @@ Popper.Defaults = Defaults;
       height = window.innerHeight;
       width = window.innerWidth;
     }
-
     if ((relativeToContainingBlock || relativeToNonStaticParent) && el !== window) {
       // Adjust for translate()
-      container = container || el.parentNode; // solves #1123 (see: https://stackoverflow.com/a/37953806/6088312)
-      // Not needed on <= IE11
+      container = container || el.parentNode;
 
+      // solves #1123 (see: https://stackoverflow.com/a/37953806/6088312)
+      // Not needed on <= IE11
       if (!IE11OrLess) {
         do {
           if (container && container.getBoundingClientRect && (css(container, 'transform') !== 'none' || relativeToNonStaticParent && css(container, 'position') !== 'static')) {
-            var containerRect = container.getBoundingClientRect(); // Set relative to edges of padding box of container
+            var containerRect = container.getBoundingClientRect();
 
+            // Set relative to edges of padding box of container
             top -= containerRect.top + parseInt(css(container, 'border-top-width'));
             left -= containerRect.left + parseInt(css(container, 'border-left-width'));
             bottom = top + elRect.height;
@@ -39429,17 +39367,14 @@ Popper.Defaults = Defaults;
             break;
           }
           /* jshint boss:true */
-
         } while (container = container.parentNode);
       }
     }
-
     if (undoScale && el !== window) {
       // Adjust for scale()
       var elMatrix = matrix(container || el),
-          scaleX = elMatrix && elMatrix.a,
-          scaleY = elMatrix && elMatrix.d;
-
+        scaleX = elMatrix && elMatrix.a,
+        scaleY = elMatrix && elMatrix.d;
       if (elMatrix) {
         top /= scaleY;
         left /= scaleX;
@@ -39449,7 +39384,6 @@ Popper.Defaults = Defaults;
         right = left + width;
       }
     }
-
     return {
       top: top,
       left: left,
@@ -39459,6 +39393,7 @@ Popper.Defaults = Defaults;
       height: height
     };
   }
+
   /**
    * Checks if a side of an element is scrolled past a side of its parents
    * @param  {HTMLElement}  el           The element who's side being scrolled out of view is in question
@@ -39466,30 +39401,26 @@ Popper.Defaults = Defaults;
    * @param  {String}       parentSide   Side of the parent in question ('top', 'left', 'right', 'bottom')
    * @return {HTMLElement}               The parent scroll element that the el's side is scrolled past, or null if there is no such element
    */
-
-
   function isScrolledPast(el, elSide, parentSide) {
     var parent = getParentAutoScrollElement(el, true),
-        elSideVal = getRect(el)[elSide];
-    /* jshint boss:true */
+      elSideVal = getRect(el)[elSide];
 
+    /* jshint boss:true */
     while (parent) {
       var parentSideVal = getRect(parent)[parentSide],
-          visible = void 0;
-
+        visible = void 0;
       if (parentSide === 'top' || parentSide === 'left') {
         visible = elSideVal >= parentSideVal;
       } else {
         visible = elSideVal <= parentSideVal;
       }
-
       if (!visible) return parent;
       if (parent === getWindowScrollingElement()) break;
       parent = getParentAutoScrollElement(parent, false);
     }
-
     return false;
   }
+
   /**
    * Gets nth child of el, ignoring hidden children, sortable's elements (does not ignore clone if it's visible)
    * and non-draggable elements
@@ -39498,44 +39429,36 @@ Popper.Defaults = Defaults;
    * @param  {Object} options       Parent Sortable's options
    * @return {HTMLElement}          The child at index childNum, or null if not found
    */
-
-
   function getChild(el, childNum, options, includeDragEl) {
     var currentChild = 0,
-        i = 0,
-        children = el.children;
-
+      i = 0,
+      children = el.children;
     while (i < children.length) {
       if (children[i].style.display !== 'none' && children[i] !== Sortable.ghost && (includeDragEl || children[i] !== Sortable.dragged) && closest(children[i], options.draggable, el, false)) {
         if (currentChild === childNum) {
           return children[i];
         }
-
         currentChild++;
       }
-
       i++;
     }
-
     return null;
   }
+
   /**
    * Gets the last child in the el, ignoring ghostEl or invisible elements (clones)
    * @param  {HTMLElement} el       Parent element
    * @param  {selector} selector    Any other elements that should be ignored
    * @return {HTMLElement}          The last child, ignoring ghostEl
    */
-
-
   function lastChild(el, selector) {
     var last = el.lastElementChild;
-
     while (last && (last === Sortable.ghost || css(last, 'display') === 'none' || selector && !matches(last, selector))) {
       last = last.previousElementSibling;
     }
-
     return last || null;
   }
+
   /**
    * Returns the index of an element within its parent for a selected set of
    * elements
@@ -39543,81 +39466,67 @@ Popper.Defaults = Defaults;
    * @param  {selector} selector
    * @return {number}
    */
-
-
   function index(el, selector) {
     var index = 0;
-
     if (!el || !el.parentNode) {
       return -1;
     }
+
     /* jshint boss:true */
-
-
     while (el = el.previousElementSibling) {
       if (el.nodeName.toUpperCase() !== 'TEMPLATE' && el !== Sortable.clone && (!selector || matches(el, selector))) {
         index++;
       }
     }
-
     return index;
   }
+
   /**
    * Returns the scroll offset of the given element, added with all the scroll offsets of parent elements.
    * The value is returned in real pixels.
    * @param  {HTMLElement} el
    * @return {Array}             Offsets in the format of [left, top]
    */
-
-
   function getRelativeScrollOffset(el) {
     var offsetLeft = 0,
-        offsetTop = 0,
-        winScroller = getWindowScrollingElement();
-
+      offsetTop = 0,
+      winScroller = getWindowScrollingElement();
     if (el) {
       do {
         var elMatrix = matrix(el),
-            scaleX = elMatrix.a,
-            scaleY = elMatrix.d;
+          scaleX = elMatrix.a,
+          scaleY = elMatrix.d;
         offsetLeft += el.scrollLeft * scaleX;
         offsetTop += el.scrollTop * scaleY;
       } while (el !== winScroller && (el = el.parentNode));
     }
-
     return [offsetLeft, offsetTop];
   }
+
   /**
    * Returns the index of the object within the given array
    * @param  {Array} arr   Array that may or may not hold the object
    * @param  {Object} obj  An object that has a key-value pair unique to and identical to a key-value pair in the object you want to find
    * @return {Number}      The index of the object in the array, or -1
    */
-
-
   function indexOfObject(arr, obj) {
     for (var i in arr) {
       if (!arr.hasOwnProperty(i)) continue;
-
       for (var key in obj) {
         if (obj.hasOwnProperty(key) && obj[key] === arr[i][key]) return Number(i);
       }
     }
-
     return -1;
   }
-
   function getParentAutoScrollElement(el, includeSelf) {
     // skip to window
     if (!el || !el.getBoundingClientRect) return getWindowScrollingElement();
     var elem = el;
     var gotSelf = false;
-
     do {
       // we don't need to get elem css if it isn't even overflowing in the first place (performance)
       if (elem.clientWidth < elem.scrollWidth || elem.clientHeight < elem.scrollHeight) {
         var elemCSS = css(elem);
-
         if (elem.clientWidth < elem.scrollWidth && (elemCSS.overflowX == 'auto' || elemCSS.overflowX == 'scroll') || elem.clientHeight < elem.scrollHeight && (elemCSS.overflowY == 'auto' || elemCSS.overflowY == 'scroll')) {
           if (!elem.getBoundingClientRect || elem === document.body) return getWindowScrollingElement();
           if (gotSelf || includeSelf) return elem;
@@ -39625,12 +39534,9 @@ Popper.Defaults = Defaults;
         }
       }
       /* jshint boss:true */
-
     } while (elem = elem.parentNode);
-
     return getWindowScrollingElement();
   }
-
   function extend(dst, src) {
     if (dst && src) {
       for (var key in src) {
@@ -39639,49 +39545,39 @@ Popper.Defaults = Defaults;
         }
       }
     }
-
     return dst;
   }
-
   function isRectEqual(rect1, rect2) {
     return Math.round(rect1.top) === Math.round(rect2.top) && Math.round(rect1.left) === Math.round(rect2.left) && Math.round(rect1.height) === Math.round(rect2.height) && Math.round(rect1.width) === Math.round(rect2.width);
   }
-
   var _throttleTimeout;
-
   function throttle(callback, ms) {
     return function () {
       if (!_throttleTimeout) {
         var args = arguments,
-            _this = this;
-
+          _this = this;
         if (args.length === 1) {
           callback.call(_this, args[0]);
         } else {
           callback.apply(_this, args);
         }
-
         _throttleTimeout = setTimeout(function () {
           _throttleTimeout = void 0;
         }, ms);
       }
     };
   }
-
   function cancelThrottle() {
     clearTimeout(_throttleTimeout);
     _throttleTimeout = void 0;
   }
-
   function scrollBy(el, x, y) {
     el.scrollLeft += x;
     el.scrollTop += y;
   }
-
   function clone(el) {
     var Polymer = window.Polymer;
     var $ = __webpack_provided_window_dot_jQuery || window.Zepto;
-
     if (Polymer && Polymer.dom) {
       return Polymer.dom(el).cloneNode(true);
     } else if ($) {
@@ -39690,7 +39586,6 @@ Popper.Defaults = Defaults;
       return el.cloneNode(true);
     }
   }
-
   function setRect(el, rect) {
     css(el, 'position', 'absolute');
     css(el, 'top', rect.top);
@@ -39698,7 +39593,6 @@ Popper.Defaults = Defaults;
     css(el, 'width', rect.width);
     css(el, 'height', rect.height);
   }
-
   function unsetRect(el) {
     css(el, 'position', '');
     css(el, 'top', '');
@@ -39706,12 +39600,28 @@ Popper.Defaults = Defaults;
     css(el, 'width', '');
     css(el, 'height', '');
   }
-
+  function getChildContainingRectFromElement(container, options, ghostEl) {
+    var rect = {};
+    Array.from(container.children).forEach(function (child) {
+      var _rect$left, _rect$top, _rect$right, _rect$bottom;
+      if (!closest(child, options.draggable, container, false) || child.animated || child === ghostEl) return;
+      var childRect = getRect(child);
+      rect.left = Math.min((_rect$left = rect.left) !== null && _rect$left !== void 0 ? _rect$left : Infinity, childRect.left);
+      rect.top = Math.min((_rect$top = rect.top) !== null && _rect$top !== void 0 ? _rect$top : Infinity, childRect.top);
+      rect.right = Math.max((_rect$right = rect.right) !== null && _rect$right !== void 0 ? _rect$right : -Infinity, childRect.right);
+      rect.bottom = Math.max((_rect$bottom = rect.bottom) !== null && _rect$bottom !== void 0 ? _rect$bottom : -Infinity, childRect.bottom);
+    });
+    rect.width = rect.right - rect.left;
+    rect.height = rect.bottom - rect.top;
+    rect.x = rect.left;
+    rect.y = rect.top;
+    return rect;
+  }
   var expando = 'Sortable' + new Date().getTime();
 
   function AnimationStateManager() {
     var animationStates = [],
-        animationCallbackId;
+      animationCallbackId;
     return {
       captureAnimationState: function captureAnimationState() {
         animationStates = [];
@@ -39723,19 +39633,16 @@ Popper.Defaults = Defaults;
             target: child,
             rect: getRect(child)
           });
+          var fromRect = _objectSpread2({}, animationStates[animationStates.length - 1].rect);
 
-          var fromRect = _objectSpread2({}, animationStates[animationStates.length - 1].rect); // If animating: compensate for current animation
-
-
+          // If animating: compensate for current animation
           if (child.thisAnimationDuration) {
             var childMatrix = matrix(child, true);
-
             if (childMatrix) {
               fromRect.top -= childMatrix.f;
               fromRect.left -= childMatrix.e;
             }
           }
-
           child.fromRect = fromRect;
         });
       },
@@ -39749,54 +39656,47 @@ Popper.Defaults = Defaults;
       },
       animateAll: function animateAll(callback) {
         var _this = this;
-
         if (!this.options.animation) {
           clearTimeout(animationCallbackId);
           if (typeof callback === 'function') callback();
           return;
         }
-
         var animating = false,
-            animationTime = 0;
+          animationTime = 0;
         animationStates.forEach(function (state) {
           var time = 0,
-              target = state.target,
-              fromRect = target.fromRect,
-              toRect = getRect(target),
-              prevFromRect = target.prevFromRect,
-              prevToRect = target.prevToRect,
-              animatingRect = state.rect,
-              targetMatrix = matrix(target, true);
-
+            target = state.target,
+            fromRect = target.fromRect,
+            toRect = getRect(target),
+            prevFromRect = target.prevFromRect,
+            prevToRect = target.prevToRect,
+            animatingRect = state.rect,
+            targetMatrix = matrix(target, true);
           if (targetMatrix) {
             // Compensate for current animation
             toRect.top -= targetMatrix.f;
             toRect.left -= targetMatrix.e;
           }
-
           target.toRect = toRect;
-
           if (target.thisAnimationDuration) {
             // Could also check if animatingRect is between fromRect and toRect
-            if (isRectEqual(prevFromRect, toRect) && !isRectEqual(fromRect, toRect) && // Make sure animatingRect is on line between toRect & fromRect
+            if (isRectEqual(prevFromRect, toRect) && !isRectEqual(fromRect, toRect) &&
+            // Make sure animatingRect is on line between toRect & fromRect
             (animatingRect.top - toRect.top) / (animatingRect.left - toRect.left) === (fromRect.top - toRect.top) / (fromRect.left - toRect.left)) {
               // If returning to same place as started from animation and on same axis
               time = calculateRealTime(animatingRect, prevFromRect, prevToRect, _this.options);
             }
-          } // if fromRect != toRect: animate
+          }
 
-
+          // if fromRect != toRect: animate
           if (!isRectEqual(toRect, fromRect)) {
             target.prevFromRect = fromRect;
             target.prevToRect = toRect;
-
             if (!time) {
               time = _this.options.animation;
             }
-
             _this.animate(target, animatingRect, toRect, time);
           }
-
           if (time) {
             animating = true;
             animationTime = Math.max(animationTime, time);
@@ -39812,7 +39712,6 @@ Popper.Defaults = Defaults;
           }
         });
         clearTimeout(animationCallbackId);
-
         if (!animating) {
           if (typeof callback === 'function') callback();
         } else {
@@ -39820,7 +39719,6 @@ Popper.Defaults = Defaults;
             if (typeof callback === 'function') callback();
           }, animationTime);
         }
-
         animationStates = [];
       },
       animate: function animate(target, currentRect, toRect, duration) {
@@ -39828,10 +39726,10 @@ Popper.Defaults = Defaults;
           css(target, 'transition', '');
           css(target, 'transform', '');
           var elMatrix = matrix(this.el),
-              scaleX = elMatrix && elMatrix.a,
-              scaleY = elMatrix && elMatrix.d,
-              translateX = (currentRect.left - toRect.left) / (scaleX || 1),
-              translateY = (currentRect.top - toRect.top) / (scaleY || 1);
+            scaleX = elMatrix && elMatrix.a,
+            scaleY = elMatrix && elMatrix.d,
+            translateX = (currentRect.left - toRect.left) / (scaleX || 1),
+            translateY = (currentRect.top - toRect.top) / (scaleY || 1);
           target.animatingX = !!translateX;
           target.animatingY = !!translateY;
           css(target, 'transform', 'translate3d(' + translateX + 'px,' + translateY + 'px,0)');
@@ -39851,11 +39749,9 @@ Popper.Defaults = Defaults;
       }
     };
   }
-
   function repaint(target) {
     return target.offsetWidth;
   }
-
   function calculateRealTime(animatingRect, fromRect, toRect, options) {
     return Math.sqrt(Math.pow(fromRect.top - animatingRect.top, 2) + Math.pow(fromRect.left - animatingRect.left, 2)) / Math.sqrt(Math.pow(fromRect.top - toRect.top, 2) + Math.pow(fromRect.left - toRect.left, 2)) * options.animation;
   }
@@ -39872,7 +39768,6 @@ Popper.Defaults = Defaults;
           plugin[option] = defaults[option];
         }
       }
-
       plugins.forEach(function (p) {
         if (p.pluginName === plugin.pluginName) {
           throw "Sortable: Cannot mount plugin ".concat(plugin.pluginName, " more than once");
@@ -39882,25 +39777,22 @@ Popper.Defaults = Defaults;
     },
     pluginEvent: function pluginEvent(eventName, sortable, evt) {
       var _this = this;
-
       this.eventCanceled = false;
-
       evt.cancel = function () {
         _this.eventCanceled = true;
       };
-
       var eventNameGlobal = eventName + 'Global';
       plugins.forEach(function (plugin) {
-        if (!sortable[plugin.pluginName]) return; // Fire global events if it exists in this sortable
-
+        if (!sortable[plugin.pluginName]) return;
+        // Fire global events if it exists in this sortable
         if (sortable[plugin.pluginName][eventNameGlobal]) {
           sortable[plugin.pluginName][eventNameGlobal](_objectSpread2({
             sortable: sortable
           }, evt));
-        } // Only fire plugin event if plugin is enabled in this sortable,
+        }
+
+        // Only fire plugin event if plugin is enabled in this sortable,
         // and plugin has event defined
-
-
         if (sortable.options[plugin.pluginName] && sortable[plugin.pluginName][eventName]) {
           sortable[plugin.pluginName][eventName](_objectSpread2({
             sortable: sortable
@@ -39915,15 +39807,14 @@ Popper.Defaults = Defaults;
         var initialized = new plugin(sortable, el, sortable.options);
         initialized.sortable = sortable;
         initialized.options = sortable.options;
-        sortable[pluginName] = initialized; // Add default options from plugin
+        sortable[pluginName] = initialized;
 
+        // Add default options from plugin
         _extends(defaults, initialized.defaults);
       });
-
       for (var option in sortable.options) {
         if (!sortable.options.hasOwnProperty(option)) continue;
         var modified = this.modifyOption(sortable, option, sortable.options[option]);
-
         if (typeof modified !== 'undefined') {
           sortable.options[option] = modified;
         }
@@ -39933,7 +39824,6 @@ Popper.Defaults = Defaults;
       var eventProperties = {};
       plugins.forEach(function (plugin) {
         if (typeof plugin.eventProperties !== 'function') return;
-
         _extends(eventProperties, plugin.eventProperties.call(sortable[plugin.pluginName], name));
       });
       return eventProperties;
@@ -39942,8 +39832,9 @@ Popper.Defaults = Defaults;
       var modifiedValue;
       plugins.forEach(function (plugin) {
         // Plugin must exist on the Sortable
-        if (!sortable[plugin.pluginName]) return; // If static option listener exists for this option, call in the context of the Sortable's instance of this plugin
+        if (!sortable[plugin.pluginName]) return;
 
+        // If static option listener exists for this option, call in the context of the Sortable's instance of this plugin
         if (plugin.optionListeners && typeof plugin.optionListeners[name] === 'function') {
           modifiedValue = plugin.optionListeners[name].call(sortable[plugin.pluginName], value);
         }
@@ -39954,25 +39845,25 @@ Popper.Defaults = Defaults;
 
   function dispatchEvent(_ref) {
     var sortable = _ref.sortable,
-        rootEl = _ref.rootEl,
-        name = _ref.name,
-        targetEl = _ref.targetEl,
-        cloneEl = _ref.cloneEl,
-        toEl = _ref.toEl,
-        fromEl = _ref.fromEl,
-        oldIndex = _ref.oldIndex,
-        newIndex = _ref.newIndex,
-        oldDraggableIndex = _ref.oldDraggableIndex,
-        newDraggableIndex = _ref.newDraggableIndex,
-        originalEvent = _ref.originalEvent,
-        putSortable = _ref.putSortable,
-        extraEventProperties = _ref.extraEventProperties;
+      rootEl = _ref.rootEl,
+      name = _ref.name,
+      targetEl = _ref.targetEl,
+      cloneEl = _ref.cloneEl,
+      toEl = _ref.toEl,
+      fromEl = _ref.fromEl,
+      oldIndex = _ref.oldIndex,
+      newIndex = _ref.newIndex,
+      oldDraggableIndex = _ref.oldDraggableIndex,
+      newDraggableIndex = _ref.newDraggableIndex,
+      originalEvent = _ref.originalEvent,
+      putSortable = _ref.putSortable,
+      extraEventProperties = _ref.extraEventProperties;
     sortable = sortable || rootEl && rootEl[expando];
     if (!sortable) return;
     var evt,
-        options = sortable.options,
-        onName = 'on' + name.charAt(0).toUpperCase() + name.substr(1); // Support for new CustomEvent feature
-
+      options = sortable.options,
+      onName = 'on' + name.charAt(0).toUpperCase() + name.substr(1);
+    // Support for new CustomEvent feature
     if (window.CustomEvent && !IE11OrLess && !Edge) {
       evt = new CustomEvent(name, {
         bubbles: true,
@@ -39982,7 +39873,6 @@ Popper.Defaults = Defaults;
       evt = document.createEvent('Event');
       evt.initEvent(name, true, true);
     }
-
     evt.to = toEl || rootEl;
     evt.from = fromEl || rootEl;
     evt.item = targetEl || rootEl;
@@ -39993,29 +39883,23 @@ Popper.Defaults = Defaults;
     evt.newDraggableIndex = newDraggableIndex;
     evt.originalEvent = originalEvent;
     evt.pullMode = putSortable ? putSortable.lastPutMode : undefined;
-
     var allEventProperties = _objectSpread2(_objectSpread2({}, extraEventProperties), PluginManager.getEventProperties(name, sortable));
-
     for (var option in allEventProperties) {
       evt[option] = allEventProperties[option];
     }
-
     if (rootEl) {
       rootEl.dispatchEvent(evt);
     }
-
     if (options[onName]) {
       options[onName].call(sortable, evt);
     }
   }
 
   var _excluded = ["evt"];
-
   var pluginEvent = function pluginEvent(eventName, sortable) {
     var _ref = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        originalEvent = _ref.evt,
-        data = _objectWithoutProperties(_ref, _excluded);
-
+      originalEvent = _ref.evt,
+      data = _objectWithoutProperties(_ref, _excluded);
     PluginManager.pluginEvent.bind(Sortable)(eventName, sortable, _objectSpread2({
       dragEl: dragEl,
       parentEl: parentEl,
@@ -40050,7 +39934,6 @@ Popper.Defaults = Defaults;
       }
     }, data));
   };
-
   function _dispatchEvent(info) {
     dispatchEvent(_objectSpread2({
       putSortable: putSortable,
@@ -40063,62 +39946,61 @@ Popper.Defaults = Defaults;
       newDraggableIndex: newDraggableIndex
     }, info));
   }
-
   var dragEl,
-      parentEl,
-      ghostEl,
-      rootEl,
-      nextEl,
-      lastDownEl,
-      cloneEl,
-      cloneHidden,
-      oldIndex,
-      newIndex,
-      oldDraggableIndex,
-      newDraggableIndex,
-      activeGroup,
-      putSortable,
-      awaitingDragStarted = false,
-      ignoreNextClick = false,
-      sortables = [],
-      tapEvt,
-      touchEvt,
-      lastDx,
-      lastDy,
-      tapDistanceLeft,
-      tapDistanceTop,
-      moved,
-      lastTarget,
-      lastDirection,
-      pastFirstInvertThresh = false,
-      isCircumstantialInvert = false,
-      targetMoveDistance,
-      // For positioning ghost absolutely
-  ghostRelativeParent,
-      ghostRelativeParentInitialScroll = [],
-      // (left, top)
-  _silent = false,
-      savedInputChecked = [];
+    parentEl,
+    ghostEl,
+    rootEl,
+    nextEl,
+    lastDownEl,
+    cloneEl,
+    cloneHidden,
+    oldIndex,
+    newIndex,
+    oldDraggableIndex,
+    newDraggableIndex,
+    activeGroup,
+    putSortable,
+    awaitingDragStarted = false,
+    ignoreNextClick = false,
+    sortables = [],
+    tapEvt,
+    touchEvt,
+    lastDx,
+    lastDy,
+    tapDistanceLeft,
+    tapDistanceTop,
+    moved,
+    lastTarget,
+    lastDirection,
+    pastFirstInvertThresh = false,
+    isCircumstantialInvert = false,
+    targetMoveDistance,
+    // For positioning ghost absolutely
+    ghostRelativeParent,
+    ghostRelativeParentInitialScroll = [],
+    // (left, top)
+
+    _silent = false,
+    savedInputChecked = [];
+
   /** @const */
-
   var documentExists = typeof document !== 'undefined',
-      PositionGhostAbsolutely = IOS,
-      CSSFloatProperty = Edge || IE11OrLess ? 'cssFloat' : 'float',
-      // This will not pass for IE9, because IE9 DnD only works on anchors
-  supportDraggable = documentExists && !ChromeForAndroid && !IOS && 'draggable' in document.createElement('div'),
-      supportCssPointerEvents = function () {
-    if (!documentExists) return; // false when <= IE11
-
-    if (IE11OrLess) {
-      return false;
-    }
-
-    var el = document.createElement('x');
-    el.style.cssText = 'pointer-events:auto';
-    return el.style.pointerEvents === 'auto';
-  }(),
-      _detectDirection = function _detectDirection(el, options) {
-    var elCSS = css(el),
+    PositionGhostAbsolutely = IOS,
+    CSSFloatProperty = Edge || IE11OrLess ? 'cssFloat' : 'float',
+    // This will not pass for IE9, because IE9 DnD only works on anchors
+    supportDraggable = documentExists && !ChromeForAndroid && !IOS && 'draggable' in document.createElement('div'),
+    supportCssPointerEvents = function () {
+      if (!documentExists) return;
+      // false when <= IE11
+      if (IE11OrLess) {
+        return false;
+      }
+      var el = document.createElement('x');
+      el.style.cssText = 'pointer-events:auto';
+      return el.style.pointerEvents === 'auto';
+    }(),
+    _detectDirection = function _detectDirection(el, options) {
+      var elCSS = css(el),
         elWidth = parseInt(elCSS.width) - parseInt(elCSS.paddingLeft) - parseInt(elCSS.paddingRight) - parseInt(elCSS.borderLeftWidth) - parseInt(elCSS.borderRightWidth),
         child1 = getChild(el, 0, options),
         child2 = getChild(el, 1, options),
@@ -40126,102 +40008,92 @@ Popper.Defaults = Defaults;
         secondChildCSS = child2 && css(child2),
         firstChildWidth = firstChildCSS && parseInt(firstChildCSS.marginLeft) + parseInt(firstChildCSS.marginRight) + getRect(child1).width,
         secondChildWidth = secondChildCSS && parseInt(secondChildCSS.marginLeft) + parseInt(secondChildCSS.marginRight) + getRect(child2).width;
-
-    if (elCSS.display === 'flex') {
-      return elCSS.flexDirection === 'column' || elCSS.flexDirection === 'column-reverse' ? 'vertical' : 'horizontal';
-    }
-
-    if (elCSS.display === 'grid') {
-      return elCSS.gridTemplateColumns.split(' ').length <= 1 ? 'vertical' : 'horizontal';
-    }
-
-    if (child1 && firstChildCSS["float"] && firstChildCSS["float"] !== 'none') {
-      var touchingSideChild2 = firstChildCSS["float"] === 'left' ? 'left' : 'right';
-      return child2 && (secondChildCSS.clear === 'both' || secondChildCSS.clear === touchingSideChild2) ? 'vertical' : 'horizontal';
-    }
-
-    return child1 && (firstChildCSS.display === 'block' || firstChildCSS.display === 'flex' || firstChildCSS.display === 'table' || firstChildCSS.display === 'grid' || firstChildWidth >= elWidth && elCSS[CSSFloatProperty] === 'none' || child2 && elCSS[CSSFloatProperty] === 'none' && firstChildWidth + secondChildWidth > elWidth) ? 'vertical' : 'horizontal';
-  },
-      _dragElInRowColumn = function _dragElInRowColumn(dragRect, targetRect, vertical) {
-    var dragElS1Opp = vertical ? dragRect.left : dragRect.top,
+      if (elCSS.display === 'flex') {
+        return elCSS.flexDirection === 'column' || elCSS.flexDirection === 'column-reverse' ? 'vertical' : 'horizontal';
+      }
+      if (elCSS.display === 'grid') {
+        return elCSS.gridTemplateColumns.split(' ').length <= 1 ? 'vertical' : 'horizontal';
+      }
+      if (child1 && firstChildCSS["float"] && firstChildCSS["float"] !== 'none') {
+        var touchingSideChild2 = firstChildCSS["float"] === 'left' ? 'left' : 'right';
+        return child2 && (secondChildCSS.clear === 'both' || secondChildCSS.clear === touchingSideChild2) ? 'vertical' : 'horizontal';
+      }
+      return child1 && (firstChildCSS.display === 'block' || firstChildCSS.display === 'flex' || firstChildCSS.display === 'table' || firstChildCSS.display === 'grid' || firstChildWidth >= elWidth && elCSS[CSSFloatProperty] === 'none' || child2 && elCSS[CSSFloatProperty] === 'none' && firstChildWidth + secondChildWidth > elWidth) ? 'vertical' : 'horizontal';
+    },
+    _dragElInRowColumn = function _dragElInRowColumn(dragRect, targetRect, vertical) {
+      var dragElS1Opp = vertical ? dragRect.left : dragRect.top,
         dragElS2Opp = vertical ? dragRect.right : dragRect.bottom,
         dragElOppLength = vertical ? dragRect.width : dragRect.height,
         targetS1Opp = vertical ? targetRect.left : targetRect.top,
         targetS2Opp = vertical ? targetRect.right : targetRect.bottom,
         targetOppLength = vertical ? targetRect.width : targetRect.height;
-    return dragElS1Opp === targetS1Opp || dragElS2Opp === targetS2Opp || dragElS1Opp + dragElOppLength / 2 === targetS1Opp + targetOppLength / 2;
-  },
-
-  /**
-   * Detects first nearest empty sortable to X and Y position using emptyInsertThreshold.
-   * @param  {Number} x      X position
-   * @param  {Number} y      Y position
-   * @return {HTMLElement}   Element of the first found nearest Sortable
-   */
-  _detectNearestEmptySortable = function _detectNearestEmptySortable(x, y) {
-    var ret;
-    sortables.some(function (sortable) {
-      var threshold = sortable[expando].options.emptyInsertThreshold;
-      if (!threshold || lastChild(sortable)) return;
-      var rect = getRect(sortable),
+      return dragElS1Opp === targetS1Opp || dragElS2Opp === targetS2Opp || dragElS1Opp + dragElOppLength / 2 === targetS1Opp + targetOppLength / 2;
+    },
+    /**
+     * Detects first nearest empty sortable to X and Y position using emptyInsertThreshold.
+     * @param  {Number} x      X position
+     * @param  {Number} y      Y position
+     * @return {HTMLElement}   Element of the first found nearest Sortable
+     */
+    _detectNearestEmptySortable = function _detectNearestEmptySortable(x, y) {
+      var ret;
+      sortables.some(function (sortable) {
+        var threshold = sortable[expando].options.emptyInsertThreshold;
+        if (!threshold || lastChild(sortable)) return;
+        var rect = getRect(sortable),
           insideHorizontally = x >= rect.left - threshold && x <= rect.right + threshold,
           insideVertically = y >= rect.top - threshold && y <= rect.bottom + threshold;
-
-      if (insideHorizontally && insideVertically) {
-        return ret = sortable;
-      }
-    });
-    return ret;
-  },
-      _prepareGroup = function _prepareGroup(options) {
-    function toFn(value, pull) {
-      return function (to, from, dragEl, evt) {
-        var sameGroup = to.options.group.name && from.options.group.name && to.options.group.name === from.options.group.name;
-
-        if (value == null && (pull || sameGroup)) {
-          // Default pull value
-          // Default pull and put value if same group
-          return true;
-        } else if (value == null || value === false) {
-          return false;
-        } else if (pull && value === 'clone') {
-          return value;
-        } else if (typeof value === 'function') {
-          return toFn(value(to, from, dragEl, evt), pull)(to, from, dragEl, evt);
-        } else {
-          var otherGroup = (pull ? to : from).options.group.name;
-          return value === true || typeof value === 'string' && value === otherGroup || value.join && value.indexOf(otherGroup) > -1;
+        if (insideHorizontally && insideVertically) {
+          return ret = sortable;
         }
-      };
-    }
+      });
+      return ret;
+    },
+    _prepareGroup = function _prepareGroup(options) {
+      function toFn(value, pull) {
+        return function (to, from, dragEl, evt) {
+          var sameGroup = to.options.group.name && from.options.group.name && to.options.group.name === from.options.group.name;
+          if (value == null && (pull || sameGroup)) {
+            // Default pull value
+            // Default pull and put value if same group
+            return true;
+          } else if (value == null || value === false) {
+            return false;
+          } else if (pull && value === 'clone') {
+            return value;
+          } else if (typeof value === 'function') {
+            return toFn(value(to, from, dragEl, evt), pull)(to, from, dragEl, evt);
+          } else {
+            var otherGroup = (pull ? to : from).options.group.name;
+            return value === true || typeof value === 'string' && value === otherGroup || value.join && value.indexOf(otherGroup) > -1;
+          }
+        };
+      }
+      var group = {};
+      var originalGroup = options.group;
+      if (!originalGroup || _typeof(originalGroup) != 'object') {
+        originalGroup = {
+          name: originalGroup
+        };
+      }
+      group.name = originalGroup.name;
+      group.checkPull = toFn(originalGroup.pull, true);
+      group.checkPut = toFn(originalGroup.put);
+      group.revertClone = originalGroup.revertClone;
+      options.group = group;
+    },
+    _hideGhostForTarget = function _hideGhostForTarget() {
+      if (!supportCssPointerEvents && ghostEl) {
+        css(ghostEl, 'display', 'none');
+      }
+    },
+    _unhideGhostForTarget = function _unhideGhostForTarget() {
+      if (!supportCssPointerEvents && ghostEl) {
+        css(ghostEl, 'display', '');
+      }
+    };
 
-    var group = {};
-    var originalGroup = options.group;
-
-    if (!originalGroup || _typeof(originalGroup) != 'object') {
-      originalGroup = {
-        name: originalGroup
-      };
-    }
-
-    group.name = originalGroup.name;
-    group.checkPull = toFn(originalGroup.pull, true);
-    group.checkPut = toFn(originalGroup.put);
-    group.revertClone = originalGroup.revertClone;
-    options.group = group;
-  },
-      _hideGhostForTarget = function _hideGhostForTarget() {
-    if (!supportCssPointerEvents && ghostEl) {
-      css(ghostEl, 'display', 'none');
-    }
-  },
-      _unhideGhostForTarget = function _unhideGhostForTarget() {
-    if (!supportCssPointerEvents && ghostEl) {
-      css(ghostEl, 'display', '');
-    }
-  }; // #1184 fix - Prevent click event on fallback if dragged but item not changed position
-
-
+  // #1184 fix - Prevent click event on fallback if dragged but item not changed position
   if (documentExists && !ChromeForAndroid) {
     document.addEventListener('click', function (evt) {
       if (ignoreNextClick) {
@@ -40233,53 +40105,44 @@ Popper.Defaults = Defaults;
       }
     }, true);
   }
-
   var nearestEmptyInsertDetectEvent = function nearestEmptyInsertDetectEvent(evt) {
     if (dragEl) {
       evt = evt.touches ? evt.touches[0] : evt;
-
       var nearest = _detectNearestEmptySortable(evt.clientX, evt.clientY);
-
       if (nearest) {
         // Create imitation event
         var event = {};
-
         for (var i in evt) {
           if (evt.hasOwnProperty(i)) {
             event[i] = evt[i];
           }
         }
-
         event.target = event.rootEl = nearest;
         event.preventDefault = void 0;
         event.stopPropagation = void 0;
-
         nearest[expando]._onDragOver(event);
       }
     }
   };
-
   var _checkOutsideTargetEl = function _checkOutsideTargetEl(evt) {
     if (dragEl) {
       dragEl.parentNode[expando]._isOutsideThisEl(evt.target);
     }
   };
+
   /**
    * @class  Sortable
    * @param  {HTMLElement}  el
    * @param  {Object}       [options]
    */
-
-
   function Sortable(el, options) {
     if (!(el && el.nodeType && el.nodeType === 1)) {
       throw "Sortable: `el` must be an HTMLElement, not ".concat({}.toString.call(el));
     }
-
     this.el = el; // root element
+    this.options = options = _extends({}, options);
 
-    this.options = options = _extends({}, options); // Export instance
-
+    // Export instance
     el[expando] = this;
     var defaults = {
       group: null,
@@ -40326,52 +40189,48 @@ Popper.Defaults = Defaults;
       supportPointer: Sortable.supportPointer !== false && 'PointerEvent' in window && !Safari,
       emptyInsertThreshold: 5
     };
-    PluginManager.initializePlugins(this, el, defaults); // Set default options
+    PluginManager.initializePlugins(this, el, defaults);
 
+    // Set default options
     for (var name in defaults) {
       !(name in options) && (options[name] = defaults[name]);
     }
+    _prepareGroup(options);
 
-    _prepareGroup(options); // Bind all private methods
-
-
+    // Bind all private methods
     for (var fn in this) {
       if (fn.charAt(0) === '_' && typeof this[fn] === 'function') {
         this[fn] = this[fn].bind(this);
       }
-    } // Setup drag mode
+    }
 
-
+    // Setup drag mode
     this.nativeDraggable = options.forceFallback ? false : supportDraggable;
-
     if (this.nativeDraggable) {
       // Touch start threshold cannot be greater than the native dragstart threshold
       this.options.touchStartThreshold = 1;
-    } // Bind events
+    }
 
-
+    // Bind events
     if (options.supportPointer) {
       on(el, 'pointerdown', this._onTapStart);
     } else {
       on(el, 'mousedown', this._onTapStart);
       on(el, 'touchstart', this._onTapStart);
     }
-
     if (this.nativeDraggable) {
       on(el, 'dragover', this);
       on(el, 'dragenter', this);
     }
+    sortables.push(this.el);
 
-    sortables.push(this.el); // Restore sorting
+    // Restore sorting
+    options.store && options.store.get && this.sort(options.store.get(this) || []);
 
-    options.store && options.store.get && this.sort(options.store.get(this) || []); // Add animation state manager
-
+    // Add animation state manager
     _extends(this, AnimationStateManager());
   }
-
-  Sortable.prototype =
-  /** @lends Sortable.prototype */
-  {
+  Sortable.prototype = /** @lends Sortable.prototype */{
     constructor: Sortable,
     _isOutsideThisEl: function _isOutsideThisEl(target) {
       if (!this.el.contains(target) && target !== this.el) {
@@ -40381,57 +40240,50 @@ Popper.Defaults = Defaults;
     _getDirection: function _getDirection(evt, target) {
       return typeof this.options.direction === 'function' ? this.options.direction.call(this, evt, target, dragEl) : this.options.direction;
     },
-    _onTapStart: function _onTapStart(
-    /** Event|TouchEvent */
-    evt) {
+    _onTapStart: function _onTapStart( /** Event|TouchEvent */evt) {
       if (!evt.cancelable) return;
-
       var _this = this,
-          el = this.el,
-          options = this.options,
-          preventOnFilter = options.preventOnFilter,
-          type = evt.type,
-          touch = evt.touches && evt.touches[0] || evt.pointerType && evt.pointerType === 'touch' && evt,
-          target = (touch || evt).target,
-          originalTarget = evt.target.shadowRoot && (evt.path && evt.path[0] || evt.composedPath && evt.composedPath()[0]) || target,
-          filter = options.filter;
+        el = this.el,
+        options = this.options,
+        preventOnFilter = options.preventOnFilter,
+        type = evt.type,
+        touch = evt.touches && evt.touches[0] || evt.pointerType && evt.pointerType === 'touch' && evt,
+        target = (touch || evt).target,
+        originalTarget = evt.target.shadowRoot && (evt.path && evt.path[0] || evt.composedPath && evt.composedPath()[0]) || target,
+        filter = options.filter;
+      _saveInputCheckedState(el);
 
-      _saveInputCheckedState(el); // Don't trigger start event when an element is been dragged, otherwise the evt.oldindex always wrong when set option.group.
-
-
+      // Don't trigger start event when an element is been dragged, otherwise the evt.oldindex always wrong when set option.group.
       if (dragEl) {
         return;
       }
-
       if (/mousedown|pointerdown/.test(type) && evt.button !== 0 || options.disabled) {
         return; // only left button and enabled
-      } // cancel dnd if original target is content editable
+      }
 
-
+      // cancel dnd if original target is content editable
       if (originalTarget.isContentEditable) {
         return;
-      } // Safari ignores further event handling after mousedown
+      }
 
-
+      // Safari ignores further event handling after mousedown
       if (!this.nativeDraggable && Safari && target && target.tagName.toUpperCase() === 'SELECT') {
         return;
       }
-
       target = closest(target, options.draggable, el, false);
-
       if (target && target.animated) {
         return;
       }
-
       if (lastDownEl === target) {
         // Ignoring duplicate `down`
         return;
-      } // Get the index of the dragged element within its parent
+      }
 
-
+      // Get the index of the dragged element within its parent
       oldIndex = index(target);
-      oldDraggableIndex = index(target, options.draggable); // Check filter
+      oldDraggableIndex = index(target, options.draggable);
 
+      // Check filter
       if (typeof filter === 'function') {
         if (filter.call(this, evt, target, this)) {
           _dispatchEvent({
@@ -40442,7 +40294,6 @@ Popper.Defaults = Defaults;
             toEl: el,
             fromEl: el
           });
-
           pluginEvent('filter', _this, {
             evt: evt
           });
@@ -40452,7 +40303,6 @@ Popper.Defaults = Defaults;
       } else if (filter) {
         filter = filter.split(',').some(function (criteria) {
           criteria = closest(originalTarget, criteria.trim(), el, false);
-
           if (criteria) {
             _dispatchEvent({
               sortable: _this,
@@ -40462,40 +40312,30 @@ Popper.Defaults = Defaults;
               fromEl: el,
               toEl: el
             });
-
             pluginEvent('filter', _this, {
               evt: evt
             });
             return true;
           }
         });
-
         if (filter) {
           preventOnFilter && evt.cancelable && evt.preventDefault();
           return; // cancel dnd
         }
       }
-
       if (options.handle && !closest(originalTarget, options.handle, el, false)) {
         return;
-      } // Prepare `dragstart`
+      }
 
-
+      // Prepare `dragstart`
       this._prepareDragStart(evt, touch, target);
     },
-    _prepareDragStart: function _prepareDragStart(
-    /** Event */
-    evt,
-    /** Touch */
-    touch,
-    /** HTMLElement */
-    target) {
+    _prepareDragStart: function _prepareDragStart( /** Event */evt, /** Touch */touch, /** HTMLElement */target) {
       var _this = this,
-          el = _this.el,
-          options = _this.options,
-          ownerDocument = el.ownerDocument,
-          dragStartFn;
-
+        el = _this.el,
+        options = _this.options,
+        ownerDocument = el.ownerDocument,
+        dragStartFn;
       if (target && !dragEl && target.parentNode === el) {
         var dragRect = getRect(target);
         rootEl = el;
@@ -40515,41 +40355,36 @@ Popper.Defaults = Defaults;
         this._lastX = (touch || evt).clientX;
         this._lastY = (touch || evt).clientY;
         dragEl.style['will-change'] = 'all';
-
         dragStartFn = function dragStartFn() {
           pluginEvent('delayEnded', _this, {
             evt: evt
           });
-
           if (Sortable.eventCanceled) {
             _this._onDrop();
-
             return;
-          } // Delayed drag has been triggered
+          }
+          // Delayed drag has been triggered
           // we can re-enable the events: touchmove/mousemove
-
-
           _this._disableDelayedDragEvents();
-
           if (!FireFox && _this.nativeDraggable) {
             dragEl.draggable = true;
-          } // Bind the events: dragstart/dragend
+          }
 
+          // Bind the events: dragstart/dragend
+          _this._triggerDragStart(evt, touch);
 
-          _this._triggerDragStart(evt, touch); // Drag start event
-
-
+          // Drag start event
           _dispatchEvent({
             sortable: _this,
             name: 'choose',
             originalEvent: evt
-          }); // Chosen item
+          });
 
-
+          // Chosen item
           toggleClass(dragEl, options.chosenClass, true);
-        }; // Disable "draggable"
+        };
 
-
+        // Disable "draggable"
         options.ignore.split(',').forEach(function (criteria) {
           find(dragEl, criteria.trim(), _disableDraggable);
         });
@@ -40558,27 +40393,26 @@ Popper.Defaults = Defaults;
         on(ownerDocument, 'touchmove', nearestEmptyInsertDetectEvent);
         on(ownerDocument, 'mouseup', _this._onDrop);
         on(ownerDocument, 'touchend', _this._onDrop);
-        on(ownerDocument, 'touchcancel', _this._onDrop); // Make dragEl draggable (must be before delay for FireFox)
+        on(ownerDocument, 'touchcancel', _this._onDrop);
 
+        // Make dragEl draggable (must be before delay for FireFox)
         if (FireFox && this.nativeDraggable) {
           this.options.touchStartThreshold = 4;
           dragEl.draggable = true;
         }
-
         pluginEvent('delayStart', this, {
           evt: evt
-        }); // Delay is impossible for native DnD in Edge or IE
+        });
 
+        // Delay is impossible for native DnD in Edge or IE
         if (options.delay && (!options.delayOnTouchOnly || touch) && (!this.nativeDraggable || !(Edge || IE11OrLess))) {
           if (Sortable.eventCanceled) {
             this._onDrop();
-
             return;
-          } // If the user moves the pointer or let go the click or touch
+          }
+          // If the user moves the pointer or let go the click or touch
           // before the delay has been reached:
           // disable the delayed drag
-
-
           on(ownerDocument, 'mouseup', _this._disableDelayedDrag);
           on(ownerDocument, 'touchend', _this._disableDelayedDrag);
           on(ownerDocument, 'touchcancel', _this._disableDelayedDrag);
@@ -40591,11 +40425,8 @@ Popper.Defaults = Defaults;
         }
       }
     },
-    _delayedDragTouchMoveHandler: function _delayedDragTouchMoveHandler(
-    /** TouchEvent|PointerEvent **/
-    e) {
+    _delayedDragTouchMoveHandler: function _delayedDragTouchMoveHandler( /** TouchEvent|PointerEvent **/e) {
       var touch = e.touches ? e.touches[0] : e;
-
       if (Math.max(Math.abs(touch.clientX - this._lastX), Math.abs(touch.clientY - this._lastY)) >= Math.floor(this.options.touchStartThreshold / (this.nativeDraggable && window.devicePixelRatio || 1))) {
         this._disableDelayedDrag();
       }
@@ -40603,7 +40434,6 @@ Popper.Defaults = Defaults;
     _disableDelayedDrag: function _disableDelayedDrag() {
       dragEl && _disableDraggable(dragEl);
       clearTimeout(this._dragStartTimer);
-
       this._disableDelayedDragEvents();
     },
     _disableDelayedDragEvents: function _disableDelayedDragEvents() {
@@ -40615,13 +40445,8 @@ Popper.Defaults = Defaults;
       off(ownerDocument, 'touchmove', this._delayedDragTouchMoveHandler);
       off(ownerDocument, 'pointermove', this._delayedDragTouchMoveHandler);
     },
-    _triggerDragStart: function _triggerDragStart(
-    /** Event */
-    evt,
-    /** Touch */
-    touch) {
+    _triggerDragStart: function _triggerDragStart( /** Event */evt, /** Touch */touch) {
       touch = touch || evt.pointerType == 'touch' && evt;
-
       if (!this.nativeDraggable || touch) {
         if (this.options.supportPointer) {
           on(document, 'pointermove', this._onTouchMove);
@@ -40634,7 +40459,6 @@ Popper.Defaults = Defaults;
         on(dragEl, 'dragend', this);
         on(rootEl, 'dragstart', this._onDragStart);
       }
-
       try {
         if (document.selection) {
           // Timeout neccessary for IE9
@@ -40647,25 +40471,23 @@ Popper.Defaults = Defaults;
       } catch (err) {}
     },
     _dragStarted: function _dragStarted(fallback, evt) {
-
       awaitingDragStarted = false;
-
       if (rootEl && dragEl) {
         pluginEvent('dragStarted', this, {
           evt: evt
         });
-
         if (this.nativeDraggable) {
           on(document, 'dragover', _checkOutsideTargetEl);
         }
+        var options = this.options;
 
-        var options = this.options; // Apply effect
-
+        // Apply effect
         !fallback && toggleClass(dragEl, options.dragClass, false);
         toggleClass(dragEl, options.ghostClass, true);
         Sortable.active = this;
-        fallback && this._appendGhost(); // Drag start event
+        fallback && this._appendGhost();
 
+        // Drag start event
         _dispatchEvent({
           sortable: this,
           name: 'start',
@@ -40679,20 +40501,15 @@ Popper.Defaults = Defaults;
       if (touchEvt) {
         this._lastX = touchEvt.clientX;
         this._lastY = touchEvt.clientY;
-
         _hideGhostForTarget();
-
         var target = document.elementFromPoint(touchEvt.clientX, touchEvt.clientY);
         var parent = target;
-
         while (target && target.shadowRoot) {
           target = target.shadowRoot.elementFromPoint(touchEvt.clientX, touchEvt.clientY);
           if (target === parent) break;
           parent = target;
         }
-
         dragEl.parentNode[expando]._isOutsideThisEl(target);
-
         if (parent) {
           do {
             if (parent[expando]) {
@@ -40703,44 +40520,37 @@ Popper.Defaults = Defaults;
                 target: target,
                 rootEl: parent
               });
-
               if (inserted && !this.options.dragoverBubble) {
                 break;
               }
             }
-
             target = parent; // store last element
           }
-          /* jshint boss:true */
-          while (parent = parent.parentNode);
+          /* jshint boss:true */ while (parent = parent.parentNode);
         }
-
         _unhideGhostForTarget();
       }
     },
-    _onTouchMove: function _onTouchMove(
-    /**TouchEvent*/
-    evt) {
+    _onTouchMove: function _onTouchMove( /**TouchEvent*/evt) {
       if (tapEvt) {
         var options = this.options,
-            fallbackTolerance = options.fallbackTolerance,
-            fallbackOffset = options.fallbackOffset,
-            touch = evt.touches ? evt.touches[0] : evt,
-            ghostMatrix = ghostEl && matrix(ghostEl, true),
-            scaleX = ghostEl && ghostMatrix && ghostMatrix.a,
-            scaleY = ghostEl && ghostMatrix && ghostMatrix.d,
-            relativeScrollOffset = PositionGhostAbsolutely && ghostRelativeParent && getRelativeScrollOffset(ghostRelativeParent),
-            dx = (touch.clientX - tapEvt.clientX + fallbackOffset.x) / (scaleX || 1) + (relativeScrollOffset ? relativeScrollOffset[0] - ghostRelativeParentInitialScroll[0] : 0) / (scaleX || 1),
-            dy = (touch.clientY - tapEvt.clientY + fallbackOffset.y) / (scaleY || 1) + (relativeScrollOffset ? relativeScrollOffset[1] - ghostRelativeParentInitialScroll[1] : 0) / (scaleY || 1); // only set the status to dragging, when we are actually dragging
+          fallbackTolerance = options.fallbackTolerance,
+          fallbackOffset = options.fallbackOffset,
+          touch = evt.touches ? evt.touches[0] : evt,
+          ghostMatrix = ghostEl && matrix(ghostEl, true),
+          scaleX = ghostEl && ghostMatrix && ghostMatrix.a,
+          scaleY = ghostEl && ghostMatrix && ghostMatrix.d,
+          relativeScrollOffset = PositionGhostAbsolutely && ghostRelativeParent && getRelativeScrollOffset(ghostRelativeParent),
+          dx = (touch.clientX - tapEvt.clientX + fallbackOffset.x) / (scaleX || 1) + (relativeScrollOffset ? relativeScrollOffset[0] - ghostRelativeParentInitialScroll[0] : 0) / (scaleX || 1),
+          dy = (touch.clientY - tapEvt.clientY + fallbackOffset.y) / (scaleY || 1) + (relativeScrollOffset ? relativeScrollOffset[1] - ghostRelativeParentInitialScroll[1] : 0) / (scaleY || 1);
 
+        // only set the status to dragging, when we are actually dragging
         if (!Sortable.active && !awaitingDragStarted) {
           if (fallbackTolerance && Math.max(Math.abs(touch.clientX - this._lastX), Math.abs(touch.clientY - this._lastY)) < fallbackTolerance) {
             return;
           }
-
           this._onDragStart(evt, true);
         }
-
         if (ghostEl) {
           if (ghostMatrix) {
             ghostMatrix.e += dx - (lastDx || 0);
@@ -40755,7 +40565,6 @@ Popper.Defaults = Defaults;
               f: dy
             };
           }
-
           var cssMatrix = "matrix(".concat(ghostMatrix.a, ",").concat(ghostMatrix.b, ",").concat(ghostMatrix.c, ",").concat(ghostMatrix.d, ",").concat(ghostMatrix.e, ",").concat(ghostMatrix.f, ")");
           css(ghostEl, 'webkitTransform', cssMatrix);
           css(ghostEl, 'mozTransform', cssMatrix);
@@ -40765,7 +40574,6 @@ Popper.Defaults = Defaults;
           lastDy = dy;
           touchEvt = touch;
         }
-
         evt.cancelable && evt.preventDefault();
       }
     },
@@ -40774,17 +40582,16 @@ Popper.Defaults = Defaults;
       // Not being adjusted for
       if (!ghostEl) {
         var container = this.options.fallbackOnBody ? document.body : rootEl,
-            rect = getRect(dragEl, true, PositionGhostAbsolutely, true, container),
-            options = this.options; // Position absolutely
+          rect = getRect(dragEl, true, PositionGhostAbsolutely, true, container),
+          options = this.options;
 
+        // Position absolutely
         if (PositionGhostAbsolutely) {
           // Get relatively positioned parent
           ghostRelativeParent = container;
-
           while (css(ghostRelativeParent, 'position') === 'static' && css(ghostRelativeParent, 'transform') === 'none' && ghostRelativeParent !== document) {
             ghostRelativeParent = ghostRelativeParent.parentNode;
           }
-
           if (ghostRelativeParent !== document.body && ghostRelativeParent !== document.documentElement) {
             if (ghostRelativeParent === document) ghostRelativeParent = getWindowScrollingElement();
             rect.top += ghostRelativeParent.scrollTop;
@@ -40792,10 +40599,8 @@ Popper.Defaults = Defaults;
           } else {
             ghostRelativeParent = getWindowScrollingElement();
           }
-
           ghostRelativeParentInitialScroll = getRelativeScrollOffset(ghostRelativeParent);
         }
-
         ghostEl = dragEl.cloneNode(true);
         toggleClass(ghostEl, options.ghostClass, false);
         toggleClass(ghostEl, options.fallbackClass, true);
@@ -40813,62 +40618,50 @@ Popper.Defaults = Defaults;
         css(ghostEl, 'zIndex', '100000');
         css(ghostEl, 'pointerEvents', 'none');
         Sortable.ghost = ghostEl;
-        container.appendChild(ghostEl); // Set transform-origin
+        container.appendChild(ghostEl);
 
+        // Set transform-origin
         css(ghostEl, 'transform-origin', tapDistanceLeft / parseInt(ghostEl.style.width) * 100 + '% ' + tapDistanceTop / parseInt(ghostEl.style.height) * 100 + '%');
       }
     },
-    _onDragStart: function _onDragStart(
-    /**Event*/
-    evt,
-    /**boolean*/
-    fallback) {
+    _onDragStart: function _onDragStart( /**Event*/evt, /**boolean*/fallback) {
       var _this = this;
-
       var dataTransfer = evt.dataTransfer;
       var options = _this.options;
       pluginEvent('dragStart', this, {
         evt: evt
       });
-
       if (Sortable.eventCanceled) {
         this._onDrop();
-
         return;
       }
-
       pluginEvent('setupClone', this);
-
       if (!Sortable.eventCanceled) {
         cloneEl = clone(dragEl);
         cloneEl.removeAttribute("id");
         cloneEl.draggable = false;
         cloneEl.style['will-change'] = '';
-
         this._hideClone();
-
         toggleClass(cloneEl, this.options.chosenClass, false);
         Sortable.clone = cloneEl;
-      } // #1143: IFrame support workaround
+      }
 
-
+      // #1143: IFrame support workaround
       _this.cloneId = _nextTick(function () {
         pluginEvent('clone', _this);
         if (Sortable.eventCanceled) return;
-
         if (!_this.options.removeCloneOnHide) {
           rootEl.insertBefore(cloneEl, dragEl);
         }
-
         _this._hideClone();
-
         _dispatchEvent({
           sortable: _this,
           name: 'clone'
         });
       });
-      !fallback && toggleClass(dragEl, options.dragClass, true); // Set proper drop events
+      !fallback && toggleClass(dragEl, options.dragClass, true);
 
+      // Set proper drop events
       if (fallback) {
         ignoreNextClick = true;
         _this._loopId = setInterval(_this._emulateDragOver, 50);
@@ -40877,47 +40670,40 @@ Popper.Defaults = Defaults;
         off(document, 'mouseup', _this._onDrop);
         off(document, 'touchend', _this._onDrop);
         off(document, 'touchcancel', _this._onDrop);
-
         if (dataTransfer) {
           dataTransfer.effectAllowed = 'move';
           options.setData && options.setData.call(_this, dataTransfer, dragEl);
         }
+        on(document, 'drop', _this);
 
-        on(document, 'drop', _this); // #1276 fix:
-
+        // #1276 fix:
         css(dragEl, 'transform', 'translateZ(0)');
       }
-
       awaitingDragStarted = true;
       _this._dragStartId = _nextTick(_this._dragStarted.bind(_this, fallback, evt));
       on(document, 'selectstart', _this);
       moved = true;
-
       if (Safari) {
         css(document.body, 'user-select', 'none');
       }
     },
     // Returns true - if no further action is needed (either inserted or another condition)
-    _onDragOver: function _onDragOver(
-    /**Event*/
-    evt) {
+    _onDragOver: function _onDragOver( /**Event*/evt) {
       var el = this.el,
-          target = evt.target,
-          dragRect,
-          targetRect,
-          revert,
-          options = this.options,
-          group = options.group,
-          activeSortable = Sortable.active,
-          isOwner = activeGroup === group,
-          canSort = options.sort,
-          fromSortable = putSortable || activeSortable,
-          vertical,
-          _this = this,
-          completedFired = false;
-
+        target = evt.target,
+        dragRect,
+        targetRect,
+        revert,
+        options = this.options,
+        group = options.group,
+        activeSortable = Sortable.active,
+        isOwner = activeGroup === group,
+        canSort = options.sort,
+        fromSortable = putSortable || activeSortable,
+        vertical,
+        _this = this,
+        completedFired = false;
       if (_silent) return;
-
       function dragOverEvent(name, extra) {
         pluginEvent(name, _this, _objectSpread2({
           evt: evt,
@@ -40935,25 +40721,22 @@ Popper.Defaults = Defaults;
           },
           changed: changed
         }, extra));
-      } // Capture animation state
+      }
 
-
+      // Capture animation state
       function capture() {
         dragOverEvent('dragOverAnimationCapture');
-
         _this.captureAnimationState();
-
         if (_this !== fromSortable) {
           fromSortable.captureAnimationState();
         }
-      } // Return invocation when dragEl is inserted (or completed)
+      }
 
-
+      // Return invocation when dragEl is inserted (or completed)
       function completed(insertion) {
         dragOverEvent('dragOverCompleted', {
           insertion: insertion
         });
-
         if (insertion) {
           // Clones must be hidden before folding animation to capture dragRectAbsolute properly
           if (isOwner) {
@@ -40961,57 +40744,51 @@ Popper.Defaults = Defaults;
           } else {
             activeSortable._showClone(_this);
           }
-
           if (_this !== fromSortable) {
             // Set ghost class to new sortable's ghost class
             toggleClass(dragEl, putSortable ? putSortable.options.ghostClass : activeSortable.options.ghostClass, false);
             toggleClass(dragEl, options.ghostClass, true);
           }
-
           if (putSortable !== _this && _this !== Sortable.active) {
             putSortable = _this;
           } else if (_this === Sortable.active && putSortable) {
             putSortable = null;
-          } // Animation
+          }
 
-
+          // Animation
           if (fromSortable === _this) {
             _this._ignoreWhileAnimating = target;
           }
-
           _this.animateAll(function () {
             dragOverEvent('dragOverAnimationComplete');
             _this._ignoreWhileAnimating = null;
           });
-
           if (_this !== fromSortable) {
             fromSortable.animateAll();
             fromSortable._ignoreWhileAnimating = null;
           }
-        } // Null lastTarget if it is not inside a previously swapped element
-
-
-        if (target === dragEl && !dragEl.animated || target === el && !target.animated) {
-          lastTarget = null;
-        } // no bubbling and not fallback
-
-
-        if (!options.dragoverBubble && !evt.rootEl && target !== document) {
-          dragEl.parentNode[expando]._isOutsideThisEl(evt.target); // Do not detect for empty insert if already inserted
-
-
-          !insertion && nearestEmptyInsertDetectEvent(evt);
         }
 
+        // Null lastTarget if it is not inside a previously swapped element
+        if (target === dragEl && !dragEl.animated || target === el && !target.animated) {
+          lastTarget = null;
+        }
+
+        // no bubbling and not fallback
+        if (!options.dragoverBubble && !evt.rootEl && target !== document) {
+          dragEl.parentNode[expando]._isOutsideThisEl(evt.target);
+
+          // Do not detect for empty insert if already inserted
+          !insertion && nearestEmptyInsertDetectEvent(evt);
+        }
         !options.dragoverBubble && evt.stopPropagation && evt.stopPropagation();
         return completedFired = true;
-      } // Call when dragEl has been inserted
+      }
 
-
+      // Call when dragEl has been inserted
       function changed() {
         newIndex = index(dragEl);
         newDraggableIndex = index(dragEl, options.draggable);
-
         _dispatchEvent({
           sortable: _this,
           name: 'change',
@@ -41021,37 +40798,27 @@ Popper.Defaults = Defaults;
           originalEvent: evt
         });
       }
-
       if (evt.preventDefault !== void 0) {
         evt.cancelable && evt.preventDefault();
       }
-
       target = closest(target, options.draggable, el, true);
       dragOverEvent('dragOver');
       if (Sortable.eventCanceled) return completedFired;
-
       if (dragEl.contains(evt.target) || target.animated && target.animatingX && target.animatingY || _this._ignoreWhileAnimating === target) {
         return completed(false);
       }
-
       ignoreNextClick = false;
-
       if (activeSortable && !options.disabled && (isOwner ? canSort || (revert = parentEl !== rootEl) // Reverting item into the original list
       : putSortable === this || (this.lastPutMode = activeGroup.checkPull(this, activeSortable, dragEl, evt)) && group.checkPut(this, activeSortable, dragEl, evt))) {
         vertical = this._getDirection(evt, target) === 'vertical';
         dragRect = getRect(dragEl);
         dragOverEvent('dragOverValid');
         if (Sortable.eventCanceled) return completedFired;
-
         if (revert) {
           parentEl = rootEl; // actualization
-
           capture();
-
           this._hideClone();
-
           dragOverEvent('revert');
-
           if (!Sortable.eventCanceled) {
             if (nextEl) {
               rootEl.insertBefore(dragEl, nextEl);
@@ -41059,38 +40826,32 @@ Popper.Defaults = Defaults;
               rootEl.appendChild(dragEl);
             }
           }
-
           return completed(true);
         }
-
         var elLastChild = lastChild(el, options.draggable);
-
         if (!elLastChild || _ghostIsLast(evt, vertical, this) && !elLastChild.animated) {
           // Insert to end of list
+
           // If already at end of list: Do not insert
           if (elLastChild === dragEl) {
             return completed(false);
-          } // if there is a last element, it is the target
+          }
 
-
+          // if there is a last element, it is the target
           if (elLastChild && el === evt.target) {
             target = elLastChild;
           }
-
           if (target) {
             targetRect = getRect(target);
           }
-
           if (_onMove(rootEl, el, dragEl, dragRect, target, targetRect, evt, !!target) !== false) {
             capture();
-
             if (elLastChild && elLastChild.nextSibling) {
               // the last draggable element is not the last node
               el.insertBefore(dragEl, elLastChild.nextSibling);
             } else {
               el.appendChild(dragEl);
             }
-
             parentEl = el; // actualization
 
             changed();
@@ -41099,14 +40860,11 @@ Popper.Defaults = Defaults;
         } else if (elLastChild && _ghostIsFirst(evt, vertical, this)) {
           // Insert to start of list
           var firstChild = getChild(el, 0, options, true);
-
           if (firstChild === dragEl) {
             return completed(false);
           }
-
           target = firstChild;
           targetRect = getRect(target);
-
           if (_onMove(rootEl, el, dragEl, dragRect, target, targetRect, evt, false) !== false) {
             capture();
             el.insertBefore(dragEl, firstChild);
@@ -41118,82 +40876,68 @@ Popper.Defaults = Defaults;
         } else if (target.parentNode === el) {
           targetRect = getRect(target);
           var direction = 0,
-              targetBeforeFirstSwap,
-              differentLevel = dragEl.parentNode !== el,
-              differentRowCol = !_dragElInRowColumn(dragEl.animated && dragEl.toRect || dragRect, target.animated && target.toRect || targetRect, vertical),
-              side1 = vertical ? 'top' : 'left',
-              scrolledPastTop = isScrolledPast(target, 'top', 'top') || isScrolledPast(dragEl, 'top', 'top'),
-              scrollBefore = scrolledPastTop ? scrolledPastTop.scrollTop : void 0;
-
+            targetBeforeFirstSwap,
+            differentLevel = dragEl.parentNode !== el,
+            differentRowCol = !_dragElInRowColumn(dragEl.animated && dragEl.toRect || dragRect, target.animated && target.toRect || targetRect, vertical),
+            side1 = vertical ? 'top' : 'left',
+            scrolledPastTop = isScrolledPast(target, 'top', 'top') || isScrolledPast(dragEl, 'top', 'top'),
+            scrollBefore = scrolledPastTop ? scrolledPastTop.scrollTop : void 0;
           if (lastTarget !== target) {
             targetBeforeFirstSwap = targetRect[side1];
             pastFirstInvertThresh = false;
             isCircumstantialInvert = !differentRowCol && options.invertSwap || differentLevel;
           }
-
           direction = _getSwapDirection(evt, target, targetRect, vertical, differentRowCol ? 1 : options.swapThreshold, options.invertedSwapThreshold == null ? options.swapThreshold : options.invertedSwapThreshold, isCircumstantialInvert, lastTarget === target);
           var sibling;
-
           if (direction !== 0) {
             // Check if target is beside dragEl in respective direction (ignoring hidden elements)
             var dragIndex = index(dragEl);
-
             do {
               dragIndex -= direction;
               sibling = parentEl.children[dragIndex];
             } while (sibling && (css(sibling, 'display') === 'none' || sibling === ghostEl));
-          } // If dragEl is already beside target: Do not insert
-
-
+          }
+          // If dragEl is already beside target: Do not insert
           if (direction === 0 || sibling === target) {
             return completed(false);
           }
-
           lastTarget = target;
           lastDirection = direction;
           var nextSibling = target.nextElementSibling,
-              after = false;
+            after = false;
           after = direction === 1;
-
           var moveVector = _onMove(rootEl, el, dragEl, dragRect, target, targetRect, evt, after);
-
           if (moveVector !== false) {
             if (moveVector === 1 || moveVector === -1) {
               after = moveVector === 1;
             }
-
             _silent = true;
             setTimeout(_unsilent, 30);
             capture();
-
             if (after && !nextSibling) {
               el.appendChild(dragEl);
             } else {
               target.parentNode.insertBefore(dragEl, after ? nextSibling : target);
-            } // Undo chrome's scroll adjustment (has no effect on other browsers)
+            }
 
-
+            // Undo chrome's scroll adjustment (has no effect on other browsers)
             if (scrolledPastTop) {
               scrollBy(scrolledPastTop, 0, scrollBefore - scrolledPastTop.scrollTop);
             }
-
             parentEl = dragEl.parentNode; // actualization
-            // must be done before animation
 
+            // must be done before animation
             if (targetBeforeFirstSwap !== undefined && !isCircumstantialInvert) {
               targetMoveDistance = Math.abs(targetBeforeFirstSwap - getRect(target)[side1]);
             }
-
             changed();
             return completed(true);
           }
         }
-
         if (el.contains(dragEl)) {
           return completed(false);
         }
       }
-
       return false;
     },
     _ignoreWhileAnimating: null,
@@ -41213,83 +40957,69 @@ Popper.Defaults = Defaults;
       off(ownerDocument, 'touchcancel', this._onDrop);
       off(document, 'selectstart', this);
     },
-    _onDrop: function _onDrop(
-    /**Event*/
-    evt) {
+    _onDrop: function _onDrop( /**Event*/evt) {
       var el = this.el,
-          options = this.options; // Get the index of the dragged element within its parent
+        options = this.options;
 
+      // Get the index of the dragged element within its parent
       newIndex = index(dragEl);
       newDraggableIndex = index(dragEl, options.draggable);
       pluginEvent('drop', this, {
         evt: evt
       });
-      parentEl = dragEl && dragEl.parentNode; // Get again after plugin event
+      parentEl = dragEl && dragEl.parentNode;
 
+      // Get again after plugin event
       newIndex = index(dragEl);
       newDraggableIndex = index(dragEl, options.draggable);
-
       if (Sortable.eventCanceled) {
         this._nulling();
-
         return;
       }
-
       awaitingDragStarted = false;
       isCircumstantialInvert = false;
       pastFirstInvertThresh = false;
       clearInterval(this._loopId);
       clearTimeout(this._dragStartTimer);
-
       _cancelNextTick(this.cloneId);
+      _cancelNextTick(this._dragStartId);
 
-      _cancelNextTick(this._dragStartId); // Unbind events
-
-
+      // Unbind events
       if (this.nativeDraggable) {
         off(document, 'drop', this);
         off(el, 'dragstart', this._onDragStart);
       }
-
       this._offMoveEvents();
-
       this._offUpEvents();
-
       if (Safari) {
         css(document.body, 'user-select', '');
       }
-
       css(dragEl, 'transform', '');
-
       if (evt) {
         if (moved) {
           evt.cancelable && evt.preventDefault();
           !options.dropBubble && evt.stopPropagation();
         }
-
         ghostEl && ghostEl.parentNode && ghostEl.parentNode.removeChild(ghostEl);
-
         if (rootEl === parentEl || putSortable && putSortable.lastPutMode !== 'clone') {
           // Remove clone(s)
           cloneEl && cloneEl.parentNode && cloneEl.parentNode.removeChild(cloneEl);
         }
-
         if (dragEl) {
           if (this.nativeDraggable) {
             off(dragEl, 'dragend', this);
           }
-
           _disableDraggable(dragEl);
+          dragEl.style['will-change'] = '';
 
-          dragEl.style['will-change'] = ''; // Remove classes
+          // Remove classes
           // ghostClass is added in dragStarted
-
           if (moved && !awaitingDragStarted) {
             toggleClass(dragEl, putSortable ? putSortable.options.ghostClass : this.options.ghostClass, false);
           }
+          toggleClass(dragEl, this.options.chosenClass, false);
 
-          toggleClass(dragEl, this.options.chosenClass, false); // Drag stop event
-
+          // Drag stop event
           _dispatchEvent({
             sortable: this,
             name: 'unchoose',
@@ -41298,7 +41028,6 @@ Popper.Defaults = Defaults;
             newDraggableIndex: null,
             originalEvent: evt
           });
-
           if (rootEl !== parentEl) {
             if (newIndex >= 0) {
               // Add event
@@ -41308,17 +41037,17 @@ Popper.Defaults = Defaults;
                 toEl: parentEl,
                 fromEl: rootEl,
                 originalEvent: evt
-              }); // Remove event
+              });
 
-
+              // Remove event
               _dispatchEvent({
                 sortable: this,
                 name: 'remove',
                 toEl: parentEl,
                 originalEvent: evt
-              }); // drag from one list and drop into another
+              });
 
-
+              // drag from one list and drop into another
               _dispatchEvent({
                 rootEl: parentEl,
                 name: 'sort',
@@ -41326,7 +41055,6 @@ Popper.Defaults = Defaults;
                 fromEl: rootEl,
                 originalEvent: evt
               });
-
               _dispatchEvent({
                 sortable: this,
                 name: 'sort',
@@ -41334,7 +41062,6 @@ Popper.Defaults = Defaults;
                 originalEvent: evt
               });
             }
-
             putSortable && putSortable.save();
           } else {
             if (newIndex !== oldIndex) {
@@ -41346,7 +41073,6 @@ Popper.Defaults = Defaults;
                   toEl: parentEl,
                   originalEvent: evt
                 });
-
                 _dispatchEvent({
                   sortable: this,
                   name: 'sort',
@@ -41356,27 +41082,24 @@ Popper.Defaults = Defaults;
               }
             }
           }
-
           if (Sortable.active) {
             /* jshint eqnull:true */
             if (newIndex == null || newIndex === -1) {
               newIndex = oldIndex;
               newDraggableIndex = oldDraggableIndex;
             }
-
             _dispatchEvent({
               sortable: this,
               name: 'end',
               toEl: parentEl,
               originalEvent: evt
-            }); // Save sorting
+            });
 
-
+            // Save sorting
             this.save();
           }
         }
       }
-
       this._nulling();
     },
     _nulling: function _nulling() {
@@ -41387,65 +41110,52 @@ Popper.Defaults = Defaults;
       });
       savedInputChecked.length = lastDx = lastDy = 0;
     },
-    handleEvent: function handleEvent(
-    /**Event*/
-    evt) {
+    handleEvent: function handleEvent( /**Event*/evt) {
       switch (evt.type) {
         case 'drop':
         case 'dragend':
           this._onDrop(evt);
-
           break;
-
         case 'dragenter':
         case 'dragover':
           if (dragEl) {
             this._onDragOver(evt);
-
             _globalDragOver(evt);
           }
-
           break;
-
         case 'selectstart':
           evt.preventDefault();
           break;
       }
     },
-
     /**
      * Serializes the item into an array of string.
      * @returns {String[]}
      */
     toArray: function toArray() {
       var order = [],
-          el,
-          children = this.el.children,
-          i = 0,
-          n = children.length,
-          options = this.options;
-
+        el,
+        children = this.el.children,
+        i = 0,
+        n = children.length,
+        options = this.options;
       for (; i < n; i++) {
         el = children[i];
-
         if (closest(el, options.draggable, this.el, false)) {
           order.push(el.getAttribute(options.dataIdAttr) || _generateId(el));
         }
       }
-
       return order;
     },
-
     /**
      * Sorts the elements according to the array.
      * @param  {String[]}  order  order of the items
      */
     sort: function sort(order, useAnimation) {
       var items = {},
-          rootEl = this.el;
+        rootEl = this.el;
       this.toArray().forEach(function (id, i) {
         var el = rootEl.children[i];
-
         if (closest(el, this.options.draggable, rootEl, false)) {
           items[id] = el;
         }
@@ -41459,7 +41169,6 @@ Popper.Defaults = Defaults;
       });
       useAnimation && this.animateAll();
     },
-
     /**
      * Save the current sorting
      */
@@ -41467,7 +41176,6 @@ Popper.Defaults = Defaults;
       var store = this.options.store;
       store && store.set && store.set(this);
     },
-
     /**
      * For each element in the set, get the first element that matches the selector by testing the element itself and traversing up through its ancestors in the DOM tree.
      * @param   {HTMLElement}  el
@@ -41477,7 +41185,6 @@ Popper.Defaults = Defaults;
     closest: function closest$1(el, selector) {
       return closest(el, selector || this.options.draggable, this.el, false);
     },
-
     /**
      * Set/get option
      * @param   {string} name
@@ -41486,24 +41193,20 @@ Popper.Defaults = Defaults;
      */
     option: function option(name, value) {
       var options = this.options;
-
       if (value === void 0) {
         return options[name];
       } else {
         var modifiedValue = PluginManager.modifyOption(this, name, value);
-
         if (typeof modifiedValue !== 'undefined') {
           options[name] = modifiedValue;
         } else {
           options[name] = value;
         }
-
         if (name === 'group') {
           _prepareGroup(options);
         }
       }
     },
-
     /**
      * Destroy
      */
@@ -41514,21 +41217,16 @@ Popper.Defaults = Defaults;
       off(el, 'mousedown', this._onTapStart);
       off(el, 'touchstart', this._onTapStart);
       off(el, 'pointerdown', this._onTapStart);
-
       if (this.nativeDraggable) {
         off(el, 'dragover', this);
         off(el, 'dragenter', this);
-      } // Remove draggable attributes
-
-
+      }
+      // Remove draggable attributes
       Array.prototype.forEach.call(el.querySelectorAll('[draggable]'), function (el) {
         el.removeAttribute('draggable');
       });
-
       this._onDrop();
-
       this._disableDelayedDragEvents();
-
       sortables.splice(sortables.indexOf(this.el), 1);
       this.el = el = null;
     },
@@ -41537,25 +41235,22 @@ Popper.Defaults = Defaults;
         pluginEvent('hideClone', this);
         if (Sortable.eventCanceled) return;
         css(cloneEl, 'display', 'none');
-
         if (this.options.removeCloneOnHide && cloneEl.parentNode) {
           cloneEl.parentNode.removeChild(cloneEl);
         }
-
         cloneHidden = true;
       }
     },
     _showClone: function _showClone(putSortable) {
       if (putSortable.lastPutMode !== 'clone') {
         this._hideClone();
-
         return;
       }
-
       if (cloneHidden) {
         pluginEvent('showClone', this);
-        if (Sortable.eventCanceled) return; // show clone at dragEl or original position
+        if (Sortable.eventCanceled) return;
 
+        // show clone at dragEl or original position
         if (dragEl.parentNode == rootEl && !this.options.group.revertClone) {
           rootEl.insertBefore(cloneEl, dragEl);
         } else if (nextEl) {
@@ -41563,33 +41258,26 @@ Popper.Defaults = Defaults;
         } else {
           rootEl.appendChild(cloneEl);
         }
-
         if (this.options.group.revertClone) {
           this.animate(dragEl, cloneEl);
         }
-
         css(cloneEl, 'display', '');
         cloneHidden = false;
       }
     }
   };
-
-  function _globalDragOver(
-  /**Event*/
-  evt) {
+  function _globalDragOver( /**Event*/evt) {
     if (evt.dataTransfer) {
       evt.dataTransfer.dropEffect = 'move';
     }
-
     evt.cancelable && evt.preventDefault();
   }
-
   function _onMove(fromEl, toEl, dragEl, dragRect, targetEl, targetRect, originalEvent, willInsertAfter) {
     var evt,
-        sortable = fromEl[expando],
-        onMoveFn = sortable.options.onMove,
-        retVal; // Support for new CustomEvent feature
-
+      sortable = fromEl[expando],
+      onMoveFn = sortable.options.onMove,
+      retVal;
+    // Support for new CustomEvent feature
     if (window.CustomEvent && !IE11OrLess && !Edge) {
       evt = new CustomEvent('move', {
         bubbles: true,
@@ -41599,7 +41287,6 @@ Popper.Defaults = Defaults;
       evt = document.createEvent('Event');
       evt.initEvent('move', true, true);
     }
-
     evt.to = toEl;
     evt.from = fromEl;
     evt.dragged = dragEl;
@@ -41609,41 +41296,35 @@ Popper.Defaults = Defaults;
     evt.willInsertAfter = willInsertAfter;
     evt.originalEvent = originalEvent;
     fromEl.dispatchEvent(evt);
-
     if (onMoveFn) {
       retVal = onMoveFn.call(sortable, evt, originalEvent);
     }
-
     return retVal;
   }
-
   function _disableDraggable(el) {
     el.draggable = false;
   }
-
   function _unsilent() {
     _silent = false;
   }
-
   function _ghostIsFirst(evt, vertical, sortable) {
-    var rect = getRect(getChild(sortable.el, 0, sortable.options, true));
+    var firstElRect = getRect(getChild(sortable.el, 0, sortable.options, true));
+    var childContainingRect = getChildContainingRectFromElement(sortable.el, sortable.options, ghostEl);
     var spacer = 10;
-    return vertical ? evt.clientX < rect.left - spacer || evt.clientY < rect.top && evt.clientX < rect.right : evt.clientY < rect.top - spacer || evt.clientY < rect.bottom && evt.clientX < rect.left;
+    return vertical ? evt.clientX < childContainingRect.left - spacer || evt.clientY < firstElRect.top && evt.clientX < firstElRect.right : evt.clientY < childContainingRect.top - spacer || evt.clientY < firstElRect.bottom && evt.clientX < firstElRect.left;
   }
-
   function _ghostIsLast(evt, vertical, sortable) {
-    var rect = getRect(lastChild(sortable.el, sortable.options.draggable));
+    var lastElRect = getRect(lastChild(sortable.el, sortable.options.draggable));
+    var childContainingRect = getChildContainingRectFromElement(sortable.el, sortable.options, ghostEl);
     var spacer = 10;
-    return vertical ? evt.clientX > rect.right + spacer || evt.clientX <= rect.right && evt.clientY > rect.bottom && evt.clientX >= rect.left : evt.clientX > rect.right && evt.clientY > rect.top || evt.clientX <= rect.right && evt.clientY > rect.bottom + spacer;
+    return vertical ? evt.clientX > childContainingRect.right + spacer || evt.clientY > lastElRect.bottom && evt.clientX > lastElRect.left : evt.clientY > childContainingRect.bottom + spacer || evt.clientX > lastElRect.right && evt.clientY > lastElRect.top;
   }
-
   function _getSwapDirection(evt, target, targetRect, vertical, swapThreshold, invertedSwapThreshold, invertSwap, isLastTarget) {
     var mouseOnAxis = vertical ? evt.clientY : evt.clientX,
-        targetLength = vertical ? targetRect.height : targetRect.width,
-        targetS1 = vertical ? targetRect.top : targetRect.left,
-        targetS2 = vertical ? targetRect.bottom : targetRect.right,
-        invert = false;
-
+      targetLength = vertical ? targetRect.height : targetRect.width,
+      targetS1 = vertical ? targetRect.top : targetRect.left,
+      targetS2 = vertical ? targetRect.bottom : targetRect.right,
+      invert = false;
     if (!invertSwap) {
       // Never invert or create dragEl shadow when target movemenet causes mouse to move past the end of regular swapThreshold
       if (isLastTarget && targetMoveDistance < targetLength * swapThreshold) {
@@ -41653,7 +41334,6 @@ Popper.Defaults = Defaults;
           // past first invert threshold, do not restrict inverted threshold to dragEl shadow
           pastFirstInvertThresh = true;
         }
-
         if (!pastFirstInvertThresh) {
           // dragEl shadow (target move distance shadow)
           if (lastDirection === 1 ? mouseOnAxis < targetS1 + targetMoveDistance // over dragEl shadow
@@ -41670,26 +41350,22 @@ Popper.Defaults = Defaults;
         }
       }
     }
-
     invert = invert || invertSwap;
-
     if (invert) {
       // Invert of regular
       if (mouseOnAxis < targetS1 + targetLength * invertedSwapThreshold / 2 || mouseOnAxis > targetS2 - targetLength * invertedSwapThreshold / 2) {
         return mouseOnAxis > targetS1 + targetLength / 2 ? 1 : -1;
       }
     }
-
     return 0;
   }
+
   /**
    * Gets the direction dragEl must be swapped relative to target in order to make it
    * seem that dragEl has been "inserted" into that element's position
    * @param  {HTMLElement} target       The target whose position dragEl is being inserted at
    * @return {Number}                   Direction dragEl must be swapped
    */
-
-
   function _getInsertDirection(target) {
     if (index(dragEl) < index(target)) {
       return 1;
@@ -41697,55 +41373,48 @@ Popper.Defaults = Defaults;
       return -1;
     }
   }
+
   /**
    * Generate id
    * @param   {HTMLElement} el
    * @returns {String}
    * @private
    */
-
-
   function _generateId(el) {
     var str = el.tagName + el.className + el.src + el.href + el.textContent,
-        i = str.length,
-        sum = 0;
-
+      i = str.length,
+      sum = 0;
     while (i--) {
       sum += str.charCodeAt(i);
     }
-
     return sum.toString(36);
   }
-
   function _saveInputCheckedState(root) {
     savedInputChecked.length = 0;
     var inputs = root.getElementsByTagName('input');
     var idx = inputs.length;
-
     while (idx--) {
       var el = inputs[idx];
       el.checked && savedInputChecked.push(el);
     }
   }
-
   function _nextTick(fn) {
     return setTimeout(fn, 0);
   }
-
   function _cancelNextTick(id) {
     return clearTimeout(id);
-  } // Fixed #973:
+  }
 
-
+  // Fixed #973:
   if (documentExists) {
     on(document, 'touchmove', function (evt) {
       if ((Sortable.active || awaitingDragStarted) && evt.cancelable) {
         evt.preventDefault();
       }
     });
-  } // Export utils
+  }
 
-
+  // Export utils
   Sortable.utils = {
     on: on,
     off: off,
@@ -41765,59 +41434,54 @@ Popper.Defaults = Defaults;
     detectDirection: _detectDirection,
     getChild: getChild
   };
+
   /**
    * Get the Sortable instance of an element
    * @param  {HTMLElement} element The element
    * @return {Sortable|undefined}         The instance of Sortable
    */
-
   Sortable.get = function (element) {
     return element[expando];
   };
+
   /**
    * Mount a plugin to Sortable
    * @param  {...SortablePlugin|SortablePlugin[]} plugins       Plugins being mounted
    */
-
-
   Sortable.mount = function () {
     for (var _len = arguments.length, plugins = new Array(_len), _key = 0; _key < _len; _key++) {
       plugins[_key] = arguments[_key];
     }
-
     if (plugins[0].constructor === Array) plugins = plugins[0];
     plugins.forEach(function (plugin) {
       if (!plugin.prototype || !plugin.prototype.constructor) {
         throw "Sortable: Mounted plugin must be a constructor function, not ".concat({}.toString.call(plugin));
       }
-
       if (plugin.utils) Sortable.utils = _objectSpread2(_objectSpread2({}, Sortable.utils), plugin.utils);
       PluginManager.mount(plugin);
     });
   };
+
   /**
    * Create sortable instance
    * @param {HTMLElement}  el
    * @param {Object}      [options]
    */
-
-
   Sortable.create = function (el, options) {
     return new Sortable(el, options);
-  }; // Export
+  };
 
-
+  // Export
   Sortable.version = version;
 
   var autoScrolls = [],
-      scrollEl,
-      scrollRootEl,
-      scrolling = false,
-      lastAutoScrollX,
-      lastAutoScrollY,
-      touchEvt$1,
-      pointerElemChangedInterval;
-
+    scrollEl,
+    scrollRootEl,
+    scrolling = false,
+    lastAutoScrollX,
+    lastAutoScrollY,
+    touchEvt$1,
+    pointerElemChangedInterval;
   function AutoScrollPlugin() {
     function AutoScroll() {
       this.defaults = {
@@ -41826,19 +41490,18 @@ Popper.Defaults = Defaults;
         scrollSensitivity: 30,
         scrollSpeed: 10,
         bubbleScroll: true
-      }; // Bind all private methods
+      };
 
+      // Bind all private methods
       for (var fn in this) {
         if (fn.charAt(0) === '_' && typeof this[fn] === 'function') {
           this[fn] = this[fn].bind(this);
         }
       }
     }
-
     AutoScroll.prototype = {
       dragStarted: function dragStarted(_ref) {
         var originalEvent = _ref.originalEvent;
-
         if (this.sortable.nativeDraggable) {
           on(document, 'dragover', this._handleAutoScroll);
         } else {
@@ -41853,7 +41516,6 @@ Popper.Defaults = Defaults;
       },
       dragOverCompleted: function dragOverCompleted(_ref2) {
         var originalEvent = _ref2.originalEvent;
-
         // For when bubbling is canceled and using fallback (fallback 'touchmove' always reached)
         if (!this.options.dragOverBubble && !originalEvent.rootEl) {
           this._handleAutoScroll(originalEvent);
@@ -41867,7 +41529,6 @@ Popper.Defaults = Defaults;
           off(document, 'touchmove', this._handleFallbackAutoScroll);
           off(document, 'mousemove', this._handleFallbackAutoScroll);
         }
-
         clearPointerElemChangedInterval();
         clearAutoScrolls();
         cancelThrottle();
@@ -41881,31 +41542,29 @@ Popper.Defaults = Defaults;
       },
       _handleAutoScroll: function _handleAutoScroll(evt, fallback) {
         var _this = this;
-
         var x = (evt.touches ? evt.touches[0] : evt).clientX,
-            y = (evt.touches ? evt.touches[0] : evt).clientY,
-            elem = document.elementFromPoint(x, y);
-        touchEvt$1 = evt; // IE does not seem to have native autoscroll,
+          y = (evt.touches ? evt.touches[0] : evt).clientY,
+          elem = document.elementFromPoint(x, y);
+        touchEvt$1 = evt;
+
+        // IE does not seem to have native autoscroll,
         // Edge's autoscroll seems too conditional,
         // MACOS Safari does not have autoscroll,
         // Firefox and Chrome are good
-
         if (fallback || this.options.forceAutoScrollFallback || Edge || IE11OrLess || Safari) {
-          autoScroll(evt, this.options, elem, fallback); // Listener for pointer element change
+          autoScroll(evt, this.options, elem, fallback);
 
+          // Listener for pointer element change
           var ogElemScroller = getParentAutoScrollElement(elem, true);
-
           if (scrolling && (!pointerElemChangedInterval || x !== lastAutoScrollX || y !== lastAutoScrollY)) {
-            pointerElemChangedInterval && clearPointerElemChangedInterval(); // Detect for pointer elem change, emulating native DnD behaviour
-
+            pointerElemChangedInterval && clearPointerElemChangedInterval();
+            // Detect for pointer elem change, emulating native DnD behaviour
             pointerElemChangedInterval = setInterval(function () {
               var newElem = getParentAutoScrollElement(document.elementFromPoint(x, y), true);
-
               if (newElem !== ogElemScroller) {
                 ogElemScroller = newElem;
                 clearAutoScrolls();
               }
-
               autoScroll(evt, _this.options, newElem, fallback);
             }, 10);
             lastAutoScrollX = x;
@@ -41917,7 +41576,6 @@ Popper.Defaults = Defaults;
             clearAutoScrolls();
             return;
           }
-
           autoScroll(evt, this.options, getParentAutoScrollElement(elem, false), false);
         }
       }
@@ -41927,60 +41585,54 @@ Popper.Defaults = Defaults;
       initializeByDefault: true
     });
   }
-
   function clearAutoScrolls() {
     autoScrolls.forEach(function (autoScroll) {
       clearInterval(autoScroll.pid);
     });
     autoScrolls = [];
   }
-
   function clearPointerElemChangedInterval() {
     clearInterval(pointerElemChangedInterval);
   }
-
   var autoScroll = throttle(function (evt, options, rootEl, isFallback) {
     // Bug: https://bugzilla.mozilla.org/show_bug.cgi?id=505521
     if (!options.scroll) return;
     var x = (evt.touches ? evt.touches[0] : evt).clientX,
-        y = (evt.touches ? evt.touches[0] : evt).clientY,
-        sens = options.scrollSensitivity,
-        speed = options.scrollSpeed,
-        winScroller = getWindowScrollingElement();
+      y = (evt.touches ? evt.touches[0] : evt).clientY,
+      sens = options.scrollSensitivity,
+      speed = options.scrollSpeed,
+      winScroller = getWindowScrollingElement();
     var scrollThisInstance = false,
-        scrollCustomFn; // New scroll root, set scrollEl
+      scrollCustomFn;
 
+    // New scroll root, set scrollEl
     if (scrollRootEl !== rootEl) {
       scrollRootEl = rootEl;
       clearAutoScrolls();
       scrollEl = options.scroll;
       scrollCustomFn = options.scrollFn;
-
       if (scrollEl === true) {
         scrollEl = getParentAutoScrollElement(rootEl, true);
       }
     }
-
     var layersOut = 0;
     var currentParent = scrollEl;
-
     do {
       var el = currentParent,
-          rect = getRect(el),
-          top = rect.top,
-          bottom = rect.bottom,
-          left = rect.left,
-          right = rect.right,
-          width = rect.width,
-          height = rect.height,
-          canScrollX = void 0,
-          canScrollY = void 0,
-          scrollWidth = el.scrollWidth,
-          scrollHeight = el.scrollHeight,
-          elCSS = css(el),
-          scrollPosX = el.scrollLeft,
-          scrollPosY = el.scrollTop;
-
+        rect = getRect(el),
+        top = rect.top,
+        bottom = rect.bottom,
+        left = rect.left,
+        right = rect.right,
+        width = rect.width,
+        height = rect.height,
+        canScrollX = void 0,
+        canScrollY = void 0,
+        scrollWidth = el.scrollWidth,
+        scrollHeight = el.scrollHeight,
+        elCSS = css(el),
+        scrollPosX = el.scrollLeft,
+        scrollPosY = el.scrollTop;
       if (el === winScroller) {
         canScrollX = width < scrollWidth && (elCSS.overflowX === 'auto' || elCSS.overflowX === 'scroll' || elCSS.overflowX === 'visible');
         canScrollY = height < scrollHeight && (elCSS.overflowY === 'auto' || elCSS.overflowY === 'scroll' || elCSS.overflowY === 'visible');
@@ -41988,10 +41640,8 @@ Popper.Defaults = Defaults;
         canScrollX = width < scrollWidth && (elCSS.overflowX === 'auto' || elCSS.overflowX === 'scroll');
         canScrollY = height < scrollHeight && (elCSS.overflowY === 'auto' || elCSS.overflowY === 'scroll');
       }
-
       var vx = canScrollX && (Math.abs(right - x) <= sens && scrollPosX + width < scrollWidth) - (Math.abs(left - x) <= sens && !!scrollPosX);
       var vy = canScrollY && (Math.abs(bottom - y) <= sens && scrollPosY + height < scrollHeight) - (Math.abs(top - y) <= sens && !!scrollPosY);
-
       if (!autoScrolls[layersOut]) {
         for (var i = 0; i <= layersOut; i++) {
           if (!autoScrolls[i]) {
@@ -41999,61 +41649,51 @@ Popper.Defaults = Defaults;
           }
         }
       }
-
       if (autoScrolls[layersOut].vx != vx || autoScrolls[layersOut].vy != vy || autoScrolls[layersOut].el !== el) {
         autoScrolls[layersOut].el = el;
         autoScrolls[layersOut].vx = vx;
         autoScrolls[layersOut].vy = vy;
         clearInterval(autoScrolls[layersOut].pid);
-
         if (vx != 0 || vy != 0) {
           scrollThisInstance = true;
           /* jshint loopfunc:true */
-
           autoScrolls[layersOut].pid = setInterval(function () {
             // emulate drag over during autoscroll (fallback), emulating native DnD behaviour
             if (isFallback && this.layer === 0) {
               Sortable.active._onTouchMove(touchEvt$1); // To move ghost if it is positioned absolutely
-
             }
-
             var scrollOffsetY = autoScrolls[this.layer].vy ? autoScrolls[this.layer].vy * speed : 0;
             var scrollOffsetX = autoScrolls[this.layer].vx ? autoScrolls[this.layer].vx * speed : 0;
-
             if (typeof scrollCustomFn === 'function') {
               if (scrollCustomFn.call(Sortable.dragged.parentNode[expando], scrollOffsetX, scrollOffsetY, evt, touchEvt$1, autoScrolls[this.layer].el) !== 'continue') {
                 return;
               }
             }
-
             scrollBy(autoScrolls[this.layer].el, scrollOffsetX, scrollOffsetY);
           }.bind({
             layer: layersOut
           }), 24);
         }
       }
-
       layersOut++;
     } while (options.bubbleScroll && currentParent !== winScroller && (currentParent = getParentAutoScrollElement(currentParent, false)));
-
     scrolling = scrollThisInstance; // in case another function catches scrolling as false in between when it is not
   }, 30);
 
   var drop = function drop(_ref) {
     var originalEvent = _ref.originalEvent,
-        putSortable = _ref.putSortable,
-        dragEl = _ref.dragEl,
-        activeSortable = _ref.activeSortable,
-        dispatchSortableEvent = _ref.dispatchSortableEvent,
-        hideGhostForTarget = _ref.hideGhostForTarget,
-        unhideGhostForTarget = _ref.unhideGhostForTarget;
+      putSortable = _ref.putSortable,
+      dragEl = _ref.dragEl,
+      activeSortable = _ref.activeSortable,
+      dispatchSortableEvent = _ref.dispatchSortableEvent,
+      hideGhostForTarget = _ref.hideGhostForTarget,
+      unhideGhostForTarget = _ref.unhideGhostForTarget;
     if (!originalEvent) return;
     var toSortable = putSortable || activeSortable;
     hideGhostForTarget();
     var touch = originalEvent.changedTouches && originalEvent.changedTouches.length ? originalEvent.changedTouches[0] : originalEvent;
     var target = document.elementFromPoint(touch.clientX, touch.clientY);
     unhideGhostForTarget();
-
     if (toSortable && !toSortable.el.contains(target)) {
       dispatchSortableEvent('spill');
       this.onSpill({
@@ -42062,9 +41702,7 @@ Popper.Defaults = Defaults;
       });
     }
   };
-
   function Revert() {}
-
   Revert.prototype = {
     startIndex: null,
     dragStart: function dragStart(_ref2) {
@@ -42073,40 +41711,32 @@ Popper.Defaults = Defaults;
     },
     onSpill: function onSpill(_ref3) {
       var dragEl = _ref3.dragEl,
-          putSortable = _ref3.putSortable;
+        putSortable = _ref3.putSortable;
       this.sortable.captureAnimationState();
-
       if (putSortable) {
         putSortable.captureAnimationState();
       }
-
       var nextSibling = getChild(this.sortable.el, this.startIndex, this.options);
-
       if (nextSibling) {
         this.sortable.el.insertBefore(dragEl, nextSibling);
       } else {
         this.sortable.el.appendChild(dragEl);
       }
-
       this.sortable.animateAll();
-
       if (putSortable) {
         putSortable.animateAll();
       }
     },
     drop: drop
   };
-
   _extends(Revert, {
     pluginName: 'revertOnSpill'
   });
-
   function Remove() {}
-
   Remove.prototype = {
     onSpill: function onSpill(_ref4) {
       var dragEl = _ref4.dragEl,
-          putSortable = _ref4.putSortable;
+        putSortable = _ref4.putSortable;
       var parentSortable = putSortable || this.sortable;
       parentSortable.captureAnimationState();
       dragEl.parentNode && dragEl.parentNode.removeChild(dragEl);
@@ -42114,20 +41744,17 @@ Popper.Defaults = Defaults;
     },
     drop: drop
   };
-
   _extends(Remove, {
     pluginName: 'removeOnSpill'
   });
 
   var lastSwapEl;
-
   function SwapPlugin() {
     function Swap() {
       this.defaults = {
         swapClass: 'sortable-swap-highlight'
       };
     }
-
     Swap.prototype = {
       dragStart: function dragStart(_ref) {
         var dragEl = _ref.dragEl;
@@ -42135,42 +41762,37 @@ Popper.Defaults = Defaults;
       },
       dragOverValid: function dragOverValid(_ref2) {
         var completed = _ref2.completed,
-            target = _ref2.target,
-            onMove = _ref2.onMove,
-            activeSortable = _ref2.activeSortable,
-            changed = _ref2.changed,
-            cancel = _ref2.cancel;
+          target = _ref2.target,
+          onMove = _ref2.onMove,
+          activeSortable = _ref2.activeSortable,
+          changed = _ref2.changed,
+          cancel = _ref2.cancel;
         if (!activeSortable.options.swap) return;
         var el = this.sortable.el,
-            options = this.options;
-
+          options = this.options;
         if (target && target !== el) {
           var prevSwapEl = lastSwapEl;
-
           if (onMove(target) !== false) {
             toggleClass(target, options.swapClass, true);
             lastSwapEl = target;
           } else {
             lastSwapEl = null;
           }
-
           if (prevSwapEl && prevSwapEl !== lastSwapEl) {
             toggleClass(prevSwapEl, options.swapClass, false);
           }
         }
-
         changed();
         completed(true);
         cancel();
       },
       drop: function drop(_ref3) {
         var activeSortable = _ref3.activeSortable,
-            putSortable = _ref3.putSortable,
-            dragEl = _ref3.dragEl;
+          putSortable = _ref3.putSortable,
+          dragEl = _ref3.dragEl;
         var toSortable = putSortable || this.sortable;
         var options = this.options;
         lastSwapEl && toggleClass(lastSwapEl, options.swapClass, false);
-
         if (lastSwapEl && (options.swap || putSortable && putSortable.options.swap)) {
           if (dragEl !== lastSwapEl) {
             toSortable.captureAnimationState();
@@ -42194,38 +41816,34 @@ Popper.Defaults = Defaults;
       }
     });
   }
-
   function swapNodes(n1, n2) {
     var p1 = n1.parentNode,
-        p2 = n2.parentNode,
-        i1,
-        i2;
+      p2 = n2.parentNode,
+      i1,
+      i2;
     if (!p1 || !p2 || p1.isEqualNode(n2) || p2.isEqualNode(n1)) return;
     i1 = index(n1);
     i2 = index(n2);
-
     if (p1.isEqualNode(p2) && i1 < i2) {
       i2++;
     }
-
     p1.insertBefore(n2, p1.children[i1]);
     p2.insertBefore(n1, p2.children[i2]);
   }
 
   var multiDragElements = [],
-      multiDragClones = [],
-      lastMultiDragSelect,
-      // for selection with modifier key down (SHIFT)
-  multiDragSortable,
-      initialFolding = false,
-      // Initial multi-drag fold when drag started
-  folding = false,
-      // Folding any other time
-  dragStarted = false,
-      dragEl$1,
-      clonesFromRect,
-      clonesHidden;
-
+    multiDragClones = [],
+    lastMultiDragSelect,
+    // for selection with modifier key down (SHIFT)
+    multiDragSortable,
+    initialFolding = false,
+    // Initial multi-drag fold when drag started
+    folding = false,
+    // Folding any other time
+    dragStarted = false,
+    dragEl$1,
+    clonesFromRect,
+    clonesHidden;
   function MultiDragPlugin() {
     function MultiDrag(sortable) {
       // Bind all private methods
@@ -42234,7 +41852,6 @@ Popper.Defaults = Defaults;
           this[fn] = this[fn].bind(this);
         }
       }
-
       if (!sortable.options.avoidImplicitDeselect) {
         if (sortable.options.supportPointer) {
           on(document, 'pointerup', this._deselectMultiDrag);
@@ -42243,7 +41860,6 @@ Popper.Defaults = Defaults;
           on(document, 'touchend', this._deselectMultiDrag);
         }
       }
-
       on(document, 'keydown', this._checkKeyDown);
       on(document, 'keyup', this._checkKeyUp);
       this.defaults = {
@@ -42252,7 +41868,6 @@ Popper.Defaults = Defaults;
         avoidImplicitDeselect: false,
         setData: function setData(dataTransfer, dragEl) {
           var data = '';
-
           if (multiDragElements.length && multiDragSortable === sortable) {
             multiDragElements.forEach(function (multiDragElement, i) {
               data += (!i ? '' : ', ') + multiDragElement.textContent;
@@ -42260,12 +41875,10 @@ Popper.Defaults = Defaults;
           } else {
             data = dragEl.textContent;
           }
-
           dataTransfer.setData('Text', data);
         }
       };
     }
-
     MultiDrag.prototype = {
       multiDragKeyDown: false,
       isMultiDrag: false,
@@ -42278,9 +41891,8 @@ Popper.Defaults = Defaults;
       },
       setupClone: function setupClone(_ref2) {
         var sortable = _ref2.sortable,
-            cancel = _ref2.cancel;
+          cancel = _ref2.cancel;
         if (!this.isMultiDrag) return;
-
         for (var i = 0; i < multiDragElements.length; i++) {
           multiDragClones.push(clone(multiDragElements[i]));
           multiDragClones[i].sortableIndex = multiDragElements[i].sortableIndex;
@@ -42289,18 +41901,15 @@ Popper.Defaults = Defaults;
           toggleClass(multiDragClones[i], this.options.selectedClass, false);
           multiDragElements[i] === dragEl$1 && toggleClass(multiDragClones[i], this.options.chosenClass, false);
         }
-
         sortable._hideClone();
-
         cancel();
       },
       clone: function clone(_ref3) {
         var sortable = _ref3.sortable,
-            rootEl = _ref3.rootEl,
-            dispatchSortableEvent = _ref3.dispatchSortableEvent,
-            cancel = _ref3.cancel;
+          rootEl = _ref3.rootEl,
+          dispatchSortableEvent = _ref3.dispatchSortableEvent,
+          cancel = _ref3.cancel;
         if (!this.isMultiDrag) return;
-
         if (!this.options.removeCloneOnHide) {
           if (multiDragElements.length && multiDragSortable === sortable) {
             insertMultiDragClones(true, rootEl);
@@ -42311,8 +41920,8 @@ Popper.Defaults = Defaults;
       },
       showClone: function showClone(_ref4) {
         var cloneNowShown = _ref4.cloneNowShown,
-            rootEl = _ref4.rootEl,
-            cancel = _ref4.cancel;
+          rootEl = _ref4.rootEl,
+          cancel = _ref4.cancel;
         if (!this.isMultiDrag) return;
         insertMultiDragClones(false, rootEl);
         multiDragClones.forEach(function (clone) {
@@ -42324,14 +41933,12 @@ Popper.Defaults = Defaults;
       },
       hideClone: function hideClone(_ref5) {
         var _this = this;
-
         var sortable = _ref5.sortable,
-            cloneNowHidden = _ref5.cloneNowHidden,
-            cancel = _ref5.cancel;
+          cloneNowHidden = _ref5.cloneNowHidden,
+          cancel = _ref5.cancel;
         if (!this.isMultiDrag) return;
         multiDragClones.forEach(function (clone) {
           css(clone, 'display', 'none');
-
           if (_this.options.removeCloneOnHide && clone.parentNode) {
             clone.parentNode.removeChild(clone);
           }
@@ -42342,15 +41949,14 @@ Popper.Defaults = Defaults;
       },
       dragStartGlobal: function dragStartGlobal(_ref6) {
         var sortable = _ref6.sortable;
-
         if (!this.isMultiDrag && multiDragSortable) {
           multiDragSortable.multiDrag._deselectMultiDrag();
         }
-
         multiDragElements.forEach(function (multiDragElement) {
           multiDragElement.sortableIndex = index(multiDragElement);
-        }); // Sort multi-drag elements
+        });
 
+        // Sort multi-drag elements
         multiDragElements = multiDragElements.sort(function (a, b) {
           return a.sortableIndex - b.sortableIndex;
         });
@@ -42358,10 +41964,8 @@ Popper.Defaults = Defaults;
       },
       dragStarted: function dragStarted(_ref7) {
         var _this2 = this;
-
         var sortable = _ref7.sortable;
         if (!this.isMultiDrag) return;
-
         if (this.options.sort) {
           // Capture rects,
           // hide multi drag elements (by positioning them absolute),
@@ -42369,8 +41973,8 @@ Popper.Defaults = Defaults;
           // show multi drag elements,
           // animate to rects,
           // unset rects & remove from DOM
-          sortable.captureAnimationState();
 
+          sortable.captureAnimationState();
           if (this.options.animation) {
             multiDragElements.forEach(function (multiDragElement) {
               if (multiDragElement === dragEl$1) return;
@@ -42385,18 +41989,16 @@ Popper.Defaults = Defaults;
             initialFolding = true;
           }
         }
-
         sortable.animateAll(function () {
           folding = false;
           initialFolding = false;
-
           if (_this2.options.animation) {
             multiDragElements.forEach(function (multiDragElement) {
               unsetRect(multiDragElement);
             });
-          } // Remove all auxiliary multidrag items from el, if sorting enabled
+          }
 
-
+          // Remove all auxiliary multidrag items from el, if sorting enabled
           if (_this2.options.sort) {
             removeMultiDragElements();
           }
@@ -42404,9 +42006,8 @@ Popper.Defaults = Defaults;
       },
       dragOver: function dragOver(_ref8) {
         var target = _ref8.target,
-            completed = _ref8.completed,
-            cancel = _ref8.cancel;
-
+          completed = _ref8.completed,
+          cancel = _ref8.cancel;
         if (folding && ~multiDragElements.indexOf(target)) {
           completed(false);
           cancel();
@@ -42414,10 +42015,9 @@ Popper.Defaults = Defaults;
       },
       revert: function revert(_ref9) {
         var fromSortable = _ref9.fromSortable,
-            rootEl = _ref9.rootEl,
-            sortable = _ref9.sortable,
-            dragRect = _ref9.dragRect;
-
+          rootEl = _ref9.rootEl,
+          sortable = _ref9.sortable,
+          dragRect = _ref9.dragRect;
         if (multiDragElements.length > 1) {
           // Setup unfold animation
           multiDragElements.forEach(function (multiDragElement) {
@@ -42435,47 +42035,44 @@ Popper.Defaults = Defaults;
       },
       dragOverCompleted: function dragOverCompleted(_ref10) {
         var sortable = _ref10.sortable,
-            isOwner = _ref10.isOwner,
-            insertion = _ref10.insertion,
-            activeSortable = _ref10.activeSortable,
-            parentEl = _ref10.parentEl,
-            putSortable = _ref10.putSortable;
+          isOwner = _ref10.isOwner,
+          insertion = _ref10.insertion,
+          activeSortable = _ref10.activeSortable,
+          parentEl = _ref10.parentEl,
+          putSortable = _ref10.putSortable;
         var options = this.options;
-
         if (insertion) {
           // Clones must be hidden before folding animation to capture dragRectAbsolute properly
           if (isOwner) {
             activeSortable._hideClone();
           }
-
-          initialFolding = false; // If leaving sort:false root, or already folding - Fold to new location
-
+          initialFolding = false;
+          // If leaving sort:false root, or already folding - Fold to new location
           if (options.animation && multiDragElements.length > 1 && (folding || !isOwner && !activeSortable.options.sort && !putSortable)) {
             // Fold: Set all multi drag elements's rects to dragEl's rect when multi-drag elements are invisible
             var dragRectAbsolute = getRect(dragEl$1, false, true, true);
             multiDragElements.forEach(function (multiDragElement) {
               if (multiDragElement === dragEl$1) return;
-              setRect(multiDragElement, dragRectAbsolute); // Move element(s) to end of parentEl so that it does not interfere with multi-drag clones insertion if they are inserted
-              // while folding, and so that we can capture them again because old sortable will no longer be fromSortable
+              setRect(multiDragElement, dragRectAbsolute);
 
+              // Move element(s) to end of parentEl so that it does not interfere with multi-drag clones insertion if they are inserted
+              // while folding, and so that we can capture them again because old sortable will no longer be fromSortable
               parentEl.appendChild(multiDragElement);
             });
             folding = true;
-          } // Clones must be shown (and check to remove multi drags) after folding when interfering multiDragElements are moved out
+          }
 
-
+          // Clones must be shown (and check to remove multi drags) after folding when interfering multiDragElements are moved out
           if (!isOwner) {
             // Only remove if not folding (folding will remove them anyways)
             if (!folding) {
               removeMultiDragElements();
             }
-
             if (multiDragElements.length > 1) {
               var clonesHiddenBefore = clonesHidden;
+              activeSortable._showClone(sortable);
 
-              activeSortable._showClone(sortable); // Unfold animation for clones if showing from hidden
-
-
+              // Unfold animation for clones if showing from hidden
               if (activeSortable.options.animation && !clonesHidden && clonesHiddenBefore) {
                 multiDragClones.forEach(function (clone) {
                   activeSortable.addAnimationState({
@@ -42494,12 +42091,11 @@ Popper.Defaults = Defaults;
       },
       dragOverAnimationCapture: function dragOverAnimationCapture(_ref11) {
         var dragRect = _ref11.dragRect,
-            isOwner = _ref11.isOwner,
-            activeSortable = _ref11.activeSortable;
+          isOwner = _ref11.isOwner,
+          activeSortable = _ref11.activeSortable;
         multiDragElements.forEach(function (multiDragElement) {
           multiDragElement.thisAnimationDuration = null;
         });
-
         if (activeSortable.options.animation && !isOwner && activeSortable.multiDrag.isMultiDrag) {
           clonesFromRect = _extends({}, dragRect);
           var dragMatrix = matrix(dragEl$1, true);
@@ -42515,24 +42111,23 @@ Popper.Defaults = Defaults;
       },
       drop: function drop(_ref12) {
         var evt = _ref12.originalEvent,
-            rootEl = _ref12.rootEl,
-            parentEl = _ref12.parentEl,
-            sortable = _ref12.sortable,
-            dispatchSortableEvent = _ref12.dispatchSortableEvent,
-            oldIndex = _ref12.oldIndex,
-            putSortable = _ref12.putSortable;
+          rootEl = _ref12.rootEl,
+          parentEl = _ref12.parentEl,
+          sortable = _ref12.sortable,
+          dispatchSortableEvent = _ref12.dispatchSortableEvent,
+          oldIndex = _ref12.oldIndex,
+          putSortable = _ref12.putSortable;
         var toSortable = putSortable || this.sortable;
         if (!evt) return;
         var options = this.options,
-            children = parentEl.children; // Multi-drag selection
+          children = parentEl.children;
 
+        // Multi-drag selection
         if (!dragStarted) {
           if (options.multiDragKey && !this.multiDragKeyDown) {
             this._deselectMultiDrag();
           }
-
           toggleClass(dragEl$1, options.selectedClass, !~multiDragElements.indexOf(dragEl$1));
-
           if (!~multiDragElements.indexOf(dragEl$1)) {
             multiDragElements.push(dragEl$1);
             dispatchEvent({
@@ -42541,17 +42136,16 @@ Popper.Defaults = Defaults;
               name: 'select',
               targetEl: dragEl$1,
               originalEvent: evt
-            }); // Modifier activated, select from last to dragEl
+            });
 
+            // Modifier activated, select from last to dragEl
             if (evt.shiftKey && lastMultiDragSelect && sortable.el.contains(lastMultiDragSelect)) {
               var lastIndex = index(lastMultiDragSelect),
-                  currentIndex = index(dragEl$1);
-
+                currentIndex = index(dragEl$1);
               if (~lastIndex && ~currentIndex && lastIndex !== currentIndex) {
                 // Must include lastMultiDragSelect (select it), in case modified selection from no selection
                 // (but previous selection existed)
                 var n, i;
-
                 if (currentIndex > lastIndex) {
                   i = lastIndex;
                   n = currentIndex;
@@ -42559,7 +42153,6 @@ Popper.Defaults = Defaults;
                   i = currentIndex;
                   n = lastIndex + 1;
                 }
-
                 for (; i < n; i++) {
                   if (~multiDragElements.indexOf(children[i])) continue;
                   toggleClass(children[i], options.selectedClass, true);
@@ -42576,7 +42169,6 @@ Popper.Defaults = Defaults;
             } else {
               lastMultiDragSelect = dragEl$1;
             }
-
             multiDragSortable = toSortable;
           } else {
             multiDragElements.splice(multiDragElements.indexOf(dragEl$1), 1);
@@ -42589,38 +42181,37 @@ Popper.Defaults = Defaults;
               originalEvent: evt
             });
           }
-        } // Multi-drag drop
+        }
 
-
+        // Multi-drag drop
         if (dragStarted && this.isMultiDrag) {
-          folding = false; // Do not "unfold" after around dragEl if reverted
-
+          folding = false;
+          // Do not "unfold" after around dragEl if reverted
           if ((parentEl[expando].options.sort || parentEl !== rootEl) && multiDragElements.length > 1) {
             var dragRect = getRect(dragEl$1),
-                multiDragIndex = index(dragEl$1, ':not(.' + this.options.selectedClass + ')');
+              multiDragIndex = index(dragEl$1, ':not(.' + this.options.selectedClass + ')');
             if (!initialFolding && options.animation) dragEl$1.thisAnimationDuration = null;
             toSortable.captureAnimationState();
-
             if (!initialFolding) {
               if (options.animation) {
                 dragEl$1.fromRect = dragRect;
                 multiDragElements.forEach(function (multiDragElement) {
                   multiDragElement.thisAnimationDuration = null;
-
                   if (multiDragElement !== dragEl$1) {
                     var rect = folding ? getRect(multiDragElement) : dragRect;
-                    multiDragElement.fromRect = rect; // Prepare unfold animation
+                    multiDragElement.fromRect = rect;
 
+                    // Prepare unfold animation
                     toSortable.addAnimationState({
                       target: multiDragElement,
                       rect: rect
                     });
                   }
                 });
-              } // Multi drag elements are not necessarily removed from the DOM on drop, so to reinsert
+              }
+
+              // Multi drag elements are not necessarily removed from the DOM on drop, so to reinsert
               // properly they must all be removed
-
-
               removeMultiDragElements();
               multiDragElements.forEach(function (multiDragElement) {
                 if (children[multiDragIndex]) {
@@ -42628,12 +42219,12 @@ Popper.Defaults = Defaults;
                 } else {
                   parentEl.appendChild(multiDragElement);
                 }
-
                 multiDragIndex++;
-              }); // If initial folding is done, the elements may have changed position because they are now
+              });
+
+              // If initial folding is done, the elements may have changed position because they are now
               // unfolding around dragEl, even though dragEl may not have his index changed, so update event
               // must be fired here as Sortable will not.
-
               if (oldIndex === index(dragEl$1)) {
                 var update = false;
                 multiDragElements.forEach(function (multiDragElement) {
@@ -42642,24 +42233,23 @@ Popper.Defaults = Defaults;
                     return;
                   }
                 });
-
                 if (update) {
                   dispatchSortableEvent('update');
+                  dispatchSortableEvent('sort');
                 }
               }
-            } // Must be done after capturing individual rects (scroll bar)
+            }
 
-
+            // Must be done after capturing individual rects (scroll bar)
             multiDragElements.forEach(function (multiDragElement) {
               unsetRect(multiDragElement);
             });
             toSortable.animateAll();
           }
-
           multiDragSortable = toSortable;
-        } // Remove clones if necessary
+        }
 
-
+        // Remove clones if necessary
         if (rootEl === parentEl || putSortable && putSortable.lastPutMode !== 'clone') {
           multiDragClones.forEach(function (clone) {
             clone.parentNode && clone.parentNode.removeChild(clone);
@@ -42672,7 +42262,6 @@ Popper.Defaults = Defaults;
       },
       destroyGlobal: function destroyGlobal() {
         this._deselectMultiDrag();
-
         off(document, 'pointerup', this._deselectMultiDrag);
         off(document, 'mouseup', this._deselectMultiDrag);
         off(document, 'touchend', this._deselectMultiDrag);
@@ -42680,14 +42269,16 @@ Popper.Defaults = Defaults;
         off(document, 'keyup', this._checkKeyUp);
       },
       _deselectMultiDrag: function _deselectMultiDrag(evt) {
-        if (typeof dragStarted !== "undefined" && dragStarted) return; // Only deselect if selection is in this sortable
+        if (typeof dragStarted !== "undefined" && dragStarted) return;
 
-        if (multiDragSortable !== this.sortable) return; // Only deselect if target is not item in this sortable
+        // Only deselect if selection is in this sortable
+        if (multiDragSortable !== this.sortable) return;
 
-        if (evt && closest(evt.target, this.options.draggable, this.sortable.el, false)) return; // Only deselect if left click
+        // Only deselect if target is not item in this sortable
+        if (evt && closest(evt.target, this.options.draggable, this.sortable.el, false)) return;
 
+        // Only deselect if left click
         if (evt && evt.button !== 0) return;
-
         while (multiDragElements.length) {
           var el = multiDragElements[0];
           toggleClass(el, this.options.selectedClass, false);
@@ -42723,24 +42314,20 @@ Popper.Defaults = Defaults;
         select: function select(el) {
           var sortable = el.parentNode[expando];
           if (!sortable || !sortable.options.multiDrag || ~multiDragElements.indexOf(el)) return;
-
           if (multiDragSortable && multiDragSortable !== sortable) {
             multiDragSortable.multiDrag._deselectMultiDrag();
-
             multiDragSortable = sortable;
           }
-
           toggleClass(el, sortable.options.selectedClass, true);
           multiDragElements.push(el);
         },
-
         /**
          * Deselects the provided multi-drag item
          * @param  {HTMLElement} el    The element to be deselected
          */
         deselect: function deselect(el) {
           var sortable = el.parentNode[expando],
-              index = multiDragElements.indexOf(el);
+            index = multiDragElements.indexOf(el);
           if (!sortable || !sortable.options.multiDrag || !~index) return;
           toggleClass(el, sortable.options.selectedClass, false);
           multiDragElements.splice(index, 1);
@@ -42748,17 +42335,16 @@ Popper.Defaults = Defaults;
       },
       eventProperties: function eventProperties() {
         var _this3 = this;
-
         var oldIndicies = [],
-            newIndicies = [];
+          newIndicies = [];
         multiDragElements.forEach(function (multiDragElement) {
           oldIndicies.push({
             multiDragElement: multiDragElement,
             index: multiDragElement.sortableIndex
-          }); // multiDragElements will already be sorted if folding
+          });
 
+          // multiDragElements will already be sorted if folding
           var newIndex;
-
           if (folding && multiDragElement !== dragEl$1) {
             newIndex = -1;
           } else if (folding) {
@@ -42766,7 +42352,6 @@ Popper.Defaults = Defaults;
           } else {
             newIndex = index(multiDragElement);
           }
-
           newIndicies.push({
             multiDragElement: multiDragElement,
             index: newIndex
@@ -42782,23 +42367,19 @@ Popper.Defaults = Defaults;
       optionListeners: {
         multiDragKey: function multiDragKey(key) {
           key = key.toLowerCase();
-
           if (key === 'ctrl') {
             key = 'Control';
           } else if (key.length > 1) {
             key = key.charAt(0).toUpperCase() + key.substr(1);
           }
-
           return key;
         }
       }
     });
   }
-
   function insertMultiDragElements(clonesInserted, rootEl) {
     multiDragElements.forEach(function (multiDragElement, i) {
       var target = rootEl.children[multiDragElement.sortableIndex + (clonesInserted ? Number(i) : 0)];
-
       if (target) {
         rootEl.insertBefore(multiDragElement, target);
       } else {
@@ -42806,17 +42387,15 @@ Popper.Defaults = Defaults;
       }
     });
   }
+
   /**
    * Insert multi-drag clones
    * @param  {[Boolean]} elementsInserted  Whether the multi-drag elements are inserted
    * @param  {HTMLElement} rootEl
    */
-
-
   function insertMultiDragClones(elementsInserted, rootEl) {
     multiDragClones.forEach(function (clone, i) {
       var target = rootEl.children[clone.sortableIndex + (elementsInserted ? Number(i) : 0)];
-
       if (target) {
         rootEl.insertBefore(clone, target);
       } else {
@@ -42824,7 +42403,6 @@ Popper.Defaults = Defaults;
       }
     });
   }
-
   function removeMultiDragElements() {
     multiDragElements.forEach(function (multiDragElement) {
       if (multiDragElement === dragEl$1) return;
@@ -42845,37 +42423,24 @@ Popper.Defaults = Defaults;
 
 /***/ }),
 
-/***/ "./node_modules/trix/dist/trix.js":
-/*!****************************************!*\
-  !*** ./node_modules/trix/dist/trix.js ***!
-  \****************************************/
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./node_modules/trix/dist/trix.esm.min.js":
+/*!************************************************!*\
+  !*** ./node_modules/trix/dist/trix.esm.min.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
-Trix 0.11.4
-Copyright © 2018 Basecamp, LLC
-http://trix-editor.org/
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Nn)
+/* harmony export */ });
+/*
+Trix 2.1.1
+Copyright © 2024 37signals, LLC
  */
-(function(){}).call(this),function(){var t;null==window.Set&&(window.Set=t=function(){function t(){this.clear()}return t.prototype.clear=function(){return this.values=[]},t.prototype.has=function(t){return-1!==this.values.indexOf(t)},t.prototype.add=function(t){return this.has(t)||this.values.push(t),this},t.prototype["delete"]=function(t){var e;return-1===(e=this.values.indexOf(t))?!1:(this.values.splice(e,1),!0)},t.prototype.forEach=function(){var t;return(t=this.values).forEach.apply(t,arguments)},t}())}.call(this),function(t){function e(){}function n(t,e){return function(){t.apply(e,arguments)}}function i(t){if("object"!=typeof this)throw new TypeError("Promises must be constructed via new");if("function"!=typeof t)throw new TypeError("not a function");this._state=0,this._handled=!1,this._value=void 0,this._deferreds=[],c(t,this)}function o(t,e){for(;3===t._state;)t=t._value;return 0===t._state?void t._deferreds.push(e):(t._handled=!0,void h(function(){var n=1===t._state?e.onFulfilled:e.onRejected;if(null===n)return void(1===t._state?r:s)(e.promise,t._value);var i;try{i=n(t._value)}catch(o){return void s(e.promise,o)}r(e.promise,i)}))}function r(t,e){try{if(e===t)throw new TypeError("A promise cannot be resolved with itself.");if(e&&("object"==typeof e||"function"==typeof e)){var o=e.then;if(e instanceof i)return t._state=3,t._value=e,void a(t);if("function"==typeof o)return void c(n(o,e),t)}t._state=1,t._value=e,a(t)}catch(r){s(t,r)}}function s(t,e){t._state=2,t._value=e,a(t)}function a(t){2===t._state&&0===t._deferreds.length&&setTimeout(function(){t._handled||p(t._value)},1);for(var e=0,n=t._deferreds.length;n>e;e++)o(t,t._deferreds[e]);t._deferreds=null}function u(t,e,n){this.onFulfilled="function"==typeof t?t:null,this.onRejected="function"==typeof e?e:null,this.promise=n}function c(t,e){var n=!1;try{t(function(t){n||(n=!0,r(e,t))},function(t){n||(n=!0,s(e,t))})}catch(i){if(n)return;n=!0,s(e,i)}}var l=setTimeout,h="function"==typeof setImmediate&&setImmediate||function(t){l(t,1)},p=function(t){"undefined"!=typeof console&&console&&console.warn("Possible Unhandled Promise Rejection:",t)};i.prototype["catch"]=function(t){return this.then(null,t)},i.prototype.then=function(t,n){var r=new i(e);return o(this,new u(t,n,r)),r},i.all=function(t){var e=Array.prototype.slice.call(t);return new i(function(t,n){function i(r,s){try{if(s&&("object"==typeof s||"function"==typeof s)){var a=s.then;if("function"==typeof a)return void a.call(s,function(t){i(r,t)},n)}e[r]=s,0===--o&&t(e)}catch(u){n(u)}}if(0===e.length)return t([]);for(var o=e.length,r=0;r<e.length;r++)i(r,e[r])})},i.resolve=function(t){return t&&"object"==typeof t&&t.constructor===i?t:new i(function(e){e(t)})},i.reject=function(t){return new i(function(e,n){n(t)})},i.race=function(t){return new i(function(e,n){for(var i=0,o=t.length;o>i;i++)t[i].then(e,n)})},i._setImmediateFn=function(t){h=t},i._setUnhandledRejectionFn=function(t){p=t}, true&&module.exports?module.exports=i:t.Promise||(t.Promise=i)}(this),/**
- * @license
- * Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
- * This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
- * The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
- * The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
- * Code distributed by Google as part of the polymer project is also
- * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
- */
-"undefined"==typeof WeakMap&&!function(){var t=Object.defineProperty,e=Date.now()%1e9,n=function(){this.name="__st"+(1e9*Math.random()>>>0)+(e++ +"__")};n.prototype={set:function(e,n){var i=e[this.name];return i&&i[0]===e?i[1]=n:t(e,this.name,{value:[e,n],writable:!0}),this},get:function(t){var e;return(e=t[this.name])&&e[0]===t?e[1]:void 0},"delete":function(t){var e=t[this.name];return e&&e[0]===t?(e[0]=e[1]=void 0,!0):!1},has:function(t){var e=t[this.name];return e?e[0]===t:!1}},window.WeakMap=n}(),function(t){function e(t){A.push(t),b||(b=!0,g(i))}function n(t){return window.ShadowDOMPolyfill&&window.ShadowDOMPolyfill.wrapIfNeeded(t)||t}function i(){b=!1;var t=A;A=[],t.sort(function(t,e){return t.uid_-e.uid_});var e=!1;t.forEach(function(t){var n=t.takeRecords();o(t),n.length&&(t.callback_(n,t),e=!0)}),e&&i()}function o(t){t.nodes_.forEach(function(e){var n=m.get(e);n&&n.forEach(function(e){e.observer===t&&e.removeTransientObservers()})})}function r(t,e){for(var n=t;n;n=n.parentNode){var i=m.get(n);if(i)for(var o=0;o<i.length;o++){var r=i[o],s=r.options;if(n===t||s.subtree){var a=e(s);a&&r.enqueue(a)}}}}function s(t){this.callback_=t,this.nodes_=[],this.records_=[],this.uid_=++C}function a(t,e){this.type=t,this.target=e,this.addedNodes=[],this.removedNodes=[],this.previousSibling=null,this.nextSibling=null,this.attributeName=null,this.attributeNamespace=null,this.oldValue=null}function u(t){var e=new a(t.type,t.target);return e.addedNodes=t.addedNodes.slice(),e.removedNodes=t.removedNodes.slice(),e.previousSibling=t.previousSibling,e.nextSibling=t.nextSibling,e.attributeName=t.attributeName,e.attributeNamespace=t.attributeNamespace,e.oldValue=t.oldValue,e}function c(t,e){return x=new a(t,e)}function l(t){return w?w:(w=u(x),w.oldValue=t,w)}function h(){x=w=void 0}function p(t){return t===w||t===x}function d(t,e){return t===e?t:w&&p(t)?w:null}function f(t,e,n){this.observer=t,this.target=e,this.options=n,this.transientObservedNodes=[]}if(!t.JsMutationObserver){var g,m=new WeakMap;if(/Trident|Edge/.test(navigator.userAgent))g=setTimeout;else if(window.setImmediate)g=window.setImmediate;else{var y=[],v=String(Math.random());window.addEventListener("message",function(t){if(t.data===v){var e=y;y=[],e.forEach(function(t){t()})}}),g=function(t){y.push(t),window.postMessage(v,"*")}}var b=!1,A=[],C=0;s.prototype={observe:function(t,e){if(t=n(t),!e.childList&&!e.attributes&&!e.characterData||e.attributeOldValue&&!e.attributes||e.attributeFilter&&e.attributeFilter.length&&!e.attributes||e.characterDataOldValue&&!e.characterData)throw new SyntaxError;var i=m.get(t);i||m.set(t,i=[]);for(var o,r=0;r<i.length;r++)if(i[r].observer===this){o=i[r],o.removeListeners(),o.options=e;break}o||(o=new f(this,t,e),i.push(o),this.nodes_.push(t)),o.addListeners()},disconnect:function(){this.nodes_.forEach(function(t){for(var e=m.get(t),n=0;n<e.length;n++){var i=e[n];if(i.observer===this){i.removeListeners(),e.splice(n,1);break}}},this),this.records_=[]},takeRecords:function(){var t=this.records_;return this.records_=[],t}};var x,w;f.prototype={enqueue:function(t){var n=this.observer.records_,i=n.length;if(n.length>0){var o=n[i-1],r=d(o,t);if(r)return void(n[i-1]=r)}else e(this.observer);n[i]=t},addListeners:function(){this.addListeners_(this.target)},addListeners_:function(t){var e=this.options;e.attributes&&t.addEventListener("DOMAttrModified",this,!0),e.characterData&&t.addEventListener("DOMCharacterDataModified",this,!0),e.childList&&t.addEventListener("DOMNodeInserted",this,!0),(e.childList||e.subtree)&&t.addEventListener("DOMNodeRemoved",this,!0)},removeListeners:function(){this.removeListeners_(this.target)},removeListeners_:function(t){var e=this.options;e.attributes&&t.removeEventListener("DOMAttrModified",this,!0),e.characterData&&t.removeEventListener("DOMCharacterDataModified",this,!0),e.childList&&t.removeEventListener("DOMNodeInserted",this,!0),(e.childList||e.subtree)&&t.removeEventListener("DOMNodeRemoved",this,!0)},addTransientObserver:function(t){if(t!==this.target){this.addListeners_(t),this.transientObservedNodes.push(t);var e=m.get(t);e||m.set(t,e=[]),e.push(this)}},removeTransientObservers:function(){var t=this.transientObservedNodes;this.transientObservedNodes=[],t.forEach(function(t){this.removeListeners_(t);for(var e=m.get(t),n=0;n<e.length;n++)if(e[n]===this){e.splice(n,1);break}},this)},handleEvent:function(t){switch(t.stopImmediatePropagation(),t.type){case"DOMAttrModified":var e=t.attrName,n=t.relatedNode.namespaceURI,i=t.target,o=new c("attributes",i);o.attributeName=e,o.attributeNamespace=n;var s=t.attrChange===MutationEvent.ADDITION?null:t.prevValue;r(i,function(t){return!t.attributes||t.attributeFilter&&t.attributeFilter.length&&-1===t.attributeFilter.indexOf(e)&&-1===t.attributeFilter.indexOf(n)?void 0:t.attributeOldValue?l(s):o});break;case"DOMCharacterDataModified":var i=t.target,o=c("characterData",i),s=t.prevValue;r(i,function(t){return t.characterData?t.characterDataOldValue?l(s):o:void 0});break;case"DOMNodeRemoved":this.addTransientObserver(t.target);case"DOMNodeInserted":var a,u,p=t.target;"DOMNodeInserted"===t.type?(a=[p],u=[]):(a=[],u=[p]);var d=p.previousSibling,f=p.nextSibling,o=c("childList",t.target.parentNode);o.addedNodes=a,o.removedNodes=u,o.previousSibling=d,o.nextSibling=f,r(t.relatedNode,function(t){return t.childList?o:void 0})}h()}},t.JsMutationObserver=s,t.MutationObserver||(t.MutationObserver=s,s._isPolyfilled=!0)}}(self),function(){"use strict";if(!window.performance){var t=Date.now();window.performance={now:function(){return Date.now()-t}}}window.requestAnimationFrame||(window.requestAnimationFrame=function(){var t=window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame;return t?function(e){return t(function(){e(performance.now())})}:function(t){return window.setTimeout(t,1e3/60)}}()),window.cancelAnimationFrame||(window.cancelAnimationFrame=function(){return window.webkitCancelAnimationFrame||window.mozCancelAnimationFrame||function(t){clearTimeout(t)}}());var e=function(){var t=document.createEvent("Event");return t.initEvent("foo",!0,!0),t.preventDefault(),t.defaultPrevented}();if(!e){var n=Event.prototype.preventDefault;Event.prototype.preventDefault=function(){this.cancelable&&(n.call(this),Object.defineProperty(this,"defaultPrevented",{get:function(){return!0},configurable:!0}))}}var i=/Trident/.test(navigator.userAgent);if((!window.CustomEvent||i&&"function"!=typeof window.CustomEvent)&&(window.CustomEvent=function(t,e){e=e||{};var n=document.createEvent("CustomEvent");return n.initCustomEvent(t,Boolean(e.bubbles),Boolean(e.cancelable),e.detail),n},window.CustomEvent.prototype=window.Event.prototype),!window.Event||i&&"function"!=typeof window.Event){var o=window.Event;window.Event=function(t,e){e=e||{};var n=document.createEvent("Event");return n.initEvent(t,Boolean(e.bubbles),Boolean(e.cancelable)),n},window.Event.prototype=o.prototype}}(window.WebComponents),window.CustomElements=window.CustomElements||{flags:{}},function(t){var e=t.flags,n=[],i=function(t){n.push(t)},o=function(){n.forEach(function(e){e(t)})};t.addModule=i,t.initializeModules=o,t.hasNative=Boolean(document.registerElement),t.isIE=/Trident/.test(navigator.userAgent),t.useNative=!e.register&&t.hasNative&&!window.ShadowDOMPolyfill&&(!window.HTMLImports||window.HTMLImports.useNative)}(window.CustomElements),window.CustomElements.addModule(function(t){function e(t,e){n(t,function(t){return e(t)?!0:void i(t,e)}),i(t,e)}function n(t,e,i){var o=t.firstElementChild;if(!o)for(o=t.firstChild;o&&o.nodeType!==Node.ELEMENT_NODE;)o=o.nextSibling;for(;o;)e(o,i)!==!0&&n(o,e,i),o=o.nextElementSibling;return null}function i(t,n){for(var i=t.shadowRoot;i;)e(i,n),i=i.olderShadowRoot}function o(t,e){r(t,e,[])}function r(t,e,n){if(t=window.wrap(t),!(n.indexOf(t)>=0)){n.push(t);for(var i,o=t.querySelectorAll("link[rel="+s+"]"),a=0,u=o.length;u>a&&(i=o[a]);a++)i.import&&r(i.import,e,n);e(t)}}var s=window.HTMLImports?window.HTMLImports.IMPORT_LINK_TYPE:"none";t.forDocumentTree=o,t.forSubtree=e}),window.CustomElements.addModule(function(t){function e(t,e){return n(t,e)||i(t,e)}function n(e,n){return t.upgrade(e,n)?!0:void(n&&s(e))}function i(t,e){b(t,function(t){return n(t,e)?!0:void 0})}function o(t){w.push(t),x||(x=!0,setTimeout(r))}function r(){x=!1;for(var t,e=w,n=0,i=e.length;i>n&&(t=e[n]);n++)t();w=[]}function s(t){C?o(function(){a(t)}):a(t)}function a(t){t.__upgraded__&&!t.__attached&&(t.__attached=!0,t.attachedCallback&&t.attachedCallback())}function u(t){c(t),b(t,function(t){c(t)})}function c(t){C?o(function(){l(t)}):l(t)}function l(t){t.__upgraded__&&t.__attached&&(t.__attached=!1,t.detachedCallback&&t.detachedCallback())}function h(t){for(var e=t,n=window.wrap(document);e;){if(e==n)return!0;e=e.parentNode||e.nodeType===Node.DOCUMENT_FRAGMENT_NODE&&e.host}}function p(t){if(t.shadowRoot&&!t.shadowRoot.__watched){v.dom&&console.log("watching shadow-root for: ",t.localName);for(var e=t.shadowRoot;e;)g(e),e=e.olderShadowRoot}}function d(t,n){if(v.dom){var i=n[0];if(i&&"childList"===i.type&&i.addedNodes&&i.addedNodes){for(var o=i.addedNodes[0];o&&o!==document&&!o.host;)o=o.parentNode;var r=o&&(o.URL||o._URL||o.host&&o.host.localName)||"";r=r.split("/?").shift().split("/").pop()}console.group("mutations (%d) [%s]",n.length,r||"")}var s=h(t);n.forEach(function(t){"childList"===t.type&&(E(t.addedNodes,function(t){t.localName&&e(t,s)}),E(t.removedNodes,function(t){t.localName&&u(t)}))}),v.dom&&console.groupEnd()}function f(t){for(t=window.wrap(t),t||(t=window.wrap(document));t.parentNode;)t=t.parentNode;var e=t.__observer;e&&(d(t,e.takeRecords()),r())}function g(t){if(!t.__observer){var e=new MutationObserver(d.bind(this,t));e.observe(t,{childList:!0,subtree:!0}),t.__observer=e}}function m(t){t=window.wrap(t),v.dom&&console.group("upgradeDocument: ",t.baseURI.split("/").pop());var n=t===window.wrap(document);e(t,n),g(t),v.dom&&console.groupEnd()}function y(t){A(t,m)}var v=t.flags,b=t.forSubtree,A=t.forDocumentTree,C=window.MutationObserver._isPolyfilled&&v["throttle-attached"];t.hasPolyfillMutations=C,t.hasThrottledAttached=C;var x=!1,w=[],E=Array.prototype.forEach.call.bind(Array.prototype.forEach),S=Element.prototype.createShadowRoot;S&&(Element.prototype.createShadowRoot=function(){var t=S.call(this);return window.CustomElements.watchShadow(this),t}),t.watchShadow=p,t.upgradeDocumentTree=y,t.upgradeDocument=m,t.upgradeSubtree=i,t.upgradeAll=e,t.attached=s,t.takeRecords=f}),window.CustomElements.addModule(function(t){function e(e,i){if("template"===e.localName&&window.HTMLTemplateElement&&HTMLTemplateElement.decorate&&HTMLTemplateElement.decorate(e),!e.__upgraded__&&e.nodeType===Node.ELEMENT_NODE){var o=e.getAttribute("is"),r=t.getRegisteredDefinition(e.localName)||t.getRegisteredDefinition(o);if(r&&(o&&r.tag==e.localName||!o&&!r.extends))return n(e,r,i)}}function n(e,n,o){return s.upgrade&&console.group("upgrade:",e.localName),n.is&&e.setAttribute("is",n.is),i(e,n),e.__upgraded__=!0,r(e),o&&t.attached(e),t.upgradeSubtree(e,o),s.upgrade&&console.groupEnd(),e}function i(t,e){Object.__proto__?t.__proto__=e.prototype:(o(t,e.prototype,e.native),t.__proto__=e.prototype)}function o(t,e,n){for(var i={},o=e;o!==n&&o!==HTMLElement.prototype;){for(var r,s=Object.getOwnPropertyNames(o),a=0;r=s[a];a++)i[r]||(Object.defineProperty(t,r,Object.getOwnPropertyDescriptor(o,r)),i[r]=1);o=Object.getPrototypeOf(o)}}function r(t){t.createdCallback&&t.createdCallback()}var s=t.flags;t.upgrade=e,t.upgradeWithDefinition=n,t.implementPrototype=i}),window.CustomElements.addModule(function(t){function e(e,i){var u=i||{};if(!e)throw new Error("document.registerElement: first argument `name` must not be empty");if(e.indexOf("-")<0)throw new Error("document.registerElement: first argument ('name') must contain a dash ('-'). Argument provided was '"+String(e)+"'.");if(o(e))throw new Error("Failed to execute 'registerElement' on 'Document': Registration failed for type '"+String(e)+"'. The type name is invalid.");if(c(e))throw new Error("DuplicateDefinitionError: a type with name '"+String(e)+"' is already registered");return u.prototype||(u.prototype=Object.create(HTMLElement.prototype)),u.__name=e.toLowerCase(),u.extends&&(u.extends=u.extends.toLowerCase()),u.lifecycle=u.lifecycle||{},u.ancestry=r(u.extends),s(u),a(u),n(u.prototype),l(u.__name,u),u.ctor=h(u),u.ctor.prototype=u.prototype,u.prototype.constructor=u.ctor,t.ready&&m(document),u.ctor}function n(t){if(!t.setAttribute._polyfilled){var e=t.setAttribute;t.setAttribute=function(t,n){i.call(this,t,n,e)};var n=t.removeAttribute;t.removeAttribute=function(t){i.call(this,t,null,n)},t.setAttribute._polyfilled=!0}}function i(t,e,n){t=t.toLowerCase();var i=this.getAttribute(t);n.apply(this,arguments);var o=this.getAttribute(t);this.attributeChangedCallback&&o!==i&&this.attributeChangedCallback(t,i,o)}function o(t){for(var e=0;e<C.length;e++)if(t===C[e])return!0}function r(t){var e=c(t);return e?r(e.extends).concat([e]):[]}function s(t){for(var e,n=t.extends,i=0;e=t.ancestry[i];i++)n=e.is&&e.tag;t.tag=n||t.__name,n&&(t.is=t.__name)}function a(t){if(!Object.__proto__){var e=HTMLElement.prototype;if(t.is){var n=document.createElement(t.tag);e=Object.getPrototypeOf(n)}for(var i,o=t.prototype,r=!1;o;)o==e&&(r=!0),i=Object.getPrototypeOf(o),i&&(o.__proto__=i),o=i;r||console.warn(t.tag+" prototype not found in prototype chain for "+t.is),t.native=e}}function u(t){return v(E(t.tag),t)}function c(t){return t?x[t.toLowerCase()]:void 0}function l(t,e){x[t]=e}function h(t){return function(){return u(t)}}function p(t,e,n){return t===w?d(e,n):S(t,e)}function d(t,e){t&&(t=t.toLowerCase()),e&&(e=e.toLowerCase());var n=c(e||t);if(n){if(t==n.tag&&e==n.is)return new n.ctor;if(!e&&!n.is)return new n.ctor}var i;return e?(i=d(t),i.setAttribute("is",e),i):(i=E(t),t.indexOf("-")>=0&&b(i,HTMLElement),i)}function f(t,e){var n=t[e];t[e]=function(){var t=n.apply(this,arguments);return y(t),t}}var g,m=(t.isIE,t.upgradeDocumentTree),y=t.upgradeAll,v=t.upgradeWithDefinition,b=t.implementPrototype,A=t.useNative,C=["annotation-xml","color-profile","font-face","font-face-src","font-face-uri","font-face-format","font-face-name","missing-glyph"],x={},w="http://www.w3.org/1999/xhtml",E=document.createElement.bind(document),S=document.createElementNS.bind(document);g=Object.__proto__||A?function(t,e){return t instanceof e}:function(t,e){if(t instanceof e)return!0;for(var n=t;n;){if(n===e.prototype)return!0;n=n.__proto__}return!1},f(Node.prototype,"cloneNode"),f(document,"importNode"),document.registerElement=e,document.createElement=d,document.createElementNS=p,t.registry=x,t.instanceof=g,t.reservedTagList=C,t.getRegisteredDefinition=c,document.register=document.registerElement}),function(t){function e(){r(window.wrap(document)),window.CustomElements.ready=!0;var t=window.requestAnimationFrame||function(t){setTimeout(t,16)};t(function(){setTimeout(function(){window.CustomElements.readyTime=Date.now(),window.HTMLImports&&(window.CustomElements.elapsed=window.CustomElements.readyTime-window.HTMLImports.readyTime),document.dispatchEvent(new CustomEvent("WebComponentsReady",{bubbles:!0}))})})}{var n=t.useNative,i=t.initializeModules;t.isIE}if(n){var o=function(){};t.watchShadow=o,t.upgrade=o,t.upgradeAll=o,t.upgradeDocumentTree=o,t.upgradeSubtree=o,t.takeRecords=o,t.instanceof=function(t,e){return t instanceof e}}else i();var r=t.upgradeDocumentTree,s=t.upgradeDocument;if(window.wrap||(window.ShadowDOMPolyfill?(window.wrap=window.ShadowDOMPolyfill.wrapIfNeeded,window.unwrap=window.ShadowDOMPolyfill.unwrapIfNeeded):window.wrap=window.unwrap=function(t){return t}),window.HTMLImports&&(window.HTMLImports.__importsParsingHook=function(t){t.import&&s(wrap(t.import))}),"complete"===document.readyState||t.flags.eager)e();else if("interactive"!==document.readyState||window.attachEvent||window.HTMLImports&&!window.HTMLImports.ready){var a=window.HTMLImports&&!window.HTMLImports.ready?"HTMLImportsLoaded":"DOMContentLoaded";window.addEventListener(a,e)}else e()}(window.CustomElements),function(){}.call(this),function(){var t=this;(function(){(function(){this.Trix={VERSION:"0.11.4",ZERO_WIDTH_SPACE:"\ufeff",NON_BREAKING_SPACE:"\xa0",OBJECT_REPLACEMENT_CHARACTER:"\ufffc",browser:{composesExistingText:/Android.*Chrome/.test(navigator.userAgent),forcesObjectResizing:/Trident.*rv:11/.test(navigator.userAgent)},config:{}}}).call(this)}).call(t);var e=t.Trix;(function(){(function(){e.BasicObject=function(){function t(){}var e,n,i;return t.proxyMethod=function(t){var i,o,r,s,a;return r=n(t),i=r.name,s=r.toMethod,a=r.toProperty,o=r.optional,this.prototype[i]=function(){var t,n;return t=null!=s?o?"function"==typeof this[s]?this[s]():void 0:this[s]():null!=a?this[a]:void 0,o?(n=null!=t?t[i]:void 0,null!=n?e.call(n,t,arguments):void 0):(n=t[i],e.call(n,t,arguments))}},n=function(t){var e,n;if(!(n=t.match(i)))throw new Error("can't parse @proxyMethod expression: "+t);return e={name:n[4]},null!=n[2]?e.toMethod=n[1]:e.toProperty=n[1],null!=n[3]&&(e.optional=!0),e},e=Function.prototype.apply,i=/^(.+?)(\(\))?(\?)?\.(.+?)$/,t}()}).call(this),function(){var t=function(t,e){function i(){this.constructor=t}for(var o in e)n.call(e,o)&&(t[o]=e[o]);return i.prototype=e.prototype,t.prototype=new i,t.__super__=e.prototype,t},n={}.hasOwnProperty;e.Object=function(n){function i(){this.id=++o}var o;return t(i,n),o=0,i.fromJSONString=function(t){return this.fromJSON(JSON.parse(t))},i.prototype.hasSameConstructorAs=function(t){return this.constructor===(null!=t?t.constructor:void 0)},i.prototype.isEqualTo=function(t){return this===t},i.prototype.inspect=function(){var t,e,n;return t=function(){var t,i,o;i=null!=(t=this.contentsForInspection())?t:{},o=[];for(e in i)n=i[e],o.push(e+"="+n);return o}.call(this),"#<"+this.constructor.name+":"+this.id+(t.length?" "+t.join(", "):"")+">"},i.prototype.contentsForInspection=function(){},i.prototype.toJSONString=function(){return JSON.stringify(this)},i.prototype.toUTF16String=function(){return e.UTF16String.box(this)},i.prototype.getCacheKey=function(){return this.id.toString()},i}(e.BasicObject)}.call(this),function(){e.extend=function(t){var e,n;for(e in t)n=t[e],this[e]=n;return this}}.call(this),function(){e.extend({defer:function(t){return setTimeout(t,1)}})}.call(this),function(){var t,n;e.extend({normalizeSpaces:function(t){return t.replace(RegExp(""+e.ZERO_WIDTH_SPACE,"g"),"").replace(RegExp(""+e.NON_BREAKING_SPACE,"g")," ")},normalizeNewlines:function(t){return t.replace(/\r\n/g,"\n")},breakableWhitespacePattern:RegExp("[^\\S"+e.NON_BREAKING_SPACE+"]"),squishBreakableWhitespace:function(t){return t.replace(RegExp(""+e.breakableWhitespacePattern.source,"g")," ").replace(/\ {2,}/g," ")},summarizeStringChange:function(t,i){var o,r,s,a;return t=e.UTF16String.box(t),i=e.UTF16String.box(i),i.length<t.length?(r=n(t,i),a=r[0],o=r[1]):(s=n(i,t),o=s[0],a=s[1]),{added:o,removed:a}}}),n=function(n,i){var o,r,s,a,u;return n.isEqualTo(i)?["",""]:(r=t(n,i),a=r.utf16String.length,s=a?(u=r.offset,r,o=n.codepoints.slice(0,u).concat(n.codepoints.slice(u+a)),t(i,e.UTF16String.fromCodepoints(o))):t(i,n),[r.utf16String.toString(),s.utf16String.toString()])},t=function(t,e){var n,i,o;for(n=0,i=t.length,o=e.length;i>n&&t.charAt(n).isEqualTo(e.charAt(n));)n++;for(;i>n+1&&t.charAt(i-1).isEqualTo(e.charAt(o-1));)i--,o--;return{utf16String:t.slice(n,i),offset:n}}}.call(this),function(){e.extend({copyObject:function(t){var e,n,i;null==t&&(t={}),n={};for(e in t)i=t[e],n[e]=i;return n},objectsAreEqual:function(t,e){var n,i;if(null==t&&(t={}),null==e&&(e={}),Object.keys(t).length!==Object.keys(e).length)return!1;for(n in t)if(i=t[n],i!==e[n])return!1;return!0}})}.call(this),function(){var t=[].slice;e.extend({arraysAreEqual:function(t,e){var n,i,o,r;if(null==t&&(t=[]),null==e&&(e=[]),t.length!==e.length)return!1;for(i=n=0,o=t.length;o>n;i=++n)if(r=t[i],r!==e[i])return!1;return!0},arrayStartsWith:function(t,n){return null==t&&(t=[]),null==n&&(n=[]),e.arraysAreEqual(t.slice(0,n.length),n)},spliceArray:function(){var e,n,i;return n=arguments[0],e=2<=arguments.length?t.call(arguments,1):[],i=n.slice(0),i.splice.apply(i,e),i},summarizeArrayChange:function(t,e){var n,i,o,r,s,a,u,c,l,h,p;for(null==t&&(t=[]),null==e&&(e=[]),n=[],h=[],o=new Set,r=0,u=t.length;u>r;r++)p=t[r],o.add(p);for(i=new Set,s=0,c=e.length;c>s;s++)p=e[s],i.add(p),o.has(p)||n.push(p);for(a=0,l=t.length;l>a;a++)p=t[a],i.has(p)||h.push(p);return{added:n,removed:h}}})}.call(this),function(){var t,n,i,o;t=null,n=null,o=null,i=null,e.extend({getAllAttributeNames:function(){return null!=t?t:t=e.getTextAttributeNames().concat(e.getBlockAttributeNames())},getBlockConfig:function(t){return e.config.blockAttributes[t]},getBlockAttributeNames:function(){return null!=n?n:n=Object.keys(e.config.blockAttributes)},getTextConfig:function(t){return e.config.textAttributes[t]},getTextAttributeNames:function(){return null!=o?o:o=Object.keys(e.config.textAttributes)},getListAttributeNames:function(){var t,n;return null!=i?i:i=function(){var i,o;i=e.config.blockAttributes,o=[];for(t in i)n=i[t].listAttribute,null!=n&&o.push(n);return o}()}})}.call(this),function(){var t,n,i,o,r,s=[].indexOf||function(t){for(var e=0,n=this.length;n>e;e++)if(e in this&&this[e]===t)return e;return-1};t=document.documentElement,n=null!=(i=null!=(o=null!=(r=t.matchesSelector)?r:t.webkitMatchesSelector)?o:t.msMatchesSelector)?i:t.mozMatchesSelector,e.extend({handleEvent:function(n,i){var o,r,s,a,u,c,l,h,p,d,f,g;return h=null!=i?i:{},c=h.onElement,u=h.matchingSelector,g=h.withCallback,a=h.inPhase,l=h.preventDefault,d=h.times,r=null!=c?c:t,p=u,o=g,f="capturing"===a,s=function(t){var n;return null!=d&&0===--d&&s.destroy(),n=e.findClosestElementFromNode(t.target,{matchingSelector:p}),null!=n&&(null!=g&&g.call(n,t,n),l)?t.preventDefault():void 0},s.destroy=function(){return r.removeEventListener(n,s,f)},r.addEventListener(n,s,f),s},handleEventOnce:function(t,n){return null==n&&(n={}),n.times=1,e.handleEvent(t,n)},triggerEvent:function(n,i){var o,r,s,a,u,c,l;return l=null!=i?i:{},c=l.onElement,r=l.bubbles,s=l.cancelable,o=l.attributes,a=null!=c?c:t,r=r!==!1,s=s!==!1,u=document.createEvent("Events"),u.initEvent(n,r,s),null!=o&&e.extend.call(u,o),a.dispatchEvent(u)},elementMatchesSelector:function(t,e){return 1===(null!=t?t.nodeType:void 0)?n.call(t,e):void 0},findClosestElementFromNode:function(t,n){var i,o,r;for(o=null!=n?n:{},i=o.matchingSelector,r=o.untilNode;null!=t&&t.nodeType!==Node.ELEMENT_NODE;)t=t.parentNode;if(null!=t){if(null==i)return t;if(t.closest&&null==r)return t.closest(i);for(;t&&t!==r;){if(e.elementMatchesSelector(t,i))return t;t=t.parentNode}}},findInnerElement:function(t){for(;null!=t?t.firstElementChild:void 0;)t=t.firstElementChild;return t},innerElementIsActive:function(t){return document.activeElement!==t&&e.elementContainsNode(t,document.activeElement)},elementContainsNode:function(t,e){if(t&&e)for(;e;){if(e===t)return!0;e=e.parentNode}},findNodeFromContainerAndOffset:function(t,e){var n;if(t)return t.nodeType===Node.TEXT_NODE?t:0===e?null!=(n=t.firstChild)?n:t:t.childNodes.item(e-1)},findElementFromContainerAndOffset:function(t,n){var i;return i=e.findNodeFromContainerAndOffset(t,n),e.findClosestElementFromNode(i)},findChildIndexOfNode:function(t){var e;if(null!=t?t.parentNode:void 0){for(e=0;t=t.previousSibling;)e++;return e}},walkTree:function(t,e){var n,i,o,r,s;return o=null!=e?e:{},i=o.onlyNodesOfType,r=o.usingFilter,n=o.expandEntityReferences,s=function(){switch(i){case"element":return NodeFilter.SHOW_ELEMENT;case"text":return NodeFilter.SHOW_TEXT;case"comment":return NodeFilter.SHOW_COMMENT;default:return NodeFilter.SHOW_ALL}}(),document.createTreeWalker(t,s,null!=r?r:null,n===!0)},tagName:function(t){var e;return null!=t&&null!=(e=t.tagName)?e.toLowerCase():void 0},makeElement:function(t,e){var n,i,o,r,s,a,u,c,l,h;if(null==e&&(e={}),"object"==typeof t?(e=t,t=e.tagName):e={attributes:e},i=document.createElement(t),null!=e.editable&&(null==e.attributes&&(e.attributes={}),e.attributes.contenteditable=e.editable),e.attributes){a=e.attributes;for(r in a)h=a[r],i.setAttribute(r,h)}if(e.style){u=e.style;for(r in u)h=u[r],i.style[r]=h}if(e.data){c=e.data;for(r in c)h=c[r],i.dataset[r]=h}if(e.className)for(l=e.className.split(" "),o=0,s=l.length;s>o;o++)n=l[o],i.classList.add(n);return e.textContent&&(i.textContent=e.textContent),i},getBlockTagNames:function(){var t,n;return null!=e.blockTagNames?e.blockTagNames:e.blockTagNames=function(){var i,o;i=e.config.blockAttributes,o=[];for(t in i)n=i[t],o.push(n.tagName);return o}()},nodeIsBlockContainer:function(t){return e.nodeIsBlockStartComment(null!=t?t.firstChild:void 0)},nodeProbablyIsBlockContainer:function(t){var n,i;return n=e.tagName(t),s.call(e.getBlockTagNames(),n)>=0&&(i=e.tagName(t.firstChild),s.call(e.getBlockTagNames(),i)<0)},nodeIsBlockStart:function(t,n){var i;return i=(null!=n?n:{strict:!0}).strict,i?e.nodeIsBlockStartComment(t):e.nodeIsBlockStartComment(t)||!e.nodeIsBlockStartComment(t.firstChild)&&e.nodeProbablyIsBlockContainer(t)},nodeIsBlockStartComment:function(t){return e.nodeIsCommentNode(t)&&"block"===(null!=t?t.data:void 0)},nodeIsCommentNode:function(t){return(null!=t?t.nodeType:void 0)===Node.COMMENT_NODE},nodeIsCursorTarget:function(t){return t?e.nodeIsTextNode(t)?t.data===e.ZERO_WIDTH_SPACE:e.nodeIsCursorTarget(t.firstChild):void 0},nodeIsAttachmentElement:function(t){return e.elementMatchesSelector(t,e.AttachmentView.attachmentSelector)},nodeIsEmptyTextNode:function(t){return e.nodeIsTextNode(t)&&""===(null!=t?t.data:void 0)},nodeIsTextNode:function(t){return(null!=t?t.nodeType:void 0)===Node.TEXT_NODE}})}.call(this),function(){var t,n,i,o,r;t=e.copyObject,o=e.objectsAreEqual,e.extend({normalizeRange:i=function(t){var e;if(null!=t)return Array.isArray(t)||(t=[t,t]),[n(t[0]),n(null!=(e=t[1])?e:t[0])]},rangeIsCollapsed:function(t){var e,n,o;if(null!=t)return n=i(t),o=n[0],e=n[1],r(o,e)},rangesAreEqual:function(t,e){var n,o,s,a,u,c;if(null!=t&&null!=e)return s=i(t),o=s[0],n=s[1],a=i(e),c=a[0],u=a[1],r(o,c)&&r(n,u)}}),n=function(e){return"number"==typeof e?e:t(e)},r=function(t,e){return"number"==typeof t?t===e:o(t,e)}}.call(this),function(){var t,n,i,o;t={extendsTagName:"div",css:"%t { display: block; }"},e.registerElement=function(e,n){var r,s,a,u,c,l,h;return null==n&&(n={}),e=e.toLowerCase(),c=o(n),u=null!=(h=c.extendsTagName)?h:t.extendsTagName,delete c.extendsTagName,s=c.defaultCSS,delete c.defaultCSS,null!=s&&u===t.extendsTagName?s+="\n"+t.css:s=t.css,i(s,e),a=Object.getPrototypeOf(document.createElement(u)),a.__super__=a,l=Object.create(a,c),r=document.registerElement(e,{prototype:l}),Object.defineProperty(l,"constructor",{value:r}),r},i=function(t,e){var i;return i=n(e),i.textContent=t.replace(/%t/g,e)},n=function(t){var e;return e=document.createElement("style"),e.setAttribute("type","text/css"),e.setAttribute("data-tag-name",t.toLowerCase()),document.head.insertBefore(e,document.head.firstChild),e},o=function(t){var e,n,i;n={};for(e in t)i=t[e],n[e]="function"==typeof i?{value:i}:i;return n}}.call(this),function(){var t,n;e.extend({getDOMSelection:function(){var t;return t=window.getSelection(),t.rangeCount>0?t:void 0},getDOMRange:function(){var n,i;return(n=null!=(i=e.getDOMSelection())?i.getRangeAt(0):void 0)&&!t(n)?n:void 0},setDOMRange:function(t){var n;return n=window.getSelection(),n.removeAllRanges(),n.addRange(t),e.selectionChangeObserver.update()}}),t=function(t){return n(t.startContainer)||n(t.endContainer)},n=function(t){return!Object.getPrototypeOf(t)}}.call(this),function(){}.call(this),function(){var t,n=function(t,e){function n(){this.constructor=t}for(var o in e)i.call(e,o)&&(t[o]=e[o]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},i={}.hasOwnProperty;t=e.arraysAreEqual,e.Hash=function(i){function o(t){null==t&&(t={}),this.values=s(t),o.__super__.constructor.apply(this,arguments)}var r,s,a,u,c;return n(o,i),o.fromCommonAttributesOfObjects=function(t){var e,n,i,o,s,a;if(null==t&&(t=[]),!t.length)return new this;for(e=r(t[0]),i=e.getKeys(),a=t.slice(1),n=0,o=a.length;o>n;n++)s=a[n],i=e.getKeysCommonToHash(r(s)),e=e.slice(i);return e},o.box=function(t){return r(t)},o.prototype.add=function(t,e){return this.merge(u(t,e))},o.prototype.remove=function(t){return new e.Hash(s(this.values,t))},o.prototype.get=function(t){return this.values[t]},o.prototype.has=function(t){return t in this.values},o.prototype.merge=function(t){return new e.Hash(a(this.values,c(t)))},o.prototype.slice=function(t){var n,i,o,r;for(r={},n=0,o=t.length;o>n;n++)i=t[n],this.has(i)&&(r[i]=this.values[i]);return new e.Hash(r)},o.prototype.getKeys=function(){return Object.keys(this.values)},o.prototype.getKeysCommonToHash=function(t){var e,n,i,o,s;for(t=r(t),o=this.getKeys(),s=[],e=0,i=o.length;i>e;e++)n=o[e],this.values[n]===t.values[n]&&s.push(n);return s},o.prototype.isEqualTo=function(e){return t(this.toArray(),r(e).toArray())},o.prototype.isEmpty=function(){return 0===this.getKeys().length},o.prototype.toArray=function(){var t,e,n;return(null!=this.array?this.array:this.array=function(){var i;e=[],i=this.values;for(t in i)n=i[t],e.push(t,n);return e}.call(this)).slice(0)},o.prototype.toObject=function(){return s(this.values)},o.prototype.toJSON=function(){return this.toObject()},o.prototype.contentsForInspection=function(){return{values:JSON.stringify(this.values)}},u=function(t,e){var n;return n={},n[t]=e,n},a=function(t,e){var n,i,o;i=s(t);for(n in e)o=e[n],i[n]=o;return i},s=function(t,e){var n,i,o,r,s;for(r={},s=Object.keys(t).sort(),n=0,o=s.length;o>n;n++)i=s[n],i!==e&&(r[i]=t[i]);return r},r=function(t){return t instanceof e.Hash?t:new e.Hash(t)},c=function(t){return t instanceof e.Hash?t.values:t},o}(e.Object)}.call(this),function(){e.ObjectGroup=function(){function t(t,e){var n,i;this.objects=null!=t?t:[],i=e.depth,n=e.asTree,n&&(this.depth=i,this.objects=this.constructor.groupObjects(this.objects,{asTree:n,depth:this.depth+1}))}return t.groupObjects=function(t,e){var n,i,o,r,s,a,u,c,l;for(null==t&&(t=[]),l=null!=e?e:{},o=l.depth,n=l.asTree,n&&null==o&&(o=0),c=[],s=0,a=t.length;a>s;s++){if(u=t[s],r){if(("function"==typeof u.canBeGrouped?u.canBeGrouped(o):void 0)&&("function"==typeof(i=r[r.length-1]).canBeGroupedWith?i.canBeGroupedWith(u,o):void 0)){r.push(u);continue}c.push(new this(r,{depth:o,asTree:n})),r=null}("function"==typeof u.canBeGrouped?u.canBeGrouped(o):void 0)?r=[u]:c.push(u)}return r&&c.push(new this(r,{depth:o,asTree:n})),c},t.prototype.getObjects=function(){return this.objects},t.prototype.getDepth=function(){return this.depth},t.prototype.getCacheKey=function(){var t,e,n,i,o;for(e=["objectGroup"],o=this.getObjects(),t=0,n=o.length;n>t;t++)i=o[t],e.push(i.getCacheKey());return e.join("/")},t}()}.call(this),function(){var t=function(t,e){function i(){this.constructor=t}for(var o in e)n.call(e,o)&&(t[o]=e[o]);return i.prototype=e.prototype,t.prototype=new i,t.__super__=e.prototype,t},n={}.hasOwnProperty;e.ObjectMap=function(e){function n(t){var e,n,i,o,r;for(null==t&&(t=[]),this.objects={},i=0,o=t.length;o>i;i++)r=t[i],n=JSON.stringify(r),null==(e=this.objects)[n]&&(e[n]=r)}return t(n,e),n.prototype.find=function(t){var e;return e=JSON.stringify(t),this.objects[e]},n}(e.BasicObject)}.call(this),function(){e.ElementStore=function(){function t(t){this.reset(t)}var e;return t.prototype.add=function(t){var n;return n=e(t),this.elements[n]=t},t.prototype.remove=function(t){var n,i;return n=e(t),(i=this.elements[n])?(delete this.elements[n],i):void 0},t.prototype.reset=function(t){var e,n,i;for(null==t&&(t=[]),this.elements={},n=0,i=t.length;i>n;n++)e=t[n],this.add(e);return t},e=function(t){return t.dataset.trixStoreKey},t}()}.call(this),function(){}.call(this),function(){var t=function(t,e){function i(){this.constructor=t}for(var o in e)n.call(e,o)&&(t[o]=e[o]);return i.prototype=e.prototype,t.prototype=new i,t.__super__=e.prototype,t},n={}.hasOwnProperty;e.Operation=function(e){function n(){return n.__super__.constructor.apply(this,arguments)}return t(n,e),n.prototype.isPerforming=function(){return this.performing===!0},n.prototype.hasPerformed=function(){return this.performed===!0},n.prototype.hasSucceeded=function(){return this.performed&&this.succeeded},n.prototype.hasFailed=function(){return this.performed&&!this.succeeded},n.prototype.getPromise=function(){return null!=this.promise?this.promise:this.promise=new Promise(function(t){return function(e,n){return t.performing=!0,t.perform(function(i,o){return t.succeeded=i,t.performing=!1,t.performed=!0,t.succeeded?e(o):n(o)})}}(this))},n.prototype.perform=function(t){return t(!1)},n.prototype.release=function(){var t;return null!=(t=this.promise)&&"function"==typeof t.cancel&&t.cancel(),this.promise=null,this.performing=null,this.performed=null,this.succeeded=null
-},n.proxyMethod("getPromise().then"),n.proxyMethod("getPromise().catch"),n}(e.BasicObject)}.call(this),function(){var t,n,i,o,r,s=function(t,e){function n(){this.constructor=t}for(var i in e)a.call(e,i)&&(t[i]=e[i]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},a={}.hasOwnProperty;e.UTF16String=function(t){function e(t,e){this.ucs2String=t,this.codepoints=e,this.length=this.codepoints.length,this.ucs2Length=this.ucs2String.length}return s(e,t),e.box=function(t){return null==t&&(t=""),t instanceof this?t:this.fromUCS2String(null!=t?t.toString():void 0)},e.fromUCS2String=function(t){return new this(t,o(t))},e.fromCodepoints=function(t){return new this(r(t),t)},e.prototype.offsetToUCS2Offset=function(t){return r(this.codepoints.slice(0,Math.max(0,t))).length},e.prototype.offsetFromUCS2Offset=function(t){return o(this.ucs2String.slice(0,Math.max(0,t))).length},e.prototype.slice=function(){var t;return this.constructor.fromCodepoints((t=this.codepoints).slice.apply(t,arguments))},e.prototype.charAt=function(t){return this.slice(t,t+1)},e.prototype.isEqualTo=function(t){return this.constructor.box(t).ucs2String===this.ucs2String},e.prototype.toJSON=function(){return this.ucs2String},e.prototype.getCacheKey=function(){return this.ucs2String},e.prototype.toString=function(){return this.ucs2String},e}(e.BasicObject),t=1===("function"==typeof Array.from?Array.from("\ud83d\udc7c").length:void 0),n=null!=("function"==typeof" ".codePointAt?" ".codePointAt(0):void 0),i=" \ud83d\udc7c"===("function"==typeof String.fromCodePoint?String.fromCodePoint(32,128124):void 0),o=t&&n?function(t){return Array.from(t).map(function(t){return t.codePointAt(0)})}:function(t){var e,n,i,o,r;for(o=[],e=0,i=t.length;i>e;)r=t.charCodeAt(e++),r>=55296&&56319>=r&&i>e&&(n=t.charCodeAt(e++),56320===(64512&n)?r=((1023&r)<<10)+(1023&n)+65536:e--),o.push(r);return o},r=i?function(t){return String.fromCodePoint.apply(String,t)}:function(t){var e,n,i;return e=function(){var e,o,r;for(r=[],e=0,o=t.length;o>e;e++)i=t[e],n="",i>65535&&(i-=65536,n+=String.fromCharCode(i>>>10&1023|55296),i=56320|1023&i),r.push(n+String.fromCharCode(i));return r}(),e.join("")}}.call(this),function(){}.call(this),function(){}.call(this),function(){e.config.lang={bold:"Bold",bullets:"Bullets","byte":"Byte",bytes:"Bytes",captionPlaceholder:"Add a caption\u2026",code:"Code",heading1:"Heading",indent:"Increase Level",italic:"Italic",link:"Link",numbers:"Numbers",outdent:"Decrease Level",quote:"Quote",redo:"Redo",remove:"Remove",strike:"Strikethrough",undo:"Undo",unlink:"Unlink",urlPlaceholder:"Enter a URL\u2026",GB:"GB",KB:"KB",MB:"MB",PB:"PB",TB:"TB"}}.call(this),function(){e.config.css={attachment:"attachment",attachmentProgress:"attachment__progress",attachmentName:"attachment__name",attachmentSize:"attachment__size",attachmentRemove:"attachment__remove",attachmentCaption:"attachment__caption",attachmentCaptionEditor:"attachment__caption-editor"}}.call(this),function(){var t;e.config.blockAttributes=t={"default":{tagName:"div",parse:!1},quote:{tagName:"blockquote",nestable:!0},heading1:{tagName:"h1",terminal:!0,breakOnReturn:!0,group:!1},code:{tagName:"pre",terminal:!0,text:{plaintext:!0}},bulletList:{tagName:"ul",parse:!1},bullet:{tagName:"li",listAttribute:"bulletList",group:!1,nestable:!0,test:function(n){return e.tagName(n.parentNode)===t[this.listAttribute].tagName}},numberList:{tagName:"ol",parse:!1},number:{tagName:"li",listAttribute:"numberList",group:!1,nestable:!0,test:function(n){return e.tagName(n.parentNode)===t[this.listAttribute].tagName}}}}.call(this),function(){var t,n;t=e.config.lang,n=[t.bytes,t.KB,t.MB,t.GB,t.TB,t.PB],e.config.fileSize={prefix:"IEC",precision:2,formatter:function(e){var i,o,r,s,a;switch(e){case 0:return"0 "+t.bytes;case 1:return"1 "+t.byte;default:return i=function(){switch(this.prefix){case"SI":return 1e3;case"IEC":return 1024}}.call(this),o=Math.floor(Math.log(e)/Math.log(i)),r=e/Math.pow(i,o),s=r.toFixed(this.precision),a=s.replace(/0*$/,"").replace(/\.$/,""),a+" "+n[o]}}}}.call(this),function(){e.config.textAttributes={bold:{tagName:"strong",inheritable:!0,parser:function(t){var e;return e=window.getComputedStyle(t),"bold"===e.fontWeight||e.fontWeight>=600}},italic:{tagName:"em",inheritable:!0,parser:function(t){var e;return e=window.getComputedStyle(t),"italic"===e.fontStyle}},href:{groupTagName:"a",parser:function(t){var n,i,o;return n=e.AttachmentView.attachmentSelector,o="a:not("+n+")",(i=e.findClosestElementFromNode(t,{matchingSelector:o}))?i.getAttribute("href"):void 0}},strike:{tagName:"del",inheritable:!0},frozen:{style:{backgroundColor:"highlight"}}}}.call(this),function(){var t,n,i,o,r;r="[data-trix-serialize=false]",o=["contenteditable","data-trix-id","data-trix-store-key","data-trix-mutable","data-trix-placeholder","tabindex"],n="data-trix-serialized-attributes",i="["+n+"]",t=new RegExp("<!--block-->","g"),e.extend({serializers:{"application/json":function(t){var n;if(t instanceof e.Document)n=t;else{if(!(t instanceof HTMLElement))throw new Error("unserializable object");n=e.Document.fromHTML(t.innerHTML)}return n.toSerializableDocument().toJSONString()},"text/html":function(s){var a,u,c,l,h,p,d,f,g,m,y,v,b,A,C,x,w;if(s instanceof e.Document)l=e.DocumentView.render(s);else{if(!(s instanceof HTMLElement))throw new Error("unserializable object");l=s.cloneNode(!0)}for(A=l.querySelectorAll(r),h=0,g=A.length;g>h;h++)c=A[h],c.parentNode.removeChild(c);for(p=0,m=o.length;m>p;p++)for(a=o[p],C=l.querySelectorAll("["+a+"]"),d=0,y=C.length;y>d;d++)c=C[d],c.removeAttribute(a);for(x=l.querySelectorAll(i),f=0,v=x.length;v>f;f++){c=x[f];try{u=JSON.parse(c.getAttribute(n)),c.removeAttribute(n);for(b in u)w=u[b],c.setAttribute(b,w)}catch(E){}}return l.innerHTML.replace(t,"")}},deserializers:{"application/json":function(t){return e.Document.fromJSONString(t)},"text/html":function(t){return e.Document.fromHTML(t)}},serializeToContentType:function(t,n){var i;if(i=e.serializers[n])return i(t);throw new Error("unknown content type: "+n)},deserializeFromContentType:function(t,n){var i;if(i=e.deserializers[n])return i(t);throw new Error("unknown content type: "+n)}})}.call(this),function(){var t;t=e.config.lang,e.config.toolbar={getDefaultHTML:function(){return'<div class="trix-button-row">\n  <span class="trix-button-group trix-button-group--text-tools" data-trix-button-group="text-tools">\n    <button type="button" class="trix-button trix-button--icon trix-button--icon-bold" data-trix-attribute="bold" data-trix-key="b" title="'+t.bold+'" tabindex="-1">'+t.bold+'</button>\n    <button type="button" class="trix-button trix-button--icon trix-button--icon-italic" data-trix-attribute="italic" data-trix-key="i" title="'+t.italic+'" tabindex="-1">'+t.italic+'</button>\n    <button type="button" class="trix-button trix-button--icon trix-button--icon-strike" data-trix-attribute="strike" title="'+t.strike+'" tabindex="-1">'+t.strike+'</button>\n    <button type="button" class="trix-button trix-button--icon trix-button--icon-link" data-trix-attribute="href" data-trix-action="link" data-trix-key="k" title="'+t.link+'" tabindex="-1">'+t.link+'</button>\n  </span>\n\n  <span class="trix-button-group trix-button-group--block-tools" data-trix-button-group="block-tools">\n    <button type="button" class="trix-button trix-button--icon trix-button--icon-heading-1" data-trix-attribute="heading1" title="'+t.heading1+'" tabindex="-1">'+t.heading1+'</button>\n    <button type="button" class="trix-button trix-button--icon trix-button--icon-quote" data-trix-attribute="quote" title="'+t.quote+'" tabindex="-1">'+t.quote+'</button>\n    <button type="button" class="trix-button trix-button--icon trix-button--icon-code" data-trix-attribute="code" title="'+t.code+'" tabindex="-1">'+t.code+'</button>\n    <button type="button" class="trix-button trix-button--icon trix-button--icon-bullet-list" data-trix-attribute="bullet" title="'+t.bullets+'" tabindex="-1">'+t.bullets+'</button>\n    <button type="button" class="trix-button trix-button--icon trix-button--icon-number-list" data-trix-attribute="number" title="'+t.numbers+'" tabindex="-1">'+t.numbers+'</button>\n    <button type="button" class="trix-button trix-button--icon trix-button--icon-decrease-nesting-level" data-trix-action="decreaseNestingLevel" title="'+t.outdent+'" tabindex="-1">'+t.outdent+'</button>\n    <button type="button" class="trix-button trix-button--icon trix-button--icon-increase-nesting-level" data-trix-action="increaseNestingLevel" title="'+t.indent+'" tabindex="-1">'+t.indent+'</button>\n  </span>\n\n  <span class="trix-button-group trix-button-group--history-tools" data-trix-button-group="history-tools">\n    <button type="button" class="trix-button trix-button--icon trix-button--icon-undo" data-trix-action="undo" data-trix-key="z" title="'+t.undo+'" tabindex="-1">'+t.undo+'</button>\n    <button type="button" class="trix-button trix-button--icon trix-button--icon-redo" data-trix-action="redo" data-trix-key="shift+z" title="'+t.redo+'" tabindex="-1">'+t.redo+'</button>\n  </span>\n</div>\n\n<div class="trix-dialogs" data-trix-dialogs>\n  <div class="trix-dialog trix-dialog--link" data-trix-dialog="href" data-trix-dialog-attribute="href">\n    <div class="trix-dialog__link-fields">\n      <input type="url" name="href" class="trix-input trix-input--dialog" placeholder="'+t.urlPlaceholder+'" required data-trix-input>\n      <div class="trix-button-group">\n        <input type="button" class="trix-button trix-button--dialog" value="'+t.link+'" data-trix-method="setAttribute">\n        <input type="button" class="trix-button trix-button--dialog" value="'+t.unlink+'" data-trix-method="removeAttribute">\n      </div>\n    </div>\n  </div>\n</div>'}}}.call(this),function(){e.config.undoInterval=5e3}.call(this),function(){e.config.attachments={preview:{caption:{name:!0,size:!0}},file:{caption:{size:!0}}}}.call(this),function(){}.call(this),function(){e.registerElement("trix-toolbar",{defaultCSS:"%t {\n  white-space: nowrap;\n}\n\n%t [data-trix-dialog] {\n  display: none;\n}\n\n%t [data-trix-dialog][data-trix-active] {\n  display: block;\n}\n\n%t [data-trix-dialog] [data-trix-validate]:invalid {\n  background-color: #ffdddd;\n}",createdCallback:function(){return""===this.innerHTML?this.innerHTML=e.config.toolbar.getDefaultHTML():void 0}})}.call(this),function(){var t=function(t,e){function i(){this.constructor=t}for(var o in e)n.call(e,o)&&(t[o]=e[o]);return i.prototype=e.prototype,t.prototype=new i,t.__super__=e.prototype,t},n={}.hasOwnProperty,i=[].indexOf||function(t){for(var e=0,n=this.length;n>e;e++)if(e in this&&this[e]===t)return e;return-1};e.ObjectView=function(n){function o(t,e){this.object=t,this.options=null!=e?e:{},this.childViews=[],this.rootView=this}return t(o,n),o.prototype.getNodes=function(){var t,e,n,i,o;for(null==this.nodes&&(this.nodes=this.createNodes()),i=this.nodes,o=[],t=0,e=i.length;e>t;t++)n=i[t],o.push(n.cloneNode(!0));return o},o.prototype.invalidate=function(){var t;return this.nodes=null,null!=(t=this.parentView)?t.invalidate():void 0},o.prototype.invalidateViewForObject=function(t){var e;return null!=(e=this.findViewForObject(t))?e.invalidate():void 0},o.prototype.findOrCreateCachedChildView=function(t,e){var n;return(n=this.getCachedViewForObject(e))?this.recordChildView(n):(n=this.createChildView.apply(this,arguments),this.cacheViewForObject(n,e)),n},o.prototype.createChildView=function(t,n,i){var o;return null==i&&(i={}),n instanceof e.ObjectGroup&&(i.viewClass=t,t=e.ObjectGroupView),o=new t(n,i),this.recordChildView(o)},o.prototype.recordChildView=function(t){return t.parentView=this,t.rootView=this.rootView,i.call(this.childViews,t)<0&&this.childViews.push(t),t},o.prototype.getAllChildViews=function(){var t,e,n,i,o;for(o=[],i=this.childViews,e=0,n=i.length;n>e;e++)t=i[e],o.push(t),o=o.concat(t.getAllChildViews());return o},o.prototype.findElement=function(){return this.findElementForObject(this.object)},o.prototype.findElementForObject=function(t){var e;return(e=null!=t?t.id:void 0)?this.rootView.element.querySelector("[data-trix-id='"+e+"']"):void 0},o.prototype.findViewForObject=function(t){var e,n,i,o;for(i=this.getAllChildViews(),e=0,n=i.length;n>e;e++)if(o=i[e],o.object===t)return o},o.prototype.getViewCache=function(){return this.rootView!==this?this.rootView.getViewCache():this.isViewCachingEnabled()?null!=this.viewCache?this.viewCache:this.viewCache={}:void 0},o.prototype.isViewCachingEnabled=function(){return this.shouldCacheViews!==!1},o.prototype.enableViewCaching=function(){return this.shouldCacheViews=!0},o.prototype.disableViewCaching=function(){return this.shouldCacheViews=!1},o.prototype.getCachedViewForObject=function(t){var e;return null!=(e=this.getViewCache())?e[t.getCacheKey()]:void 0},o.prototype.cacheViewForObject=function(t,e){var n;return null!=(n=this.getViewCache())?n[e.getCacheKey()]=t:void 0},o.prototype.garbageCollectCachedViews=function(){var t,e,n,o,r,s;if(t=this.getViewCache()){s=this.getAllChildViews().concat(this),n=function(){var t,e,n;for(n=[],t=0,e=s.length;e>t;t++)r=s[t],n.push(r.object.getCacheKey());return n}(),o=[];for(e in t)i.call(n,e)<0&&o.push(delete t[e]);return o}},o}(e.BasicObject)}.call(this),function(){var t=function(t,e){function i(){this.constructor=t}for(var o in e)n.call(e,o)&&(t[o]=e[o]);return i.prototype=e.prototype,t.prototype=new i,t.__super__=e.prototype,t},n={}.hasOwnProperty;e.ObjectGroupView=function(e){function n(){n.__super__.constructor.apply(this,arguments),this.objectGroup=this.object,this.viewClass=this.options.viewClass,delete this.options.viewClass}return t(n,e),n.prototype.getChildViews=function(){var t,e,n,i;if(!this.childViews.length)for(i=this.objectGroup.getObjects(),t=0,e=i.length;e>t;t++)n=i[t],this.findOrCreateCachedChildView(this.viewClass,n,this.options);return this.childViews},n.prototype.createNodes=function(){var t,e,n,i,o,r,s,a,u;for(t=this.createContainerElement(),s=this.getChildViews(),e=0,i=s.length;i>e;e++)for(u=s[e],a=u.getNodes(),n=0,o=a.length;o>n;n++)r=a[n],t.appendChild(r);return[t]},n.prototype.createContainerElement=function(t){return null==t&&(t=this.objectGroup.getDepth()),this.getChildViews()[0].createContainerElement(t)},n}(e.ObjectView)}.call(this),function(){var t=function(t,e){function i(){this.constructor=t}for(var o in e)n.call(e,o)&&(t[o]=e[o]);return i.prototype=e.prototype,t.prototype=new i,t.__super__=e.prototype,t},n={}.hasOwnProperty;e.Controller=function(e){function n(){return n.__super__.constructor.apply(this,arguments)}return t(n,e),n}(e.BasicObject)}.call(this),function(){var t,n,i,o,r,s,a=function(t,e){return function(){return t.apply(e,arguments)}},u=function(t,e){function n(){this.constructor=t}for(var i in e)c.call(e,i)&&(t[i]=e[i]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},c={}.hasOwnProperty,l=[].indexOf||function(t){for(var e=0,n=this.length;n>e;e++)if(e in this&&this[e]===t)return e;return-1};t=e.findClosestElementFromNode,i=e.nodeIsEmptyTextNode,n=e.nodeIsBlockStartComment,o=e.normalizeSpaces,r=e.summarizeStringChange,s=e.tagName,e.MutationObserver=function(e){function c(t){this.element=t,this.didMutate=a(this.didMutate,this),this.observer=new window.MutationObserver(this.didMutate),this.start()}var h,p,d,f;return u(c,e),p="data-trix-mutable",d="["+p+"]",f={attributes:!0,childList:!0,characterData:!0,characterDataOldValue:!0,subtree:!0},c.prototype.start=function(){return this.reset(),this.observer.observe(this.element,f)},c.prototype.stop=function(){return this.observer.disconnect()},c.prototype.didMutate=function(t){var e,n;return(e=this.mutations).push.apply(e,this.findSignificantMutations(t)),this.mutations.length?(null!=(n=this.delegate)&&"function"==typeof n.elementDidMutate&&n.elementDidMutate(this.getMutationSummary()),this.reset()):void 0},c.prototype.reset=function(){return this.mutations=[]},c.prototype.findSignificantMutations=function(t){var e,n,i,o;for(o=[],e=0,n=t.length;n>e;e++)i=t[e],this.mutationIsSignificant(i)&&o.push(i);return o},c.prototype.mutationIsSignificant=function(t){var e,n,i,o;for(o=this.nodesModifiedByMutation(t),e=0,n=o.length;n>e;e++)if(i=o[e],this.nodeIsSignificant(i))return!0;return!1},c.prototype.nodeIsSignificant=function(t){return t!==this.element&&!this.nodeIsMutable(t)&&!i(t)},c.prototype.nodeIsMutable=function(e){return t(e,{matchingSelector:d})},c.prototype.nodesModifiedByMutation=function(t){var e;switch(e=[],t.type){case"attributes":t.attributeName!==p&&e.push(t.target);break;case"characterData":e.push(t.target.parentNode),e.push(t.target);break;case"childList":e.push.apply(e,t.addedNodes),e.push.apply(e,t.removedNodes)}return e},c.prototype.getMutationSummary=function(){return this.getTextMutationSummary()},c.prototype.getTextMutationSummary=function(){var t,e,n,i,o,r,s,a,u,c,h;for(a=this.getTextChangesFromCharacterData(),n=a.additions,o=a.deletions,h=this.getTextChangesFromChildList(),u=h.additions,r=0,s=u.length;s>r;r++)e=u[r],l.call(n,e)<0&&n.push(e);return o.push.apply(o,h.deletions),c={},(t=n.join(""))&&(c.textAdded=t),(i=o.join(""))&&(c.textDeleted=i),c},c.prototype.getMutationsByType=function(t){var e,n,i,o,r;for(o=this.mutations,r=[],e=0,n=o.length;n>e;e++)i=o[e],i.type===t&&r.push(i);return r},c.prototype.getTextChangesFromChildList=function(){var t,e,i,r,s,a,u,c,l,p,d;for(t=[],u=[],a=this.getMutationsByType("childList"),e=0,r=a.length;r>e;e++)s=a[e],t.push.apply(t,s.addedNodes),u.push.apply(u,s.removedNodes);return c=0===t.length&&1===u.length&&n(u[0]),c?(p=[],d=["\n"]):(p=h(t),d=h(u)),{additions:function(){var t,e,n;for(n=[],i=t=0,e=p.length;e>t;i=++t)l=p[i],l!==d[i]&&n.push(o(l));return n}(),deletions:function(){var t,e,n;for(n=[],i=t=0,e=d.length;e>t;i=++t)l=d[i],l!==p[i]&&n.push(o(l));return n}()}},c.prototype.getTextChangesFromCharacterData=function(){var t,e,n,i,s,a,u,c;return e=this.getMutationsByType("characterData"),e.length&&(c=e[0],n=e[e.length-1],s=o(c.oldValue),i=o(n.target.data),a=r(s,i),t=a.added,u=a.removed),{additions:t?[t]:[],deletions:u?[u]:[]}},h=function(t){var e,n,i,o;for(null==t&&(t=[]),o=[],e=0,n=t.length;n>e;e++)switch(i=t[e],i.nodeType){case Node.TEXT_NODE:o.push(i.data);break;case Node.ELEMENT_NODE:"br"===s(i)?o.push("\n"):o.push.apply(o,h(i.childNodes))}return o},c}(e.BasicObject)}.call(this),function(){var t=function(t,e){function i(){this.constructor=t}for(var o in e)n.call(e,o)&&(t[o]=e[o]);return i.prototype=e.prototype,t.prototype=new i,t.__super__=e.prototype,t},n={}.hasOwnProperty;e.FileVerificationOperation=function(e){function n(t){this.file=t}return t(n,e),n.prototype.perform=function(t){var e;return e=new FileReader,e.onerror=function(){return t(!1)},e.onload=function(n){return function(){e.onerror=null;try{e.abort()}catch(i){}return t(!0,n.file)}}(this),e.readAsArrayBuffer(this.file)},n}(e.Operation)}.call(this),function(){var t,n=function(t,e){function n(){this.constructor=t}for(var o in e)i.call(e,o)&&(t[o]=e[o]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},i={}.hasOwnProperty;t=e.browser,e.CompositionInput=function(e){function i(t){var e;this.inputController=t,e=this.inputController,this.responder=e.responder,this.delegate=e.delegate,this.inputSummary=e.inputSummary,this.data={}}return n(i,e),i.prototype.start=function(t){var e,n;return this.data.start=t,this.isSignificant()?("keypress"===this.inputSummary.eventName&&this.inputSummary.textAdded&&null!=(e=this.responder)&&e.deleteInDirection("left"),this.selectionIsExpanded()||(this.insertPlaceholder(),this.requestRender()),this.range=null!=(n=this.responder)?n.getSelectedRange():void 0):void 0},i.prototype.update=function(t){var e;return this.data.update=t,this.isSignificant()&&(e=this.selectPlaceholder())?(this.forgetPlaceholder(),this.range=e):void 0},i.prototype.end=function(t){var e,n,i,o;return this.data.end=t,this.isSignificant()?(this.forgetPlaceholder(),this.canApplyToDocument()?(this.setInputSummary({preferDocument:!0,didInput:!1}),null!=(e=this.delegate)&&e.inputControllerWillPerformTyping(),null!=(n=this.responder)&&n.setSelectedRange(this.range),null!=(i=this.responder)&&i.insertString(this.data.end),null!=(o=this.responder)?o.setSelectedRange(this.range[0]+this.data.end.length):void 0):null!=this.data.start||null!=this.data.update?(this.requestReparse(),this.inputController.reset()):void 0):this.inputController.reset()},i.prototype.getEndData=function(){return this.data.end},i.prototype.isEnded=function(){return null!=this.getEndData()},i.prototype.isSignificant=function(){return t.composesExistingText?this.inputSummary.didInput:!0},i.prototype.canApplyToDocument=function(){var t,e;return 0===(null!=(t=this.data.start)?t.length:void 0)&&(null!=(e=this.data.end)?e.length:void 0)>0&&null!=this.range},i.proxyMethod("inputController.setInputSummary"),i.proxyMethod("inputController.requestRender"),i.proxyMethod("inputController.requestReparse"),i.proxyMethod("responder?.selectionIsExpanded"),i.proxyMethod("responder?.insertPlaceholder"),i.proxyMethod("responder?.selectPlaceholder"),i.proxyMethod("responder?.forgetPlaceholder"),i}(e.BasicObject)}.call(this),function(){var t,n,i,o,r,s,a,u,c,l,h,p,d,f,g,m,y=function(t,e){function n(){this.constructor=t}for(var i in e)v.call(e,i)&&(t[i]=e[i]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},v={}.hasOwnProperty,b=[].indexOf||function(t){for(var e=0,n=this.length;n>e;e++)if(e in this&&this[e]===t)return e;return-1};o=e.handleEvent,h=e.makeElement,s=e.innerElementIsActive,p=e.objectsAreEqual,g=e.tagName,l={8:"backspace",9:"tab",13:"return",27:"escape",37:"left",39:"right",46:"delete",68:"d",72:"h",79:"o"},e.InputController=function(r){function g(t){var n;this.element=t,this.resetInputSummary(),this.mutationObserver=new e.MutationObserver(this.element),this.mutationObserver.delegate=this;for(n in this.events)o(n,{onElement:this.element,withCallback:this.handlerFor(n),inPhase:"capturing"})}var m;return y(g,r),m=0,g.keyNames=l,g.prototype.handlerFor=function(t){return function(e){return function(n){return e.handleInput(function(){return s(this.element)?void 0:(this.eventName=t,this.events[t].call(this,n))})}}(this)},g.prototype.setInputSummary=function(t){var e,n;null==t&&(t={}),this.inputSummary.eventName=this.eventName;for(e in t)n=t[e],this.inputSummary[e]=n;return this.inputSummary},g.prototype.resetInputSummary=function(){return this.inputSummary={}},g.prototype.reset=function(){return this.resetInputSummary(),e.selectionChangeObserver.reset()},g.prototype.editorWillSyncDocumentView=function(){return this.mutationObserver.stop()},g.prototype.editorDidSyncDocumentView=function(){return this.mutationObserver.start()},g.prototype.requestRender=function(){var t;return null!=(t=this.delegate)&&"function"==typeof t.inputControllerDidRequestRender?t.inputControllerDidRequestRender():void 0},g.prototype.requestReparse=function(){var t;return null!=(t=this.delegate)&&"function"==typeof t.inputControllerDidRequestReparse&&t.inputControllerDidRequestReparse(),this.requestRender()},g.prototype.elementDidMutate=function(t){var e;return this.isComposing()?null!=(e=this.delegate)&&"function"==typeof e.inputControllerDidAllowUnhandledInput?e.inputControllerDidAllowUnhandledInput():void 0:this.handleInput(function(){return this.mutationIsSignificant(t)&&(this.mutationIsExpected(t)?this.requestRender():this.requestReparse()),this.reset()})},g.prototype.mutationIsExpected=function(t){var e,n,i,o,r,s,a,u,c,l;return a=t.textAdded,u=t.textDeleted,this.inputSummary.preferDocument?!0:(e=null!=a?a===this.inputSummary.textAdded:!this.inputSummary.textAdded,n=null!=u?this.inputSummary.didDelete:!this.inputSummary.didDelete,c=("\n"===a||" \n"===a)&&!e,l="\n"===u&&!n,s=c&&!l||l&&!c,s&&(o=this.getSelectedRange())&&(i=c?a.replace(/\n$/,"").length||-1:(null!=a?a.length:void 0)||1,null!=(r=this.responder)?r.positionIsBlockBreak(o[1]+i):void 0)?!0:e&&n)},g.prototype.mutationIsSignificant=function(t){var e,n,i;return i=Object.keys(t).length>0,e=""===(null!=(n=this.compositionInput)?n.getEndData():void 0),i||!e},g.prototype.attachFiles=function(t){var n,i;return i=function(){var i,o,r;for(r=[],i=0,o=t.length;o>i;i++)n=t[i],r.push(new e.FileVerificationOperation(n));return r}(),Promise.all(i).then(function(t){return function(e){return t.handleInput(function(){var t,n;return null!=(t=this.delegate)&&t.inputControllerWillAttachFiles(),null!=(n=this.responder)&&n.insertFiles(e),this.requestRender()})}}(this))},g.prototype.events={keydown:function(t){var n,i,o,r,s,u,c,l,h;if(this.isComposing()||this.resetInputSummary(),this.inputSummary.didInput=!0,r=this.constructor.keyNames[t.keyCode]){for(i=this.keys,l=["ctrl","alt","shift","meta"],o=0,u=l.length;u>o;o++)c=l[o],t[c+"Key"]&&("ctrl"===c&&(c="control"),i=null!=i?i[c]:void 0);null!=(null!=i?i[r]:void 0)&&(this.setInputSummary({keyName:r}),e.selectionChangeObserver.reset(),i[r].call(this,t))}return a(t)&&(n=String.fromCharCode(t.keyCode).toLowerCase())&&(s=function(){var e,n,i,o;for(i=["alt","shift"],o=[],e=0,n=i.length;n>e;e++)c=i[e],t[c+"Key"]&&o.push(c);return o}(),s.push(n),null!=(h=this.delegate)?h.inputControllerDidReceiveKeyboardCommand(s):void 0)?t.preventDefault():void 0},keypress:function(t){var e,n,i;if(null==this.inputSummary.eventName&&(!t.metaKey&&!t.ctrlKey||t.altKey)&&!c(t)&&!u(t))return(i=f(t))?(null!=(e=this.delegate)&&e.inputControllerWillPerformTyping(),null!=(n=this.responder)&&n.insertString(i),this.setInputSummary({textAdded:i,didDelete:this.selectionIsExpanded()})):void 0},textInput:function(t){var e,n,i,o;return e=t.data,o=this.inputSummary.textAdded,o&&o!==e&&o.toUpperCase()===e?(n=this.getSelectedRange(),this.setSelectedRange([n[0],n[1]+o.length]),null!=(i=this.responder)&&i.insertString(e),this.setInputSummary({textAdded:e}),this.setSelectedRange(n)):void 0},dragenter:function(t){return t.preventDefault()},dragstart:function(t){var e,n;return n=t.target,this.serializeSelectionToDataTransfer(t.dataTransfer),this.draggedRange=this.getSelectedRange(),null!=(e=this.delegate)&&"function"==typeof e.inputControllerDidStartDrag?e.inputControllerDidStartDrag():void 0},dragover:function(t){var e,n;return!this.draggedRange&&!this.canAcceptDataTransfer(t.dataTransfer)||(t.preventDefault(),e={x:t.clientX,y:t.clientY},p(e,this.draggingPoint))?void 0:(this.draggingPoint=e,null!=(n=this.delegate)&&"function"==typeof n.inputControllerDidReceiveDragOverPoint?n.inputControllerDidReceiveDragOverPoint(this.draggingPoint):void 0)},dragend:function(){var t;return null!=(t=this.delegate)&&"function"==typeof t.inputControllerDidCancelDrag&&t.inputControllerDidCancelDrag(),this.draggedRange=null,this.draggingPoint=null},drop:function(t){var n,i,o,r,s,a,u,c,l;return t.preventDefault(),o=null!=(s=t.dataTransfer)?s.files:void 0,r={x:t.clientX,y:t.clientY},null!=(a=this.responder)&&a.setLocationRangeFromPointRange(r),(null!=o?o.length:void 0)?this.attachFiles(o):this.draggedRange?(null!=(u=this.delegate)&&u.inputControllerWillMoveText(),null!=(c=this.responder)&&c.moveTextFromRange(this.draggedRange),this.draggedRange=null,this.requestRender()):(i=t.dataTransfer.getData("application/x-trix-document"))&&(n=e.Document.fromJSONString(i),null!=(l=this.responder)&&l.insertDocument(n),this.requestRender()),this.draggedRange=null,this.draggingPoint=null},cut:function(t){var e,n;return(null!=(e=this.responder)?e.selectionIsExpanded():void 0)&&(this.serializeSelectionToDataTransfer(t.clipboardData)&&t.preventDefault(),null!=(n=this.delegate)&&n.inputControllerWillCutText(),this.deleteInDirection("backward"),t.defaultPrevented)?this.requestRender():void 0},copy:function(t){var e;return(null!=(e=this.responder)?e.selectionIsExpanded():void 0)&&this.serializeSelectionToDataTransfer(t.clipboardData)?t.preventDefault():void 0},paste:function(n){var o,r,s,a,u,c,l,h,p,f,g,y,v,A,C,x,w,E,S,k,R,L;return o=null!=(h=n.clipboardData)?h:n.testClipboardData,l={clipboard:o},null==o||d(n)?void this.getPastedHTMLUsingHiddenElement(function(t){return function(e){var n,i,o;return l.type="text/html",l.html=e,null!=(n=t.delegate)&&n.inputControllerWillPaste(l),null!=(i=t.responder)&&i.insertHTML(l.html),t.requestRender(),null!=(o=t.delegate)?o.inputControllerDidPaste(l):void 0}}(this)):((a=o.getData("URL"))?(l.type="URL",l.href=a,l.string=(c=o.getData("public.url-name"))?e.squishBreakableWhitespace(c).trim():a,null!=(p=this.delegate)&&p.inputControllerWillPaste(l),this.setInputSummary({textAdded:l.string,didDelete:this.selectionIsExpanded()}),null!=(C=this.responder)&&C.insertText(e.Text.textForStringWithAttributes(l.string,{href:l.href})),this.requestRender(),null!=(x=this.delegate)&&x.inputControllerDidPaste(l)):t(o)?(l.type="text/plain",l.string=o.getData("text/plain"),null!=(w=this.delegate)&&w.inputControllerWillPaste(l),this.setInputSummary({textAdded:l.string,didDelete:this.selectionIsExpanded()}),null!=(E=this.responder)&&E.insertString(l.string),this.requestRender(),null!=(S=this.delegate)&&S.inputControllerDidPaste(l)):(u=o.getData("text/html"))?(l.type="text/html",l.html=u,null!=(k=this.delegate)&&k.inputControllerWillPaste(l),null!=(R=this.responder)&&R.insertHTML(l.html),this.requestRender(),null!=(L=this.delegate)&&L.inputControllerDidPaste(l)):b.call(o.types,"Files")>=0&&(s=null!=(f=o.items)&&null!=(g=f[0])&&"function"==typeof g.getAsFile?g.getAsFile():void 0)&&(!s.name&&(r=i(s))&&(s.name="pasted-file-"+ ++m+"."+r),l.type="File",l.file=s,null!=(y=this.delegate)&&y.inputControllerWillAttachFiles(),null!=(v=this.responder)&&v.insertFile(l.file),this.requestRender(),null!=(A=this.delegate)&&A.inputControllerDidPaste(l)),n.preventDefault())},compositionstart:function(t){return this.getCompositionInput().start(t.data)},compositionupdate:function(t){return this.getCompositionInput().update(t.data)},compositionend:function(t){return this.getCompositionInput().end(t.data)},beforeinput:function(){return this.inputSummary.didInput=!0},input:function(t){return this.inputSummary.didInput=!0,t.stopPropagation()}},g.prototype.keys={backspace:function(t){var e;return null!=(e=this.delegate)&&e.inputControllerWillPerformTyping(),this.deleteInDirection("backward",t)},"delete":function(t){var e;return null!=(e=this.delegate)&&e.inputControllerWillPerformTyping(),this.deleteInDirection("forward",t)},"return":function(){var t,e;return this.setInputSummary({preferDocument:!0}),null!=(t=this.delegate)&&t.inputControllerWillPerformTyping(),null!=(e=this.responder)?e.insertLineBreak():void 0},tab:function(t){var e,n;return(null!=(e=this.responder)?e.canIncreaseNestingLevel():void 0)?(null!=(n=this.responder)&&n.increaseNestingLevel(),this.requestRender(),t.preventDefault()):void 0},left:function(t){var e;return this.selectionIsInCursorTarget()?(t.preventDefault(),null!=(e=this.responder)?e.moveCursorInDirection("backward"):void 0):void 0},right:function(t){var e;return this.selectionIsInCursorTarget()?(t.preventDefault(),null!=(e=this.responder)?e.moveCursorInDirection("forward"):void 0):void 0},control:{d:function(t){var e;return null!=(e=this.delegate)&&e.inputControllerWillPerformTyping(),this.deleteInDirection("forward",t)},h:function(t){var e;return null!=(e=this.delegate)&&e.inputControllerWillPerformTyping(),this.deleteInDirection("backward",t)},o:function(t){var e,n;return t.preventDefault(),null!=(e=this.delegate)&&e.inputControllerWillPerformTyping(),null!=(n=this.responder)&&n.insertString("\n",{updatePosition:!1}),this.requestRender()}},shift:{"return":function(t){var e,n;return null!=(e=this.delegate)&&e.inputControllerWillPerformTyping(),null!=(n=this.responder)&&n.insertString("\n"),this.requestRender(),t.preventDefault()},tab:function(t){var e,n;return(null!=(e=this.responder)?e.canDecreaseNestingLevel():void 0)?(null!=(n=this.responder)&&n.decreaseNestingLevel(),this.requestRender(),t.preventDefault()):void 0},left:function(t){return this.selectionIsInCursorTarget()?(t.preventDefault(),this.expandSelectionInDirection("backward")):void 0},right:function(t){return this.selectionIsInCursorTarget()?(t.preventDefault(),this.expandSelectionInDirection("forward")):void 0}},alt:{backspace:function(){var t;return this.setInputSummary({preferDocument:!1}),null!=(t=this.delegate)?t.inputControllerWillPerformTyping():void 0}},meta:{backspace:function(){var t;return this.setInputSummary({preferDocument:!1}),null!=(t=this.delegate)?t.inputControllerWillPerformTyping():void 0}}},g.prototype.handleInput=function(t){var e,n;try{return null!=(e=this.delegate)&&e.inputControllerWillHandleInput(),t.call(this)}finally{null!=(n=this.delegate)&&n.inputControllerDidHandleInput()}},g.prototype.getCompositionInput=function(){return this.isComposing()?this.compositionInput:this.compositionInput=new e.CompositionInput(this)
-},g.prototype.isComposing=function(){return null!=this.compositionInput&&!this.compositionInput.isEnded()},g.prototype.deleteInDirection=function(t,e){var n;return(null!=(n=this.responder)?n.deleteInDirection(t):void 0)!==!1?this.setInputSummary({didDelete:!0}):e?(e.preventDefault(),this.requestRender()):void 0},g.prototype.serializeSelectionToDataTransfer=function(t){var i,o;if(n(t))return i=null!=(o=this.responder)?o.getSelectedDocument().toSerializableDocument():void 0,t.setData("application/x-trix-document",JSON.stringify(i)),t.setData("text/html",e.DocumentView.render(i).innerHTML),t.setData("text/plain",i.toString().replace(/\n$/,"")),!0},g.prototype.canAcceptDataTransfer=function(t){var e,n,i,o,r,s;for(s={},o=null!=(i=null!=t?t.types:void 0)?i:[],e=0,n=o.length;n>e;e++)r=o[e],s[r]=!0;return s.Files||s["application/x-trix-document"]||s["text/html"]||s["text/plain"]},g.prototype.getPastedHTMLUsingHiddenElement=function(t){var e,n,i;return n=this.getSelectedRange(),i={position:"absolute",left:window.pageXOffset+"px",top:window.pageYOffset+"px",opacity:0},e=h({style:i,tagName:"div",editable:!0}),document.body.appendChild(e),e.focus(),requestAnimationFrame(function(i){return function(){var o;return o=e.innerHTML,document.body.removeChild(e),i.setSelectedRange(n),t(o)}}(this))},g.proxyMethod("responder?.getSelectedRange"),g.proxyMethod("responder?.setSelectedRange"),g.proxyMethod("responder?.expandSelectionInDirection"),g.proxyMethod("responder?.selectionIsInCursorTarget"),g.proxyMethod("responder?.selectionIsExpanded"),g}(e.BasicObject),i=function(t){var e,n;return null!=(e=t.type)&&null!=(n=e.match(/\/(\w+)$/))?n[1]:void 0},r=null!=("function"==typeof" ".codePointAt?" ".codePointAt(0):void 0),f=function(t){var n;return t.key&&r&&t.key.codePointAt(0)===t.keyCode?t.key:(null===t.which?n=t.keyCode:0!==t.which&&0!==t.charCode&&(n=t.charCode),null!=n&&"escape"!==l[n]?e.UTF16String.fromCodepoints([n]).toString():void 0)},c=function(t){return t.metaKey&&t.altKey&&!t.shiftKey&&94===t.keyCode},u=function(t){return t.metaKey&&t.altKey&&t.shiftKey&&9674===t.keyCode},a=function(t){return/Mac|^iP/.test(navigator.platform)?t.metaKey:t.ctrlKey},d=function(t){var e,n,i,o,r,s,a,u,c,l;if(u=t.clipboardData){if(b.call(u.types,"text/html")>=0){for(c=u.types,i=0,s=c.length;s>i;i++)if(l=c[i],e=/^CorePasteboardFlavorType/.test(l),n=/^dyn\./.test(l)&&u.getData(l),a=e||n)return!0;return!1}return o=b.call(u.types,"com.apple.webarchive")>=0,r=b.call(u.types,"com.apple.flat-rtfd")>=0,o||r}},t=function(t){var e,n,i;return i=t.getData("text/plain"),n=t.getData("text/html"),i&&n?(e=h("div"),e.innerHTML=n,e.textContent===i?!e.querySelector(":not(meta)"):void 0):null!=i?i.length:void 0},m={"application/x-trix-feature-detection":"test"},n=function(t){var e,n;if(null!=(null!=t?t.setData:void 0)){for(e in m)if(n=m[e],!function(){try{return t.setData(e,n),t.getData(e)===n}catch(i){}}())return;return!0}}}.call(this),function(){var t,n,i,o,r,s,a,u=function(t,e){return function(){return t.apply(e,arguments)}},c=function(t,e){function n(){this.constructor=t}for(var i in e)l.call(e,i)&&(t[i]=e[i]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},l={}.hasOwnProperty;n=e.handleEvent,r=e.makeElement,a=e.tagName,i=e.InputController.keyNames,s=e.config,o=s.lang,t=s.css,e.AttachmentEditorController=function(e){function s(t,e,n){this.attachmentPiece=t,this.element=e,this.container=n,this.didBlurCaption=u(this.didBlurCaption,this),this.didChangeCaption=u(this.didChangeCaption,this),this.didInputCaption=u(this.didInputCaption,this),this.didKeyDownCaption=u(this.didKeyDownCaption,this),this.didClickCaption=u(this.didClickCaption,this),this.didClickRemoveButton=u(this.didClickRemoveButton,this),this.attachment=this.attachmentPiece.attachment,"a"===a(this.element)&&(this.element=this.element.firstChild),this.install()}var l;return c(s,e),l=function(t){return function(){var e;return e=t.apply(this,arguments),e["do"](),null==this.undos&&(this.undos=[]),this.undos.push(e.undo)}},s.prototype.install=function(){return this.makeElementMutable(),this.attachment.isPreviewable()&&this.makeCaptionEditable(),this.addRemoveButton()},s.prototype.uninstall=function(){var t,e;for(this.savePendingCaption();e=this.undos.pop();)e();return null!=(t=this.delegate)?t.didUninstallAttachmentEditor(this):void 0},s.prototype.savePendingCaption=function(){var t,e,n;return null!=this.pendingCaption?(t=this.pendingCaption,this.pendingCaption=null,t?null!=(e=this.delegate)&&"function"==typeof e.attachmentEditorDidRequestUpdatingAttributesForAttachment?e.attachmentEditorDidRequestUpdatingAttributesForAttachment({caption:t},this.attachment):void 0:null!=(n=this.delegate)&&"function"==typeof n.attachmentEditorDidRequestRemovingAttributeForAttachment?n.attachmentEditorDidRequestRemovingAttributeForAttachment("caption",this.attachment):void 0):void 0},s.prototype.makeElementMutable=l(function(){return{"do":function(t){return function(){return t.element.dataset.trixMutable=!0}}(this),undo:function(t){return function(){return delete t.element.dataset.trixMutable}}(this)}}),s.prototype.makeCaptionEditable=l(function(){var t,e;return t=this.element.querySelector("figcaption"),e=null,{"do":function(i){return function(){return e=n("click",{onElement:t,withCallback:i.didClickCaption,inPhase:"capturing"})}}(this),undo:function(){return function(){return e.destroy()}}(this)}}),s.prototype.addRemoveButton=l(function(){var e;return e=r({tagName:"button",textContent:o.remove,className:t.attachmentRemove+" "+t.attachmentRemove+"--icon",attributes:{type:"button",title:o.remove},data:{trixMutable:!0}}),n("click",{onElement:e,withCallback:this.didClickRemoveButton}),{"do":function(t){return function(){return t.element.appendChild(e)}}(this),undo:function(t){return function(){return t.element.removeChild(e)}}(this)}}),s.prototype.editCaption=l(function(){var e,i,s,a,u;return a=r({tagName:"textarea",className:t.attachmentCaptionEditor,attributes:{placeholder:o.captionPlaceholder}}),a.value=this.attachmentPiece.getCaption(),u=a.cloneNode(),u.classList.add("trix-autoresize-clone"),e=function(){return u.value=a.value,a.style.height=u.scrollHeight+"px"},n("keydown",{onElement:a,withCallback:this.didKeyDownCaption}),n("input",{onElement:a,withCallback:this.didInputCaption}),n("change",{onElement:a,withCallback:this.didChangeCaption}),n("blur",{onElement:a,withCallback:this.didBlurCaption}),s=this.element.querySelector("figcaption"),i=s.cloneNode(),{"do":function(){return s.style.display="none",i.appendChild(a),i.appendChild(u),i.classList.add(t.attachmentCaption+"--editing"),s.parentElement.insertBefore(i,s),e(),a.focus()},undo:function(){return i.parentNode.removeChild(i),s.style.display=null}}}),s.prototype.didClickRemoveButton=function(t){var e;return t.preventDefault(),t.stopPropagation(),null!=(e=this.delegate)?e.attachmentEditorDidRequestRemovalOfAttachment(this.attachment):void 0},s.prototype.didClickCaption=function(t){return t.preventDefault(),this.editCaption()},s.prototype.didKeyDownCaption=function(t){var e;return"return"===i[t.keyCode]?(t.preventDefault(),this.savePendingCaption(),null!=(e=this.delegate)&&"function"==typeof e.attachmentEditorDidRequestDeselectingAttachment?e.attachmentEditorDidRequestDeselectingAttachment(this.attachment):void 0):void 0},s.prototype.didInputCaption=function(t){return this.pendingCaption=t.target.value.replace(/\s/g," ").trim()},s.prototype.didChangeCaption=function(){return this.savePendingCaption()},s.prototype.didBlurCaption=function(){return this.savePendingCaption()},s}(e.BasicObject)}.call(this),function(){var t,n,i,o=function(t,e){function n(){this.constructor=t}for(var i in e)r.call(e,i)&&(t[i]=e[i]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},r={}.hasOwnProperty;i=e.makeElement,t=e.config.css,e.AttachmentView=function(r){function s(){s.__super__.constructor.apply(this,arguments),this.attachment=this.object,this.attachment.uploadProgressDelegate=this,this.attachmentPiece=this.options.piece}var a;return o(s,r),s.attachmentSelector="[data-trix-attachment]",s.prototype.createContentNodes=function(){return[]},s.prototype.createNodes=function(){var e,n,o,r,s,u,c,l,h,p,d;if(r=i({tagName:"figure",className:this.getClassName()}),this.attachment.hasContent())r.innerHTML=this.attachment.getContent();else for(p=this.createContentNodes(),u=0,l=p.length;l>u;u++)h=p[u],r.appendChild(h);r.appendChild(this.createCaptionElement()),n={trixAttachment:JSON.stringify(this.attachment),trixContentType:this.attachment.getContentType(),trixId:this.attachment.id},e=this.attachmentPiece.getAttributesForAttachment(),e.isEmpty()||(n.trixAttributes=JSON.stringify(e)),this.attachment.isPending()&&(this.progressElement=i({tagName:"progress",attributes:{"class":t.attachmentProgress,value:this.attachment.getUploadProgress(),max:100},data:{trixMutable:!0,trixStoreKey:["progressElement",this.attachment.id].join("/")}}),r.appendChild(this.progressElement),n.trixSerialize=!1),(s=this.getHref())?(o=i("a",{href:s,tabindex:-1}),o.appendChild(r)):o=r;for(c in n)d=n[c],o.dataset[c]=d;return o.setAttribute("contenteditable",!1),[a("left"),o,a("right")]},s.prototype.createCaptionElement=function(){var e,n,o,r,s,a,u;return o=i({tagName:"figcaption",className:t.attachmentCaption}),(e=this.attachmentPiece.getCaption())?(o.classList.add(t.attachmentCaption+"--edited"),o.textContent=e):(n=this.getCaptionConfig(),n.name&&(r=this.attachment.getFilename()),n.size&&(a=this.attachment.getFormattedFilesize()),r&&(s=i({tagName:"span",className:t.attachmentName,textContent:r}),o.appendChild(s)),a&&(r&&o.appendChild(document.createTextNode(" ")),u=i({tagName:"span",className:t.attachmentSize,textContent:a}),o.appendChild(u))),o},s.prototype.getClassName=function(){var e,n;return n=[t.attachment,t.attachment+"--"+this.attachment.getType()],(e=this.attachment.getExtension())&&n.push(t.attachment+"--"+e),n.join(" ")},s.prototype.getHref=function(){return n(this.attachment.getContent(),"a")?void 0:this.attachment.getHref()},s.prototype.getCaptionConfig=function(){var t,n,i;return i=this.attachment.getType(),t=e.copyObject(null!=(n=e.config.attachments[i])?n.caption:void 0),"file"===i&&(t.name=!0),t},s.prototype.findProgressElement=function(){var t;return null!=(t=this.findElement())?t.querySelector("progress"):void 0},a=function(t){return i({tagName:"span",textContent:e.ZERO_WIDTH_SPACE,data:{trixCursorTarget:t,trixSerialize:!1}})},s.prototype.attachmentDidChangeUploadProgress=function(){var t,e;return e=this.attachment.getUploadProgress(),null!=(t=this.findProgressElement())?t.value=e:void 0},s}(e.ObjectView),n=function(t,e){var n;return n=i("div"),n.innerHTML=null!=t?t:"",n.querySelector(e)}}.call(this),function(){var t,n=function(t,e){function n(){this.constructor=t}for(var o in e)i.call(e,o)&&(t[o]=e[o]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},i={}.hasOwnProperty;t=e.makeElement,e.PreviewableAttachmentView=function(i){function o(){o.__super__.constructor.apply(this,arguments),this.attachment.previewDelegate=this}return n(o,i),o.prototype.createContentNodes=function(){return this.image=t({tagName:"img",attributes:{src:""},data:{trixMutable:!0}}),this.refresh(this.image),[this.image]},o.prototype.createCaptionElement=function(){var t;return t=o.__super__.createCaptionElement.apply(this,arguments),t.textContent||t.setAttribute("data-trix-placeholder",e.config.lang.captionPlaceholder),t},o.prototype.refresh=function(t){var e;return null==t&&(t=null!=(e=this.findElement())?e.querySelector("img"):void 0),t?this.updateAttributesForImage(t):void 0},o.prototype.updateAttributesForImage=function(t){var e,n,i,o,r,s;return r=this.attachment.getURL(),n=this.attachment.getPreviewURL(),t.src=n||r,n===r?t.removeAttribute("data-trix-serialized-attributes"):(i=JSON.stringify({src:r}),t.setAttribute("data-trix-serialized-attributes",i)),s=this.attachment.getWidth(),e=this.attachment.getHeight(),null!=s&&(t.width=s),null!=e&&(t.height=e),o=["imageElement",this.attachment.id,t.src,t.width,t.height].join("/"),t.dataset.trixStoreKey=o},o.prototype.attachmentDidChangeAttributes=function(){return this.refresh(this.image),this.refresh()},o}(e.AttachmentView)}.call(this),function(){var t,n,i,o=function(t,e){function n(){this.constructor=t}for(var i in e)r.call(e,i)&&(t[i]=e[i]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},r={}.hasOwnProperty;i=e.makeElement,t=e.findInnerElement,n=e.getTextConfig,e.PieceView=function(r){function s(){var t;s.__super__.constructor.apply(this,arguments),this.piece=this.object,this.attributes=this.piece.getAttributes(),t=this.options,this.textConfig=t.textConfig,this.context=t.context,this.piece.attachment?this.attachment=this.piece.attachment:this.string=this.piece.toString()}var a;return o(s,r),s.prototype.createNodes=function(){var e,n,i,o,r,s;if(s=this.attachment?this.createAttachmentNodes():this.createStringNodes(),e=this.createElement()){for(i=t(e),n=0,o=s.length;o>n;n++)r=s[n],i.appendChild(r);s=[e]}return s},s.prototype.createAttachmentNodes=function(){var t,n;return t=this.attachment.isPreviewable()?e.PreviewableAttachmentView:e.AttachmentView,n=this.createChildView(t,this.piece.attachment,{piece:this.piece}),n.getNodes()},s.prototype.createStringNodes=function(){var t,e,n,o,r,s,a,u,c,l;if(null!=(u=this.textConfig)?u.plaintext:void 0)return[document.createTextNode(this.string)];for(a=[],c=this.string.split("\n"),n=e=0,o=c.length;o>e;n=++e)l=c[n],n>0&&(t=i("br"),a.push(t)),(r=l.length)&&(s=document.createTextNode(this.preserveSpaces(l)),a.push(s));return a},s.prototype.createElement=function(){var t,e,o,r,s,a,u,c,l;c={},a=this.attributes;for(r in a)if(l=a[r],(t=n(r))&&(t.tagName&&(s=i(t.tagName),o?(o.appendChild(s),o=s):e=o=s),t.styleProperty&&(c[t.styleProperty]=l),t.style)){u=t.style;for(r in u)l=u[r],c[r]=l}if(Object.keys(c).length){null==e&&(e=i("span"));for(r in c)l=c[r],e.style[r]=l}return e},s.prototype.createContainerElement=function(){var t,e,o,r,s;r=this.attributes;for(o in r)if(s=r[o],(e=n(o))&&e.groupTagName)return t={},t[o]=s,i(e.groupTagName,t)},a=e.NON_BREAKING_SPACE,s.prototype.preserveSpaces=function(t){return this.context.isLast&&(t=t.replace(/\ $/,a)),t=t.replace(/(\S)\ {3}(\S)/g,"$1 "+a+" $2").replace(/\ {2}/g,a+" ").replace(/\ {2}/g," "+a),(this.context.isFirst||this.context.followsWhitespace)&&(t=t.replace(/^\ /,a)),t},s}(e.ObjectView)}.call(this),function(){var t=function(t,e){function i(){this.constructor=t}for(var o in e)n.call(e,o)&&(t[o]=e[o]);return i.prototype=e.prototype,t.prototype=new i,t.__super__=e.prototype,t},n={}.hasOwnProperty;e.TextView=function(n){function i(){i.__super__.constructor.apply(this,arguments),this.text=this.object,this.textConfig=this.options.textConfig}var o;return t(i,n),i.prototype.createNodes=function(){var t,n,i,r,s,a,u,c,l,h;for(a=[],c=e.ObjectGroup.groupObjects(this.getPieces()),r=c.length-1,i=n=0,s=c.length;s>n;i=++n)u=c[i],t={},0===i&&(t.isFirst=!0),i===r&&(t.isLast=!0),o(l)&&(t.followsWhitespace=!0),h=this.findOrCreateCachedChildView(e.PieceView,u,{textConfig:this.textConfig,context:t}),a.push.apply(a,h.getNodes()),l=u;return a},i.prototype.getPieces=function(){var t,e,n,i,o;for(i=this.text.getPieces(),o=[],t=0,e=i.length;e>t;t++)n=i[t],n.hasAttribute("blockBreak")||o.push(n);return o},o=function(t){return/\s$/.test(null!=t?t.toString():void 0)},i}(e.ObjectView)}.call(this),function(){var t,n,i=function(t,e){function n(){this.constructor=t}for(var i in e)o.call(e,i)&&(t[i]=e[i]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},o={}.hasOwnProperty;n=e.makeElement,t=e.getBlockConfig,e.BlockView=function(o){function r(){r.__super__.constructor.apply(this,arguments),this.block=this.object,this.attributes=this.block.getAttributes()}return i(r,o),r.prototype.createNodes=function(){var i,o,r,s,a,u,c,l,h;if(i=document.createComment("block"),u=[i],this.block.isEmpty()?u.push(n("br")):(l=null!=(c=t(this.block.getLastAttribute()))?c.text:void 0,h=this.findOrCreateCachedChildView(e.TextView,this.block.text,{textConfig:l}),u.push.apply(u,h.getNodes()),this.shouldAddExtraNewlineElement()&&u.push(n("br"))),this.attributes.length)return u;for(o=n(e.config.blockAttributes["default"].tagName),r=0,s=u.length;s>r;r++)a=u[r],o.appendChild(a);return[o]},r.prototype.createContainerElement=function(e){var i,o;return i=this.attributes[e],o=t(i),n(o.tagName)},r.prototype.shouldAddExtraNewlineElement=function(){return/\n\n$/.test(this.block.toString())},r}(e.ObjectView)}.call(this),function(){var t,n,i=function(t,e){function n(){this.constructor=t}for(var i in e)o.call(e,i)&&(t[i]=e[i]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},o={}.hasOwnProperty;t=e.defer,n=e.makeElement,e.DocumentView=function(o){function r(){r.__super__.constructor.apply(this,arguments),this.element=this.options.element,this.elementStore=new e.ElementStore,this.setDocument(this.object)}var s,a,u;return i(r,o),r.render=function(t){var e,i;return e=n("div"),i=new this(t,{element:e}),i.render(),i.sync(),e},r.prototype.setDocument=function(t){return t.isEqualTo(this.document)?void 0:this.document=this.object=t},r.prototype.render=function(){var t,i,o,r,s,a,u;if(this.childViews=[],this.shadowElement=n("div"),!this.document.isEmpty()){for(s=e.ObjectGroup.groupObjects(this.document.getBlocks(),{asTree:!0}),a=[],t=0,i=s.length;i>t;t++)r=s[t],u=this.findOrCreateCachedChildView(e.BlockView,r),a.push(function(){var t,e,n,i;for(n=u.getNodes(),i=[],t=0,e=n.length;e>t;t++)o=n[t],i.push(this.shadowElement.appendChild(o));return i}.call(this));return a}},r.prototype.isSynced=function(){return s(this.shadowElement,this.element)},r.prototype.sync=function(){var t;for(t=this.createDocumentFragmentForSync();this.element.lastChild;)this.element.removeChild(this.element.lastChild);return this.element.appendChild(t),this.didSync()},r.prototype.didSync=function(){return this.elementStore.reset(a(this.element)),t(function(t){return function(){return t.garbageCollectCachedViews()}}(this))},r.prototype.createDocumentFragmentForSync=function(){var t,e,n,i,o,r,s,u,c,l;for(e=document.createDocumentFragment(),u=this.shadowElement.childNodes,n=0,o=u.length;o>n;n++)s=u[n],e.appendChild(s.cloneNode(!0));for(c=a(e),i=0,r=c.length;r>i;i++)t=c[i],(l=this.elementStore.remove(t))&&t.parentNode.replaceChild(l,t);return e},a=function(t){return t.querySelectorAll("[data-trix-store-key]")},s=function(t,e){return u(t.innerHTML)===u(e.innerHTML)},u=function(t){return t.replace(/&nbsp;/g," ")},r}(e.ObjectView)}.call(this),function(){var t,n,i,o,r=function(t,e){return function(){return t.apply(e,arguments)}},s=function(t,e){function n(){this.constructor=t}for(var i in e)a.call(e,i)&&(t[i]=e[i]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},a={}.hasOwnProperty;i=e.handleEvent,o=e.innerElementIsActive,n=e.defer,t=e.AttachmentView.attachmentSelector,e.CompositionController=function(a){function u(n,o){this.element=n,this.composition=o,this.didClickAttachment=r(this.didClickAttachment,this),this.didBlur=r(this.didBlur,this),this.didFocus=r(this.didFocus,this),this.documentView=new e.DocumentView(this.composition.document,{element:this.element}),i("focus",{onElement:this.element,withCallback:this.didFocus}),i("blur",{onElement:this.element,withCallback:this.didBlur}),i("click",{onElement:this.element,matchingSelector:"a[contenteditable=false]",preventDefault:!0}),i("mousedown",{onElement:this.element,matchingSelector:t,withCallback:this.didClickAttachment}),i("click",{onElement:this.element,matchingSelector:"a"+t,preventDefault:!0})}return s(u,a),u.prototype.didFocus=function(){var t,e,n;return t=function(t){return function(){var e;return t.focused?void 0:(t.focused=!0,null!=(e=t.delegate)&&"function"==typeof e.compositionControllerDidFocus?e.compositionControllerDidFocus():void 0)}}(this),null!=(e=null!=(n=this.blurPromise)?n.then(t):void 0)?e:t()},u.prototype.didBlur=function(){return this.blurPromise=new Promise(function(t){return function(e){return n(function(){var n;return o(t.element)||(t.focused=null,null!=(n=t.delegate)&&"function"==typeof n.compositionControllerDidBlur&&n.compositionControllerDidBlur()),t.blurPromise=null,e()})}}(this))},u.prototype.didClickAttachment=function(t,e){var n,i;return n=this.findAttachmentForElement(e),null!=(i=this.delegate)&&"function"==typeof i.compositionControllerDidSelectAttachment?i.compositionControllerDidSelectAttachment(n):void 0},u.prototype.getSerializableElement=function(){return this.isEditingAttachment()?this.documentView.shadowElement:this.element},u.prototype.render=function(){var t,e,n;return this.revision!==this.composition.revision&&(this.documentView.setDocument(this.composition.document),this.documentView.render(),this.revision=this.composition.revision),this.canSyncDocumentView()&&!this.documentView.isSynced()&&(null!=(t=this.delegate)&&"function"==typeof t.compositionControllerWillSyncDocumentView&&t.compositionControllerWillSyncDocumentView(),this.documentView.sync(),null!=(e=this.delegate)&&"function"==typeof e.compositionControllerDidSyncDocumentView&&e.compositionControllerDidSyncDocumentView()),null!=(n=this.delegate)&&"function"==typeof n.compositionControllerDidRender?n.compositionControllerDidRender():void 0},u.prototype.rerenderViewForObject=function(t){return this.invalidateViewForObject(t),this.render()},u.prototype.invalidateViewForObject=function(t){return this.documentView.invalidateViewForObject(t)},u.prototype.isViewCachingEnabled=function(){return this.documentView.isViewCachingEnabled()},u.prototype.enableViewCaching=function(){return this.documentView.enableViewCaching()},u.prototype.disableViewCaching=function(){return this.documentView.disableViewCaching()},u.prototype.refreshViewCache=function(){return this.documentView.garbageCollectCachedViews()},u.prototype.isEditingAttachment=function(){return null!=this.attachmentEditor},u.prototype.installAttachmentEditorForAttachment=function(t){var n,i,o;if((null!=(o=this.attachmentEditor)?o.attachment:void 0)!==t&&(i=this.documentView.findElementForObject(t)))return this.uninstallAttachmentEditor(),n=this.composition.document.getAttachmentPieceForAttachment(t),this.attachmentEditor=new e.AttachmentEditorController(n,i,this.element),this.attachmentEditor.delegate=this},u.prototype.uninstallAttachmentEditor=function(){var t;return null!=(t=this.attachmentEditor)?t.uninstall():void 0},u.prototype.editAttachmentCaption=function(){var t;return null!=(t=this.attachmentEditor)?t.editCaption():void 0},u.prototype.didUninstallAttachmentEditor=function(){return this.attachmentEditor=null,this.render()},u.prototype.attachmentEditorDidRequestUpdatingAttributesForAttachment=function(t,e){var n;return null!=(n=this.delegate)&&"function"==typeof n.compositionControllerWillUpdateAttachment&&n.compositionControllerWillUpdateAttachment(e),this.composition.updateAttributesForAttachment(t,e)},u.prototype.attachmentEditorDidRequestRemovingAttributeForAttachment=function(t,e){var n;return null!=(n=this.delegate)&&"function"==typeof n.compositionControllerWillUpdateAttachment&&n.compositionControllerWillUpdateAttachment(e),this.composition.removeAttributeForAttachment(t,e)},u.prototype.attachmentEditorDidRequestRemovalOfAttachment=function(t){var e;return null!=(e=this.delegate)&&"function"==typeof e.compositionControllerDidRequestRemovalOfAttachment?e.compositionControllerDidRequestRemovalOfAttachment(t):void 0},u.prototype.attachmentEditorDidRequestDeselectingAttachment=function(t){var e;return null!=(e=this.delegate)&&"function"==typeof e.compositionControllerDidRequestDeselectingAttachment?e.compositionControllerDidRequestDeselectingAttachment(t):void 0},u.prototype.canSyncDocumentView=function(){return!this.isEditingAttachment()},u.prototype.findAttachmentForElement=function(t){return this.composition.document.getAttachmentById(parseInt(t.dataset.trixId,10))},u}(e.BasicObject)}.call(this),function(){var t,n,i,o=function(t,e){return function(){return t.apply(e,arguments)}},r=function(t,e){function n(){this.constructor=t}for(var i in e)s.call(e,i)&&(t[i]=e[i]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},s={}.hasOwnProperty;n=e.handleEvent,i=e.triggerEvent,t=e.findClosestElementFromNode,e.ToolbarController=function(e){function s(t){this.element=t,this.didKeyDownDialogInput=o(this.didKeyDownDialogInput,this),this.didClickDialogButton=o(this.didClickDialogButton,this),this.didClickAttributeButton=o(this.didClickAttributeButton,this),this.didClickActionButton=o(this.didClickActionButton,this),this.attributes={},this.actions={},this.resetDialogInputs(),n("mousedown",{onElement:this.element,matchingSelector:a,withCallback:this.didClickActionButton}),n("mousedown",{onElement:this.element,matchingSelector:c,withCallback:this.didClickAttributeButton}),n("click",{onElement:this.element,matchingSelector:y,preventDefault:!0}),n("click",{onElement:this.element,matchingSelector:l,withCallback:this.didClickDialogButton}),n("keydown",{onElement:this.element,matchingSelector:h,withCallback:this.didKeyDownDialogInput})}var a,u,c,l,h,p,d,f,g,m,y;return r(s,e),c="[data-trix-attribute]",a="[data-trix-action]",y=c+", "+a,p="[data-trix-dialog]",u=p+"[data-trix-active]",l=p+" [data-trix-method]",h=p+" [data-trix-input]",s.prototype.didClickActionButton=function(t,e){var n,i,o;return null!=(i=this.delegate)&&i.toolbarDidClickButton(),t.preventDefault(),n=d(e),this.getDialog(n)?this.toggleDialog(n):null!=(o=this.delegate)?o.toolbarDidInvokeAction(n):void 0},s.prototype.didClickAttributeButton=function(t,e){var n,i,o;return null!=(i=this.delegate)&&i.toolbarDidClickButton(),t.preventDefault(),n=f(e),this.getDialog(n)?this.toggleDialog(n):null!=(o=this.delegate)&&o.toolbarDidToggleAttribute(n),this.refreshAttributeButtons()},s.prototype.didClickDialogButton=function(e,n){var i,o;return i=t(n,{matchingSelector:p}),o=n.getAttribute("data-trix-method"),this[o].call(this,i)},s.prototype.didKeyDownDialogInput=function(t,e){var n,i;return 13===t.keyCode&&(t.preventDefault(),n=e.getAttribute("name"),i=this.getDialog(n),this.setAttribute(i)),27===t.keyCode?(t.preventDefault(),this.hideDialog()):void 0},s.prototype.updateActions=function(t){return this.actions=t,this.refreshActionButtons()},s.prototype.refreshActionButtons=function(){return this.eachActionButton(function(t){return function(e,n){return e.disabled=t.actions[n]===!1}}(this))},s.prototype.eachActionButton=function(t){var e,n,i,o,r;for(o=this.element.querySelectorAll(a),r=[],n=0,i=o.length;i>n;n++)e=o[n],r.push(t(e,d(e)));return r},s.prototype.updateAttributes=function(t){return this.attributes=t,this.refreshAttributeButtons()},s.prototype.refreshAttributeButtons=function(){return this.eachAttributeButton(function(t){return function(e,n){return e.disabled=t.attributes[n]===!1,t.attributes[n]||t.dialogIsVisible(n)?(e.setAttribute("data-trix-active",""),e.classList.add("trix-active")):(e.removeAttribute("data-trix-active"),e.classList.remove("trix-active"))}}(this))},s.prototype.eachAttributeButton=function(t){var e,n,i,o,r;for(o=this.element.querySelectorAll(c),r=[],n=0,i=o.length;i>n;n++)e=o[n],r.push(t(e,f(e)));return r},s.prototype.applyKeyboardCommand=function(t){var e,n,o,r,s,a,u;for(s=JSON.stringify(t.sort()),u=this.element.querySelectorAll("[data-trix-key]"),r=0,a=u.length;a>r;r++)if(e=u[r],o=e.getAttribute("data-trix-key").split("+"),n=JSON.stringify(o.sort()),n===s)return i("mousedown",{onElement:e}),!0;return!1},s.prototype.dialogIsVisible=function(t){var e;return(e=this.getDialog(t))?e.hasAttribute("data-trix-active"):void 0},s.prototype.toggleDialog=function(t){return this.dialogIsVisible(t)?this.hideDialog():this.showDialog(t)},s.prototype.showDialog=function(t){var e,n,i,o,r,s,a,u,c,l;for(this.hideDialog(),null!=(a=this.delegate)&&a.toolbarWillShowDialog(),i=this.getDialog(t),i.setAttribute("data-trix-active",""),i.classList.add("trix-active"),u=i.querySelectorAll("input[disabled]"),o=0,s=u.length;s>o;o++)n=u[o],n.removeAttribute("disabled");return(e=f(i))&&(r=m(i,t))&&(r.value=null!=(c=this.attributes[e])?c:"",r.select()),null!=(l=this.delegate)?l.toolbarDidShowDialog(t):void 0},s.prototype.setAttribute=function(t){var e,n,i;return e=f(t),n=m(t,e),n.willValidate&&!n.checkValidity()?(n.setAttribute("data-trix-validate",""),n.classList.add("trix-validate"),n.focus()):(null!=(i=this.delegate)&&i.toolbarDidUpdateAttribute(e,n.value),this.hideDialog())},s.prototype.removeAttribute=function(t){var e,n;return e=f(t),null!=(n=this.delegate)&&n.toolbarDidRemoveAttribute(e),this.hideDialog()},s.prototype.hideDialog=function(){var t,e;return(t=this.element.querySelector(u))?(t.removeAttribute("data-trix-active"),t.classList.remove("trix-active"),this.resetDialogInputs(),null!=(e=this.delegate)?e.toolbarDidHideDialog(g(t)):void 0):void 0},s.prototype.resetDialogInputs=function(){var t,e,n,i,o;for(i=this.element.querySelectorAll(h),o=[],t=0,n=i.length;n>t;t++)e=i[t],e.setAttribute("disabled","disabled"),e.removeAttribute("data-trix-validate"),o.push(e.classList.remove("trix-validate"));return o},s.prototype.getDialog=function(t){return this.element.querySelector("[data-trix-dialog="+t+"]")},m=function(t,e){return null==e&&(e=f(t)),t.querySelector("[data-trix-input][name='"+e+"']")},d=function(t){return t.getAttribute("data-trix-action")},f=function(t){var e;return null!=(e=t.getAttribute("data-trix-attribute"))?e:t.getAttribute("data-trix-dialog-attribute")},g=function(t){return t.getAttribute("data-trix-dialog")},s}(e.BasicObject)}.call(this),function(){var t=function(t,e){function i(){this.constructor=t}for(var o in e)n.call(e,o)&&(t[o]=e[o]);return i.prototype=e.prototype,t.prototype=new i,t.__super__=e.prototype,t},n={}.hasOwnProperty;e.ImagePreloadOperation=function(e){function n(t){this.url=t}return t(n,e),n.prototype.perform=function(t){var e;return e=new Image,e.onload=function(n){return function(){return e.width=n.width=e.naturalWidth,e.height=n.height=e.naturalHeight,t(!0,e)}}(this),e.onerror=function(){return t(!1)},e.src=this.url},n}(e.Operation)}.call(this),function(){var t=function(t,e){return function(){return t.apply(e,arguments)}},n=function(t,e){function n(){this.constructor=t}for(var o in e)i.call(e,o)&&(t[o]=e[o]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},i={}.hasOwnProperty;e.Attachment=function(i){function o(n){null==n&&(n={}),this.releaseFile=t(this.releaseFile,this),o.__super__.constructor.apply(this,arguments),this.attributes=e.Hash.box(n),this.didChangeAttributes()}return n(o,i),o.previewablePattern=/^image(\/(gif|png|jpe?g)|$)/,o.attachmentForFile=function(t){var e,n;return n=this.attributesForFile(t),e=new this(n),e.setFile(t),e},o.attributesForFile=function(t){return new e.Hash({filename:t.name,filesize:t.size,contentType:t.type})},o.fromJSON=function(t){return new this(t)},o.prototype.getAttribute=function(t){return this.attributes.get(t)},o.prototype.hasAttribute=function(t){return this.attributes.has(t)},o.prototype.getAttributes=function(){return this.attributes.toObject()},o.prototype.setAttributes=function(t){var e,n,i;return null==t&&(t={}),e=this.attributes.merge(t),this.attributes.isEqualTo(e)?void 0:(this.attributes=e,this.didChangeAttributes(),null!=(n=this.previewDelegate)&&"function"==typeof n.attachmentDidChangeAttributes&&n.attachmentDidChangeAttributes(this),null!=(i=this.delegate)&&"function"==typeof i.attachmentDidChangeAttributes?i.attachmentDidChangeAttributes(this):void 0)},o.prototype.didChangeAttributes=function(){return this.isPreviewable()?this.preloadURL():void 0},o.prototype.isPending=function(){return null!=this.file&&!(this.getURL()||this.getHref())},o.prototype.isPreviewable=function(){return this.attributes.has("previewable")?this.attributes.get("previewable"):this.constructor.previewablePattern.test(this.getContentType())},o.prototype.getType=function(){return this.hasContent()?"content":this.isPreviewable()?"preview":"file"},o.prototype.getURL=function(){return this.attributes.get("url")},o.prototype.getHref=function(){return this.attributes.get("href")},o.prototype.getFilename=function(){var t;return null!=(t=this.attributes.get("filename"))?t:""},o.prototype.getFilesize=function(){return this.attributes.get("filesize")},o.prototype.getFormattedFilesize=function(){var t;return t=this.attributes.get("filesize"),"number"==typeof t?e.config.fileSize.formatter(t):""},o.prototype.getExtension=function(){var t;return null!=(t=this.getFilename().match(/\.(\w+)$/))?t[1].toLowerCase():void 0},o.prototype.getContentType=function(){return this.attributes.get("contentType")},o.prototype.hasContent=function(){return this.attributes.has("content")
-},o.prototype.getContent=function(){return this.attributes.get("content")},o.prototype.getWidth=function(){return this.attributes.get("width")},o.prototype.getHeight=function(){return this.attributes.get("height")},o.prototype.getFile=function(){return this.file},o.prototype.setFile=function(t){return this.file=t,this.isPreviewable()?this.preloadFile():void 0},o.prototype.releaseFile=function(){return this.releasePreloadedFile(),this.file=null},o.prototype.getUploadProgress=function(){var t;return null!=(t=this.uploadProgress)?t:0},o.prototype.setUploadProgress=function(t){var e;return this.uploadProgress!==t?(this.uploadProgress=t,null!=(e=this.uploadProgressDelegate)&&"function"==typeof e.attachmentDidChangeUploadProgress?e.attachmentDidChangeUploadProgress(this):void 0):void 0},o.prototype.toJSON=function(){return this.getAttributes()},o.prototype.getCacheKey=function(){return[o.__super__.getCacheKey.apply(this,arguments),this.attributes.getCacheKey(),this.getPreviewURL()].join("/")},o.prototype.getPreviewURL=function(){return this.previewURL||this.preloadingURL},o.prototype.setPreviewURL=function(t){var e,n;return t!==this.getPreviewURL()?(this.previewURL=t,null!=(e=this.previewDelegate)&&"function"==typeof e.attachmentDidChangeAttributes&&e.attachmentDidChangeAttributes(this),null!=(n=this.delegate)&&"function"==typeof n.attachmentDidChangePreviewURL?n.attachmentDidChangePreviewURL(this):void 0):void 0},o.prototype.preloadURL=function(){return this.preload(this.getURL(),this.releaseFile)},o.prototype.preloadFile=function(){return this.file?(this.fileObjectURL=URL.createObjectURL(this.file),this.preload(this.fileObjectURL)):void 0},o.prototype.releasePreloadedFile=function(){return this.fileObjectURL?(URL.revokeObjectURL(this.fileObjectURL),this.fileObjectURL=null):void 0},o.prototype.preload=function(t,n){var i;return t&&t!==this.getPreviewURL()?(this.preloadingURL=t,i=new e.ImagePreloadOperation(t),i.then(function(e){return function(i){var o,r;return r=i.width,o=i.height,e.setAttributes({width:r,height:o}),e.preloadingURL=null,e.setPreviewURL(t),"function"==typeof n?n():void 0}}(this))):void 0},o}(e.Object)}.call(this),function(){var t=function(t,e){function i(){this.constructor=t}for(var o in e)n.call(e,o)&&(t[o]=e[o]);return i.prototype=e.prototype,t.prototype=new i,t.__super__=e.prototype,t},n={}.hasOwnProperty;e.Piece=function(n){function i(t,n){null==n&&(n={}),i.__super__.constructor.apply(this,arguments),this.attributes=e.Hash.box(n)}return t(i,n),i.types={},i.registerType=function(t,e){return e.type=t,this.types[t]=e},i.fromJSON=function(t){var e;return(e=this.types[t.type])?e.fromJSON(t):void 0},i.prototype.copyWithAttributes=function(t){return new this.constructor(this.getValue(),t)},i.prototype.copyWithAdditionalAttributes=function(t){return this.copyWithAttributes(this.attributes.merge(t))},i.prototype.copyWithoutAttribute=function(t){return this.copyWithAttributes(this.attributes.remove(t))},i.prototype.copy=function(){return this.copyWithAttributes(this.attributes)},i.prototype.getAttribute=function(t){return this.attributes.get(t)},i.prototype.getAttributesHash=function(){return this.attributes},i.prototype.getAttributes=function(){return this.attributes.toObject()},i.prototype.getCommonAttributes=function(){var t,e,n;return(n=pieceList.getPieceAtIndex(0))?(t=n.attributes,e=t.getKeys(),pieceList.eachPiece(function(n){return e=t.getKeysCommonToHash(n.attributes),t=t.slice(e)}),t.toObject()):{}},i.prototype.hasAttribute=function(t){return this.attributes.has(t)},i.prototype.hasSameStringValueAsPiece=function(t){return null!=t&&this.toString()===t.toString()},i.prototype.hasSameAttributesAsPiece=function(t){return null!=t&&(this.attributes===t.attributes||this.attributes.isEqualTo(t.attributes))},i.prototype.isBlockBreak=function(){return!1},i.prototype.isEqualTo=function(t){return i.__super__.isEqualTo.apply(this,arguments)||this.hasSameConstructorAs(t)&&this.hasSameStringValueAsPiece(t)&&this.hasSameAttributesAsPiece(t)},i.prototype.isEmpty=function(){return 0===this.length},i.prototype.isSerializable=function(){return!0},i.prototype.toJSON=function(){return{type:this.constructor.type,attributes:this.getAttributes()}},i.prototype.contentsForInspection=function(){return{type:this.constructor.type,attributes:this.attributes.inspect()}},i.prototype.canBeGrouped=function(){return this.hasAttribute("href")},i.prototype.canBeGroupedWith=function(t){return this.getAttribute("href")===t.getAttribute("href")},i.prototype.getLength=function(){return this.length},i.prototype.canBeConsolidatedWith=function(){return!1},i}(e.Object)}.call(this),function(){var t=function(t,e){function i(){this.constructor=t}for(var o in e)n.call(e,o)&&(t[o]=e[o]);return i.prototype=e.prototype,t.prototype=new i,t.__super__=e.prototype,t},n={}.hasOwnProperty;e.Piece.registerType("attachment",e.AttachmentPiece=function(n){function i(t){this.attachment=t,i.__super__.constructor.apply(this,arguments),this.length=1,this.ensureAttachmentExclusivelyHasAttribute("href")}return t(i,n),i.fromJSON=function(t){return new this(e.Attachment.fromJSON(t.attachment),t.attributes)},i.prototype.ensureAttachmentExclusivelyHasAttribute=function(t){return this.hasAttribute(t)&&this.attachment.hasAttribute(t)?this.attributes=this.attributes.remove(t):void 0},i.prototype.getValue=function(){return this.attachment},i.prototype.isSerializable=function(){return!this.attachment.isPending()},i.prototype.getCaption=function(){var t;return null!=(t=this.attributes.get("caption"))?t:""},i.prototype.getAttributesForAttachment=function(){return this.attributes.slice(["caption"])},i.prototype.canBeGrouped=function(){return i.__super__.canBeGrouped.apply(this,arguments)&&!this.attachment.hasAttribute("href")},i.prototype.isEqualTo=function(t){var e;return i.__super__.isEqualTo.apply(this,arguments)&&this.attachment.id===(null!=t&&null!=(e=t.attachment)?e.id:void 0)},i.prototype.toString=function(){return e.OBJECT_REPLACEMENT_CHARACTER},i.prototype.toJSON=function(){var t;return t=i.__super__.toJSON.apply(this,arguments),t.attachment=this.attachment,t},i.prototype.getCacheKey=function(){return[i.__super__.getCacheKey.apply(this,arguments),this.attachment.getCacheKey()].join("/")},i.prototype.toConsole=function(){return JSON.stringify(this.toString())},i}(e.Piece))}.call(this),function(){var t,n=function(t,e){function n(){this.constructor=t}for(var o in e)i.call(e,o)&&(t[o]=e[o]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},i={}.hasOwnProperty;t=e.normalizeNewlines,e.Piece.registerType("string",e.StringPiece=function(e){function i(e){i.__super__.constructor.apply(this,arguments),this.string=t(e),this.length=this.string.length}return n(i,e),i.fromJSON=function(t){return new this(t.string,t.attributes)},i.prototype.getValue=function(){return this.string},i.prototype.toString=function(){return this.string.toString()},i.prototype.isBlockBreak=function(){return"\n"===this.toString()&&this.getAttribute("blockBreak")===!0},i.prototype.toJSON=function(){var t;return t=i.__super__.toJSON.apply(this,arguments),t.string=this.string,t},i.prototype.canBeConsolidatedWith=function(t){return null!=t&&this.hasSameConstructorAs(t)&&this.hasSameAttributesAsPiece(t)},i.prototype.consolidateWith=function(t){return new this.constructor(this.toString()+t.toString(),this.attributes)},i.prototype.splitAtOffset=function(t){var e,n;return 0===t?(e=null,n=this):t===this.length?(e=this,n=null):(e=new this.constructor(this.string.slice(0,t),this.attributes),n=new this.constructor(this.string.slice(t),this.attributes)),[e,n]},i.prototype.toConsole=function(){var t;return t=this.string,t.length>15&&(t=t.slice(0,14)+"\u2026"),JSON.stringify(t.toString())},i}(e.Piece))}.call(this),function(){var t,n=function(t,e){function n(){this.constructor=t}for(var o in e)i.call(e,o)&&(t[o]=e[o]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},i={}.hasOwnProperty,o=[].slice;t=e.spliceArray,e.SplittableList=function(e){function i(t){null==t&&(t=[]),i.__super__.constructor.apply(this,arguments),this.objects=t.slice(0),this.length=this.objects.length}var r,s,a;return n(i,e),i.box=function(t){return t instanceof this?t:new this(t)},i.prototype.indexOf=function(t){return this.objects.indexOf(t)},i.prototype.splice=function(){var e;return e=1<=arguments.length?o.call(arguments,0):[],new this.constructor(t.apply(null,[this.objects].concat(o.call(e))))},i.prototype.eachObject=function(t){var e,n,i,o,r,s;for(r=this.objects,s=[],n=e=0,i=r.length;i>e;n=++e)o=r[n],s.push(t(o,n));return s},i.prototype.insertObjectAtIndex=function(t,e){return this.splice(e,0,t)},i.prototype.insertSplittableListAtIndex=function(t,e){return this.splice.apply(this,[e,0].concat(o.call(t.objects)))},i.prototype.insertSplittableListAtPosition=function(t,e){var n,i,o;return o=this.splitObjectAtPosition(e),i=o[0],n=o[1],new this.constructor(i).insertSplittableListAtIndex(t,n)},i.prototype.editObjectAtIndex=function(t,e){return this.replaceObjectAtIndex(e(this.objects[t]),t)},i.prototype.replaceObjectAtIndex=function(t,e){return this.splice(e,1,t)},i.prototype.removeObjectAtIndex=function(t){return this.splice(t,1)},i.prototype.getObjectAtIndex=function(t){return this.objects[t]},i.prototype.getSplittableListInRange=function(t){var e,n,i,o;return i=this.splitObjectsAtRange(t),n=i[0],e=i[1],o=i[2],new this.constructor(n.slice(e,o+1))},i.prototype.selectSplittableList=function(t){var e,n;return n=function(){var n,i,o,r;for(o=this.objects,r=[],n=0,i=o.length;i>n;n++)e=o[n],t(e)&&r.push(e);return r}.call(this),new this.constructor(n)},i.prototype.removeObjectsInRange=function(t){var e,n,i,o;return i=this.splitObjectsAtRange(t),n=i[0],e=i[1],o=i[2],new this.constructor(n).splice(e,o-e+1)},i.prototype.transformObjectsInRange=function(t,e){var n,i,o,r,s,a,u;return s=this.splitObjectsAtRange(t),r=s[0],i=s[1],a=s[2],u=function(){var t,s,u;for(u=[],n=t=0,s=r.length;s>t;n=++t)o=r[n],u.push(n>=i&&a>=n?e(o):o);return u}(),new this.constructor(u)},i.prototype.splitObjectsAtRange=function(t){var e,n,i,o,s,u;return o=this.splitObjectAtPosition(a(t)),n=o[0],e=o[1],i=o[2],s=new this.constructor(n).splitObjectAtPosition(r(t)+i),n=s[0],u=s[1],[n,e,u-1]},i.prototype.getObjectAtPosition=function(t){var e,n,i;return i=this.findIndexAndOffsetAtPosition(t),e=i.index,n=i.offset,this.objects[e]},i.prototype.splitObjectAtPosition=function(t){var e,n,i,o,r,s,a,u,c,l;return s=this.findIndexAndOffsetAtPosition(t),e=s.index,r=s.offset,o=this.objects.slice(0),null!=e?0===r?(c=e,l=0):(i=this.getObjectAtIndex(e),a=i.splitAtOffset(r),n=a[0],u=a[1],o.splice(e,1,n,u),c=e+1,l=n.getLength()-r):(c=o.length,l=0),[o,c,l]},i.prototype.consolidate=function(){var t,e,n,i,o,r;for(i=[],o=this.objects[0],r=this.objects.slice(1),t=0,e=r.length;e>t;t++)n=r[t],("function"==typeof o.canBeConsolidatedWith?o.canBeConsolidatedWith(n):void 0)?o=o.consolidateWith(n):(i.push(o),o=n);return null!=o&&i.push(o),new this.constructor(i)},i.prototype.consolidateFromIndexToIndex=function(t,e){var n,i,r;return i=this.objects.slice(0),r=i.slice(t,e+1),n=new this.constructor(r).consolidate().toArray(),this.splice.apply(this,[t,r.length].concat(o.call(n)))},i.prototype.findIndexAndOffsetAtPosition=function(t){var e,n,i,o,r,s,a;for(e=0,a=this.objects,i=n=0,o=a.length;o>n;i=++n){if(s=a[i],r=e+s.getLength(),t>=e&&r>t)return{index:i,offset:t-e};e=r}return{index:null,offset:null}},i.prototype.findPositionAtIndexAndOffset=function(t,e){var n,i,o,r,s,a;for(s=0,a=this.objects,n=i=0,o=a.length;o>i;n=++i)if(r=a[n],t>n)s+=r.getLength();else if(n===t){s+=e;break}return s},i.prototype.getEndPosition=function(){var t,e;return null!=this.endPosition?this.endPosition:this.endPosition=function(){var n,i,o;for(e=0,o=this.objects,n=0,i=o.length;i>n;n++)t=o[n],e+=t.getLength();return e}.call(this)},i.prototype.toString=function(){return this.objects.join("")},i.prototype.toArray=function(){return this.objects.slice(0)},i.prototype.toJSON=function(){return this.toArray()},i.prototype.isEqualTo=function(t){return i.__super__.isEqualTo.apply(this,arguments)||s(this.objects,null!=t?t.objects:void 0)},s=function(t,e){var n,i,o,r,s;if(null==e&&(e=[]),t.length!==e.length)return!1;for(s=!0,i=n=0,o=t.length;o>n;i=++n)r=t[i],s&&!r.isEqualTo(e[i])&&(s=!1);return s},i.prototype.contentsForInspection=function(){var t;return{objects:"["+function(){var e,n,i,o;for(i=this.objects,o=[],e=0,n=i.length;n>e;e++)t=i[e],o.push(t.inspect());return o}.call(this).join(", ")+"]"}},a=function(t){return t[0]},r=function(t){return t[1]},i}(e.Object)}.call(this),function(){var t=function(t,e){function i(){this.constructor=t}for(var o in e)n.call(e,o)&&(t[o]=e[o]);return i.prototype=e.prototype,t.prototype=new i,t.__super__=e.prototype,t},n={}.hasOwnProperty;e.Text=function(n){function i(t){var n;null==t&&(t=[]),i.__super__.constructor.apply(this,arguments),this.pieceList=new e.SplittableList(function(){var e,i,o;for(o=[],e=0,i=t.length;i>e;e++)n=t[e],n.isEmpty()||o.push(n);return o}())}return t(i,n),i.textForAttachmentWithAttributes=function(t,n){var i;return i=new e.AttachmentPiece(t,n),new this([i])},i.textForStringWithAttributes=function(t,n){var i;return i=new e.StringPiece(t,n),new this([i])},i.fromJSON=function(t){var n,i;return i=function(){var i,o,r;for(r=[],i=0,o=t.length;o>i;i++)n=t[i],r.push(e.Piece.fromJSON(n));return r}(),new this(i)},i.prototype.copy=function(){return this.copyWithPieceList(this.pieceList)},i.prototype.copyWithPieceList=function(t){return new this.constructor(t.consolidate().toArray())},i.prototype.copyUsingObjectMap=function(t){var e,n;return n=function(){var n,i,o,r,s;for(o=this.getPieces(),s=[],n=0,i=o.length;i>n;n++)e=o[n],s.push(null!=(r=t.find(e))?r:e);return s}.call(this),new this.constructor(n)},i.prototype.appendText=function(t){return this.insertTextAtPosition(t,this.getLength())},i.prototype.insertTextAtPosition=function(t,e){return this.copyWithPieceList(this.pieceList.insertSplittableListAtPosition(t.pieceList,e))},i.prototype.removeTextAtRange=function(t){return this.copyWithPieceList(this.pieceList.removeObjectsInRange(t))},i.prototype.replaceTextAtRange=function(t,e){return this.removeTextAtRange(e).insertTextAtPosition(t,e[0])},i.prototype.moveTextFromRangeToPosition=function(t,e){var n,i;if(!(t[0]<=e&&e<=t[1]))return i=this.getTextAtRange(t),n=i.getLength(),t[0]<e&&(e-=n),this.removeTextAtRange(t).insertTextAtPosition(i,e)},i.prototype.addAttributeAtRange=function(t,e,n){var i;return i={},i[t]=e,this.addAttributesAtRange(i,n)},i.prototype.addAttributesAtRange=function(t,e){return this.copyWithPieceList(this.pieceList.transformObjectsInRange(e,function(e){return e.copyWithAdditionalAttributes(t)}))},i.prototype.removeAttributeAtRange=function(t,e){return this.copyWithPieceList(this.pieceList.transformObjectsInRange(e,function(e){return e.copyWithoutAttribute(t)}))},i.prototype.setAttributesAtRange=function(t,e){return this.copyWithPieceList(this.pieceList.transformObjectsInRange(e,function(e){return e.copyWithAttributes(t)}))},i.prototype.getAttributesAtPosition=function(t){var e,n;return null!=(e=null!=(n=this.pieceList.getObjectAtPosition(t))?n.getAttributes():void 0)?e:{}},i.prototype.getCommonAttributes=function(){var t,n;return t=function(){var t,e,i,o;for(i=this.pieceList.toArray(),o=[],t=0,e=i.length;e>t;t++)n=i[t],o.push(n.getAttributes());return o}.call(this),e.Hash.fromCommonAttributesOfObjects(t).toObject()},i.prototype.getCommonAttributesAtRange=function(t){var e;return null!=(e=this.getTextAtRange(t).getCommonAttributes())?e:{}},i.prototype.getExpandedRangeForAttributeAtOffset=function(t,e){var n,i,o;for(n=o=e,i=this.getLength();n>0&&this.getCommonAttributesAtRange([n-1,o])[t];)n--;for(;i>o&&this.getCommonAttributesAtRange([e,o+1])[t];)o++;return[n,o]},i.prototype.getTextAtRange=function(t){return this.copyWithPieceList(this.pieceList.getSplittableListInRange(t))},i.prototype.getStringAtRange=function(t){return this.pieceList.getSplittableListInRange(t).toString()},i.prototype.getStringAtPosition=function(t){return this.getStringAtRange([t,t+1])},i.prototype.startsWithString=function(t){return this.getStringAtRange([0,t.length])===t},i.prototype.endsWithString=function(t){var e;return e=this.getLength(),this.getStringAtRange([e-t.length,e])===t},i.prototype.getAttachmentPieces=function(){var t,e,n,i,o;for(i=this.pieceList.toArray(),o=[],t=0,e=i.length;e>t;t++)n=i[t],null!=n.attachment&&o.push(n);return o},i.prototype.getAttachments=function(){var t,e,n,i,o;for(i=this.getAttachmentPieces(),o=[],t=0,e=i.length;e>t;t++)n=i[t],o.push(n.attachment);return o},i.prototype.getAttachmentAndPositionById=function(t){var e,n,i,o,r,s;for(o=0,r=this.pieceList.toArray(),e=0,n=r.length;n>e;e++){if(i=r[e],(null!=(s=i.attachment)?s.id:void 0)===t)return{attachment:i.attachment,position:o};o+=i.length}return{attachment:null,position:null}},i.prototype.getAttachmentById=function(t){var e,n,i;return i=this.getAttachmentAndPositionById(t),e=i.attachment,n=i.position,e},i.prototype.getRangeOfAttachment=function(t){var e,n;return n=this.getAttachmentAndPositionById(t.id),t=n.attachment,e=n.position,null!=t?[e,e+1]:void 0},i.prototype.updateAttributesForAttachment=function(t,e){var n;return(n=this.getRangeOfAttachment(e))?this.addAttributesAtRange(t,n):this},i.prototype.getLength=function(){return this.pieceList.getEndPosition()},i.prototype.isEmpty=function(){return 0===this.getLength()},i.prototype.isEqualTo=function(t){var e;return i.__super__.isEqualTo.apply(this,arguments)||(null!=t&&null!=(e=t.pieceList)?e.isEqualTo(this.pieceList):void 0)},i.prototype.isBlockBreak=function(){return 1===this.getLength()&&this.pieceList.getObjectAtIndex(0).isBlockBreak()},i.prototype.eachPiece=function(t){return this.pieceList.eachObject(t)},i.prototype.getPieces=function(){return this.pieceList.toArray()},i.prototype.getPieceAtPosition=function(t){return this.pieceList.getObjectAtPosition(t)},i.prototype.contentsForInspection=function(){return{pieceList:this.pieceList.inspect()}},i.prototype.toSerializableText=function(){var t;return t=this.pieceList.selectSplittableList(function(t){return t.isSerializable()}),this.copyWithPieceList(t)},i.prototype.toString=function(){return this.pieceList.toString()},i.prototype.toJSON=function(){return this.pieceList.toJSON()},i.prototype.toConsole=function(){var t;return JSON.stringify(function(){var e,n,i,o;for(i=this.pieceList.toArray(),o=[],e=0,n=i.length;n>e;e++)t=i[e],o.push(JSON.parse(t.toConsole()));return o}.call(this))},i}(e.Object)}.call(this),function(){var t,n,i,o,r,s=function(t,e){function n(){this.constructor=t}for(var i in e)a.call(e,i)&&(t[i]=e[i]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},a={}.hasOwnProperty,u=[].slice,c=[].indexOf||function(t){for(var e=0,n=this.length;n>e;e++)if(e in this&&this[e]===t)return e;return-1};t=e.arraysAreEqual,r=e.spliceArray,i=e.getBlockConfig,n=e.getBlockAttributeNames,o=e.getListAttributeNames,e.Block=function(n){function a(t,n){null==t&&(t=new e.Text),null==n&&(n=[]),a.__super__.constructor.apply(this,arguments),this.text=h(t),this.attributes=n}var l,h,p,d,f,g,m,y,v;return s(a,n),a.fromJSON=function(t){var n;return n=e.Text.fromJSON(t.text),new this(n,t.attributes)},a.prototype.isEmpty=function(){return this.text.isBlockBreak()},a.prototype.isEqualTo=function(e){return a.__super__.isEqualTo.apply(this,arguments)||this.text.isEqualTo(null!=e?e.text:void 0)&&t(this.attributes,null!=e?e.attributes:void 0)},a.prototype.copyWithText=function(t){return new this.constructor(t,this.attributes)},a.prototype.copyWithoutText=function(){return this.copyWithText(null)},a.prototype.copyWithAttributes=function(t){return new this.constructor(this.text,t)},a.prototype.copyUsingObjectMap=function(t){var e;return this.copyWithText((e=t.find(this.text))?e:this.text.copyUsingObjectMap(t))},a.prototype.addAttribute=function(t){var e;return e=this.attributes.concat(d(t)),this.copyWithAttributes(e)},a.prototype.removeAttribute=function(t){var e,n;return n=i(t).listAttribute,e=g(g(this.attributes,t),n),this.copyWithAttributes(e)},a.prototype.removeLastAttribute=function(){return this.removeAttribute(this.getLastAttribute())},a.prototype.getLastAttribute=function(){return f(this.attributes)},a.prototype.getAttributes=function(){return this.attributes.slice(0)},a.prototype.getAttributeLevel=function(){return this.attributes.length},a.prototype.getAttributeAtLevel=function(t){return this.attributes[t-1]},a.prototype.hasAttributes=function(){return this.getAttributeLevel()>0},a.prototype.getLastNestableAttribute=function(){return f(this.getNestableAttributes())},a.prototype.getNestableAttributes=function(){var t,e,n,o,r;for(o=this.attributes,r=[],e=0,n=o.length;n>e;e++)t=o[e],i(t).nestable&&r.push(t);return r},a.prototype.getNestingLevel=function(){return this.getNestableAttributes().length},a.prototype.decreaseNestingLevel=function(){var t;return(t=this.getLastNestableAttribute())?this.removeAttribute(t):this},a.prototype.increaseNestingLevel=function(){var t,e,n;return(t=this.getLastNestableAttribute())?(n=this.attributes.lastIndexOf(t),e=r.apply(null,[this.attributes,n+1,0].concat(u.call(d(t)))),this.copyWithAttributes(e)):this},a.prototype.getListItemAttributes=function(){var t,e,n,o,r;for(o=this.attributes,r=[],e=0,n=o.length;n>e;e++)t=o[e],i(t).listAttribute&&r.push(t);return r},a.prototype.isListItem=function(){var t;return null!=(t=i(this.getLastAttribute()))?t.listAttribute:void 0},a.prototype.isTerminalBlock=function(){var t;return null!=(t=i(this.getLastAttribute()))?t.terminal:void 0},a.prototype.breaksOnReturn=function(){var t;return null!=(t=i(this.getLastAttribute()))?t.breakOnReturn:void 0},a.prototype.findLineBreakInDirectionFromPosition=function(t,e){var n,i;return i=this.toString(),n=function(){switch(t){case"forward":return i.indexOf("\n",e);case"backward":return i.slice(0,e).lastIndexOf("\n")}}(),-1!==n?n:void 0},a.prototype.contentsForInspection=function(){return{text:this.text.inspect(),attributes:this.attributes}},a.prototype.toString=function(){return this.text.toString()},a.prototype.toJSON=function(){return{text:this.text,attributes:this.attributes}},a.prototype.getLength=function(){return this.text.getLength()},a.prototype.canBeConsolidatedWith=function(t){return!this.hasAttributes()&&!t.hasAttributes()},a.prototype.consolidateWith=function(t){var n,i;return n=e.Text.textForStringWithAttributes("\n"),i=this.getTextWithoutBlockBreak().appendText(n),this.copyWithText(i.appendText(t.text))},a.prototype.splitAtOffset=function(t){var e,n;return 0===t?(e=null,n=this):t===this.getLength()?(e=this,n=null):(e=this.copyWithText(this.text.getTextAtRange([0,t])),n=this.copyWithText(this.text.getTextAtRange([t,this.getLength()]))),[e,n]},a.prototype.getBlockBreakPosition=function(){return this.text.getLength()-1},a.prototype.getTextWithoutBlockBreak=function(){return m(this.text)?this.text.getTextAtRange([0,this.getBlockBreakPosition()]):this.text.copy()},a.prototype.canBeGrouped=function(t){return this.attributes[t]},a.prototype.canBeGroupedWith=function(t,e){var n,r,s,a;return s=t.getAttributes(),r=s[e],n=this.attributes[e],n===r&&!(i(n).group===!1&&(a=s[e+1],c.call(o(),a)<0))},h=function(t){return t=v(t),t=l(t)},v=function(t){var n,i,o,r,s,a;return r=!1,a=t.getPieces(),i=2<=a.length?u.call(a,0,n=a.length-1):(n=0,[]),o=a[n++],null==o?t:(i=function(){var t,e,n;for(n=[],t=0,e=i.length;e>t;t++)s=i[t],s.isBlockBreak()?(r=!0,n.push(y(s))):n.push(s);return n}(),r?new e.Text(u.call(i).concat([o])):t)},p=e.Text.textForStringWithAttributes("\n",{blockBreak:!0}),l=function(t){return m(t)?t:t.appendText(p)},m=function(t){var e,n;return n=t.getLength(),0===n?!1:(e=t.getTextAtRange([n-1,n]),e.isBlockBreak())},y=function(t){return t.copyWithoutAttribute("blockBreak")},d=function(t){var e;return e=i(t).listAttribute,null!=e?[e,t]:[t]},f=function(t){return t.slice(-1)[0]},g=function(t,e){var n;return n=t.lastIndexOf(e),-1===n?t:r(t,n,1)},a}(e.Object)}.call(this),function(){var t,n,i,o=function(t,e){function n(){this.constructor=t}for(var i in e)r.call(e,i)&&(t[i]=e[i]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},r={}.hasOwnProperty,s=[].slice,a=[].indexOf||function(t){for(var e=0,n=this.length;n>e;e++)if(e in this&&this[e]===t)return e;return-1};n=e.tagName,i=e.walkTree,t=e.nodeIsAttachmentElement,e.HTMLSanitizer=function(e){function r(t,e){this.allowedAttributes=(null!=e?e:{}).allowedAttributes,null==this.allowedAttributes&&(this.allowedAttributes=u),this.body=c(t)}var u,c,l;return o(r,e),u="style href src width height class".split(" "),r.sanitize=function(t,e){var n;return n=new this(t,e),n.sanitize(),n},r.prototype.sanitize=function(){return this.sanitizeElements()},r.prototype.getHTML=function(){return this.body.innerHTML},r.prototype.getBody=function(){return this.body},r.prototype.sanitizeElements=function(){var t,e,n,o,r;for(r=i(this.body),o=[];r.nextNode();)switch(n=r.currentNode,n.nodeType){case Node.ELEMENT_NODE:l(n)?o.push(n):this.sanitizeElement(n);break;case Node.COMMENT_NODE:o.push(n)}for(t=0,e=o.length;e>t;t++)n=o[t],n.parentNode.removeChild(n);return this.body},r.prototype.sanitizeElement=function(t){var e,n,i,o;for(o=s.call(t.attributes),e=0,n=o.length;n>e;e++)i=o[e].name,a.call(this.allowedAttributes,i)>=0||0===i.indexOf("data-trix")||t.removeAttribute(i);return t},l=function(e){return(null!=e?e.nodeType:void 0)!==Node.ELEMENT_NODE||t(e)?void 0:"script"===n(e)||"false"===e.getAttribute("data-trix-serialize")},c=function(t){var e,n,i,o,r;for(null==t&&(t=""),t=t.replace(/<\/html[^>]*>[^]*$/i,"</html>"),e=document.implementation.createHTMLDocument(""),e.documentElement.innerHTML=t,r=e.head.querySelectorAll("style"),i=0,o=r.length;o>i;i++)n=r[i],e.body.appendChild(n);return e.body},r}(e.BasicObject)}.call(this),function(){var t,n,i,o,r,s,a,u,c,l,h,p=function(t,e){function n(){this.constructor=t}for(var i in e)d.call(e,i)&&(t[i]=e[i]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},d={}.hasOwnProperty,f=[].indexOf||function(t){for(var e=0,n=this.length;n>e;e++)if(e in this&&this[e]===t)return e;return-1};t=e.arraysAreEqual,s=e.makeElement,l=e.tagName,r=e.getBlockTagNames,h=e.walkTree,o=e.findClosestElementFromNode,i=e.elementContainsNode,a=e.nodeIsAttachmentElement,u=e.normalizeSpaces,n=e.breakableWhitespacePattern,c=e.squishBreakableWhitespace,e.HTMLParser=function(d){function g(t,e){this.html=t,this.referenceElement=(null!=e?e:{}).referenceElement,this.blocks=[],this.blockElements=[],this.processedElements=[]}var m,y,v,b,A,C,x,w,E,S,k,R;return p(g,d),g.parse=function(t,e){var n;return n=new this(t,e),n.parse(),n},g.prototype.getDocument=function(){return e.Document.fromJSON(this.blocks)},g.prototype.parse=function(){var t,n;try{for(this.createHiddenContainer(),t=e.HTMLSanitizer.sanitize(this.html).getHTML(),this.containerElement.innerHTML=t,n=h(this.containerElement,{usingFilter:w});n.nextNode();)this.processNode(n.currentNode);return this.translateBlockElementMarginsToNewlines()}finally{this.removeHiddenContainer()}},g.prototype.createHiddenContainer=function(){return this.referenceElement?(this.containerElement=this.referenceElement.cloneNode(!1),this.containerElement.removeAttribute("id"),this.containerElement.setAttribute("data-trix-internal",""),this.containerElement.style.display="none",this.referenceElement.parentNode.insertBefore(this.containerElement,this.referenceElement.nextSibling)):(this.containerElement=s({tagName:"div",style:{display:"none"}}),document.body.appendChild(this.containerElement))},g.prototype.removeHiddenContainer=function(){return this.containerElement.parentNode.removeChild(this.containerElement)},w=function(t){return"style"===l(t)?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT},g.prototype.processNode=function(t){switch(t.nodeType){case Node.TEXT_NODE:return this.processTextNode(t);case Node.ELEMENT_NODE:return this.appendBlockForElement(t),this.processElement(t)}},g.prototype.appendBlockForElement=function(e){var n,o,r,s;if(r=this.isBlockElement(e),o=i(this.currentBlockElement,e),r&&!this.isBlockElement(e.firstChild)){if(!(this.isInsignificantTextNode(e.firstChild)&&this.isBlockElement(e.firstElementChild)||(n=this.getBlockAttributes(e),o&&t(n,this.currentBlock.attributes))))return this.currentBlock=this.appendBlockForAttributesWithElement(n,e),this.currentBlockElement=e}else if(this.currentBlockElement&&!o&&!r)return(s=this.findParentBlockElement(e))?this.appendBlockForElement(s):(this.currentBlock=this.appendEmptyBlock(),this.currentBlockElement=null)},g.prototype.findParentBlockElement=function(t){var e;for(e=t.parentElement;e&&e!==this.containerElement;){if(this.isBlockElement(e)&&f.call(this.blockElements,e)>=0)return e;e=e.parentElement}return null},g.prototype.processTextNode=function(t){var e,n;return this.isInsignificantTextNode(t)?void 0:(n=t.data,y(t.parentNode)||(n=c(n),k(null!=(e=t.previousSibling)?e.textContent:void 0)&&(n=C(n))),this.appendStringWithAttributes(n,this.getTextAttributes(t.parentNode)))},g.prototype.processElement=function(t){var e,n,i,o,r;if(a(t))return e=v(t),Object.keys(e).length&&(o=this.getTextAttributes(t),this.appendAttachmentWithAttributes(e,o),t.innerHTML=""),this.processedElements.push(t);switch(l(t)){case"br":return this.isExtraBR(t)||this.isBlockElement(t.nextSibling)||this.appendStringWithAttributes("\n",this.getTextAttributes(t)),this.processedElements.push(t);case"img":e={url:t.getAttribute("src"),contentType:"image"},i=A(t);for(n in i)r=i[n],e[n]=r;return this.appendAttachmentWithAttributes(e,this.getTextAttributes(t)),this.processedElements.push(t);case"tr":if(t.parentNode.firstChild!==t)return this.appendStringWithAttributes("\n");break;case"td":if(t.parentNode.firstChild!==t)return this.appendStringWithAttributes(" | ")}},g.prototype.appendBlockForAttributesWithElement=function(t,e){var n;return this.blockElements.push(e),n=m(t),this.blocks.push(n),n},g.prototype.appendEmptyBlock=function(){return this.appendBlockForAttributesWithElement([],null)},g.prototype.appendStringWithAttributes=function(t,e){return this.appendPiece(S(t,e))},g.prototype.appendAttachmentWithAttributes=function(t,e){return this.appendPiece(E(t,e))},g.prototype.appendPiece=function(t){return 0===this.blocks.length&&this.appendEmptyBlock(),this.blocks[this.blocks.length-1].text.push(t)},g.prototype.appendStringToTextAtIndex=function(t,e){var n,i;return i=this.blocks[e].text,n=i[i.length-1],"string"===(null!=n?n.type:void 0)?n.string+=t:i.push(S(t))},g.prototype.prependStringToTextAtIndex=function(t,e){var n,i;return i=this.blocks[e].text,n=i[0],"string"===(null!=n?n.type:void 0)?n.string=t+n.string:i.unshift(S(t))},S=function(t,e){var n;return null==e&&(e={}),n="string",t=u(t),{string:t,attributes:e,type:n}},E=function(t,e){var n;return null==e&&(e={}),n="attachment",{attachment:t,attributes:e,type:n}},m=function(t){var e;return null==t&&(t={}),e=[],{text:e,attributes:t}},g.prototype.getTextAttributes=function(t){var n,i,r,s,u,c,l,h,p,d,f,g,m;r={},d=e.config.textAttributes;for(n in d)if(u=d[n],u.tagName&&o(t,{matchingSelector:u.tagName,untilNode:this.containerElement}))r[n]=!0;else if(u.parser){if(m=u.parser(t)){for(i=!1,f=this.findBlockElementAncestors(t),c=0,p=f.length;p>c;c++)if(s=f[c],u.parser(s)===m){i=!0;break}i||(r[n]=m)}}else u.styleProperty&&(m=t.style[u.styleProperty])&&(r[n]=m);if(a(t)&&(l=t.getAttribute("data-trix-attributes"))){g=JSON.parse(l);for(h in g)m=g[h],r[h]=m}return r},g.prototype.getBlockAttributes=function(t){var n,i,o,r;for(i=[];t&&t!==this.containerElement;){r=e.config.blockAttributes;for(n in r)o=r[n],o.parse!==!1&&l(t)===o.tagName&&(("function"==typeof o.test?o.test(t):void 0)||!o.test)&&(i.push(n),o.listAttribute&&i.push(o.listAttribute));t=t.parentNode}return i.reverse()},g.prototype.findBlockElementAncestors=function(t){var e,n;for(e=[];t&&t!==this.containerElement;)n=l(t),f.call(r(),n)>=0&&e.push(t),t=t.parentNode;return e},v=function(t){return JSON.parse(t.getAttribute("data-trix-attachment"))},A=function(t){var e,n,i;return i=t.getAttribute("width"),n=t.getAttribute("height"),e={},i&&(e.width=parseInt(i,10)),n&&(e.height=parseInt(n,10)),e},g.prototype.isBlockElement=function(t){var e;if((null!=t?t.nodeType:void 0)===Node.ELEMENT_NODE&&!a(t)&&!o(t,{matchingSelector:"td",untilNode:this.containerElement}))return e=l(t),f.call(r(),e)>=0||"block"===window.getComputedStyle(t).display},g.prototype.isInsignificantTextNode=function(t){var e,n,i;if((null!=t?t.nodeType:void 0)===Node.TEXT_NODE&&R(t.data)&&(n=t.parentNode,i=t.previousSibling,e=t.nextSibling,(!x(n.previousSibling)||this.isBlockElement(n.previousSibling))&&!y(n)))return!i||this.isBlockElement(i)||!e||this.isBlockElement(e)
-},g.prototype.isExtraBR=function(t){return"br"===l(t)&&this.isBlockElement(t.parentNode)&&t.parentNode.lastChild===t},y=function(t){var e;return e=window.getComputedStyle(t).whiteSpace,"pre"===e||"pre-wrap"===e||"pre-line"===e},x=function(t){return t&&!k(t.textContent)},g.prototype.translateBlockElementMarginsToNewlines=function(){var t,e,n,i,o,r,s,a;for(e=this.getMarginOfDefaultBlockElement(),s=this.blocks,a=[],i=n=0,o=s.length;o>n;i=++n)t=s[i],(r=this.getMarginOfBlockElementAtIndex(i))&&(r.top>2*e.top&&this.prependStringToTextAtIndex("\n",i),a.push(r.bottom>2*e.bottom?this.appendStringToTextAtIndex("\n",i):void 0));return a},g.prototype.getMarginOfBlockElementAtIndex=function(t){var e,n;return!(e=this.blockElements[t])||!e.textContent||(n=l(e),f.call(r(),n)>=0||f.call(this.processedElements,e)>=0)?void 0:b(e)},g.prototype.getMarginOfDefaultBlockElement=function(){var t;return t=s(e.config.blockAttributes["default"].tagName),this.containerElement.appendChild(t),b(t)},b=function(t){var e;return e=window.getComputedStyle(t),"block"===e.display?{top:parseInt(e.marginTop),bottom:parseInt(e.marginBottom)}:void 0},C=function(t){return t.replace(RegExp("^"+n.source+"+"),"")},R=function(t){return RegExp("^"+n.source+"*$").test(t)},k=function(t){return/\s$/.test(t)},g}(e.BasicObject)}.call(this),function(){var t,n,i,o,r=function(t,e){function n(){this.constructor=t}for(var i in e)s.call(e,i)&&(t[i]=e[i]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},s={}.hasOwnProperty,a=[].slice,u=[].indexOf||function(t){for(var e=0,n=this.length;n>e;e++)if(e in this&&this[e]===t)return e;return-1};t=e.arraysAreEqual,i=e.normalizeRange,o=e.rangeIsCollapsed,n=e.getBlockConfig,e.Document=function(s){function c(t){null==t&&(t=[]),c.__super__.constructor.apply(this,arguments),0===t.length&&(t=[new e.Block]),this.blockList=e.SplittableList.box(t)}var l;return r(c,s),c.fromJSON=function(t){var n,i;return i=function(){var i,o,r;for(r=[],i=0,o=t.length;o>i;i++)n=t[i],r.push(e.Block.fromJSON(n));return r}(),new this(i)},c.fromHTML=function(t,n){return e.HTMLParser.parse(t,n).getDocument()},c.fromString=function(t,n){var i;return i=e.Text.textForStringWithAttributes(t,n),new this([new e.Block(i)])},c.prototype.isEmpty=function(){var t;return 1===this.blockList.length&&(t=this.getBlockAtIndex(0),t.isEmpty()&&!t.hasAttributes())},c.prototype.copy=function(t){var e;return null==t&&(t={}),e=t.consolidateBlocks?this.blockList.consolidate().toArray():this.blockList.toArray(),new this.constructor(e)},c.prototype.copyUsingObjectsFromDocument=function(t){var n;return n=new e.ObjectMap(t.getObjects()),this.copyUsingObjectMap(n)},c.prototype.copyUsingObjectMap=function(t){var e,n,i;return n=function(){var n,o,r,s;for(r=this.getBlocks(),s=[],n=0,o=r.length;o>n;n++)e=r[n],s.push((i=t.find(e))?i:e.copyUsingObjectMap(t));return s}.call(this),new this.constructor(n)},c.prototype.copyWithBaseBlockAttributes=function(t){var e,n,i;return null==t&&(t=[]),i=function(){var i,o,r,s;for(r=this.getBlocks(),s=[],i=0,o=r.length;o>i;i++)n=r[i],e=t.concat(n.getAttributes()),s.push(n.copyWithAttributes(e));return s}.call(this),new this.constructor(i)},c.prototype.replaceBlock=function(t,e){var n;return n=this.blockList.indexOf(t),-1===n?this:new this.constructor(this.blockList.replaceObjectAtIndex(e,n))},c.prototype.insertDocumentAtRange=function(t,e){var n,r,s,a,u,c,l;return r=t.blockList,u=(e=i(e))[0],c=this.locationFromPosition(u),s=c.index,a=c.offset,l=this,n=this.getBlockAtPosition(u),o(e)&&n.isEmpty()&&!n.hasAttributes()?l=new this.constructor(l.blockList.removeObjectAtIndex(s)):n.getBlockBreakPosition()===a&&u++,l=l.removeTextAtRange(e),new this.constructor(l.blockList.insertSplittableListAtPosition(r,u))},c.prototype.mergeDocumentAtRange=function(e,n){var o,r,s,a,u,c,l,h,p,d,f,g;return f=(n=i(n))[0],d=this.locationFromPosition(f),r=this.getBlockAtIndex(d.index).getAttributes(),o=e.getBaseBlockAttributes(),g=r.slice(-o.length),t(o,g)?(l=r.slice(0,-o.length),c=e.copyWithBaseBlockAttributes(l)):c=e.copy({consolidateBlocks:!0}).copyWithBaseBlockAttributes(r),s=c.getBlockCount(),a=c.getBlockAtIndex(0),t(r,a.getAttributes())?(u=a.getTextWithoutBlockBreak(),p=this.insertTextAtRange(u,n),s>1&&(c=new this.constructor(c.getBlocks().slice(1)),h=f+u.getLength(),p=p.insertDocumentAtRange(c,h))):p=this.insertDocumentAtRange(c,n),p},c.prototype.insertTextAtRange=function(t,e){var n,o,r,s,a;return a=(e=i(e))[0],s=this.locationFromPosition(a),o=s.index,r=s.offset,n=this.removeTextAtRange(e),new this.constructor(n.blockList.editObjectAtIndex(o,function(e){return e.copyWithText(e.text.insertTextAtPosition(t,r))}))},c.prototype.removeTextAtRange=function(t){var e,n,r,s,a,u,c,l,h,p,d,f,g,m,y,v,b,A,C,x,w;return p=t=i(t),l=p[0],A=p[1],o(t)?this:(d=this.locationRangeFromRange(t),u=d[0],v=d[1],a=u.index,c=u.offset,s=this.getBlockAtIndex(a),y=v.index,b=v.offset,m=this.getBlockAtIndex(y),f=A-l===1&&s.getBlockBreakPosition()===c&&m.getBlockBreakPosition()!==b&&"\n"===m.text.getStringAtPosition(b),f?r=this.blockList.editObjectAtIndex(y,function(t){return t.copyWithText(t.text.removeTextAtRange([b,b+1]))}):(h=s.text.getTextAtRange([0,c]),C=m.text.getTextAtRange([b,m.getLength()]),x=h.appendText(C),g=a!==y&&0===c,w=g&&s.getAttributeLevel()>=m.getAttributeLevel(),n=w?m.copyWithText(x):s.copyWithText(x),e=y+1-a,r=this.blockList.splice(a,e,n)),new this.constructor(r))},c.prototype.moveTextFromRangeToPosition=function(t,e){var n,o,r,s,u,c,l,h,p,d;if(c=t=i(t),p=c[0],r=c[1],e>=p&&r>=e)return this;if(o=this.getDocumentAtRange(t),h=this.removeTextAtRange(t),u=e>p,u&&(e-=o.getLength()),!h.firstBlockInRangeIsEntirelySelected(t)){if(l=o.getBlocks(),s=l[0],n=2<=l.length?a.call(l,1):[],0===n.length?(d=s.getTextWithoutBlockBreak(),u&&(e+=1)):d=s.text,h=h.insertTextAtRange(d,e),0===n.length)return h;o=new this.constructor(n),e+=d.getLength()}return h.insertDocumentAtRange(o,e)},c.prototype.addAttributeAtRange=function(t,e,i){var o;return o=this.blockList,this.eachBlockAtRange(i,function(i,r,s){return o=o.editObjectAtIndex(s,function(){return n(t)?i.addAttribute(t,e):r[0]===r[1]?i:i.copyWithText(i.text.addAttributeAtRange(t,e,r))})}),new this.constructor(o)},c.prototype.addAttribute=function(t,e){var n;return n=this.blockList,this.eachBlock(function(i,o){return n=n.editObjectAtIndex(o,function(){return i.addAttribute(t,e)})}),new this.constructor(n)},c.prototype.removeAttributeAtRange=function(t,e){var i;return i=this.blockList,this.eachBlockAtRange(e,function(e,o,r){return n(t)?i=i.editObjectAtIndex(r,function(){return e.removeAttribute(t)}):o[0]!==o[1]?i=i.editObjectAtIndex(r,function(){return e.copyWithText(e.text.removeAttributeAtRange(t,o))}):void 0}),new this.constructor(i)},c.prototype.updateAttributesForAttachment=function(t,e){var n,i,o,r;return o=(i=this.getRangeOfAttachment(e))[0],n=this.locationFromPosition(o).index,r=this.getTextAtIndex(n),new this.constructor(this.blockList.editObjectAtIndex(n,function(n){return n.copyWithText(r.updateAttributesForAttachment(t,e))}))},c.prototype.removeAttributeForAttachment=function(t,e){var n;return n=this.getRangeOfAttachment(e),this.removeAttributeAtRange(t,n)},c.prototype.insertBlockBreakAtRange=function(t){var n,o,r,s;return s=(t=i(t))[0],r=this.locationFromPosition(s).offset,o=this.removeTextAtRange(t),0===r&&(n=[new e.Block]),new this.constructor(o.blockList.insertSplittableListAtPosition(new e.SplittableList(n),s))},c.prototype.applyBlockAttributeAtRange=function(t,e,i){var o,r,s,a;return s=this.expandRangeToLineBreaksAndSplitBlocks(i),r=s.document,i=s.range,o=n(t),o.listAttribute?(r=r.removeLastListAttributeAtRange(i,{exceptAttributeName:t}),a=r.convertLineBreaksToBlockBreaksInRange(i),r=a.document,i=a.range):r=o.terminal?r.removeLastTerminalAttributeAtRange(i):r.consolidateBlocksAtRange(i),r.addAttributeAtRange(t,e,i)},c.prototype.removeLastListAttributeAtRange=function(t,e){var i;return null==e&&(e={}),i=this.blockList,this.eachBlockAtRange(t,function(t,o,r){var s;if((s=t.getLastAttribute())&&n(s).listAttribute&&s!==e.exceptAttributeName)return i=i.editObjectAtIndex(r,function(){return t.removeAttribute(s)})}),new this.constructor(i)},c.prototype.removeLastTerminalAttributeAtRange=function(t){var e;return e=this.blockList,this.eachBlockAtRange(t,function(t,i,o){var r;if((r=t.getLastAttribute())&&n(r).terminal)return e=e.editObjectAtIndex(o,function(){return t.removeAttribute(r)})}),new this.constructor(e)},c.prototype.firstBlockInRangeIsEntirelySelected=function(t){var e,n,o,r,s,a;return r=t=i(t),a=r[0],e=r[1],n=this.locationFromPosition(a),s=this.locationFromPosition(e),0===n.offset&&n.index<s.index?!0:n.index===s.index?(o=this.getBlockAtIndex(n.index).getLength(),0===n.offset&&s.offset===o):!1},c.prototype.expandRangeToLineBreaksAndSplitBlocks=function(t){var e,n,o,r,s,a,u,c,l;return a=t=i(t),l=a[0],r=a[1],c=this.locationFromPosition(l),o=this.locationFromPosition(r),e=this,u=e.getBlockAtIndex(c.index),null!=(c.offset=u.findLineBreakInDirectionFromPosition("backward",c.offset))&&(s=e.positionFromLocation(c),e=e.insertBlockBreakAtRange([s,s+1]),o.index+=1,o.offset-=e.getBlockAtIndex(c.index).getLength(),c.index+=1),c.offset=0,0===o.offset&&o.index>c.index?(o.index-=1,o.offset=e.getBlockAtIndex(o.index).getBlockBreakPosition()):(n=e.getBlockAtIndex(o.index),"\n"===n.text.getStringAtRange([o.offset-1,o.offset])?o.offset-=1:o.offset=n.findLineBreakInDirectionFromPosition("forward",o.offset),o.offset!==n.getBlockBreakPosition()&&(s=e.positionFromLocation(o),e=e.insertBlockBreakAtRange([s,s+1]))),l=e.positionFromLocation(c),r=e.positionFromLocation(o),t=i([l,r]),{document:e,range:t}},c.prototype.convertLineBreaksToBlockBreaksInRange=function(t){var e,n,o;return n=(t=i(t))[0],o=this.getStringAtRange(t).slice(0,-1),e=this,o.replace(/.*?\n/g,function(t){return n+=t.length,e=e.insertBlockBreakAtRange([n-1,n])}),{document:e,range:t}},c.prototype.consolidateBlocksAtRange=function(t){var e,n,o,r,s;return o=t=i(t),s=o[0],n=o[1],r=this.locationFromPosition(s).index,e=this.locationFromPosition(n).index,new this.constructor(this.blockList.consolidateFromIndexToIndex(r,e))},c.prototype.getDocumentAtRange=function(t){var e;return t=i(t),e=this.blockList.getSplittableListInRange(t).toArray(),new this.constructor(e)},c.prototype.getStringAtRange=function(t){var e,n,o;return o=t=i(t),n=o[o.length-1],n!==this.getLength()&&(e=-1),this.getDocumentAtRange(t).toString().slice(0,e)},c.prototype.getBlockAtIndex=function(t){return this.blockList.getObjectAtIndex(t)},c.prototype.getBlockAtPosition=function(t){var e;return e=this.locationFromPosition(t).index,this.getBlockAtIndex(e)},c.prototype.getTextAtIndex=function(t){var e;return null!=(e=this.getBlockAtIndex(t))?e.text:void 0},c.prototype.getTextAtPosition=function(t){var e;return e=this.locationFromPosition(t).index,this.getTextAtIndex(e)},c.prototype.getPieceAtPosition=function(t){var e,n,i;return i=this.locationFromPosition(t),e=i.index,n=i.offset,this.getTextAtIndex(e).getPieceAtPosition(n)},c.prototype.getCharacterAtPosition=function(t){var e,n,i;return i=this.locationFromPosition(t),e=i.index,n=i.offset,this.getTextAtIndex(e).getStringAtRange([n,n+1])},c.prototype.getLength=function(){return this.blockList.getEndPosition()},c.prototype.getBlocks=function(){return this.blockList.toArray()},c.prototype.getBlockCount=function(){return this.blockList.length},c.prototype.getEditCount=function(){return this.editCount},c.prototype.eachBlock=function(t){return this.blockList.eachObject(t)},c.prototype.eachBlockAtRange=function(t,e){var n,o,r,s,a,u,c,l,h,p,d,f;if(u=t=i(t),d=u[0],r=u[1],p=this.locationFromPosition(d),o=this.locationFromPosition(r),p.index===o.index)return n=this.getBlockAtIndex(p.index),f=[p.offset,o.offset],e(n,f,p.index);for(h=[],a=s=c=p.index,l=o.index;l>=c?l>=s:s>=l;a=l>=c?++s:--s)(n=this.getBlockAtIndex(a))?(f=function(){switch(a){case p.index:return[p.offset,n.text.getLength()];case o.index:return[0,o.offset];default:return[0,n.text.getLength()]}}(),h.push(e(n,f,a))):h.push(void 0);return h},c.prototype.getCommonAttributesAtRange=function(t){var n,r,s;return r=(t=i(t))[0],o(t)?this.getCommonAttributesAtPosition(r):(s=[],n=[],this.eachBlockAtRange(t,function(t,e){return e[0]!==e[1]?(s.push(t.text.getCommonAttributesAtRange(e)),n.push(l(t))):void 0}),e.Hash.fromCommonAttributesOfObjects(s).merge(e.Hash.fromCommonAttributesOfObjects(n)).toObject())},c.prototype.getCommonAttributesAtPosition=function(t){var n,i,o,r,s,a,c,h,p,d;if(p=this.locationFromPosition(t),s=p.index,h=p.offset,o=this.getBlockAtIndex(s),!o)return{};r=l(o),n=o.text.getAttributesAtPosition(h),i=o.text.getAttributesAtPosition(h-1),a=function(){var t,n;t=e.config.textAttributes,n=[];for(c in t)d=t[c],d.inheritable&&n.push(c);return n}();for(c in i)d=i[c],(d===n[c]||u.call(a,c)>=0)&&(r[c]=d);return r},c.prototype.getRangeOfCommonAttributeAtPosition=function(t,e){var n,o,r,s,a,u,c,l,h;return a=this.locationFromPosition(e),r=a.index,s=a.offset,h=this.getTextAtIndex(r),u=h.getExpandedRangeForAttributeAtOffset(t,s),l=u[0],o=u[1],c=this.positionFromLocation({index:r,offset:l}),n=this.positionFromLocation({index:r,offset:o}),i([c,n])},c.prototype.getBaseBlockAttributes=function(){var t,e,n,i,o,r,s;for(t=this.getBlockAtIndex(0).getAttributes(),n=i=1,s=this.getBlockCount();s>=1?s>i:i>s;n=s>=1?++i:--i)e=this.getBlockAtIndex(n).getAttributes(),r=Math.min(t.length,e.length),t=function(){var n,i,s;for(s=[],o=n=0,i=r;(i>=0?i>n:n>i)&&e[o]===t[o];o=i>=0?++n:--n)s.push(e[o]);return s}();return t},l=function(t){var e,n;return n={},(e=t.getLastAttribute())&&(n[e]=!0),n},c.prototype.getAttachmentById=function(t){var e,n,i,o;for(o=this.getAttachments(),n=0,i=o.length;i>n;n++)if(e=o[n],e.id===t)return e},c.prototype.getAttachmentPieces=function(){var t;return t=[],this.blockList.eachObject(function(e){var n;return n=e.text,t=t.concat(n.getAttachmentPieces())}),t},c.prototype.getAttachments=function(){var t,e,n,i,o;for(i=this.getAttachmentPieces(),o=[],t=0,e=i.length;e>t;t++)n=i[t],o.push(n.attachment);return o},c.prototype.getRangeOfAttachment=function(t){var e,n,o,r,s,a,u;for(r=0,s=this.blockList.toArray(),n=e=0,o=s.length;o>e;n=++e){if(a=s[n].text,u=a.getRangeOfAttachment(t))return i([r+u[0],r+u[1]]);r+=a.getLength()}},c.prototype.getLocationRangeOfAttachment=function(t){var e;return e=this.getRangeOfAttachment(t),this.locationRangeFromRange(e)},c.prototype.getAttachmentPieceForAttachment=function(t){var e,n,i,o;for(o=this.getAttachmentPieces(),e=0,n=o.length;n>e;e++)if(i=o[e],i.attachment===t)return i},c.prototype.findRangesForTextAttribute=function(t,e){var n,i,o,r,s,a,u,c,l,h;for(h=(null!=e?e:{}).withValue,a=0,u=[],c=[],r=function(e){return null!=h?e.getAttribute(t)===h:e.hasAttribute(t)},l=this.getPieces(),n=0,i=l.length;i>n;n++)s=l[n],o=s.getLength(),r(s)&&(u[1]===a?u[1]=a+o:c.push(u=[a,a+o])),a+=o;return c},c.prototype.locationFromPosition=function(t){var e,n;return n=this.blockList.findIndexAndOffsetAtPosition(Math.max(0,t)),null!=n.index?n:(e=this.getBlocks(),{index:e.length-1,offset:e[e.length-1].getLength()})},c.prototype.positionFromLocation=function(t){return this.blockList.findPositionAtIndexAndOffset(t.index,t.offset)},c.prototype.locationRangeFromPosition=function(t){return i(this.locationFromPosition(t))},c.prototype.locationRangeFromRange=function(t){var e,n,o,r;if(t=i(t))return r=t[0],n=t[1],o=this.locationFromPosition(r),e=this.locationFromPosition(n),i([o,e])},c.prototype.rangeFromLocationRange=function(t){var e,n;return t=i(t),e=this.positionFromLocation(t[0]),o(t)||(n=this.positionFromLocation(t[1])),i([e,n])},c.prototype.isEqualTo=function(t){return this.blockList.isEqualTo(null!=t?t.blockList:void 0)},c.prototype.getTexts=function(){var t,e,n,i,o;for(i=this.getBlocks(),o=[],e=0,n=i.length;n>e;e++)t=i[e],o.push(t.text);return o},c.prototype.getPieces=function(){var t,e,n,i,o;for(n=[],i=this.getTexts(),t=0,e=i.length;e>t;t++)o=i[t],n.push.apply(n,o.getPieces());return n},c.prototype.getObjects=function(){return this.getBlocks().concat(this.getTexts()).concat(this.getPieces())},c.prototype.toSerializableDocument=function(){var t;return t=[],this.blockList.eachObject(function(e){return t.push(e.copyWithText(e.text.toSerializableText()))}),new this.constructor(t)},c.prototype.toString=function(){return this.blockList.toString()},c.prototype.toJSON=function(){return this.blockList.toJSON()},c.prototype.toConsole=function(){var t;return JSON.stringify(function(){var e,n,i,o;for(i=this.blockList.toArray(),o=[],e=0,n=i.length;n>e;e++)t=i[e],o.push(JSON.parse(t.text.toConsole()));return o}.call(this))},c}(e.Object)}.call(this),function(){e.LineBreakInsertion=function(){function t(t){var e;this.composition=t,this.document=this.composition.document,e=this.composition.getSelectedRange(),this.startPosition=e[0],this.endPosition=e[1],this.startLocation=this.document.locationFromPosition(this.startPosition),this.endLocation=this.document.locationFromPosition(this.endPosition),this.block=this.document.getBlockAtIndex(this.endLocation.index),this.breaksOnReturn=this.block.breaksOnReturn(),this.previousCharacter=this.block.text.getStringAtPosition(this.endLocation.offset-1),this.nextCharacter=this.block.text.getStringAtPosition(this.endLocation.offset)}return t.prototype.shouldInsertBlockBreak=function(){return this.block.hasAttributes()&&this.block.isListItem()&&!this.block.isEmpty()?0!==this.startLocation.offset:this.breaksOnReturn&&"\n"!==this.nextCharacter},t.prototype.shouldBreakFormattedBlock=function(){return this.block.hasAttributes()&&!this.block.isListItem()&&(this.breaksOnReturn&&"\n"===this.nextCharacter||"\n"===this.previousCharacter)},t.prototype.shouldDecreaseListLevel=function(){return this.block.hasAttributes()&&this.block.isListItem()&&this.block.isEmpty()},t.prototype.shouldPrependListItem=function(){return this.block.isListItem()&&0===this.startLocation.offset&&!this.block.isEmpty()},t.prototype.shouldRemoveLastBlockAttribute=function(){return this.block.hasAttributes()&&!this.block.isListItem()&&this.block.isEmpty()},t}()}.call(this),function(){var t,n,i,o,r,s,a,u,c,l,h=function(t,e){function n(){this.constructor=t}for(var i in e)p.call(e,i)&&(t[i]=e[i]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},p={}.hasOwnProperty;s=e.normalizeRange,c=e.rangesAreEqual,u=e.rangeIsCollapsed,a=e.objectsAreEqual,t=e.arrayStartsWith,l=e.summarizeArrayChange,i=e.getAllAttributeNames,o=e.getBlockConfig,r=e.getTextConfig,n=e.extend,e.Composition=function(p){function d(){this.document=new e.Document,this.attachments=[],this.currentAttributes={},this.revision=0}var f;return h(d,p),d.prototype.setDocument=function(t){var e;return t.isEqualTo(this.document)?void 0:(this.document=t,this.refreshAttachments(),this.revision++,null!=(e=this.delegate)&&"function"==typeof e.compositionDidChangeDocument?e.compositionDidChangeDocument(t):void 0)},d.prototype.getSnapshot=function(){return{document:this.document,selectedRange:this.getSelectedRange()}},d.prototype.loadSnapshot=function(t){var n,i,o,r;return n=t.document,r=t.selectedRange,null!=(i=this.delegate)&&"function"==typeof i.compositionWillLoadSnapshot&&i.compositionWillLoadSnapshot(),this.setDocument(null!=n?n:new e.Document),this.setSelection(null!=r?r:[0,0]),null!=(o=this.delegate)&&"function"==typeof o.compositionDidLoadSnapshot?o.compositionDidLoadSnapshot():void 0},d.prototype.insertText=function(t,e){var n,i,o,r;return r=(null!=e?e:{updatePosition:!0}).updatePosition,i=this.getSelectedRange(),this.setDocument(this.document.insertTextAtRange(t,i)),o=i[0],n=o+t.getLength(),r&&this.setSelection(n),this.notifyDelegateOfInsertionAtRange([o,n])},d.prototype.insertBlock=function(t){var n;return null==t&&(t=new e.Block),n=new e.Document([t]),this.insertDocument(n)},d.prototype.insertDocument=function(t){var n,i,o;return null==t&&(t=new e.Document),i=this.getSelectedRange(),this.setDocument(this.document.insertDocumentAtRange(t,i)),o=i[0],n=o+t.getLength(),this.setSelection(n),this.notifyDelegateOfInsertionAtRange([o,n])},d.prototype.insertString=function(t,n){var i,o;return i=this.getCurrentTextAttributes(),o=e.Text.textForStringWithAttributes(t,i),this.insertText(o,n)},d.prototype.insertBlockBreak=function(){var t,e,n;return e=this.getSelectedRange(),this.setDocument(this.document.insertBlockBreakAtRange(e)),n=e[0],t=n+1,this.setSelection(t),this.notifyDelegateOfInsertionAtRange([n,t])},d.prototype.insertLineBreak=function(){var t,n;return n=new e.LineBreakInsertion(this),n.shouldDecreaseListLevel()?(this.decreaseListLevel(),this.setSelection(n.startPosition)):n.shouldPrependListItem()?(t=new e.Document([n.block.copyWithoutText()]),this.insertDocument(t)):n.shouldInsertBlockBreak()?this.insertBlockBreak():n.shouldRemoveLastBlockAttribute()?this.removeLastBlockAttribute():n.shouldBreakFormattedBlock()?this.breakFormattedBlock(n):this.insertString("\n")},d.prototype.insertHTML=function(t){var n,i,o,r;return n=e.Document.fromHTML(t),o=this.getSelectedRange(),this.setDocument(this.document.mergeDocumentAtRange(n,o)),r=o[0],i=r+n.getLength()-1,this.setSelection(i),this.notifyDelegateOfInsertionAtRange([r,i])},d.prototype.replaceHTML=function(t){var n,i,o;return n=e.Document.fromHTML(t).copyUsingObjectsFromDocument(this.document),i=this.getLocationRange({strict:!1}),o=this.document.rangeFromLocationRange(i),this.setDocument(n),this.setSelection(o)},d.prototype.insertFile=function(t){var n,i;return(null!=(i=this.delegate)?i.compositionShouldAcceptFile(t):void 0)?(n=e.Attachment.attachmentForFile(t),this.insertAttachment(n)):void 0},d.prototype.insertFiles=function(t){var n,i,o,r,s,a,u,c;for(o=this.getCurrentTextAttributes(),c=new e.Text,s=0,a=t.length;a>s;s++)r=t[s],(null!=(u=this.delegate)?u.compositionShouldAcceptFile(r):void 0)&&(n=e.Attachment.attachmentForFile(r),i=e.Text.textForAttachmentWithAttributes(n,o),c=c.appendText(i));return this.insertText(c)},d.prototype.insertAttachment=function(t){var n,i;return n=this.getCurrentTextAttributes(),i=e.Text.textForAttachmentWithAttributes(t,n),this.insertText(i)},d.prototype.deleteInDirection=function(t){var e,n,i,o,r,s,a;return o=this.getLocationRange(),r=this.getSelectedRange(),s=u(r),s?i="backward"===t&&0===o[0].offset:a=o[0].index!==o[1].index,i&&this.canDecreaseBlockAttributeLevel()&&(n=this.getBlock(),n.isListItem()?this.decreaseListLevel():this.decreaseBlockAttributeLevel(),this.setSelection(r[0]),n.isEmpty())?!1:(s&&(r=this.getExpandedRangeInDirection(t),"backward"===t&&(e=this.getAttachmentAtRange(r))),e?(this.editAttachment(e),!1):(this.setDocument(this.document.removeTextAtRange(r)),this.setSelection(r[0]),i||a?!1:void 0))},d.prototype.moveTextFromRange=function(t){var e;return e=this.getSelectedRange()[0],this.setDocument(this.document.moveTextFromRangeToPosition(t,e)),this.setSelection(e)},d.prototype.removeAttachment=function(t){var e;return(e=this.document.getRangeOfAttachment(t))?(this.stopEditingAttachment(),this.setDocument(this.document.removeTextAtRange(e)),this.setSelection(e[0])):void 0},d.prototype.removeLastBlockAttribute=function(){var t,e,n,i;return n=this.getSelectedRange(),i=n[0],e=n[1],t=this.document.getBlockAtPosition(e),this.removeCurrentAttribute(t.getLastAttribute()),this.setSelection(i)},f=" ",d.prototype.insertPlaceholder=function(){return this.placeholderPosition=this.getPosition(),this.insertString(f)},d.prototype.selectPlaceholder=function(){return null!=this.placeholderPosition?(this.setSelectedRange([this.placeholderPosition,this.placeholderPosition+f.length]),this.getSelectedRange()):void 0},d.prototype.forgetPlaceholder=function(){return this.placeholderPosition=null},d.prototype.hasCurrentAttribute=function(t){var e;return e=this.currentAttributes[t],null!=e&&e!==!1},d.prototype.toggleCurrentAttribute=function(t){var e;return(e=!this.currentAttributes[t])?this.setCurrentAttribute(t,e):this.removeCurrentAttribute(t)},d.prototype.canSetCurrentAttribute=function(t){return o(t)?this.canSetCurrentBlockAttribute(t):this.canSetCurrentTextAttribute(t)},d.prototype.canSetCurrentTextAttribute=function(t){switch(t){case"href":return!this.selectionContainsAttachmentWithAttribute(t);default:return!0}},d.prototype.canSetCurrentBlockAttribute=function(){var t;if(t=this.getBlock())return!t.isTerminalBlock()},d.prototype.setCurrentAttribute=function(t,e){return o(t)?this.setBlockAttribute(t,e):(this.setTextAttribute(t,e),this.currentAttributes[t]=e,this.notifyDelegateOfCurrentAttributesChange())},d.prototype.setTextAttribute=function(t,n){var i,o,r,s;if(o=this.getSelectedRange())return r=o[0],i=o[1],r!==i?this.setDocument(this.document.addAttributeAtRange(t,n,o)):"href"===t?(s=e.Text.textForStringWithAttributes(n,{href:n}),this.insertText(s)):void 0},d.prototype.setBlockAttribute=function(t,e){var n,i;if(i=this.getSelectedRange())return this.canSetCurrentAttribute(t)?(n=this.getBlock(),this.setDocument(this.document.applyBlockAttributeAtRange(t,e,i)),this.setSelection(i)):void 0},d.prototype.removeCurrentAttribute=function(t){return o(t)?(this.removeBlockAttribute(t),this.updateCurrentAttributes()):(this.removeTextAttribute(t),delete this.currentAttributes[t],this.notifyDelegateOfCurrentAttributesChange())},d.prototype.removeTextAttribute=function(t){var e;if(e=this.getSelectedRange())return this.setDocument(this.document.removeAttributeAtRange(t,e))},d.prototype.removeBlockAttribute=function(t){var e;if(e=this.getSelectedRange())return this.setDocument(this.document.removeAttributeAtRange(t,e))},d.prototype.canDecreaseNestingLevel=function(){var t;return(null!=(t=this.getBlock())?t.getNestingLevel():void 0)>0},d.prototype.canIncreaseNestingLevel=function(){var e,n,i;if(e=this.getBlock())return(null!=(i=o(e.getLastNestableAttribute()))?i.listAttribute:0)?(n=this.getPreviousBlock())?t(n.getListItemAttributes(),e.getListItemAttributes()):void 0:e.getNestingLevel()>0},d.prototype.decreaseNestingLevel=function(){var t;if(t=this.getBlock())return this.setDocument(this.document.replaceBlock(t,t.decreaseNestingLevel()))},d.prototype.increaseNestingLevel=function(){var t;if(t=this.getBlock())return this.setDocument(this.document.replaceBlock(t,t.increaseNestingLevel()))},d.prototype.canDecreaseBlockAttributeLevel=function(){var t;return(null!=(t=this.getBlock())?t.getAttributeLevel():void 0)>0},d.prototype.decreaseBlockAttributeLevel=function(){var t,e;return(t=null!=(e=this.getBlock())?e.getLastAttribute():void 0)?this.removeCurrentAttribute(t):void 0},d.prototype.decreaseListLevel=function(){var t,e,n,i,o,r;for(r=this.getSelectedRange()[0],o=this.document.locationFromPosition(r).index,n=o,t=this.getBlock().getAttributeLevel();(e=this.document.getBlockAtIndex(n+1))&&e.isListItem()&&e.getAttributeLevel()>t;)n++;return r=this.document.positionFromLocation({index:o,offset:0}),i=this.document.positionFromLocation({index:n,offset:0}),this.setDocument(this.document.removeLastListAttributeAtRange([r,i]))},d.prototype.updateCurrentAttributes=function(){var t,e,n,o,r,s;if(s=this.getSelectedRange({ignoreLock:!0})){for(e=this.document.getCommonAttributesAtRange(s),r=i(),n=0,o=r.length;o>n;n++)t=r[n],e[t]||this.canSetCurrentAttribute(t)||(e[t]=!1);if(!a(e,this.currentAttributes))return this.currentAttributes=e,this.notifyDelegateOfCurrentAttributesChange()}},d.prototype.getCurrentAttributes=function(){return n.call({},this.currentAttributes)},d.prototype.getCurrentTextAttributes=function(){var t,e,n,i;t={},n=this.currentAttributes;for(e in n)i=n[e],r(e)&&(t[e]=i);return t},d.prototype.freezeSelection=function(){return this.setCurrentAttribute("frozen",!0)},d.prototype.thawSelection=function(){return this.removeCurrentAttribute("frozen")},d.prototype.hasFrozenSelection=function(){return this.hasCurrentAttribute("frozen")},d.proxyMethod("getSelectionManager().getPointRange"),d.proxyMethod("getSelectionManager().setLocationRangeFromPointRange"),d.proxyMethod("getSelectionManager().locationIsCursorTarget"),d.proxyMethod("getSelectionManager().selectionIsExpanded"),d.proxyMethod("delegate?.getSelectionManager"),d.prototype.setSelection=function(t){var e,n;return e=this.document.locationRangeFromRange(t),null!=(n=this.delegate)?n.compositionDidRequestChangingSelectionToLocationRange(e):void 0},d.prototype.getSelectedRange=function(){var t;return(t=this.getLocationRange())?this.document.rangeFromLocationRange(t):void 0},d.prototype.setSelectedRange=function(t){var e;return e=this.document.locationRangeFromRange(t),this.getSelectionManager().setLocationRange(e)},d.prototype.getPosition=function(){var t;return(t=this.getLocationRange())?this.document.positionFromLocation(t[0]):void 0},d.prototype.getLocationRange=function(t){var e;return null!=(e=this.getSelectionManager().getLocationRange(t))?e:s({index:0,offset:0})},d.prototype.getExpandedRangeInDirection=function(t){var e,n,i;return n=this.getSelectedRange(),i=n[0],e=n[1],"backward"===t?i=this.translateUTF16PositionFromOffset(i,-1):e=this.translateUTF16PositionFromOffset(e,1),s([i,e])},d.prototype.moveCursorInDirection=function(t){var e,n,i,o;return this.editingAttachment?i=this.document.getRangeOfAttachment(this.editingAttachment):(o=this.getSelectedRange(),i=this.getExpandedRangeInDirection(t),n=!c(o,i)),this.setSelectedRange("backward"===t?i[0]:i[1]),n&&(e=this.getAttachmentAtRange(i))?this.editAttachment(e):void 0},d.prototype.expandSelectionInDirection=function(t){var e;return e=this.getExpandedRangeInDirection(t),this.setSelectedRange(e)},d.prototype.expandSelectionForEditing=function(){return this.hasCurrentAttribute("href")?this.expandSelectionAroundCommonAttribute("href"):void 0},d.prototype.expandSelectionAroundCommonAttribute=function(t){var e,n;return e=this.getPosition(),n=this.document.getRangeOfCommonAttributeAtPosition(t,e),this.setSelectedRange(n)},d.prototype.selectionContainsAttachmentWithAttribute=function(t){var e,n,i,o,r;if(r=this.getSelectedRange()){for(o=this.document.getDocumentAtRange(r).getAttachments(),n=0,i=o.length;i>n;n++)if(e=o[n],e.hasAttribute(t))return!0;return!1}},d.prototype.selectionIsInCursorTarget=function(){return this.editingAttachment||this.positionIsCursorTarget(this.getPosition())},d.prototype.positionIsCursorTarget=function(t){var e;return(e=this.document.locationFromPosition(t))?this.locationIsCursorTarget(e):void 0},d.prototype.positionIsBlockBreak=function(t){var e;return null!=(e=this.document.getPieceAtPosition(t))?e.isBlockBreak():void 0},d.prototype.getSelectedDocument=function(){var t;return(t=this.getSelectedRange())?this.document.getDocumentAtRange(t):void 0},d.prototype.getAttachments=function(){return this.attachments.slice(0)},d.prototype.refreshAttachments=function(){var t,e,n,i,o,r,s,a,u,c,h,p;for(n=this.document.getAttachments(),a=l(this.attachments,n),t=a.added,h=a.removed,this.attachments=n,i=0,r=h.length;r>i;i++)e=h[i],e.delegate=null,null!=(u=this.delegate)&&"function"==typeof u.compositionDidRemoveAttachment&&u.compositionDidRemoveAttachment(e);for(p=[],o=0,s=t.length;s>o;o++)e=t[o],e.delegate=this,p.push(null!=(c=this.delegate)&&"function"==typeof c.compositionDidAddAttachment?c.compositionDidAddAttachment(e):void 0);return p},d.prototype.attachmentDidChangeAttributes=function(t){var e;return this.revision++,null!=(e=this.delegate)&&"function"==typeof e.compositionDidEditAttachment?e.compositionDidEditAttachment(t):void 0},d.prototype.attachmentDidChangePreviewURL=function(t){var e;return this.revision++,null!=(e=this.delegate)&&"function"==typeof e.compositionDidChangeAttachmentPreviewURL?e.compositionDidChangeAttachmentPreviewURL(t):void 0},d.prototype.editAttachment=function(t){var e;if(t!==this.editingAttachment)return this.stopEditingAttachment(),this.editingAttachment=t,null!=(e=this.delegate)&&"function"==typeof e.compositionDidStartEditingAttachment?e.compositionDidStartEditingAttachment(this.editingAttachment):void 0},d.prototype.stopEditingAttachment=function(){var t;if(this.editingAttachment)return null!=(t=this.delegate)&&"function"==typeof t.compositionDidStopEditingAttachment&&t.compositionDidStopEditingAttachment(this.editingAttachment),this.editingAttachment=null},d.prototype.canEditAttachmentCaption=function(){var t;return null!=(t=this.editingAttachment)?t.isPreviewable():void 0},d.prototype.updateAttributesForAttachment=function(t,e){return this.setDocument(this.document.updateAttributesForAttachment(t,e))},d.prototype.removeAttributeForAttachment=function(t,e){return this.setDocument(this.document.removeAttributeForAttachment(t,e))},d.prototype.breakFormattedBlock=function(t){var n,i,o,r,s;return i=t.document,n=t.block,r=t.startPosition,s=[r-1,r],n.getBlockBreakPosition()===t.startLocation.offset?(n.breaksOnReturn()&&"\n"===t.nextCharacter?r+=1:i=i.removeTextAtRange(s),s=[r,r]):"\n"===t.nextCharacter?"\n"===t.previousCharacter?s=[r-1,r+1]:(s=[r,r+1],r+=1):t.startLocation.offset-1!==0&&(r+=1),o=new e.Document([n.removeLastAttribute().copyWithoutText()]),this.setDocument(i.insertDocumentAtRange(o,s)),this.setSelection(r)
-},d.prototype.getPreviousBlock=function(){var t,e;return(e=this.getLocationRange())&&(t=e[0].index,t>0)?this.document.getBlockAtIndex(t-1):void 0},d.prototype.getBlock=function(){var t;return(t=this.getLocationRange())?this.document.getBlockAtIndex(t[0].index):void 0},d.prototype.getAttachmentAtRange=function(t){var n;return n=this.document.getDocumentAtRange(t),n.toString()===e.OBJECT_REPLACEMENT_CHARACTER+"\n"?n.getAttachments()[0]:void 0},d.prototype.notifyDelegateOfCurrentAttributesChange=function(){var t;return null!=(t=this.delegate)&&"function"==typeof t.compositionDidChangeCurrentAttributes?t.compositionDidChangeCurrentAttributes(this.currentAttributes):void 0},d.prototype.notifyDelegateOfInsertionAtRange=function(t){var e;return null!=(e=this.delegate)&&"function"==typeof e.compositionDidPerformInsertionAtRange?e.compositionDidPerformInsertionAtRange(t):void 0},d.prototype.translateUTF16PositionFromOffset=function(t,e){var n,i;return i=this.document.toUTF16String(),n=i.offsetFromUCS2Offset(t),i.offsetToUCS2Offset(n+e)},d}(e.BasicObject)}.call(this),function(){var t=function(t,e){function i(){this.constructor=t}for(var o in e)n.call(e,o)&&(t[o]=e[o]);return i.prototype=e.prototype,t.prototype=new i,t.__super__=e.prototype,t},n={}.hasOwnProperty;e.UndoManager=function(e){function n(t){this.composition=t,this.undoEntries=[],this.redoEntries=[]}var i;return t(n,e),n.prototype.recordUndoEntry=function(t,e){var n,o,r,s,a;return s=null!=e?e:{},o=s.context,n=s.consolidatable,r=this.undoEntries.slice(-1)[0],n&&i(r,t,o)?void 0:(a=this.createEntry({description:t,context:o}),this.undoEntries.push(a),this.redoEntries=[])},n.prototype.undo=function(){var t,e;return(e=this.undoEntries.pop())?(t=this.createEntry(e),this.redoEntries.push(t),this.composition.loadSnapshot(e.snapshot)):void 0},n.prototype.redo=function(){var t,e;return(t=this.redoEntries.pop())?(e=this.createEntry(t),this.undoEntries.push(e),this.composition.loadSnapshot(t.snapshot)):void 0},n.prototype.canUndo=function(){return this.undoEntries.length>0},n.prototype.canRedo=function(){return this.redoEntries.length>0},n.prototype.createEntry=function(t){var e,n,i;return i=null!=t?t:{},n=i.description,e=i.context,{description:null!=n?n.toString():void 0,context:JSON.stringify(e),snapshot:this.composition.getSnapshot()}},i=function(t,e,n){return(null!=t?t.description:void 0)===(null!=e?e.toString():void 0)&&(null!=t?t.context:void 0)===JSON.stringify(n)},n}(e.BasicObject)}.call(this),function(){e.Editor=function(){function t(t,n,i){this.composition=t,this.selectionManager=n,this.element=i,this.undoManager=new e.UndoManager(this.composition)}return t.prototype.loadDocument=function(t){return this.loadSnapshot({document:t,selectedRange:[0,0]})},t.prototype.loadHTML=function(t){return null==t&&(t=""),this.loadDocument(e.Document.fromHTML(t,{referenceElement:this.element}))},t.prototype.loadJSON=function(t){var n,i;return n=t.document,i=t.selectedRange,n=e.Document.fromJSON(n),this.loadSnapshot({document:n,selectedRange:i})},t.prototype.loadSnapshot=function(t){return this.undoManager=new e.UndoManager(this.composition),this.composition.loadSnapshot(t)},t.prototype.getDocument=function(){return this.composition.document},t.prototype.getSelectedDocument=function(){return this.composition.getSelectedDocument()},t.prototype.getSnapshot=function(){return this.composition.getSnapshot()},t.prototype.toJSON=function(){return this.getSnapshot()},t.prototype.deleteInDirection=function(t){return this.composition.deleteInDirection(t)},t.prototype.insertAttachment=function(t){return this.composition.insertAttachment(t)},t.prototype.insertDocument=function(t){return this.composition.insertDocument(t)},t.prototype.insertFile=function(t){return this.composition.insertFile(t)},t.prototype.insertHTML=function(t){return this.composition.insertHTML(t)},t.prototype.insertString=function(t){return this.composition.insertString(t)},t.prototype.insertText=function(t){return this.composition.insertText(t)},t.prototype.insertLineBreak=function(){return this.composition.insertLineBreak()},t.prototype.getSelectedRange=function(){return this.composition.getSelectedRange()},t.prototype.getPosition=function(){return this.composition.getPosition()},t.prototype.getClientRectAtPosition=function(t){var e;return e=this.getDocument().locationRangeFromRange([t,t+1]),this.selectionManager.getClientRectAtLocationRange(e)},t.prototype.expandSelectionInDirection=function(t){return this.composition.expandSelectionInDirection(t)},t.prototype.moveCursorInDirection=function(t){return this.composition.moveCursorInDirection(t)},t.prototype.setSelectedRange=function(t){return this.composition.setSelectedRange(t)},t.prototype.activateAttribute=function(t,e){return null==e&&(e=!0),this.composition.setCurrentAttribute(t,e)},t.prototype.attributeIsActive=function(t){return this.composition.hasCurrentAttribute(t)},t.prototype.canActivateAttribute=function(t){return this.composition.canSetCurrentAttribute(t)},t.prototype.deactivateAttribute=function(t){return this.composition.removeCurrentAttribute(t)},t.prototype.canDecreaseNestingLevel=function(){return this.composition.canDecreaseNestingLevel()},t.prototype.canIncreaseNestingLevel=function(){return this.composition.canIncreaseNestingLevel()},t.prototype.decreaseNestingLevel=function(){return this.canDecreaseNestingLevel()?this.composition.decreaseNestingLevel():void 0},t.prototype.increaseNestingLevel=function(){return this.canIncreaseNestingLevel()?this.composition.increaseNestingLevel():void 0},t.prototype.canDecreaseIndentationLevel=function(){return this.canDecreaseNestingLevel()},t.prototype.canIncreaseIndentationLevel=function(){return this.canIncreaseNestingLevel()},t.prototype.decreaseIndentationLevel=function(){return this.decreaseNestingLevel()},t.prototype.increaseIndentationLevel=function(){return this.increaseNestingLevel()},t.prototype.canRedo=function(){return this.undoManager.canRedo()},t.prototype.canUndo=function(){return this.undoManager.canUndo()},t.prototype.recordUndoEntry=function(t,e){var n,i,o;return o=null!=e?e:{},i=o.context,n=o.consolidatable,this.undoManager.recordUndoEntry(t,{context:i,consolidatable:n})},t.prototype.redo=function(){return this.canRedo()?this.undoManager.redo():void 0},t.prototype.undo=function(){return this.canUndo()?this.undoManager.undo():void 0},t}()}.call(this),function(){var t=function(t,e){function i(){this.constructor=t}for(var o in e)n.call(e,o)&&(t[o]=e[o]);return i.prototype=e.prototype,t.prototype=new i,t.__super__=e.prototype,t},n={}.hasOwnProperty;e.ManagedAttachment=function(e){function n(t,e){var n;this.attachmentManager=t,this.attachment=e,n=this.attachment,this.id=n.id,this.file=n.file}return t(n,e),n.prototype.remove=function(){return this.attachmentManager.requestRemovalOfAttachment(this.attachment)},n.proxyMethod("attachment.getAttribute"),n.proxyMethod("attachment.hasAttribute"),n.proxyMethod("attachment.setAttribute"),n.proxyMethod("attachment.getAttributes"),n.proxyMethod("attachment.setAttributes"),n.proxyMethod("attachment.isPending"),n.proxyMethod("attachment.isPreviewable"),n.proxyMethod("attachment.getURL"),n.proxyMethod("attachment.getHref"),n.proxyMethod("attachment.getFilename"),n.proxyMethod("attachment.getFilesize"),n.proxyMethod("attachment.getFormattedFilesize"),n.proxyMethod("attachment.getExtension"),n.proxyMethod("attachment.getContentType"),n.proxyMethod("attachment.getFile"),n.proxyMethod("attachment.setFile"),n.proxyMethod("attachment.releaseFile"),n.proxyMethod("attachment.getUploadProgress"),n.proxyMethod("attachment.setUploadProgress"),n}(e.BasicObject)}.call(this),function(){var t=function(t,e){function i(){this.constructor=t}for(var o in e)n.call(e,o)&&(t[o]=e[o]);return i.prototype=e.prototype,t.prototype=new i,t.__super__=e.prototype,t},n={}.hasOwnProperty;e.AttachmentManager=function(n){function i(t){var e,n,i;for(null==t&&(t=[]),this.managedAttachments={},n=0,i=t.length;i>n;n++)e=t[n],this.manageAttachment(e)}return t(i,n),i.prototype.getAttachments=function(){var t,e,n,i;n=this.managedAttachments,i=[];for(e in n)t=n[e],i.push(t);return i},i.prototype.manageAttachment=function(t){var n,i;return null!=(n=this.managedAttachments)[i=t.id]?n[i]:n[i]=new e.ManagedAttachment(this,t)},i.prototype.attachmentIsManaged=function(t){return t.id in this.managedAttachments},i.prototype.requestRemovalOfAttachment=function(t){var e;return this.attachmentIsManaged(t)&&null!=(e=this.delegate)&&"function"==typeof e.attachmentManagerDidRequestRemovalOfAttachment?e.attachmentManagerDidRequestRemovalOfAttachment(t):void 0},i.prototype.unmanageAttachment=function(t){var e;return e=this.managedAttachments[t.id],delete this.managedAttachments[t.id],e},i}(e.BasicObject)}.call(this),function(){var t,n,i,o,r,s,a,u,c,l,h;t=e.elementContainsNode,n=e.findChildIndexOfNode,r=e.nodeIsBlockStart,s=e.nodeIsBlockStartComment,o=e.nodeIsBlockContainer,a=e.nodeIsCursorTarget,u=e.nodeIsEmptyTextNode,c=e.nodeIsTextNode,i=e.nodeIsAttachmentElement,l=e.tagName,h=e.walkTree,e.LocationMapper=function(){function e(t){this.element=t}var p,d,f,g;return e.prototype.findLocationFromContainerAndOffset=function(e,i,o){var s,u,l,p,g,m,y;for(m=(null!=o?o:{strict:!0}).strict,u=0,l=!1,p={index:0,offset:0},(s=this.findAttachmentElementParentForNode(e))&&(e=s.parentNode,i=n(s)),y=h(this.element,{usingFilter:f});y.nextNode();){if(g=y.currentNode,g===e&&c(e)){a(g)||(p.offset+=i);break}if(g.parentNode===e){if(u++===i)break}else if(!t(e,g)&&u>0)break;r(g,{strict:m})?(l&&p.index++,p.offset=0,l=!0):p.offset+=d(g)}return p},e.prototype.findContainerAndOffsetFromLocation=function(t){var e,i,s,a,u,l;if(0===t.index&&0===t.offset){for(e=this.element,a=0;e.firstChild;)if(e=e.firstChild,o(e)){a=1;break}return[e,a]}if(u=this.findNodeAndOffsetFromLocation(t),i=u[0],s=u[1],i){if(c(i))e=i,l=i.textContent,a=t.offset-s;else{if(e=i.parentNode,!r(i.previousSibling)&&!o(e))for(;i===e.lastChild&&(i=e,e=e.parentNode,!o(e)););a=n(i),0!==t.offset&&a++}return[e,a]}},e.prototype.findNodeAndOffsetFromLocation=function(t){var e,n,i,o,r,s,u,l;for(u=0,l=this.getSignificantNodesForIndex(t.index),n=0,i=l.length;i>n;n++){if(e=l[n],o=d(e),t.offset<=u+o)if(c(e)){if(r=e,s=u,t.offset===s&&a(r))break}else r||(r=e,s=u);if(u+=o,u>t.offset)break}return[r,s]},e.prototype.findAttachmentElementParentForNode=function(t){for(;t&&t!==this.element;){if(i(t))return t;t=t.parentNode}},e.prototype.getSignificantNodesForIndex=function(t){var e,n,i,o,r;for(i=[],r=h(this.element,{usingFilter:p}),o=!1;r.nextNode();)if(n=r.currentNode,s(n)){if("undefined"!=typeof e&&null!==e?e++:e=0,e===t)o=!0;else if(o)break}else o&&i.push(n);return i},d=function(t){var e;return t.nodeType===Node.TEXT_NODE?a(t)?0:(e=t.textContent,e.length):"br"===l(t)||i(t)?1:0},p=function(t){return g(t)===NodeFilter.FILTER_ACCEPT?f(t):NodeFilter.FILTER_REJECT},g=function(t){return u(t)?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT},f=function(t){return i(t.parentNode)?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT},e}()}.call(this),function(){var t,n,i=[].slice;t=e.getDOMRange,n=e.setDOMRange,e.PointMapper=function(){function e(){}return e.prototype.createDOMRangeFromPoint=function(e){var i,o,r,s,a,u,c,l;if(c=e.x,l=e.y,document.caretPositionFromPoint)return a=document.caretPositionFromPoint(c,l),r=a.offsetNode,o=a.offset,i=document.createRange(),i.setStart(r,o),i;if(document.caretRangeFromPoint)return document.caretRangeFromPoint(c,l);if(document.body.createTextRange){s=t();try{u=document.body.createTextRange(),u.moveToPoint(c,l),u.select()}catch(h){}return i=t(),n(s),i}},e.prototype.getClientRectsForDOMRange=function(t){var e,n,o;return n=i.call(t.getClientRects()),o=n[0],e=n[n.length-1],[o,e]},e}()}.call(this),function(){var t,n=function(t,e){return function(){return t.apply(e,arguments)}},i=function(t,e){function n(){this.constructor=t}for(var i in e)o.call(e,i)&&(t[i]=e[i]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},o={}.hasOwnProperty,r=[].indexOf||function(t){for(var e=0,n=this.length;n>e;e++)if(e in this&&this[e]===t)return e;return-1};t=e.getDOMRange,e.SelectionChangeObserver=function(e){function o(){this.run=n(this.run,this),this.update=n(this.update,this),this.selectionManagers=[]}var s;return i(o,e),o.prototype.start=function(){return this.started?void 0:(this.started=!0,"onselectionchange"in document?document.addEventListener("selectionchange",this.update,!0):this.run())},o.prototype.stop=function(){return this.started?(this.started=!1,document.removeEventListener("selectionchange",this.update,!0)):void 0},o.prototype.registerSelectionManager=function(t){return r.call(this.selectionManagers,t)<0?(this.selectionManagers.push(t),this.start()):void 0},o.prototype.unregisterSelectionManager=function(t){var e;return this.selectionManagers=function(){var n,i,o,r;for(o=this.selectionManagers,r=[],n=0,i=o.length;i>n;n++)e=o[n],e!==t&&r.push(e);return r}.call(this),0===this.selectionManagers.length?this.stop():void 0},o.prototype.notifySelectionManagersOfSelectionChange=function(){var t,e,n,i,o;for(n=this.selectionManagers,i=[],t=0,e=n.length;e>t;t++)o=n[t],i.push(o.selectionDidChange());return i},o.prototype.update=function(){var e;return e=t(),s(e,this.domRange)?void 0:(this.domRange=e,this.notifySelectionManagersOfSelectionChange())},o.prototype.reset=function(){return this.domRange=null,this.update()},o.prototype.run=function(){return this.started?(this.update(),requestAnimationFrame(this.run)):void 0},s=function(t,e){return(null!=t?t.startContainer:void 0)===(null!=e?e.startContainer:void 0)&&(null!=t?t.startOffset:void 0)===(null!=e?e.startOffset:void 0)&&(null!=t?t.endContainer:void 0)===(null!=e?e.endContainer:void 0)&&(null!=t?t.endOffset:void 0)===(null!=e?e.endOffset:void 0)},o}(e.BasicObject),null==e.selectionChangeObserver&&(e.selectionChangeObserver=new e.SelectionChangeObserver)}.call(this),function(){var t,n,i,o,r,s,a,u,c,l,h=function(t,e){return function(){return t.apply(e,arguments)}},p=function(t,e){function n(){this.constructor=t}for(var i in e)d.call(e,i)&&(t[i]=e[i]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},d={}.hasOwnProperty;i=e.getDOMSelection,n=e.getDOMRange,l=e.setDOMRange,t=e.elementContainsNode,s=e.nodeIsCursorTarget,r=e.innerElementIsActive,o=e.handleEvent,a=e.normalizeRange,u=e.rangeIsCollapsed,c=e.rangesAreEqual,e.SelectionManager=function(d){function f(t){this.element=t,this.selectionDidChange=h(this.selectionDidChange,this),this.didMouseDown=h(this.didMouseDown,this),this.locationMapper=new e.LocationMapper(this.element),this.pointMapper=new e.PointMapper,this.lockCount=0,o("mousedown",{onElement:this.element,withCallback:this.didMouseDown})}return p(f,d),f.prototype.getLocationRange=function(t){var e,i;return null==t&&(t={}),e=t.strict===!1?this.createLocationRangeFromDOMRange(n(),{strict:!1}):t.ignoreLock?this.currentLocationRange:null!=(i=this.lockedLocationRange)?i:this.currentLocationRange},f.prototype.setLocationRange=function(t){var e;if(!this.lockedLocationRange)return t=a(t),(e=this.createDOMRangeFromLocationRange(t))?(l(e),this.updateCurrentLocationRange(t)):void 0},f.prototype.setLocationRangeFromPointRange=function(t){var e,n;return t=a(t),n=this.getLocationAtPoint(t[0]),e=this.getLocationAtPoint(t[1]),this.setLocationRange([n,e])},f.prototype.getClientRectAtLocationRange=function(t){var e;return(e=this.createDOMRangeFromLocationRange(t))?this.getClientRectsForDOMRange(e)[1]:void 0},f.prototype.locationIsCursorTarget=function(t){var e,n,i;return i=this.findNodeAndOffsetFromLocation(t),e=i[0],n=i[1],s(e)},f.prototype.lock=function(){return 0===this.lockCount++?(this.updateCurrentLocationRange(),this.lockedLocationRange=this.getLocationRange()):void 0},f.prototype.unlock=function(){var t;return 0===--this.lockCount&&(t=this.lockedLocationRange,this.lockedLocationRange=null,null!=t)?this.setLocationRange(t):void 0},f.prototype.clearSelection=function(){var t;return null!=(t=i())?t.removeAllRanges():void 0},f.prototype.selectionIsCollapsed=function(){var t;return(null!=(t=n())?t.collapsed:void 0)===!0},f.prototype.selectionIsExpanded=function(){return!this.selectionIsCollapsed()},f.proxyMethod("locationMapper.findLocationFromContainerAndOffset"),f.proxyMethod("locationMapper.findContainerAndOffsetFromLocation"),f.proxyMethod("locationMapper.findNodeAndOffsetFromLocation"),f.proxyMethod("pointMapper.createDOMRangeFromPoint"),f.proxyMethod("pointMapper.getClientRectsForDOMRange"),f.prototype.didMouseDown=function(){return this.pauseTemporarily()},f.prototype.pauseTemporarily=function(){var e,n,i,r;return this.paused=!0,n=function(e){return function(){var n,o,s;for(e.paused=!1,clearTimeout(r),o=0,s=i.length;s>o;o++)n=i[o],n.destroy();return t(document,e.element)?e.selectionDidChange():void 0}}(this),r=setTimeout(n,200),i=function(){var t,i,r,s;for(r=["mousemove","keydown"],s=[],t=0,i=r.length;i>t;t++)e=r[t],s.push(o(e,{onElement:document,withCallback:n}));return s}()},f.prototype.selectionDidChange=function(){return this.paused||r(this.element)?void 0:this.updateCurrentLocationRange()},f.prototype.updateCurrentLocationRange=function(t){var e;return(null!=t?t:t=this.createLocationRangeFromDOMRange(n()))&&!c(t,this.currentLocationRange)?(this.currentLocationRange=t,null!=(e=this.delegate)&&"function"==typeof e.locationRangeDidChange?e.locationRangeDidChange(this.currentLocationRange.slice(0)):void 0):void 0},f.prototype.createDOMRangeFromLocationRange=function(t){var e,n,i,o;return i=this.findContainerAndOffsetFromLocation(t[0]),n=u(t)?i:null!=(o=this.findContainerAndOffsetFromLocation(t[1]))?o:i,null!=i&&null!=n?(e=document.createRange(),e.setStart.apply(e,i),e.setEnd.apply(e,n),e):void 0},f.prototype.createLocationRangeFromDOMRange=function(t,e){var n,i;if(null!=t&&this.domRangeWithinElement(t)&&(i=this.findLocationFromContainerAndOffset(t.startContainer,t.startOffset,e)))return t.collapsed||(n=this.findLocationFromContainerAndOffset(t.endContainer,t.endOffset,e)),a([i,n])},f.prototype.getLocationAtPoint=function(t){var e,n;return(e=this.createDOMRangeFromPoint(t))&&null!=(n=this.createLocationRangeFromDOMRange(e))?n[0]:void 0},f.prototype.domRangeWithinElement=function(e){return e.collapsed?t(this.element,e.startContainer):t(this.element,e.startContainer)&&t(this.element,e.endContainer)},f}(e.BasicObject)}.call(this),function(){var t,n,i,o=function(t,e){function n(){this.constructor=t}for(var i in e)r.call(e,i)&&(t[i]=e[i]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},r={}.hasOwnProperty,s=[].slice;n=e.rangeIsCollapsed,i=e.rangesAreEqual,t=e.objectsAreEqual,e.EditorController=function(r){function a(t){var n,i;this.editorElement=t.editorElement,n=t.document,i=t.html,this.selectionManager=new e.SelectionManager(this.editorElement),this.selectionManager.delegate=this,this.composition=new e.Composition,this.composition.delegate=this,this.attachmentManager=new e.AttachmentManager(this.composition.getAttachments()),this.attachmentManager.delegate=this,this.inputController=new e.InputController(this.editorElement),this.inputController.delegate=this,this.inputController.responder=this.composition,this.compositionController=new e.CompositionController(this.editorElement,this.composition),this.compositionController.delegate=this,this.toolbarController=new e.ToolbarController(this.editorElement.toolbarElement),this.toolbarController.delegate=this,this.editor=new e.Editor(this.composition,this.selectionManager,this.editorElement),null!=n?this.editor.loadDocument(n):this.editor.loadHTML(i)}return o(a,r),a.prototype.registerSelectionManager=function(){return e.selectionChangeObserver.registerSelectionManager(this.selectionManager)},a.prototype.unregisterSelectionManager=function(){return e.selectionChangeObserver.unregisterSelectionManager(this.selectionManager)},a.prototype.compositionDidChangeDocument=function(){return this.notifyEditorElement("document-change"),this.handlingInput?void 0:this.render()},a.prototype.compositionDidChangeCurrentAttributes=function(t){return this.currentAttributes=t,this.toolbarController.updateAttributes(this.currentAttributes),this.updateCurrentActions(),this.notifyEditorElement("attributes-change",{attributes:this.currentAttributes})},a.prototype.compositionDidPerformInsertionAtRange=function(t){return this.pasting?this.pastedRange=t:void 0},a.prototype.compositionShouldAcceptFile=function(t){return this.notifyEditorElement("file-accept",{file:t})},a.prototype.compositionDidAddAttachment=function(t){var e;return e=this.attachmentManager.manageAttachment(t),this.notifyEditorElement("attachment-add",{attachment:e})},a.prototype.compositionDidEditAttachment=function(t){var e;return this.compositionController.rerenderViewForObject(t),e=this.attachmentManager.manageAttachment(t),this.notifyEditorElement("attachment-edit",{attachment:e}),this.notifyEditorElement("change")},a.prototype.compositionDidChangeAttachmentPreviewURL=function(t){return this.compositionController.invalidateViewForObject(t),this.notifyEditorElement("change")},a.prototype.compositionDidRemoveAttachment=function(t){var e;return e=this.attachmentManager.unmanageAttachment(t),this.notifyEditorElement("attachment-remove",{attachment:e})},a.prototype.compositionDidStartEditingAttachment=function(t){return this.attachmentLocationRange=this.composition.document.getLocationRangeOfAttachment(t),this.compositionController.installAttachmentEditorForAttachment(t),this.selectionManager.setLocationRange(this.attachmentLocationRange)},a.prototype.compositionDidStopEditingAttachment=function(){return this.compositionController.uninstallAttachmentEditor(),this.attachmentLocationRange=null},a.prototype.compositionDidRequestChangingSelectionToLocationRange=function(t){return!this.loadingSnapshot||this.isFocused()?(this.requestedLocationRange=t,this.compositionRevisionWhenLocationRangeRequested=this.composition.revision,this.handlingInput?void 0:this.render()):void 0},a.prototype.compositionWillLoadSnapshot=function(){return this.loadingSnapshot=!0},a.prototype.compositionDidLoadSnapshot=function(){return this.compositionController.refreshViewCache(),this.render(),this.loadingSnapshot=!1},a.prototype.getSelectionManager=function(){return this.selectionManager},a.proxyMethod("getSelectionManager().setLocationRange"),a.proxyMethod("getSelectionManager().getLocationRange"),a.prototype.attachmentManagerDidRequestRemovalOfAttachment=function(t){return this.removeAttachment(t)},a.prototype.compositionControllerWillSyncDocumentView=function(){return this.inputController.editorWillSyncDocumentView(),this.selectionManager.lock(),this.selectionManager.clearSelection()},a.prototype.compositionControllerDidSyncDocumentView=function(){return this.inputController.editorDidSyncDocumentView(),this.selectionManager.unlock(),this.updateCurrentActions(),this.notifyEditorElement("sync")},a.prototype.compositionControllerDidRender=function(){return null!=this.requestedLocationRange&&(this.compositionRevisionWhenLocationRangeRequested===this.composition.revision&&this.selectionManager.setLocationRange(this.requestedLocationRange),this.requestedLocationRange=null,this.compositionRevisionWhenLocationRangeRequested=null),this.renderedCompositionRevision!==this.composition.revision&&(this.composition.updateCurrentAttributes(),this.notifyEditorElement("render")),this.renderedCompositionRevision=this.composition.revision},a.prototype.compositionControllerDidFocus=function(){return this.toolbarController.hideDialog(),this.notifyEditorElement("focus")},a.prototype.compositionControllerDidBlur=function(){return this.notifyEditorElement("blur")},a.prototype.compositionControllerDidSelectAttachment=function(t){return this.composition.editAttachment(t)},a.prototype.compositionControllerDidRequestDeselectingAttachment=function(t){var e,n;return e=null!=(n=this.attachmentLocationRange)?n:this.composition.document.getLocationRangeOfAttachment(t),this.selectionManager.setLocationRange(e[1])},a.prototype.compositionControllerWillUpdateAttachment=function(t){return this.editor.recordUndoEntry("Edit Attachment",{context:t.id,consolidatable:!0})},a.prototype.compositionControllerDidRequestRemovalOfAttachment=function(t){return this.removeAttachment(t)},a.prototype.inputControllerWillHandleInput=function(){return this.handlingInput=!0,this.requestedRender=!1},a.prototype.inputControllerDidRequestRender=function(){return this.requestedRender=!0},a.prototype.inputControllerDidHandleInput=function(){return this.handlingInput=!1,this.requestedRender?(this.requestedRender=!1,this.render()):void 0},a.prototype.inputControllerDidAllowUnhandledInput=function(){return this.notifyEditorElement("change")},a.prototype.inputControllerDidRequestReparse=function(){return this.reparse()},a.prototype.inputControllerWillPerformTyping=function(){return this.recordTypingUndoEntry()},a.prototype.inputControllerWillCutText=function(){return this.editor.recordUndoEntry("Cut")},a.prototype.inputControllerWillPaste=function(t){return this.editor.recordUndoEntry("Paste"),this.pasting=!0,this.notifyEditorElement("before-paste",{paste:t})},a.prototype.inputControllerDidPaste=function(t){return t.range=this.pastedRange,this.pastedRange=null,this.pasting=null,this.notifyEditorElement("paste",{paste:t})},a.prototype.inputControllerWillMoveText=function(){return this.editor.recordUndoEntry("Move")},a.prototype.inputControllerWillAttachFiles=function(){return this.editor.recordUndoEntry("Drop Files")},a.prototype.inputControllerDidReceiveKeyboardCommand=function(t){return this.toolbarController.applyKeyboardCommand(t)},a.prototype.inputControllerDidStartDrag=function(){return this.locationRangeBeforeDrag=this.selectionManager.getLocationRange()},a.prototype.inputControllerDidReceiveDragOverPoint=function(t){return this.selectionManager.setLocationRangeFromPointRange(t)},a.prototype.inputControllerDidCancelDrag=function(){return this.selectionManager.setLocationRange(this.locationRangeBeforeDrag),this.locationRangeBeforeDrag=null},a.prototype.locationRangeDidChange=function(t){return this.composition.updateCurrentAttributes(),this.updateCurrentActions(),this.attachmentLocationRange&&!i(this.attachmentLocationRange,t)&&this.composition.stopEditingAttachment(),this.notifyEditorElement("selection-change")},a.prototype.toolbarDidClickButton=function(){return this.getLocationRange()?void 0:this.setLocationRange({index:0,offset:0})},a.prototype.toolbarDidInvokeAction=function(t){return this.invokeAction(t)},a.prototype.toolbarDidToggleAttribute=function(t){return this.recordFormattingUndoEntry(),this.composition.toggleCurrentAttribute(t),this.render(),this.selectionFrozen?void 0:this.editorElement.focus()},a.prototype.toolbarDidUpdateAttribute=function(t,e){return this.recordFormattingUndoEntry(),this.composition.setCurrentAttribute(t,e),this.render(),this.selectionFrozen?void 0:this.editorElement.focus()},a.prototype.toolbarDidRemoveAttribute=function(t){return this.recordFormattingUndoEntry(),this.composition.removeCurrentAttribute(t),this.render(),this.selectionFrozen?void 0:this.editorElement.focus()},a.prototype.toolbarWillShowDialog=function(){return this.composition.expandSelectionForEditing(),this.freezeSelection()},a.prototype.toolbarDidShowDialog=function(t){return this.notifyEditorElement("toolbar-dialog-show",{dialogName:t})},a.prototype.toolbarDidHideDialog=function(t){return this.thawSelection(),this.editorElement.focus(),this.notifyEditorElement("toolbar-dialog-hide",{dialogName:t})},a.prototype.freezeSelection=function(){return this.selectionFrozen?void 0:(this.selectionManager.lock(),this.composition.freezeSelection(),this.selectionFrozen=!0,this.render())},a.prototype.thawSelection=function(){return this.selectionFrozen?(this.composition.thawSelection(),this.selectionManager.unlock(),this.selectionFrozen=!1,this.render()):void 0},a.prototype.actions={undo:{test:function(){return this.editor.canUndo()},perform:function(){return this.editor.undo()}},redo:{test:function(){return this.editor.canRedo()},perform:function(){return this.editor.redo()}},link:{test:function(){return this.editor.canActivateAttribute("href")}},increaseNestingLevel:{test:function(){return this.editor.canIncreaseNestingLevel()},perform:function(){return this.editor.increaseNestingLevel()&&this.render()}},decreaseNestingLevel:{test:function(){return this.editor.canDecreaseNestingLevel()},perform:function(){return this.editor.decreaseNestingLevel()&&this.render()}},increaseBlockLevel:{test:function(){return this.editor.canIncreaseNestingLevel()},perform:function(){return this.editor.increaseNestingLevel()&&this.render()}},decreaseBlockLevel:{test:function(){return this.editor.canDecreaseNestingLevel()},perform:function(){return this.editor.decreaseNestingLevel()&&this.render()}}},a.prototype.canInvokeAction=function(t){var e,n;return this.actionIsExternal(t)?!0:!!(null!=(e=this.actions[t])&&null!=(n=e.test)?n.call(this):void 0)},a.prototype.invokeAction=function(t){var e,n;return this.actionIsExternal(t)?this.notifyEditorElement("action-invoke",{actionName:t}):null!=(e=this.actions[t])&&null!=(n=e.perform)?n.call(this):void 0},a.prototype.actionIsExternal=function(t){return/^x-./.test(t)},a.prototype.getCurrentActions=function(){var t,e;e={};for(t in this.actions)e[t]=this.canInvokeAction(t);return e},a.prototype.updateCurrentActions=function(){var e;return e=this.getCurrentActions(),t(e,this.currentActions)?void 0:(this.currentActions=e,this.toolbarController.updateActions(this.currentActions),this.notifyEditorElement("actions-change",{actions:this.currentActions}))},a.prototype.reparse=function(){return this.composition.replaceHTML(this.editorElement.innerHTML)},a.prototype.render=function(){return this.compositionController.render()},a.prototype.updateInputElement=function(){var t,n;return t=this.compositionController.getSerializableElement(),n=e.serializeToContentType(t,"text/html"),this.editorElement.setInputElementValue(n)},a.prototype.notifyEditorElement=function(t,e){switch(t){case"document-change":this.documentChangedSinceLastRender=!0;break;case"render":this.documentChangedSinceLastRender&&(this.documentChangedSinceLastRender=!1,this.notifyEditorElement("change"));break;case"change":case"attachment-add":case"attachment-edit":case"attachment-remove":this.updateInputElement()}return this.editorElement.notify(t,e)},a.prototype.removeAttachment=function(t){return this.editor.recordUndoEntry("Delete Attachment"),this.composition.removeAttachment(t),this.render()},a.prototype.recordFormattingUndoEntry=function(){var t;return t=this.selectionManager.getLocationRange(),n(t)?void 0:this.editor.recordUndoEntry("Formatting",{context:this.getUndoContext(),consolidatable:!0})},a.prototype.recordTypingUndoEntry=function(){return this.editor.recordUndoEntry("Typing",{context:this.getUndoContext(this.currentAttributes),consolidatable:!0})},a.prototype.getUndoContext=function(){var t;return t=1<=arguments.length?s.call(arguments,0):[],[this.getLocationContext(),this.getTimeContext()].concat(s.call(t))},a.prototype.getLocationContext=function(){var t;return t=this.selectionManager.getLocationRange(),n(t)?t[0].index:t},a.prototype.getTimeContext=function(){return e.config.undoInterval>0?Math.floor((new Date).getTime()/e.config.undoInterval):0},a.prototype.isFocused=function(){var t;return this.editorElement===(null!=(t=this.editorElement.ownerDocument)?t.activeElement:void 0)},a}(e.Controller)}.call(this),function(){var t,n,i,o,r,s;n=e.browser,r=e.makeElement,s=e.triggerEvent,i=e.handleEvent,o=e.handleEventOnce,t=e.AttachmentView.attachmentSelector,e.registerElement("trix-editor",function(){var a,u,c,l,h,p,d,f;return p=0,u=function(t){return!document.querySelector(":focus")&&t.hasAttribute("autofocus")&&document.querySelector("[autofocus]")===t?t.focus():void 0},d=function(t){return t.hasAttribute("contenteditable")?void 0:(t.setAttribute("contenteditable",""),o("focus",{onElement:t,withCallback:function(){return c(t)}}))},a=function(t){return t.hasAttribute("role")?void 0:t.setAttribute("role","textbox")},c=function(t){return h(t),f(t)},h=function(t){return("function"==typeof document.queryCommandSupported?document.queryCommandSupported("enableObjectResizing"):void 0)?(document.execCommand("enableObjectResizing",!1,!1),i("mscontrolselect",{onElement:t,preventDefault:!0})):void 0},f=function(){var t;return("function"==typeof document.queryCommandSupported?document.queryCommandSupported("DefaultParagraphSeparator"):void 0)&&(t=e.config.blockAttributes["default"].tagName,"div"===t||"p"===t)?document.execCommand("DefaultParagraphSeparator",!1,t):void 0},l=function(){return n.forcesObjectResizing?{display:"inline",width:"auto"}:{display:"inline-block",width:"1px"}
-}(),{defaultCSS:"%t:empty:not(:focus)::before {\n  content: attr(placeholder);\n  color: graytext;\n  cursor: text;\n}\n\n%t a[contenteditable=false] {\n  cursor: text;\n}\n\n%t img {\n  max-width: 100%;\n  height: auto;\n}\n\n%t "+t+" figcaption textarea {\n  resize: none;\n}\n\n%t "+t+" figcaption textarea.trix-autoresize-clone {\n  position: absolute;\n  left: -9999px;\n  max-height: 0px;\n}\n\n%t "+t+" figcaption[data-trix-placeholder]:empty::before {\n  content: attr(data-trix-placeholder);\n  color: graytext;\n}\n\n%t [data-trix-cursor-target] {\n  display: "+l.display+" !important;\n  width: "+l.width+" !important;\n  padding: 0 !important;\n  margin: 0 !important;\n  border: none !important;\n}\n\n%t [data-trix-cursor-target=left] {\n  vertical-align: top !important;\n  margin-left: -1px !important;\n}\n\n%t [data-trix-cursor-target=right] {\n  vertical-align: bottom !important;\n  margin-right: -1px !important;\n}",trixId:{get:function(){return this.hasAttribute("trix-id")?this.getAttribute("trix-id"):(this.setAttribute("trix-id",++p),this.trixId)}},toolbarElement:{get:function(){var t,e,n;return this.hasAttribute("toolbar")?null!=(e=this.ownerDocument)?e.getElementById(this.getAttribute("toolbar")):void 0:this.parentNode?(n="trix-toolbar-"+this.trixId,this.setAttribute("toolbar",n),t=r("trix-toolbar",{id:n}),this.parentNode.insertBefore(t,this),t):void 0}},inputElement:{get:function(){var t,e,n;return this.hasAttribute("input")?null!=(n=this.ownerDocument)?n.getElementById(this.getAttribute("input")):void 0:this.parentNode?(e="trix-input-"+this.trixId,this.setAttribute("input",e),t=r("input",{type:"hidden",id:e}),this.parentNode.insertBefore(t,this.nextElementSibling),t):void 0}},editor:{get:function(){var t;return null!=(t=this.editorController)?t.editor:void 0}},name:{get:function(){var t;return null!=(t=this.inputElement)?t.name:void 0}},value:{get:function(){var t;return null!=(t=this.inputElement)?t.value:void 0},set:function(t){var e;return this.defaultValue=t,null!=(e=this.editor)?e.loadHTML(this.defaultValue):void 0}},notify:function(t,e){return this.editorController?s("trix-"+t,{onElement:this,attributes:e}):void 0},setInputElementValue:function(t){var e;return null!=(e=this.inputElement)?e.value=t:void 0},createdCallback:function(){return d(this),a(this)},attachedCallback:function(){return this.hasAttribute("data-trix-internal")?void 0:(null==this.editorController&&(this.editorController=new e.EditorController({editorElement:this,html:this.defaultValue=this.value})),this.editorController.registerSelectionManager(),this.registerResetListener(),u(this),requestAnimationFrame(function(t){return function(){return t.notify("initialize")}}(this)))},detachedCallback:function(){var t;return null!=(t=this.editorController)&&t.unregisterSelectionManager(),this.unregisterResetListener()},registerResetListener:function(){return this.resetListener=this.resetBubbled.bind(this),window.addEventListener("reset",this.resetListener,!1)},unregisterResetListener:function(){return window.removeEventListener("reset",this.resetListener,!1)},resetBubbled:function(t){var e;return t.target!==(null!=(e=this.inputElement)?e.form:void 0)||t.defaultPrevented?void 0:this.reset()},reset:function(){return this.value=this.defaultValue}}}())}.call(this),function(){}.call(this)}).call(this), true&&module.exports?module.exports=e: true&&!(__WEBPACK_AMD_DEFINE_FACTORY__ = (e),
-		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
-		(__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) :
-		__WEBPACK_AMD_DEFINE_FACTORY__),
-		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__))}.call(this);
+var t="2.1.1";const e="[data-trix-attachment]",i={preview:{presentation:"gallery",caption:{name:!0,size:!0}},file:{caption:{size:!0}}},n={default:{tagName:"div",parse:!1},quote:{tagName:"blockquote",nestable:!0},heading1:{tagName:"h1",terminal:!0,breakOnReturn:!0,group:!1},code:{tagName:"pre",terminal:!0,htmlAttributes:["language"],text:{plaintext:!0}},bulletList:{tagName:"ul",parse:!1},bullet:{tagName:"li",listAttribute:"bulletList",group:!1,nestable:!0,test(t){return r(t.parentNode)===n[this.listAttribute].tagName}},numberList:{tagName:"ol",parse:!1},number:{tagName:"li",listAttribute:"numberList",group:!1,nestable:!0,test(t){return r(t.parentNode)===n[this.listAttribute].tagName}},attachmentGallery:{tagName:"div",exclusive:!0,terminal:!0,parse:!1,group:!1}},r=t=>{var e;return null==t||null===(e=t.tagName)||void 0===e?void 0:e.toLowerCase()},o=navigator.userAgent.match(/android\s([0-9]+.*Chrome)/i),s=o&&parseInt(o[1]);var a={composesExistingText:/Android.*Chrome/.test(navigator.userAgent),recentAndroid:s&&s>12,samsungAndroid:s&&navigator.userAgent.match(/Android.*SM-/),forcesObjectResizing:/Trident.*rv:11/.test(navigator.userAgent),supportsInputEvents:"undefined"!=typeof InputEvent&&["data","getTargetRanges","inputType"].every((t=>t in InputEvent.prototype))},l={attachFiles:"Attach Files",bold:"Bold",bullets:"Bullets",byte:"Byte",bytes:"Bytes",captionPlaceholder:"Add a caption…",code:"Code",heading1:"Heading",indent:"Increase Level",italic:"Italic",link:"Link",numbers:"Numbers",outdent:"Decrease Level",quote:"Quote",redo:"Redo",remove:"Remove",strike:"Strikethrough",undo:"Undo",unlink:"Unlink",url:"URL",urlPlaceholder:"Enter a URL…",GB:"GB",KB:"KB",MB:"MB",PB:"PB",TB:"TB"};const c=[l.bytes,l.KB,l.MB,l.GB,l.TB,l.PB];var u={prefix:"IEC",precision:2,formatter(t){switch(t){case 0:return"0 ".concat(l.bytes);case 1:return"1 ".concat(l.byte);default:let e;"SI"===this.prefix?e=1e3:"IEC"===this.prefix&&(e=1024);const i=Math.floor(Math.log(t)/Math.log(e)),n=(t/Math.pow(e,i)).toFixed(this.precision).replace(/0*$/,"").replace(/\.$/,"");return"".concat(n," ").concat(c[i])}}};const h="\ufeff",d=" ",g=function(t){for(const e in t){const i=t[e];this[e]=i}return this},m=document.documentElement,p=m.matches,f=function(t){let{onElement:e,matchingSelector:i,withCallback:n,inPhase:r,preventDefault:o,times:s}=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};const a=e||m,l=i,c="capturing"===r,u=function(t){null!=s&&0==--s&&u.destroy();const e=A(t.target,{matchingSelector:l});null!=e&&(null==n||n.call(e,t,e),o&&t.preventDefault())};return u.destroy=()=>a.removeEventListener(t,u,c),a.addEventListener(t,u,c),u},b=function(t){let{onElement:e,bubbles:i,cancelable:n,attributes:r}=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};const o=null!=e?e:m;i=!1!==i,n=!1!==n;const s=document.createEvent("Events");return s.initEvent(t,i,n),null!=r&&g.call(s,r),o.dispatchEvent(s)},v=function(t,e){if(1===(null==t?void 0:t.nodeType))return p.call(t,e)},A=function(t){let{matchingSelector:e,untilNode:i}=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};for(;t&&t.nodeType!==Node.ELEMENT_NODE;)t=t.parentNode;if(null!=t){if(null==e)return t;if(t.closest&&null==i)return t.closest(e);for(;t&&t!==i;){if(v(t,e))return t;t=t.parentNode}}},x=t=>document.activeElement!==t&&y(t,document.activeElement),y=function(t,e){if(t&&e)for(;e;){if(e===t)return!0;e=e.parentNode}},C=function(t){var e;if(null===(e=t)||void 0===e||!e.parentNode)return;let i=0;for(t=t.previousSibling;t;)i++,t=t.previousSibling;return i},k=t=>{var e;return null==t||null===(e=t.parentNode)||void 0===e?void 0:e.removeChild(t)},R=function(t){let{onlyNodesOfType:e,usingFilter:i,expandEntityReferences:n}=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};const r=(()=>{switch(e){case"element":return NodeFilter.SHOW_ELEMENT;case"text":return NodeFilter.SHOW_TEXT;case"comment":return NodeFilter.SHOW_COMMENT;default:return NodeFilter.SHOW_ALL}})();return document.createTreeWalker(t,r,null!=i?i:null,!0===n)},E=t=>{var e;return null==t||null===(e=t.tagName)||void 0===e?void 0:e.toLowerCase()},S=function(t){let e,i,n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};"object"==typeof t?(n=t,t=n.tagName):n={attributes:n};const r=document.createElement(t);if(null!=n.editable&&(null==n.attributes&&(n.attributes={}),n.attributes.contenteditable=n.editable),n.attributes)for(e in n.attributes)i=n.attributes[e],r.setAttribute(e,i);if(n.style)for(e in n.style)i=n.style[e],r.style[e]=i;if(n.data)for(e in n.data)i=n.data[e],r.dataset[e]=i;return n.className&&n.className.split(" ").forEach((t=>{r.classList.add(t)})),n.textContent&&(r.textContent=n.textContent),n.childNodes&&[].concat(n.childNodes).forEach((t=>{r.appendChild(t)})),r};let L;const D=function(){if(null!=L)return L;L=[];for(const t in n){const e=n[t];e.tagName&&L.push(e.tagName)}return L},w=t=>B(null==t?void 0:t.firstChild),T=function(t){let{strict:e}=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{strict:!0};return e?B(t):B(t)||!B(t.firstChild)&&function(t){return D().includes(E(t))&&!D().includes(E(t.firstChild))}(t)},B=t=>F(t)&&"block"===(null==t?void 0:t.data),F=t=>(null==t?void 0:t.nodeType)===Node.COMMENT_NODE,P=function(t){let{name:e}=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};if(t)return O(t)?t.data===h?!e||t.parentNode.dataset.trixCursorTarget===e:void 0:P(t.firstChild)},I=t=>v(t,e),N=t=>O(t)&&""===(null==t?void 0:t.data),O=t=>(null==t?void 0:t.nodeType)===Node.TEXT_NODE,M={level2Enabled:!0,getLevel(){return this.level2Enabled&&a.supportsInputEvents?2:0},pickFiles(t){const e=S("input",{type:"file",multiple:!0,hidden:!0,id:this.fileInputId});e.addEventListener("change",(()=>{t(e.files),k(e)})),k(document.getElementById(this.fileInputId)),document.body.appendChild(e),e.click()}};var j={removeBlankTableCells:!1,tableCellSeparator:" | ",tableRowSeparator:"\n"},W={bold:{tagName:"strong",inheritable:!0,parser(t){const e=window.getComputedStyle(t);return"bold"===e.fontWeight||e.fontWeight>=600}},italic:{tagName:"em",inheritable:!0,parser:t=>"italic"===window.getComputedStyle(t).fontStyle},href:{groupTagName:"a",parser(t){const i="a:not(".concat(e,")"),n=t.closest(i);if(n)return n.getAttribute("href")}},strike:{tagName:"del",inheritable:!0},frozen:{style:{backgroundColor:"highlight"}}},U={getDefaultHTML:()=>'<div class="trix-button-row">\n      <span class="trix-button-group trix-button-group--text-tools" data-trix-button-group="text-tools">\n        <button type="button" class="trix-button trix-button--icon trix-button--icon-bold" data-trix-attribute="bold" data-trix-key="b" title="'.concat(l.bold,'" tabindex="-1">').concat(l.bold,'</button>\n        <button type="button" class="trix-button trix-button--icon trix-button--icon-italic" data-trix-attribute="italic" data-trix-key="i" title="').concat(l.italic,'" tabindex="-1">').concat(l.italic,'</button>\n        <button type="button" class="trix-button trix-button--icon trix-button--icon-strike" data-trix-attribute="strike" title="').concat(l.strike,'" tabindex="-1">').concat(l.strike,'</button>\n        <button type="button" class="trix-button trix-button--icon trix-button--icon-link" data-trix-attribute="href" data-trix-action="link" data-trix-key="k" title="').concat(l.link,'" tabindex="-1">').concat(l.link,'</button>\n      </span>\n\n      <span class="trix-button-group trix-button-group--block-tools" data-trix-button-group="block-tools">\n        <button type="button" class="trix-button trix-button--icon trix-button--icon-heading-1" data-trix-attribute="heading1" title="').concat(l.heading1,'" tabindex="-1">').concat(l.heading1,'</button>\n        <button type="button" class="trix-button trix-button--icon trix-button--icon-quote" data-trix-attribute="quote" title="').concat(l.quote,'" tabindex="-1">').concat(l.quote,'</button>\n        <button type="button" class="trix-button trix-button--icon trix-button--icon-code" data-trix-attribute="code" title="').concat(l.code,'" tabindex="-1">').concat(l.code,'</button>\n        <button type="button" class="trix-button trix-button--icon trix-button--icon-bullet-list" data-trix-attribute="bullet" title="').concat(l.bullets,'" tabindex="-1">').concat(l.bullets,'</button>\n        <button type="button" class="trix-button trix-button--icon trix-button--icon-number-list" data-trix-attribute="number" title="').concat(l.numbers,'" tabindex="-1">').concat(l.numbers,'</button>\n        <button type="button" class="trix-button trix-button--icon trix-button--icon-decrease-nesting-level" data-trix-action="decreaseNestingLevel" title="').concat(l.outdent,'" tabindex="-1">').concat(l.outdent,'</button>\n        <button type="button" class="trix-button trix-button--icon trix-button--icon-increase-nesting-level" data-trix-action="increaseNestingLevel" title="').concat(l.indent,'" tabindex="-1">').concat(l.indent,'</button>\n      </span>\n\n      <span class="trix-button-group trix-button-group--file-tools" data-trix-button-group="file-tools">\n        <button type="button" class="trix-button trix-button--icon trix-button--icon-attach" data-trix-action="attachFiles" title="').concat(l.attachFiles,'" tabindex="-1">').concat(l.attachFiles,'</button>\n      </span>\n\n      <span class="trix-button-group-spacer"></span>\n\n      <span class="trix-button-group trix-button-group--history-tools" data-trix-button-group="history-tools">\n        <button type="button" class="trix-button trix-button--icon trix-button--icon-undo" data-trix-action="undo" data-trix-key="z" title="').concat(l.undo,'" tabindex="-1">').concat(l.undo,'</button>\n        <button type="button" class="trix-button trix-button--icon trix-button--icon-redo" data-trix-action="redo" data-trix-key="shift+z" title="').concat(l.redo,'" tabindex="-1">').concat(l.redo,'</button>\n      </span>\n    </div>\n\n    <div class="trix-dialogs" data-trix-dialogs>\n      <div class="trix-dialog trix-dialog--link" data-trix-dialog="href" data-trix-dialog-attribute="href">\n        <div class="trix-dialog__link-fields">\n          <input type="url" name="href" class="trix-input trix-input--dialog" placeholder="').concat(l.urlPlaceholder,'" aria-label="').concat(l.url,'" required data-trix-input>\n          <div class="trix-button-group">\n            <input type="button" class="trix-button trix-button--dialog" value="').concat(l.link,'" data-trix-method="setAttribute">\n            <input type="button" class="trix-button trix-button--dialog" value="').concat(l.unlink,'" data-trix-method="removeAttribute">\n          </div>\n        </div>\n      </div>\n    </div>')};const q={interval:5e3};var V=Object.freeze({__proto__:null,attachments:i,blockAttributes:n,browser:a,css:{attachment:"attachment",attachmentCaption:"attachment__caption",attachmentCaptionEditor:"attachment__caption-editor",attachmentMetadata:"attachment__metadata",attachmentMetadataContainer:"attachment__metadata-container",attachmentName:"attachment__name",attachmentProgress:"attachment__progress",attachmentSize:"attachment__size",attachmentToolbar:"attachment__toolbar",attachmentGallery:"attachment-gallery"},fileSize:u,input:M,keyNames:{8:"backspace",9:"tab",13:"return",27:"escape",37:"left",39:"right",46:"delete",68:"d",72:"h",79:"o"},lang:l,parser:j,textAttributes:W,toolbar:U,undo:q});class H{static proxyMethod(t){const{name:e,toMethod:i,toProperty:n,optional:r}=z(t);this.prototype[e]=function(){let t,o;var s,a;i?o=r?null===(s=this[i])||void 0===s?void 0:s.call(this):this[i]():n&&(o=this[n]);return r?(t=null===(a=o)||void 0===a?void 0:a[e],t?_.call(t,o,arguments):void 0):(t=o[e],_.call(t,o,arguments))}}}const z=function(t){const e=t.match(J);if(!e)throw new Error("can't parse @proxyMethod expression: ".concat(t));const i={name:e[4]};return null!=e[2]?i.toMethod=e[1]:i.toProperty=e[1],null!=e[3]&&(i.optional=!0),i},{apply:_}=Function.prototype,J=new RegExp("^(.+?)(\\(\\))?(\\?)?\\.(.+?)$");var K,G,$;class X extends H{static box(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:"";return t instanceof this?t:this.fromUCS2String(null==t?void 0:t.toString())}static fromUCS2String(t){return new this(t,tt(t))}static fromCodepoints(t){return new this(et(t),t)}constructor(t,e){super(...arguments),this.ucs2String=t,this.codepoints=e,this.length=this.codepoints.length,this.ucs2Length=this.ucs2String.length}offsetToUCS2Offset(t){return et(this.codepoints.slice(0,Math.max(0,t))).length}offsetFromUCS2Offset(t){return tt(this.ucs2String.slice(0,Math.max(0,t))).length}slice(){return this.constructor.fromCodepoints(this.codepoints.slice(...arguments))}charAt(t){return this.slice(t,t+1)}isEqualTo(t){return this.constructor.box(t).ucs2String===this.ucs2String}toJSON(){return this.ucs2String}getCacheKey(){return this.ucs2String}toString(){return this.ucs2String}}const Y=1===(null===(K=Array.from)||void 0===K?void 0:K.call(Array,"👼").length),Q=null!=(null===(G=" ".codePointAt)||void 0===G?void 0:G.call(" ",0)),Z=" 👼"===(null===($=String.fromCodePoint)||void 0===$?void 0:$.call(String,32,128124));let tt,et;tt=Y&&Q?t=>Array.from(t).map((t=>t.codePointAt(0))):function(t){const e=[];let i=0;const{length:n}=t;for(;i<n;){let r=t.charCodeAt(i++);if(55296<=r&&r<=56319&&i<n){const e=t.charCodeAt(i++);56320==(64512&e)?r=((1023&r)<<10)+(1023&e)+65536:i--}e.push(r)}return e},et=Z?t=>String.fromCodePoint(...Array.from(t||[])):function(t){return(()=>{const e=[];return Array.from(t).forEach((t=>{let i="";t>65535&&(t-=65536,i+=String.fromCharCode(t>>>10&1023|55296),t=56320|1023&t),e.push(i+String.fromCharCode(t))})),e})().join("")};let it=0;class nt extends H{static fromJSONString(t){return this.fromJSON(JSON.parse(t))}constructor(){super(...arguments),this.id=++it}hasSameConstructorAs(t){return this.constructor===(null==t?void 0:t.constructor)}isEqualTo(t){return this===t}inspect(){const t=[],e=this.contentsForInspection()||{};for(const i in e){const n=e[i];t.push("".concat(i,"=").concat(n))}return"#<".concat(this.constructor.name,":").concat(this.id).concat(t.length?" ".concat(t.join(", ")):"",">")}contentsForInspection(){}toJSONString(){return JSON.stringify(this)}toUTF16String(){return X.box(this)}getCacheKey(){return this.id.toString()}}const rt=function(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:[],e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:[];if(t.length!==e.length)return!1;for(let i=0;i<t.length;i++){if(t[i]!==e[i])return!1}return!0},ot=function(t){const e=t.slice(0);for(var i=arguments.length,n=new Array(i>1?i-1:0),r=1;r<i;r++)n[r-1]=arguments[r];return e.splice(...n),e},st=/[\u05BE\u05C0\u05C3\u05D0-\u05EA\u05F0-\u05F4\u061B\u061F\u0621-\u063A\u0640-\u064A\u066D\u0671-\u06B7\u06BA-\u06BE\u06C0-\u06CE\u06D0-\u06D5\u06E5\u06E6\u200F\u202B\u202E\uFB1F-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE70-\uFE72\uFE74\uFE76-\uFEFC]/,at=function(){const t=S("input",{dir:"auto",name:"x",dirName:"x.dir"}),e=S("textarea",{dir:"auto",name:"y",dirName:"y.dir"}),i=S("form");i.appendChild(t),i.appendChild(e);const n=function(){try{return new FormData(i).has(e.dirName)}catch(t){return!1}}(),r=function(){try{return t.matches(":dir(ltr),:dir(rtl)")}catch(t){return!1}}();return n?function(t){return e.value=t,new FormData(i).get(e.dirName)}:r?function(e){return t.value=e,t.matches(":dir(rtl)")?"rtl":"ltr"}:function(t){const e=t.trim().charAt(0);return st.test(e)?"rtl":"ltr"}}();let lt=null,ct=null,ut=null,ht=null;const dt=()=>(lt||(lt=ft().concat(mt())),lt),gt=t=>n[t],mt=()=>(ct||(ct=Object.keys(n)),ct),pt=t=>W[t],ft=()=>(ut||(ut=Object.keys(W)),ut),bt=function(t,e){vt(t).textContent=e.replace(/%t/g,t)},vt=function(t){const e=document.createElement("style");e.setAttribute("type","text/css"),e.setAttribute("data-tag-name",t.toLowerCase());const i=At();return i&&e.setAttribute("nonce",i),document.head.insertBefore(e,document.head.firstChild),e},At=function(){const t=xt("trix-csp-nonce")||xt("csp-nonce");if(t)return t.getAttribute("content")},xt=t=>document.head.querySelector("meta[name=".concat(t,"]")),yt={"application/x-trix-feature-detection":"test"},Ct=function(t){const e=t.getData("text/plain"),i=t.getData("text/html");if(!e||!i)return null==e?void 0:e.length;{const{body:t}=(new DOMParser).parseFromString(i,"text/html");if(t.textContent===e)return!t.querySelector("*")}},kt=/Mac|^iP/.test(navigator.platform)?t=>t.metaKey:t=>t.ctrlKey,Rt=t=>setTimeout(t,1),Et=function(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};const e={};for(const i in t){const n=t[i];e[i]=n}return e},St=function(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};if(Object.keys(t).length!==Object.keys(e).length)return!1;for(const i in t){if(t[i]!==e[i])return!1}return!0},Lt=function(t){if(null!=t)return Array.isArray(t)||(t=[t,t]),[Tt(t[0]),Tt(null!=t[1]?t[1]:t[0])]},Dt=function(t){if(null==t)return;const[e,i]=Lt(t);return Bt(e,i)},wt=function(t,e){if(null==t||null==e)return;const[i,n]=Lt(t),[r,o]=Lt(e);return Bt(i,r)&&Bt(n,o)},Tt=function(t){return"number"==typeof t?t:Et(t)},Bt=function(t,e){return"number"==typeof t?t===e:St(t,e)};class Ft extends H{constructor(){super(...arguments),this.update=this.update.bind(this),this.selectionManagers=[]}start(){this.started||(this.started=!0,document.addEventListener("selectionchange",this.update,!0))}stop(){if(this.started)return this.started=!1,document.removeEventListener("selectionchange",this.update,!0)}registerSelectionManager(t){if(!this.selectionManagers.includes(t))return this.selectionManagers.push(t),this.start()}unregisterSelectionManager(t){if(this.selectionManagers=this.selectionManagers.filter((e=>e!==t)),0===this.selectionManagers.length)return this.stop()}notifySelectionManagersOfSelectionChange(){return this.selectionManagers.map((t=>t.selectionDidChange()))}update(){this.notifySelectionManagersOfSelectionChange()}reset(){this.update()}}const Pt=new Ft,It=function(){const t=window.getSelection();if(t.rangeCount>0)return t},Nt=function(){var t;const e=null===(t=It())||void 0===t?void 0:t.getRangeAt(0);if(e&&!Mt(e))return e},Ot=function(t){const e=window.getSelection();return e.removeAllRanges(),e.addRange(t),Pt.update()},Mt=t=>jt(t.startContainer)||jt(t.endContainer),jt=t=>!Object.getPrototypeOf(t),Wt=t=>t.replace(new RegExp("".concat(h),"g"),"").replace(new RegExp("".concat(d),"g")," "),Ut=new RegExp("[^\\S".concat(d,"]")),qt=t=>t.replace(new RegExp("".concat(Ut.source),"g")," ").replace(/\ {2,}/g," "),Vt=function(t,e){if(t.isEqualTo(e))return["",""];const i=Ht(t,e),{length:n}=i.utf16String;let r;if(n){const{offset:o}=i,s=t.codepoints.slice(0,o).concat(t.codepoints.slice(o+n));r=Ht(e,X.fromCodepoints(s))}else r=Ht(e,t);return[i.utf16String.toString(),r.utf16String.toString()]},Ht=function(t,e){let i=0,n=t.length,r=e.length;for(;i<n&&t.charAt(i).isEqualTo(e.charAt(i));)i++;for(;n>i+1&&t.charAt(n-1).isEqualTo(e.charAt(r-1));)n--,r--;return{utf16String:t.slice(i,n),offset:i}};class zt extends nt{static fromCommonAttributesOfObjects(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:[];if(!t.length)return new this;let e=Gt(t[0]),i=e.getKeys();return t.slice(1).forEach((t=>{i=e.getKeysCommonToHash(Gt(t)),e=e.slice(i)})),e}static box(t){return Gt(t)}constructor(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};super(...arguments),this.values=Kt(t)}add(t,e){return this.merge(_t(t,e))}remove(t){return new zt(Kt(this.values,t))}get(t){return this.values[t]}has(t){return t in this.values}merge(t){return new zt(Jt(this.values,$t(t)))}slice(t){const e={};return Array.from(t).forEach((t=>{this.has(t)&&(e[t]=this.values[t])})),new zt(e)}getKeys(){return Object.keys(this.values)}getKeysCommonToHash(t){return t=Gt(t),this.getKeys().filter((e=>this.values[e]===t.values[e]))}isEqualTo(t){return rt(this.toArray(),Gt(t).toArray())}isEmpty(){return 0===this.getKeys().length}toArray(){if(!this.array){const t=[];for(const e in this.values){const i=this.values[e];t.push(t.push(e,i))}this.array=t.slice(0)}return this.array}toObject(){return Kt(this.values)}toJSON(){return this.toObject()}contentsForInspection(){return{values:JSON.stringify(this.values)}}}const _t=function(t,e){const i={};return i[t]=e,i},Jt=function(t,e){const i=Kt(t);for(const t in e){const n=e[t];i[t]=n}return i},Kt=function(t,e){const i={};return Object.keys(t).sort().forEach((n=>{n!==e&&(i[n]=t[n])})),i},Gt=function(t){return t instanceof zt?t:new zt(t)},$t=function(t){return t instanceof zt?t.values:t};class Xt{static groupObjects(){let t,e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:[],{depth:i,asTree:n}=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};n&&null==i&&(i=0);const r=[];return Array.from(e).forEach((e=>{var o;if(t){var s,a,l;if(null!==(s=e.canBeGrouped)&&void 0!==s&&s.call(e,i)&&null!==(a=(l=t[t.length-1]).canBeGroupedWith)&&void 0!==a&&a.call(l,e,i))return void t.push(e);r.push(new this(t,{depth:i,asTree:n})),t=null}null!==(o=e.canBeGrouped)&&void 0!==o&&o.call(e,i)?t=[e]:r.push(e)})),t&&r.push(new this(t,{depth:i,asTree:n})),r}constructor(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:[],{depth:e,asTree:i}=arguments.length>1?arguments[1]:void 0;this.objects=t,i&&(this.depth=e,this.objects=this.constructor.groupObjects(this.objects,{asTree:i,depth:this.depth+1}))}getObjects(){return this.objects}getDepth(){return this.depth}getCacheKey(){const t=["objectGroup"];return Array.from(this.getObjects()).forEach((e=>{t.push(e.getCacheKey())})),t.join("/")}}class Yt extends H{constructor(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:[];super(...arguments),this.objects={},Array.from(t).forEach((t=>{const e=JSON.stringify(t);null==this.objects[e]&&(this.objects[e]=t)}))}find(t){const e=JSON.stringify(t);return this.objects[e]}}class Qt{constructor(t){this.reset(t)}add(t){const e=Zt(t);this.elements[e]=t}remove(t){const e=Zt(t),i=this.elements[e];if(i)return delete this.elements[e],i}reset(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:[];return this.elements={},Array.from(t).forEach((t=>{this.add(t)})),t}}const Zt=t=>t.dataset.trixStoreKey;class te extends H{isPerforming(){return!0===this.performing}hasPerformed(){return!0===this.performed}hasSucceeded(){return this.performed&&this.succeeded}hasFailed(){return this.performed&&!this.succeeded}getPromise(){return this.promise||(this.promise=new Promise(((t,e)=>(this.performing=!0,this.perform(((i,n)=>{this.succeeded=i,this.performing=!1,this.performed=!0,this.succeeded?t(n):e(n)})))))),this.promise}perform(t){return t(!1)}release(){var t,e;null===(t=this.promise)||void 0===t||null===(e=t.cancel)||void 0===e||e.call(t),this.promise=null,this.performing=null,this.performed=null,this.succeeded=null}}te.proxyMethod("getPromise().then"),te.proxyMethod("getPromise().catch");class ee extends H{constructor(t){let e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};super(...arguments),this.object=t,this.options=e,this.childViews=[],this.rootView=this}getNodes(){return this.nodes||(this.nodes=this.createNodes()),this.nodes.map((t=>t.cloneNode(!0)))}invalidate(){var t;return this.nodes=null,this.childViews=[],null===(t=this.parentView)||void 0===t?void 0:t.invalidate()}invalidateViewForObject(t){var e;return null===(e=this.findViewForObject(t))||void 0===e?void 0:e.invalidate()}findOrCreateCachedChildView(t,e,i){let n=this.getCachedViewForObject(e);return n?this.recordChildView(n):(n=this.createChildView(...arguments),this.cacheViewForObject(n,e)),n}createChildView(t,e){let i=arguments.length>2&&void 0!==arguments[2]?arguments[2]:{};e instanceof Xt&&(i.viewClass=t,t=ie);const n=new t(e,i);return this.recordChildView(n)}recordChildView(t){return t.parentView=this,t.rootView=this.rootView,this.childViews.push(t),t}getAllChildViews(){let t=[];return this.childViews.forEach((e=>{t.push(e),t=t.concat(e.getAllChildViews())})),t}findElement(){return this.findElementForObject(this.object)}findElementForObject(t){const e=null==t?void 0:t.id;if(e)return this.rootView.element.querySelector("[data-trix-id='".concat(e,"']"))}findViewForObject(t){for(const e of this.getAllChildViews())if(e.object===t)return e}getViewCache(){return this.rootView!==this?this.rootView.getViewCache():this.isViewCachingEnabled()?(this.viewCache||(this.viewCache={}),this.viewCache):void 0}isViewCachingEnabled(){return!1!==this.shouldCacheViews}enableViewCaching(){this.shouldCacheViews=!0}disableViewCaching(){this.shouldCacheViews=!1}getCachedViewForObject(t){var e;return null===(e=this.getViewCache())||void 0===e?void 0:e[t.getCacheKey()]}cacheViewForObject(t,e){const i=this.getViewCache();i&&(i[e.getCacheKey()]=t)}garbageCollectCachedViews(){const t=this.getViewCache();if(t){const e=this.getAllChildViews().concat(this).map((t=>t.object.getCacheKey()));for(const i in t)e.includes(i)||delete t[i]}}}class ie extends ee{constructor(){super(...arguments),this.objectGroup=this.object,this.viewClass=this.options.viewClass,delete this.options.viewClass}getChildViews(){return this.childViews.length||Array.from(this.objectGroup.getObjects()).forEach((t=>{this.findOrCreateCachedChildView(this.viewClass,t,this.options)})),this.childViews}createNodes(){const t=this.createContainerElement();return this.getChildViews().forEach((e=>{Array.from(e.getNodes()).forEach((e=>{t.appendChild(e)}))})),[t]}createContainerElement(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:this.objectGroup.getDepth();return this.getChildViews()[0].createContainerElement(t)}}const{css:ne}=V;class re extends ee{constructor(){super(...arguments),this.attachment=this.object,this.attachment.uploadProgressDelegate=this,this.attachmentPiece=this.options.piece}createContentNodes(){return[]}createNodes(){let t;const e=t=S({tagName:"figure",className:this.getClassName(),data:this.getData(),editable:!1}),i=this.getHref();return i&&(t=S({tagName:"a",editable:!1,attributes:{href:i,tabindex:-1}}),e.appendChild(t)),this.attachment.hasContent()?t.innerHTML=this.attachment.getContent():this.createContentNodes().forEach((e=>{t.appendChild(e)})),t.appendChild(this.createCaptionElement()),this.attachment.isPending()&&(this.progressElement=S({tagName:"progress",attributes:{class:ne.attachmentProgress,value:this.attachment.getUploadProgress(),max:100},data:{trixMutable:!0,trixStoreKey:["progressElement",this.attachment.id].join("/")}}),e.appendChild(this.progressElement)),[oe("left"),e,oe("right")]}createCaptionElement(){const t=S({tagName:"figcaption",className:ne.attachmentCaption}),e=this.attachmentPiece.getCaption();if(e)t.classList.add("".concat(ne.attachmentCaption,"--edited")),t.textContent=e;else{let e,i;const n=this.getCaptionConfig();if(n.name&&(e=this.attachment.getFilename()),n.size&&(i=this.attachment.getFormattedFilesize()),e){const i=S({tagName:"span",className:ne.attachmentName,textContent:e});t.appendChild(i)}if(i){e&&t.appendChild(document.createTextNode(" "));const n=S({tagName:"span",className:ne.attachmentSize,textContent:i});t.appendChild(n)}}return t}getClassName(){const t=[ne.attachment,"".concat(ne.attachment,"--").concat(this.attachment.getType())],e=this.attachment.getExtension();return e&&t.push("".concat(ne.attachment,"--").concat(e)),t.join(" ")}getData(){const t={trixAttachment:JSON.stringify(this.attachment),trixContentType:this.attachment.getContentType(),trixId:this.attachment.id},{attributes:e}=this.attachmentPiece;return e.isEmpty()||(t.trixAttributes=JSON.stringify(e)),this.attachment.isPending()&&(t.trixSerialize=!1),t}getHref(){if(!se(this.attachment.getContent(),"a"))return this.attachment.getHref()}getCaptionConfig(){var t;const e=this.attachment.getType(),n=Et(null===(t=i[e])||void 0===t?void 0:t.caption);return"file"===e&&(n.name=!0),n}findProgressElement(){var t;return null===(t=this.findElement())||void 0===t?void 0:t.querySelector("progress")}attachmentDidChangeUploadProgress(){const t=this.attachment.getUploadProgress(),e=this.findProgressElement();e&&(e.value=t)}}const oe=t=>S({tagName:"span",textContent:h,data:{trixCursorTarget:t,trixSerialize:!1}}),se=function(t,e){const i=S("div");return i.innerHTML=t||"",i.querySelector(e)};class ae extends re{constructor(){super(...arguments),this.attachment.previewDelegate=this}createContentNodes(){return this.image=S({tagName:"img",attributes:{src:""},data:{trixMutable:!0}}),this.refresh(this.image),[this.image]}createCaptionElement(){const t=super.createCaptionElement(...arguments);return t.textContent||t.setAttribute("data-trix-placeholder",l.captionPlaceholder),t}refresh(t){var e;t||(t=null===(e=this.findElement())||void 0===e?void 0:e.querySelector("img"));if(t)return this.updateAttributesForImage(t)}updateAttributesForImage(t){const e=this.attachment.getURL(),i=this.attachment.getPreviewURL();if(t.src=i||e,i===e)t.removeAttribute("data-trix-serialized-attributes");else{const i=JSON.stringify({src:e});t.setAttribute("data-trix-serialized-attributes",i)}const n=this.attachment.getWidth(),r=this.attachment.getHeight();null!=n&&(t.width=n),null!=r&&(t.height=r);const o=["imageElement",this.attachment.id,t.src,t.width,t.height].join("/");t.dataset.trixStoreKey=o}attachmentDidChangeAttributes(){return this.refresh(this.image),this.refresh()}}class le extends ee{constructor(){super(...arguments),this.piece=this.object,this.attributes=this.piece.getAttributes(),this.textConfig=this.options.textConfig,this.context=this.options.context,this.piece.attachment?this.attachment=this.piece.attachment:this.string=this.piece.toString()}createNodes(){let t=this.attachment?this.createAttachmentNodes():this.createStringNodes();const e=this.createElement();if(e){const i=function(t){for(;null!==(e=t)&&void 0!==e&&e.firstElementChild;){var e;t=t.firstElementChild}return t}(e);Array.from(t).forEach((t=>{i.appendChild(t)})),t=[e]}return t}createAttachmentNodes(){const t=this.attachment.isPreviewable()?ae:re;return this.createChildView(t,this.piece.attachment,{piece:this.piece}).getNodes()}createStringNodes(){var t;if(null!==(t=this.textConfig)&&void 0!==t&&t.plaintext)return[document.createTextNode(this.string)];{const t=[],e=this.string.split("\n");for(let i=0;i<e.length;i++){const n=e[i];if(i>0){const e=S("br");t.push(e)}if(n.length){const e=document.createTextNode(this.preserveSpaces(n));t.push(e)}}return t}}createElement(){let t,e,i;const n={};for(e in this.attributes){i=this.attributes[e];const o=pt(e);if(o){if(o.tagName){var r;const e=S(o.tagName);r?(r.appendChild(e),r=e):t=r=e}if(o.styleProperty&&(n[o.styleProperty]=i),o.style)for(e in o.style)i=o.style[e],n[e]=i}}if(Object.keys(n).length)for(e in t||(t=S("span")),n)i=n[e],t.style[e]=i;return t}createContainerElement(){for(const t in this.attributes){const e=this.attributes[t],i=pt(t);if(i&&i.groupTagName){const n={};return n[t]=e,S(i.groupTagName,n)}}}preserveSpaces(t){return this.context.isLast&&(t=t.replace(/\ $/,d)),t=t.replace(/(\S)\ {3}(\S)/g,"$1 ".concat(d," $2")).replace(/\ {2}/g,"".concat(d," ")).replace(/\ {2}/g," ".concat(d)),(this.context.isFirst||this.context.followsWhitespace)&&(t=t.replace(/^\ /,d)),t}}class ce extends ee{constructor(){super(...arguments),this.text=this.object,this.textConfig=this.options.textConfig}createNodes(){const t=[],e=Xt.groupObjects(this.getPieces()),i=e.length-1;for(let r=0;r<e.length;r++){const o=e[r],s={};0===r&&(s.isFirst=!0),r===i&&(s.isLast=!0),ue(n)&&(s.followsWhitespace=!0);const a=this.findOrCreateCachedChildView(le,o,{textConfig:this.textConfig,context:s});t.push(...Array.from(a.getNodes()||[]));var n=o}return t}getPieces(){return Array.from(this.text.getPieces()).filter((t=>!t.hasAttribute("blockBreak")))}}const ue=t=>/\s$/.test(null==t?void 0:t.toString()),{css:he}=V;class de extends ee{constructor(){super(...arguments),this.block=this.object,this.attributes=this.block.getAttributes()}createNodes(){const t=[document.createComment("block")];if(this.block.isEmpty())t.push(S("br"));else{var e;const i=null===(e=gt(this.block.getLastAttribute()))||void 0===e?void 0:e.text,n=this.findOrCreateCachedChildView(ce,this.block.text,{textConfig:i});t.push(...Array.from(n.getNodes()||[])),this.shouldAddExtraNewlineElement()&&t.push(S("br"))}if(this.attributes.length)return t;{let e;const{tagName:i}=n.default;this.block.isRTL()&&(e={dir:"rtl"});const r=S({tagName:i,attributes:e});return t.forEach((t=>r.appendChild(t))),[r]}}createContainerElement(t){const e={};let i;const n=this.attributes[t],{tagName:r,htmlAttributes:o=[]}=gt(n);if(0===t&&this.block.isRTL()&&Object.assign(e,{dir:"rtl"}),"attachmentGallery"===n){const t=this.block.getBlockBreakPosition();i="".concat(he.attachmentGallery," ").concat(he.attachmentGallery,"--").concat(t)}return Object.entries(this.block.htmlAttributes).forEach((t=>{let[i,n]=t;o.includes(i)&&(e[i]=n)})),S({tagName:r,className:i,attributes:e})}shouldAddExtraNewlineElement(){return/\n\n$/.test(this.block.toString())}}class ge extends ee{static render(t){const e=S("div"),i=new this(t,{element:e});return i.render(),i.sync(),e}constructor(){super(...arguments),this.element=this.options.element,this.elementStore=new Qt,this.setDocument(this.object)}setDocument(t){t.isEqualTo(this.document)||(this.document=this.object=t)}render(){if(this.childViews=[],this.shadowElement=S("div"),!this.document.isEmpty()){const t=Xt.groupObjects(this.document.getBlocks(),{asTree:!0});Array.from(t).forEach((t=>{const e=this.findOrCreateCachedChildView(de,t);Array.from(e.getNodes()).map((t=>this.shadowElement.appendChild(t)))}))}}isSynced(){return pe(this.shadowElement,this.element)}sync(){const t=this.createDocumentFragmentForSync();for(;this.element.lastChild;)this.element.removeChild(this.element.lastChild);return this.element.appendChild(t),this.didSync()}didSync(){return this.elementStore.reset(me(this.element)),Rt((()=>this.garbageCollectCachedViews()))}createDocumentFragmentForSync(){const t=document.createDocumentFragment();return Array.from(this.shadowElement.childNodes).forEach((e=>{t.appendChild(e.cloneNode(!0))})),Array.from(me(t)).forEach((t=>{const e=this.elementStore.remove(t);e&&t.parentNode.replaceChild(e,t)})),t}}const me=t=>t.querySelectorAll("[data-trix-store-key]"),pe=(t,e)=>fe(t.innerHTML)===fe(e.innerHTML),fe=t=>t.replace(/&nbsp;/g," ");function be(t){var e,i;function n(e,i){try{var o=t[e](i),s=o.value,a=s instanceof ve;Promise.resolve(a?s.v:s).then((function(i){if(a){var l="return"===e?"return":"next";if(!s.k||i.done)return n(l,i);i=t[l](i).value}r(o.done?"return":"normal",i)}),(function(t){n("throw",t)}))}catch(t){r("throw",t)}}function r(t,r){switch(t){case"return":e.resolve({value:r,done:!0});break;case"throw":e.reject(r);break;default:e.resolve({value:r,done:!1})}(e=e.next)?n(e.key,e.arg):i=null}this._invoke=function(t,r){return new Promise((function(o,s){var a={key:t,arg:r,resolve:o,reject:s,next:null};i?i=i.next=a:(e=i=a,n(t,r))}))},"function"!=typeof t.return&&(this.return=void 0)}function ve(t,e){this.v=t,this.k=e}function Ae(t,e,i){return(e=xe(e))in t?Object.defineProperty(t,e,{value:i,enumerable:!0,configurable:!0,writable:!0}):t[e]=i,t}function xe(t){var e=function(t,e){if("object"!=typeof t||null===t)return t;var i=t[Symbol.toPrimitive];if(void 0!==i){var n=i.call(t,e||"default");if("object"!=typeof n)return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return("string"===e?String:Number)(t)}(t,"string");return"symbol"==typeof e?e:String(e)}be.prototype["function"==typeof Symbol&&Symbol.asyncIterator||"@@asyncIterator"]=function(){return this},be.prototype.next=function(t){return this._invoke("next",t)},be.prototype.throw=function(t){return this._invoke("throw",t)},be.prototype.return=function(t){return this._invoke("return",t)};class ye extends nt{static registerType(t,e){e.type=t,this.types[t]=e}static fromJSON(t){const e=this.types[t.type];if(e)return e.fromJSON(t)}constructor(t){let e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};super(...arguments),this.attributes=zt.box(e)}copyWithAttributes(t){return new this.constructor(this.getValue(),t)}copyWithAdditionalAttributes(t){return this.copyWithAttributes(this.attributes.merge(t))}copyWithoutAttribute(t){return this.copyWithAttributes(this.attributes.remove(t))}copy(){return this.copyWithAttributes(this.attributes)}getAttribute(t){return this.attributes.get(t)}getAttributesHash(){return this.attributes}getAttributes(){return this.attributes.toObject()}hasAttribute(t){return this.attributes.has(t)}hasSameStringValueAsPiece(t){return t&&this.toString()===t.toString()}hasSameAttributesAsPiece(t){return t&&(this.attributes===t.attributes||this.attributes.isEqualTo(t.attributes))}isBlockBreak(){return!1}isEqualTo(t){return super.isEqualTo(...arguments)||this.hasSameConstructorAs(t)&&this.hasSameStringValueAsPiece(t)&&this.hasSameAttributesAsPiece(t)}isEmpty(){return 0===this.length}isSerializable(){return!0}toJSON(){return{type:this.constructor.type,attributes:this.getAttributes()}}contentsForInspection(){return{type:this.constructor.type,attributes:this.attributes.inspect()}}canBeGrouped(){return this.hasAttribute("href")}canBeGroupedWith(t){return this.getAttribute("href")===t.getAttribute("href")}getLength(){return this.length}canBeConsolidatedWith(t){return!1}}Ae(ye,"types",{});class Ce extends te{constructor(t){super(...arguments),this.url=t}perform(t){const e=new Image;e.onload=()=>(e.width=this.width=e.naturalWidth,e.height=this.height=e.naturalHeight,t(!0,e)),e.onerror=()=>t(!1),e.src=this.url}}class ke extends nt{static attachmentForFile(t){const e=new this(this.attributesForFile(t));return e.setFile(t),e}static attributesForFile(t){return new zt({filename:t.name,filesize:t.size,contentType:t.type})}static fromJSON(t){return new this(t)}constructor(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};super(t),this.releaseFile=this.releaseFile.bind(this),this.attributes=zt.box(t),this.didChangeAttributes()}getAttribute(t){return this.attributes.get(t)}hasAttribute(t){return this.attributes.has(t)}getAttributes(){return this.attributes.toObject()}setAttributes(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};const e=this.attributes.merge(t);var i,n,r,o;if(!this.attributes.isEqualTo(e))return this.attributes=e,this.didChangeAttributes(),null===(i=this.previewDelegate)||void 0===i||null===(n=i.attachmentDidChangeAttributes)||void 0===n||n.call(i,this),null===(r=this.delegate)||void 0===r||null===(o=r.attachmentDidChangeAttributes)||void 0===o?void 0:o.call(r,this)}didChangeAttributes(){if(this.isPreviewable())return this.preloadURL()}isPending(){return null!=this.file&&!(this.getURL()||this.getHref())}isPreviewable(){return this.attributes.has("previewable")?this.attributes.get("previewable"):ke.previewablePattern.test(this.getContentType())}getType(){return this.hasContent()?"content":this.isPreviewable()?"preview":"file"}getURL(){return this.attributes.get("url")}getHref(){return this.attributes.get("href")}getFilename(){return this.attributes.get("filename")||""}getFilesize(){return this.attributes.get("filesize")}getFormattedFilesize(){const t=this.attributes.get("filesize");return"number"==typeof t?u.formatter(t):""}getExtension(){var t;return null===(t=this.getFilename().match(/\.(\w+)$/))||void 0===t?void 0:t[1].toLowerCase()}getContentType(){return this.attributes.get("contentType")}hasContent(){return this.attributes.has("content")}getContent(){return this.attributes.get("content")}getWidth(){return this.attributes.get("width")}getHeight(){return this.attributes.get("height")}getFile(){return this.file}setFile(t){if(this.file=t,this.isPreviewable())return this.preloadFile()}releaseFile(){this.releasePreloadedFile(),this.file=null}getUploadProgress(){return null!=this.uploadProgress?this.uploadProgress:0}setUploadProgress(t){var e,i;if(this.uploadProgress!==t)return this.uploadProgress=t,null===(e=this.uploadProgressDelegate)||void 0===e||null===(i=e.attachmentDidChangeUploadProgress)||void 0===i?void 0:i.call(e,this)}toJSON(){return this.getAttributes()}getCacheKey(){return[super.getCacheKey(...arguments),this.attributes.getCacheKey(),this.getPreviewURL()].join("/")}getPreviewURL(){return this.previewURL||this.preloadingURL}setPreviewURL(t){var e,i,n,r;if(t!==this.getPreviewURL())return this.previewURL=t,null===(e=this.previewDelegate)||void 0===e||null===(i=e.attachmentDidChangeAttributes)||void 0===i||i.call(e,this),null===(n=this.delegate)||void 0===n||null===(r=n.attachmentDidChangePreviewURL)||void 0===r?void 0:r.call(n,this)}preloadURL(){return this.preload(this.getURL(),this.releaseFile)}preloadFile(){if(this.file)return this.fileObjectURL=URL.createObjectURL(this.file),this.preload(this.fileObjectURL)}releasePreloadedFile(){this.fileObjectURL&&(URL.revokeObjectURL(this.fileObjectURL),this.fileObjectURL=null)}preload(t,e){if(t&&t!==this.getPreviewURL()){this.preloadingURL=t;return new Ce(t).then((i=>{let{width:n,height:r}=i;return this.getWidth()&&this.getHeight()||this.setAttributes({width:n,height:r}),this.preloadingURL=null,this.setPreviewURL(t),null==e?void 0:e()})).catch((()=>(this.preloadingURL=null,null==e?void 0:e())))}}}Ae(ke,"previewablePattern",/^image(\/(gif|png|webp|jpe?g)|$)/);class Re extends ye{static fromJSON(t){return new this(ke.fromJSON(t.attachment),t.attributes)}constructor(t){super(...arguments),this.attachment=t,this.length=1,this.ensureAttachmentExclusivelyHasAttribute("href"),this.attachment.hasContent()||this.removeProhibitedAttributes()}ensureAttachmentExclusivelyHasAttribute(t){this.hasAttribute(t)&&(this.attachment.hasAttribute(t)||this.attachment.setAttributes(this.attributes.slice([t])),this.attributes=this.attributes.remove(t))}removeProhibitedAttributes(){const t=this.attributes.slice(Re.permittedAttributes);t.isEqualTo(this.attributes)||(this.attributes=t)}getValue(){return this.attachment}isSerializable(){return!this.attachment.isPending()}getCaption(){return this.attributes.get("caption")||""}isEqualTo(t){var e;return super.isEqualTo(t)&&this.attachment.id===(null==t||null===(e=t.attachment)||void 0===e?void 0:e.id)}toString(){return"￼"}toJSON(){const t=super.toJSON(...arguments);return t.attachment=this.attachment,t}getCacheKey(){return[super.getCacheKey(...arguments),this.attachment.getCacheKey()].join("/")}toConsole(){return JSON.stringify(this.toString())}}Ae(Re,"permittedAttributes",["caption","presentation"]),ye.registerType("attachment",Re);class Ee extends ye{static fromJSON(t){return new this(t.string,t.attributes)}constructor(t){super(...arguments),this.string=(t=>t.replace(/\r\n?/g,"\n"))(t),this.length=this.string.length}getValue(){return this.string}toString(){return this.string.toString()}isBlockBreak(){return"\n"===this.toString()&&!0===this.getAttribute("blockBreak")}toJSON(){const t=super.toJSON(...arguments);return t.string=this.string,t}canBeConsolidatedWith(t){return t&&this.hasSameConstructorAs(t)&&this.hasSameAttributesAsPiece(t)}consolidateWith(t){return new this.constructor(this.toString()+t.toString(),this.attributes)}splitAtOffset(t){let e,i;return 0===t?(e=null,i=this):t===this.length?(e=this,i=null):(e=new this.constructor(this.string.slice(0,t),this.attributes),i=new this.constructor(this.string.slice(t),this.attributes)),[e,i]}toConsole(){let{string:t}=this;return t.length>15&&(t=t.slice(0,14)+"…"),JSON.stringify(t.toString())}}ye.registerType("string",Ee);class Se extends nt{static box(t){return t instanceof this?t:new this(t)}constructor(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:[];super(...arguments),this.objects=t.slice(0),this.length=this.objects.length}indexOf(t){return this.objects.indexOf(t)}splice(){for(var t=arguments.length,e=new Array(t),i=0;i<t;i++)e[i]=arguments[i];return new this.constructor(ot(this.objects,...e))}eachObject(t){return this.objects.map(((e,i)=>t(e,i)))}insertObjectAtIndex(t,e){return this.splice(e,0,t)}insertSplittableListAtIndex(t,e){return this.splice(e,0,...t.objects)}insertSplittableListAtPosition(t,e){const[i,n]=this.splitObjectAtPosition(e);return new this.constructor(i).insertSplittableListAtIndex(t,n)}editObjectAtIndex(t,e){return this.replaceObjectAtIndex(e(this.objects[t]),t)}replaceObjectAtIndex(t,e){return this.splice(e,1,t)}removeObjectAtIndex(t){return this.splice(t,1)}getObjectAtIndex(t){return this.objects[t]}getSplittableListInRange(t){const[e,i,n]=this.splitObjectsAtRange(t);return new this.constructor(e.slice(i,n+1))}selectSplittableList(t){const e=this.objects.filter((e=>t(e)));return new this.constructor(e)}removeObjectsInRange(t){const[e,i,n]=this.splitObjectsAtRange(t);return new this.constructor(e).splice(i,n-i+1)}transformObjectsInRange(t,e){const[i,n,r]=this.splitObjectsAtRange(t),o=i.map(((t,i)=>n<=i&&i<=r?e(t):t));return new this.constructor(o)}splitObjectsAtRange(t){let e,[i,n,r]=this.splitObjectAtPosition(De(t));return[i,e]=new this.constructor(i).splitObjectAtPosition(we(t)+r),[i,n,e-1]}getObjectAtPosition(t){const{index:e}=this.findIndexAndOffsetAtPosition(t);return this.objects[e]}splitObjectAtPosition(t){let e,i;const{index:n,offset:r}=this.findIndexAndOffsetAtPosition(t),o=this.objects.slice(0);if(null!=n)if(0===r)e=n,i=0;else{const t=this.getObjectAtIndex(n),[s,a]=t.splitAtOffset(r);o.splice(n,1,s,a),e=n+1,i=s.getLength()-r}else e=o.length,i=0;return[o,e,i]}consolidate(){const t=[];let e=this.objects[0];return this.objects.slice(1).forEach((i=>{var n,r;null!==(n=(r=e).canBeConsolidatedWith)&&void 0!==n&&n.call(r,i)?e=e.consolidateWith(i):(t.push(e),e=i)})),e&&t.push(e),new this.constructor(t)}consolidateFromIndexToIndex(t,e){const i=this.objects.slice(0).slice(t,e+1),n=new this.constructor(i).consolidate().toArray();return this.splice(t,i.length,...n)}findIndexAndOffsetAtPosition(t){let e,i=0;for(e=0;e<this.objects.length;e++){const n=i+this.objects[e].getLength();if(i<=t&&t<n)return{index:e,offset:t-i};i=n}return{index:null,offset:null}}findPositionAtIndexAndOffset(t,e){let i=0;for(let n=0;n<this.objects.length;n++){const r=this.objects[n];if(n<t)i+=r.getLength();else if(n===t){i+=e;break}}return i}getEndPosition(){return null==this.endPosition&&(this.endPosition=0,this.objects.forEach((t=>this.endPosition+=t.getLength()))),this.endPosition}toString(){return this.objects.join("")}toArray(){return this.objects.slice(0)}toJSON(){return this.toArray()}isEqualTo(t){return super.isEqualTo(...arguments)||Le(this.objects,null==t?void 0:t.objects)}contentsForInspection(){return{objects:"[".concat(this.objects.map((t=>t.inspect())).join(", "),"]")}}}const Le=function(t){let e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:[];if(t.length!==e.length)return!1;let i=!0;for(let n=0;n<t.length;n++){const r=t[n];i&&!r.isEqualTo(e[n])&&(i=!1)}return i},De=t=>t[0],we=t=>t[1];class Te extends nt{static textForAttachmentWithAttributes(t,e){return new this([new Re(t,e)])}static textForStringWithAttributes(t,e){return new this([new Ee(t,e)])}static fromJSON(t){return new this(Array.from(t).map((t=>ye.fromJSON(t))))}constructor(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:[];super(...arguments);const e=t.filter((t=>!t.isEmpty()));this.pieceList=new Se(e)}copy(){return this.copyWithPieceList(this.pieceList)}copyWithPieceList(t){return new this.constructor(t.consolidate().toArray())}copyUsingObjectMap(t){const e=this.getPieces().map((e=>t.find(e)||e));return new this.constructor(e)}appendText(t){return this.insertTextAtPosition(t,this.getLength())}insertTextAtPosition(t,e){return this.copyWithPieceList(this.pieceList.insertSplittableListAtPosition(t.pieceList,e))}removeTextAtRange(t){return this.copyWithPieceList(this.pieceList.removeObjectsInRange(t))}replaceTextAtRange(t,e){return this.removeTextAtRange(e).insertTextAtPosition(t,e[0])}moveTextFromRangeToPosition(t,e){if(t[0]<=e&&e<=t[1])return;const i=this.getTextAtRange(t),n=i.getLength();return t[0]<e&&(e-=n),this.removeTextAtRange(t).insertTextAtPosition(i,e)}addAttributeAtRange(t,e,i){const n={};return n[t]=e,this.addAttributesAtRange(n,i)}addAttributesAtRange(t,e){return this.copyWithPieceList(this.pieceList.transformObjectsInRange(e,(e=>e.copyWithAdditionalAttributes(t))))}removeAttributeAtRange(t,e){return this.copyWithPieceList(this.pieceList.transformObjectsInRange(e,(e=>e.copyWithoutAttribute(t))))}setAttributesAtRange(t,e){return this.copyWithPieceList(this.pieceList.transformObjectsInRange(e,(e=>e.copyWithAttributes(t))))}getAttributesAtPosition(t){var e;return(null===(e=this.pieceList.getObjectAtPosition(t))||void 0===e?void 0:e.getAttributes())||{}}getCommonAttributes(){const t=Array.from(this.pieceList.toArray()).map((t=>t.getAttributes()));return zt.fromCommonAttributesOfObjects(t).toObject()}getCommonAttributesAtRange(t){return this.getTextAtRange(t).getCommonAttributes()||{}}getExpandedRangeForAttributeAtOffset(t,e){let i,n=i=e;const r=this.getLength();for(;n>0&&this.getCommonAttributesAtRange([n-1,i])[t];)n--;for(;i<r&&this.getCommonAttributesAtRange([e,i+1])[t];)i++;return[n,i]}getTextAtRange(t){return this.copyWithPieceList(this.pieceList.getSplittableListInRange(t))}getStringAtRange(t){return this.pieceList.getSplittableListInRange(t).toString()}getStringAtPosition(t){return this.getStringAtRange([t,t+1])}startsWithString(t){return this.getStringAtRange([0,t.length])===t}endsWithString(t){const e=this.getLength();return this.getStringAtRange([e-t.length,e])===t}getAttachmentPieces(){return this.pieceList.toArray().filter((t=>!!t.attachment))}getAttachments(){return this.getAttachmentPieces().map((t=>t.attachment))}getAttachmentAndPositionById(t){let e=0;for(const n of this.pieceList.toArray()){var i;if((null===(i=n.attachment)||void 0===i?void 0:i.id)===t)return{attachment:n.attachment,position:e};e+=n.length}return{attachment:null,position:null}}getAttachmentById(t){const{attachment:e}=this.getAttachmentAndPositionById(t);return e}getRangeOfAttachment(t){const e=this.getAttachmentAndPositionById(t.id),i=e.position;if(t=e.attachment)return[i,i+1]}updateAttributesForAttachment(t,e){const i=this.getRangeOfAttachment(e);return i?this.addAttributesAtRange(t,i):this}getLength(){return this.pieceList.getEndPosition()}isEmpty(){return 0===this.getLength()}isEqualTo(t){var e;return super.isEqualTo(t)||(null==t||null===(e=t.pieceList)||void 0===e?void 0:e.isEqualTo(this.pieceList))}isBlockBreak(){return 1===this.getLength()&&this.pieceList.getObjectAtIndex(0).isBlockBreak()}eachPiece(t){return this.pieceList.eachObject(t)}getPieces(){return this.pieceList.toArray()}getPieceAtPosition(t){return this.pieceList.getObjectAtPosition(t)}contentsForInspection(){return{pieceList:this.pieceList.inspect()}}toSerializableText(){const t=this.pieceList.selectSplittableList((t=>t.isSerializable()));return this.copyWithPieceList(t)}toString(){return this.pieceList.toString()}toJSON(){return this.pieceList.toJSON()}toConsole(){return JSON.stringify(this.pieceList.toArray().map((t=>JSON.parse(t.toConsole()))))}getDirection(){return at(this.toString())}isRTL(){return"rtl"===this.getDirection()}}class Be extends nt{static fromJSON(t){return new this(Te.fromJSON(t.text),t.attributes,t.htmlAttributes)}constructor(t,e,i){super(...arguments),this.text=Fe(t||new Te),this.attributes=e||[],this.htmlAttributes=i||{}}isEmpty(){return this.text.isBlockBreak()}isEqualTo(t){return!!super.isEqualTo(t)||this.text.isEqualTo(null==t?void 0:t.text)&&rt(this.attributes,null==t?void 0:t.attributes)&&St(this.htmlAttributes,null==t?void 0:t.htmlAttributes)}copyWithText(t){return new Be(t,this.attributes,this.htmlAttributes)}copyWithoutText(){return this.copyWithText(null)}copyWithAttributes(t){return new Be(this.text,t,this.htmlAttributes)}copyWithoutAttributes(){return this.copyWithAttributes(null)}copyUsingObjectMap(t){const e=t.find(this.text);return e?this.copyWithText(e):this.copyWithText(this.text.copyUsingObjectMap(t))}addAttribute(t){const e=this.attributes.concat(je(t));return this.copyWithAttributes(e)}addHTMLAttribute(t,e){const i=Object.assign({},this.htmlAttributes,{[t]:e});return new Be(this.text,this.attributes,i)}removeAttribute(t){const{listAttribute:e}=gt(t),i=Ue(Ue(this.attributes,t),e);return this.copyWithAttributes(i)}removeLastAttribute(){return this.removeAttribute(this.getLastAttribute())}getLastAttribute(){return We(this.attributes)}getAttributes(){return this.attributes.slice(0)}getAttributeLevel(){return this.attributes.length}getAttributeAtLevel(t){return this.attributes[t-1]}hasAttribute(t){return this.attributes.includes(t)}hasAttributes(){return this.getAttributeLevel()>0}getLastNestableAttribute(){return We(this.getNestableAttributes())}getNestableAttributes(){return this.attributes.filter((t=>gt(t).nestable))}getNestingLevel(){return this.getNestableAttributes().length}decreaseNestingLevel(){const t=this.getLastNestableAttribute();return t?this.removeAttribute(t):this}increaseNestingLevel(){const t=this.getLastNestableAttribute();if(t){const e=this.attributes.lastIndexOf(t),i=ot(this.attributes,e+1,0,...je(t));return this.copyWithAttributes(i)}return this}getListItemAttributes(){return this.attributes.filter((t=>gt(t).listAttribute))}isListItem(){var t;return null===(t=gt(this.getLastAttribute()))||void 0===t?void 0:t.listAttribute}isTerminalBlock(){var t;return null===(t=gt(this.getLastAttribute()))||void 0===t?void 0:t.terminal}breaksOnReturn(){var t;return null===(t=gt(this.getLastAttribute()))||void 0===t?void 0:t.breakOnReturn}findLineBreakInDirectionFromPosition(t,e){const i=this.toString();let n;switch(t){case"forward":n=i.indexOf("\n",e);break;case"backward":n=i.slice(0,e).lastIndexOf("\n")}if(-1!==n)return n}contentsForInspection(){return{text:this.text.inspect(),attributes:this.attributes}}toString(){return this.text.toString()}toJSON(){return{text:this.text,attributes:this.attributes,htmlAttributes:this.htmlAttributes}}getDirection(){return this.text.getDirection()}isRTL(){return this.text.isRTL()}getLength(){return this.text.getLength()}canBeConsolidatedWith(t){return!this.hasAttributes()&&!t.hasAttributes()&&this.getDirection()===t.getDirection()}consolidateWith(t){const e=Te.textForStringWithAttributes("\n"),i=this.getTextWithoutBlockBreak().appendText(e);return this.copyWithText(i.appendText(t.text))}splitAtOffset(t){let e,i;return 0===t?(e=null,i=this):t===this.getLength()?(e=this,i=null):(e=this.copyWithText(this.text.getTextAtRange([0,t])),i=this.copyWithText(this.text.getTextAtRange([t,this.getLength()]))),[e,i]}getBlockBreakPosition(){return this.text.getLength()-1}getTextWithoutBlockBreak(){return Oe(this.text)?this.text.getTextAtRange([0,this.getBlockBreakPosition()]):this.text.copy()}canBeGrouped(t){return this.attributes[t]}canBeGroupedWith(t,e){const i=t.getAttributes(),r=i[e],o=this.attributes[e];return o===r&&!(!1===gt(o).group&&!(()=>{if(!ht){ht=[];for(const t in n){const{listAttribute:e}=n[t];null!=e&&ht.push(e)}}return ht})().includes(i[e+1]))&&(this.getDirection()===t.getDirection()||t.isEmpty())}}const Fe=function(t){return t=Pe(t),t=Ne(t)},Pe=function(t){let e=!1;const i=t.getPieces();let n=i.slice(0,i.length-1);const r=i[i.length-1];return r?(n=n.map((t=>t.isBlockBreak()?(e=!0,Me(t)):t)),e?new Te([...n,r]):t):t},Ie=Te.textForStringWithAttributes("\n",{blockBreak:!0}),Ne=function(t){return Oe(t)?t:t.appendText(Ie)},Oe=function(t){const e=t.getLength();if(0===e)return!1;return t.getTextAtRange([e-1,e]).isBlockBreak()},Me=t=>t.copyWithoutAttribute("blockBreak"),je=function(t){const{listAttribute:e}=gt(t);return e?[e,t]:[t]},We=t=>t.slice(-1)[0],Ue=function(t,e){const i=t.lastIndexOf(e);return-1===i?t:ot(t,i,1)};class qe extends nt{static fromJSON(t){return new this(Array.from(t).map((t=>Be.fromJSON(t))))}static fromString(t,e){const i=Te.textForStringWithAttributes(t,e);return new this([new Be(i)])}constructor(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:[];super(...arguments),0===t.length&&(t=[new Be]),this.blockList=Se.box(t)}isEmpty(){const t=this.getBlockAtIndex(0);return 1===this.blockList.length&&t.isEmpty()&&!t.hasAttributes()}copy(){const t=(arguments.length>0&&void 0!==arguments[0]?arguments[0]:{}).consolidateBlocks?this.blockList.consolidate().toArray():this.blockList.toArray();return new this.constructor(t)}copyUsingObjectsFromDocument(t){const e=new Yt(t.getObjects());return this.copyUsingObjectMap(e)}copyUsingObjectMap(t){const e=this.getBlocks().map((e=>t.find(e)||e.copyUsingObjectMap(t)));return new this.constructor(e)}copyWithBaseBlockAttributes(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:[];const e=this.getBlocks().map((e=>{const i=t.concat(e.getAttributes());return e.copyWithAttributes(i)}));return new this.constructor(e)}replaceBlock(t,e){const i=this.blockList.indexOf(t);return-1===i?this:new this.constructor(this.blockList.replaceObjectAtIndex(e,i))}insertDocumentAtRange(t,e){const{blockList:i}=t;e=Lt(e);let[n]=e;const{index:r,offset:o}=this.locationFromPosition(n);let s=this;const a=this.getBlockAtPosition(n);return Dt(e)&&a.isEmpty()&&!a.hasAttributes()?s=new this.constructor(s.blockList.removeObjectAtIndex(r)):a.getBlockBreakPosition()===o&&n++,s=s.removeTextAtRange(e),new this.constructor(s.blockList.insertSplittableListAtPosition(i,n))}mergeDocumentAtRange(t,e){let i,n;e=Lt(e);const[r]=e,o=this.locationFromPosition(r),s=this.getBlockAtIndex(o.index).getAttributes(),a=t.getBaseBlockAttributes(),l=s.slice(-a.length);if(rt(a,l)){const e=s.slice(0,-a.length);i=t.copyWithBaseBlockAttributes(e)}else i=t.copy({consolidateBlocks:!0}).copyWithBaseBlockAttributes(s);const c=i.getBlockCount(),u=i.getBlockAtIndex(0);if(rt(s,u.getAttributes())){const t=u.getTextWithoutBlockBreak();if(n=this.insertTextAtRange(t,e),c>1){i=new this.constructor(i.getBlocks().slice(1));const e=r+t.getLength();n=n.insertDocumentAtRange(i,e)}}else n=this.insertDocumentAtRange(i,e);return n}insertTextAtRange(t,e){e=Lt(e);const[i]=e,{index:n,offset:r}=this.locationFromPosition(i),o=this.removeTextAtRange(e);return new this.constructor(o.blockList.editObjectAtIndex(n,(e=>e.copyWithText(e.text.insertTextAtPosition(t,r)))))}removeTextAtRange(t){let e;t=Lt(t);const[i,n]=t;if(Dt(t))return this;const[r,o]=Array.from(this.locationRangeFromRange(t)),s=r.index,a=r.offset,l=this.getBlockAtIndex(s),c=o.index,u=o.offset,h=this.getBlockAtIndex(c);if(n-i==1&&l.getBlockBreakPosition()===a&&h.getBlockBreakPosition()!==u&&"\n"===h.text.getStringAtPosition(u))e=this.blockList.editObjectAtIndex(c,(t=>t.copyWithText(t.text.removeTextAtRange([u,u+1]))));else{let t;const i=l.text.getTextAtRange([0,a]),n=h.text.getTextAtRange([u,h.getLength()]),r=i.appendText(n);t=s!==c&&0===a&&l.getAttributeLevel()>=h.getAttributeLevel()?h.copyWithText(r):l.copyWithText(r);const o=c+1-s;e=this.blockList.splice(s,o,t)}return new this.constructor(e)}moveTextFromRangeToPosition(t,e){let i;t=Lt(t);const[n,r]=t;if(n<=e&&e<=r)return this;let o=this.getDocumentAtRange(t),s=this.removeTextAtRange(t);const a=n<e;a&&(e-=o.getLength());const[l,...c]=o.getBlocks();return 0===c.length?(i=l.getTextWithoutBlockBreak(),a&&(e+=1)):i=l.text,s=s.insertTextAtRange(i,e),0===c.length?s:(o=new this.constructor(c),e+=i.getLength(),s.insertDocumentAtRange(o,e))}addAttributeAtRange(t,e,i){let{blockList:n}=this;return this.eachBlockAtRange(i,((i,r,o)=>n=n.editObjectAtIndex(o,(function(){return gt(t)?i.addAttribute(t,e):r[0]===r[1]?i:i.copyWithText(i.text.addAttributeAtRange(t,e,r))})))),new this.constructor(n)}addAttribute(t,e){let{blockList:i}=this;return this.eachBlock(((n,r)=>i=i.editObjectAtIndex(r,(()=>n.addAttribute(t,e))))),new this.constructor(i)}removeAttributeAtRange(t,e){let{blockList:i}=this;return this.eachBlockAtRange(e,(function(e,n,r){gt(t)?i=i.editObjectAtIndex(r,(()=>e.removeAttribute(t))):n[0]!==n[1]&&(i=i.editObjectAtIndex(r,(()=>e.copyWithText(e.text.removeAttributeAtRange(t,n)))))})),new this.constructor(i)}updateAttributesForAttachment(t,e){const i=this.getRangeOfAttachment(e),[n]=Array.from(i),{index:r}=this.locationFromPosition(n),o=this.getTextAtIndex(r);return new this.constructor(this.blockList.editObjectAtIndex(r,(i=>i.copyWithText(o.updateAttributesForAttachment(t,e)))))}removeAttributeForAttachment(t,e){const i=this.getRangeOfAttachment(e);return this.removeAttributeAtRange(t,i)}setHTMLAttributeAtPosition(t,e,i){const n=this.getBlockAtPosition(t),r=n.addHTMLAttribute(e,i);return this.replaceBlock(n,r)}insertBlockBreakAtRange(t){let e;t=Lt(t);const[i]=t,{offset:n}=this.locationFromPosition(i),r=this.removeTextAtRange(t);return 0===n&&(e=[new Be]),new this.constructor(r.blockList.insertSplittableListAtPosition(new Se(e),i))}applyBlockAttributeAtRange(t,e,i){const n=this.expandRangeToLineBreaksAndSplitBlocks(i);let r=n.document;i=n.range;const o=gt(t);if(o.listAttribute){r=r.removeLastListAttributeAtRange(i,{exceptAttributeName:t});const e=r.convertLineBreaksToBlockBreaksInRange(i);r=e.document,i=e.range}else r=o.exclusive?r.removeBlockAttributesAtRange(i):o.terminal?r.removeLastTerminalAttributeAtRange(i):r.consolidateBlocksAtRange(i);return r.addAttributeAtRange(t,e,i)}removeLastListAttributeAtRange(t){let e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{},{blockList:i}=this;return this.eachBlockAtRange(t,(function(t,n,r){const o=t.getLastAttribute();o&&gt(o).listAttribute&&o!==e.exceptAttributeName&&(i=i.editObjectAtIndex(r,(()=>t.removeAttribute(o))))})),new this.constructor(i)}removeLastTerminalAttributeAtRange(t){let{blockList:e}=this;return this.eachBlockAtRange(t,(function(t,i,n){const r=t.getLastAttribute();r&&gt(r).terminal&&(e=e.editObjectAtIndex(n,(()=>t.removeAttribute(r))))})),new this.constructor(e)}removeBlockAttributesAtRange(t){let{blockList:e}=this;return this.eachBlockAtRange(t,(function(t,i,n){t.hasAttributes()&&(e=e.editObjectAtIndex(n,(()=>t.copyWithoutAttributes())))})),new this.constructor(e)}expandRangeToLineBreaksAndSplitBlocks(t){let e;t=Lt(t);let[i,n]=t;const r=this.locationFromPosition(i),o=this.locationFromPosition(n);let s=this;const a=s.getBlockAtIndex(r.index);if(r.offset=a.findLineBreakInDirectionFromPosition("backward",r.offset),null!=r.offset&&(e=s.positionFromLocation(r),s=s.insertBlockBreakAtRange([e,e+1]),o.index+=1,o.offset-=s.getBlockAtIndex(r.index).getLength(),r.index+=1),r.offset=0,0===o.offset&&o.index>r.index)o.index-=1,o.offset=s.getBlockAtIndex(o.index).getBlockBreakPosition();else{const t=s.getBlockAtIndex(o.index);"\n"===t.text.getStringAtRange([o.offset-1,o.offset])?o.offset-=1:o.offset=t.findLineBreakInDirectionFromPosition("forward",o.offset),o.offset!==t.getBlockBreakPosition()&&(e=s.positionFromLocation(o),s=s.insertBlockBreakAtRange([e,e+1]))}return i=s.positionFromLocation(r),n=s.positionFromLocation(o),{document:s,range:t=Lt([i,n])}}convertLineBreaksToBlockBreaksInRange(t){t=Lt(t);let[e]=t;const i=this.getStringAtRange(t).slice(0,-1);let n=this;return i.replace(/.*?\n/g,(function(t){e+=t.length,n=n.insertBlockBreakAtRange([e-1,e])})),{document:n,range:t}}consolidateBlocksAtRange(t){t=Lt(t);const[e,i]=t,n=this.locationFromPosition(e).index,r=this.locationFromPosition(i).index;return new this.constructor(this.blockList.consolidateFromIndexToIndex(n,r))}getDocumentAtRange(t){t=Lt(t);const e=this.blockList.getSplittableListInRange(t).toArray();return new this.constructor(e)}getStringAtRange(t){let e;const i=t=Lt(t);return i[i.length-1]!==this.getLength()&&(e=-1),this.getDocumentAtRange(t).toString().slice(0,e)}getBlockAtIndex(t){return this.blockList.getObjectAtIndex(t)}getBlockAtPosition(t){const{index:e}=this.locationFromPosition(t);return this.getBlockAtIndex(e)}getTextAtIndex(t){var e;return null===(e=this.getBlockAtIndex(t))||void 0===e?void 0:e.text}getTextAtPosition(t){const{index:e}=this.locationFromPosition(t);return this.getTextAtIndex(e)}getPieceAtPosition(t){const{index:e,offset:i}=this.locationFromPosition(t);return this.getTextAtIndex(e).getPieceAtPosition(i)}getCharacterAtPosition(t){const{index:e,offset:i}=this.locationFromPosition(t);return this.getTextAtIndex(e).getStringAtRange([i,i+1])}getLength(){return this.blockList.getEndPosition()}getBlocks(){return this.blockList.toArray()}getBlockCount(){return this.blockList.length}getEditCount(){return this.editCount}eachBlock(t){return this.blockList.eachObject(t)}eachBlockAtRange(t,e){let i,n;t=Lt(t);const[r,o]=t,s=this.locationFromPosition(r),a=this.locationFromPosition(o);if(s.index===a.index)return i=this.getBlockAtIndex(s.index),n=[s.offset,a.offset],e(i,n,s.index);for(let t=s.index;t<=a.index;t++)if(i=this.getBlockAtIndex(t),i){switch(t){case s.index:n=[s.offset,i.text.getLength()];break;case a.index:n=[0,a.offset];break;default:n=[0,i.text.getLength()]}e(i,n,t)}}getCommonAttributesAtRange(t){t=Lt(t);const[e]=t;if(Dt(t))return this.getCommonAttributesAtPosition(e);{const e=[],i=[];return this.eachBlockAtRange(t,(function(t,n){if(n[0]!==n[1])return e.push(t.text.getCommonAttributesAtRange(n)),i.push(Ve(t))})),zt.fromCommonAttributesOfObjects(e).merge(zt.fromCommonAttributesOfObjects(i)).toObject()}}getCommonAttributesAtPosition(t){let e,i;const{index:n,offset:r}=this.locationFromPosition(t),o=this.getBlockAtIndex(n);if(!o)return{};const s=Ve(o),a=o.text.getAttributesAtPosition(r),l=o.text.getAttributesAtPosition(r-1),c=Object.keys(W).filter((t=>W[t].inheritable));for(e in l)i=l[e],(i===a[e]||c.includes(e))&&(s[e]=i);return s}getRangeOfCommonAttributeAtPosition(t,e){const{index:i,offset:n}=this.locationFromPosition(e),r=this.getTextAtIndex(i),[o,s]=Array.from(r.getExpandedRangeForAttributeAtOffset(t,n)),a=this.positionFromLocation({index:i,offset:o}),l=this.positionFromLocation({index:i,offset:s});return Lt([a,l])}getBaseBlockAttributes(){let t=this.getBlockAtIndex(0).getAttributes();for(let e=1;e<this.getBlockCount();e++){const i=this.getBlockAtIndex(e).getAttributes(),n=Math.min(t.length,i.length);t=(()=>{const e=[];for(let r=0;r<n&&i[r]===t[r];r++)e.push(i[r]);return e})()}return t}getAttachmentById(t){for(const e of this.getAttachments())if(e.id===t)return e}getAttachmentPieces(){let t=[];return this.blockList.eachObject((e=>{let{text:i}=e;return t=t.concat(i.getAttachmentPieces())})),t}getAttachments(){return this.getAttachmentPieces().map((t=>t.attachment))}getRangeOfAttachment(t){let e=0;const i=this.blockList.toArray();for(let n=0;n<i.length;n++){const{text:r}=i[n],o=r.getRangeOfAttachment(t);if(o)return Lt([e+o[0],e+o[1]]);e+=r.getLength()}}getLocationRangeOfAttachment(t){const e=this.getRangeOfAttachment(t);return this.locationRangeFromRange(e)}getAttachmentPieceForAttachment(t){for(const e of this.getAttachmentPieces())if(e.attachment===t)return e}findRangesForBlockAttribute(t){let e=0;const i=[];return this.getBlocks().forEach((n=>{const r=n.getLength();n.hasAttribute(t)&&i.push([e,e+r]),e+=r})),i}findRangesForTextAttribute(t){let{withValue:e}=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{},i=0,n=[];const r=[];return this.getPieces().forEach((o=>{const s=o.getLength();(function(i){return e?i.getAttribute(t)===e:i.hasAttribute(t)})(o)&&(n[1]===i?n[1]=i+s:r.push(n=[i,i+s])),i+=s})),r}locationFromPosition(t){const e=this.blockList.findIndexAndOffsetAtPosition(Math.max(0,t));if(null!=e.index)return e;{const t=this.getBlocks();return{index:t.length-1,offset:t[t.length-1].getLength()}}}positionFromLocation(t){return this.blockList.findPositionAtIndexAndOffset(t.index,t.offset)}locationRangeFromPosition(t){return Lt(this.locationFromPosition(t))}locationRangeFromRange(t){if(!(t=Lt(t)))return;const[e,i]=Array.from(t),n=this.locationFromPosition(e),r=this.locationFromPosition(i);return Lt([n,r])}rangeFromLocationRange(t){let e;t=Lt(t);const i=this.positionFromLocation(t[0]);return Dt(t)||(e=this.positionFromLocation(t[1])),Lt([i,e])}isEqualTo(t){return this.blockList.isEqualTo(null==t?void 0:t.blockList)}getTexts(){return this.getBlocks().map((t=>t.text))}getPieces(){const t=[];return Array.from(this.getTexts()).forEach((e=>{t.push(...Array.from(e.getPieces()||[]))})),t}getObjects(){return this.getBlocks().concat(this.getTexts()).concat(this.getPieces())}toSerializableDocument(){const t=[];return this.blockList.eachObject((e=>t.push(e.copyWithText(e.text.toSerializableText())))),new this.constructor(t)}toString(){return this.blockList.toString()}toJSON(){return this.blockList.toJSON()}toConsole(){return JSON.stringify(this.blockList.toArray().map((t=>JSON.parse(t.text.toConsole()))))}}const Ve=function(t){const e={},i=t.getLastAttribute();return i&&(e[i]=!0),e},He="style href src width height language class".split(" "),ze="javascript:".split(" "),_e="script iframe form noscript".split(" ");class Je extends H{static sanitize(t,e){const i=new this(t,e);return i.sanitize(),i}constructor(t){let{allowedAttributes:e,forbiddenProtocols:i,forbiddenElements:n}=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};super(...arguments),this.allowedAttributes=e||He,this.forbiddenProtocols=i||ze,this.forbiddenElements=n||_e,this.body=Ke(t)}sanitize(){return this.sanitizeElements(),this.normalizeListElementNesting()}getHTML(){return this.body.innerHTML}getBody(){return this.body}sanitizeElements(){const t=R(this.body),e=[];for(;t.nextNode();){const i=t.currentNode;switch(i.nodeType){case Node.ELEMENT_NODE:this.elementIsRemovable(i)?e.push(i):this.sanitizeElement(i);break;case Node.COMMENT_NODE:e.push(i)}}return e.forEach((t=>k(t))),this.body}sanitizeElement(t){return t.hasAttribute("href")&&this.forbiddenProtocols.includes(t.protocol)&&t.removeAttribute("href"),Array.from(t.attributes).forEach((e=>{let{name:i}=e;this.allowedAttributes.includes(i)||0===i.indexOf("data-trix")||t.removeAttribute(i)})),t}normalizeListElementNesting(){return Array.from(this.body.querySelectorAll("ul,ol")).forEach((t=>{const e=t.previousElementSibling;e&&"li"===E(e)&&e.appendChild(t)})),this.body}elementIsRemovable(t){if((null==t?void 0:t.nodeType)===Node.ELEMENT_NODE)return this.elementIsForbidden(t)||this.elementIsntSerializable(t)}elementIsForbidden(t){return this.forbiddenElements.includes(E(t))}elementIsntSerializable(t){return"false"===t.getAttribute("data-trix-serialize")&&!I(t)}}const Ke=function(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:"";t=t.replace(/<\/html[^>]*>[^]*$/i,"</html>");const e=document.implementation.createHTMLDocument("");return e.documentElement.innerHTML=t,Array.from(e.head.querySelectorAll("style")).forEach((t=>{e.body.appendChild(t)})),e.body},Ge=function(t){let e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};return{string:t=Wt(t),attributes:e,type:"string"}},$e=(t,e)=>{try{const i=JSON.parse(t.getAttribute("data-trix-".concat(e)));return"text/html"===i.contentType&&i.content&&(i.content=Je.sanitize(i.content).getHTML()),i}catch(t){return{}}};class Xe extends H{static parse(t,e){const i=new this(t,e);return i.parse(),i}constructor(t){let{referenceElement:e}=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};super(...arguments),this.html=t,this.referenceElement=e,this.blocks=[],this.blockElements=[],this.processedElements=[]}getDocument(){return qe.fromJSON(this.blocks)}parse(){try{this.createHiddenContainer();const t=Je.sanitize(this.html).getHTML();this.containerElement.innerHTML=t;const e=R(this.containerElement,{usingFilter:ti});for(;e.nextNode();)this.processNode(e.currentNode);return this.translateBlockElementMarginsToNewlines()}finally{this.removeHiddenContainer()}}createHiddenContainer(){return this.referenceElement?(this.containerElement=this.referenceElement.cloneNode(!1),this.containerElement.removeAttribute("id"),this.containerElement.setAttribute("data-trix-internal",""),this.containerElement.style.display="none",this.referenceElement.parentNode.insertBefore(this.containerElement,this.referenceElement.nextSibling)):(this.containerElement=S({tagName:"div",style:{display:"none"}}),document.body.appendChild(this.containerElement))}removeHiddenContainer(){return k(this.containerElement)}processNode(t){switch(t.nodeType){case Node.TEXT_NODE:if(!this.isInsignificantTextNode(t))return this.appendBlockForTextNode(t),this.processTextNode(t);break;case Node.ELEMENT_NODE:return this.appendBlockForElement(t),this.processElement(t)}}appendBlockForTextNode(t){const e=t.parentNode;if(e===this.currentBlockElement&&this.isBlockElement(t.previousSibling))return this.appendStringWithAttributes("\n");if(e===this.containerElement||this.isBlockElement(e)){var i;const t=this.getBlockAttributes(e),n=this.getBlockHTMLAttributes(e);rt(t,null===(i=this.currentBlock)||void 0===i?void 0:i.attributes)||(this.currentBlock=this.appendBlockForAttributesWithElement(t,e,n),this.currentBlockElement=e)}}appendBlockForElement(t){const e=this.isBlockElement(t),i=y(this.currentBlockElement,t);if(e&&!this.isBlockElement(t.firstChild)){if(!this.isInsignificantTextNode(t.firstChild)||!this.isBlockElement(t.firstElementChild)){const e=this.getBlockAttributes(t),n=this.getBlockHTMLAttributes(t);if(t.firstChild){if(i&&rt(e,this.currentBlock.attributes))return this.appendStringWithAttributes("\n");this.currentBlock=this.appendBlockForAttributesWithElement(e,t,n),this.currentBlockElement=t}}}else if(this.currentBlockElement&&!i&&!e){const e=this.findParentBlockElement(t);if(e)return this.appendBlockForElement(e);this.currentBlock=this.appendEmptyBlock(),this.currentBlockElement=null}}findParentBlockElement(t){let{parentElement:e}=t;for(;e&&e!==this.containerElement;){if(this.isBlockElement(e)&&this.blockElements.includes(e))return e;e=e.parentElement}return null}processTextNode(t){let e=t.data;var i;Ye(t.parentNode)||(e=qt(e),ni(null===(i=t.previousSibling)||void 0===i?void 0:i.textContent)&&(e=ei(e)));return this.appendStringWithAttributes(e,this.getTextAttributes(t.parentNode))}processElement(t){let e;if(I(t)){if(e=$e(t,"attachment"),Object.keys(e).length){const i=this.getTextAttributes(t);this.appendAttachmentWithAttributes(e,i),t.innerHTML=""}return this.processedElements.push(t)}switch(E(t)){case"br":return this.isExtraBR(t)||this.isBlockElement(t.nextSibling)||this.appendStringWithAttributes("\n",this.getTextAttributes(t)),this.processedElements.push(t);case"img":e={url:t.getAttribute("src"),contentType:"image"};const i=(t=>{const e=t.getAttribute("width"),i=t.getAttribute("height"),n={};return e&&(n.width=parseInt(e,10)),i&&(n.height=parseInt(i,10)),n})(t);for(const t in i){const n=i[t];e[t]=n}return this.appendAttachmentWithAttributes(e,this.getTextAttributes(t)),this.processedElements.push(t);case"tr":if(this.needsTableSeparator(t))return this.appendStringWithAttributes(j.tableRowSeparator);break;case"td":if(this.needsTableSeparator(t))return this.appendStringWithAttributes(j.tableCellSeparator)}}appendBlockForAttributesWithElement(t,e){let i=arguments.length>2&&void 0!==arguments[2]?arguments[2]:{};this.blockElements.push(e);const n=function(){return{text:[],attributes:arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},htmlAttributes:arguments.length>1&&void 0!==arguments[1]?arguments[1]:{}}}(t,i);return this.blocks.push(n),n}appendEmptyBlock(){return this.appendBlockForAttributesWithElement([],null)}appendStringWithAttributes(t,e){return this.appendPiece(Ge(t,e))}appendAttachmentWithAttributes(t,e){return this.appendPiece(function(t){return{attachment:t,attributes:arguments.length>1&&void 0!==arguments[1]?arguments[1]:{},type:"attachment"}}(t,e))}appendPiece(t){return 0===this.blocks.length&&this.appendEmptyBlock(),this.blocks[this.blocks.length-1].text.push(t)}appendStringToTextAtIndex(t,e){const{text:i}=this.blocks[e],n=i[i.length-1];if("string"!==(null==n?void 0:n.type))return i.push(Ge(t));n.string+=t}prependStringToTextAtIndex(t,e){const{text:i}=this.blocks[e],n=i[0];if("string"!==(null==n?void 0:n.type))return i.unshift(Ge(t));n.string=t+n.string}getTextAttributes(t){let e;const i={};for(const n in W){const r=W[n];if(r.tagName&&A(t,{matchingSelector:r.tagName,untilNode:this.containerElement}))i[n]=!0;else if(r.parser){if(e=r.parser(t),e){let o=!1;for(const i of this.findBlockElementAncestors(t))if(r.parser(i)===e){o=!0;break}o||(i[n]=e)}}else r.styleProperty&&(e=t.style[r.styleProperty],e&&(i[n]=e))}if(I(t)){const n=$e(t,"attributes");for(const t in n)e=n[t],i[t]=e}return i}getBlockAttributes(t){const e=[];for(;t&&t!==this.containerElement;){for(const r in n){const o=n[r];var i;if(!1!==o.parse)if(E(t)===o.tagName)(null!==(i=o.test)&&void 0!==i&&i.call(o,t)||!o.test)&&(e.push(r),o.listAttribute&&e.push(o.listAttribute))}t=t.parentNode}return e.reverse()}getBlockHTMLAttributes(t){const e={},i=Object.values(n).find((e=>e.tagName===E(t)));return((null==i?void 0:i.htmlAttributes)||[]).forEach((i=>{t.hasAttribute(i)&&(e[i]=t.getAttribute(i))})),e}findBlockElementAncestors(t){const e=[];for(;t&&t!==this.containerElement;){const i=E(t);D().includes(i)&&e.push(t),t=t.parentNode}return e}isBlockElement(t){if((null==t?void 0:t.nodeType)===Node.ELEMENT_NODE&&!I(t)&&!A(t,{matchingSelector:"td",untilNode:this.containerElement}))return D().includes(E(t))||"block"===window.getComputedStyle(t).display}isInsignificantTextNode(t){if((null==t?void 0:t.nodeType)!==Node.TEXT_NODE)return;if(!ii(t.data))return;const{parentNode:e,previousSibling:i,nextSibling:n}=t;return Qe(e.previousSibling)&&!this.isBlockElement(e.previousSibling)||Ye(e)?void 0:!i||this.isBlockElement(i)||!n||this.isBlockElement(n)}isExtraBR(t){return"br"===E(t)&&this.isBlockElement(t.parentNode)&&t.parentNode.lastChild===t}needsTableSeparator(t){if(j.removeBlankTableCells){var e;const i=null===(e=t.previousSibling)||void 0===e?void 0:e.textContent;return i&&/\S/.test(i)}return t.previousSibling}translateBlockElementMarginsToNewlines(){const t=this.getMarginOfDefaultBlockElement();for(let e=0;e<this.blocks.length;e++){const i=this.getMarginOfBlockElementAtIndex(e);i&&(i.top>2*t.top&&this.prependStringToTextAtIndex("\n",e),i.bottom>2*t.bottom&&this.appendStringToTextAtIndex("\n",e))}}getMarginOfBlockElementAtIndex(t){const e=this.blockElements[t];if(e&&e.textContent&&!D().includes(E(e))&&!this.processedElements.includes(e))return Ze(e)}getMarginOfDefaultBlockElement(){const t=S(n.default.tagName);return this.containerElement.appendChild(t),Ze(t)}}const Ye=function(t){const{whiteSpace:e}=window.getComputedStyle(t);return["pre","pre-wrap","pre-line"].includes(e)},Qe=t=>t&&!ni(t.textContent),Ze=function(t){const e=window.getComputedStyle(t);if("block"===e.display)return{top:parseInt(e.marginTop),bottom:parseInt(e.marginBottom)}},ti=function(t){return"style"===E(t)?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT},ei=t=>t.replace(new RegExp("^".concat(Ut.source,"+")),""),ii=t=>new RegExp("^".concat(Ut.source,"*$")).test(t),ni=t=>/\s$/.test(t),ri=["contenteditable","data-trix-id","data-trix-store-key","data-trix-mutable","data-trix-placeholder","tabindex"],oi="data-trix-serialized-attributes",si="[".concat(oi,"]"),ai=new RegExp("\x3c!--block--\x3e","g"),li={"application/json":function(t){let e;if(t instanceof qe)e=t;else{if(!(t instanceof HTMLElement))throw new Error("unserializable object");e=Xe.parse(t.innerHTML).getDocument()}return e.toSerializableDocument().toJSONString()},"text/html":function(t){let e;if(t instanceof qe)e=ge.render(t);else{if(!(t instanceof HTMLElement))throw new Error("unserializable object");e=t.cloneNode(!0)}return Array.from(e.querySelectorAll("[data-trix-serialize=false]")).forEach((t=>{k(t)})),ri.forEach((t=>{Array.from(e.querySelectorAll("[".concat(t,"]"))).forEach((e=>{e.removeAttribute(t)}))})),Array.from(e.querySelectorAll(si)).forEach((t=>{try{const e=JSON.parse(t.getAttribute(oi));t.removeAttribute(oi);for(const i in e){const n=e[i];t.setAttribute(i,n)}}catch(t){}})),e.innerHTML.replace(ai,"")}};var ci=Object.freeze({__proto__:null});class ui extends H{constructor(t,e){super(...arguments),this.attachmentManager=t,this.attachment=e,this.id=this.attachment.id,this.file=this.attachment.file}remove(){return this.attachmentManager.requestRemovalOfAttachment(this.attachment)}}ui.proxyMethod("attachment.getAttribute"),ui.proxyMethod("attachment.hasAttribute"),ui.proxyMethod("attachment.setAttribute"),ui.proxyMethod("attachment.getAttributes"),ui.proxyMethod("attachment.setAttributes"),ui.proxyMethod("attachment.isPending"),ui.proxyMethod("attachment.isPreviewable"),ui.proxyMethod("attachment.getURL"),ui.proxyMethod("attachment.getHref"),ui.proxyMethod("attachment.getFilename"),ui.proxyMethod("attachment.getFilesize"),ui.proxyMethod("attachment.getFormattedFilesize"),ui.proxyMethod("attachment.getExtension"),ui.proxyMethod("attachment.getContentType"),ui.proxyMethod("attachment.getFile"),ui.proxyMethod("attachment.setFile"),ui.proxyMethod("attachment.releaseFile"),ui.proxyMethod("attachment.getUploadProgress"),ui.proxyMethod("attachment.setUploadProgress");class hi extends H{constructor(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:[];super(...arguments),this.managedAttachments={},Array.from(t).forEach((t=>{this.manageAttachment(t)}))}getAttachments(){const t=[];for(const e in this.managedAttachments){const i=this.managedAttachments[e];t.push(i)}return t}manageAttachment(t){return this.managedAttachments[t.id]||(this.managedAttachments[t.id]=new ui(this,t)),this.managedAttachments[t.id]}attachmentIsManaged(t){return t.id in this.managedAttachments}requestRemovalOfAttachment(t){var e,i;if(this.attachmentIsManaged(t))return null===(e=this.delegate)||void 0===e||null===(i=e.attachmentManagerDidRequestRemovalOfAttachment)||void 0===i?void 0:i.call(e,t)}unmanageAttachment(t){const e=this.managedAttachments[t.id];return delete this.managedAttachments[t.id],e}}class di{constructor(t){this.composition=t,this.document=this.composition.document;const e=this.composition.getSelectedRange();this.startPosition=e[0],this.endPosition=e[1],this.startLocation=this.document.locationFromPosition(this.startPosition),this.endLocation=this.document.locationFromPosition(this.endPosition),this.block=this.document.getBlockAtIndex(this.endLocation.index),this.breaksOnReturn=this.block.breaksOnReturn(),this.previousCharacter=this.block.text.getStringAtPosition(this.endLocation.offset-1),this.nextCharacter=this.block.text.getStringAtPosition(this.endLocation.offset)}shouldInsertBlockBreak(){return this.block.hasAttributes()&&this.block.isListItem()&&!this.block.isEmpty()?0!==this.startLocation.offset:this.breaksOnReturn&&"\n"!==this.nextCharacter}shouldBreakFormattedBlock(){return this.block.hasAttributes()&&!this.block.isListItem()&&(this.breaksOnReturn&&"\n"===this.nextCharacter||"\n"===this.previousCharacter)}shouldDecreaseListLevel(){return this.block.hasAttributes()&&this.block.isListItem()&&this.block.isEmpty()}shouldPrependListItem(){return this.block.isListItem()&&0===this.startLocation.offset&&!this.block.isEmpty()}shouldRemoveLastBlockAttribute(){return this.block.hasAttributes()&&!this.block.isListItem()&&this.block.isEmpty()}}class gi extends H{constructor(){super(...arguments),this.document=new qe,this.attachments=[],this.currentAttributes={},this.revision=0}setDocument(t){var e,i;if(!t.isEqualTo(this.document))return this.document=t,this.refreshAttachments(),this.revision++,null===(e=this.delegate)||void 0===e||null===(i=e.compositionDidChangeDocument)||void 0===i?void 0:i.call(e,t)}getSnapshot(){return{document:this.document,selectedRange:this.getSelectedRange()}}loadSnapshot(t){var e,i,n,r;let{document:o,selectedRange:s}=t;return null===(e=this.delegate)||void 0===e||null===(i=e.compositionWillLoadSnapshot)||void 0===i||i.call(e),this.setDocument(null!=o?o:new qe),this.setSelection(null!=s?s:[0,0]),null===(n=this.delegate)||void 0===n||null===(r=n.compositionDidLoadSnapshot)||void 0===r?void 0:r.call(n)}insertText(t){let{updatePosition:e}=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{updatePosition:!0};const i=this.getSelectedRange();this.setDocument(this.document.insertTextAtRange(t,i));const n=i[0],r=n+t.getLength();return e&&this.setSelection(r),this.notifyDelegateOfInsertionAtRange([n,r])}insertBlock(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:new Be;const e=new qe([t]);return this.insertDocument(e)}insertDocument(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:new qe;const e=this.getSelectedRange();this.setDocument(this.document.insertDocumentAtRange(t,e));const i=e[0],n=i+t.getLength();return this.setSelection(n),this.notifyDelegateOfInsertionAtRange([i,n])}insertString(t,e){const i=this.getCurrentTextAttributes(),n=Te.textForStringWithAttributes(t,i);return this.insertText(n,e)}insertBlockBreak(){const t=this.getSelectedRange();this.setDocument(this.document.insertBlockBreakAtRange(t));const e=t[0],i=e+1;return this.setSelection(i),this.notifyDelegateOfInsertionAtRange([e,i])}insertLineBreak(){const t=new di(this);if(t.shouldDecreaseListLevel())return this.decreaseListLevel(),this.setSelection(t.startPosition);if(t.shouldPrependListItem()){const e=new qe([t.block.copyWithoutText()]);return this.insertDocument(e)}return t.shouldInsertBlockBreak()?this.insertBlockBreak():t.shouldRemoveLastBlockAttribute()?this.removeLastBlockAttribute():t.shouldBreakFormattedBlock()?this.breakFormattedBlock(t):this.insertString("\n")}insertHTML(t){const e=Xe.parse(t).getDocument(),i=this.getSelectedRange();this.setDocument(this.document.mergeDocumentAtRange(e,i));const n=i[0],r=n+e.getLength()-1;return this.setSelection(r),this.notifyDelegateOfInsertionAtRange([n,r])}replaceHTML(t){const e=Xe.parse(t).getDocument().copyUsingObjectsFromDocument(this.document),i=this.getLocationRange({strict:!1}),n=this.document.rangeFromLocationRange(i);return this.setDocument(e),this.setSelection(n)}insertFile(t){return this.insertFiles([t])}insertFiles(t){const e=[];return Array.from(t).forEach((t=>{var i;if(null!==(i=this.delegate)&&void 0!==i&&i.compositionShouldAcceptFile(t)){const i=ke.attachmentForFile(t);e.push(i)}})),this.insertAttachments(e)}insertAttachment(t){return this.insertAttachments([t])}insertAttachments(t){let e=new Te;return Array.from(t).forEach((t=>{var n;const r=t.getType(),o=null===(n=i[r])||void 0===n?void 0:n.presentation,s=this.getCurrentTextAttributes();o&&(s.presentation=o);const a=Te.textForAttachmentWithAttributes(t,s);e=e.appendText(a)})),this.insertText(e)}shouldManageDeletingInDirection(t){const e=this.getLocationRange();if(Dt(e)){if("backward"===t&&0===e[0].offset)return!0;if(this.shouldManageMovingCursorInDirection(t))return!0}else if(e[0].index!==e[1].index)return!0;return!1}deleteInDirection(t){let e,i,n,{length:r}=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};const o=this.getLocationRange();let s=this.getSelectedRange();const a=Dt(s);if(a?i="backward"===t&&0===o[0].offset:n=o[0].index!==o[1].index,i&&this.canDecreaseBlockAttributeLevel()){const t=this.getBlock();if(t.isListItem()?this.decreaseListLevel():this.decreaseBlockAttributeLevel(),this.setSelection(s[0]),t.isEmpty())return!1}return a&&(s=this.getExpandedRangeInDirection(t,{length:r}),"backward"===t&&(e=this.getAttachmentAtRange(s))),e?(this.editAttachment(e),!1):(this.setDocument(this.document.removeTextAtRange(s)),this.setSelection(s[0]),!i&&!n&&void 0)}moveTextFromRange(t){const[e]=Array.from(this.getSelectedRange());return this.setDocument(this.document.moveTextFromRangeToPosition(t,e)),this.setSelection(e)}removeAttachment(t){const e=this.document.getRangeOfAttachment(t);if(e)return this.stopEditingAttachment(),this.setDocument(this.document.removeTextAtRange(e)),this.setSelection(e[0])}removeLastBlockAttribute(){const[t,e]=Array.from(this.getSelectedRange()),i=this.document.getBlockAtPosition(e);return this.removeCurrentAttribute(i.getLastAttribute()),this.setSelection(t)}insertPlaceholder(){return this.placeholderPosition=this.getPosition(),this.insertString(" ")}selectPlaceholder(){if(null!=this.placeholderPosition)return this.setSelectedRange([this.placeholderPosition,this.placeholderPosition+1]),this.getSelectedRange()}forgetPlaceholder(){this.placeholderPosition=null}hasCurrentAttribute(t){const e=this.currentAttributes[t];return null!=e&&!1!==e}toggleCurrentAttribute(t){const e=!this.currentAttributes[t];return e?this.setCurrentAttribute(t,e):this.removeCurrentAttribute(t)}canSetCurrentAttribute(t){return gt(t)?this.canSetCurrentBlockAttribute(t):this.canSetCurrentTextAttribute(t)}canSetCurrentTextAttribute(t){const e=this.getSelectedDocument();if(e){for(const t of Array.from(e.getAttachments()))if(!t.hasContent())return!1;return!0}}canSetCurrentBlockAttribute(t){const e=this.getBlock();if(e)return!e.isTerminalBlock()}setCurrentAttribute(t,e){return gt(t)?this.setBlockAttribute(t,e):(this.setTextAttribute(t,e),this.currentAttributes[t]=e,this.notifyDelegateOfCurrentAttributesChange())}setHTMLAtributeAtPosition(t,e,i){var n;const r=this.document.getBlockAtPosition(t),o=null===(n=gt(r.getLastAttribute()))||void 0===n?void 0:n.htmlAttributes;if(r&&null!=o&&o.includes(e)){const n=this.document.setHTMLAttributeAtPosition(t,e,i);this.setDocument(n)}}setTextAttribute(t,e){const i=this.getSelectedRange();if(!i)return;const[n,r]=Array.from(i);if(n!==r)return this.setDocument(this.document.addAttributeAtRange(t,e,i));if("href"===t){const t=Te.textForStringWithAttributes(e,{href:e});return this.insertText(t)}}setBlockAttribute(t,e){const i=this.getSelectedRange();if(this.canSetCurrentAttribute(t))return this.setDocument(this.document.applyBlockAttributeAtRange(t,e,i)),this.setSelection(i)}removeCurrentAttribute(t){return gt(t)?(this.removeBlockAttribute(t),this.updateCurrentAttributes()):(this.removeTextAttribute(t),delete this.currentAttributes[t],this.notifyDelegateOfCurrentAttributesChange())}removeTextAttribute(t){const e=this.getSelectedRange();if(e)return this.setDocument(this.document.removeAttributeAtRange(t,e))}removeBlockAttribute(t){const e=this.getSelectedRange();if(e)return this.setDocument(this.document.removeAttributeAtRange(t,e))}canDecreaseNestingLevel(){var t;return(null===(t=this.getBlock())||void 0===t?void 0:t.getNestingLevel())>0}canIncreaseNestingLevel(){var t;const e=this.getBlock();if(e){if(null===(t=gt(e.getLastNestableAttribute()))||void 0===t||!t.listAttribute)return e.getNestingLevel()>0;{const t=this.getPreviousBlock();if(t)return function(){let t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:[];return rt((arguments.length>0&&void 0!==arguments[0]?arguments[0]:[]).slice(0,t.length),t)}(t.getListItemAttributes(),e.getListItemAttributes())}}}decreaseNestingLevel(){const t=this.getBlock();if(t)return this.setDocument(this.document.replaceBlock(t,t.decreaseNestingLevel()))}increaseNestingLevel(){const t=this.getBlock();if(t)return this.setDocument(this.document.replaceBlock(t,t.increaseNestingLevel()))}canDecreaseBlockAttributeLevel(){var t;return(null===(t=this.getBlock())||void 0===t?void 0:t.getAttributeLevel())>0}decreaseBlockAttributeLevel(){var t;const e=null===(t=this.getBlock())||void 0===t?void 0:t.getLastAttribute();if(e)return this.removeCurrentAttribute(e)}decreaseListLevel(){let[t]=Array.from(this.getSelectedRange());const{index:e}=this.document.locationFromPosition(t);let i=e;const n=this.getBlock().getAttributeLevel();let r=this.document.getBlockAtIndex(i+1);for(;r&&r.isListItem()&&!(r.getAttributeLevel()<=n);)i++,r=this.document.getBlockAtIndex(i+1);t=this.document.positionFromLocation({index:e,offset:0});const o=this.document.positionFromLocation({index:i,offset:0});return this.setDocument(this.document.removeLastListAttributeAtRange([t,o]))}updateCurrentAttributes(){const t=this.getSelectedRange({ignoreLock:!0});if(t){const e=this.document.getCommonAttributesAtRange(t);if(Array.from(dt()).forEach((t=>{e[t]||this.canSetCurrentAttribute(t)||(e[t]=!1)})),!St(e,this.currentAttributes))return this.currentAttributes=e,this.notifyDelegateOfCurrentAttributesChange()}}getCurrentAttributes(){return g.call({},this.currentAttributes)}getCurrentTextAttributes(){const t={};for(const e in this.currentAttributes){const i=this.currentAttributes[e];!1!==i&&pt(e)&&(t[e]=i)}return t}freezeSelection(){return this.setCurrentAttribute("frozen",!0)}thawSelection(){return this.removeCurrentAttribute("frozen")}hasFrozenSelection(){return this.hasCurrentAttribute("frozen")}setSelection(t){var e;const i=this.document.locationRangeFromRange(t);return null===(e=this.delegate)||void 0===e?void 0:e.compositionDidRequestChangingSelectionToLocationRange(i)}getSelectedRange(){const t=this.getLocationRange();if(t)return this.document.rangeFromLocationRange(t)}setSelectedRange(t){const e=this.document.locationRangeFromRange(t);return this.getSelectionManager().setLocationRange(e)}getPosition(){const t=this.getLocationRange();if(t)return this.document.positionFromLocation(t[0])}getLocationRange(t){return this.targetLocationRange?this.targetLocationRange:this.getSelectionManager().getLocationRange(t)||Lt({index:0,offset:0})}withTargetLocationRange(t,e){let i;this.targetLocationRange=t;try{i=e()}finally{this.targetLocationRange=null}return i}withTargetRange(t,e){const i=this.document.locationRangeFromRange(t);return this.withTargetLocationRange(i,e)}withTargetDOMRange(t,e){const i=this.createLocationRangeFromDOMRange(t,{strict:!1});return this.withTargetLocationRange(i,e)}getExpandedRangeInDirection(t){let{length:e}=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{},[i,n]=Array.from(this.getSelectedRange());return"backward"===t?e?i-=e:i=this.translateUTF16PositionFromOffset(i,-1):e?n+=e:n=this.translateUTF16PositionFromOffset(n,1),Lt([i,n])}shouldManageMovingCursorInDirection(t){if(this.editingAttachment)return!0;const e=this.getExpandedRangeInDirection(t);return null!=this.getAttachmentAtRange(e)}moveCursorInDirection(t){let e,i;if(this.editingAttachment)i=this.document.getRangeOfAttachment(this.editingAttachment);else{const n=this.getSelectedRange();i=this.getExpandedRangeInDirection(t),e=!wt(n,i)}if("backward"===t?this.setSelectedRange(i[0]):this.setSelectedRange(i[1]),e){const t=this.getAttachmentAtRange(i);if(t)return this.editAttachment(t)}}expandSelectionInDirection(t){let{length:e}=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};const i=this.getExpandedRangeInDirection(t,{length:e});return this.setSelectedRange(i)}expandSelectionForEditing(){if(this.hasCurrentAttribute("href"))return this.expandSelectionAroundCommonAttribute("href")}expandSelectionAroundCommonAttribute(t){const e=this.getPosition(),i=this.document.getRangeOfCommonAttributeAtPosition(t,e);return this.setSelectedRange(i)}selectionContainsAttachments(){var t;return(null===(t=this.getSelectedAttachments())||void 0===t?void 0:t.length)>0}selectionIsInCursorTarget(){return this.editingAttachment||this.positionIsCursorTarget(this.getPosition())}positionIsCursorTarget(t){const e=this.document.locationFromPosition(t);if(e)return this.locationIsCursorTarget(e)}positionIsBlockBreak(t){var e;return null===(e=this.document.getPieceAtPosition(t))||void 0===e?void 0:e.isBlockBreak()}getSelectedDocument(){const t=this.getSelectedRange();if(t)return this.document.getDocumentAtRange(t)}getSelectedAttachments(){var t;return null===(t=this.getSelectedDocument())||void 0===t?void 0:t.getAttachments()}getAttachments(){return this.attachments.slice(0)}refreshAttachments(){const t=this.document.getAttachments(),{added:e,removed:i}=function(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:[],e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:[];const i=[],n=[],r=new Set;t.forEach((t=>{r.add(t)}));const o=new Set;return e.forEach((t=>{o.add(t),r.has(t)||i.push(t)})),t.forEach((t=>{o.has(t)||n.push(t)})),{added:i,removed:n}}(this.attachments,t);return this.attachments=t,Array.from(i).forEach((t=>{var e,i;t.delegate=null,null===(e=this.delegate)||void 0===e||null===(i=e.compositionDidRemoveAttachment)||void 0===i||i.call(e,t)})),(()=>{const t=[];return Array.from(e).forEach((e=>{var i,n;e.delegate=this,t.push(null===(i=this.delegate)||void 0===i||null===(n=i.compositionDidAddAttachment)||void 0===n?void 0:n.call(i,e))})),t})()}attachmentDidChangeAttributes(t){var e,i;return this.revision++,null===(e=this.delegate)||void 0===e||null===(i=e.compositionDidEditAttachment)||void 0===i?void 0:i.call(e,t)}attachmentDidChangePreviewURL(t){var e,i;return this.revision++,null===(e=this.delegate)||void 0===e||null===(i=e.compositionDidChangeAttachmentPreviewURL)||void 0===i?void 0:i.call(e,t)}editAttachment(t,e){var i,n;if(t!==this.editingAttachment)return this.stopEditingAttachment(),this.editingAttachment=t,null===(i=this.delegate)||void 0===i||null===(n=i.compositionDidStartEditingAttachment)||void 0===n?void 0:n.call(i,this.editingAttachment,e)}stopEditingAttachment(){var t,e;this.editingAttachment&&(null===(t=this.delegate)||void 0===t||null===(e=t.compositionDidStopEditingAttachment)||void 0===e||e.call(t,this.editingAttachment),this.editingAttachment=null)}updateAttributesForAttachment(t,e){return this.setDocument(this.document.updateAttributesForAttachment(t,e))}removeAttributeForAttachment(t,e){return this.setDocument(this.document.removeAttributeForAttachment(t,e))}breakFormattedBlock(t){let{document:e}=t;const{block:i}=t;let n=t.startPosition,r=[n-1,n];i.getBlockBreakPosition()===t.startLocation.offset?(i.breaksOnReturn()&&"\n"===t.nextCharacter?n+=1:e=e.removeTextAtRange(r),r=[n,n]):"\n"===t.nextCharacter?"\n"===t.previousCharacter?r=[n-1,n+1]:(r=[n,n+1],n+=1):t.startLocation.offset-1!=0&&(n+=1);const o=new qe([i.removeLastAttribute().copyWithoutText()]);return this.setDocument(e.insertDocumentAtRange(o,r)),this.setSelection(n)}getPreviousBlock(){const t=this.getLocationRange();if(t){const{index:e}=t[0];if(e>0)return this.document.getBlockAtIndex(e-1)}}getBlock(){const t=this.getLocationRange();if(t)return this.document.getBlockAtIndex(t[0].index)}getAttachmentAtRange(t){const e=this.document.getDocumentAtRange(t);if(e.toString()==="".concat("￼","\n"))return e.getAttachments()[0]}notifyDelegateOfCurrentAttributesChange(){var t,e;return null===(t=this.delegate)||void 0===t||null===(e=t.compositionDidChangeCurrentAttributes)||void 0===e?void 0:e.call(t,this.currentAttributes)}notifyDelegateOfInsertionAtRange(t){var e,i;return null===(e=this.delegate)||void 0===e||null===(i=e.compositionDidPerformInsertionAtRange)||void 0===i?void 0:i.call(e,t)}translateUTF16PositionFromOffset(t,e){const i=this.document.toUTF16String(),n=i.offsetFromUCS2Offset(t);return i.offsetToUCS2Offset(n+e)}}gi.proxyMethod("getSelectionManager().getPointRange"),gi.proxyMethod("getSelectionManager().setLocationRangeFromPointRange"),gi.proxyMethod("getSelectionManager().createLocationRangeFromDOMRange"),gi.proxyMethod("getSelectionManager().locationIsCursorTarget"),gi.proxyMethod("getSelectionManager().selectionIsExpanded"),gi.proxyMethod("delegate?.getSelectionManager");class mi extends H{constructor(t){super(...arguments),this.composition=t,this.undoEntries=[],this.redoEntries=[]}recordUndoEntry(t){let{context:e,consolidatable:i}=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};const n=this.undoEntries.slice(-1)[0];if(!i||!pi(n,t,e)){const i=this.createEntry({description:t,context:e});this.undoEntries.push(i),this.redoEntries=[]}}undo(){const t=this.undoEntries.pop();if(t){const e=this.createEntry(t);return this.redoEntries.push(e),this.composition.loadSnapshot(t.snapshot)}}redo(){const t=this.redoEntries.pop();if(t){const e=this.createEntry(t);return this.undoEntries.push(e),this.composition.loadSnapshot(t.snapshot)}}canUndo(){return this.undoEntries.length>0}canRedo(){return this.redoEntries.length>0}createEntry(){let{description:t,context:e}=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};return{description:null==t?void 0:t.toString(),context:JSON.stringify(e),snapshot:this.composition.getSnapshot()}}}const pi=(t,e,i)=>(null==t?void 0:t.description)===(null==e?void 0:e.toString())&&(null==t?void 0:t.context)===JSON.stringify(i),fi="attachmentGallery";class bi{constructor(t){this.document=t.document,this.selectedRange=t.selectedRange}perform(){return this.removeBlockAttribute(),this.applyBlockAttribute()}getSnapshot(){return{document:this.document,selectedRange:this.selectedRange}}removeBlockAttribute(){return this.findRangesOfBlocks().map((t=>this.document=this.document.removeAttributeAtRange(fi,t)))}applyBlockAttribute(){let t=0;this.findRangesOfPieces().forEach((e=>{e[1]-e[0]>1&&(e[0]+=t,e[1]+=t,"\n"!==this.document.getCharacterAtPosition(e[1])&&(this.document=this.document.insertBlockBreakAtRange(e[1]),e[1]<this.selectedRange[1]&&this.moveSelectedRangeForward(),e[1]++,t++),0!==e[0]&&"\n"!==this.document.getCharacterAtPosition(e[0]-1)&&(this.document=this.document.insertBlockBreakAtRange(e[0]),e[0]<this.selectedRange[0]&&this.moveSelectedRangeForward(),e[0]++,t++),this.document=this.document.applyBlockAttributeAtRange(fi,!0,e))}))}findRangesOfBlocks(){return this.document.findRangesForBlockAttribute(fi)}findRangesOfPieces(){return this.document.findRangesForTextAttribute("presentation",{withValue:"gallery"})}moveSelectedRangeForward(){this.selectedRange[0]+=1,this.selectedRange[1]+=1}}const vi=function(t){const e=new bi(t);return e.perform(),e.getSnapshot()},Ai=[vi];class xi{constructor(t,e,i){this.insertFiles=this.insertFiles.bind(this),this.composition=t,this.selectionManager=e,this.element=i,this.undoManager=new mi(this.composition),this.filters=Ai.slice(0)}loadDocument(t){return this.loadSnapshot({document:t,selectedRange:[0,0]})}loadHTML(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:"";const e=Xe.parse(t,{referenceElement:this.element}).getDocument();return this.loadDocument(e)}loadJSON(t){let{document:e,selectedRange:i}=t;return e=qe.fromJSON(e),this.loadSnapshot({document:e,selectedRange:i})}loadSnapshot(t){return this.undoManager=new mi(this.composition),this.composition.loadSnapshot(t)}getDocument(){return this.composition.document}getSelectedDocument(){return this.composition.getSelectedDocument()}getSnapshot(){return this.composition.getSnapshot()}toJSON(){return this.getSnapshot()}deleteInDirection(t){return this.composition.deleteInDirection(t)}insertAttachment(t){return this.composition.insertAttachment(t)}insertAttachments(t){return this.composition.insertAttachments(t)}insertDocument(t){return this.composition.insertDocument(t)}insertFile(t){return this.composition.insertFile(t)}insertFiles(t){return this.composition.insertFiles(t)}insertHTML(t){return this.composition.insertHTML(t)}insertString(t){return this.composition.insertString(t)}insertText(t){return this.composition.insertText(t)}insertLineBreak(){return this.composition.insertLineBreak()}getSelectedRange(){return this.composition.getSelectedRange()}getPosition(){return this.composition.getPosition()}getClientRectAtPosition(t){const e=this.getDocument().locationRangeFromRange([t,t+1]);return this.selectionManager.getClientRectAtLocationRange(e)}expandSelectionInDirection(t){return this.composition.expandSelectionInDirection(t)}moveCursorInDirection(t){return this.composition.moveCursorInDirection(t)}setSelectedRange(t){return this.composition.setSelectedRange(t)}activateAttribute(t){let e=!(arguments.length>1&&void 0!==arguments[1])||arguments[1];return this.composition.setCurrentAttribute(t,e)}attributeIsActive(t){return this.composition.hasCurrentAttribute(t)}canActivateAttribute(t){return this.composition.canSetCurrentAttribute(t)}deactivateAttribute(t){return this.composition.removeCurrentAttribute(t)}setHTMLAtributeAtPosition(t,e,i){this.composition.setHTMLAtributeAtPosition(t,e,i)}canDecreaseNestingLevel(){return this.composition.canDecreaseNestingLevel()}canIncreaseNestingLevel(){return this.composition.canIncreaseNestingLevel()}decreaseNestingLevel(){if(this.canDecreaseNestingLevel())return this.composition.decreaseNestingLevel()}increaseNestingLevel(){if(this.canIncreaseNestingLevel())return this.composition.increaseNestingLevel()}canRedo(){return this.undoManager.canRedo()}canUndo(){return this.undoManager.canUndo()}recordUndoEntry(t){let{context:e,consolidatable:i}=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};return this.undoManager.recordUndoEntry(t,{context:e,consolidatable:i})}redo(){if(this.canRedo())return this.undoManager.redo()}undo(){if(this.canUndo())return this.undoManager.undo()}}class yi{constructor(t){this.element=t}findLocationFromContainerAndOffset(t,e){let{strict:i}=arguments.length>2&&void 0!==arguments[2]?arguments[2]:{strict:!0},n=0,r=!1;const o={index:0,offset:0},s=this.findAttachmentElementParentForNode(t);s&&(t=s.parentNode,e=C(s));const a=R(this.element,{usingFilter:Ei});for(;a.nextNode();){const s=a.currentNode;if(s===t&&O(t)){P(s)||(o.offset+=e);break}if(s.parentNode===t){if(n++===e)break}else if(!y(t,s)&&n>0)break;T(s,{strict:i})?(r&&o.index++,o.offset=0,r=!0):o.offset+=Ci(s)}return o}findContainerAndOffsetFromLocation(t){let e,i;if(0===t.index&&0===t.offset){for(e=this.element,i=0;e.firstChild;)if(e=e.firstChild,w(e)){i=1;break}return[e,i]}let[n,r]=this.findNodeAndOffsetFromLocation(t);if(n){if(O(n))0===Ci(n)?(e=n.parentNode.parentNode,i=C(n.parentNode),P(n,{name:"right"})&&i++):(e=n,i=t.offset-r);else{if(e=n.parentNode,!T(n.previousSibling)&&!w(e))for(;n===e.lastChild&&(n=e,e=e.parentNode,!w(e)););i=C(n),0!==t.offset&&i++}return[e,i]}}findNodeAndOffsetFromLocation(t){let e,i,n=0;for(const r of this.getSignificantNodesForIndex(t.index)){const o=Ci(r);if(t.offset<=n+o)if(O(r)){if(e=r,i=n,t.offset===i&&P(e))break}else e||(e=r,i=n);if(n+=o,n>t.offset)break}return[e,i]}findAttachmentElementParentForNode(t){for(;t&&t!==this.element;){if(I(t))return t;t=t.parentNode}}getSignificantNodesForIndex(t){const e=[],i=R(this.element,{usingFilter:ki});let n=!1;for(;i.nextNode();){const o=i.currentNode;var r;if(B(o)){if(null!=r?r++:r=0,r===t)n=!0;else if(n)break}else n&&e.push(o)}return e}}const Ci=function(t){if(t.nodeType===Node.TEXT_NODE){if(P(t))return 0;return t.textContent.length}return"br"===E(t)||I(t)?1:0},ki=function(t){return Ri(t)===NodeFilter.FILTER_ACCEPT?Ei(t):NodeFilter.FILTER_REJECT},Ri=function(t){return N(t)?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT},Ei=function(t){return I(t.parentNode)?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT};class Si{createDOMRangeFromPoint(t){let e,{x:i,y:n}=t;if(document.caretPositionFromPoint){const{offsetNode:t,offset:r}=document.caretPositionFromPoint(i,n);return e=document.createRange(),e.setStart(t,r),e}if(document.caretRangeFromPoint)return document.caretRangeFromPoint(i,n);if(document.body.createTextRange){const t=Nt();try{const t=document.body.createTextRange();t.moveToPoint(i,n),t.select()}catch(t){}return e=Nt(),Ot(t),e}}getClientRectsForDOMRange(t){const e=Array.from(t.getClientRects());return[e[0],e[e.length-1]]}}class Li extends H{constructor(t){super(...arguments),this.didMouseDown=this.didMouseDown.bind(this),this.selectionDidChange=this.selectionDidChange.bind(this),this.element=t,this.locationMapper=new yi(this.element),this.pointMapper=new Si,this.lockCount=0,f("mousedown",{onElement:this.element,withCallback:this.didMouseDown})}getLocationRange(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};return!1===t.strict?this.createLocationRangeFromDOMRange(Nt()):t.ignoreLock?this.currentLocationRange:this.lockedLocationRange?this.lockedLocationRange:this.currentLocationRange}setLocationRange(t){if(this.lockedLocationRange)return;t=Lt(t);const e=this.createDOMRangeFromLocationRange(t);e&&(Ot(e),this.updateCurrentLocationRange(t))}setLocationRangeFromPointRange(t){t=Lt(t);const e=this.getLocationAtPoint(t[0]),i=this.getLocationAtPoint(t[1]);this.setLocationRange([e,i])}getClientRectAtLocationRange(t){const e=this.createDOMRangeFromLocationRange(t);if(e)return this.getClientRectsForDOMRange(e)[1]}locationIsCursorTarget(t){const e=Array.from(this.findNodeAndOffsetFromLocation(t))[0];return P(e)}lock(){0==this.lockCount++&&(this.updateCurrentLocationRange(),this.lockedLocationRange=this.getLocationRange())}unlock(){if(0==--this.lockCount){const{lockedLocationRange:t}=this;if(this.lockedLocationRange=null,null!=t)return this.setLocationRange(t)}}clearSelection(){var t;return null===(t=It())||void 0===t?void 0:t.removeAllRanges()}selectionIsCollapsed(){var t;return!0===(null===(t=Nt())||void 0===t?void 0:t.collapsed)}selectionIsExpanded(){return!this.selectionIsCollapsed()}createLocationRangeFromDOMRange(t,e){if(null==t||!this.domRangeWithinElement(t))return;const i=this.findLocationFromContainerAndOffset(t.startContainer,t.startOffset,e);if(!i)return;const n=t.collapsed?void 0:this.findLocationFromContainerAndOffset(t.endContainer,t.endOffset,e);return Lt([i,n])}didMouseDown(){return this.pauseTemporarily()}pauseTemporarily(){let t;this.paused=!0;const e=()=>{if(this.paused=!1,clearTimeout(i),Array.from(t).forEach((t=>{t.destroy()})),y(document,this.element))return this.selectionDidChange()},i=setTimeout(e,200);t=["mousemove","keydown"].map((t=>f(t,{onElement:document,withCallback:e})))}selectionDidChange(){if(!this.paused&&!x(this.element))return this.updateCurrentLocationRange()}updateCurrentLocationRange(t){var e,i;if((null!=t?t:t=this.createLocationRangeFromDOMRange(Nt()))&&!wt(t,this.currentLocationRange))return this.currentLocationRange=t,null===(e=this.delegate)||void 0===e||null===(i=e.locationRangeDidChange)||void 0===i?void 0:i.call(e,this.currentLocationRange.slice(0))}createDOMRangeFromLocationRange(t){const e=this.findContainerAndOffsetFromLocation(t[0]),i=Dt(t)?e:this.findContainerAndOffsetFromLocation(t[1])||e;if(null!=e&&null!=i){const t=document.createRange();return t.setStart(...Array.from(e||[])),t.setEnd(...Array.from(i||[])),t}}getLocationAtPoint(t){const e=this.createDOMRangeFromPoint(t);var i;if(e)return null===(i=this.createLocationRangeFromDOMRange(e))||void 0===i?void 0:i[0]}domRangeWithinElement(t){return t.collapsed?y(this.element,t.startContainer):y(this.element,t.startContainer)&&y(this.element,t.endContainer)}}Li.proxyMethod("locationMapper.findLocationFromContainerAndOffset"),Li.proxyMethod("locationMapper.findContainerAndOffsetFromLocation"),Li.proxyMethod("locationMapper.findNodeAndOffsetFromLocation"),Li.proxyMethod("pointMapper.createDOMRangeFromPoint"),Li.proxyMethod("pointMapper.getClientRectsForDOMRange");var Di=Object.freeze({__proto__:null,Attachment:ke,AttachmentManager:hi,AttachmentPiece:Re,Block:Be,Composition:gi,Document:qe,Editor:xi,HTMLParser:Xe,HTMLSanitizer:Je,LineBreakInsertion:di,LocationMapper:yi,ManagedAttachment:ui,Piece:ye,PointMapper:Si,SelectionManager:Li,SplittableList:Se,StringPiece:Ee,Text:Te,UndoManager:mi}),wi=Object.freeze({__proto__:null,ObjectView:ee,AttachmentView:re,BlockView:de,DocumentView:ge,PieceView:le,PreviewableAttachmentView:ae,TextView:ce});const{lang:Ti,css:Bi,keyNames:Fi}=V,Pi=function(t){return function(){const e=t.apply(this,arguments);e.do(),this.undos||(this.undos=[]),this.undos.push(e.undo)}};class Ii extends H{constructor(t,e,i){let n=arguments.length>3&&void 0!==arguments[3]?arguments[3]:{};super(...arguments),Ae(this,"makeElementMutable",Pi((()=>({do:()=>{this.element.dataset.trixMutable=!0},undo:()=>delete this.element.dataset.trixMutable})))),Ae(this,"addToolbar",Pi((()=>{const t=S({tagName:"div",className:Bi.attachmentToolbar,data:{trixMutable:!0},childNodes:S({tagName:"div",className:"trix-button-row",childNodes:S({tagName:"span",className:"trix-button-group trix-button-group--actions",childNodes:S({tagName:"button",className:"trix-button trix-button--remove",textContent:Ti.remove,attributes:{title:Ti.remove},data:{trixAction:"remove"}})})})});return this.attachment.isPreviewable()&&t.appendChild(S({tagName:"div",className:Bi.attachmentMetadataContainer,childNodes:S({tagName:"span",className:Bi.attachmentMetadata,childNodes:[S({tagName:"span",className:Bi.attachmentName,textContent:this.attachment.getFilename(),attributes:{title:this.attachment.getFilename()}}),S({tagName:"span",className:Bi.attachmentSize,textContent:this.attachment.getFormattedFilesize()})]})})),f("click",{onElement:t,withCallback:this.didClickToolbar}),f("click",{onElement:t,matchingSelector:"[data-trix-action]",withCallback:this.didClickActionButton}),b("trix-attachment-before-toolbar",{onElement:this.element,attributes:{toolbar:t,attachment:this.attachment}}),{do:()=>this.element.appendChild(t),undo:()=>k(t)}}))),Ae(this,"installCaptionEditor",Pi((()=>{const t=S({tagName:"textarea",className:Bi.attachmentCaptionEditor,attributes:{placeholder:Ti.captionPlaceholder},data:{trixMutable:!0}});t.value=this.attachmentPiece.getCaption();const e=t.cloneNode();e.classList.add("trix-autoresize-clone"),e.tabIndex=-1;const i=function(){e.value=t.value,t.style.height=e.scrollHeight+"px"};f("input",{onElement:t,withCallback:i}),f("input",{onElement:t,withCallback:this.didInputCaption}),f("keydown",{onElement:t,withCallback:this.didKeyDownCaption}),f("change",{onElement:t,withCallback:this.didChangeCaption}),f("blur",{onElement:t,withCallback:this.didBlurCaption});const n=this.element.querySelector("figcaption"),r=n.cloneNode();return{do:()=>{if(n.style.display="none",r.appendChild(t),r.appendChild(e),r.classList.add("".concat(Bi.attachmentCaption,"--editing")),n.parentElement.insertBefore(r,n),i(),this.options.editCaption)return Rt((()=>t.focus()))},undo(){k(r),n.style.display=null}}}))),this.didClickToolbar=this.didClickToolbar.bind(this),this.didClickActionButton=this.didClickActionButton.bind(this),this.didKeyDownCaption=this.didKeyDownCaption.bind(this),this.didInputCaption=this.didInputCaption.bind(this),this.didChangeCaption=this.didChangeCaption.bind(this),this.didBlurCaption=this.didBlurCaption.bind(this),this.attachmentPiece=t,this.element=e,this.container=i,this.options=n,this.attachment=this.attachmentPiece.attachment,"a"===E(this.element)&&(this.element=this.element.firstChild),this.install()}install(){this.makeElementMutable(),this.addToolbar(),this.attachment.isPreviewable()&&this.installCaptionEditor()}uninstall(){var t;let e=this.undos.pop();for(this.savePendingCaption();e;)e(),e=this.undos.pop();null===(t=this.delegate)||void 0===t||t.didUninstallAttachmentEditor(this)}savePendingCaption(){if(null!=this.pendingCaption){const r=this.pendingCaption;var t,e,i,n;if(this.pendingCaption=null,r)null===(t=this.delegate)||void 0===t||null===(e=t.attachmentEditorDidRequestUpdatingAttributesForAttachment)||void 0===e||e.call(t,{caption:r},this.attachment);else null===(i=this.delegate)||void 0===i||null===(n=i.attachmentEditorDidRequestRemovingAttributeForAttachment)||void 0===n||n.call(i,"caption",this.attachment)}}didClickToolbar(t){return t.preventDefault(),t.stopPropagation()}didClickActionButton(t){var e;if("remove"===t.target.getAttribute("data-trix-action"))return null===(e=this.delegate)||void 0===e?void 0:e.attachmentEditorDidRequestRemovalOfAttachment(this.attachment)}didKeyDownCaption(t){var e,i;if("return"===Fi[t.keyCode])return t.preventDefault(),this.savePendingCaption(),null===(e=this.delegate)||void 0===e||null===(i=e.attachmentEditorDidRequestDeselectingAttachment)||void 0===i?void 0:i.call(e,this.attachment)}didInputCaption(t){this.pendingCaption=t.target.value.replace(/\s/g," ").trim()}didChangeCaption(t){return this.savePendingCaption()}didBlurCaption(t){return this.savePendingCaption()}}class Ni extends H{constructor(t,i){super(...arguments),this.didFocus=this.didFocus.bind(this),this.didBlur=this.didBlur.bind(this),this.didClickAttachment=this.didClickAttachment.bind(this),this.element=t,this.composition=i,this.documentView=new ge(this.composition.document,{element:this.element}),f("focus",{onElement:this.element,withCallback:this.didFocus}),f("blur",{onElement:this.element,withCallback:this.didBlur}),f("click",{onElement:this.element,matchingSelector:"a[contenteditable=false]",preventDefault:!0}),f("mousedown",{onElement:this.element,matchingSelector:e,withCallback:this.didClickAttachment}),f("click",{onElement:this.element,matchingSelector:"a".concat(e),preventDefault:!0})}didFocus(t){var e;const i=()=>{var t,e;if(!this.focused)return this.focused=!0,null===(t=this.delegate)||void 0===t||null===(e=t.compositionControllerDidFocus)||void 0===e?void 0:e.call(t)};return(null===(e=this.blurPromise)||void 0===e?void 0:e.then(i))||i()}didBlur(t){this.blurPromise=new Promise((t=>Rt((()=>{var e,i;x(this.element)||(this.focused=null,null===(e=this.delegate)||void 0===e||null===(i=e.compositionControllerDidBlur)||void 0===i||i.call(e));return this.blurPromise=null,t()}))))}didClickAttachment(t,e){var i,n;const r=this.findAttachmentForElement(e),o=!!A(t.target,{matchingSelector:"figcaption"});return null===(i=this.delegate)||void 0===i||null===(n=i.compositionControllerDidSelectAttachment)||void 0===n?void 0:n.call(i,r,{editCaption:o})}getSerializableElement(){return this.isEditingAttachment()?this.documentView.shadowElement:this.element}render(){var t,e,i,n,r,o;(this.revision!==this.composition.revision&&(this.documentView.setDocument(this.composition.document),this.documentView.render(),this.revision=this.composition.revision),this.canSyncDocumentView()&&!this.documentView.isSynced())&&(null===(i=this.delegate)||void 0===i||null===(n=i.compositionControllerWillSyncDocumentView)||void 0===n||n.call(i),this.documentView.sync(),null===(r=this.delegate)||void 0===r||null===(o=r.compositionControllerDidSyncDocumentView)||void 0===o||o.call(r));return null===(t=this.delegate)||void 0===t||null===(e=t.compositionControllerDidRender)||void 0===e?void 0:e.call(t)}rerenderViewForObject(t){return this.invalidateViewForObject(t),this.render()}invalidateViewForObject(t){return this.documentView.invalidateViewForObject(t)}isViewCachingEnabled(){return this.documentView.isViewCachingEnabled()}enableViewCaching(){return this.documentView.enableViewCaching()}disableViewCaching(){return this.documentView.disableViewCaching()}refreshViewCache(){return this.documentView.garbageCollectCachedViews()}isEditingAttachment(){return!!this.attachmentEditor}installAttachmentEditorForAttachment(t,e){var i;if((null===(i=this.attachmentEditor)||void 0===i?void 0:i.attachment)===t)return;const n=this.documentView.findElementForObject(t);if(!n)return;this.uninstallAttachmentEditor();const r=this.composition.document.getAttachmentPieceForAttachment(t);this.attachmentEditor=new Ii(r,n,this.element,e),this.attachmentEditor.delegate=this}uninstallAttachmentEditor(){var t;return null===(t=this.attachmentEditor)||void 0===t?void 0:t.uninstall()}didUninstallAttachmentEditor(){return this.attachmentEditor=null,this.render()}attachmentEditorDidRequestUpdatingAttributesForAttachment(t,e){var i,n;return null===(i=this.delegate)||void 0===i||null===(n=i.compositionControllerWillUpdateAttachment)||void 0===n||n.call(i,e),this.composition.updateAttributesForAttachment(t,e)}attachmentEditorDidRequestRemovingAttributeForAttachment(t,e){var i,n;return null===(i=this.delegate)||void 0===i||null===(n=i.compositionControllerWillUpdateAttachment)||void 0===n||n.call(i,e),this.composition.removeAttributeForAttachment(t,e)}attachmentEditorDidRequestRemovalOfAttachment(t){var e,i;return null===(e=this.delegate)||void 0===e||null===(i=e.compositionControllerDidRequestRemovalOfAttachment)||void 0===i?void 0:i.call(e,t)}attachmentEditorDidRequestDeselectingAttachment(t){var e,i;return null===(e=this.delegate)||void 0===e||null===(i=e.compositionControllerDidRequestDeselectingAttachment)||void 0===i?void 0:i.call(e,t)}canSyncDocumentView(){return!this.isEditingAttachment()}findAttachmentForElement(t){return this.composition.document.getAttachmentById(parseInt(t.dataset.trixId,10))}}class Oi extends H{}const Mi="data-trix-mutable",ji="[".concat(Mi,"]"),Wi={attributes:!0,childList:!0,characterData:!0,characterDataOldValue:!0,subtree:!0};class Ui extends H{constructor(t){super(t),this.didMutate=this.didMutate.bind(this),this.element=t,this.observer=new window.MutationObserver(this.didMutate),this.start()}start(){return this.reset(),this.observer.observe(this.element,Wi)}stop(){return this.observer.disconnect()}didMutate(t){var e,i;if(this.mutations.push(...Array.from(this.findSignificantMutations(t)||[])),this.mutations.length)return null===(e=this.delegate)||void 0===e||null===(i=e.elementDidMutate)||void 0===i||i.call(e,this.getMutationSummary()),this.reset()}reset(){this.mutations=[]}findSignificantMutations(t){return t.filter((t=>this.mutationIsSignificant(t)))}mutationIsSignificant(t){if(this.nodeIsMutable(t.target))return!1;for(const e of Array.from(this.nodesModifiedByMutation(t)))if(this.nodeIsSignificant(e))return!0;return!1}nodeIsSignificant(t){return t!==this.element&&!this.nodeIsMutable(t)&&!N(t)}nodeIsMutable(t){return A(t,{matchingSelector:ji})}nodesModifiedByMutation(t){const e=[];switch(t.type){case"attributes":t.attributeName!==Mi&&e.push(t.target);break;case"characterData":e.push(t.target.parentNode),e.push(t.target);break;case"childList":e.push(...Array.from(t.addedNodes||[])),e.push(...Array.from(t.removedNodes||[]))}return e}getMutationSummary(){return this.getTextMutationSummary()}getTextMutationSummary(){const{additions:t,deletions:e}=this.getTextChangesFromCharacterData(),i=this.getTextChangesFromChildList();Array.from(i.additions).forEach((e=>{Array.from(t).includes(e)||t.push(e)})),e.push(...Array.from(i.deletions||[]));const n={},r=t.join("");r&&(n.textAdded=r);const o=e.join("");return o&&(n.textDeleted=o),n}getMutationsByType(t){return Array.from(this.mutations).filter((e=>e.type===t))}getTextChangesFromChildList(){let t,e;const i=[],n=[];Array.from(this.getMutationsByType("childList")).forEach((t=>{i.push(...Array.from(t.addedNodes||[])),n.push(...Array.from(t.removedNodes||[]))}));0===i.length&&1===n.length&&B(n[0])?(t=[],e=["\n"]):(t=qi(i),e=qi(n));return{additions:t.filter(((t,i)=>t!==e[i])).map(Wt),deletions:e.filter(((e,i)=>e!==t[i])).map(Wt)}}getTextChangesFromCharacterData(){let t,e;const i=this.getMutationsByType("characterData");if(i.length){const n=i[0],r=i[i.length-1],o=function(t,e){let i,n;return t=X.box(t),(e=X.box(e)).length<t.length?[n,i]=Vt(t,e):[i,n]=Vt(e,t),{added:i,removed:n}}(Wt(n.oldValue),Wt(r.target.data));t=o.added,e=o.removed}return{additions:t?[t]:[],deletions:e?[e]:[]}}}const qi=function(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:[];const e=[];for(const i of Array.from(t))switch(i.nodeType){case Node.TEXT_NODE:e.push(i.data);break;case Node.ELEMENT_NODE:"br"===E(i)?e.push("\n"):e.push(...Array.from(qi(i.childNodes)||[]))}return e};class Vi extends te{constructor(t){super(...arguments),this.file=t}perform(t){const e=new FileReader;return e.onerror=()=>t(!1),e.onload=()=>{e.onerror=null;try{e.abort()}catch(t){}return t(!0,this.file)},e.readAsArrayBuffer(this.file)}}class Hi{constructor(t){this.element=t}shouldIgnore(t){return!!a.samsungAndroid&&(this.previousEvent=this.event,this.event=t,this.checkSamsungKeyboardBuggyModeStart(),this.checkSamsungKeyboardBuggyModeEnd(),this.buggyMode)}checkSamsungKeyboardBuggyModeStart(){this.insertingLongTextAfterUnidentifiedChar()&&zi(this.element.innerText,this.event.data)&&(this.buggyMode=!0,this.event.preventDefault())}checkSamsungKeyboardBuggyModeEnd(){this.buggyMode&&"insertText"!==this.event.inputType&&(this.buggyMode=!1)}insertingLongTextAfterUnidentifiedChar(){var t;return this.isBeforeInputInsertText()&&this.previousEventWasUnidentifiedKeydown()&&(null===(t=this.event.data)||void 0===t?void 0:t.length)>50}isBeforeInputInsertText(){return"beforeinput"===this.event.type&&"insertText"===this.event.inputType}previousEventWasUnidentifiedKeydown(){var t,e;return"keydown"===(null===(t=this.previousEvent)||void 0===t?void 0:t.type)&&"Unidentified"===(null===(e=this.previousEvent)||void 0===e?void 0:e.key)}}const zi=(t,e)=>Ji(t)===Ji(e),_i=new RegExp("(".concat("￼","|").concat(h,"|").concat(d,"|\\s)+"),"g"),Ji=t=>t.replace(_i," ").trim();class Ki extends H{constructor(t){super(...arguments),this.element=t,this.mutationObserver=new Ui(this.element),this.mutationObserver.delegate=this,this.flakyKeyboardDetector=new Hi(this.element);for(const t in this.constructor.events)f(t,{onElement:this.element,withCallback:this.handlerFor(t)})}elementDidMutate(t){}editorWillSyncDocumentView(){return this.mutationObserver.stop()}editorDidSyncDocumentView(){return this.mutationObserver.start()}requestRender(){var t,e;return null===(t=this.delegate)||void 0===t||null===(e=t.inputControllerDidRequestRender)||void 0===e?void 0:e.call(t)}requestReparse(){var t,e;return null===(t=this.delegate)||void 0===t||null===(e=t.inputControllerDidRequestReparse)||void 0===e||e.call(t),this.requestRender()}attachFiles(t){const e=Array.from(t).map((t=>new Vi(t)));return Promise.all(e).then((t=>{this.handleInput((function(){var e,i;return null===(e=this.delegate)||void 0===e||e.inputControllerWillAttachFiles(),null===(i=this.responder)||void 0===i||i.insertFiles(t),this.requestRender()}))}))}handlerFor(t){return e=>{e.defaultPrevented||this.handleInput((()=>{if(!x(this.element)){if(this.flakyKeyboardDetector.shouldIgnore(e))return;this.eventName=t,this.constructor.events[t].call(this,e)}}))}}handleInput(t){try{var e;null===(e=this.delegate)||void 0===e||e.inputControllerWillHandleInput(),t.call(this)}finally{var i;null===(i=this.delegate)||void 0===i||i.inputControllerDidHandleInput()}}createLinkHTML(t,e){const i=document.createElement("a");return i.href=t,i.textContent=e||t,i.outerHTML}}var Gi;Ae(Ki,"events",{});const{browser:$i,keyNames:Xi}=V;let Yi=0;class Qi extends Ki{constructor(){super(...arguments),this.resetInputSummary()}setInputSummary(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};this.inputSummary.eventName=this.eventName;for(const e in t){const i=t[e];this.inputSummary[e]=i}return this.inputSummary}resetInputSummary(){this.inputSummary={}}reset(){return this.resetInputSummary(),Pt.reset()}elementDidMutate(t){var e,i;return this.isComposing()?null===(e=this.delegate)||void 0===e||null===(i=e.inputControllerDidAllowUnhandledInput)||void 0===i?void 0:i.call(e):this.handleInput((function(){return this.mutationIsSignificant(t)&&(this.mutationIsExpected(t)?this.requestRender():this.requestReparse()),this.reset()}))}mutationIsExpected(t){let{textAdded:e,textDeleted:i}=t;if(this.inputSummary.preferDocument)return!0;const n=null!=e?e===this.inputSummary.textAdded:!this.inputSummary.textAdded,r=null!=i?this.inputSummary.didDelete:!this.inputSummary.didDelete,o=["\n"," \n"].includes(e)&&!n,s="\n"===i&&!r;if(o&&!s||s&&!o){const t=this.getSelectedRange();if(t){var a;const i=o?e.replace(/\n$/,"").length||-1:(null==e?void 0:e.length)||1;if(null!==(a=this.responder)&&void 0!==a&&a.positionIsBlockBreak(t[1]+i))return!0}}return n&&r}mutationIsSignificant(t){var e;const i=Object.keys(t).length>0,n=""===(null===(e=this.compositionInput)||void 0===e?void 0:e.getEndData());return i||!n}getCompositionInput(){if(this.isComposing())return this.compositionInput;this.compositionInput=new rn(this)}isComposing(){return this.compositionInput&&!this.compositionInput.isEnded()}deleteInDirection(t,e){var i;return!1!==(null===(i=this.responder)||void 0===i?void 0:i.deleteInDirection(t))?this.setInputSummary({didDelete:!0}):e?(e.preventDefault(),this.requestRender()):void 0}serializeSelectionToDataTransfer(t){var e;if(!function(t){if(null==t||!t.setData)return!1;for(const e in yt){const i=yt[e];try{if(t.setData(e,i),!t.getData(e)===i)return!1}catch(t){return!1}}return!0}(t))return;const i=null===(e=this.responder)||void 0===e?void 0:e.getSelectedDocument().toSerializableDocument();return t.setData("application/x-trix-document",JSON.stringify(i)),t.setData("text/html",ge.render(i).innerHTML),t.setData("text/plain",i.toString().replace(/\n$/,"")),!0}canAcceptDataTransfer(t){const e={};return Array.from((null==t?void 0:t.types)||[]).forEach((t=>{e[t]=!0})),e.Files||e["application/x-trix-document"]||e["text/html"]||e["text/plain"]}getPastedHTMLUsingHiddenElement(t){const e=this.getSelectedRange(),i={position:"absolute",left:"".concat(window.pageXOffset,"px"),top:"".concat(window.pageYOffset,"px"),opacity:0},n=S({style:i,tagName:"div",editable:!0});return document.body.appendChild(n),n.focus(),requestAnimationFrame((()=>{const i=n.innerHTML;return k(n),this.setSelectedRange(e),t(i)}))}}Ae(Qi,"events",{keydown(t){this.isComposing()||this.resetInputSummary(),this.inputSummary.didInput=!0;const e=Xi[t.keyCode];if(e){var i;let n=this.keys;["ctrl","alt","shift","meta"].forEach((e=>{var i;t["".concat(e,"Key")]&&("ctrl"===e&&(e="control"),n=null===(i=n)||void 0===i?void 0:i[e])})),null!=(null===(i=n)||void 0===i?void 0:i[e])&&(this.setInputSummary({keyName:e}),Pt.reset(),n[e].call(this,t))}if(kt(t)){const e=String.fromCharCode(t.keyCode).toLowerCase();if(e){var n;const i=["alt","shift"].map((e=>{if(t["".concat(e,"Key")])return e})).filter((t=>t));i.push(e),null!==(n=this.delegate)&&void 0!==n&&n.inputControllerDidReceiveKeyboardCommand(i)&&t.preventDefault()}}},keypress(t){if(null!=this.inputSummary.eventName)return;if(t.metaKey)return;if(t.ctrlKey&&!t.altKey)return;const e=en(t);var i,n;return e?(null===(i=this.delegate)||void 0===i||i.inputControllerWillPerformTyping(),null===(n=this.responder)||void 0===n||n.insertString(e),this.setInputSummary({textAdded:e,didDelete:this.selectionIsExpanded()})):void 0},textInput(t){const{data:e}=t,{textAdded:i}=this.inputSummary;if(i&&i!==e&&i.toUpperCase()===e){var n;const t=this.getSelectedRange();return this.setSelectedRange([t[0],t[1]+i.length]),null===(n=this.responder)||void 0===n||n.insertString(e),this.setInputSummary({textAdded:e}),this.setSelectedRange(t)}},dragenter(t){t.preventDefault()},dragstart(t){var e,i;return this.serializeSelectionToDataTransfer(t.dataTransfer),this.draggedRange=this.getSelectedRange(),null===(e=this.delegate)||void 0===e||null===(i=e.inputControllerDidStartDrag)||void 0===i?void 0:i.call(e)},dragover(t){if(this.draggedRange||this.canAcceptDataTransfer(t.dataTransfer)){t.preventDefault();const n={x:t.clientX,y:t.clientY};var e,i;if(!St(n,this.draggingPoint))return this.draggingPoint=n,null===(e=this.delegate)||void 0===e||null===(i=e.inputControllerDidReceiveDragOverPoint)||void 0===i?void 0:i.call(e,this.draggingPoint)}},dragend(t){var e,i;null===(e=this.delegate)||void 0===e||null===(i=e.inputControllerDidCancelDrag)||void 0===i||i.call(e),this.draggedRange=null,this.draggingPoint=null},drop(t){var e,i;t.preventDefault();const n=null===(e=t.dataTransfer)||void 0===e?void 0:e.files,r=t.dataTransfer.getData("application/x-trix-document"),o={x:t.clientX,y:t.clientY};if(null===(i=this.responder)||void 0===i||i.setLocationRangeFromPointRange(o),null!=n&&n.length)this.attachFiles(n);else if(this.draggedRange){var s,a;null===(s=this.delegate)||void 0===s||s.inputControllerWillMoveText(),null===(a=this.responder)||void 0===a||a.moveTextFromRange(this.draggedRange),this.draggedRange=null,this.requestRender()}else if(r){var l;const t=qe.fromJSONString(r);null===(l=this.responder)||void 0===l||l.insertDocument(t),this.requestRender()}this.draggedRange=null,this.draggingPoint=null},cut(t){var e,i;if(null!==(e=this.responder)&&void 0!==e&&e.selectionIsExpanded()&&(this.serializeSelectionToDataTransfer(t.clipboardData)&&t.preventDefault(),null===(i=this.delegate)||void 0===i||i.inputControllerWillCutText(),this.deleteInDirection("backward"),t.defaultPrevented))return this.requestRender()},copy(t){var e;null!==(e=this.responder)&&void 0!==e&&e.selectionIsExpanded()&&this.serializeSelectionToDataTransfer(t.clipboardData)&&t.preventDefault()},paste(t){const e=t.clipboardData||t.testClipboardData,i={clipboard:e};if(!e||nn(t))return void this.getPastedHTMLUsingHiddenElement((t=>{var e,n,r;return i.type="text/html",i.html=t,null===(e=this.delegate)||void 0===e||e.inputControllerWillPaste(i),null===(n=this.responder)||void 0===n||n.insertHTML(i.html),this.requestRender(),null===(r=this.delegate)||void 0===r?void 0:r.inputControllerDidPaste(i)}));const n=e.getData("URL"),r=e.getData("text/html"),o=e.getData("public.url-name");if(n){var s,a,l;let t;i.type="text/html",t=o?qt(o).trim():n,i.html=this.createLinkHTML(n,t),null===(s=this.delegate)||void 0===s||s.inputControllerWillPaste(i),this.setInputSummary({textAdded:t,didDelete:this.selectionIsExpanded()}),null===(a=this.responder)||void 0===a||a.insertHTML(i.html),this.requestRender(),null===(l=this.delegate)||void 0===l||l.inputControllerDidPaste(i)}else if(Ct(e)){var c,u,h;i.type="text/plain",i.string=e.getData("text/plain"),null===(c=this.delegate)||void 0===c||c.inputControllerWillPaste(i),this.setInputSummary({textAdded:i.string,didDelete:this.selectionIsExpanded()}),null===(u=this.responder)||void 0===u||u.insertString(i.string),this.requestRender(),null===(h=this.delegate)||void 0===h||h.inputControllerDidPaste(i)}else if(r){var d,g,m;i.type="text/html",i.html=r,null===(d=this.delegate)||void 0===d||d.inputControllerWillPaste(i),null===(g=this.responder)||void 0===g||g.insertHTML(i.html),this.requestRender(),null===(m=this.delegate)||void 0===m||m.inputControllerDidPaste(i)}else if(Array.from(e.types).includes("Files")){var p,f;const t=null===(p=e.items)||void 0===p||null===(p=p[0])||void 0===p||null===(f=p.getAsFile)||void 0===f?void 0:f.call(p);if(t){var b,v,A;const e=Zi(t);!t.name&&e&&(t.name="pasted-file-".concat(++Yi,".").concat(e)),i.type="File",i.file=t,null===(b=this.delegate)||void 0===b||b.inputControllerWillAttachFiles(),null===(v=this.responder)||void 0===v||v.insertFile(i.file),this.requestRender(),null===(A=this.delegate)||void 0===A||A.inputControllerDidPaste(i)}}t.preventDefault()},compositionstart(t){return this.getCompositionInput().start(t.data)},compositionupdate(t){return this.getCompositionInput().update(t.data)},compositionend(t){return this.getCompositionInput().end(t.data)},beforeinput(t){this.inputSummary.didInput=!0},input(t){return this.inputSummary.didInput=!0,t.stopPropagation()}}),Ae(Qi,"keys",{backspace(t){var e;return null===(e=this.delegate)||void 0===e||e.inputControllerWillPerformTyping(),this.deleteInDirection("backward",t)},delete(t){var e;return null===(e=this.delegate)||void 0===e||e.inputControllerWillPerformTyping(),this.deleteInDirection("forward",t)},return(t){var e,i;return this.setInputSummary({preferDocument:!0}),null===(e=this.delegate)||void 0===e||e.inputControllerWillPerformTyping(),null===(i=this.responder)||void 0===i?void 0:i.insertLineBreak()},tab(t){var e,i;null!==(e=this.responder)&&void 0!==e&&e.canIncreaseNestingLevel()&&(null===(i=this.responder)||void 0===i||i.increaseNestingLevel(),this.requestRender(),t.preventDefault())},left(t){var e;if(this.selectionIsInCursorTarget())return t.preventDefault(),null===(e=this.responder)||void 0===e?void 0:e.moveCursorInDirection("backward")},right(t){var e;if(this.selectionIsInCursorTarget())return t.preventDefault(),null===(e=this.responder)||void 0===e?void 0:e.moveCursorInDirection("forward")},control:{d(t){var e;return null===(e=this.delegate)||void 0===e||e.inputControllerWillPerformTyping(),this.deleteInDirection("forward",t)},h(t){var e;return null===(e=this.delegate)||void 0===e||e.inputControllerWillPerformTyping(),this.deleteInDirection("backward",t)},o(t){var e,i;return t.preventDefault(),null===(e=this.delegate)||void 0===e||e.inputControllerWillPerformTyping(),null===(i=this.responder)||void 0===i||i.insertString("\n",{updatePosition:!1}),this.requestRender()}},shift:{return(t){var e,i;null===(e=this.delegate)||void 0===e||e.inputControllerWillPerformTyping(),null===(i=this.responder)||void 0===i||i.insertString("\n"),this.requestRender(),t.preventDefault()},tab(t){var e,i;null!==(e=this.responder)&&void 0!==e&&e.canDecreaseNestingLevel()&&(null===(i=this.responder)||void 0===i||i.decreaseNestingLevel(),this.requestRender(),t.preventDefault())},left(t){if(this.selectionIsInCursorTarget())return t.preventDefault(),this.expandSelectionInDirection("backward")},right(t){if(this.selectionIsInCursorTarget())return t.preventDefault(),this.expandSelectionInDirection("forward")}},alt:{backspace(t){var e;return this.setInputSummary({preferDocument:!1}),null===(e=this.delegate)||void 0===e?void 0:e.inputControllerWillPerformTyping()}},meta:{backspace(t){var e;return this.setInputSummary({preferDocument:!1}),null===(e=this.delegate)||void 0===e?void 0:e.inputControllerWillPerformTyping()}}}),Qi.proxyMethod("responder?.getSelectedRange"),Qi.proxyMethod("responder?.setSelectedRange"),Qi.proxyMethod("responder?.expandSelectionInDirection"),Qi.proxyMethod("responder?.selectionIsInCursorTarget"),Qi.proxyMethod("responder?.selectionIsExpanded");const Zi=t=>{var e;return null===(e=t.type)||void 0===e||null===(e=e.match(/\/(\w+)$/))||void 0===e?void 0:e[1]},tn=!(null===(Gi=" ".codePointAt)||void 0===Gi||!Gi.call(" ",0)),en=function(t){if(t.key&&tn&&t.key.codePointAt(0)===t.keyCode)return t.key;{let e;if(null===t.which?e=t.keyCode:0!==t.which&&0!==t.charCode&&(e=t.charCode),null!=e&&"escape"!==Xi[e])return X.fromCodepoints([e]).toString()}},nn=function(t){const e=t.clipboardData;if(e){if(e.types.includes("text/html")){for(const t of e.types){const i=/^CorePasteboardFlavorType/.test(t),n=/^dyn\./.test(t)&&e.getData(t);if(i||n)return!0}return!1}{const t=e.types.includes("com.apple.webarchive"),i=e.types.includes("com.apple.flat-rtfd");return t||i}}};class rn extends H{constructor(t){super(...arguments),this.inputController=t,this.responder=this.inputController.responder,this.delegate=this.inputController.delegate,this.inputSummary=this.inputController.inputSummary,this.data={}}start(t){if(this.data.start=t,this.isSignificant()){var e,i;if("keypress"===this.inputSummary.eventName&&this.inputSummary.textAdded)null===(i=this.responder)||void 0===i||i.deleteInDirection("left");this.selectionIsExpanded()||(this.insertPlaceholder(),this.requestRender()),this.range=null===(e=this.responder)||void 0===e?void 0:e.getSelectedRange()}}update(t){if(this.data.update=t,this.isSignificant()){const t=this.selectPlaceholder();t&&(this.forgetPlaceholder(),this.range=t)}}end(t){return this.data.end=t,this.isSignificant()?(this.forgetPlaceholder(),this.canApplyToDocument()?(this.setInputSummary({preferDocument:!0,didInput:!1}),null===(e=this.delegate)||void 0===e||e.inputControllerWillPerformTyping(),null===(i=this.responder)||void 0===i||i.setSelectedRange(this.range),null===(n=this.responder)||void 0===n||n.insertString(this.data.end),null===(r=this.responder)||void 0===r?void 0:r.setSelectedRange(this.range[0]+this.data.end.length)):null!=this.data.start||null!=this.data.update?(this.requestReparse(),this.inputController.reset()):void 0):this.inputController.reset();var e,i,n,r}getEndData(){return this.data.end}isEnded(){return null!=this.getEndData()}isSignificant(){return!$i.composesExistingText||this.inputSummary.didInput}canApplyToDocument(){var t,e;return 0===(null===(t=this.data.start)||void 0===t?void 0:t.length)&&(null===(e=this.data.end)||void 0===e?void 0:e.length)>0&&this.range}}rn.proxyMethod("inputController.setInputSummary"),rn.proxyMethod("inputController.requestRender"),rn.proxyMethod("inputController.requestReparse"),rn.proxyMethod("responder?.selectionIsExpanded"),rn.proxyMethod("responder?.insertPlaceholder"),rn.proxyMethod("responder?.selectPlaceholder"),rn.proxyMethod("responder?.forgetPlaceholder");class on extends Ki{constructor(){super(...arguments),this.render=this.render.bind(this)}elementDidMutate(){return this.scheduledRender?this.composing?null===(t=this.delegate)||void 0===t||null===(e=t.inputControllerDidAllowUnhandledInput)||void 0===e?void 0:e.call(t):void 0:this.reparse();var t,e}scheduleRender(){return this.scheduledRender?this.scheduledRender:this.scheduledRender=requestAnimationFrame(this.render)}render(){var t,e;(cancelAnimationFrame(this.scheduledRender),this.scheduledRender=null,this.composing)||(null===(e=this.delegate)||void 0===e||e.render());null===(t=this.afterRender)||void 0===t||t.call(this),this.afterRender=null}reparse(){var t;return null===(t=this.delegate)||void 0===t?void 0:t.reparse()}insertString(){var t;let e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:"",i=arguments.length>1?arguments[1]:void 0;return null===(t=this.delegate)||void 0===t||t.inputControllerWillPerformTyping(),this.withTargetDOMRange((function(){var t;return null===(t=this.responder)||void 0===t?void 0:t.insertString(e,i)}))}toggleAttributeIfSupported(t){var e;if(dt().includes(t))return null===(e=this.delegate)||void 0===e||e.inputControllerWillPerformFormatting(t),this.withTargetDOMRange((function(){var e;return null===(e=this.responder)||void 0===e?void 0:e.toggleCurrentAttribute(t)}))}activateAttributeIfSupported(t,e){var i;if(dt().includes(t))return null===(i=this.delegate)||void 0===i||i.inputControllerWillPerformFormatting(t),this.withTargetDOMRange((function(){var i;return null===(i=this.responder)||void 0===i?void 0:i.setCurrentAttribute(t,e)}))}deleteInDirection(t){let{recordUndoEntry:e}=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{recordUndoEntry:!0};var i;e&&(null===(i=this.delegate)||void 0===i||i.inputControllerWillPerformTyping());const n=()=>{var e;return null===(e=this.responder)||void 0===e?void 0:e.deleteInDirection(t)},r=this.getTargetDOMRange({minLength:2});return r?this.withTargetDOMRange(r,n):n()}withTargetDOMRange(t,e){var i;return"function"==typeof t&&(e=t,t=this.getTargetDOMRange()),t?null===(i=this.responder)||void 0===i?void 0:i.withTargetDOMRange(t,e.bind(this)):(Pt.reset(),e.call(this))}getTargetDOMRange(){var t,e;let{minLength:i}=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{minLength:0};const n=null===(t=(e=this.event).getTargetRanges)||void 0===t?void 0:t.call(e);if(n&&n.length){const t=sn(n[0]);if(0===i||t.toString().length>=i)return t}}withEvent(t,e){let i;this.event=t;try{i=e.call(this)}finally{this.event=null}return i}}Ae(on,"events",{keydown(t){if(kt(t)){var e;const i=un(t);null!==(e=this.delegate)&&void 0!==e&&e.inputControllerDidReceiveKeyboardCommand(i)&&t.preventDefault()}else{let e=t.key;t.altKey&&(e+="+Alt"),t.shiftKey&&(e+="+Shift");const i=this.constructor.keys[e];if(i)return this.withEvent(t,i)}},paste(t){var e;let i;const n=null===(e=t.clipboardData)||void 0===e?void 0:e.getData("URL");return ln(t)?(t.preventDefault(),this.attachFiles(t.clipboardData.files)):cn(t)?(t.preventDefault(),i={type:"text/plain",string:t.clipboardData.getData("text/plain")},null===(r=this.delegate)||void 0===r||r.inputControllerWillPaste(i),null===(o=this.responder)||void 0===o||o.insertString(i.string),this.render(),null===(s=this.delegate)||void 0===s?void 0:s.inputControllerDidPaste(i)):n?(t.preventDefault(),i={type:"text/html",html:this.createLinkHTML(n)},null===(a=this.delegate)||void 0===a||a.inputControllerWillPaste(i),null===(l=this.responder)||void 0===l||l.insertHTML(i.html),this.render(),null===(c=this.delegate)||void 0===c?void 0:c.inputControllerDidPaste(i)):void 0;var r,o,s,a,l,c},beforeinput(t){const e=this.constructor.inputTypes[t.inputType];e&&(this.withEvent(t,e),this.scheduleRender())},input(t){Pt.reset()},dragstart(t){var e,i;null!==(e=this.responder)&&void 0!==e&&e.selectionContainsAttachments()&&(t.dataTransfer.setData("application/x-trix-dragging",!0),this.dragging={range:null===(i=this.responder)||void 0===i?void 0:i.getSelectedRange(),point:hn(t)})},dragenter(t){an(t)&&t.preventDefault()},dragover(t){if(this.dragging){t.preventDefault();const i=hn(t);var e;if(!St(i,this.dragging.point))return this.dragging.point=i,null===(e=this.responder)||void 0===e?void 0:e.setLocationRangeFromPointRange(i)}else an(t)&&t.preventDefault()},drop(t){var e,i;if(this.dragging)return t.preventDefault(),null===(e=this.delegate)||void 0===e||e.inputControllerWillMoveText(),null===(i=this.responder)||void 0===i||i.moveTextFromRange(this.dragging.range),this.dragging=null,this.scheduleRender();if(an(t)){var n;t.preventDefault();const e=hn(t);return null===(n=this.responder)||void 0===n||n.setLocationRangeFromPointRange(e),this.attachFiles(t.dataTransfer.files)}},dragend(){var t;this.dragging&&(null===(t=this.responder)||void 0===t||t.setSelectedRange(this.dragging.range),this.dragging=null)},compositionend(t){this.composing&&(this.composing=!1,a.recentAndroid||this.scheduleRender())}}),Ae(on,"keys",{ArrowLeft(){var t,e;if(null!==(t=this.responder)&&void 0!==t&&t.shouldManageMovingCursorInDirection("backward"))return this.event.preventDefault(),null===(e=this.responder)||void 0===e?void 0:e.moveCursorInDirection("backward")},ArrowRight(){var t,e;if(null!==(t=this.responder)&&void 0!==t&&t.shouldManageMovingCursorInDirection("forward"))return this.event.preventDefault(),null===(e=this.responder)||void 0===e?void 0:e.moveCursorInDirection("forward")},Backspace(){var t,e,i;if(null!==(t=this.responder)&&void 0!==t&&t.shouldManageDeletingInDirection("backward"))return this.event.preventDefault(),null===(e=this.delegate)||void 0===e||e.inputControllerWillPerformTyping(),null===(i=this.responder)||void 0===i||i.deleteInDirection("backward"),this.render()},Tab(){var t,e;if(null!==(t=this.responder)&&void 0!==t&&t.canIncreaseNestingLevel())return this.event.preventDefault(),null===(e=this.responder)||void 0===e||e.increaseNestingLevel(),this.render()},"Tab+Shift"(){var t,e;if(null!==(t=this.responder)&&void 0!==t&&t.canDecreaseNestingLevel())return this.event.preventDefault(),null===(e=this.responder)||void 0===e||e.decreaseNestingLevel(),this.render()}}),Ae(on,"inputTypes",{deleteByComposition(){return this.deleteInDirection("backward",{recordUndoEntry:!1})},deleteByCut(){return this.deleteInDirection("backward")},deleteByDrag(){return this.event.preventDefault(),this.withTargetDOMRange((function(){var t;this.deleteByDragRange=null===(t=this.responder)||void 0===t?void 0:t.getSelectedRange()}))},deleteCompositionText(){return this.deleteInDirection("backward",{recordUndoEntry:!1})},deleteContent(){return this.deleteInDirection("backward")},deleteContentBackward(){return this.deleteInDirection("backward")},deleteContentForward(){return this.deleteInDirection("forward")},deleteEntireSoftLine(){return this.deleteInDirection("forward")},deleteHardLineBackward(){return this.deleteInDirection("backward")},deleteHardLineForward(){return this.deleteInDirection("forward")},deleteSoftLineBackward(){return this.deleteInDirection("backward")},deleteSoftLineForward(){return this.deleteInDirection("forward")},deleteWordBackward(){return this.deleteInDirection("backward")},deleteWordForward(){return this.deleteInDirection("forward")},formatBackColor(){return this.activateAttributeIfSupported("backgroundColor",this.event.data)},formatBold(){return this.toggleAttributeIfSupported("bold")},formatFontColor(){return this.activateAttributeIfSupported("color",this.event.data)},formatFontName(){return this.activateAttributeIfSupported("font",this.event.data)},formatIndent(){var t;if(null!==(t=this.responder)&&void 0!==t&&t.canIncreaseNestingLevel())return this.withTargetDOMRange((function(){var t;return null===(t=this.responder)||void 0===t?void 0:t.increaseNestingLevel()}))},formatItalic(){return this.toggleAttributeIfSupported("italic")},formatJustifyCenter(){return this.toggleAttributeIfSupported("justifyCenter")},formatJustifyFull(){return this.toggleAttributeIfSupported("justifyFull")},formatJustifyLeft(){return this.toggleAttributeIfSupported("justifyLeft")},formatJustifyRight(){return this.toggleAttributeIfSupported("justifyRight")},formatOutdent(){var t;if(null!==(t=this.responder)&&void 0!==t&&t.canDecreaseNestingLevel())return this.withTargetDOMRange((function(){var t;return null===(t=this.responder)||void 0===t?void 0:t.decreaseNestingLevel()}))},formatRemove(){this.withTargetDOMRange((function(){for(const i in null===(t=this.responder)||void 0===t?void 0:t.getCurrentAttributes()){var t,e;null===(e=this.responder)||void 0===e||e.removeCurrentAttribute(i)}}))},formatSetBlockTextDirection(){return this.activateAttributeIfSupported("blockDir",this.event.data)},formatSetInlineTextDirection(){return this.activateAttributeIfSupported("textDir",this.event.data)},formatStrikeThrough(){return this.toggleAttributeIfSupported("strike")},formatSubscript(){return this.toggleAttributeIfSupported("sub")},formatSuperscript(){return this.toggleAttributeIfSupported("sup")},formatUnderline(){return this.toggleAttributeIfSupported("underline")},historyRedo(){var t;return null===(t=this.delegate)||void 0===t?void 0:t.inputControllerWillPerformRedo()},historyUndo(){var t;return null===(t=this.delegate)||void 0===t?void 0:t.inputControllerWillPerformUndo()},insertCompositionText(){return this.composing=!0,this.insertString(this.event.data)},insertFromComposition(){return this.composing=!1,this.insertString(this.event.data)},insertFromDrop(){const t=this.deleteByDragRange;var e;if(t)return this.deleteByDragRange=null,null===(e=this.delegate)||void 0===e||e.inputControllerWillMoveText(),this.withTargetDOMRange((function(){var e;return null===(e=this.responder)||void 0===e?void 0:e.moveTextFromRange(t)}))},insertFromPaste(){var t;const{dataTransfer:e}=this.event,i={dataTransfer:e},n=e.getData("URL"),r=e.getData("text/html");if(n){var o;let t;this.event.preventDefault(),i.type="text/html";const r=e.getData("public.url-name");t=r?qt(r).trim():n,i.html=this.createLinkHTML(n,t),null===(o=this.delegate)||void 0===o||o.inputControllerWillPaste(i),this.withTargetDOMRange((function(){var t;return null===(t=this.responder)||void 0===t?void 0:t.insertHTML(i.html)})),this.afterRender=()=>{var t;return null===(t=this.delegate)||void 0===t?void 0:t.inputControllerDidPaste(i)}}else if(Ct(e)){var s;i.type="text/plain",i.string=e.getData("text/plain"),null===(s=this.delegate)||void 0===s||s.inputControllerWillPaste(i),this.withTargetDOMRange((function(){var t;return null===(t=this.responder)||void 0===t?void 0:t.insertString(i.string)})),this.afterRender=()=>{var t;return null===(t=this.delegate)||void 0===t?void 0:t.inputControllerDidPaste(i)}}else if(r){var a;this.event.preventDefault(),i.type="text/html",i.html=r,null===(a=this.delegate)||void 0===a||a.inputControllerWillPaste(i),this.withTargetDOMRange((function(){var t;return null===(t=this.responder)||void 0===t?void 0:t.insertHTML(i.html)})),this.afterRender=()=>{var t;return null===(t=this.delegate)||void 0===t?void 0:t.inputControllerDidPaste(i)}}else if(null!==(t=e.files)&&void 0!==t&&t.length){var l;i.type="File",i.file=e.files[0],null===(l=this.delegate)||void 0===l||l.inputControllerWillPaste(i),this.withTargetDOMRange((function(){var t;return null===(t=this.responder)||void 0===t?void 0:t.insertFile(i.file)})),this.afterRender=()=>{var t;return null===(t=this.delegate)||void 0===t?void 0:t.inputControllerDidPaste(i)}}},insertFromYank(){return this.insertString(this.event.data)},insertLineBreak(){return this.insertString("\n")},insertLink(){return this.activateAttributeIfSupported("href",this.event.data)},insertOrderedList(){return this.toggleAttributeIfSupported("number")},insertParagraph(){var t;return null===(t=this.delegate)||void 0===t||t.inputControllerWillPerformTyping(),this.withTargetDOMRange((function(){var t;return null===(t=this.responder)||void 0===t?void 0:t.insertLineBreak()}))},insertReplacementText(){const t=this.event.dataTransfer.getData("text/plain"),e=this.event.getTargetRanges()[0];this.withTargetDOMRange(e,(()=>{this.insertString(t,{updatePosition:!1})}))},insertText(){var t;return this.insertString(this.event.data||(null===(t=this.event.dataTransfer)||void 0===t?void 0:t.getData("text/plain")))},insertTranspose(){return this.insertString(this.event.data)},insertUnorderedList(){return this.toggleAttributeIfSupported("bullet")}});const sn=function(t){const e=document.createRange();return e.setStart(t.startContainer,t.startOffset),e.setEnd(t.endContainer,t.endOffset),e},an=t=>{var e;return Array.from((null===(e=t.dataTransfer)||void 0===e?void 0:e.types)||[]).includes("Files")},ln=function(t){const e=t.clipboardData;if(e)return e.types.includes("Files")&&1===e.types.length&&e.files.length>=1},cn=function(t){const e=t.clipboardData;if(e)return e.types.includes("text/plain")&&1===e.types.length},un=function(t){const e=[];return t.altKey&&e.push("alt"),t.shiftKey&&e.push("shift"),e.push(t.key),e},hn=t=>({x:t.clientX,y:t.clientY}),dn="[data-trix-attribute]",gn="[data-trix-action]",mn="".concat(dn,", ").concat(gn),pn="[data-trix-dialog]",fn="".concat(pn,"[data-trix-active]"),bn="".concat(pn," [data-trix-method]"),vn="".concat(pn," [data-trix-input]"),An=(t,e)=>(e||(e=yn(t)),t.querySelector("[data-trix-input][name='".concat(e,"']"))),xn=t=>t.getAttribute("data-trix-action"),yn=t=>t.getAttribute("data-trix-attribute")||t.getAttribute("data-trix-dialog-attribute");class Cn extends H{constructor(t){super(t),this.didClickActionButton=this.didClickActionButton.bind(this),this.didClickAttributeButton=this.didClickAttributeButton.bind(this),this.didClickDialogButton=this.didClickDialogButton.bind(this),this.didKeyDownDialogInput=this.didKeyDownDialogInput.bind(this),this.element=t,this.attributes={},this.actions={},this.resetDialogInputs(),f("mousedown",{onElement:this.element,matchingSelector:gn,withCallback:this.didClickActionButton}),f("mousedown",{onElement:this.element,matchingSelector:dn,withCallback:this.didClickAttributeButton}),f("click",{onElement:this.element,matchingSelector:mn,preventDefault:!0}),f("click",{onElement:this.element,matchingSelector:bn,withCallback:this.didClickDialogButton}),f("keydown",{onElement:this.element,matchingSelector:vn,withCallback:this.didKeyDownDialogInput})}didClickActionButton(t,e){var i;null===(i=this.delegate)||void 0===i||i.toolbarDidClickButton(),t.preventDefault();const n=xn(e);return this.getDialog(n)?this.toggleDialog(n):null===(r=this.delegate)||void 0===r?void 0:r.toolbarDidInvokeAction(n,e);var r}didClickAttributeButton(t,e){var i;null===(i=this.delegate)||void 0===i||i.toolbarDidClickButton(),t.preventDefault();const n=yn(e);var r;this.getDialog(n)?this.toggleDialog(n):null===(r=this.delegate)||void 0===r||r.toolbarDidToggleAttribute(n);return this.refreshAttributeButtons()}didClickDialogButton(t,e){const i=A(e,{matchingSelector:pn});return this[e.getAttribute("data-trix-method")].call(this,i)}didKeyDownDialogInput(t,e){if(13===t.keyCode){t.preventDefault();const i=e.getAttribute("name"),n=this.getDialog(i);this.setAttribute(n)}if(27===t.keyCode)return t.preventDefault(),this.hideDialog()}updateActions(t){return this.actions=t,this.refreshActionButtons()}refreshActionButtons(){return this.eachActionButton(((t,e)=>{t.disabled=!1===this.actions[e]}))}eachActionButton(t){return Array.from(this.element.querySelectorAll(gn)).map((e=>t(e,xn(e))))}updateAttributes(t){return this.attributes=t,this.refreshAttributeButtons()}refreshAttributeButtons(){return this.eachAttributeButton(((t,e)=>(t.disabled=!1===this.attributes[e],this.attributes[e]||this.dialogIsVisible(e)?(t.setAttribute("data-trix-active",""),t.classList.add("trix-active")):(t.removeAttribute("data-trix-active"),t.classList.remove("trix-active")))))}eachAttributeButton(t){return Array.from(this.element.querySelectorAll(dn)).map((e=>t(e,yn(e))))}applyKeyboardCommand(t){const e=JSON.stringify(t.sort());for(const t of Array.from(this.element.querySelectorAll("[data-trix-key]"))){const i=t.getAttribute("data-trix-key").split("+");if(JSON.stringify(i.sort())===e)return b("mousedown",{onElement:t}),!0}return!1}dialogIsVisible(t){const e=this.getDialog(t);if(e)return e.hasAttribute("data-trix-active")}toggleDialog(t){return this.dialogIsVisible(t)?this.hideDialog():this.showDialog(t)}showDialog(t){var e,i;this.hideDialog(),null===(e=this.delegate)||void 0===e||e.toolbarWillShowDialog();const n=this.getDialog(t);n.setAttribute("data-trix-active",""),n.classList.add("trix-active"),Array.from(n.querySelectorAll("input[disabled]")).forEach((t=>{t.removeAttribute("disabled")}));const r=yn(n);if(r){const e=An(n,t);e&&(e.value=this.attributes[r]||"",e.select())}return null===(i=this.delegate)||void 0===i?void 0:i.toolbarDidShowDialog(t)}setAttribute(t){const e=yn(t),i=An(t,e);return i.willValidate&&!i.checkValidity()?(i.setAttribute("data-trix-validate",""),i.classList.add("trix-validate"),i.focus()):(null===(n=this.delegate)||void 0===n||n.toolbarDidUpdateAttribute(e,i.value),this.hideDialog());var n}removeAttribute(t){var e;const i=yn(t);return null===(e=this.delegate)||void 0===e||e.toolbarDidRemoveAttribute(i),this.hideDialog()}hideDialog(){const t=this.element.querySelector(fn);var e;if(t)return t.removeAttribute("data-trix-active"),t.classList.remove("trix-active"),this.resetDialogInputs(),null===(e=this.delegate)||void 0===e?void 0:e.toolbarDidHideDialog((t=>t.getAttribute("data-trix-dialog"))(t))}resetDialogInputs(){Array.from(this.element.querySelectorAll(vn)).forEach((t=>{t.setAttribute("disabled","disabled"),t.removeAttribute("data-trix-validate"),t.classList.remove("trix-validate")}))}getDialog(t){return this.element.querySelector("[data-trix-dialog=".concat(t,"]"))}}class kn extends Oi{constructor(t){let{editorElement:e,document:i,html:n}=t;super(...arguments),this.editorElement=e,this.selectionManager=new Li(this.editorElement),this.selectionManager.delegate=this,this.composition=new gi,this.composition.delegate=this,this.attachmentManager=new hi(this.composition.getAttachments()),this.attachmentManager.delegate=this,this.inputController=2===M.getLevel()?new on(this.editorElement):new Qi(this.editorElement),this.inputController.delegate=this,this.inputController.responder=this.composition,this.compositionController=new Ni(this.editorElement,this.composition),this.compositionController.delegate=this,this.toolbarController=new Cn(this.editorElement.toolbarElement),this.toolbarController.delegate=this,this.editor=new xi(this.composition,this.selectionManager,this.editorElement),i?this.editor.loadDocument(i):this.editor.loadHTML(n)}registerSelectionManager(){return Pt.registerSelectionManager(this.selectionManager)}unregisterSelectionManager(){return Pt.unregisterSelectionManager(this.selectionManager)}render(){return this.compositionController.render()}reparse(){return this.composition.replaceHTML(this.editorElement.innerHTML)}compositionDidChangeDocument(t){if(this.notifyEditorElement("document-change"),!this.handlingInput)return this.render()}compositionDidChangeCurrentAttributes(t){return this.currentAttributes=t,this.toolbarController.updateAttributes(this.currentAttributes),this.updateCurrentActions(),this.notifyEditorElement("attributes-change",{attributes:this.currentAttributes})}compositionDidPerformInsertionAtRange(t){this.pasting&&(this.pastedRange=t)}compositionShouldAcceptFile(t){return this.notifyEditorElement("file-accept",{file:t})}compositionDidAddAttachment(t){const e=this.attachmentManager.manageAttachment(t);return this.notifyEditorElement("attachment-add",{attachment:e})}compositionDidEditAttachment(t){this.compositionController.rerenderViewForObject(t);const e=this.attachmentManager.manageAttachment(t);return this.notifyEditorElement("attachment-edit",{attachment:e}),this.notifyEditorElement("change")}compositionDidChangeAttachmentPreviewURL(t){return this.compositionController.invalidateViewForObject(t),this.notifyEditorElement("change")}compositionDidRemoveAttachment(t){const e=this.attachmentManager.unmanageAttachment(t);return this.notifyEditorElement("attachment-remove",{attachment:e})}compositionDidStartEditingAttachment(t,e){return this.attachmentLocationRange=this.composition.document.getLocationRangeOfAttachment(t),this.compositionController.installAttachmentEditorForAttachment(t,e),this.selectionManager.setLocationRange(this.attachmentLocationRange)}compositionDidStopEditingAttachment(t){this.compositionController.uninstallAttachmentEditor(),this.attachmentLocationRange=null}compositionDidRequestChangingSelectionToLocationRange(t){if(!this.loadingSnapshot||this.isFocused())return this.requestedLocationRange=t,this.compositionRevisionWhenLocationRangeRequested=this.composition.revision,this.handlingInput?void 0:this.render()}compositionWillLoadSnapshot(){this.loadingSnapshot=!0}compositionDidLoadSnapshot(){this.compositionController.refreshViewCache(),this.render(),this.loadingSnapshot=!1}getSelectionManager(){return this.selectionManager}attachmentManagerDidRequestRemovalOfAttachment(t){return this.removeAttachment(t)}compositionControllerWillSyncDocumentView(){return this.inputController.editorWillSyncDocumentView(),this.selectionManager.lock(),this.selectionManager.clearSelection()}compositionControllerDidSyncDocumentView(){return this.inputController.editorDidSyncDocumentView(),this.selectionManager.unlock(),this.updateCurrentActions(),this.notifyEditorElement("sync")}compositionControllerDidRender(){this.requestedLocationRange&&(this.compositionRevisionWhenLocationRangeRequested===this.composition.revision&&this.selectionManager.setLocationRange(this.requestedLocationRange),this.requestedLocationRange=null,this.compositionRevisionWhenLocationRangeRequested=null),this.renderedCompositionRevision!==this.composition.revision&&(this.runEditorFilters(),this.composition.updateCurrentAttributes(),this.notifyEditorElement("render")),this.renderedCompositionRevision=this.composition.revision}compositionControllerDidFocus(){return this.isFocusedInvisibly()&&this.setLocationRange({index:0,offset:0}),this.toolbarController.hideDialog(),this.notifyEditorElement("focus")}compositionControllerDidBlur(){return this.notifyEditorElement("blur")}compositionControllerDidSelectAttachment(t,e){return this.toolbarController.hideDialog(),this.composition.editAttachment(t,e)}compositionControllerDidRequestDeselectingAttachment(t){const e=this.attachmentLocationRange||this.composition.document.getLocationRangeOfAttachment(t);return this.selectionManager.setLocationRange(e[1])}compositionControllerWillUpdateAttachment(t){return this.editor.recordUndoEntry("Edit Attachment",{context:t.id,consolidatable:!0})}compositionControllerDidRequestRemovalOfAttachment(t){return this.removeAttachment(t)}inputControllerWillHandleInput(){this.handlingInput=!0,this.requestedRender=!1}inputControllerDidRequestRender(){this.requestedRender=!0}inputControllerDidHandleInput(){if(this.handlingInput=!1,this.requestedRender)return this.requestedRender=!1,this.render()}inputControllerDidAllowUnhandledInput(){return this.notifyEditorElement("change")}inputControllerDidRequestReparse(){return this.reparse()}inputControllerWillPerformTyping(){return this.recordTypingUndoEntry()}inputControllerWillPerformFormatting(t){return this.recordFormattingUndoEntry(t)}inputControllerWillCutText(){return this.editor.recordUndoEntry("Cut")}inputControllerWillPaste(t){return this.editor.recordUndoEntry("Paste"),this.pasting=!0,this.notifyEditorElement("before-paste",{paste:t})}inputControllerDidPaste(t){return t.range=this.pastedRange,this.pastedRange=null,this.pasting=null,this.notifyEditorElement("paste",{paste:t})}inputControllerWillMoveText(){return this.editor.recordUndoEntry("Move")}inputControllerWillAttachFiles(){return this.editor.recordUndoEntry("Drop Files")}inputControllerWillPerformUndo(){return this.editor.undo()}inputControllerWillPerformRedo(){return this.editor.redo()}inputControllerDidReceiveKeyboardCommand(t){return this.toolbarController.applyKeyboardCommand(t)}inputControllerDidStartDrag(){this.locationRangeBeforeDrag=this.selectionManager.getLocationRange()}inputControllerDidReceiveDragOverPoint(t){return this.selectionManager.setLocationRangeFromPointRange(t)}inputControllerDidCancelDrag(){this.selectionManager.setLocationRange(this.locationRangeBeforeDrag),this.locationRangeBeforeDrag=null}locationRangeDidChange(t){return this.composition.updateCurrentAttributes(),this.updateCurrentActions(),this.attachmentLocationRange&&!wt(this.attachmentLocationRange,t)&&this.composition.stopEditingAttachment(),this.notifyEditorElement("selection-change")}toolbarDidClickButton(){if(!this.getLocationRange())return this.setLocationRange({index:0,offset:0})}toolbarDidInvokeAction(t,e){return this.invokeAction(t,e)}toolbarDidToggleAttribute(t){if(this.recordFormattingUndoEntry(t),this.composition.toggleCurrentAttribute(t),this.render(),!this.selectionFrozen)return this.editorElement.focus()}toolbarDidUpdateAttribute(t,e){if(this.recordFormattingUndoEntry(t),this.composition.setCurrentAttribute(t,e),this.render(),!this.selectionFrozen)return this.editorElement.focus()}toolbarDidRemoveAttribute(t){if(this.recordFormattingUndoEntry(t),this.composition.removeCurrentAttribute(t),this.render(),!this.selectionFrozen)return this.editorElement.focus()}toolbarWillShowDialog(t){return this.composition.expandSelectionForEditing(),this.freezeSelection()}toolbarDidShowDialog(t){return this.notifyEditorElement("toolbar-dialog-show",{dialogName:t})}toolbarDidHideDialog(t){return this.thawSelection(),this.editorElement.focus(),this.notifyEditorElement("toolbar-dialog-hide",{dialogName:t})}freezeSelection(){if(!this.selectionFrozen)return this.selectionManager.lock(),this.composition.freezeSelection(),this.selectionFrozen=!0,this.render()}thawSelection(){if(this.selectionFrozen)return this.composition.thawSelection(),this.selectionManager.unlock(),this.selectionFrozen=!1,this.render()}canInvokeAction(t){return!!this.actionIsExternal(t)||!(null===(e=this.actions[t])||void 0===e||null===(e=e.test)||void 0===e||!e.call(this));var e}invokeAction(t,e){return this.actionIsExternal(t)?this.notifyEditorElement("action-invoke",{actionName:t,invokingElement:e}):null===(i=this.actions[t])||void 0===i||null===(i=i.perform)||void 0===i?void 0:i.call(this);var i}actionIsExternal(t){return/^x-./.test(t)}getCurrentActions(){const t={};for(const e in this.actions)t[e]=this.canInvokeAction(e);return t}updateCurrentActions(){const t=this.getCurrentActions();if(!St(t,this.currentActions))return this.currentActions=t,this.toolbarController.updateActions(this.currentActions),this.notifyEditorElement("actions-change",{actions:this.currentActions})}runEditorFilters(){let t=this.composition.getSnapshot();if(Array.from(this.editor.filters).forEach((e=>{const{document:i,selectedRange:n}=t;t=e.call(this.editor,t)||{},t.document||(t.document=i),t.selectedRange||(t.selectedRange=n)})),e=t,i=this.composition.getSnapshot(),!wt(e.selectedRange,i.selectedRange)||!e.document.isEqualTo(i.document))return this.composition.loadSnapshot(t);var e,i}updateInputElement(){const t=function(t,e){const i=li[e];if(i)return i(t);throw new Error("unknown content type: ".concat(e))}(this.compositionController.getSerializableElement(),"text/html");return this.editorElement.setInputElementValue(t)}notifyEditorElement(t,e){switch(t){case"document-change":this.documentChangedSinceLastRender=!0;break;case"render":this.documentChangedSinceLastRender&&(this.documentChangedSinceLastRender=!1,this.notifyEditorElement("change"));break;case"change":case"attachment-add":case"attachment-edit":case"attachment-remove":this.updateInputElement()}return this.editorElement.notify(t,e)}removeAttachment(t){return this.editor.recordUndoEntry("Delete Attachment"),this.composition.removeAttachment(t),this.render()}recordFormattingUndoEntry(t){const e=gt(t),i=this.selectionManager.getLocationRange();if(e||!Dt(i))return this.editor.recordUndoEntry("Formatting",{context:this.getUndoContext(),consolidatable:!0})}recordTypingUndoEntry(){return this.editor.recordUndoEntry("Typing",{context:this.getUndoContext(this.currentAttributes),consolidatable:!0})}getUndoContext(){for(var t=arguments.length,e=new Array(t),i=0;i<t;i++)e[i]=arguments[i];return[this.getLocationContext(),this.getTimeContext(),...Array.from(e)]}getLocationContext(){const t=this.selectionManager.getLocationRange();return Dt(t)?t[0].index:t}getTimeContext(){return q.interval>0?Math.floor((new Date).getTime()/q.interval):0}isFocused(){var t;return this.editorElement===(null===(t=this.editorElement.ownerDocument)||void 0===t?void 0:t.activeElement)}isFocusedInvisibly(){return this.isFocused()&&!this.getLocationRange()}get actions(){return this.constructor.actions}}Ae(kn,"actions",{undo:{test(){return this.editor.canUndo()},perform(){return this.editor.undo()}},redo:{test(){return this.editor.canRedo()},perform(){return this.editor.redo()}},link:{test(){return this.editor.canActivateAttribute("href")}},increaseNestingLevel:{test(){return this.editor.canIncreaseNestingLevel()},perform(){return this.editor.increaseNestingLevel()&&this.render()}},decreaseNestingLevel:{test(){return this.editor.canDecreaseNestingLevel()},perform(){return this.editor.decreaseNestingLevel()&&this.render()}},attachFiles:{test:()=>!0,perform(){return M.pickFiles(this.editor.insertFiles)}}}),kn.proxyMethod("getSelectionManager().setLocationRange"),kn.proxyMethod("getSelectionManager().getLocationRange");var Rn=Object.freeze({__proto__:null,AttachmentEditorController:Ii,CompositionController:Ni,Controller:Oi,EditorController:kn,InputController:Ki,Level0InputController:Qi,Level2InputController:on,ToolbarController:Cn}),En=Object.freeze({__proto__:null,MutationObserver:Ui,SelectionChangeObserver:Ft}),Sn=Object.freeze({__proto__:null,FileVerificationOperation:Vi,ImagePreloadOperation:Ce});bt("trix-toolbar","%t {\n  display: block;\n}\n\n%t {\n  white-space: nowrap;\n}\n\n%t [data-trix-dialog] {\n  display: none;\n}\n\n%t [data-trix-dialog][data-trix-active] {\n  display: block;\n}\n\n%t [data-trix-dialog] [data-trix-validate]:invalid {\n  background-color: #ffdddd;\n}");class Ln extends HTMLElement{connectedCallback(){""===this.innerHTML&&(this.innerHTML=U.getDefaultHTML())}}let Dn=0;const wn=function(t){if(!t.hasAttribute("contenteditable"))return t.setAttribute("contenteditable",""),function(t){let e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};return e.times=1,f(t,e)}("focus",{onElement:t,withCallback:()=>Tn(t)})},Tn=function(t){return Bn(t),Fn(t)},Bn=function(t){var e,i;if(null!==(e=(i=document).queryCommandSupported)&&void 0!==e&&e.call(i,"enableObjectResizing"))return document.execCommand("enableObjectResizing",!1,!1),f("mscontrolselect",{onElement:t,preventDefault:!0})},Fn=function(t){var e,i;if(null!==(e=(i=document).queryCommandSupported)&&void 0!==e&&e.call(i,"DefaultParagraphSeparator")){const{tagName:t}=n.default;if(["div","p"].includes(t))return document.execCommand("DefaultParagraphSeparator",!1,t)}},Pn=a.forcesObjectResizing?{display:"inline",width:"auto"}:{display:"inline-block",width:"1px"};bt("trix-editor","%t {\n    display: block;\n}\n\n%t:empty:not(:focus)::before {\n    content: attr(placeholder);\n    color: graytext;\n    cursor: text;\n    pointer-events: none;\n    white-space: pre-line;\n}\n\n%t a[contenteditable=false] {\n    cursor: text;\n}\n\n%t img {\n    max-width: 100%;\n    height: auto;\n}\n\n%t ".concat(e," figcaption textarea {\n    resize: none;\n}\n\n%t ").concat(e," figcaption textarea.trix-autoresize-clone {\n    position: absolute;\n    left: -9999px;\n    max-height: 0px;\n}\n\n%t ").concat(e," figcaption[data-trix-placeholder]:empty::before {\n    content: attr(data-trix-placeholder);\n    color: graytext;\n}\n\n%t [data-trix-cursor-target] {\n    display: ").concat(Pn.display," !important;\n    width: ").concat(Pn.width," !important;\n    padding: 0 !important;\n    margin: 0 !important;\n    border: none !important;\n}\n\n%t [data-trix-cursor-target=left] {\n    vertical-align: top !important;\n    margin-left: -1px !important;\n}\n\n%t [data-trix-cursor-target=right] {\n    vertical-align: bottom !important;\n    margin-right: -1px !important;\n}"));class In extends HTMLElement{get trixId(){return this.hasAttribute("trix-id")?this.getAttribute("trix-id"):(this.setAttribute("trix-id",++Dn),this.trixId)}get labels(){const t=[];this.id&&this.ownerDocument&&t.push(...Array.from(this.ownerDocument.querySelectorAll("label[for='".concat(this.id,"']"))||[]));const e=A(this,{matchingSelector:"label"});return e&&[this,null].includes(e.control)&&t.push(e),t}get toolbarElement(){var t;if(this.hasAttribute("toolbar"))return null===(t=this.ownerDocument)||void 0===t?void 0:t.getElementById(this.getAttribute("toolbar"));if(this.parentNode){const t="trix-toolbar-".concat(this.trixId);this.setAttribute("toolbar",t);const e=S("trix-toolbar",{id:t});return this.parentNode.insertBefore(e,this),e}}get form(){var t;return null===(t=this.inputElement)||void 0===t?void 0:t.form}get inputElement(){var t;if(this.hasAttribute("input"))return null===(t=this.ownerDocument)||void 0===t?void 0:t.getElementById(this.getAttribute("input"));if(this.parentNode){const t="trix-input-".concat(this.trixId);this.setAttribute("input",t);const e=S("input",{type:"hidden",id:t});return this.parentNode.insertBefore(e,this.nextElementSibling),e}}get editor(){var t;return null===(t=this.editorController)||void 0===t?void 0:t.editor}get name(){var t;return null===(t=this.inputElement)||void 0===t?void 0:t.name}get value(){var t;return null===(t=this.inputElement)||void 0===t?void 0:t.value}set value(t){var e;this.defaultValue=t,null===(e=this.editor)||void 0===e||e.loadHTML(this.defaultValue)}notify(t,e){if(this.editorController)return b("trix-".concat(t),{onElement:this,attributes:e})}setInputElementValue(t){this.inputElement&&(this.inputElement.value=t)}connectedCallback(){this.hasAttribute("data-trix-internal")||(wn(this),function(t){if(!t.hasAttribute("role"))t.setAttribute("role","textbox")}(this),function(t){if(t.hasAttribute("aria-label")||t.hasAttribute("aria-labelledby"))return;const e=function(){const e=Array.from(t.labels).map((e=>{if(!e.contains(t))return e.textContent})).filter((t=>t)),i=e.join(" ");return i?t.setAttribute("aria-label",i):t.removeAttribute("aria-label")};e(),f("focus",{onElement:t,withCallback:e})}(this),this.editorController||(b("trix-before-initialize",{onElement:this}),this.editorController=new kn({editorElement:this,html:this.defaultValue=this.value}),requestAnimationFrame((()=>b("trix-initialize",{onElement:this})))),this.editorController.registerSelectionManager(),this.registerResetListener(),this.registerClickListener(),function(t){if(!document.querySelector(":focus")&&t.hasAttribute("autofocus")&&document.querySelector("[autofocus]")===t)t.focus()}(this))}disconnectedCallback(){var t;return null===(t=this.editorController)||void 0===t||t.unregisterSelectionManager(),this.unregisterResetListener(),this.unregisterClickListener()}registerResetListener(){return this.resetListener=this.resetBubbled.bind(this),window.addEventListener("reset",this.resetListener,!1)}unregisterResetListener(){return window.removeEventListener("reset",this.resetListener,!1)}registerClickListener(){return this.clickListener=this.clickBubbled.bind(this),window.addEventListener("click",this.clickListener,!1)}unregisterClickListener(){return window.removeEventListener("click",this.clickListener,!1)}resetBubbled(t){if(!t.defaultPrevented&&t.target===this.form)return this.reset()}clickBubbled(t){if(t.defaultPrevented)return;if(this.contains(t.target))return;const e=A(t.target,{matchingSelector:"label"});return e&&Array.from(this.labels).includes(e)?this.focus():void 0}reset(){this.value=this.defaultValue}}const Nn={VERSION:t,config:V,core:ci,models:Di,views:wi,controllers:Rn,observers:En,operations:Sn,elements:Object.freeze({__proto__:null,TrixEditorElement:In,TrixToolbarElement:Ln}),filters:Object.freeze({__proto__:null,Filter:bi,attachmentGalleryFilter:vi})};Object.assign(Nn,Di),window.Trix=Nn,setTimeout((function(){customElements.get("trix-toolbar")||customElements.define("trix-toolbar",Ln),customElements.get("trix-editor")||customElements.define("trix-editor",In)}),0);
+//# sourceMappingURL=trix.esm.min.js.map
+
 
 /***/ })
 

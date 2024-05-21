@@ -128,7 +128,7 @@ var profiles = (function ($, undefined) {
         elem = form.querySelector('button[type=submit]');
 
         elem_text = elem.innerHTML.replace(/<i[^>]*>(.*?)<\/i>/g, '');
-        elem.innerHTML = `<i class="fas fa-hourglass-half fa-spin fa-fw"></i> ${elem_text}`;
+        elem.innerHTML = `<i class="fas fa-spinner fa-spin fa-fw"></i> ${elem_text}`;
 
         elem.classList.add('btn-primary', 'disabled');
         elem.classList.remove('btn-light', 'btn-dark', 'btn-secondary', 'btn-info', 'btn-success', 'btn-warning', 'btn-danger');

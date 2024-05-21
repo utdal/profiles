@@ -8,7 +8,7 @@
 
 /* provided dependency */ var jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/src/jquery.js");
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/src/jquery.js");
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
@@ -176,7 +176,7 @@ var profiles = function ($, undefined) {
   var wait_when_submitting = function wait_when_submitting(form) {
     elem = form.querySelector('button[type=submit]');
     elem_text = elem.innerHTML.replace(/<i[^>]*>(.*?)<\/i>/g, '');
-    elem.innerHTML = "<i class=\"fas fa-hourglass-half fa-spin fa-fw\"></i> ".concat(elem_text);
+    elem.innerHTML = "<i class=\"fas fa-spinner fa-spin fa-fw\"></i> ".concat(elem_text);
     elem.classList.add('btn-primary', 'disabled');
     elem.classList.remove('btn-light', 'btn-dark', 'btn-secondary', 'btn-info', 'btn-success', 'btn-warning', 'btn-danger');
     elem.disabled = true;
@@ -204,45 +204,45 @@ var profiles = function ($, undefined) {
       }
       var new_item = item_template.cloneNode(true);
       new_item.dataset.rowId = new_id;
-      (_new_item$querySelect = new_item.querySelectorAll('input:not([type="button"]), textarea, select')) === null || _new_item$querySelect === void 0 ? void 0 : _new_item$querySelect.forEach(function (el) {
+      (_new_item$querySelect = new_item.querySelectorAll('input:not([type="button"]), textarea, select')) === null || _new_item$querySelect === void 0 || _new_item$querySelect.forEach(function (el) {
         el.id = el.id.replace(old_id, new_id);
         el.setAttribute('name', el.name.replace(old_id, new_id));
         el.setAttribute('value', '');
         el.value = '';
       });
-      (_new_item$querySelect2 = new_item.querySelectorAll("input[type=\"hidden\"][name$=\"[id]\"]")) === null || _new_item$querySelect2 === void 0 ? void 0 : _new_item$querySelect2.forEach(function (el) {
+      (_new_item$querySelect2 = new_item.querySelectorAll("input[type=\"hidden\"][name$=\"[id]\"]")) === null || _new_item$querySelect2 === void 0 || _new_item$querySelect2.forEach(function (el) {
         el.id = el.name;
         el.value = new_id;
       });
-      (_new_item$querySelect3 = new_item.querySelectorAll('label')) === null || _new_item$querySelect3 === void 0 ? void 0 : _new_item$querySelect3.forEach(function (el) {
+      (_new_item$querySelect3 = new_item.querySelectorAll('label')) === null || _new_item$querySelect3 === void 0 || _new_item$querySelect3.forEach(function (el) {
         var _el$getAttribute;
         el.setAttribute('for', (_el$getAttribute = el.getAttribute('for')) === null || _el$getAttribute === void 0 ? void 0 : _el$getAttribute.replace(old_id, new_id));
       });
-      (_new_item$querySelect4 = new_item.querySelectorAll('trix-editor')) === null || _new_item$querySelect4 === void 0 ? void 0 : _new_item$querySelect4.forEach(function (el) {
+      (_new_item$querySelect4 = new_item.querySelectorAll('trix-editor')) === null || _new_item$querySelect4 === void 0 || _new_item$querySelect4.forEach(function (el) {
         el.setAttribute('input', el.getAttribute('input').replace(old_id, new_id));
       });
-      (_new_item$querySelect5 = new_item.querySelectorAll('img')) === null || _new_item$querySelect5 === void 0 ? void 0 : _new_item$querySelect5.forEach(function (el) {
+      (_new_item$querySelect5 = new_item.querySelectorAll('img')) === null || _new_item$querySelect5 === void 0 || _new_item$querySelect5.forEach(function (el) {
         el.id = el.id.replace(old_id, new_id);
         el.src = '';
       });
-      (_new_item$querySelect6 = new_item.querySelectorAll('.custom-file-label')) === null || _new_item$querySelect6 === void 0 ? void 0 : _new_item$querySelect6.forEach(function (el) {
+      (_new_item$querySelect6 = new_item.querySelectorAll('.custom-file-label')) === null || _new_item$querySelect6 === void 0 || _new_item$querySelect6.forEach(function (el) {
         el.id = el.id.replace(old_id, new_id);
         el.innerHTML = 'Select an image';
       });
-      (_new_item$querySelect7 = new_item.querySelectorAll('.actions .trash')) === null || _new_item$querySelect7 === void 0 ? void 0 : _new_item$querySelect7.forEach(function (el) {
+      (_new_item$querySelect7 = new_item.querySelectorAll('.actions .trash')) === null || _new_item$querySelect7 === void 0 || _new_item$querySelect7.forEach(function (el) {
         $(el).on('click', function () {
           return clear_row(el);
         });
       });
-      (_new_item$querySelect8 = new_item.querySelectorAll('input[type="file"][accept^="image"]')) === null || _new_item$querySelect8 === void 0 ? void 0 : _new_item$querySelect8.forEach(function (el) {
+      (_new_item$querySelect8 = new_item.querySelectorAll('input[type="file"][accept^="image"]')) === null || _new_item$querySelect8 === void 0 || _new_item$querySelect8.forEach(function (el) {
         $(el).on('change', function (event) {
           return preview_selected_image(event);
         });
       });
-      (_new_item$querySelect9 = new_item.querySelectorAll('.datepicker.year')) === null || _new_item$querySelect9 === void 0 ? void 0 : _new_item$querySelect9.forEach(function (el) {
+      (_new_item$querySelect9 = new_item.querySelectorAll('.datepicker.year')) === null || _new_item$querySelect9 === void 0 || _new_item$querySelect9.forEach(function (el) {
         $(el).datepicker(config.datepicker.year);
       });
-      (_new_item$querySelect10 = new_item.querySelectorAll('.datepicker.month')) === null || _new_item$querySelect10 === void 0 ? void 0 : _new_item$querySelect10.forEach(function (el) {
+      (_new_item$querySelect10 = new_item.querySelectorAll('.datepicker.month')) === null || _new_item$querySelect10 === void 0 || _new_item$querySelect10.forEach(function (el) {
         $(el).datepicker(config.datepicker.month);
       });
       $(new_item).hide();
@@ -815,7 +815,7 @@ window.Sortable = __webpack_require__(/*! sortablejs/Sortable */ "./node_modules
 window.Bloodhound = __webpack_require__(/*! corejs-typeahead */ "./node_modules/corejs-typeahead/dist/typeahead.bundle.js");
 
 // Trix editor
-__webpack_require__(/*! trix */ "./node_modules/trix/dist/trix.js");
+__webpack_require__(/*! trix */ "./node_modules/trix/dist/trix.esm.min.js");
 
 /***/ }),
 
