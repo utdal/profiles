@@ -25,7 +25,7 @@
                         </div>
                     @endif
 
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
+                    <form id="login-form" class="form-horizontal" role="form" method="POST" action="{{ route('login')}}" data-toggle="wait-on-submit">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                         <div class="form-group row justify-content-center">
@@ -79,12 +79,14 @@
 
 @section('scripts')
 <script>
-$(document).ready(function() {
+$(function() {
     // focus the name field if it's empty
     $username = $('#name');
     if (! $username.val()) {
         $username.focus();
     }
+
+    $('form[data-toggle=wait-on-submit]').on('submit', (e) => profiles.wait_when_submitting(e.currentTarget));
 });
 </script>
 @endsection
