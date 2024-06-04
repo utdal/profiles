@@ -74,7 +74,7 @@
 						<input type="email" class="form-control" name="data[{{$info->id}}][data][email]" id="data[{{$info->id}}][data][email]" value="{{$info->email}}"  />
 					</div>
 					<div class="form-group col col-sm-6 col-12">
-						<label for="data[{{$info->id}}][phone][tertiary_title]">Phone</label>
+						<label for="data[{{$info->id}}][data][phone]">Phone</label>
 						<input type="tel" class="form-control" name="data[{{$info->id}}][data][phone]" id="data[{{$info->id}}][data][phone]" value="{{$info->phone}}"  />
 					</div>
 			</div>
