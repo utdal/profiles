@@ -33,7 +33,7 @@
     "sass": "^1.52.3",
     "sass-loader": "^8.0.2",
     "sortablejs": "^1.15.0",
-    "trix": "^0.11.2",
+    "trix": "^2.1.1",
     "vue-template-compiler": "^2.6.14"
   },
   "dependencies": {
