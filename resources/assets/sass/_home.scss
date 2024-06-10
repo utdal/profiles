@@ -97,7 +97,7 @@ $home-top-height: 60vh;
         z-index: -100;
 }
 
-.control-bt {
+button.video-control {
     $video-btn-size: 45px;
     $video-btn-spacing: map.get($spacers, 3);
     position: absolute;

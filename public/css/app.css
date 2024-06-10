@@ -10427,7 +10427,7 @@ footer > ul > li {
   z-index: -100;
 }
 
-.control-bt {
+button.video-control {
   position: absolute;
   height: 45px;
   width: 45px;
@@ -10441,31 +10441,31 @@ footer > ul > li {
   cursor: pointer;
   transition: opacity 0.3s ease-in-out;
 }
-.control-bt span {
+button.video-control span {
   width: 24px;
   height: 24px;
   fill: #fff;
   margin-top: -0.1rem;
 }
-.control-bt span:first-of-type {
+button.video-control span:first-of-type {
   margin-left: 0.1rem;
 }
 @media (max-width: 1199.98px) and (hover: none) {
-  .control-bt span {
+  button.video-control span {
     margin-left: -11px;
   }
-  .control-bt span:first-of-type {
+  button.video-control span:first-of-type {
     margin-left: -9px;
   }
 }
-.control-bt.pause span:first-of-type {
+button.video-control.pause span:first-of-type {
   display: none;
 }
-.control-bt.play span:last-of-type {
+button.video-control.play span:last-of-type {
   display: none;
 }
 @media (max-width: 991.98px) {
-  .control-bt {
+  button.video-control {
     display: none;
   }
 }

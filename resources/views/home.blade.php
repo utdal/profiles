@@ -8,7 +8,7 @@
 
 @if(File::exists(public_path('/storage/video/home.jpg')) && File::exists(public_path('/storage/video/home.mp4')))
 	<div class="video-cover">
-			<button class="control-bt pause" aria-label="Video Playing.">
+			<button class="video-control pause" aria-label="Video Playing.">
 				<span><i class="fas fa-play"></i></span>
 				<span><i class="fas fa-pause"></i></span>
 			</button>
