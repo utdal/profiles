@@ -382,7 +382,7 @@ class User extends Authenticatable implements Auditable
 
     /**
      * Current user delegates.
-     *
+     * @psalm-suppress InvalidArgument
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function currentDelegates()
@@ -431,7 +431,7 @@ class User extends Authenticatable implements Auditable
 
     /**
      * Current user delegators.
-     *
+     * @psalm-suppress InvalidArgument
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function currentDelegators()
