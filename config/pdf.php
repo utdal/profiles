@@ -16,7 +16,7 @@ return [
      * Additional arguments to pass to Chromium
      * Specify as ['key' => 'value'] for --key=value
      */
-    'chrome_arguments' => json_decode(env('CHROME_ARGS'), true) ?? [
+    'chrome_arguments' => json_decode(env('CHROME_ARGS', ''), true) ?? [
         'autoplay-policy' => 'user-gesture-required',
         'disable-component-update',
         'disable-domain-reliability',

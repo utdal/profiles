@@ -68,7 +68,7 @@ trait LoginWithRole
     /**
      * Data provider for various roles
      */
-    public function userRolesProvider(): array
+    public static function userRolesProvider(): array
     {
         return [
             ['guest'],

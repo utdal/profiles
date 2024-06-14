@@ -118,7 +118,7 @@ class Semester
 
         return [
             'season' => $pieces[0],
-            'year' => Carbon::create($pieces[1]),
+            'year' => Carbon::create((int)$pieces[1]),
         ];
     }
 
