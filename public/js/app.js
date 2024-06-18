@@ -50,6 +50,9 @@ var profiles = function ($, undefined) {
     }
   };
 
+  /** @type {boolean} Reduced motion enabled */
+  var is_reduced = window.matchMedia("(prefers-reduced-motion: reduce)") === true || window.matchMedia("(prefers-reduced-motion: reduce)").matches === true;
+
   /**
    * Checks to see if an input is empty.
    *
@@ -546,6 +549,74 @@ var profiles = function ($, undefined) {
       }
     });
   };
+
+  /**
+   * Register playPauseVideo function for video control button(s)
+   * 
+   * @return {void}
+   */
+  var registerTogglerVideoPlay = function registerTogglerVideoPlay() {
+    var vid_ctrl_buttons = document.querySelectorAll('button.video-control');
+    if (is_reduced) {
+      vid_ctrl_buttons.forEach(function (bt) {
+        playPauseVideo(bt);
+      });
+    }
+    vid_ctrl_buttons.forEach(function (bt) {
+      bt.addEventListener('click', playPauseVideo);
+    });
+  };
+
+  /**
+   * Identifies video and control button and triggers video toggler function 
+   * @param {*} elem button that triggers event
+   * @returns {void}
+   */
+  var playPauseVideo = function playPauseVideo(elem) {
+    //Check to see if the target element is the cover block,
+    var target = typeof elem.target !== 'undefined' ? elem.target : elem;
+    var parent = target.parentNode;
+    do {
+      //Check if the element's parent is the video cover block
+      if (parent.classList.contains('video-cover')) {
+        // if it is, pull the video and the button elements from the children and put them through the toggleVideoPlay function
+        var pKids = Array.from(parent.children);
+        var video = pKids.filter(function (vid) {
+          return vid.localName === 'video';
+        });
+        var button = pKids.filter(function (btn) {
+          return btn.localName === 'button';
+        });
+        if (video.length > 0) {
+          toggleVideoPlay(video, button);
+        }
+        return true;
+      }
+      // if it isn't go up another level and rerun the check
+      parent = parent.parentNode;
+    } while (parent);
+    return false;
+  };
+
+  /**
+   * Play/pause video and controls the video and button attributes
+   * @param {*} vid 
+   * @param {*} btn 
+   * @return {void}
+   */
+  var toggleVideoPlay = function toggleVideoPlay(vid, btn) {
+    if (vid[0].paused) {
+      btn[0].setAttribute('aria-label', 'Video Playing.');
+      btn[0].classList.remove('play');
+      btn[0].classList.add('pause');
+      vid[0].play();
+    } else {
+      btn[0].setAttribute('aria-label', 'Video Paused.');
+      btn[0].classList.remove('pause');
+      btn[0].classList.add('play');
+      vid[0].pause();
+    }
+  };
   return {
     add_row: add_row,
     clear_row: clear_row,
@@ -558,7 +629,8 @@ var profiles = function ($, undefined) {
     registerProfilePickers: registerProfilePickers,
     toast: toast,
     toggle_class: toggle_class,
-    toggle_show: toggle_show
+    toggle_show: toggle_show,
+    registerTogglerVideoPlay: registerTogglerVideoPlay
   };
 }(jQuery);
 window.profiles = profiles;
@@ -635,6 +707,9 @@ $(function () {
       return typeof content === 'string' && $(content).length ? $(content).html() : '';
     }
   });
+  if (document.querySelectorAll('div.video-cover video').length > 0 && document.querySelectorAll('div.video-cover button.video-control').length > 0) {
+    profiles.registerTogglerVideoPlay();
+  }
 });
 
 // Livewire global hooks
@@ -656,97 +731,6 @@ if ((typeof Livewire === "undefined" ? "undefined" : _typeof(Livewire)) === 'obj
       return false;
     }
   });
-}
-
-//Reduced motion enabled
-var isReduced = window.matchMedia("(prefers-reduced-motion: reduce)") === true || window.matchMedia("(prefers-reduced-motion: reduce)").matches === true;
-
-//Play/Pause Toggle - on any click inside the cover, if not a link, initiate the play/pause toggle
-var covers = document.querySelectorAll('.video-cover');
-var clickCount;
-if (!isReduced) {
-  clickCount = 0;
-} else {
-  clickCount = 1;
-  var coversWithVideo = document.querySelectorAll('.video-cover');
-  coversWithVideo.forEach(function (el) {
-    var button = el.parentNode.children.item(4);
-    if (button.classList.contains('pause')) {
-      button.classList.remove('pause');
-      button.classList.add('play');
-      button.setAttribute('aria-label', 'Video Paused.');
-      el.pause();
-    }
-  });
-}
-covers.forEach(function (cover) {
-  cover.addEventListener('click', playpause);
-});
-
-//play pause toggle for video covers
-function playpause(el) {
-  //Check to see if the target element is the cover block,
-  var target = typeof el.target !== 'undefined' ? el.target : el;
-  if (target.classList.contains('video-cover')) {
-    // If it is, pull the video and the button elements from the children and put them through the toggle function
-    var tKids = Array.from(target.children);
-    var video = tKids.filter(function (vid) {
-      return vid.localName === 'video';
-    });
-    var button = tKids.filter(function (btn) {
-      return btn.localName === 'button';
-    });
-    if (video.length > 0) {
-      toggle(video, button);
-    }
-  } else {
-    //If it isn't, loop of the elements parent,
-    var parent = target.parentNode;
-    do {
-      //Check if the element's parent is the wp-cover block,
-      if (parent.classList.contains('video-cover')) {
-        // if it is, pull the video and the button elements from the children and put them through the toggle function
-        var pKids = Array.from(parent.children);
-        var _video = pKids.filter(function (vid) {
-          return vid.localName === 'video';
-        });
-        var _button = pKids.filter(function (btn) {
-          return btn.localName === 'button';
-        });
-        if (_video.length > 0) {
-          toggle(_video, _button);
-        }
-        return true;
-      }
-      // if it isn't go up another level and rerun the check
-      parent = parent.parentNode;
-    } while (parent);
-    return false;
-  }
-
-  //controls the video and button attributes
-  function toggle(vid, btn) {
-    if (clickCount == 0) {
-      //Video initial
-      btn[0].setAttribute('aria-label', 'Video Paused.');
-      btn[0].classList.remove('pause');
-      btn[0].classList.add('play');
-      vid[0].pause();
-    } else if (clickCount % 2 == 0) {
-      //From initial to pause
-      btn[0].setAttribute('aria-label', 'Video Paused.');
-      btn[0].classList.remove('pause');
-      btn[0].classList.add('play');
-      vid[0].pause();
-    } else {
-      //From pause to play
-      btn[0].setAttribute('aria-label', 'Video Playing.');
-      btn[0].classList.remove('play');
-      btn[0].classList.add('pause');
-      vid[0].play();
-    }
-    clickCount++;
-  }
 }
 
 /***/ }),
