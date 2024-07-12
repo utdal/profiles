@@ -5,7 +5,6 @@ namespace App\Providers;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\App;
-use \Spatie\Tags\Tag;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -28,7 +27,6 @@ class RouteServiceProvider extends ServiceProvider
         //
 
         parent::boot();
-       // Route::bind('tag', fn($tag) => Tag::findFromStringOfAnyType($tag)->first());
     }
 
     /**
