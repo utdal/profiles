@@ -5,7 +5,7 @@ inputs:
   php-version:
     description: 'PHP version'
     required: false
-    default: '8.0'
+    default: '8.3'
   php-extensions:
     description: 'PHP extensions to install'
     required: false
