@@ -24,39 +24,25 @@
 
     @include('errors/has')
 
-    @if (Session::has('admin'))
-		<div class="alert alert-success alert-dismissable" role="alert">
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			{{ session('admin') }}
-		</div>
-	@endif
-
-	@if (Session::has('editor'))
-		<div class="alert alert-success alert-dismissable" role="alert">
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			{{ session('editor') }}
-		</div>
-	@endif
-
     {!! Form::model($tag, ['method' => 'PATCH','route' => ['tags.updateTag', $tag], 'class' => 'form-horizontal' ]) !!}
 
-    <div class="form-group {{ ($errors->has('name') ?  'has-error' : '') }}">
-        {!! Form::label('name', 'Tag name(s)', ['class' => 'col-sm-2 control-label']) !!}
-        <div class="col-sm-9">
-            <span class="text-danger">{!! $errors->first('name') !!}</span>
-            {!! Form::text('name', null, ['class' => 'form-control']) !!}
+        <div class="form-group {{ ($errors->has('name') ?  'has-error' : '') }}">
+            {!! Form::label('name', 'Tag name(s)', ['class' => 'col-sm-2 control-label']) !!}
+            <div class="col-sm-9">
+                <span class="text-danger">{!! $errors->first('name') !!}</span>
+                {!! Form::text('name', null, ['class' => 'form-control']) !!}
+            </div>
+            <div class="col-sm-9">
+                <span class="text-danger">{!! $errors->first('type') !!}</span>
+                {!! Form::text('type', null, ['class' => 'form-control', 'readonly']) !!}
+            </div>
         </div>
-        <div class="col-sm-9">
-            <span class="text-danger">{!! $errors->first('type') !!}</span>
-            {!! Form::text('type', null, ['class' => 'form-control', 'readonly']) !!}
-        </div>
-    </div>
 
-	<!-- Submit Button -->
+        <!-- Submit Button -->
         <div class="col-sm-9">
             <a href="{{ route('tags.table') }}" class='btn btn-light'>Cancel</a>
             {!! Form::submit('Update Tag', ['class' => 'btn btn-primary']) !!}
-		</div>
-	{!! Form::close() !!}
+        </div>
+    {!! Form::close() !!}
 </div>
 @stop
