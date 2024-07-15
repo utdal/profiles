@@ -71,4 +71,36 @@
       <code>\Illuminate\Database\Query\Builder</code>
     </InvalidReturnType>
   </file>
+  <file src="app/Http/Controllers/ProfilesController.php">
+    <InvalidStaticInvocation occurrences="4">
+      <code>Profile::containing($search)</code>
+      <code>Profile::taggedWith($search)</code>
+      <code>Profile::public()</code>
+      <code>Profile::public()</code>
+    </InvalidStaticInvocation>
+    <TypeDoesNotContainType occurrences="2">
+      <code>$existing_profile</code>
+      <code>$existing_profile</code>
+    </TypeDoesNotContainType>
+  </file>
+  <file src="app/Http/Controllers/SchoolsController.php">
+    <InvalidStaticInvocation occurrences="1">
+      <code>Profile::fromSchoolId($school-&gt;id)</code>
+    </InvalidStaticInvocation>
+  </file>
+  <file src="app/Console/Commands/NotifyProfilesAboutStudents.php">
+    <InvalidStaticInvocation occurrences="1">
+      <code>Profile::StudentsPendingReviewWithSemester($semester)</code>
+    </InvalidStaticInvocation>
+  </file>
+  <file src="app/Http/Controllers/Testing/TestingController.php">
+    <InvalidStaticInvocation occurrences="1">
+      <code>Profile::EagerStudentsPendingReviewWithSemester($semester)</code>
+    </InvalidStaticInvocation>
+  </file>
+  <file src="app/Http/Controllers/ProfilesApiController.php">
+    <UndefinedMagicMethod occurrences="1">
+      <code>Profile::select(Profile::apiAttributes())</code>
+    </UndefinedMagicMethod>
+  </file>
 </files>

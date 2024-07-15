@@ -59,6 +59,18 @@ class TagPolicy
     }
 
     /**
+     * Determine whether the user can update the tag.
+     *
+     * @param  \App\User  $user
+     * @param  \Spatie\Tags\Tag  $tag
+     * @return mixed
+     */
+    public function updateTag(User $user)
+    {
+        return false;
+    }
+
+    /**
      * Determine whether the user can delete the tag.
      *
      * @param  \App\User  $user
