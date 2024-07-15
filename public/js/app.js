@@ -815,7 +815,7 @@ window.Sortable = __webpack_require__(/*! sortablejs/Sortable */ "./node_modules
 window.Bloodhound = __webpack_require__(/*! corejs-typeahead */ "./node_modules/corejs-typeahead/dist/typeahead.bundle.js");
 
 // Trix editor
-__webpack_require__(/*! trix */ "./node_modules/trix/dist/trix.esm.min.js");
+__webpack_require__(/*! trix */ "./node_modules/trix/dist/trix.js");
 
 /***/ }),
 
