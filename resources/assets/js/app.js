@@ -123,6 +123,22 @@ var profiles = (function ($, undefined) {
     }
 
     /**
+     * Display spinner animation and disable form submit button
+     *
+     * @param {HTMLElement} form that gets submitted 
+     */
+    const wait_when_submitting = function(form) {
+        elem = form.querySelector('button[type=submit]');
+
+        elem_text = elem.innerHTML.replace(/<i[^>]*>(.*?)<\/i>/g, '');
+        elem.innerHTML = `<i class="fas fa-spinner fa-spin fa-fw"></i> ${elem_text}`;
+
+        elem.classList.add('btn-primary', 'disabled');
+        elem.classList.remove('btn-light', 'btn-dark', 'btn-secondary', 'btn-info', 'btn-success', 'btn-warning', 'btn-danger');
+        elem.disabled = true;
+    }
+
+    /**
      * Adds a new item input row
      *
      * @param {Event} event the triggered event
@@ -561,6 +577,7 @@ var profiles = (function ($, undefined) {
         toast: toast,
         toggle_class: toggle_class,
         toggle_show: toggle_show,
+        wait_when_submitting : wait_when_submitting,
         registerTogglerVideoPlay: registerTogglerVideoPlay,
     };
 
