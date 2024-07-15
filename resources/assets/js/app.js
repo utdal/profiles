@@ -38,9 +38,6 @@ var profiles = (function ($, undefined) {
         },
     };
 
-    /** @type {boolean} Reduced motion enabled */
-    var is_reduced = window.matchMedia(`(prefers-reduced-motion: reduce)`) === true || window.matchMedia(`(prefers-reduced-motion: reduce)`).matches === true;
-
     /**
      * Checks to see if an input is empty.
      *
@@ -508,9 +505,10 @@ var profiles = (function ($, undefined) {
      * @return {void}
      */
     const registerVideoControls = function () {
-        const vid_ctrl_buttons = document.querySelectorAll('button.video-control');
+        const play_pause_buttons = document.querySelectorAll('button.video-control.play-pause');
+        const prefers_reduced_motion = window.matchMedia(`(prefers-reduced-motion: reduce)`);
 
-        vid_ctrl_buttons.forEach(bt => bt.addEventListener('click', evt => {
+        play_pause_buttons.forEach(bt => bt.addEventListener('click', evt => {
             const button = evt.currentTarget;
             const video = document.getElementById(button?.getAttribute('aria-controls'));
             if (video instanceof HTMLVideoElement && button instanceof HTMLButtonElement) {
@@ -518,8 +516,8 @@ var profiles = (function ($, undefined) {
             }
         }));
 
-        if (window.matchMedia(`(prefers-reduced-motion: reduce)`).matches) {
-            vid_ctrl_buttons.forEach((bt) => bt.click());
+        if (prefers_reduced_motion.matches) {
+            play_pause_buttons.forEach((bt) => bt.click());
         }
     }
 

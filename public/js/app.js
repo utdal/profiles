@@ -50,9 +50,6 @@ var profiles = function ($, undefined) {
     }
   };
 
-  /** @type {boolean} Reduced motion enabled */
-  var is_reduced = window.matchMedia("(prefers-reduced-motion: reduce)") === true || window.matchMedia("(prefers-reduced-motion: reduce)").matches === true;
-
   /**
    * Checks to see if an input is empty.
    *
@@ -570,8 +567,9 @@ var profiles = function ($, undefined) {
    * @return {void}
    */
   var registerVideoControls = function registerVideoControls() {
-    var vid_ctrl_buttons = document.querySelectorAll('button.video-control');
-    vid_ctrl_buttons.forEach(function (bt) {
+    var play_pause_buttons = document.querySelectorAll('button.video-control.play-pause');
+    var prefers_reduced_motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    play_pause_buttons.forEach(function (bt) {
       return bt.addEventListener('click', function (evt) {
         var button = evt.currentTarget;
         var video = document.getElementById(button === null || button === void 0 ? void 0 : button.getAttribute('aria-controls'));
@@ -580,8 +578,8 @@ var profiles = function ($, undefined) {
         }
       });
     });
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      vid_ctrl_buttons.forEach(function (bt) {
+    if (prefers_reduced_motion.matches) {
+      play_pause_buttons.forEach(function (bt) {
         return bt.click();
       });
     }
