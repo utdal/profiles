@@ -499,6 +499,47 @@ var profiles = (function ($, undefined) {
         });
     }
 
+    /**
+     * Register playPauseVideo function for video control button(s)
+     * 
+     * @return {void}
+     */
+    const registerVideoControls = function () {
+        const play_pause_buttons = document.querySelectorAll('button.video-control.play-pause');
+        const prefers_reduced_motion = window.matchMedia(`(prefers-reduced-motion: reduce)`);
+
+        play_pause_buttons.forEach(bt => bt.addEventListener('click', evt => {
+            const button = evt.currentTarget;
+            const video = document.getElementById(button?.getAttribute('aria-controls'));
+            if (video instanceof HTMLVideoElement && button instanceof HTMLButtonElement) {
+                toggleVideoPlay(video, button);
+            }
+        }));
+
+        if (prefers_reduced_motion.matches) {
+            play_pause_buttons.forEach((bt) => bt.click());
+        }
+    }
+
+    /**
+     * Play/pause video and controls the video and button attributes
+     * @param {HTMLVideoElement} vid 
+     * @param {HTMLButtonElement} btn 
+     * @return {void}
+     */
+    const toggleVideoPlay = function (vid, btn) {
+        const icon = btn.querySelector('[data-fa-i2svg],.fas');
+        if (vid.paused) {
+            vid.play();
+            btn.ariaPressed = "true";
+            icon.className = "fas fa-pause";
+        } else {
+            vid.pause();
+            btn.ariaPressed = "false";
+            icon.className = "fas fa-play";
+        }
+    }
+
     return {
         add_row: add_row,
         clear_row: clear_row,
@@ -513,6 +554,7 @@ var profiles = (function ($, undefined) {
         toggle_class: toggle_class,
         toggle_show: toggle_show,
         wait_when_submitting : wait_when_submitting,
+        registerVideoControls: registerVideoControls,
     };
 
 })(jQuery);
@@ -593,6 +635,10 @@ $(function() {
     }
   });
 
+  if (document.querySelectorAll('.video-cover video').length > 0 && document.querySelectorAll('.video-cover .video-control').length > 0) {
+    profiles.registerVideoControls();
+  }
+
 });
 
 // Livewire global hooks
@@ -612,87 +658,4 @@ if (typeof Livewire === 'object') {
   });
 }
 
-//Reduced motion enabled
-const isReduced = window.matchMedia(`(prefers-reduced-motion: reduce)`) === true || window.matchMedia(`(prefers-reduced-motion: reduce)`).matches === true;
 
-//Play/Pause Toggle - on any click inside the cover, if not a link, initiate the play/pause toggle
-const covers = document.querySelectorAll('.video-cover');
-let clickCount;
-if (!isReduced) {
-    clickCount = 0;
-} else {
-    clickCount = 1;
-    const coversWithVideo = document.querySelectorAll('.video-cover');
-    coversWithVideo.forEach(el => {
-        const button = el.parentNode.children.item(4);
-        if (button.classList.contains('pause')) {
-            button.classList.remove('pause');
-            button.classList.add('play');
-            button.setAttribute('aria-label', 'Video Paused.');
-            el.pause();
-        }
-    });
-}
- covers.forEach(cover => {
-    cover.addEventListener('click', playpause);
-});
-
-
-//play pause toggle for video covers
-function playpause(el) {
-    //Check to see if the target element is the cover block,
-    const target = (typeof el.target !== 'undefined') ? el.target : el;
-    if (target.classList.contains('video-cover')) {
-        // If it is, pull the video and the button elements from the children and put them through the toggle function
-        const tKids = Array.from(target.children);
-        const video = tKids.filter(vid => vid.localName === 'video');
-        const button = tKids.filter(btn => btn.localName === 'button');
-        if (video.length > 0) {
-            toggle(video, button);
-        }
-    } else {
-        //If it isn't, loop of the elements parent,
-        let parent = target.parentNode;
-        do {
-            //Check if the element's parent is the wp-cover block,
-            if (parent.classList.contains('video-cover')) {
-                // if it is, pull the video and the button elements from the children and put them through the toggle function
-                const pKids = Array.from(parent.children);
-                const video = pKids.filter(vid => vid.localName === 'video');
-                const button = pKids.filter(btn => btn.localName === 'button');
-                if (video.length > 0) {
-                    toggle(video, button);
-                }
-                return true;
-            }
-            // if it isn't go up another level and rerun the check
-            parent = parent.parentNode;
-        } while (parent);
-        return false;
-    }
-
-    //controls the video and button attributes
-    function toggle(vid, btn) {
-
-        if (clickCount == 0) {
-            //Video initial
-            btn[0].setAttribute('aria-label', 'Video Paused.');
-            btn[0].classList.remove('pause');
-            btn[0].classList.add('play');
-            vid[0].pause();
-        } else if (clickCount % 2 == 0) {
-            //From initial to pause
-            btn[0].setAttribute('aria-label', 'Video Paused.');
-            btn[0].classList.remove('pause');
-            btn[0].classList.add('play');
-            vid[0].pause();
-        } else {
-            //From pause to play
-            btn[0].setAttribute('aria-label', 'Video Playing.');
-            btn[0].classList.remove('play');
-            btn[0].classList.add('pause');
-            vid[0].play();
-        }
-        clickCount++;
-    }
-}

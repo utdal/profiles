@@ -8,10 +8,10 @@
 
 @if(File::exists(public_path('/storage/video/home.jpg')) && File::exists(public_path('/storage/video/home.mp4')))
 	<div class="video-cover">
-			<button class="control-bt pause" aria-label="Video Playing.">
-				<span><i class="fas fa-play"></i></span>
-				<span><i class="fas fa-pause"></i></span>
-			</button>
+		<button class="video-control play-pause" aria-controls="home-video" aria-pressed="true">
+			<span class="video-control-icon"><i class="fas fa-pause"></i></span>
+			<span class="sr-only">Play background video</span>
+		</button>
 		<p id="video-description" class="sr-only">Scenes of campus buildings</p>
 		<p id="img-description" class="sr-only">Scenes of campus buildings</p>
 		<video autoplay muted loop
