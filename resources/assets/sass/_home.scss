@@ -112,29 +112,20 @@ button.video-control {
     border-radius: 50%;
     cursor: pointer;
     transition: opacity 0.3s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     
-     span {
+    .video-control-icon {
         width: 24px;
         height: 24px;
         fill: $white;
-        margin-top: -0.1rem;
-        &:first-of-type {
-            margin-left: 0.1rem;
-        }
-        @media (max-width: 1199.98px) and (hover: none) {
-            margin-left: -11px;
-            &:first-of-type {
-                margin-left: -9px;
-            }
-        }
     }
 
-    &.pause span:first-of-type {
-        display: none
+    .fa-play {
+        margin-left: 0.1rem;
     }
-    &.play span:last-of-type {
-        display: none
-    }
+
     @media (max-width: 991.98px) {
         display: none;
     }

@@ -507,60 +507,38 @@ var profiles = (function ($, undefined) {
      * 
      * @return {void}
      */
-    const registerTogglerVideoPlay = function () {
+    const registerVideoControls = function () {
         const vid_ctrl_buttons = document.querySelectorAll('button.video-control');
 
-        if (is_reduced) {
-            vid_ctrl_buttons.forEach(bt => { playPauseVideo(bt) });
-        }
-        vid_ctrl_buttons.forEach(bt => { bt.addEventListener('click', playPauseVideo) });
-    }
-
-    /**
-     * Identifies video and control button and triggers video toggler function 
-     * @param {*} elem button that triggers event
-     * @returns {void}
-     */
-    const playPauseVideo =  function(elem) {
-        //Check to see if the target element is the cover block,
-        const target = (typeof elem.target !== 'undefined') ? elem.target : elem;
-
-        let parent = target.parentNode;
-        do {
-            //Check if the element's parent is the video cover block
-            if (parent.classList.contains('video-cover')) {
-                // if it is, pull the video and the button elements from the children and put them through the toggleVideoPlay function
-                const pKids = Array.from(parent.children);
-                const video = pKids.filter(vid => vid.localName === 'video');
-                const button = pKids.filter(btn => btn.localName === 'button');
-                if (video.length > 0) {
-                    toggleVideoPlay(video, button);
-                }
-                return true;
+        vid_ctrl_buttons.forEach(bt => bt.addEventListener('click', evt => {
+            const button = evt.currentTarget;
+            const video = document.getElementById(button?.getAttribute('aria-controls'));
+            if (video instanceof HTMLVideoElement && button instanceof HTMLButtonElement) {
+                toggleVideoPlay(video, button);
             }
-            // if it isn't go up another level and rerun the check
-            parent = parent.parentNode;
-        } while (parent);
-        return false;
+        }));
+
+        if (window.matchMedia(`(prefers-reduced-motion: reduce)`).matches) {
+            vid_ctrl_buttons.forEach((bt) => bt.click());
+        }
     }
 
     /**
      * Play/pause video and controls the video and button attributes
-     * @param {*} vid 
-     * @param {*} btn 
+     * @param {HTMLVideoElement} vid 
+     * @param {HTMLButtonElement} btn 
      * @return {void}
      */
-    var toggleVideoPlay = function (vid, btn) {
-        if (vid[0].paused) {
-            btn[0].setAttribute('aria-label', 'Video Playing.');
-            btn[0].classList.remove('play');
-            btn[0].classList.add('pause');
-            vid[0].play();
+    const toggleVideoPlay = function (vid, btn) {
+        const icon = btn.querySelector('[data-fa-i2svg],.fas');
+        if (vid.paused) {
+            vid.play();
+            btn.ariaPressed = "true";
+            icon.className = "fas fa-pause";
         } else {
-            btn[0].setAttribute('aria-label', 'Video Paused.');
-            btn[0].classList.remove('pause');
-            btn[0].classList.add('play');
-            vid[0].pause();
+            vid.pause();
+            btn.ariaPressed = "false";
+            icon.className = "fas fa-play";
         }
     }
 
@@ -578,7 +556,7 @@ var profiles = (function ($, undefined) {
         toggle_class: toggle_class,
         toggle_show: toggle_show,
         wait_when_submitting : wait_when_submitting,
-        registerTogglerVideoPlay: registerTogglerVideoPlay,
+        registerVideoControls: registerVideoControls,
     };
 
 })(jQuery);
@@ -659,8 +637,8 @@ $(function() {
     }
   });
 
-  if (document.querySelectorAll('div.video-cover video').length > 0 && document.querySelectorAll('div.video-cover button.video-control').length > 0) {
-    profiles.registerTogglerVideoPlay();
+  if (document.querySelectorAll('.video-cover video').length > 0 && document.querySelectorAll('.video-cover .video-control').length > 0) {
+    profiles.registerVideoControls();
   }
 
 });
