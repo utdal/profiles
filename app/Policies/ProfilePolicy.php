@@ -78,8 +78,12 @@ class ProfilePolicy
      * @param  \App\Profile  $profile
      * @return mixed
      */
-    public function view(User $user, Profile $profile)
+    public function view(?User $user, Profile $profile)
     {
+        if (request()->is('api/*')) {
+            return $profile->public;
+        }
+
         return true;
     }
 
