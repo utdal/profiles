@@ -61,6 +61,10 @@ class ProfilesApiController extends Controller
                 }
             }
 
+            if ($request->boolean('not_accepting_undergrad')) {
+                $profile = $profile->notAcceptingUndergradStudents();
+            }
+
             if ($request->boolean('with_data')) {
                 if(count(array_filter($request->query())) <=1){
                     return response()->json(['error' => 'Please use a filter when pulling data.'], 400);

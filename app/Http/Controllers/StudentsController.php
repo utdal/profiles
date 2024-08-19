@@ -107,6 +107,7 @@ class StudentsController extends Controller
             'custom_questions' => StudentData::customQuestions(),
             'languages' => StudentData::$languages,
             'majors' => StudentData::majors(),
+            'not_accepting_undergrad' => true,
         ]);
     }
 
@@ -121,6 +122,7 @@ class StudentsController extends Controller
             'custom_questions' => StudentData::customQuestions(),
             'languages' => StudentData::$languages,
             'majors' => StudentData::majors(),
+            'not_accepting_undergrad' => true,
         ]);
     }
 
