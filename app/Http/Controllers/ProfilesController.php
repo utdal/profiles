@@ -44,6 +44,8 @@ class ProfilesController extends Controller
             'updateImage',
         ]);
 
+        $this->middleware('can:view,profile')->only('show');
+
         $this->middleware('can:export,profile')->only('pdfExport');
 
         $this->middleware('can.create.profile')->only('create');
