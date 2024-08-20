@@ -34,7 +34,7 @@
     </div>
 
     {!! Form::model($student, ['route' => ['students.update', $student]]) !!}
-        @include('students.form', ['editable' => true, 'not_accepting_undergrad' => $not_accepting_undergrad])
+        @include('students.form', ['editable' => true])
     {!! Form::close() !!}
 
 </div>

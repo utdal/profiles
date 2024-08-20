@@ -108,7 +108,7 @@
     <hr>
 
     <fieldset disabled>
-        @include('students.form', ['editable' => false, 'not_accepting_undergrad' => $not_accepting_undergrad])
+        @include('students.form', ['editable' => false])
     </fieldset>
 
     @can('viewFeedback', $student)
