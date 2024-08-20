@@ -510,6 +510,19 @@ class Profile extends Model implements HasMedia, Auditable
             $query_students->WithStatusPendingReview();
         });
     }
+    /**
+     * Query scope for Profiles that are not marked as "Not accepting undergrad students" or 
+     * have not selected the option "Show not accepting students" on their pages
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeNotAcceptingUndergradStudents($query) {
+        return $query->whereHas('information', function($q) {
+                      $q->whereJsonDoesntContain('data->show_not_accepting_students','1')
+                        ->orWhereJsonDoesntContain('data->not_accepting_students','1');
+                });
+    }
 
     ///////////////////////////////////
     // Mutators & Virtual Attributes //
