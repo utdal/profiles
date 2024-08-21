@@ -35,7 +35,7 @@ class UsersController extends Controller
 
         $this->middleware('can:viewAdminIndex,App\User')->only('index');
 
-        $this->middleware('can:view,user')->only('show');
+        $this->middleware('can:view,user')->only(['show', 'showBookmarks']);
 
         $this->middleware('can:create,App\User')->only([
             'create',
