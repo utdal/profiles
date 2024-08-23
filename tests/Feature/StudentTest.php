@@ -105,7 +105,7 @@ class StudentTest extends TestCase
             ->assertViewIs('students.show')
             ->assertSee('Un-submit');
 
-        $this->followingRedirects()->get($unsubmit_route)
+        $this->followingRedirects()->patch($unsubmit_route)
             ->assertStatus(200)
             ->assertSee('Student profile status updated');
 
