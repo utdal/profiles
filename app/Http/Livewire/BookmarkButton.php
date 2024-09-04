@@ -2,11 +2,16 @@
 
 namespace App\Http\Livewire;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class BookmarkButton extends Component
 {
+    use AuthorizesRequests;
+
     public $model;
+
+    public $bookmark;
 
     public $user;
 
@@ -33,6 +38,10 @@ class BookmarkButton extends Component
 
     public function unbookmark()
     {
+        $bookmark = $this->user->bookmarks->where('userable_id', '=', $this->model->getKey())->first();
+
+        $this->authorize('delete', $bookmark);
+        
         $this->user->unbookmark($this->model);
 
         $this->emit('alert', "Removed from your bookmarks", 'success');
