@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Policies\UserBookmarkPolicy;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
@@ -31,6 +32,8 @@ class BookmarkButton extends Component
 
     public function bookmark()
     {
+        $this->authorize('create', 'App\Bookmark');
+
         $this->user->bookmark($this->model);
 
         $this->emit('alert', "Bookmarked!", 'success');

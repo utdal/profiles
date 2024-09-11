@@ -5,7 +5,7 @@ namespace App\Policies;
 use App\Bookmark;
 use App\User;
 
-class BookmarkPolicy
+class UserBookmarkPolicy
 {
     // use HandlesAuthorization;
 
@@ -24,34 +24,15 @@ class BookmarkPolicy
     }
 
     /**
-     * Determine whether a user can view their their own or another's user's bookmarks
+     * Determine whether the user can view the owner's bookmarks.
      *
      * @param  User  $user
+     * @param  User  $owner
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function viewUserIndex(User $user)
+    public function viewBookmarks(User $user, User $owner)
     {
-        $bookmarks_owner_requested = request()->route()->user;
-
-        foreach ($bookmarks_owner_requested->bookmarks as $bookmark) {
-            if(!$this->view($user, $bookmark))
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Determine whether the user can view the model.
-     *
-     * @param  User  $user
-     * @param  Bookmark  $bookmark
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function view(User $user, Bookmark $bookmark)
-    {
-        return $user->owns($bookmark) || $user->hasRole(['profiles_editor', 'school_profiles_editor', 'department_profiles_editor']);
+        return $user->is($owner);
     }
 
     /**
@@ -74,6 +55,6 @@ class BookmarkPolicy
      */
     public function delete(User $user, Bookmark $bookmark)
     {
-        return $user->owns($bookmark) || $user->hasRole('profiles_editor');
+        return $user->owns($bookmark);
     }
 }

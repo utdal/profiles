@@ -12,7 +12,7 @@ use App\Policies\UserPolicy;
 use App\Policies\UserDelegationPolicy;
 use App\LogEntry;
 use App\Policies\ProfileStudentPolicy;
-use App\Policies\BookmarkPolicy;
+use App\Policies\UserBookmarkPolicy;
 use App\Profile;
 use App\ProfileStudent;
 use App\Setting;
@@ -39,7 +39,7 @@ class AuthServiceProvider extends ServiceProvider
         Tag::class => TagPolicy::class,
         User::class => UserPolicy::class,
         UserDelegation::class => UserDelegationPolicy::class,
-        Bookmark::class => BookmarkPolicy::class,
+        Bookmark::class => UserBookmarkPolicy::class,
     ];
 
     /**
