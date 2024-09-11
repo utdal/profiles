@@ -30,24 +30,4 @@ class Bookmark extends MorphPivot
         return $this->belongsTo(Profile::class, 'userable_id');
     }
 
-    /**
-     * This belongs to one user.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
-
-    /**
-     * Bookmark belongs to a given user
-     * 
-     * @param User $user
-     * @return bool
-     */
-    public function ownerIs(User $user): bool
-    {
-        return $this->user_id === $user->id;
-    }
 }
