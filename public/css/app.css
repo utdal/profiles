@@ -10189,6 +10189,11 @@ input[type=file]:invalid {
   padding: 30px;
 }
 
+.coi-reports-export .disabled-element {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 #footer-container {
   background-color: #919191;
   border-top: 10px solid #154734;

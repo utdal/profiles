@@ -460,3 +460,8 @@ input[type="file"]:invalid{
 .flash-container .flash-message {
 	padding: 30px;
 }
+
+.coi-reports-export .disabled-element {
+	opacity: 0.4;
+	cursor: not-allowed;
+  }
