@@ -25,10 +25,10 @@ class StudentDataInsight extends Insight
      * @param array $filing_status_category_2 Filing statuses for the first category. Example: ['not interested', 'maybe later'].
      * @return array
     */
-    public function getAppsForSemestersAndSchoolsWithFilingStatuses($semesters_params, $schools_params, $filing_status_category_1, $filing_status_category_2)
+    public function getAppsForSemestersAndSchoolsWithFilingStatuses($semesters_params, $schools_params, $filing_status_category_1, $filing_status_category_2, $weeks_before_semester_start, $weeks_before_semester_end)
     {
-        $filing_status_category_1_total = $this->getCachedAppsForSemestersAndSchoolsWithFilingStatus($semesters_params, $schools_params, $filing_status_category_1)->count();
-        $filing_status_category_2_total = $this->getCachedAppsForSemestersAndSchoolsWithFilingStatus($semesters_params, $schools_params, $filing_status_category_2)->count();
+        $filing_status_category_1_total = $this->getCachedAppsForSemestersAndSchoolsWithFilingStatus($semesters_params, $schools_params, $filing_status_category_1, $weeks_before_semester_start, $weeks_before_semester_end)->count();
+        $filing_status_category_2_total = $this->getCachedAppsForSemestersAndSchoolsWithFilingStatus($semesters_params, $schools_params, $filing_status_category_2, $weeks_before_semester_start, $weeks_before_semester_end)->count();
 
         return [$filing_status_category_1_total, $filing_status_category_2_total];
     }
@@ -45,16 +45,18 @@ class StudentDataInsight extends Insight
      * @param array $filing_status_params Filing status filter for the last status of the applications. Example: ['accepted', 'follow up'].
      * @return \Illuminate\Support\Collection
     */
-    public function getCachedAppsForSemestersAndSchoolsWithFilingStatus($semesters_params, $schools_params, $filing_status_params)
+    public function getCachedAppsForSemestersAndSchoolsWithFilingStatus($semesters_params, $schools_params, $filing_status_params, $weeks_before_semester_start, $weeks_before_semester_end)
     {
         $sm = implode('-', $semesters_params);
         $sch = implode('-', $schools_params);
         $fls = implode('-', $filing_status_params);
+        $wbs = $weeks_before_semester_start;
+        $wbe = $weeks_before_semester_end;
 
         return Cache::remember(
-            "student-apps-for-semesters-schools-with-flstatus-{$sm}-{$sch}-{$fls}",
+            "student-apps-for-semesters-schools-with-flstatus-{$sm}-{$sch}-{$fls}-{$wbs}-{$wbe}",
             15 * 60,
-            fn() => $this->groupAppsBySemestersAndSchoolsWithFilingStatus($semesters_params, $schools_params, $filing_status_params)
+            fn() => $this->groupAppsBySemestersAndSchoolsWithFilingStatus($semesters_params, $schools_params, $filing_status_params, $weeks_before_semester_start, $weeks_before_semester_end)
         );
     }
 
@@ -66,10 +68,10 @@ class StudentDataInsight extends Insight
      * @param array $filing_status_params Filing status filter for the last status of the applications. Example: ['accepted', 'follow up'].
      * @return \Illuminate\Support\Collection
     */
-    public function groupAppsBySemestersAndSchoolsWithFilingStatus($semesters_params, $schools_params, $filing_status_params)
+    public function groupAppsBySemestersAndSchoolsWithFilingStatus($semesters_params, $schools_params, $filing_status_params, $weeks_before_semester_start, $weeks_before_semester_end)
     {
         $student_applications = $this->getCachedAppsForSemestersAndSchoolsWithStats($semesters_params, $schools_params);
-        $semesters_params_start_end = $this->semestersParamsStartAndEnd($semesters_params);
+        $semesters_params_start_end = $this->semestersParamsStartAndEnd($semesters_params, $weeks_before_semester_start, $weeks_before_semester_end);
         $results = [];
         
         $student_applications->each(function ($application) use ($semesters_params_start_end, $filing_status_params, &$results) {
@@ -300,9 +302,9 @@ class StudentDataInsight extends Insight
      * @param array $schools_params Schools filter. Example: ["BBS", "NSM"].
      * @param array $filing_status_params Filing status filter for the last status of the applications. Example: ['accepted', 'follow up'].
     */
-    public function getAppsBySemestersAndSchoolsWithFilingStatus($semesters_params, $schools_params, $filing_status_params)
+    public function getAppsBySemestersAndSchoolsWithFilingStatus($semesters_params, $schools_params, $filing_status_params, $weeks_before_semester_start, $weeks_before_semester_end)
     {
-        $applications = $this->getCachedAppsForSemestersAndSchoolsWithFilingStatus($semesters_params, $schools_params, $filing_status_params);
+        $applications = $this->getCachedAppsForSemestersAndSchoolsWithFilingStatus($semesters_params, $schools_params, $filing_status_params, $weeks_before_semester_start, $weeks_before_semester_end);
 
         $counted_apps = $applications
                             ->groupBy(['semester', 'filing_status'])
@@ -373,17 +375,17 @@ class StudentDataInsight extends Insight
         }
     }
 
-    public function semestersParamsStartAndEnd($semesters_params, $weeks_before_start = 4, $weeks_before_end = 4) : array {
+    public function semestersParamsStartAndEnd($semesters_params, $weeks_before_start, $weeks_before_end) : array {
         $result = [];
-    
+        
         foreach ($semesters_params as $semester_params) {
 
             $semester = explode(' ', $semester_params);
             $start_date = Carbon::createFromFormat('M j Y', Semester::seasonDates()[$semester[0]][0].' '.$semester[1])
-                            ->subweeks($weeks_before_start)
+                            ->subweeks((int) $weeks_before_start)
                             ->format('Y-m-d');
             $end_date = Carbon::createFromFormat('M j Y', Semester::seasonDates()[$semester[0]][1].' '.$semester[1])
-                            ->subweeks($weeks_before_end)
+                            ->subweeks((int) $weeks_before_end)
                             ->format('Y-m-d');
             
             $result[$semester_params] = [ 'start' => $start_date, 'end' => $end_date ];

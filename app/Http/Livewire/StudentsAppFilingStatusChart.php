@@ -12,18 +12,24 @@ class StudentsAppFilingStatusChart extends Component
     public array $data;
     public $selected_semesters = [];
     public $selected_schools = [];
+    public $weeks_before_semester_start;
+    public $weeks_before_semester_end;
     public $selected_filing_statuses;
     protected $listeners = ['refreshData1', 'refreshChart1'];
 
     public function mount()
     {
+        $this->weeks_before_semester_start = 4;
+        $this->weeks_before_semester_end = 4;
         $this->selected_filing_statuses = ["accepted", "maybe later", "not interested", "new", "follow up"];
     }
 
     public function refreshChart1($data, $labels) {}
 
-    public function refreshData1($selected_semesters, $selected_schools) {
+    public function refreshData1($selected_semesters, $selected_schools, $weeks_before_semester_start, $weeks_before_semester_end) {
 
+        $this->weeks_before_semester_start = $weeks_before_semester_start;
+        $this->weeks_before_semester_end = $weeks_before_semester_end;
         $this->selected_semesters = $selected_semesters;
         $this->selected_schools = $selected_schools;
 
@@ -38,7 +44,7 @@ class StudentsAppFilingStatusChart extends Component
     public function getData()
     {
         $report = new StudentDataInsight();
-        return $report->getAppsBySemestersAndSchoolsWithFilingStatus($this->selected_semesters, $this->selected_schools, $this->selected_filing_statuses);
+        return $report->getAppsBySemestersAndSchoolsWithFilingStatus($this->selected_semesters, $this->selected_schools, $this->selected_filing_statuses, $this->weeks_before_semester_start, $this->weeks_before_semester_end);
     }
 
     public function render()
