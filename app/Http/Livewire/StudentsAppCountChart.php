@@ -32,7 +32,7 @@ class StudentsAppCountChart extends Component
     public function getData()
     {
         $report = new StudentDataInsight();
-        return $report->getAppsBySemestersAndSchools($this->selected_semesters, $this->selected_school);
+        return $report->getAppsBySemestersAndSchools($this->selected_semesters, $this->selected_schools);
     }
 
     public function render()

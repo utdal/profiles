@@ -162,7 +162,7 @@ class StudentDataInsight extends Insight
      * Retrieve and cache a collection of student applications for given semesters and schools that have been viewed.
      * @param array $semesters_params Semesters filter. Example: ["Summer 2023", "Fall 2023"].
      * @param array $schools_params Schools filter. Example: ["BBS", "NSM"].
-     * @return Illuminate\Database\Eloquent\Builder
+     * @return \Illuminate\Support\Collection
     */
     public function getCachedAppsForSemestersAndSchoolsViewed($semesters_params, $schools_params)
     {
@@ -178,7 +178,7 @@ class StudentDataInsight extends Insight
                                $q->whereNotNull('data->views');
                                $q->where('data->views', '>', 0);
                            });
-                       })
+                       })->get()
        );
     }
     
@@ -186,7 +186,7 @@ class StudentDataInsight extends Insight
      * Retrieve and cache a collection of student applications for given semesters and schools that have not been viewed.
      * @param array $semesters_params Semesters filter. Example: ["Summer 2023", "Fall 2023"].
      * @param array $schools_params Schools filter. Example: ["BBS", "NSM"].
-     * @return Illuminate\Database\Eloquent\Builder
+     * @return \Illuminate\Support\Collection
     */
     public function getCachedAppsForSemestersAndSchoolsNotViewed($semesters_params, $schools_params)
     {
@@ -202,7 +202,7 @@ class StudentDataInsight extends Insight
                                 $q->whereNull('data->views');
                             });
                             $query->orDoesntHave('stats');
-                        })
+                        })->get()
         );
     }
 

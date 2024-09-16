@@ -38,7 +38,7 @@ class StudentsAppFilingStatusChart extends Component
     public function getData()
     {
         $report = new StudentDataInsight();
-        return $report->getAppsBySemestersAndSchoolsWithFilingStatus($this->selected_semesters, $this->selected_filing_statuses, $this->selected_schools);
+        return $report->getAppsBySemestersAndSchoolsWithFilingStatus($this->selected_semesters, $this->selected_schools, $this->selected_filing_statuses);
     }
 
     public function render()
