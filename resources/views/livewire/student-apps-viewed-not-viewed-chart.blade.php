@@ -6,56 +6,36 @@
         labels: @entangle('labels'),
         selected_semesters: @entangle('selected_semesters'),
         init() {
+                if (this.data.every(value => value === 0)) {
+                      this.data = [1, 1]; // Fallback to ensure the chart renders
+                }
+                
                 var progress = this.data[0];
-                var total = Number(this.data[0]) + Number(this.data[1]);
-                var progress_percentage = total === 0 ? 0 : Math.round((this.data[0] / total) * 100);
 
                 const progressTextPlugin = {
                     id: 'progressText',
                     afterDraw: function(chart) {
-                        var ctx = chart.ctx;
-                        var width = chart.width;
-                        var height = chart.height;
+                        const {ctx, data} = chart;
 
-                        ctx.restore();
+                        var progress = Number(data.datasets[0].data[0]);
+                        var remaining = Number(data.datasets[0].data[1]);
+                        var total = progress + remaining;
+                        var progress_percentage = total === 0 ? 0 : Math.round((progress / total) * 100);
                         
+                        ctx.save();
+                        const xCoor = chart. getDatasetMeta(0).data[0].x;
+                        const yCoor = chart. getDatasetMeta(0).data[0].y;
+
+                        var height = chart.height;
                         var fontSize = (height / 140).toFixed(2);
                         ctx.font = fontSize + 'em Roboto';
-                        ctx.textBaseline = 'middle';
                         ctx.fillStyle = '#198754';
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText(`${progress_percentage}%`, xCoor, yCoor);
 
-                        var text = progress_percentage + '%',
-                            textX = Math.round((width - ctx.measureText(text).width) / 2),
-                            textY = height / 2.15;
-
-                        ctx.fillText(text, textX, textY);
-                        ctx.save();
                     }
                 };
-                // var progress = this.data[0];
-
-                // const progressTextPlugin = {
-                //     id: 'progressText',
-                //     afterDraw: function(chart) {
-                //         var ctx = chart.ctx;
-                //         var width = chart.width;
-                //         var height = chart.height;
-
-                //         ctx.restore();
-                        
-                //         var fontSize = (height / 140).toFixed(2);
-                //         ctx.font = 'bold ' + fontSize + 'em Roboto';
-                //         ctx.textBaseline = 'middle';
-                //         ctx.fillStyle = '#198754';
-
-                //         var text = progress,
-                //             textX = Math.round((width - ctx.measureText(text).width) / 2),
-                //             textY = height / 2.15;
-
-                //         ctx.fillText(text, textX, textY);
-                //         ctx.save();
-                //     }
-                // };
                 
                 const chart_options = {
                             cutout: '35%',
@@ -102,10 +82,8 @@
                 animateProgress(chart_instance, progress, false);
 
                 Livewire.on('refreshChart4', (data, labels) => {
-                    var progress = data[0];
-
-                    if (this.data.every(value => value === 0)) {
-                      this.data = [1, 1]; // Fallback to ensure the chart renders
+                    if (data.every(value => value === 0)) {
+                      data = [1, 1]; // Fallback to ensure the chart renders
                     }
 
                     chart_instance.data.labels = labels;
@@ -114,7 +92,6 @@
                             backgroundColor: ['#4CAF50', '#E0E0E0'],
                             borderWidth: 3
                             }];
-                    chart_instance.data.plugins = [progressTextPlugin];
                     chart_instance.update();
                 });
             }
