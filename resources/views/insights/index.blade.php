@@ -20,7 +20,7 @@
           var start = 0;
           var end = progress;
           var current = start;
-          var increment = end / 100;
+          var increment = Math.round(end / 100);
 
           function step() {
               current += increment;
