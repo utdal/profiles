@@ -81,29 +81,37 @@
             </div>
         </div>
 
-        <div class="btn-group-toggle ml-3" data-toggle="buttons">
-            <label class="btn btn-info btn-sm active">
-                <input type="checkbox" data-toggle="show" data-toggle-target="#advanced_settings">
-                <span class="fa fa-cog fa-fw"></span> Advanced Settings
-            </label>
-        </div>
-
+        <span class="dropdown ml-3">
+            <button
+                class="btn btn-info btn-sm dropdown-toggle"
+                type="button"
+                id="advance_settings"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-controls="advance_settings"
+                aria-expanded="false"
+            >
+                <i class="fas fa-cog fa-fw"></i> Advanced Settings 
+            </button>
+            <div class="dropdown-menu p-3" id="advanced_settings" aria-labelledby="advance_settings">
+                <div class="mt-3">
+                    <small class="form-text text-muted">Students typically submit their applications before the start of the semester. By default, we include applications filed within a range starting 4 weeks before the semester begins and ending 4 weeks before it ends. For example, for Summer 2023, the included application period would be from May 4th, 2023, to August 8th, 2023. You can adjust this timeframe by changing the number of weeks below, then clicking 'Apply Filters'.</small>
+                </div>
+                <div class="row">
+                    <div class="form-group mt-2 col-md-6">
+                        <small class="form-text text-muted" for="weeks_before_semester_start">Weeks before semester's start:</small>
+                        <input type="number" class="form-control form-text text-muted" id="weeks_before_semester_start" name="weeks_before_semester_start" value="4" step="1" min="3" max="6">
+                    </div>
+                    <div class="form-group mt-2 col-md-6">
+                        <small class="form-text text-muted" for="weeks_before_semester_end">Weeks before semester's end:</small>
+                        <input type="number" class="form-control form-text text-muted" id="weeks_before_semester_end" name="weeks_before_semester_end" value="4" step="1" min="3" max="6">
+                    </div>
+                </div>
+            </div>
+        </span>
+        
         <div class="chart-actions ml-3">
             <button class="btn btn-primary btn-sm" id="apply_filters"><span class="fa fa-check fa-fw"></span> Apply Filters</button>
-        </div>
-    </div>
-
-    <div class="row" id="advanced_settings">
-        <div class="ml-3 mt-3">
-            <small>Students typically submit their applications before the start of the semester. By default, we include applications filed within a range starting 4 weeks before the semester begins and ending 4 weeks before it ends. For example, for Summer 2023, the included application period would be from May 4th, 2023, to August 8th, 2023. You can adjust this timeframe by changing the number of weeks below, then clicking 'Apply Filters'.</small>
-        </div>
-        <div class="form-group mt-2 col-md-3">
-            <small class="form-label" for="weeks_before_semester_start">Weeks before semester's start:</small>
-            <input type="number" class="form-control" id="weeks_before_semester_start" name="weeks_before_semester_start" value="4" step="1" min="3" max="6">
-        </div>
-        <div class="form-group mt-2 col-md-3">
-            <small class="form-label" for="weeks_before_semester_end">Weeks before semester's end:</small>
-            <input type="number" class="form-control" id="weeks_before_semester_end" name="weeks_before_semester_end" value="4" step="1" min="3" max="6">
         </div>
     </div>
 
@@ -137,6 +145,9 @@
             display: block;
         }
 
+        .dropdown-menu#advanced_settings {
+            width: 350% !important;
+        }
     </style>
 </div>
 
