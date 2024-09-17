@@ -74,31 +74,35 @@ class StudentDataInsight extends Insight
         $semesters_params_start_end = $this->semestersParamsStartAndEnd($semesters_params, $weeks_before_semester_start, $weeks_before_semester_end);
         $results = [];
         
-        $student_applications->each(function ($application) use ($semesters_params_start_end, $filing_status_params, &$results) {
-            if (!empty($application->research_profile->data['semesters']) && !empty($application->stats->data['status_history'])) {
-                foreach ($semesters_params_start_end as $semester => $semester_start_end) {
-                    $start_date = $semester_start_end['start'];
-                    $end_date = $semester_start_end['end'];
-                    foreach ($filing_status_params as $filing_status) {
-                        collect($application->stats->data['status_history'])
-                        ->groupBy('profile')
-                        ->each(function($group) use ($start_date, $end_date, $filing_status, $semester, $application, &$results) {
-                            $last_update = $group->sortByDesc(function ($item) {
-                                return Carbon::parse($item['updated_at']);
-                            })->first();
-                            $filing_date = Carbon::parse($last_update['updated_at']);
-                            if ($last_update['new_status'] === $filing_status && $filing_date->between($start_date, $end_date)) {
-                                $results[] = [
-                                    'id' => $application->stats->id,
-                                    'semester' => $semester,
-                                    'filing_status' => ucfirst($filing_status),
-                                ];
-                            }
-                        });
-                    }
-                }
+        foreach ($semesters_params_start_end as $semester => $semester_start_end) {
+            $start_date = $semester_start_end['start'];
+            $end_date = $semester_start_end['end'];
+            foreach ($filing_status_params as $filing_status) {
+                $student_applications->filter(function($app) use ($semester) {
+                    return in_array($semester, $app->research_profile->data['semesters']);
+                })->each(function ($application) use ($start_date, $end_date, $filing_status, $semester, &$results) {
+                        if (!empty($application->stats->data['status_history'])) {
+                            collect($application->stats->data['status_history'])
+                            ->groupBy('profile')
+                            ->each(function($group) use ($start_date, $end_date, $filing_status, $semester, $application, &$results) {
+                                $last_update = $group->sortByDesc(function ($item) {
+                                    return Carbon::parse($item['updated_at']);
+                                })->first();
+                                $filing_date = Carbon::parse($last_update['updated_at']);
+                                if ($last_update['new_status'] === $filing_status && $filing_date->between($start_date, $end_date)) {
+                                    $results[] = [
+                                        'id' => $application->stats->id,
+                                        'semester' => $semester,
+                                        'filing_status' => ucfirst($last_update['new_status']),
+                                        'updated_at' => $last_update['updated_at'],
+                                        'profile' => $last_update['profile'],
+                                    ];
+                                }
+                            });
+                        }
+                    });
             }
-        });
+        }
         return collect($results);
     }
 
