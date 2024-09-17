@@ -101,7 +101,7 @@
     }"
 >
     <h5>Accepted & Follow Up Applications Count</h5>
-    <div style="max-width: 400px; max-height: 400px;">
+    <div class="justify-content-center" style="max-width: 300px; max-height: 300px;">
     <canvas id="acceptedAndFollowUpAppPercentage" x-ref="acceptedAndFollowUpAppPercentage"></canvas>
     </div>
 </div>

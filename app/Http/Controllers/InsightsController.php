@@ -28,8 +28,8 @@ class InsightsController extends Controller
 
         $schools_options = StudentDataInsight::getLabels('school')->toArray();
         $semesters_options = StudentDataInsight::getLabels('semester')->toArray();
-        // $filing_status_params = ["accepted", "maybe later", "not interested", "new", "follow up"];
+        $title = StudentDataInsight::convertParameterstoTitle($semesters_options, $schools_options);
 
-        return view('insights.index', compact('schools_options', 'semesters_options'));
+        return view('insights.index', compact('schools_options', 'semesters_options', 'title'));
     }
 }

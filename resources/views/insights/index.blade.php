@@ -66,13 +66,13 @@
   <div class="tab-content coi-reports-export">
      
     <div role="tabpanel" class="tab-pane active container" id="student-applications">
-      <div><livewire:insights-filter :semester_options="$semesters_options" :school_options="$schools_options"/></div>
-      <div class="row mt-4">
-        <div class="col-md-6"><livewire:accepted-and-follow-up-apps-percentage-chart :selected_semesters="$semesters_options" :selected_schools="$schools_options"/></div>
-        <div class="col-md-6"><livewire:student-apps-viewed-not-viewed-chart :selected_semesters="$semesters_options" :selected_schools="$schools_options"/></div>
+      <div><livewire:insights-filter :semester_options="$semesters_options" :school_options="$schools_options" :title="$title"/></div>
+      <div class="row mt-4 d-flex justify-content-center align-items-center">
+        <div class="col-md-6 d-flex justify-content-center"><livewire:accepted-and-follow-up-apps-percentage-chart :selected_semesters="$semesters_options" :selected_schools="$schools_options"/></div>
+        <div class="col-md-6 d-flex justify-content-center"><livewire:student-apps-viewed-not-viewed-chart :selected_semesters="$semesters_options" :selected_schools="$schools_options"/></div>
       </div>
-      <div><livewire:students-app-count-chart :selected_semesters="$semesters_options" :selected_schools="$schools_options"/></div>
-      <div><livewire:students-app-filing-status-chart :selected_semesters="$semesters_options" :selected_schools="$schools_options"/></div>
+      <div class="mt-4"><livewire:students-app-count-chart :selected_semesters="$semesters_options" :selected_schools="$schools_options"/></div>
+      <div class="mt-4"><livewire:students-app-filing-status-chart :selected_semesters="$semesters_options" :selected_schools="$schools_options"/></div>
     </div>
     
     <div role="tabpanel" class="tab-pane" id="profiles">

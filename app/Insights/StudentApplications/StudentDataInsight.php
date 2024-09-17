@@ -405,4 +405,23 @@ class StudentDataInsight extends Insight
         return $result;
     }
 
+    public static function convertParameterstoTitle($semesters_params, $schools_params)
+    {
+        // If there is only one semester, just return it
+        if (count($semesters_params) === 1) {
+            return $semesters_params[0];
+        }
+        
+        // If there is only one semester, just return it
+        if (count($schools_params) === 1) {
+            return $schools_params[0];
+        }
+
+        // For more than one semester, format with commas and "and" before the last item
+        $lastSchool = array_pop($schools_params);
+        $lastSemester = array_pop($semesters_params);
+        $title = [implode(', ', $semesters_params) . ' and ' . $lastSemester, implode(', ', $schools_params) . ' and ' . $lastSchool];
+
+        return "{$title[0]} and for {$title[1]} schools.";
+    }
 }

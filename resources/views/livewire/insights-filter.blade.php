@@ -113,6 +113,8 @@
         <div class="chart-actions ml-3">
             <button class="btn btn-primary btn-sm" id="apply_filters"><span class="fa fa-check fa-fw"></span> Apply Filters</button>
         </div>
+
+        <p class="text-muted mt-3"><span><strong>Results for: </strong></span>{{$title}}</p>
     </div>
 
     <style>
