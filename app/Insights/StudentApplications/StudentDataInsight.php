@@ -70,7 +70,7 @@ class StudentDataInsight extends Insight
     */
     public function groupAppsBySemestersAndSchoolsWithFilingStatus($semesters_params, $schools_params, $filing_status_params, $weeks_before_semester_start, $weeks_before_semester_end)
     {
-        $student_applications = $this->getCachedAppsForSemestersAndSchoolsWithStats($semesters_params, $schools_params);
+        $students = $this->getCachedAppsForSemestersAndSchoolsWithStatsWithUser($semesters_params, $schools_params);
         $semesters_params_start_end = $this->semestersParamsStartAndEnd($semesters_params, $weeks_before_semester_start, $weeks_before_semester_end);
         $results = [];
         
@@ -78,24 +78,27 @@ class StudentDataInsight extends Insight
             $start_date = $semester_start_end['start'];
             $end_date = $semester_start_end['end'];
             foreach ($filing_status_params as $filing_status) {
-                $student_applications->filter(function($app) use ($semester) {
-                    return in_array($semester, $app->research_profile->data['semesters']);
-                })->each(function ($application) use ($start_date, $end_date, $filing_status, $semester, &$results) {
-                        if (!empty($application->stats->data['status_history'])) {
-                            collect($application->stats->data['status_history'])
+                $students->filter(function($student) use ($semester) {
+                    return in_array($semester, $student->research_profile->data['semesters']);
+                })->each(function ($student) use ($start_date, $end_date, $filing_status, $semester, &$results) {
+                        if (!empty($student->stats->data['status_history'])) {
+                            collect($student->stats->data['status_history'])
                             ->groupBy('profile')
-                            ->each(function($group) use ($start_date, $end_date, $filing_status, $semester, $application, &$results) {
+                            ->each(function($group) use ($student, $start_date, $end_date, $filing_status, $semester, &$results) {
                                 $last_update = $group->sortByDesc(function ($item) {
                                     return Carbon::parse($item['updated_at']);
                                 })->first();
                                 $filing_date = Carbon::parse($last_update['updated_at']);
                                 if ($last_update['new_status'] === $filing_status && $filing_date->between($start_date, $end_date)) {
                                     $results[] = [
-                                        'id' => $application->stats->id,
+                                        'id' => $student->stats->id,
                                         'semester' => $semester,
+                                        'school' => $student->research_profile->data['schools'],
                                         'filing_status' => ucfirst($last_update['new_status']),
                                         'updated_at' => $last_update['updated_at'],
                                         'profile' => $last_update['profile'],
+                                        'display_name' => $student->user->display_name,
+                                        'pea' => $student->user->pea,
                                     ];
                                 }
                             });
@@ -112,7 +115,7 @@ class StudentDataInsight extends Insight
      * @param array $schools_params Schools filter. Example: ["BBS", "NSM"].
      * @return \Illuminate\Support\Collection
     */
-    public function getCachedAppsForSemestersAndSchoolsWithStats($semesters_params, $schools_params)
+    public function getCachedAppsForSemestersAndSchoolsWithStatsWithUser($semesters_params, $schools_params)
     {
         $sm = implode('-', $semesters_params);
         $sch = implode('-', $schools_params);
@@ -120,7 +123,10 @@ class StudentDataInsight extends Insight
         return Cache::remember(
             "student-apps-for-semesters-schools-with-stats-{$sm}-{$sch}",
             15 * 60,
-            fn() => $this->appsForSemestersAndSchools($semesters_params, $schools_params)->with('stats')->get()
+            fn() => $this->appsForSemestersAndSchools($semesters_params, $schools_params)
+                         ->with('stats')
+                         ->with('user')
+                         ->get()
         );
     }
 
