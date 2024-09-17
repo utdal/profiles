@@ -91,7 +91,7 @@ class StudentDataInsight extends Insight
                                 $results[] = [
                                     'id' => $application->stats->id,
                                     'semester' => $semester,
-                                    'filing_status' => $filing_status,
+                                    'filing_status' => ucfirst($filing_status),
                                 ];
                             }
                         });
@@ -217,24 +217,24 @@ class StudentDataInsight extends Insight
     public function getAppsBySemestersAndSchools($semesters_params, $schools_params)
     {
         $applications = $this->transformAppsBySemestersAndSchools($semesters_params, $schools_params);
+        $semesters_sort_closure = Semester::sortCollectionWithSemestersKeyChronologically();
 
         $counted_apps = $applications
                             ->groupBy(['semester', 'school'])
+                            ->sortKeysUsing($semesters_sort_closure)
                             ->map(function ($semester_group) {
                                 return $semester_group->map(function ($school_group) {
                                     return $school_group->count();
                                 });
                             });
-        $semesters_sort_closure = Semester::sortCollectionWithSemestersKeyChronologically();
-        $all_semesters = $applications->pluck('semester')->unique()->sort()->values();
-        // $all_semesters = $applications->pluck('semester')->unique()->sortBy($semesters_sort_closure)->values();
+
+        $all_semesters = $counted_apps->keys();
         $all_schools = $applications->pluck('school')->unique()->sort()->values();
                             
         $datasets = $all_schools->mapWithKeys(function ($school) use ($all_semesters) { // Initialize datasets for each school
             return [  $school => ['label' => $school, 'data' => array_fill(0, $all_semesters->count(), 0)]];
         })->toArray();
 
-        // $sorted_apps = $counted_apps->sortKeysUsing(Semester::sortCollectionWithSemestersKeyChronologically());
         foreach ($counted_apps as $semester => $school_counts) {
             $semester_index = $all_semesters->search($semester);
             foreach ($school_counts as $school => $count) {
@@ -305,20 +305,21 @@ class StudentDataInsight extends Insight
     public function getAppsBySemestersAndSchoolsWithFilingStatus($semesters_params, $schools_params, $filing_status_params, $weeks_before_semester_start, $weeks_before_semester_end)
     {
         $applications = $this->getCachedAppsForSemestersAndSchoolsWithFilingStatus($semesters_params, $schools_params, $filing_status_params, $weeks_before_semester_start, $weeks_before_semester_end);
-
+        $semesters_sort_closure = Semester::sortCollectionWithSemestersKeyChronologically();
         $counted_apps = $applications
                             ->groupBy(['semester', 'filing_status'])
+                            ->sortKeysUsing($semesters_sort_closure)
                             ->map(function ($semester_group) {
                                 return $semester_group->map(function ($status_group) {
                                     return $status_group->count();
                                 });
                             });
 
-        $all_semesters = $applications->pluck('semester')->unique()->sort()->values();
+        $all_semesters = $counted_apps->keys();
         $all_filing_statuses = $applications->pluck('filing_status')->unique()->sort()->values();
         
         $datasets = $all_filing_statuses->mapWithKeys(function ($filing_status) use ($all_semesters) { // Initialize datasets for each status
-            return [$filing_status => ['label' => $filing_status, 'data' => array_fill(0, $all_semesters->count(), 0)]];
+            return [$filing_status => ['label' => ucfirst($filing_status), 'data' => array_fill(0, $all_semesters->count(), 0)]];
         })->toArray();
 
         foreach ($counted_apps as $semester => $filing_status_counts) {

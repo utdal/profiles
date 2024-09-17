@@ -136,25 +136,30 @@ class Semester
      * @return array
      */
     public static function sortCollectionWithSemestersKeyChronologically() {
-        return
-        function($a, $b) {
-            // Extract the year from the semesters
-            [$semesterA, $yearA] = explode(' ', $a);
-            [$semesterB, $yearB] = explode(' ', $b);
-        
-            // Define the semester order
-            $order = ['Spring' => 1, 'Summer' => 2, 'Fall' => 3];
-        
-            // Sort by year first, and by semester order if the years are the same
-            if ($yearA === $yearB) {
-                return $order[$semesterA] <=> $order[$semesterB];
+        return function ($a, $b) {
+            // Extract the year and season from both semesters
+            list($seasonA, $yearA) = explode(' ', $a);
+            list($seasonB, $yearB) = explode(' ', $b);
+
+            // Define a mapping of seasons to values for sorting
+            $seasonOrder = [
+                'Spring' => 1,
+                'Summer' => 2,
+                'Fall' => 3,
+                'Winter' => 4,
+            ];
+
+            // First, compare the years
+            if ($yearA != $yearB) {
+                return $yearA <=> $yearB;
             }
-        
-            return $yearA <=> $yearB;
+
+            // If the years are the same, compare the seasons using the seasonOrder
+            return $seasonOrder[$seasonA] <=> $seasonOrder[$seasonB];
         };
     }
 
-        /**
+    /**
      * Sort chronologically an array of semesters in the 'Semester YY' format 
      * @param array $semesters
      * @return array
