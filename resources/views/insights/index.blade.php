@@ -51,11 +51,11 @@
       <a class="nav-link active" href="#student-applications" role="tab" data-toggle="tab">Research Applications</a>
     </li>
 
-    <li role="presentation" class="">
+    <li role="presentation" style="display:none;">
       <a class="nav-link" href="#profiles" role="tab" data-toggle="tab">Profiles</a>
     </li>
     
-    <li role="presentation" class="">
+    <li role="presentation" style="display:none;">
       <a class="nav-link" href="#admin" role="tab" data-toggle="tab">Admin</a>
     </li>
 

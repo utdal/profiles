@@ -1,6 +1,6 @@
 
 <div>
-    <h5>Student Research Applications Filing Status Count</h5>
+    <h5>Applications Count by Filing Status</h5>
     <div><canvas id="appCountFilingStatus"></canvas></div>
 </div>
 

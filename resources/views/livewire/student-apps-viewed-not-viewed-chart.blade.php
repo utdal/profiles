@@ -97,8 +97,8 @@
             }
     }"
 >
-    <h5>Viewed Applications Count</h5>
-    <div class="justify-content-center" style="max-width: 300px; max-height: 300px;">
-    <canvas id="appsPercViewedNotViewed" x-ref="appsPercViewedNotViewed"></canvas>
+    <h5 class="d-flex justify-content-center">Applications Viewed</h5>
+    <div class="d-flex justify-content-center" style="max-width: 300px; max-height: 300px;">
+        <canvas id="appsPercViewedNotViewed" x-ref="appsPercViewedNotViewed"></canvas>
     </div>
 </div>

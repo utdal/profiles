@@ -82,7 +82,7 @@
                      plugins: [progressTextPlugin],
                 });
 
-                //animateProgress(chart_instance, progress, false);
+                animateProgress(chart_instance, progress, false);
 
                 Livewire.on('refreshChart5', (data, labels) => {
                     if (data.every(value => value === 0)) {
@@ -100,8 +100,8 @@
             }
     }"
 >
-    <h5>Accepted & Follow Up Applications Count</h5>
-    <div class="justify-content-center" style="max-width: 300px; max-height: 300px;">
-    <canvas id="acceptedAndFollowUpAppPercentage" x-ref="acceptedAndFollowUpAppPercentage"></canvas>
+    <h5 class="d-flex justify-content-center">Applications Accepted & to Follow Up</h5>
+    <div class="d-flex justify-content-center" style="max-width: 300px; max-height: 300px;">
+        <canvas id="acceptedAndFollowUpAppPercentage" x-ref="acceptedAndFollowUpAppPercentage"></canvas>
     </div>
 </div>

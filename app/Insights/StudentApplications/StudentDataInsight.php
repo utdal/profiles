@@ -409,21 +409,22 @@ class StudentDataInsight extends Insight
 
     public static function convertParameterstoTitle($semesters_params, $schools_params)
     {
-        // If there is only one semester, just return it
         if (count($semesters_params) === 1) {
-            return $semesters_params[0];
+            $semesters = $semesters_params[0];
+        }
+        else {
+            $last_semester = array_pop($semesters_params);
+            $semesters = implode(', ', $semesters_params) . ' and ' . $last_semester;
         }
         
-        // If there is only one semester, just return it
         if (count($schools_params) === 1) {
-            return $schools_params[0];
+            $schools = "the {$schools_params[0]} school.";
+        }
+        else {
+            $last_school = array_pop($schools_params);
+            $schools = 'the ' . implode(', ', $schools_params) . ' and ' . $last_school . ' schools.';
         }
 
-        // For more than one semester, format with commas and "and" before the last item
-        $lastSchool = array_pop($schools_params);
-        $lastSemester = array_pop($semesters_params);
-        $title = [implode(', ', $semesters_params) . ' and ' . $lastSemester, implode(', ', $schools_params) . ' and ' . $lastSchool];
-
-        return "{$title[0]} and for {$title[1]} schools.";
+        return "Results for {$semesters} and {$schools}";
     }
 }

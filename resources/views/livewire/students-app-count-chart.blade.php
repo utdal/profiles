@@ -1,6 +1,6 @@
 
 <div>
-    <h5>Student Research Applications Status Count</h5>
+    <h5>Applications by Semester & School</h5>
     <div><canvas id="appCountBySemester"></canvas></div>
 </div>
 
