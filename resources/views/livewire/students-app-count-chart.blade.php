@@ -1,22 +1,18 @@
+<div
+    wire:ignore
+    x-data="{
+        data: @entangle('data'),
+        labels: @entangle('labels'),
+        selected_semesters: @entangle('selected_semesters'),
+        init() {
 
-<div>
-    <h5>Applications by Semester & School</h5>
-    <div><canvas id="appCountBySemester"></canvas></div>
-</div>
-
-@push('scripts')
-    <script>
-        $(function() {
-
-            // Student apps count by semester and school chart
-            var ctx = document.getElementById("appCountBySemester").getContext("2d");
             const appCountBySemesterChart = new Chart(
-                ctx,
+                this.$refs.appCountBySemester,
                 {
                     type: 'bar',
                     data: {
-                        labels: @json($labels),
-                        datasets: @json($data),
+                        labels: this.labels,
+                        datasets: this.data,
                     },
                     options: {
                         plugins: {
@@ -46,6 +42,9 @@
                 appCountBySemesterChart.data.datasets = data;
                 appCountBySemesterChart.update();
             });
-        });
-    </script>
-@endpush
+        }
+    }"
+>
+    <h5>Applications by Semester & School</h5>
+    <div><canvas id="appCountBySemester" x-ref="appCountBySemester"></canvas></div>
+</div>
