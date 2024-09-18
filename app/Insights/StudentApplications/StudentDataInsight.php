@@ -75,35 +75,37 @@ class StudentDataInsight extends Insight
         $results = [];
         
         foreach ($semesters_params_start_end as $semester => $semester_start_end) {
-            $start_date = $semester_start_end['start'];
-            $end_date = $semester_start_end['end'];
-            foreach ($filing_status_params as $filing_status) {
-                $students->filter(function($student) use ($semester) {
-                    return in_array($semester, $student->research_profile->data['semesters']);
-                })->each(function ($student) use ($start_date, $end_date, $filing_status, $semester, &$results) {
-                        if (!empty($student->stats->data['status_history'])) {
-                            collect($student->stats->data['status_history'])
-                            ->groupBy('profile')
-                            ->each(function($group) use ($student, $start_date, $end_date, $filing_status, $semester, &$results) {
-                                $last_update = $group->sortByDesc(function ($item) {
-                                    return Carbon::parse($item['updated_at']);
-                                })->first();
-                                $filing_date = Carbon::parse($last_update['updated_at']);
-                                if ($last_update['new_status'] === $filing_status && $filing_date->between($start_date, $end_date)) {
-                                    $results[] = [
-                                        'id' => $student->stats->id,
-                                        'semester' => $semester,
-                                        'school' => $student->research_profile->data['schools'],
-                                        'filing_status' => ucfirst($last_update['new_status']),
-                                        'updated_at' => $last_update['updated_at'],
-                                        'profile' => $last_update['profile'],
-                                        'display_name' => $student->user->display_name,
-                                        'pea' => $student->user->pea,
-                                    ];
-                                }
-                            });
-                        }
-                    });
+            foreach ($schools_params as $school) {
+                $start_date = $semester_start_end['start'];
+                $end_date = $semester_start_end['end'];
+                foreach ($filing_status_params as $filing_status) {
+                    $students->filter(function($student) use ($semester, $school) {
+                        return in_array($semester, $student->research_profile->data['semesters']) && in_array($school, $student->research_profile->data['schools']);
+                    })->each(function ($student) use ($start_date, $end_date, $filing_status, $semester, &$results) {
+                            if (!empty($student->stats->data['status_history'])) {
+                                collect($student->stats->data['status_history'])
+                                ->groupBy('profile')
+                                ->each(function($group) use ($student, $start_date, $end_date, $filing_status, $semester, &$results) {
+                                    $last_update = $group->sortByDesc(function ($item) {
+                                        return Carbon::parse($item['updated_at']);
+                                    })->first();
+                                    $filing_date = Carbon::parse($last_update['updated_at']);
+                                    if ($last_update['new_status'] === $filing_status && $filing_date->between($start_date, $end_date)) {
+                                        $results[] = [
+                                            'id' => $student->stats->id,
+                                            'semester' => $semester,
+                                            'school' => $student->research_profile->data['schools'],
+                                            'filing_status' => ucfirst($last_update['new_status']),
+                                            'updated_at' => $last_update['updated_at'],
+                                            'profile' => $last_update['profile'],
+                                            'display_name' => $student->user->display_name,
+                                            'pea' => $student->user->pea,
+                                        ];
+                                    }
+                                });
+                            }
+                        });
+                }
             }
         }
         return collect($results);
