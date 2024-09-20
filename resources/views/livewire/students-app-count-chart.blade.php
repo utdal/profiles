@@ -5,7 +5,7 @@
         labels: @entangle('labels'),
         selected_semesters: @entangle('selected_semesters'),
         init() {
-            var chart2_complete = false;
+
             const appCountBySemesterChart = new Chart(
                 this.$refs.appCountBySemester,
                 {

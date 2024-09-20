@@ -9,7 +9,7 @@
                 if (this.data.every(value => value === 0)) {
                       this.data = [1, 1]; // Fallback to ensure the chart renders
                 }
-                var chart4_complete = false;
+
                 var progress = this.data[0];
 
                 const progressTextPlugin = {
@@ -81,8 +81,6 @@
                      options: chart_options,
                      plugins: [progressTextPlugin],
                 });
-
-                // animateProgress(chart_instance, progress, false);
 
                 Livewire.on('refreshChart4', (data, labels) => {
                     if (data.every(value => value === 0)) {
