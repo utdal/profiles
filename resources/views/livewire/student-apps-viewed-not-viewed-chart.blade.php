@@ -9,7 +9,7 @@
                 if (this.data.every(value => value === 0)) {
                       this.data = [1, 1]; // Fallback to ensure the chart renders
                 }
-                
+                var chart4_complete = false;
                 var progress = this.data[0];
 
                 const progressTextPlugin = {
@@ -38,6 +38,7 @@
                 };
                 
                 const chart_options = {
+                            responsive: true,
                             cutout: '35%',
                             rotation: -90,
                             circumference: 360,
@@ -52,12 +53,14 @@
                                 datalabels: {
                                     labels: {
                                         value: {
-                                            // font: {
-                                            //     weight: 'bold',
-                                            // },
                                             color: ['white', 'gray'],
                                         },
                                     }
+                                }
+                            },
+                            animation: {
+                                onComplete: function() {
+                                    Livewire.emit('chartAnimationComplete');
                                 }
                             }
                         };
@@ -79,7 +82,7 @@
                      plugins: [progressTextPlugin],
                 });
 
-                animateProgress(chart_instance, progress, false);
+                // animateProgress(chart_instance, progress, false);
 
                 Livewire.on('refreshChart4', (data, labels) => {
                     if (data.every(value => value === 0)) {
@@ -98,7 +101,7 @@
     }"
 >
     <h5 class="d-flex justify-content-center">Applications Viewed</h5>
-    <div class="d-flex justify-content-center" style="max-width: 300px; max-height: 300px;">
+    <div class="d-flex justify-content-center" style="position: relative; height:30vh; width:33.33vw">
         <canvas id="appsPercViewedNotViewed" x-ref="appsPercViewedNotViewed"></canvas>
     </div>
 </div>

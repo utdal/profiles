@@ -10,10 +10,17 @@ class InsightsFilter extends Component
 
     public $semester_options = [];
     public $school_options = [];
+    public $charts_loaded;
     public $title;
     protected $listeners = ['applyFilters'];
 
+    public function mount()
+    {
+        $this->charts_loaded = true;
+    }
+
     public function applyFilters($selected_semesters, $selected_schools, $weeks_before_semester_start, $weeks_before_semester_end) {
+        $this->charts_loaded = false;
         $this->title = StudentDataInsight::convertParameterstoTitle($selected_semesters, $selected_schools);
         $this->emitTo('accepted-and-follow-up-apps-percentage-chart', 'refreshData5', $selected_semesters, $selected_schools, $weeks_before_semester_start, $weeks_before_semester_end);
         $this->emitTo('student-apps-viewed-not-viewed-chart', 'refreshData4', $selected_semesters, $selected_schools, $weeks_before_semester_start, $weeks_before_semester_end);

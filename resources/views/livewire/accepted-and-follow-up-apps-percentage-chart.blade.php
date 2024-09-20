@@ -9,6 +9,7 @@
                       this.data = [1, 1]; // Fallback to ensure the chart renders
                 }
                 
+                var chart5_complete = false;
                 var progress = this.data[0];
 
                 const progressTextPlugin = {
@@ -37,32 +38,34 @@
                 };
 
                 const chart_options = {
-                    responsive: true,
-                            cutout: '35%',
-                            rotation: -90,
-                            circumference: 360,
-                            plugins: {
-                                tooltip: {
-                                    enabled: true,
-                                },
-                                legend: {
-                                    position: 'bottom',
-                                },
-                                datalabels: {
-                                    // formatter: (value, ctx) => {
-                                    //     return Math.round(value) + '%';
-                                    // },
-                                    labels: {
-                                        value: {
-                                            // font: {
-                                            //     weight: 'bold',
-                                            // },
-                                            color: ['white', 'gray'],
-                                        },
-                                    }
-                                }
+                        responsive: true,
+                        cutout: '35%',
+                        rotation: -90,
+                        circumference: 360,
+                        plugins: {
+                            tooltip: {
+                                enabled: true,
                             },
-                        };
+                            legend: {
+                                position: 'bottom',
+                            },
+                            datalabels: {
+                                labels: {
+                                    value: {
+                                        // font: {
+                                        //     weight: 'bold',
+                                        // },
+                                        color: ['white', 'gray'],
+                                    },
+                                }
+                            }
+                        },
+                    animation: {
+                        onComplete: function() {
+                            Livewire.emit('chartAnimationComplete');
+                        }
+                    }
+                };
 
                 // Create the new chart instance
                 const chart_instance = new Chart(
@@ -82,7 +85,7 @@
                      plugins: [progressTextPlugin],
                 });
 
-                animateProgress(chart_instance, progress, false);
+                // animateProgress(chart_instance, progress, false);
 
                 Livewire.on('refreshChart5', (data, labels) => {
                     if (data.every(value => value === 0)) {
@@ -101,7 +104,7 @@
     }"
 >
     <h5 class="d-flex justify-content-center">Applications Accepted & to Follow Up</h5>
-    <div class="d-flex justify-content-center" style="max-width: 300px; max-height: 300px;">
+    <div class="d-flex justify-content-center" style="position: relative; height:30vh; width:33.33vw">
         <canvas id="acceptedAndFollowUpAppPercentage" x-ref="acceptedAndFollowUpAppPercentage"></canvas>
     </div>
 </div>

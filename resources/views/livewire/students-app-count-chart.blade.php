@@ -5,7 +5,7 @@
         labels: @entangle('labels'),
         selected_semesters: @entangle('selected_semesters'),
         init() {
-
+            var chart2_complete = false;
             const appCountBySemesterChart = new Chart(
                 this.$refs.appCountBySemester,
                 {
@@ -33,6 +33,11 @@
                             y: {
                                 stacked: false,
                             },
+                        },
+                        animation: {
+                            onComplete: function() {
+                                Livewire.emit('chartAnimationComplete');
+                            }
                         }
                     },
                 }
@@ -45,6 +50,15 @@
         }
     }"
 >
-    <h5>Applications by Semester & School</h5>
-    <div><canvas id="appCountBySemester" x-ref="appCountBySemester"></canvas></div>
+    <h5>Student Applications Count
+        <small class="form-text text-muted d-inline">
+            <a role="button" tabindex="0" aria-label="proficiency information" data-toggle="popover" data-trigger="focus" data-popover-content="#chart_info_1"><i class="fas fa-info-circle"></i></a>
+        </small>
+    </h5>
+    <div class="d-flex" style="position: relative; height:40vh; width:60vw">
+        <canvas id="appCountBySemester" x-ref="appCountBySemester"></canvas>
+    </div>
+    <div id="chart_info_1" style="display:none">
+        <p><small>Count of single applications submited.</small></p>
+    </div>
 </div>
