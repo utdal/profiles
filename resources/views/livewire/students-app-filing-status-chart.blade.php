@@ -3,8 +3,46 @@
     x-data="{
         data: @entangle('data'),
         labels: @entangle('labels'),
+        current: @entangle('current'),
         selected_semesters: @entangle('selected_semesters'),
         init() {
+            // if (this.labels.length === 0 || this.data.length === 0) {
+            //     // Set a fallback for each dataset to ensure the chart renders
+            //     console.log('in');
+            //         this.data = [1]; // Use dummy data to ensure bars appear
+            //         this.labels = ['No data']; // Use dummy data to ensure bars appear
+            // }
+            var current = this.current;
+
+            const currentSemesterPlugin = {
+                id: 'currentSemesterPlugin',
+                afterDatasetsDraw: function(chart) {
+                    const ctx = chart.ctx;
+                    const xAxis = chart.scales['x'];  // X-axis
+                    const yAxis = chart.scales['y'];  // Y-axis
+
+                    // Determine where to draw the line
+                    const currentIndex = chart.data.labels.indexOf('Fall 2024'); // Label of the current period
+                    if (currentIndex >= 0) {
+                        const xPos = xAxis.getPixelForValue(currentIndex);
+
+                        // Draw the line
+                        ctx.save();
+                        ctx.beginPath();
+                        ctx.moveTo(xPos, yAxis.top);
+                        ctx.lineTo(xPos, yAxis.bottom);
+                        ctx.lineWidth = 2;
+                        ctx.strokeStyle = 'gray';
+                        ctx.stroke();
+
+                        // Optional: Add a label for the line
+                        ctx.font = '12px Arial';
+                        ctx.fillStyle = 'gray';
+                        ctx.fillText('Current', xPos + 5, yAxis.top - 5);
+                        ctx.restore();
+                    }
+                }
+            };
 
             const appCountFilingStatusChart = new Chart(
                 this.$refs.appCountFilingStatus,
@@ -40,6 +78,7 @@
                             }
                         }
                     },
+                    plugins: [currentSemesterPlugin],
                 }
             );
             Livewire.on('refreshChart1', (data, labels) => {
@@ -55,7 +94,7 @@
             <a role="button" tabindex="0" aria-label="proficiency information" data-toggle="popover" data-trigger="focus" data-popover-content="#chart_info"><i class="fas fa-info-circle"></i></a>
         </small>
     </h5>
-    <div class="d-flex" style="position: relative; height:40vh; width:60vw">
+    <div class="d-flex justify-content-center" style="position: relative; height:40vh; width:60vw">
         <canvas id="appCountFilingStatus" x-ref="appCountFilingStatus"></canvas>
     </div>
     <div id="chart_info" style="display:none">

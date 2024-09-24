@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Helpers\Semester;
 use App\Insights\StudentApplications\StudentDataInsight;
 use Livewire\Component;
 
@@ -10,6 +11,7 @@ class StudentsAppFilingStatusChart extends Component
 
     public array $labels;
     public array $data;
+    public $current;
     public $selected_semesters = [];
     public $selected_schools = [];
     public $weeks_before_semester_start;
@@ -21,6 +23,7 @@ class StudentsAppFilingStatusChart extends Component
     {
         $this->weeks_before_semester_start = 4;
         $this->weeks_before_semester_end = 4;
+        $this->current = Semester::current();
         $this->selected_filing_statuses = ["accepted", "maybe later", "not interested", "new", "follow up"];
     }
 
@@ -56,6 +59,7 @@ class StudentsAppFilingStatusChart extends Component
         return view('livewire.students-app-filing-status-chart', [
             'data' => $this->data,
             'labels' => $this->labels,
+            'current' => $this->current,
         ]);
     }
 }
