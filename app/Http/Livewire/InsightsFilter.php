@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Helpers\Semester;
 use App\Insights\StudentApplications\StudentDataInsight;
 use Livewire\Component;
 
@@ -12,11 +13,13 @@ class InsightsFilter extends Component
     public $school_options = [];
     public $charts_loaded;
     public $title;
+    public $current_semester;
     protected $listeners = ['applyFilters'];
 
     public function mount()
     {
         $this->charts_loaded = true;
+        $this->current_semester = Semester::current();
     }
 
     public function applyFilters($selected_semesters, $selected_schools, $weeks_before_semester_start, $weeks_before_semester_end) {

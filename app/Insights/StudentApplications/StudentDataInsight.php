@@ -99,7 +99,7 @@ class StudentDataInsight extends Insight
                                             'updated_at' => $last_update['updated_at'],
                                             'profile' => $last_update['profile'],
                                             'display_name' => $student->user->display_name,
-                                            'pea' => $student->user->pea,
+                                            'netID' => $student->user->name,
                                         ];
                                     }
                                 });
@@ -409,22 +409,8 @@ class StudentDataInsight extends Insight
 
     public static function convertParameterstoTitle($semesters_params, $schools_params)
     {
-        if (count($semesters_params) === 1) {
-            $semesters = $semesters_params[0];
-        }
-        else {
-            $last_semester = array_pop($semesters_params);
-            $semesters = implode(', ', $semesters_params) . ' and ' . $last_semester;
-        }
-        
-        if (count($schools_params) === 1) {
-            $schools = "the {$schools_params[0]} school.";
-        }
-        else {
-            $last_school = array_pop($schools_params);
-            $schools = 'the ' . implode(', ', $schools_params) . ' and ' . $last_school . ' schools.';
-        }
-
-        return "Results for {$semesters} and {$schools}";
+        $semesters = implode(' | ', $semesters_params);
+        $schools = implode(' | ', $schools_params);
+        return [$semesters, $schools];
     }
 }

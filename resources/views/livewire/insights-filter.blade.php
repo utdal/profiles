@@ -58,6 +58,7 @@
             const width = window.innerWidth;
             return width < 576 ? 10 : width < 768 ? 12 : width < 992 ? 14 : 16; // Adjust sizes as needed
         }
+
     </script>
 @endpush
 
@@ -141,8 +142,8 @@
         </div>
     </div>
     
-    <div class="row">
-        <p wire:model="title" id="filters_title" class="text-muted mt-3">{{$title}}</p>
+    <div class="row mt-3">
+        <p class="small text-muted" wire:model="title" id="filters_title" class="text-muted mt-3">Showing Results For: {{$title[0]}} | {{$title[1]}}</p>
     </div>
     
     @php
