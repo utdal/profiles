@@ -14,28 +14,95 @@
 @endonce
 
 @push('scripts')
-    <script>
-        // Function to animate the progress
-        function animateProgress(chart_instance, progress, percentage) {
-          var start = 0;
-          var end = progress;
-          var current = start;
-          var increment = Math.round(end / 100);
+<script>
 
-          function step() {
-              current += increment;
-              if (current >= end) current = end;
-              chart_instance.data.datasets[0].data[0] = current;
-              chart_instance.data.datasets[0].data[1] = percentage ? 100 - current : chart_instance.data.datasets[0].data[1];
-              chart_instance.update();
+    const progressTextPlugin = {
+        id: 'progressText',
+        afterDraw: function(chart) {
+            const {ctx, data} = chart;
 
-              if (current < end) {
-                  requestAnimationFrame(step);
-              }
-          }
-          step();
+            var progress = Number(data.datasets[0].data[0]);
+            var remaining = Number(data.datasets[0].data[1]);
+            var total = progress + remaining;
+            var progress_percentage = total === 0 ? 0 : Math.round((progress / total) * 100);
+
+            ctx.save();
+            const xCoor = chart. getDatasetMeta(0).data[0].x;
+            const yCoor = chart. getDatasetMeta(0).data[0].y;
+
+            var height = chart.height;
+            var fontSize = (height / 140).toFixed(2);
+            ctx.font = fontSize + 'em Roboto';
+            ctx.fillStyle = '#198754';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(`${progress_percentage}%`, xCoor, yCoor);
         }
-    </script>
+    };
+
+    const highlightTickPlugin = {
+        id: 'highlightRegion',
+        beforeDraw: (chart) => {
+            const ctx = chart.ctx;
+            const xAxis = chart.scales['x'];
+            const yAxis = chart.scales['y'];
+
+            xAxis.ticks.forEach((tick, index) => {
+                const label = xAxis.getLabelForValue(tick.value);
+
+                if (label === highlightValue) {
+                    const xPixel = xAxis.getPixelForValue(tick.value);
+
+                    const totalTicks = xAxis.ticks.length;
+                    const barWidth = xAxis.width / totalTicks;
+                    const xLeft = xPixel - barWidth / 2;
+                    const chartHeight = yAxis.bottom - yAxis.top;
+
+                    ctx.fillStyle = '#d7dadd75';
+                    ctx.fillRect(xLeft, yAxis.top, barWidth, chartHeight);
+                }
+            });
+        }
+    };
+
+    const validateEmptyDataPlugin = {
+        id: 'validateEmptyData',
+        afterDraw: function(chart) {
+          
+            const ctx = chart.ctx;
+            const { chartArea } = chart;
+            const chartType = chart.config.type;
+            let empty = false;
+
+            if (chartType === 'doughnut') {
+              const data = chart.data.datasets[0].data;
+              if (data.every(value => value === 0)) {
+                var img = new Image();
+                img.src = img_route_doughnut;
+                empty = true;
+              }
+            }
+            else if (chartType === 'bar') {
+              const data = chart.data.datasets;
+              if (data.length === 0 ) {
+                var img = new Image();
+                img.src = img_route_bar;
+                empty = true;
+              }
+            }
+            if (empty) {
+              img.alt = 'No results found for the selected filters';
+              img.onload = function() {
+                  const imgX = chartArea.left + (chartArea.width / 2) - (img.width / 2);
+                  const imgY = chartArea.top + (chartArea.height / 2) - (img.height / 2);
+                  ctx.drawImage(img, imgX, imgY);
+              }
+            }
+            Livewire.emit('chartAnimationComplete');
+        }
+    };
+
+</script>
 @endpush
 
 @section('content')

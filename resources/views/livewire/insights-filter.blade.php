@@ -1,8 +1,11 @@
 @push('scripts')
     <script>
         const button = document.getElementById('apply_filters');
+        let highlightValue = @js($current_semester);
         let charts_completed = 0;
         let total_charts = 4;
+        let img_route_bar = "{{asset('img/no-results-found.png')}}";
+        let img_route_doughnut = "{{asset('img/no-results-found2.png')}}";
 
         button.addEventListener('click', function() {
             showLoadingModal();
