@@ -99,7 +99,7 @@
                                 id="school_{{$key}}"
                                 name="{{$value}}"
                                 value="{{$value}}"
-                                checked="{{ in_array($value, $school_options) ?? false}}" 
+                                {{ in_array($value, $school_options) ? 'checked' : '' }}   
                                 aria-describedby="school-selection"
                             />{{$value}}
                         </span>
