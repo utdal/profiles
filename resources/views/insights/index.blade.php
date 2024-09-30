@@ -136,13 +136,17 @@
   <div class="tab-content coi-reports-export">
      
     <div role="tabpanel" class="tab-pane active container" id="student-applications">
-      <div><livewire:insights-filter :semester_options="$semesters_options" :semesters_selected="$semesters_selected" :school_options="$schools_options" :title="$title"/></div>
-      <div class="row mt-4 d-flex justify-content-center align-items-center">
-        <div class="col-md-6 d-flex justify-content-center"><livewire:accepted-and-follow-up-apps-percentage-chart :selected_semesters="$semesters_selected" :selected_schools="$schools_options"/></div>
-        <div class="col-md-6 d-flex justify-content-center"><livewire:student-apps-viewed-not-viewed-chart :selected_semesters="$semesters_selected" :selected_schools="$schools_options"/></div>
-      </div>
-      <div class="mt-4"><livewire:students-app-count-chart :selected_semesters="$semesters_selected" :selected_schools="$schools_options"/></div>
-      <div class="mt-4"><livewire:students-app-filing-status-chart :selected_semesters="$semesters_selected" :selected_schools="$schools_options"/></div>
+        <div><livewire:insights-filter :semester_options="$semesters_options" :semesters_selected="$semesters_selected" :school_options="$schools_options" :title="$title"/></div>
+        <div class="flex-row mt-4 d-md-flex justify-content-center">
+            <div><livewire:accepted-and-follow-up-apps-percentage-chart :selected_semesters="$semesters_selected" :selected_schools="$schools_options"/></div>
+            <div><livewire:student-apps-viewed-not-viewed-chart :selected_semesters="$semesters_selected" :selected_schools="$schools_options"/></div>
+        </div>
+        <div class="mt-4 d-md-flex justify-content-md-center"><livewire:students-app-count-chart :selected_semesters="$semesters_selected" :selected_schools="$schools_options"/></div>
+        <div class="mt-4 d-md-flex justify-content-md-center"><livewire:students-app-filing-status-chart :selected_semesters="$semesters_selected" :selected_schools="$schools_options"/></div>
+
+        <div class="mt-5 d-md-flex justify-content-md-start">
+            <small class="small text-muted font-italic mt-2 " style="max-width: 50vw;"><span style="color: #198754;">Note: </span> The highlighted stripe in green corresponds to the current semester.</small>
+        </div>
     </div>
     
     <div role="tabpanel" class="tab-pane" id="profiles">

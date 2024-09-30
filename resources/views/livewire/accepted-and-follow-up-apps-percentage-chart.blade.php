@@ -61,8 +61,8 @@
             }
     }"
 >
-    <h5 class="d-flex justify-content-center">Applications Accepted & to Follow Up</h5>
-    <div class="d-flex justify-content-center" style="position: relative; height:30vh; width:33.33vw">
+    <h5 class="d-md-flex justify-content-md-center">Applications Accepted & to Follow Up</h5>
+    <div class="d-md-flex justify-content-md-center" style="position: relative; height:30vh; width:33.33vw">
         <canvas id="acceptedAndFollowUpAppPercentage" x-ref="acceptedAndFollowUpAppPercentage"></canvas>
     </div>
 </div>

@@ -48,15 +48,17 @@
         }
     }"
 >
-    <h5>Student Applications Count
-        <small class="form-text text-muted d-inline">
-            <a role="button" tabindex="0" aria-label="proficiency information" data-toggle="popover" data-trigger="focus" data-popover-content="#chart_info_1"><i class="fas fa-info-circle"></i></a>
+    <h5 class="d-md-flex justify-content-md-start">Student Applications Count 
+        <small class="form-text text-muted d-inline" style="margin-left: 4px; font-size: 0.8em;">
+            <a role="button" tabindex="0" aria-label="applications count chart information" data-toggle="class" data-toggle-class="d-md-flex" data-target="#apps_count_chart_info"><i class="fas fa-info-circle"></i></a>
         </small>
     </h5>
-    <div class="d-flex justify-content-center" style="position: relative; height:40vh; width:60vw">
+
+    <div class="d-md-flex justify-content-md-center" style="position: relative; height:40vh; width:60vw">
         <canvas id="appCountBySemester" x-ref="appCountBySemester"></canvas>
     </div>
-    <div id="chart_info_1" style="display:none">
-        <p><small>Count of single applications submited.</small></p>
+    
+    <div id="apps_count_chart_info" class="mt-2 justify-content-md-center" style="text-align: center; display:none;">
+        <small class="d-block small text-muted font-italic" style="max-width: 50vw; line-height: 1.2em;"> This chart represents only the count of applications for the semesters selected by the students.</small>
     </div>
 </div>

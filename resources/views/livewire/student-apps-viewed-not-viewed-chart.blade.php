@@ -61,8 +61,8 @@
             }
     }"
 >
-    <h5 class="d-flex justify-content-center">Applications Viewed</h5>
-    <div class="d-flex justify-content-center" style="position: relative; height:30vh; width:33.33vw">
+    <h5 class="d-md-flex justify-content-md-center">Applications Viewed</h5>
+    <div class="d-md-flex justify-content-md-center" style="position: relative; height:30vh; width:33.33vw">
         <canvas id="appsPercViewedNotViewed" x-ref="appsPercViewedNotViewed"></canvas>
     </div>
 </div>
