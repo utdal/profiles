@@ -50,15 +50,18 @@
             xAxis.ticks.forEach((tick, index) => {
                 const label = xAxis.getLabelForValue(tick.value);
 
+                const xPixel = xAxis.getPixelForValue(tick.value);
+                const totalTicks = xAxis.ticks.length;
+                const barWidth = xAxis.width / totalTicks;
+                const xLeft = xPixel - barWidth / 2;
+                const chartHeight = yAxis.bottom - yAxis.top;
+
                 if (label === highlightValue) {
-                    const xPixel = xAxis.getPixelForValue(tick.value);
-
-                    const totalTicks = xAxis.ticks.length;
-                    const barWidth = xAxis.width / totalTicks;
-                    const xLeft = xPixel - barWidth / 2;
-                    const chartHeight = yAxis.bottom - yAxis.top;
-
-                    ctx.fillStyle = '#d7dadd75';
+                    ctx.fillStyle = '#aced0a9e';
+                    ctx.fillRect(xLeft, yAxis.top, barWidth, chartHeight);
+                }
+                else {
+                    ctx.fillStyle = '#FFFFFF';
                     ctx.fillRect(xLeft, yAxis.top, barWidth, chartHeight);
                 }
             });

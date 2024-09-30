@@ -3,7 +3,6 @@
     x-data="{
         data: @entangle('data'),
         labels: @entangle('labels'),
-        selected_semesters: @entangle('selected_semesters'),
         init() {
 
             const appCountBySemesterChart = new Chart(
@@ -12,7 +11,10 @@
                     type: 'bar',
                     data: {
                         labels: this.labels,
-                        datasets: this.data,
+                        datasets: this.data.map((dataset, index) => ({
+                            ...dataset,
+                            backgroundColor: ['#9BD0F5', '#56CC9F', '#FFCFA0', '#FFB1C1'][index],
+                        })),    
                     },
                     options: {
                         plugins: {

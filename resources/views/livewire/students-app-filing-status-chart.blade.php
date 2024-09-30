@@ -12,7 +12,10 @@
                     type: 'bar',
                     data: {
                         labels: this.labels,
-                        datasets: this.data,
+                        datasets: this.data.map((dataset, index) => ({
+                            ...dataset,
+                            backgroundColor: ['#9BD0F5', '#56CC9F', '#FFCFA0', '#FFB1C1'][index],
+                        })),    
                     },
                     options: {
                         plugins: {

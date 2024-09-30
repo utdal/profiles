@@ -41,7 +41,7 @@
                         labels: this.labels,
                         datasets: [{
                             data: this.data,
-                            backgroundColor: ['#4CAF50', '#E0E0E0'],
+                            backgroundColor: ['#56CC9F', '#E0E0E0'],
                             borderWidth: 3
                             }]
                     },
@@ -53,7 +53,7 @@
                     chart_instance.data.labels = labels;
                     chart_instance.data.datasets = [{
                             data: data,
-                            backgroundColor: ['#4CAF50', '#E0E0E0'],
+                            backgroundColor: ['#56CC9F', '#E0E0E0'],
                             borderWidth: 3
                             }];
                     chart_instance.update();
