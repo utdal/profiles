@@ -3,19 +3,13 @@
 namespace App\Insights\StudentApplications;
 
 use App\Helpers\Semester;
-use App\Insights\Insight;
-use App\Insights\InsightDataBuilder;
 use App\Student;
 use App\StudentData;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 
-use function PHPUnit\Framework\isEmpty;
 
-class StudentDataInsight extends Insight
+class StudentDataInsight
 {
     /**
      * DOUGHNUT CHART #1 DATA - APPLICATIONS COUNT BY FILING STATUS FOR SEMESTERS AND SCHOOLS
@@ -345,21 +339,6 @@ class StudentDataInsight extends Insight
             'labels' => $all_semesters->toArray(),
             'datasets' => array_values($datasets),
         ];
-    }
-
-    // public function getDataSet(string $criteria, ?string $type = null, ?string $status = 'submitted', ?string $stats_progress = null)
-    public function getDataSet(?array $semesters_params = [], ?array $schools_params = [], ?string $type = null, ?string $status = 'submitted')
-    {
-        $insight_parameters[] = [
-                'label' => 'Applications for Semester',
-                'type' => 'bar',
-                'backgroundColor' => 'rgba(15,64,97,255)',
-                'borderColor' => 'rgba(15,64,97,255)',
-                // 'data' => $this->getDataSemesterAndSchool($semesters_params, $schools_params, $type, $status),
-                //'labels' => $this->getLabels($semester),
-            ];
-
-        return $this->getDataArray($insight_parameters);
     }
 
     /** AUXILIARY METHODS */

@@ -133,7 +133,7 @@
   
   <hr>
   <!-- Tab panes -->
-  <div class="tab-content coi-reports-export">
+  <div class="tab-content">
      
     <div role="tabpanel" class="tab-pane active container" id="student-applications">
         <div><livewire:insights-filter :semester_options="$semesters_options" :semesters_selected="$semesters_selected" :school_options="$schools_options" :title="$title"/></div>
