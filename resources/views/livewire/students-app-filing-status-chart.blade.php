@@ -36,7 +36,12 @@
                             y: {
                                 stacked: false,
                             },
-                        }
+                        },
+                        animation: {
+                            onComplete: function() {
+                                Livewire.emit('chartAnimationComplete');
+                            }
+                        },
                     },
                     plugins: [highlightTickPlugin, validateEmptyDataPlugin],
                 }

@@ -37,8 +37,13 @@
                                         color: ['white', 'gray'],
                                     },
                                 }
-                            }
+                            },
                         },
+                        animation: {
+                            onComplete: function() {
+                                Livewire.emit('chartAnimationComplete');
+                            }
+                        },  
                 };
 
                 // Create the new chart instance

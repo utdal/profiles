@@ -101,7 +101,6 @@
                   ctx.drawImage(img, imgX, imgY);
               }
             }
-            Livewire.emit('chartAnimationComplete');
         }
     };
 

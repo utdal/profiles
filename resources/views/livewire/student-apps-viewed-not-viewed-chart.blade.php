@@ -38,6 +38,11 @@
                                             color: ['white', 'gray'],
                                         },
                                     }
+                                },
+                            },
+                            animation: {
+                                onComplete: function() {
+                                    Livewire.emit('chartAnimationComplete');
                                 }
                             },
                         };
