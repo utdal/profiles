@@ -13,7 +13,17 @@
                         circumference: 360,
                         plugins: {
                             tooltip: {
-                                enabled: true,
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        label += ' ' + context.raw; // Add extra spaces here
+                                        return label;
+                                    }
+                                }
                             },
                             legend: {
                                 position: 'bottom',
