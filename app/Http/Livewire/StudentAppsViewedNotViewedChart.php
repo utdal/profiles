@@ -16,13 +16,20 @@ class StudentAppsViewedNotViewedChart extends Component
     public $selected_filing_statuses;
     protected $listeners = ['refreshData4', 'refreshChart4'];
 
+    public function mount()
+    {
+        $data = $this->dataset;
+        $this->data = $data['datasets'];
+        $this->labels = $data['labels'];    
+    }
+
     public function refreshChart4($data, $labels) {}
 
     public function refreshData4($selected_semesters, $selected_schools) {
         $this->selected_semesters = $selected_semesters;
         $this->selected_schools = $selected_schools;
 
-        $data = $this->getData();
+        $data = $this->dataset;
         
         $this->data = $data['datasets'];
         $this->labels = $data['labels'];
@@ -30,7 +37,7 @@ class StudentAppsViewedNotViewedChart extends Component
         $this->emit('refreshChart4', $this->data, $this->labels);
     }
 
-    public function getData()
+    public function getDatasetProperty()
     {
         $report = new StudentDataInsight();
         return $report->getViewedAndNotViewedApps($this->selected_semesters, $this->selected_schools);
@@ -38,10 +45,6 @@ class StudentAppsViewedNotViewedChart extends Component
 
     public function render()
     {
-        $data = $this->getData();
-
-        $this->data = $data['datasets'];
-        $this->labels = $data['labels'];
         return view('livewire.student-apps-viewed-not-viewed-chart');
     }
 }

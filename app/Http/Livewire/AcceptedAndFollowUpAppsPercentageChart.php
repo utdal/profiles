@@ -25,7 +25,10 @@ class AcceptedAndFollowUpAppsPercentageChart extends Component
         $this->weeks_before_semester_end = 4;
         $this->filing_statuses_category_1 = ['accepted', 'follow up'];
         $this->filing_statuses_category_2= ['not interested', 'maybe later'];
+        $this->data = $this->dataset;
+        $this->labels = ['Accepted & Follow Up', 'Other'];
     }
+
     public function refreshChart5($data, $labels) {}
 
     public function refreshData5($selected_semesters, $selected_schools, $weeks_before_semester_start, $weeks_before_semester_end)
@@ -35,14 +38,11 @@ class AcceptedAndFollowUpAppsPercentageChart extends Component
         $this->selected_semesters = $selected_semesters;
         $this->selected_schools = $selected_schools;
 
-        $data = $this->getData();
-        $this->data = $data;
-        $this->labels = ['Accepted & Follow Up', 'Other'];
-
+        $this->data = $this->dataset;
         $this->emit('refreshChart5', $this->data, $this->labels);
     }
 
-    public function getData()
+    public function getDatasetProperty()
     {
         $report = new StudentDataInsight();
         return $report->getAppsForSemestersAndSchoolsWithFilingStatuses($this->selected_semesters, $this->selected_schools, $this->filing_statuses_category_1, $this->filing_statuses_category_2, $this->weeks_before_semester_start, $this->weeks_before_semester_end);
@@ -50,10 +50,6 @@ class AcceptedAndFollowUpAppsPercentageChart extends Component
 
     public function render()
     {
-        $data = $this->getData();
-        $this->data = $data;
-        $this->labels = ['Accepted & Follow Up', 'Other'];
-
         return view('livewire.accepted-and-follow-up-apps-percentage-chart');
     }
 }

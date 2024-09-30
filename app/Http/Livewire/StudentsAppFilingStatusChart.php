@@ -22,6 +22,10 @@ class StudentsAppFilingStatusChart extends Component
         $this->weeks_before_semester_start = 4;
         $this->weeks_before_semester_end = 4;
         $this->selected_filing_statuses = ["accepted", "maybe later", "not interested", "new", "follow up"];
+     
+        $data = $this->dataset;
+        $this->data = $data['datasets'];
+        $this->labels = $data['labels'];
     }
 
     public function refreshChart1($data, $labels) {}
@@ -33,7 +37,7 @@ class StudentsAppFilingStatusChart extends Component
         $this->selected_semesters = $selected_semesters;
         $this->selected_schools = $selected_schools;
 
-        $data = $this->getData();
+        $data = $this->dataset;
         
         $this->data = $data['datasets'];
         $this->labels = $data['labels'];
@@ -41,7 +45,7 @@ class StudentsAppFilingStatusChart extends Component
         $this->emit('refreshChart1', $this->data, $this->labels);
     }
 
-    public function getData()
+    public function getDatasetProperty()
     {
         $report = new StudentDataInsight();
         return $report->getAppsBySemestersAndSchoolsWithFilingStatus($this->selected_semesters, $this->selected_schools, $this->selected_filing_statuses, $this->weeks_before_semester_start, $this->weeks_before_semester_end);
@@ -49,13 +53,6 @@ class StudentsAppFilingStatusChart extends Component
 
     public function render()
     {
-        $data = $this->getData();
-        $this->data = $data['datasets'];
-        $this->labels = $data['labels'];
-
-        return view('livewire.students-app-filing-status-chart', [
-            'data' => $this->data,
-            'labels' => $this->labels,
-        ]);
+        return view('livewire.students-app-filing-status-chart');
     }
 }
