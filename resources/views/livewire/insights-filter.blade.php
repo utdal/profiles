@@ -108,7 +108,7 @@
             </div>
         </div>
 
-        <span class="dropdown ml-3">
+        <span class="dropdown dropdown-options ml-3">
             <button
                 class="btn btn-info btn-sm dropdown-toggle"
                 type="button"
@@ -120,7 +120,7 @@
             >
                 <i class="fas fa-cog fa-fw"></i> Advanced Settings 
             </button>
-            <div class="dropdown-menu p-3" id="advanced_settings" aria-labelledby="advance_settings">
+            <div class="dropdown-menu dropdown-content-options p-3" id="advanced_settings" aria-labelledby="advance_settings">
                 <div class="mt-3">
                     <small class="form-text text-muted">Students typically submit their applications before the start of the semester. By default, we include applications filed within a range starting 4 weeks before the semester begins and ending 4 weeks before it ends. For example, for Summer 2023, the included application period would be from May 4th, 2023, to August 8th, 2023. You can adjust this timeframe by changing the number of weeks below, then clicking 'Apply Filters'.</small>
                 </div>
