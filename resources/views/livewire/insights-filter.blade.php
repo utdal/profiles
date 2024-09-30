@@ -77,7 +77,7 @@
                                 id="semester_{{$key}}"
                                 name="{{$value}}"
                                 value="{{$value}}"
-                                checked="{{ in_array($value, $semester_options) ?? false}}" 
+                                {{ in_array($value, $semesters_selected) ? 'checked' : '' }}  
                                 aria-describedby="semester-selection"
                             />{{$value}}
                         </span>

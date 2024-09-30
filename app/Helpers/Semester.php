@@ -183,4 +183,20 @@ class Semester
             return $seasonOrder[$matchesA[1]] - $seasonOrder[$matchesB[1]];
         });
     }
+
+    /**
+     * Given a list of semesters, removes the ones that are in the future
+     */
+    public static function removeFutureSemesters($semesters)
+    {
+        $current_semester = static::current();
+        $current_semester_index = array_search($current_semester, $semesters);
+    
+        if ($current_semester_index !== false) {
+            return array_slice($semesters, 0, $current_semester_index + 1);
+        }
+    
+        return $semesters;
+        
+    }
 }

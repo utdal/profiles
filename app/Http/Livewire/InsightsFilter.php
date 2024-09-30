@@ -10,6 +10,7 @@ class InsightsFilter extends Component
 {
 
     public $semester_options = [];
+    public $semesters_selected = [];
     public $school_options = [];
     public $charts_loaded;
     public $title;

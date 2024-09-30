@@ -28,8 +28,9 @@ class InsightsController extends Controller
 
         $schools_options = StudentDataInsight::getLabels('school')->toArray();
         $semesters_options = StudentDataInsight::getLabels('semester')->toArray();
+        $semesters_selected = Semester::removeFutureSemesters($semesters_options);
         $title = StudentDataInsight::convertParameterstoTitle($semesters_options, $schools_options);
 
-        return view('insights.index', compact('schools_options', 'semesters_options', 'title'));
+        return view('insights.index', compact('schools_options', 'semesters_options', 'semesters_selected', 'title'));
     }
 }
