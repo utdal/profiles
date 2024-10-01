@@ -65,6 +65,6 @@
     </div>
 
     <div id="apps_fs_chart_info" class="mt-2 justify-content-md-center" style="text-align: center; display:none;">
-        <small class="d-block small text-muted font-italic" style="max-width: 50vw; line-height: 1.2em;">This chart represents the count of how faculty have filed student applications for the selected semester and schools. Given that a student can choose multiple faculty members in a single application, each application can be counted more than once.</small>
+        <small class="d-block small text-muted font-italic" style="max-width: 50vw; line-height: 1.2em;">This chart represents the count of how faculty have filed student applications for the selected semesters and schools. Given that a student can choose multiple faculty members in a single application, each application can be counted more than once.</small>
     </div>
 </div>
