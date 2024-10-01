@@ -57,7 +57,7 @@
                 const chartHeight = yAxis.bottom - yAxis.top;
 
                 if (label === highlightValue) {
-                    ctx.fillStyle = '#aced0a9e';
+                    ctx.fillStyle = '#FEFAEC';
                     ctx.fillRect(xLeft, yAxis.top, barWidth, chartHeight);
                 }
                 else {
