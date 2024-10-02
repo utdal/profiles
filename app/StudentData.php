@@ -5,7 +5,9 @@ namespace App;
 use App\ProfileData;
 use App\Setting;
 use App\Student;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class StudentData extends ProfileData
 {
@@ -100,6 +102,48 @@ class StudentData extends ProfileData
     public function scopeStats($query)
     {
         return $query->where('type', 'stats');
+    }
+
+    /**
+     * Query scope for research profile
+     *
+     * @param  \Illuminate\Database\Query\Builder $query
+     * @return \Illuminate\Database\Query\Builder
+     */
+    public function scopeResearchProfileSubmittedWithSemesterSelected($query, $status)
+    {
+        return $query->where('type', 'research_profile')
+                     ->whereJsonLength("data->semesters", ">=", "1")
+                     ->whereRelation("student", "status", $status);
+    }
+
+    /**
+     * Query scope for research profile
+     *
+     * @param  \Illuminate\Database\Query\Builder $query
+     * @return \Illuminate\Database\Query\Builder
+     */
+    public function scopeDataContains($query, $key, $value)
+    {
+        if ($value !== '') {
+            $query->whereJsonContains("data->{$key}", $value);
+        }
+
+        return $query;
+    }
+
+    public function scopeOrDataContains($query, $key, $value)
+    {
+        if ($value !== '') {
+            $query->orWhereJsonContains("data->{$key}", $value);
+        }
+
+        return $query;
+    }
+
+    public function scopeWithDataLengthGreaterThan($query, $key, $length)
+    {
+        return $query->whereJsonLength("data->{$key}", ">=", $length);
     }
 
     ///////////////

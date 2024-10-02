@@ -105,6 +105,9 @@ $can_create_users = $user && $user->can('create', 'App\User');
               <span class="fas fa-history fa-fw"></span> Activity Logs
             </a>
             @endif
+            <a class="dropdown-item" href="{{ route('app.insights.index') }}">
+              <span class="fas fa-history fa-fw"></span> Profiles Update Data
+            </a>
           </div>
         </li>
         @endif

@@ -129,4 +129,74 @@ class Semester
 
         return Carbon::parse($month_and_day . ' ' . $parsed['year']->year);
     }
+
+    /**
+     * Sort chronologically an array of semesters in the 'Semester YY' format 
+     * @param array $semesters
+     * @return array
+     */
+    public static function sortCollectionWithSemestersKeyChronologically() {
+        return function ($a, $b) {
+            // Extract the year and season from both semesters
+            list($seasonA, $yearA) = explode(' ', $a);
+            list($seasonB, $yearB) = explode(' ', $b);
+
+            // Define a mapping of seasons to values for sorting
+            $seasonOrder = [
+                'Spring' => 1,
+                'Summer' => 2,
+                'Fall' => 3,
+                'Winter' => 4,
+            ];
+
+            // First, compare the years
+            if ($yearA != $yearB) {
+                return $yearA <=> $yearB;
+            }
+
+            // If the years are the same, compare the seasons using the seasonOrder
+            return $seasonOrder[$seasonA] <=> $seasonOrder[$seasonB];
+        };
+    }
+
+    /**
+     * Sort chronologically an array of semesters in the 'Semester YY' format 
+     * @param array $semesters
+     * @return array
+     */
+    public static function sortSemestersChronologically($semesters) {
+        return
+        usort($semesters, function ($a, $b) {
+            // Extract year and season
+            preg_match('/(Spring|Summer|Fall) (\d+)/', $a, $matchesA);
+            preg_match('/(Spring|Summer|Fall) (\d+)/', $b, $matchesB);
+        
+            // Map seasons to an order
+            $seasonOrder = ['Spring' => 1, 'Summer' => 2, 'Fall' => 3];
+        
+            // Compare by year first
+            if ($matchesA[2] != $matchesB[2]) {
+                return $matchesA[2] - $matchesB[2];
+            }
+        
+            // If years are the same, compare by season
+            return $seasonOrder[$matchesA[1]] - $seasonOrder[$matchesB[1]];
+        });
+    }
+
+    /**
+     * Given a list of semesters, removes the ones that are in the future
+     */
+    public static function removeFutureSemesters($semesters)
+    {
+        $current_semester = static::current();
+        $current_semester_index = array_search($current_semester, $semesters);
+    
+        if ($current_semester_index !== false) {
+            return array_slice($semesters, 0, $current_semester_index + 1);
+        }
+    
+        return $semesters;
+        
+    }
 }
