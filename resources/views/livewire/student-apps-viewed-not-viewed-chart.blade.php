@@ -79,5 +79,9 @@
     <h5 class="d-md-flex justify-content-md-center">Applications Viewed</h5>
     <div class="d-md-flex justify-content-md-center" style="position: relative; height:30vh; width:33.33vw">
         <canvas id="appsPercViewedNotViewed" x-ref="appsPercViewedNotViewed"></canvas>
+        <div id="appsPercViewedNotViewed" class="text-overlay no-data" style="display: none;">
+            <p>No results found for the selected filters</p>
+            <p>😭</p>
+        </div>
     </div>
 </div>

@@ -63,88 +63,68 @@
 @endpush
 
 <div>
-    <div class="row mt-3">
-        <div>
-            <div class="dropdown dropdown-options" id="semesters_options" data-allchecked="true">
-                <button class="dropdown-toggle btn btn-sm btn-light" data-toggle="dropdown">Select Semesters
-                    <span class="caret"></span>
-                </button>
-                <div class="dropdown-menu dropdown-content-options">
-                    <a class="small ml-4" style="cursor: pointer;" onclick="selectAllToggle('semesters_options')">Select/Unselect All</a>
-                    @foreach($semester_options as $key => $value)
-                        <span class="dropdown-content-item">
-                            <input type="checkbox"
-                                id="semester_{{$key}}"
-                                name="{{$value}}"
-                                value="{{$value}}"
-                                {{ in_array($value, $semesters_selected) ? 'checked' : '' }}  
-                                aria-describedby="semester-selection"
-                            />{{$value}}
-                        </span>
-                    @endforeach
+    <div class="dropdown dropdown-options" id="semesters_options" data-allchecked="true">
+        <button class="dropdown-toggle btn btn-sm btn-light" data-toggle="dropdown">Select Semesters
+            <span class="caret"></span>
+        </button>
+        <div class="dropdown-menu dropdown-content-options">
+            <a class="small ml-4" style="cursor: pointer;" onclick="selectAllToggle('semesters_options')">Select/Unselect All</a>
+            @foreach($semester_options as $key => $value)
+                <span class="dropdown-content-item">
+                    <input type="checkbox"
+                        id="semester_{{$key}}"
+                        name="{{$value}}"
+                        value="{{$value}}"
+                        {{ in_array($value, $semesters_selected) ? 'checked' : '' }}  
+                        aria-describedby="semester-selection"
+                    />{{$value}}
+                </span>
+            @endforeach
+        </div>
+    </div>
+
+    <div class="dropdown dropdown-options ml-3" id="schools_options" data-allchecked="true">
+        <button class="dropdown-toggle btn btn-sm btn-light" data-toggle="dropdown">Select Schools
+            <span class="caret"></span>
+        </button>
+        <div class="dropdown-menu dropdown-content-options">
+            <a class="small ml-4" style="cursor: pointer;" onclick="selectAllToggle('schools_options')">Select/Unselect All</a>
+            @foreach($school_options as $key => $value)
+                <span class="dropdown-content-item">
+                    <input type="checkbox"
+                        id="school_{{$key}}"
+                        name="{{$value}}"
+                        value="{{$value}}"
+                        {{ in_array($value, $school_options) ? 'checked' : '' }}   
+                        aria-describedby="school-selection"
+                    />{{$value}}
+                </span>
+            @endforeach
+        </div>
+    </div>
+
+    <div class="dropdown dropdown-options ml-3">
+        <button class="dropdown-toggle btn btn-sm btn-info" data-toggle="dropdown" id="advanced_settings_button" aria-controls="advanced_settings_button" aria-expanded="false"><i class="fas fa-cog fa-fw"></i> Advanced Settings 
+            <span class="caret"></span>
+        </button>
+        <div class="dropdown-menu dropdown-content-options p-3" id="advanced_settings" aria-labelledby="advanced_settings_button">
+            <small class="form-text text-muted">Students typically submit their applications before the start of the semester. By default, we include applications filed within a range starting 4 weeks before the semester begins and ending 4 weeks before it ends. For example, for Summer 2023, the included application period would be from May 4th, 2023, to August 8th, 2023. You can adjust this timeframe by changing the number of weeks below, then clicking 'Apply Filters'.</small>
+            <div class="row">
+                <div class="form-group mt-2 col-md-6">
+                    <small class="form-text text-muted" for="weeks_before_semester_start">Weeks before semester's start:</small>
+                    <input type="number" class="form-control form-text text-muted" id="weeks_before_semester_start" name="weeks_before_semester_start" value="4" step="1" min="3" max="6">
+                </div>
+                <div class="form-group mt-2 col-md-6">
+                    <small class="form-text text-muted" for="weeks_before_semester_end">Weeks before semester's end:</small>
+                    <input type="number" class="form-control form-text text-muted" id="weeks_before_semester_end" name="weeks_before_semester_end" value="4" step="1" min="3" max="6">
                 </div>
             </div>
         </div>
-
-        <div class="ml-3">
-            <div class="dropdown dropdown-options" id="schools_options" data-allchecked="true">
-                <button class="dropdown-toggle btn btn-sm btn-light" data-toggle="dropdown">Select Schools
-                    <span class="caret"></span>
-                </button>
-                <div class="dropdown-menu dropdown-content-options">
-                    <a class="small ml-4" style="cursor: pointer;" onclick="selectAllToggle('schools_options')">Select/Unselect All</a>
-                    @foreach($school_options as $key => $value)
-                        <span class="dropdown-content-item">
-                            <input type="checkbox"
-                                id="school_{{$key}}"
-                                name="{{$value}}"
-                                value="{{$value}}"
-                                {{ in_array($value, $school_options) ? 'checked' : '' }}   
-                                aria-describedby="school-selection"
-                            />{{$value}}
-                        </span>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-
-        <span class="dropdown dropdown-options ml-3">
-            <button
-                class="btn btn-info btn-sm dropdown-toggle"
-                type="button"
-                id="advance_settings"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-controls="advance_settings"
-                aria-expanded="false"
-            >
-                <i class="fas fa-cog fa-fw"></i> Advanced Settings 
-            </button>
-            <div class="dropdown-menu dropdown-content-options p-3" id="advanced_settings" aria-labelledby="advance_settings">
-                <div class="mt-3">
-                    <small class="form-text text-muted">Students typically submit their applications before the start of the semester. By default, we include applications filed within a range starting 4 weeks before the semester begins and ending 4 weeks before it ends. For example, for Summer 2023, the included application period would be from May 4th, 2023, to August 8th, 2023. You can adjust this timeframe by changing the number of weeks below, then clicking 'Apply Filters'.</small>
-                </div>
-                <div class="row">
-                    <div class="form-group mt-2 col-md-6">
-                        <small class="form-text text-muted" for="weeks_before_semester_start">Weeks before semester's start:</small>
-                        <input type="number" class="form-control form-text text-muted" id="weeks_before_semester_start" name="weeks_before_semester_start" value="4" step="1" min="3" max="6">
-                    </div>
-                    <div class="form-group mt-2 col-md-6">
-                        <small class="form-text text-muted" for="weeks_before_semester_end">Weeks before semester's end:</small>
-                        <input type="number" class="form-control form-text text-muted" id="weeks_before_semester_end" name="weeks_before_semester_end" value="4" step="1" min="3" max="6">
-                    </div>
-                </div>
-            </div>
-        </span>
+    </div>
         
-        <div class="chart-actions ml-3">
-            <button class="btn btn-primary btn-sm" id="apply_filters"><span class="fa fa-check fa-fw"></span> Apply Filters</button>
-        </div>
-    </div>
+    <button class="btn btn-primary btn-sm ml-3" id="apply_filters"><span class="fa fa-check fa-fw"></span> Apply Filters</button>
     
-    <div class="row mt-3">
-        <p class="small text-muted" wire:model="title" id="filters_title" class="text-muted mt-3">Showing Results For: {{$title[0]}} | {{$title[1]}}</p>
-    </div>
+    <p class="mt-3 small text-muted" wire:model="title" id="filters_title" class="text-muted mt-3">Showing Results For: {{$title[0]}} | {{$title[1]}}</p>
     
     @php
         $style = $charts_loaded ? 'display:none;' : 'display:flex;'

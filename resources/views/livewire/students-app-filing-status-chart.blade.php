@@ -54,17 +54,13 @@
         }
     }"
 >
-    <h5 class="d-md-flex justify-content-md-start">Student Applications by Filing Status
-        <small class="form-text text-muted d-inline"  style="margin-left: 4px; font-size: 0.8em;">
-            <a role="button" tabindex="0" aria-label="applications count by filing status chart information" data-toggle="class" data-toggle-class="d-md-flex" data-target="#apps_fs_chart_info"><i class="fas fa-info-circle"></i></a>
-        </small>
-    </h5>
+    <h5>Student Applications by Filing Status <small><sup>2</sup></small></h5>
 
-    <div class="d-md-flex justify-content-md-center" style="position: relative; height:40vh; width:60vw">
+    <div class="d-md-flex mt-3" style="position:relative; justify-content:center;">
         <canvas id="appCountFilingStatus" x-ref="appCountFilingStatus"></canvas>
-    </div>
-
-    <div id="apps_fs_chart_info" class="mt-2 justify-content-md-center" style="text-align: center; display:none;">
-        <small class="d-block small text-muted font-italic" style="max-width: 50vw; line-height: 1.2em;">This chart represents the count of how faculty have filed student applications for the selected semesters and schools. Given that a student can choose multiple faculty members in a single application, each application can be counted more than once.</small>
+        <div id="appCountFilingStatus" class="text-overlay no-data" style="display: none;">
+            <p>No results found for the selected filters</p>
+            <p>😭</p>
+        </div>
     </div>
 </div>

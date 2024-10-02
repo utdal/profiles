@@ -53,17 +53,13 @@
         }
     }"
 >
-    <h5 class="d-md-flex justify-content-md-start">Student Applications Count 
-        <small class="form-text text-muted d-inline" style="margin-left: 4px; font-size: 0.8em;">
-            <a role="button" tabindex="0" aria-label="applications count chart information" data-toggle="class" data-toggle-class="d-md-flex" data-target="#apps_count_chart_info"><i class="fas fa-info-circle"></i></a>
-        </small>
-    </h5>
-
-    <div class="d-md-flex justify-content-md-center" style="position: relative; height:40vh; width:60vw">
+    <h5>Student Applications Count <small><sup>1</sup></small></h5>
+    <div class="d-md-flex mt-3" style="position:relative; justify-content:center;">
         <canvas id="appCountBySemester" x-ref="appCountBySemester"></canvas>
-    </div>
-    
-    <div id="apps_count_chart_info" class="mt-2 justify-content-md-center" style="text-align: center; display:none;">
-        <small class="d-block small text-muted font-italic" style="max-width: 50vw; line-height: 1.2em;"> This chart represents only the count of applications for the semesters selected by the students.</small>
+        <div id="appCountBySemester" class="text-overlay no-data" style="display: none;">
+            <p>No results found for the selected filters</p>
+            <p>😭</p>
+        </div>
     </div>
 </div>
+

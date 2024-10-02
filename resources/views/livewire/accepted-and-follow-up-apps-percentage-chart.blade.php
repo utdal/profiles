@@ -61,7 +61,7 @@
                        
                     },
                      options: chart_options,
-                     plugins: [progressTextPlugin, validateEmptyDataPlugin],
+                     plugins: [progressTextPlugin],
                 });
 
                 Livewire.on('refreshChart5', (data, labels) => {
@@ -79,5 +79,9 @@
     <h5 class="d-md-flex justify-content-md-center">Applications Accepted & to Follow Up</h5>
     <div class="d-md-flex justify-content-md-center" style="position: relative; height:30vh; width:33.33vw">
         <canvas id="acceptedAndFollowUpAppPercentage" x-ref="acceptedAndFollowUpAppPercentage"></canvas>
+        <div id="acceptedAndFollowUpAppPercentage" class="text-overlay no-data" style="display: none;">
+            <p>No results found for the selected filters</p>
+            <p>😭</p>
+        </div>
     </div>
 </div>

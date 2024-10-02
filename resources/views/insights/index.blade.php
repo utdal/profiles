@@ -18,25 +18,33 @@
 
     const progressTextPlugin = {
         id: 'progressText',
-        afterDraw: function(chart) {
-            const {ctx, data} = chart;
+        beforeDraw: function(chart) {
+            const data = chart.data.datasets[0].data;
+            var no_data_selector = '#'+chart.canvas.id+'.no-data';
 
-            var progress = Number(data.datasets[0].data[0]);
-            var remaining = Number(data.datasets[0].data[1]);
-            var total = progress + remaining;
-            var progress_percentage = total === 0 ? 0 : Math.round((progress / total) * 100);
+            if (data.every(value => value === 0)) {
+              document.querySelector(no_data_selector).style.display = 'block';
+            }
+            else {
+              const {ctx, data} = chart;
+              var progress = Number(data.datasets[0].data[0]);
+              var remaining = Number(data.datasets[0].data[1]);
+              var total = progress + remaining;
+              var progress_percentage = total === 0 ? 0 : Math.round((progress / total) * 100);
 
-            ctx.save();
-            const xCoor = chart. getDatasetMeta(0).data[0].x;
-            const yCoor = chart. getDatasetMeta(0).data[0].y;
+              ctx.save();
+              const xCoor = chart.getDatasetMeta(0).data[0].x;
+              const yCoor = chart.getDatasetMeta(0).data[0].y;
 
-            var height = chart.height;
-            var fontSize = (height / 140).toFixed(2);
-            ctx.font = fontSize + 'em Roboto';
-            ctx.fillStyle = '#198754';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(`${progress_percentage}%`, xCoor, yCoor);
+              document.querySelector(no_data_selector).style.display = 'none';
+              var height = chart.height;
+              var fontSize = (height / 140).toFixed(2);
+              ctx.font = fontSize + 'em Roboto';
+              ctx.fillStyle = '#198754';
+              ctx.textAlign = 'center';
+              ctx.textBaseline = 'middle';
+              ctx.fillText(`${progress_percentage}%`, xCoor, yCoor);
+            }
         }
     };
 
@@ -71,35 +79,14 @@
     const validateEmptyDataPlugin = {
         id: 'validateEmptyData',
         afterDraw: function(chart) {
-          
-            const ctx = chart.ctx;
-            const { chartArea } = chart;
-            const chartType = chart.config.type;
-            let empty = false;
+            const data = chart.data.datasets;
+            var no_data_selector = '#'+chart.canvas.id+'.no-data';
 
-            if (chartType === 'doughnut') {
-              const data = chart.data.datasets[0].data;
-              if (data.every(value => value === 0)) {
-                var img = new Image();
-                img.src = img_route_doughnut;
-                empty = true;
-              }
+            if (data.length === 0 ) {
+                document.querySelector(no_data_selector).style.display = 'block';
             }
-            else if (chartType === 'bar') {
-              const data = chart.data.datasets;
-              if (data.length === 0 ) {
-                var img = new Image();
-                img.src = img_route_bar;
-                empty = true;
-              }
-            }
-            if (empty) {
-              img.alt = 'No results found for the selected filters';
-              img.onload = function() {
-                  const imgX = chartArea.left + (chartArea.width / 2) - (img.width / 2);
-                  const imgY = chartArea.top + (chartArea.height / 2) - (img.height / 2);
-                  ctx.drawImage(img, imgX, imgY);
-              }
+            else {
+                document.querySelector(no_data_selector).style.display = 'none';
             }
         }
     };
@@ -134,18 +121,18 @@
   <!-- Tab panes -->
   <div class="tab-content">
      
-    <div role="tabpanel" class="tab-pane active container" id="student-applications">
+    <div role="tabpanel" class="tab-pane active" id="student-applications">
         <div><livewire:insights-filter :semester_options="$semesters_options" :semesters_selected="$semesters_selected" :school_options="$schools_options" :title="$title"/></div>
-        <div class="flex-row mt-4 d-md-flex justify-content-center">
-            <div><livewire:accepted-and-follow-up-apps-percentage-chart :selected_semesters="$semesters_selected" :selected_schools="$schools_options"/></div>
-            <div><livewire:student-apps-viewed-not-viewed-chart :selected_semesters="$semesters_selected" :selected_schools="$schools_options"/></div>
+        <div class="mt-4 mb-5 d-md-flex justify-content-center">
+            <div class="col-md-6 d-md-flex justify-content-center"><livewire:accepted-and-follow-up-apps-percentage-chart :selected_semesters="$semesters_selected" :selected_schools="$schools_options"/></div>
+            <div class="col-md-6 d-md-flex justify-content-center"><livewire:student-apps-viewed-not-viewed-chart :selected_semesters="$semesters_selected" :selected_schools="$schools_options"/></div>
         </div>
-        <div class="mt-4 d-md-flex justify-content-md-center"><livewire:students-app-count-chart :selected_semesters="$semesters_selected" :selected_schools="$schools_options"/></div>
-        <div class="mt-4 d-md-flex justify-content-md-center"><livewire:students-app-filing-status-chart :selected_semesters="$semesters_selected" :selected_schools="$schools_options"/></div>
+        <div><livewire:students-app-count-chart :selected_semesters="$semesters_selected" :selected_schools="$schools_options"/></div>
+        <div><livewire:students-app-filing-status-chart :selected_semesters="$semesters_selected" :selected_schools="$schools_options"/></div>
 
-        <div class="mt-5 d-md-flex justify-content-md-start">
-            <small class="small text-muted font-italic mt-2 " style="max-width: 50vw;"><span style="color: #198754;">Note: </span> The highlighted stripe in green corresponds to the current semester.</small>
-        </div>
+        <small class="mt-4 small d-block text-muted font-italic">[1] This chart represents only the count of applications for the semesters selected by the students.</small>
+        <small class="small d-block text-muted font-italic">[2] This chart represents the count of how faculty have filed student applications for the selected semesters and schools. Given that a student can choose multiple faculty members in a single application, each application can be counted more than once.</small>
+        <small class="mt-2 small d-block text-muted font-italic"><span style="color: #198754;">Note: </span> The highlighted stripe corresponds to the current semester.</small>
     </div>
     
     <div role="tabpanel" class="tab-pane" id="profiles">
@@ -159,3 +146,15 @@
   </div>
 @stop
 
+<style>
+  .text-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.25rem;
+    color: #da6f6f;
+    text-align: center;
+    z-index: 10;
+  }
+</style>
