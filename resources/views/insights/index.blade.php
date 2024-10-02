@@ -18,7 +18,7 @@
 
     const progressTextPlugin = {
         id: 'progressText',
-        beforeDraw: function(chart) {
+        afterDraw: function(chart) {
             const data = chart.data.datasets[0].data;
             var no_data_selector = '#'+chart.canvas.id+'.no-data';
 
