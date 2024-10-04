@@ -16,34 +16,69 @@
 @push('scripts')
 <script>
 
+    function getChartData(data, labels)
+    {
+        let bg_color = ['#56CC9F', '#E0E0E0'];
+        const total = data.reduce((sum, value) => sum + value, 0);
+
+        if (total === 0) {
+            bg_color = ['#E0E0E0'];
+            data = [1];
+            labels = [' '];
+        }
+
+        return [data, labels, bg_color];
+    }
+
+    const toggleTooltipPlugin = {
+        id: 'toggleTooltip',
+        beforeDraw: function(chart) {
+
+            const total = chart.data.datasets[0].data.reduce((sum, value) => sum + value, 0);
+
+            if (total === 1) {
+                chart.options.plugins.tooltip.enabled = false;
+            } else {
+                chart.options.plugins.tooltip.enabled = true;
+            }
+        }
+    };
+
     const progressTextPlugin = {
         id: 'progressText',
         afterDraw: function(chart) {
-            const data = chart.data.datasets[0].data;
-            var no_data_selector = '#'+chart.canvas.id+'.no-data';
+            var {ctx, data} = chart;
 
-            if (data.every(value => value === 0)) {
-              document.querySelector(no_data_selector).style.display = 'block';
+            ctx.save();
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            const xCoor = chart.getDatasetMeta(0).data[0].x;
+            const yCoor = chart.getDatasetMeta(0).data[0].y;
+            var height = chart.height;
+            total = data.datasets[0].data.reduce((sum, value) => sum + value, 0);
+
+            if (total === 1) {
+                let no_data_text ='No results found \n for the selected filters \n 😭';
+                const lines = no_data_text.split('\n');
+
+                ctx.font = '1.15rem Roboto';
+                ctx.fillStyle = '#da6f6f';
+
+                lines.forEach((line, index) => {
+                    ctx.fillText(line, xCoor, yCoor - (lines.length / 2 - (index + 1) ) * 20);
+                });
             }
             else {
-              const {ctx, data} = chart;
-              var progress = Number(data.datasets[0].data[0]);
-              var remaining = Number(data.datasets[0].data[1]);
-              var total = progress + remaining;
-              var progress_percentage = total === 0 ? 0 : Math.round((progress / total) * 100);
+                var progress = Number(data.datasets[0].data[0]);
+                var remaining = Number(data.datasets[0].data[1]);
+                var total = progress + remaining;
+                var progress_percentage = total === 0 ? 0 : Math.round((progress / total) * 100);
 
-              ctx.save();
-              const xCoor = chart.getDatasetMeta(0).data[0].x;
-              const yCoor = chart.getDatasetMeta(0).data[0].y;
+                var fontSize = (height / 140).toFixed(2);
+                ctx.font = fontSize + 'em Roboto';
+                ctx.fillStyle = '#198754';
 
-              document.querySelector(no_data_selector).style.display = 'none';
-              var height = chart.height;
-              var fontSize = (height / 140).toFixed(2);
-              ctx.font = fontSize + 'em Roboto';
-              ctx.fillStyle = '#198754';
-              ctx.textAlign = 'center';
-              ctx.textBaseline = 'middle';
-              ctx.fillText(`${progress_percentage}%`, xCoor, yCoor);
+                ctx.fillText(`${progress_percentage}%`, xCoor, yCoor);
             }
         }
     };
