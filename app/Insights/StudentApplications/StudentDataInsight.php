@@ -134,20 +134,24 @@ class StudentDataInsight
     */
     public function appsForSemestersAndSchools($semesters_params, $schools_params)
     {
+        if (empty($semesters_params) || empty($schools_params)) {
+            return Student::query()->whereRaw('1 = 0');
+        }
+
         return Student::query()
                 ->submitted()
-                    ->withWhereHas('research_profile', function($q) use ($semesters_params, $schools_params) {
-                        $q->where(function($q) use ($semesters_params) {
-                            foreach ($semesters_params as $semester) {
-                                $q->orDataContains('semesters', $semester);
-                            }
-                        });
-                        $q->where(function($q) use ($schools_params) {
-                            foreach ($schools_params as $school) {
-                                $q->orDataContains('schools', $school);
-                            }
-                        });
+                ->withWhereHas('research_profile', function($q) use ($semesters_params, $schools_params) {
+                    $q->where(function($q) use ($semesters_params) {
+                        foreach ($semesters_params as $semester) {
+                            $q->orDataContains('semesters', $semester);
+                        }
                     });
+                    $q->where(function($q) use ($schools_params) {
+                        foreach ($schools_params as $school) {
+                            $q->orDataContains('schools', $school);
+                        }
+                    });
+                });
     }
 
     /**
