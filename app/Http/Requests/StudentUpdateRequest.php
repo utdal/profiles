@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\MinWords;
 use App\StudentData;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -19,9 +20,28 @@ class StudentUpdateRequest extends FormRequest
     {
         return [
             'full_name' => 'required|string',
+            'major' => 'required',
             'faculty.*' => [
                 'integer',
                 Rule::exists('profiles', 'id')->where('public', 1),
+            ],
+            'research_profile.brief_intro' => [
+                'required',
+                'string',
+                'max:280',
+                new MinWords(5),
+            ],
+            'research_profile.intro' => [
+                'required',
+                'string',
+                'max:250',
+                new MinWords(5),
+            ],
+            'research_profile.interest' => [
+                'required',
+                'string',
+                'max:200',
+                new MinWords(5),
             ],
             'research_profile.semesters' => 'required|array|min:1',
             'research_profile.schools' => 'required|array|min:1',
@@ -40,6 +60,7 @@ class StudentUpdateRequest extends FormRequest
         return [
             'faculty.*.exists' => 'The faculty member(s) selected could not be validated.',
             'faculty.required' => 'You must selest at least one faculty member that you would like to work with',
+            'research_profile.major' => 'The major field is required',
             'research_profile.semesters.required' => 'At least one semester is required',
             'research_profile.schools.required' => 'At least one school is required',
             'research_profile.graduation_date.after' => 'The graduation date must be in the future',
@@ -55,11 +76,14 @@ class StudentUpdateRequest extends FormRequest
     public function attributes()
     {
         return [
-            'full_name' => 'Display Name',
-            'research_profile.semesters' => 'Semesters',
-            'research_profile.schools' => 'School',
-            'research_profile.graduation_date' => 'Graduation date',
-            'research_profile.credit' => 'Credit',
+            'full_name' => 'display name',
+            'research_profile.semesters' => 'semesters',
+            'research_profile.schools' => 'school',
+            'research_profile.graduation_date' => 'graduation date',
+            'research_profile.credit' => 'credit',
+            'research_profile.brief_intro' => 'research opportunity reasons',
+            'research_profile.intro' => 'future goals',
+            'research_profile.interest' => 'interest',
         ];
     }
 
@@ -101,7 +125,7 @@ class StudentUpdateRequest extends FormRequest
                 }
             }
 
-            foreach ($schools as $key => $school) {
+            foreach ($schools as $key => $school) { // Validates the answers to the custom questions based on the school selection
                 if (!isset($school_custom_questions[$school])) {
                     $validator->errors()->add("research_profile.school_custom_questions.{$school}", "The specific questions for $school are required.");
                 }
