@@ -23,6 +23,7 @@ class StudentUpdateRequest extends FormRequest
                 'integer',
                 Rule::exists('profiles', 'id')->where('public', 1),
             ],
+            'research_profile.major' => 'required',
             'research_profile.brief_intro' => [
                 'required',
                 'string',
