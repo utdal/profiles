@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\MinWords;
 use App\StudentData;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -20,7 +19,6 @@ class StudentUpdateRequest extends FormRequest
     {
         return [
             'full_name' => 'required|string',
-            'major' => 'required',
             'faculty.*' => [
                 'integer',
                 Rule::exists('profiles', 'id')->where('public', 1),
@@ -29,19 +27,16 @@ class StudentUpdateRequest extends FormRequest
                 'required',
                 'string',
                 'max:280',
-                new MinWords(5),
             ],
             'research_profile.intro' => [
                 'required',
                 'string',
                 'max:250',
-                new MinWords(5),
             ],
             'research_profile.interest' => [
                 'required',
                 'string',
                 'max:200',
-                new MinWords(5),
             ],
             'research_profile.semesters' => 'required|array|min:1',
             'research_profile.schools' => 'required|array|min:1',
