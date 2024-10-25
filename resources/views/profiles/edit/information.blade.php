@@ -313,7 +313,7 @@
 					</div>
 				</div>
 				<div class="col col-12 col-xl-5">
-					<p class="text-muted">Make profile viewable and searchable by website visitors. (If turned off, it will still be accessible via the public API and to site administrators.)</p>
+					<p class="text-muted">Make profile viewable and searchable by website visitors. If turned off, it will still be accessible to site administrators.</p>
 				</div>
 			</fieldset>
 			{!! Form::submit('Save', array('class' => 'btn btn-primary edit-button')) !!}

@@ -78,9 +78,17 @@ class ProfilePolicy
      * @param  \App\Profile  $profile
      * @return mixed
      */
-    public function view(User $user, Profile $profile)
+    public function view(?User $user, Profile $profile)
     {
-        return true;
+        if (request()->is('api/*')) {
+            return $profile->public;
+        }
+
+        return $profile->public ||
+                $user->hasRole(['site_admin', 'profiles_editor']) ||
+                $user->owns($profile, true) ||
+                $this->checkSchoolEditor($user, $profile) ||
+                $this->checkDepartmentEditor($user, $profile);
     }
 
     /**
