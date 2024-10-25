@@ -6,6 +6,7 @@ use App\Helpers\Semester;
 use App\Student;
 use App\StudentData;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 
 
@@ -19,10 +20,10 @@ class StudentDataInsight
      * @param array $filing_status_category_2 Filing statuses for the first category. Example: ['not interested', 'maybe later'].
      * @return array
     */
-    public function getAppsForSemestersAndSchoolsWithFilingStatuses($semesters_params, $schools_params, $filing_status_category_1, $filing_status_category_2, $weeks_before_semester_start, $weeks_before_semester_end)
+    public function appsCountForTwoCategoriesOfFilingStatus($semesters_params, $schools_params, $filing_status_category_1, $filing_status_category_2, $weeks_before_semester_start, $weeks_before_semester_end)
     {
-        $filing_status_category_1_total = $this->getCachedAppsForSemestersAndSchoolsWithFilingStatus($semesters_params, $schools_params, $filing_status_category_1, $weeks_before_semester_start, $weeks_before_semester_end)->count();
-        $filing_status_category_2_total = $this->getCachedAppsForSemestersAndSchoolsWithFilingStatus($semesters_params, $schools_params, $filing_status_category_2, $weeks_before_semester_start, $weeks_before_semester_end)->count();
+        $filing_status_category_1_total = $this->cachedAppsForSemestersAndSchoolsWithFilingStatuses($semesters_params, $schools_params, $filing_status_category_1, $weeks_before_semester_start, $weeks_before_semester_end)->count();
+        $filing_status_category_2_total = $this->cachedAppsForSemestersAndSchoolsWithFilingStatuses($semesters_params, $schools_params, $filing_status_category_2, $weeks_before_semester_start, $weeks_before_semester_end)->count();
 
         return [$filing_status_category_1_total, $filing_status_category_2_total];
     }
@@ -39,7 +40,7 @@ class StudentDataInsight
      * @param array $filing_status_params Filing status filter for the last status of the applications. Example: ['accepted', 'follow up'].
      * @return \Illuminate\Support\Collection
     */
-    public function getCachedAppsForSemestersAndSchoolsWithFilingStatus($semesters_params, $schools_params, $filing_status_params, $weeks_before_semester_start, $weeks_before_semester_end)
+    public function cachedAppsForSemestersAndSchoolsWithFilingStatuses($semesters_params, $schools_params, $filing_status_params, $weeks_before_semester_start, $weeks_before_semester_end)
     {
         $sm = implode('-', $semesters_params);
         $sch = implode('-', $schools_params);
@@ -64,41 +65,34 @@ class StudentDataInsight
     */
     public function groupAppsBySemestersAndSchoolsWithFilingStatus($semesters_params, $schools_params, $filing_status_params, $weeks_before_semester_start, $weeks_before_semester_end)
     {
-        $students = $this->getCachedAppsForSemestersAndSchoolsWithStatsWithUser($semesters_params, $schools_params);
+        $students = $this->cachedAppsForSemestersAndSchoolsWithStatsWithUser($semesters_params, $schools_params);
         $semesters_params_start_end = $this->semestersParamsStartAndEnd($semesters_params, $weeks_before_semester_start, $weeks_before_semester_end);
         $results = [];
         
-        foreach ($semesters_params_start_end as $semester => $semester_start_end) {
-            foreach ($schools_params as $school) {
+        foreach ($semesters_params_start_end as $semester => $semester_start_end) { // Looping through semesters
+            foreach ($schools_params as $school) { // Looping through schools
                 $start_date = $semester_start_end['start'];
                 $end_date = $semester_start_end['end'];
-                foreach ($filing_status_params as $filing_status) {
-                    $students->filter(function($student) use ($semester, $school) {
-                        return in_array($semester, $student->research_profile->data['semesters']) && in_array($school, $student->research_profile->data['schools']);
-                    })->each(function ($student) use ($start_date, $end_date, $filing_status, $semester, &$results) {
-                            if (!empty($student->stats->data['status_history'])) {
-                                collect($student->stats->data['status_history'])
-                                ->groupBy('profile')
-                                ->each(function($group) use ($student, $start_date, $end_date, $filing_status, $semester, &$results) {
-                                    $last_update = $group->sortByDesc(function ($item) {
-                                        return Carbon::parse($item['updated_at']);
-                                    })->first();
-                                    $filing_date = Carbon::parse($last_update['updated_at']);
-                                    if ($last_update['new_status'] === $filing_status && $filing_date->between($start_date, $end_date)) {
-                                        $results[] = [
-                                            'id' => $student->stats->id,
-                                            'semester' => $semester,
-                                            'school' => $student->research_profile->data['schools'],
-                                            'filing_status' => ucfirst($last_update['new_status']),
-                                            'updated_at' => $last_update['updated_at'],
-                                            'profile' => $last_update['profile'],
-                                            'display_name' => $student->user->display_name,
-                                            'netID' => $student->user->name,
-                                        ];
-                                    }
-                                });
-                            }
-                        });
+                foreach ($filing_status_params as $filing_status) { // Looping through filing statuses
+            
+                    $students_filtered = $this->filterStudentsBySemesterAndSchool($students, $semester, $school);
+                    $students_filtered->each(function ($student) use ($start_date, $end_date, $filing_status, $semester, &$results) {
+                        // For each student, find the non empty status history in the stats
+                        if (!empty($student->stats->data['status_history'])) { // Each status history equals a filing record for a student app - 
+                            // Each status history represents an action of filing the app for a specific status by a faculty member
+                            $matching_updates = collect($student->stats->data['status_history']) //For each status history, group by profile
+                                                ->groupBy('profile') //Filter the st-hist for which the last update matches the filing status param and was updated in the given timeframe
+                                                ->filter(function($group_by_profile) use ($start_date, $end_date, $filing_status) {
+                                                    $last_update_by_profile = $this->lastUpdateByProfile($group_by_profile);
+                                                    $filing_date = Carbon::parse($last_update_by_profile['updated_at']);
+                                                    return $last_update_by_profile['new_status'] === $filing_status && $filing_date->between($start_date, $end_date);
+                                                });
+                                                // There could be multiple matches. For instance, two faculty members file the app as follow up in the same timeframe
+                                                foreach ($matching_updates as $m) { 
+                                                    $results[] = $this->lastUpdateBetweenRangeByProfileWithStatus($m->first(), $semester, $student);
+                                                }
+                        }
+                    });
                 }
             }
         }
@@ -111,7 +105,7 @@ class StudentDataInsight
      * @param array $schools_params Schools filter. Example: ["BBS", "NSM"].
      * @return \Illuminate\Support\Collection
     */
-    public function getCachedAppsForSemestersAndSchoolsWithStatsWithUser($semesters_params, $schools_params)
+    public function cachedAppsForSemestersAndSchoolsWithStatsWithUser($semesters_params, $schools_params)
     {
         $sm = implode('-', $semesters_params);
         $sch = implode('-', $schools_params);
@@ -160,10 +154,10 @@ class StudentDataInsight
      * @param array $schools_params Schools filter. Example: ["BBS", "NSM"].
      * @return array
     */
-    public function getViewedAndNotViewedApps($semesters_params, $schools_params,)
+    public function appsCountViewedAndNotViewed($semesters_params, $schools_params)
     {
-        $submitted_and_viewed = $this->getCachedAppsForSemestersAndSchoolsViewed($semesters_params, $schools_params)->count();
-        $submitted_not_viewed = $this->getCachedAppsForSemestersAndSchoolsNotViewed($semesters_params, $schools_params)->count();
+        $submitted_and_viewed = $this->cachedViewedAppsForSemestersAndSchools($semesters_params, $schools_params)->count();
+        $submitted_not_viewed = $this->cachedNotViewedAppsForSemestersAndSchools($semesters_params, $schools_params)->count();
 
         return [
                 'labels' => [ 'Viewed', 'Not Viewed' ],
@@ -176,7 +170,7 @@ class StudentDataInsight
      * @param array $schools_params Schools filter. Example: ["BBS", "NSM"].
      * @return \Illuminate\Support\Collection
     */
-    public function getCachedAppsForSemestersAndSchoolsViewed($semesters_params, $schools_params)
+    public function cachedViewedAppsForSemestersAndSchools($semesters_params, $schools_params)
     {
        $sm = implode('-', $semesters_params);
        $sch = implode('-', $schools_params);
@@ -200,7 +194,7 @@ class StudentDataInsight
      * @param array $schools_params Schools filter. Example: ["BBS", "NSM"].
      * @return \Illuminate\Support\Collection
     */
-    public function getCachedAppsForSemestersAndSchoolsNotViewed($semesters_params, $schools_params)
+    public function cachedNotViewedAppsForSemestersAndSchools($semesters_params, $schools_params)
     {
         $sm = implode('-', $semesters_params);
         $sch = implode('-', $schools_params);
@@ -224,9 +218,9 @@ class StudentDataInsight
      * @param array $schools_params Schools filter. Example: ["BBS", "NSM"].
      * @return array
      */
-    public function getAppsBySemestersAndSchools($semesters_params, $schools_params)
+    public function appsCountBySemestersAndSchools($semesters_params, $schools_params)
     {
-        $applications = $this->transformAppsBySemestersAndSchools($semesters_params, $schools_params);
+        $applications = $this->groupAppsBySemestersAndSchools($semesters_params, $schools_params);
         $semesters_sort_closure = Semester::sortCollectionWithSemestersKeyChronologically();
 
         $counted_apps = $applications
@@ -258,34 +252,33 @@ class StudentDataInsight
         ];
 
     }
+
     /**
      * Auxiliary method for Chart #3 to transform student applications by semesters and schools.
      * @param array $semesters_params Semesters filter. Example: ["Summer 2023", "Fall 2023"].
      * @param array $schools_params Schools filter. Example: ["BBS", "NSM"].
      * @return \Illuminate\Support\Collection
     */
-    public function transformAppsBySemestersAndSchools(array $semesters_params, array $schools_params)
+    public function groupAppsBySemestersAndSchools(array $semesters_params, array $schools_params)
     {
-        $student_applications = $this->getCachedAppsForSemestersAndSchools($semesters_params, $schools_params);
+        $students = $this->getCachedAppsForSemestersAndSchools($semesters_params, $schools_params);
+        $results = [];
 
-        return $student_applications->flatMap(function ($application) use ($semesters_params, $schools_params) {
-            
-            if (!empty($application->research_profile->data['semesters']) && !empty($application->research_profile->data['schools'])) {
+        foreach ($semesters_params as $semester) { // Looping through semesters
+            foreach ($schools_params as $school) { // Looping through schools
 
-                $semesters_values = array_intersect($application->research_profile->data['semesters'], $semesters_params);
-                $schools_values = array_intersect($application->research_profile->data['schools'], $schools_params);
-
-                    return array_map(function ($school_value) use ($application, $semesters_values) {
-                        return array_map(function ($semester_value) use ($application, $school_value) {
-                            return [
-                                        'id' => $application->id,
-                                        'semester' => $semester_value,
-                                        'school' => $school_value,
-                                    ];
-                            }, $semesters_values);
-                        }, $schools_values);
-            } 
-        })->flatten(1);
+                $students_filtered = $this->filterStudentsBySemesterAndSchool($students, $semester, $school);
+                $students_filtered->each(function ($student) use ($semester, $school, &$results) {
+                    // For each student, find the non empty status history in the stats
+                    $results[] =[
+                        'id' => $student->research_profile->id,
+                        'semester' => $semester,
+                        'school' => $school,
+                    ];
+                });
+            }
+        }
+        return collect($results);
     }
 
     /**
@@ -312,9 +305,9 @@ class StudentDataInsight
      * @param array $schools_params Schools filter. Example: ["BBS", "NSM"].
      * @param array $filing_status_params Filing status filter for the last status of the applications. Example: ['accepted', 'follow up'].
     */
-    public function getAppsBySemestersAndSchoolsWithFilingStatus($semesters_params, $schools_params, $filing_status_params, $weeks_before_semester_start, $weeks_before_semester_end)
+    public function appsCountBySemestersAndSchoolsWithFilingStatus($semesters_params, $schools_params, $filing_status_params, $weeks_before_semester_start, $weeks_before_semester_end)
     {
-        $applications = $this->getCachedAppsForSemestersAndSchoolsWithFilingStatus($semesters_params, $schools_params, $filing_status_params, $weeks_before_semester_start, $weeks_before_semester_end);
+        $applications = $this->cachedAppsForSemestersAndSchoolsWithFilingStatuses($semesters_params, $schools_params, $filing_status_params, $weeks_before_semester_start, $weeks_before_semester_end);
         $semesters_sort_closure = Semester::sortCollectionWithSemestersKeyChronologically();
         $counted_apps = $applications
                             ->groupBy(['semester', 'filing_status'])
@@ -395,5 +388,32 @@ class StudentDataInsight
         $semesters = implode(' | ', $semesters_params);
         $schools = implode(' | ', $schools_params);
         return [$semesters, $schools];
+    }
+
+    public function filterStudentsBySemesterAndSchool($students, $semester, $school): Collection {
+        return $students->filter(function($student) use ($semester, $school) {
+            return in_array($semester, $student->research_profile->data['semesters']) && in_array($school, $student->research_profile->data['schools']);
+        });
+    }
+
+    public function lastUpdateBetweenRangeByProfileWithStatus($matching_update, $semester, $student) {
+
+            return [
+                'id' => $student->stats->id,
+                'semester' => $semester,
+                'school' => $student->research_profile->data['schools'],
+                'filing_status' => ucfirst($matching_update['new_status']),
+                'updated_at' => $matching_update['updated_at'],
+                'profile' => $matching_update['profile'],
+                'display_name' => $student->user->display_name,
+                'netID' => $student->user->name,
+            ];
+
+    }
+
+    public function lastUpdateByProfile($group_by_profile) {
+        return $group_by_profile->sortByDesc(function ($item) {
+            return Carbon::parse($item['updated_at']);
+        })->first();
     }
 }

@@ -40,7 +40,7 @@ class StudentAppsViewedNotViewedChart extends Component
     public function getDatasetProperty()
     {
         $report = new StudentDataInsight();
-        return $report->getViewedAndNotViewedApps($this->selected_semesters, $this->selected_schools);
+        return $report->appsCountViewedAndNotViewed($this->selected_semesters, $this->selected_schools);
     }
 
     public function render()
