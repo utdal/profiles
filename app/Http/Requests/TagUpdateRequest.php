@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\TagNameUniqueness;
+use App\Rules\EachIsUnique;
 use App\Student;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -29,6 +29,7 @@ class TagUpdateRequest extends FormRequest
     public function rules()
     {
         $this->tag_types[] = "App\\Profile";
+        $locale = app()->getLocale();
         
         foreach (Student::participatingSchools() as $shortname => $name) {
             $this->tag_types[]= "App\\Student\\{$shortname}";
@@ -37,11 +38,14 @@ class TagUpdateRequest extends FormRequest
         return [
             'type' => [
                         'required',
+                        'string',
                         Rule::in($this->tag_types),
                     ],
             'name' => [
+                        'required',
                         'string',
-                        new TagNameUniqueness,
+                        'max:100',
+                        new EachIsUnique('/\r\n|\r|\n/', 'tags', 'name->'.$locale, ['type', $this->input('type')], $this->route()->parameters['tag'] ?? null),
                     ],
         ];
     }
@@ -53,6 +57,14 @@ class TagUpdateRequest extends FormRequest
         return [
             'type.in' => "The tag types allowed are: {$types_allowed}",
         ]; 
+    }
+
+
+    public function split($value)
+    {
+        if (is_string($value)) {
+            return preg_split($this->delimeter, $value);
+        }
     }
 
 }
