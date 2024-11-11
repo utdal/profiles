@@ -194,24 +194,24 @@
                     @case('text')              
                         <div class="col">
                             {!! Form::label("research_profile[{$question['name']}]", $question['label'], ['class' => 'form-label']) !!}
-                            {!! Form::text("research_profile[school_custom_questions][$school_shortname][{$question['name']}]", $student->research_profile?->{$question['name']}, ['class' => 'form-control']) !!}
+                            {!! Form::text("research_profile[$school_shortname][{$question['name']}]", $student->research_profile?->{$question['name']}, ['class' => 'form-control']) !!}
                         </div>
                         @break
                     @case('textarea')
                         <div class="col">
                             {!! Form::label("research_profile[{$question['name']}]", $question['label'], ['class' => 'form-label']) !!}
-                            {!! Form::textarea("research_profile[school_custom_questions][$school_shortname][{$question['name']}]", $student->research_profile?->{$question['name']}, ['class' => 'form-control']) !!}
+                            {!! Form::textarea("research_profile[$school_shortname][{$question['name']}]", $student->research_profile?->{$question['name']}, ['class' => 'form-control']) !!}
                         </div>
                         @break
                     @case('yes_no')
                         <strong class="col-lg-9">{!! $question['label'] !!}</strong>
                         <div class="col-lg-3">
                             <div class="form-check form-check-inline">
-                                {!! Form::radio("research_profile[school_custom_questions][$school_shortname][{$question['name']}]", '1', $student->research_profile->{$question['name']} === '1', ['id' => "{$question['name']}_yes", 'class' => 'form-check-input']) !!}
+                                {!! Form::radio("research_profile[$school_shortname][{$question['name']}]", '1', $student->research_profile->{$question['name']} === '1', ['id' => "{$question['name']}_yes", 'class' => 'form-check-input']) !!}
                                 {!! Form::label("{$question['name']}_yes", "Yes", ['class' => 'form-check-label']) !!}
                             </div>
                             <div class="form-check form-check-inline">
-                                {!! Form::radio("research_profile[school_custom_questions][$school_shortname][{$question['name']}]", '0', $student->research_profile->{$question['name']} === '0', ['id' => "{$question['name']}_no", 'class' => 'form-check-input']) !!}
+                                {!! Form::radio("research_profile[$school_shortname][{$question['name']}]", '0', $student->research_profile->{$question['name']} === '0', ['id' => "{$question['name']}_no", 'class' => 'form-check-input']) !!}
                                 {!! Form::label("{$question['name']}_no", "No", ['class' => 'form-check-label']) !!}
                             </div>
                         </div>
