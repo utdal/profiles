@@ -34,7 +34,12 @@ class ProfilePolicy
      */
     protected function checkSchoolEditor(User $user, Profile $profile)
     {
-        return $user->hasRoleOption('school_profiles_editor', 'schools', $profile->user->school_id ?? -1);
+        // return $user->hasRoleOption('school_profiles_editor', 'schools', $profile->user->school_id ?? -1);
+        $profile_linked_schools = $profile->user->schools->pluck('id');
+
+        foreach ($profile_linked_schools as $school_id) {
+            return $user->hasRoleOption('school_profiles_editor', 'schools', $school_id ?? -1);
+        }
     }
 
     /**
