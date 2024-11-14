@@ -53,11 +53,25 @@ class EachIsUnique implements ValidationRule
 
         $values = $this->split($value);
 
-        foreach ($values as $value) {
+        $rule = Rule::unique($this->table, $this->column);
 
-            $rule = Rule::unique($this->table, $this->column)
-                            ->where($this->constraint[0], $this->constraint[1])
-                            ->ignore($this->ignore);
+        if (isset($this->constraint)) {
+            $rule->where($this->constraint[0], $this->constraint[1]); 
+        }
+
+        if (isset($this->ignore)) {
+            if (is_array($this->ignore)) {
+                if (isset($this->ignore[1])) { // If the array has two values (value to ignore and p_key column name if p_key is other than the id)
+                    $rule->ignore($this->ignore[0], $this->ignore[1]); // Ignore the value for the specified column
+                } else {
+                    $rule->ignore($this->ignore[0]); // If there's only one value, ignore just the first (likely the ID)
+                }
+            } elseif (is_object($this->ignore) || is_string($this->ignore)) { // If ignore is a string or an object (likely the ID), ignore this value
+                $rule->ignore($this->ignore);
+            }
+        }
+
+        foreach ($values as $value) {
 
             $valid = !validator([$attribute => $value], [$attribute => $rule])->fails();
 
