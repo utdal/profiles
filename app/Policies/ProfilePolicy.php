@@ -84,11 +84,11 @@ class ProfilePolicy
             return $profile->public;
         }
 
-        return $profile->public ||
-                $user->hasRole(['site_admin', 'profiles_editor']) ||
-                $user->owns($profile, true) ||
-                $this->checkSchoolEditor($user, $profile) ||
-                $this->checkDepartmentEditor($user, $profile);
+        return $profile->public || ($user && (
+            $user->owns($profile, true) ||
+            $this->checkSchoolEditor($user, $profile) ||
+            $this->checkDepartmentEditor($user, $profile)
+        ));
     }
 
     /**
