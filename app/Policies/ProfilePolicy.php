@@ -6,6 +6,7 @@ use App\User;
 use App\Profile;
 use App\ProfileStudent;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Auth\Access\Response;
 
 class ProfilePolicy
 {
@@ -88,7 +89,7 @@ class ProfilePolicy
             $user->owns($profile, true) ||
             $this->checkSchoolEditor($user, $profile) ||
             $this->checkDepartmentEditor($user, $profile)
-        ));
+        )) ? Response::allow() : Response::denyAsNotFound();
     }
 
     /**
