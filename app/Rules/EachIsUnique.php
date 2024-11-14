@@ -5,6 +5,7 @@ namespace App\Rules;
 use Closure;
 use Illuminate\Contracts\Validation\DataAwareRule;
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\Rule;
 use Spatie\Tags\Tag;
@@ -87,7 +88,7 @@ class EachIsUnique implements ValidationRule
         }
     }
 
-    public function split($value)
+    public function split($value) : array
     {
         if (is_string($value)) {
             return preg_split($this->delimiter, $value);
