@@ -29,4 +29,5 @@ class Bookmark extends MorphPivot
     {
         return $this->belongsTo(Profile::class, 'userable_id');
     }
+
 }

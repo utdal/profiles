@@ -37,6 +37,8 @@ class UsersController extends Controller
 
         $this->middleware('can:view,user')->only('show');
 
+        $this->middleware('can:viewBookmarks,user')->only('showBookmarks');
+
         $this->middleware('can:create,App\User')->only([
             'create',
             'store',

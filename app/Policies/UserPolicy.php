@@ -71,6 +71,18 @@ class UserPolicy
     }
 
     /**
+     * Determine whether the user can view the owner's bookmarks.
+     *
+     * @param  \App\User  $user
+     * @param  \App\User  $model
+     * @return mixed
+     */
+    public function viewBookmarks(User $user, User $owner)
+    {
+        return $user->can('viewBookmarks', ['App\Bookmark', $owner]);
+    }
+
+    /**
      * Determine whether the user can create models.
      *
      * @param  \App\User  $user
