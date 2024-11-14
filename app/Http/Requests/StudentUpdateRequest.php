@@ -98,39 +98,34 @@ class StudentUpdateRequest extends FormRequest
         ];
     }
 
-    public function validateCustomQuestions($schools) 
+    public function validateCustomQuestions() 
     {
-        return function($attr, $value, $fail) use ($schools) {
+        return function($attr, $value, $fail) {
             
             $questions = StudentData::customQuestions()->flatten(1);
-            $school_key = substr($attr, strpos($attr, '.') + 1);
+            $question_name = substr($attr, strpos($attr, '.') + 1);
 
-            if (!in_array($school_key, $schools)) {
+            $question_settings = $questions->first(function ($q) use ($question_name) {
+                            return isset($q['name'], $q['type']) && $q['name'] === $question_name;
+                        });
+
+            if (is_null($question_settings)) {
                 return;
             }
 
             foreach ($value as $question => $answer) {
-                
-                $settings_question = $questions->first(function ($q) use ($question, $school_key) {
-                    return isset($q['name'], $q['school'], $q['type']) && $q['name'] === $question && $q['school'] === $school_key;
-                });
 
-                if (!$settings_question) {
-                    $fail("Question '{$question}' for school '{$school_key}' is not valid.");
-                    continue;
-                }
-
-                switch ($settings_question['type']) {
+                switch ($question_settings['type']) {
                     case 'yes_no':
                         if (!in_array($answer, ["1", "0"])) {
                             $formated_question_name = strtolower(str_replace('_', ' ', $question));
-                            $fail("The answer to {$formated_question_name} for school {$school_key} must be Yes or No.");
+                            $fail("The answer to {$formated_question_name} must be Yes or No.");
                         }
                         break;
                     default:
                     if (strlen($answer) > 1000) {
                         $formated_question_name = strtolower(str_replace('_', ' ', $question));
-                        $fail("The value for {$formated_question_name} in school {$school_key} question cannot exceed 1000 characters.");
+                        $fail("The value for the {$formated_question_name} question cannot exceed 1000 characters.");
                     }
                     break;
                 }
