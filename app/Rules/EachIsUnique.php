@@ -3,12 +3,9 @@
 namespace App\Rules;
 
 use Closure;
-use Illuminate\Contracts\Validation\DataAwareRule;
 use Illuminate\Contracts\Validation\ValidationRule;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\Rule;
-use Spatie\Tags\Tag;
+use Illuminate\Support\Str;
 
 class EachIsUnique implements ValidationRule
 {
@@ -52,9 +49,10 @@ class EachIsUnique implements ValidationRule
     {
         $values = $errors = [];
 
-        $values = $this->split($value);
+        $values = is_string($value) ? preg_split($this->delimiter, $value) : [];
 
-        $rule = Rule::unique($this->table, $this->column);
+        $rule = Rule::unique($this->table, "lower($this->column)");
+        // return $query->where('lower(email)', DB::raw('lower(?)'),  $this->input('email'));
 
         if (isset($this->constraint)) {
             $rule->where($this->constraint[0], $this->constraint[1]); 
@@ -85,13 +83,6 @@ class EachIsUnique implements ValidationRule
             foreach ($errors as $error) {
                 $fail($error);
             }
-        }
-    }
-
-    public function split($value) : array
-    {
-        if (is_string($value)) {
-            return preg_split($this->delimiter, $value);
         }
     }
 
