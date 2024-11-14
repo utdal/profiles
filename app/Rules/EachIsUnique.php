@@ -23,8 +23,17 @@ class EachIsUnique implements ValidationRule, DataAwareRule
     protected array $constraint;
     protected $ignore;
 
-
-    public function __construct($delimiter, $table, $column, $constraint, $ignore)
+    /**
+     * Create a new validation rule instance.
+     *
+     * @param string $delimiter   Delimiter to split the field under validation into individual elements.
+     * @param string $table       Table where the uniqueness check will be performed.
+     * @param string $column      Column in the table where uniqueness will be checked.
+     * @param array  $constraint  Constraint for the where method to apply when checking uniqueness in the format of ['column', 'value'].
+     * @param mixed  $ignore      Value to ignore in the uniqueness check if the request is an update (id by deafult). It can receive an array in the format of [value, p_key]
+     *                            if the primary key is different than the 'id'.
+     */
+    public function __construct($delimiter, $table, $column, $constraint = null, $ignore = null)
     {
         $this->delimiter = $delimiter;
         $this->table = $table;
