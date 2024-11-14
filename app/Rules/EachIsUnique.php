@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\Rule;
 use Spatie\Tags\Tag;
 
-class EachIsUnique implements ValidationRule, DataAwareRule
+class EachIsUnique implements ValidationRule
 {
     /**
      * All of the data under validation.
@@ -80,15 +80,4 @@ class EachIsUnique implements ValidationRule, DataAwareRule
         }
     }
 
-    /**
-     * Set the data under validation.
-     *
-     * @param  array<string, mixed>  $data
-     */
-    public function setData(array $data): static
-    {
-        $this->data = $data;
- 
-        return $this;
-    }
 }
