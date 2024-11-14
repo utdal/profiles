@@ -60,12 +60,4 @@ class TagUpdateRequest extends FormRequest
         ]; 
     }
 
-
-    public function split($value)
-    {
-        if (is_string($value)) {
-            return preg_split($this->delimeter, $value);
-        }
-    }
-
 }
