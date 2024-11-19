@@ -75,16 +75,6 @@ var profiles = (function ($, undefined) {
     };
 
     /**
-     * Submits img update
-     *
-     * @param {Event} event the triggered event
-     */
-    const submit_img_update = function (event) {
-        const file_input = event.target;
-        $(file_input).closest('form').submit();
-    };
-
-    /**
      * Reindex numbers in field ids, names, and labels to match sort order,
      * e.g. if the first item's name is "thing[3]", rename it to "thing[0]"
      * 
@@ -557,7 +547,6 @@ var profiles = (function ($, undefined) {
         deobfuscate_mail_links: deobfuscate_mail_links,
         on_list_updated: on_list_updated,
         preview_selected_image: preview_selected_image,
-        submit_img_update : submit_img_update,
         replace_icon: replace_icon,
         registerTagEditors: registerTagEditors,
         registerProfilePickers: registerProfilePickers,
@@ -582,7 +571,6 @@ $(function() {
     //show preview of uploaded image
     $('input[type="file"]').on('change', function(e) {
         profiles.preview_selected_image(e);
-        profiles.submit_img_update(e);
     });
 
     // enable drag and drop sorting for items with sortable class

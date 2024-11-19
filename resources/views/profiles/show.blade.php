@@ -37,6 +37,10 @@
 				@if(!$information->fancy_header)
 					<div class="col-md-5 col-sm-6">
 						<img class="profile_photo" src="{{ $profile->image_url }}" alt="{{ $profile->full_name }}">
+						<a class="btn-sm btn-info btn" href="#" data-target="#profile_picture_editor" data-toggle="modal" role="button">
+							<i class="fas fa-camera"></i> Edit
+						</a>
+						<livewire:profile-picture-editor-modal :profile="$profile">
 					</div>
 				@endif
 				<div class="@if($information->fancy_header)col-lg-5 @else col-md-7 col-sm-6 @endif">

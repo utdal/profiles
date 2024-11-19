@@ -2,24 +2,12 @@
 <div class="row">
 	@foreach($data as $info)
 		<div class="col col-md-4">
-			{!! Form::open(['url' => route('profiles.update-image', [$profile->slug]), 'method' => 'POST', 'files' => true]) !!}
 			<label for="file">Icon</label>
-			<img id="file-img" class="profile_photo" src="{{ $profile->imageUrl }}" />
-			<br />
-			<br />
-			<div class="control-group">
-				<div class="controls">
-					{!! Form::file('image', ['id' => 'file', 'name' => 'image', 'required' => 'true', 'accept' => 'image/*', 'class' => 'd-none form-control']) !!}
-					<label for="file" class="btn btn-secondary btn-block"><i class="fas fa-plus"></i> Select Image</label>
-					{!! Form::inlineErrors('image') !!}
-				</div>
-			</div>
-			<button type="submit" class="btn btn-primary btn-block" data-toggle="replace-icon" data-newicon="fas fa-sync fa-spin" data-inputrequired="#file">
-				<i class="fas fa-upload"></i> Replace Image
-			</button>
-			{!! Form::close() !!}
-			<br>
-			<br>
+			<img class="profile_photo" src="{{ $profile->image_url }}" alt="{{ $profile->full_name }}">
+			<a class="btn-sm btn-info btn" href="#" data-target="#profile_picture_editor" data-toggle="modal" role="button">
+				<i class="fas fa-camera"></i> Edit
+			</a>
+			<livewire:profile-picture-editor-modal :profile="$profile">
 			{!! Form::open(['url' => route('profiles.update-banner', [$profile->slug]), 'method' => 'POST', 'files' => true]) !!}
 			<label for="banner">Banner</label>
 			<img id="banner-img" class="profile_photo" src="{{ $profile->banner_url }}" />

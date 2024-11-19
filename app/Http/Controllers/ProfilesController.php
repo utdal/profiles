@@ -272,7 +272,7 @@ class ProfilesController extends Controller
 
     public function updateImage(Profile $profile, ProfileImageRequest $request): RedirectResponse
     {
-        return redirect()->route('profiles.edit', [$profile->slug, 'information'])->with('flash_message', $profile->processImage($request->file('image'), 'images'));
+        return redirect()->route('profiles.show', [$profile->slug, 'information'])->with('flash_message', $profile->processImage($request->file('image'), 'images'));
     }
 
     /**
