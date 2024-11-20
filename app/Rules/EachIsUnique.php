@@ -19,7 +19,8 @@ class EachIsUnique implements ValidationRule
     protected string $table;
     protected string $column;
     protected array $constraint;
-    protected $ignore;
+    protected $ignore_id;
+    protected $ignore_column;
 
     /**
      * Create a new validation rule instance.
@@ -31,13 +32,12 @@ class EachIsUnique implements ValidationRule
      * @param mixed  $ignore      Value to ignore in the uniqueness check if the request is an update (id by deafult). It can receive an array in the format of [value, p_key]
      *                            if the primary key is different than the 'id'.
      */
-    public function __construct($delimiter, $table, $column, $constraint = null, $ignore = null)
+    public function __construct($delimiter, $table, $column, $constraint = null)
     {
         $this->delimiter = $delimiter;
         $this->table = $table;
         $this->column = $column;
         $this->constraint = $constraint;
-        $this->ignore = $ignore;
     }
 
     /**
@@ -58,16 +58,17 @@ class EachIsUnique implements ValidationRule
             $rule->where($this->constraint[0], $this->constraint[1]); 
         }
 
-        if (isset($this->ignore)) {
-            if (is_array($this->ignore)) {
-                if (isset($this->ignore[1])) { // If the array has two values (value to ignore and p_key column name if p_key is other than the id)
-                    $rule->ignore($this->ignore[0], $this->ignore[1]); // Ignore the value for the specified column
-                } else {
-                    $rule->ignore($this->ignore[0]); // If there's only one value, ignore just the first (likely the ID)
-                }
-            } elseif (is_object($this->ignore) || is_string($this->ignore)) { // If ignore is a string or an object (likely the ID), ignore this value
-                $rule->ignore($this->ignore);
-            }
+        if (isset($this->ignore_id)) {
+            $rule->ignore($this->ignore_id, $this->ignore_column);
+            // if (is_array($this->ignore)) {
+            //     if (isset($this->ignore[1])) { // If the array has two values (value to ignore and p_key column name if p_key is other than the id)
+            //         $rule->ignore($this->ignore[0], $this->ignore[1]); // Ignore the value for the specified column
+            //     } else {
+            //         $rule->ignore($this->ignore[0]); // If there's only one value, ignore just the first (likely the ID)
+            //     }
+            // } elseif (is_object($this->ignore) || is_string($this->ignore)) { // If ignore is a string or an object (likely the ID), ignore this value
+            //     $rule->ignore($this->ignore);
+            // }
         }
 
         foreach ($values as $value) {
@@ -84,6 +85,14 @@ class EachIsUnique implements ValidationRule
                 $fail($error);
             }
         }
+    }
+
+    public function ignore($id, $idColumn = null)
+    {
+        $this->ignore_id = $id;
+        $this->ignore_column = $idColumn;
+
+        return $this;
     }
 
 }

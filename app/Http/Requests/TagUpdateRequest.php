@@ -45,7 +45,8 @@ class TagUpdateRequest extends FormRequest
                         'required',
                         'string',
                         'max:100',
-                        new EachIsUnique('/\r\n|\r|\n/', 'tags', 'name->'.$locale, ['type', $this->input('type')], $this->route()->parameters['tag'] ?? null),
+                        (new EachIsUnique('/\r\n|\r|\n/', 'tags', 'name->'.$locale, ['type', $this->input('type')]))
+                            ->ignore($this->route()->parameters['tag'] ?? null),
                     ],
         ];
     }
