@@ -6,11 +6,13 @@ use App\Profile;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Http\Requests\Concerns\HasImageUploads;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ProfilePictureEditorModal extends Component
 {
     use WithFileUploads;
     use HasImageUploads;
+    use AuthorizesRequests;
     public Profile $profile;
     public $image;
     public $user;
@@ -29,7 +31,10 @@ class ProfilePictureEditorModal extends Component
 
     public function submit()
     {
+        $this->authorize('update', $this->user, $this->profile);
+        
         $msg = $this->profile->processImage($this->image);
+        
         return redirect(route('profiles.show', $this->profile))->with('flash_message', $msg, 'images');
     }
 
