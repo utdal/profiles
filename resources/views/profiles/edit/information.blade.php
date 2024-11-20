@@ -4,7 +4,7 @@
 		<div class="col col-md-4">
 			<label for="file">Icon</label>
 			<img class="profile_photo" src="{{ $profile->image_url }}" alt="{{ $profile->full_name }}">
-			<a class="btn-sm btn-info btn" href="#" data-target="#profile_picture_editor" data-toggle="modal" role="button">
+			<a class="btn-sm btn-info btn edit_photo_button" href="#" data-target="#profile_picture_editor" data-toggle="modal" role="button">
 				<i class="fas fa-camera"></i> Edit
 			</a>
 			<livewire:profile-picture-editor-modal :profile="$profile">
