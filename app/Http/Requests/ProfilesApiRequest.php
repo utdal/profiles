@@ -38,6 +38,8 @@ class ProfilesApiRequest extends FormRequest
             'raw_data' => 'sometimes|boolean',
             'data_type' => [
                 'sometimes',
+                'filled',
+                'string',
                 new AllowedProfileDataType(),
             ],
         ];
