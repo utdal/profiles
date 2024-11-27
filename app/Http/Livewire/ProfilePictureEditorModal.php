@@ -17,11 +17,6 @@ class ProfilePictureEditorModal extends Component
     public $image;
     public $user;
 
-    public function mount()
-    {
-        $this->user = auth()->user();
-    }
-
     public function updatedImage()
     {
         $this->validate([
@@ -31,11 +26,13 @@ class ProfilePictureEditorModal extends Component
 
     public function submit()
     {
-        $this->authorize('update', $this->user, $this->profile);
+        $this->authorize('update', $this->profile);
+
+        $this->validate(array_merge(['image' => $this->uploadedImageRules()], ['image' => 'required']));
+
+        $message = $this->profile->processImage($this->image, 'images');
         
-        $msg = $this->profile->processImage($this->image);
-        
-        return redirect(route('profiles.show', $this->profile))->with('flash_message', $msg, 'images');
+        return redirect(route('profiles.show', $this->profile))->with('flash_message', $message);
     }
 
     public function render()
