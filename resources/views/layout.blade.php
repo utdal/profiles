@@ -70,6 +70,7 @@
 	<script src="{{ asset(mix('js/manifest.js')) }}"></script>
 	<script src="{{ asset(mix('js/vendor.js')) }}"></script>
 	<script src="{{ asset(mix('js/app.js')) }}"></script>
+	<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
 	@yield('scripts')
 	@stack('scripts')
 	@if(isset($settings['primary_color']) || isset($settings['secondary_color']) || isset($settings['tertiary_color'] ))
