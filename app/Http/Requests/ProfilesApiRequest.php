@@ -39,7 +39,6 @@ class ProfilesApiRequest extends FormRequest
             'data_type' => [
                 'sometimes',
                 'filled',
-                'string',
                 new AllowedProfileDataType(),
             ],
         ];
