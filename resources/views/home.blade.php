@@ -5,7 +5,7 @@
 	<h1 class="sr-only">Profiles</h1>
 @stop
 @section('content')
-
+@include('errors.has')
 @if(File::exists(public_path('/storage/video/home.jpg')) && File::exists(public_path('/storage/video/home.mp4')))
 	<div class="video-cover">
 		<button class="video-control play-pause" aria-controls="home-video" aria-pressed="true">
