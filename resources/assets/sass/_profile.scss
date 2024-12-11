@@ -51,7 +51,7 @@
 		background-attachment: fixed;
 		background-position: center top;
 		background-size: cover;
-		height: 85vh;
+		height: calc(70vh - 20px);
 		position: relative;
 
 		@media (max-width: map-get($grid-breakpoints, lg)){
@@ -84,6 +84,12 @@
 			margin: 15px;
 			background: $light;
 			width: auto;
+		}
+
+		.edit_banner_button {
+			position: absolute;
+			bottom: 0px;
+			right: 0px;
 		}
 	}
 
@@ -246,8 +252,8 @@ a.edit_photo_button {
 	top: -31px;
 }
 
-a.edit_banner_button {
+.edit_banner_button {
 	position: relative;
-	top: 40px;
-	right: -25px;
-}
+	bottom: -40px;
+	right: -40px;
+}	

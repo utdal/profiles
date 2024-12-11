@@ -116,14 +116,14 @@
 				@endif
 			</div>
 		</div>
-		<div class="row">
-			@if($editable)
-			<a class="btn-sm btn-info btn offset-11 col-1 edit_banner_button" href="#" data-target="#banner_picture_editor" data-toggle="modal" role="button">
-				<small><i class="fas fa-camera"></i> Banner</small>
-			</a>
-			@endif
-			<livewire:banner-picture-editor-modal :profile="$profile" :info="$information">
-		</div>
+		@if($editable)
+			<div class="d-flex align-items-end flex-column edit_banner_button">
+				<a class="btn-sm btn-info btn " href="#" data-target="#banner_picture_editor" data-toggle="modal" role="button">
+					<small><i class="fas fa-camera"></i> Banner</small>
+				</a>
+			</div>
+		@endif
+		<livewire:banner-picture-editor-modal :profile="$profile" :info="$information">
 	</div>
 	<nav id="links" class="container links" aria-label="profile sections">
 		<ul>

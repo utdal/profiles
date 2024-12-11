@@ -10461,7 +10461,7 @@ button.video-control .fa-play {
   background-attachment: fixed;
   background-position: center top;
   background-size: cover;
-  height: 85vh;
+  height: calc(70vh - 20px);
   position: relative;
 }
 @media (max-width: 992px) {
@@ -10491,6 +10491,11 @@ button.video-control .fa-play {
   margin: 15px;
   background: #f8f9fa;
   width: auto;
+}
+.profile .fancy_header .edit_banner_button {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
 }
 .profile .profile_list_photo {
   width: 100%;
@@ -10638,10 +10643,10 @@ a.edit_photo_button {
   top: -31px;
 }
 
-a.edit_banner_button {
+.edit_banner_button {
   position: relative;
-  top: 40px;
-  right: -25px;
+  bottom: -40px;
+  right: -40px;
 }
 
 .student-card-img-overlay {
