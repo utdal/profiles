@@ -9,18 +9,18 @@
                 <div class="container-md">
                     <form wire:submit.prevent="submit" enctype="multipart/form-data" method="GET">
                         @csrf
-                        <img name="image" id="file-img" src="{{ $profile->imageUrl }}" wire:ignore/>
+                        @if ($errors->any())
+                            <div class="alert alert-danger" role="alert">
+                                <p><strong>There are some errors. Please correct them and try again.</strong></p>
+                                @foreach ($errors->all() as $error)
+                                    {{ $error }}
+                                @endforeach
+                            </div>
+                        @endif<img name="image" id="file-img" src="{{ $profile->imageUrl }}" wire:ignore/>
                         <br>
                         <br>
                         <div class="control-group">
-                            @if ($errors->any())
-                                <div class="alert alert-danger" role="alert">
-                                    <p><strong>There are some errors. Please correct them and try again.</strong></p>
-                                    @foreach ($errors->all() as $error)
-                                        {{ $error }}
-                                    @endforeach
-                                </div>
-                            @endif
+ 
                             {!! Form::file('image', ['id' => 'file', 'name' => 'image', 'accept' => 'image/*', 'wire:model' => 'image', 'class' => 'd-none form-control']) !!}
                             <label for="file" class="btn btn-secondary btn-block"><i class="fas fa-plus"></i> Select Image</label>
                         </div>

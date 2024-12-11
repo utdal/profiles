@@ -10,7 +10,7 @@
                     <div class="alert alert-info">
                         <ul class="fa-ul mb-0">
                             <li>
-                                <span class="fa-li"><i class="fas fa-info-circle"></i></span> Select an banner image to upload and preview.
+                                <span class="fa-li"><i class="fas fa-info-circle"></i></span> Select a banner image to upload and preview.
                             </li>
                             <li>
                                 <span class="fa-li"><i class="fas fa-info-circle"></i></span> Note: Clicking 'Save and Use' will replace your profile picture with a fancy header style, using the selected image as the background. Click 'Restore Header' to remove the fancy header and use your profile picture.
@@ -19,18 +19,19 @@
                     </div>
                     <form wire:submit.prevent="submit" enctype="multipart/form-data" method="GET">
                         @csrf
+                        @if ($errors->any())
+                            <div class="alert alert-danger" role="alert">
+                                <p><strong>There are some errors. Please correct them and try again.</strong></p>
+                                @foreach ($errors->all() as $error)
+                                    {{ $error }}
+                                @endforeach
+                            </div>
+                        @endif
                         <img id="banner-img" src="{{ $profile->banner_url }}" wire:ignore/>
                         <br>
                         <br>
                         <div class="controls">
-                            @if ($errors->any())
-                                <div class="alert alert-danger" role="alert">
-                                    <p><strong>There are some errors. Please correct them and try again.</strong></p>
-                                    @foreach ($errors->all() as $error)
-                                        {{ $error }}
-                                    @endforeach
-                                </div>
-                            @endif
+ 
                             {!! Form::file('banner_image', ['id' => 'banner', 'name' => 'banner_image', 'accept' => 'image/*', 'wire:model' => 'banner_image', 'class' => 'd-none form-control']) !!}
                             <label for="banner" class="btn btn-secondary btn-block"><i class="fas fa-plus"></i> Select Image</label>
                         </div>
@@ -53,9 +54,9 @@
                         <div class="control-group">
                             <div class="row justify-content-between">
                                 <button type="button" class="btn btn-secondary ml-3 col-3" data-dismiss="modal" aria-label="Close">Cancel</button>
-                                <button wire:click="$emit('removeFancyHeader')" class="btn btn-primary col-3" data-toggle="replace-icon" data-newicon="fas fa-sync fa-spin" data-inputrequired="#banner">
+                                <a wire:click="$emit('removeFancyHeader')" class="btn btn-primary col-3" data-toggle="replace-icon" data-newicon="fas fa-sync fa-spin">
                                     <i class="fas fa-undo"></i> Restore Header
-                                </button>
+                                </a>
                                 <button type="submit" class="btn btn-primary mr-3 col-3" data-toggle="replace-icon" data-newicon="fas fa-sync fa-spin" data-inputrequired="#banner">
                                     <i class="fas fa-upload"></i> Save and Use
                                 </button>
