@@ -15,8 +15,8 @@ class BannerPictureEditorModal extends Component
 
     public Profile $profile;
     public ProfileData $info;
-    public bool $fancy_header;
-    public bool $fancy_header_right;
+    public $fancy_header;
+    public $fancy_header_right;
     public $banner_image;
     public $user;
     protected $listeners = ['removeFancyHeader'];
@@ -38,24 +38,34 @@ class BannerPictureEditorModal extends Component
     public function submit()
     {
         $this->authorize('update', $this->profile);
-        
-        $message = $this->profile->processImage($this->banner_image, 'banners');
+
+        $message = 'Fancy header updated';
+
+        if (!is_null($this->banner_image)) 
+        {
+            
+            $this->validate([
+                'banner_image' => $this->uploadedImageRules(),
+                'fancy_header_right' => 'boolean',
+            ]);
+
+            $message = $this->profile->processImage($this->banner_image, 'banners');
+        }
         
         $profile_info = $this->profile->information->first();
 
         $profile_info->data = array_merge($profile_info->data ?? [], [
-            'fancy_header' => true,
-            'fancy_header_right' => (bool) $this->fancy_header_right,
-        ]);
-        
-        $updated = $profile_info->save();
-        
-        if ($updated) {
-            return redirect(route('profiles.show', $this->profile))->with('flash_message', $message);
+                                'fancy_header' => true,
+                                'fancy_header_right' => (bool) $this->fancy_header_right,
+                            ]);
+
+        $profile_info->save();
+
+        if (!$profile_info->wasChanged()) {
+            return back()->withErrors(['banner_image' => 'Failed to update profile information. Please try again.']);
         }
         
-        return back()->withErrors(['update' => 'Failed to update profile information. Please try again.']);
-        
+        redirect()->route('profiles.show', $this->profile)->with('flash_message', $message);
     }
 
     public function removeFancyHeader()
