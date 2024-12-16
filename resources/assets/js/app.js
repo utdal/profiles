@@ -352,8 +352,8 @@ var profiles = (function ($, undefined) {
           api += '&from_school=' + $select.data('school');
       }
 
-      if ($select.data('not_accepting_undergrad')) {
-          api += '&not_accepting_undergrad=' + $select.data('not_accepting_undergrad');
+      if ($select.data('accepting-undergrad')) {
+          api += '&accepting_undergrad=' + $select.data('accepting-undergrad');
       }
 
       let profileSearch = new Bloodhound({

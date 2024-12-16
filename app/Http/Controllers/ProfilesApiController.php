@@ -61,8 +61,8 @@ class ProfilesApiController extends Controller
                 }
             }
 
-            if ($request->boolean('not_accepting_undergrad')) {
-                $profile = $profile->notAcceptingUndergradStudents();
+            if ($request->boolean('accepting_undergrad')) {
+                $profile = $profile->acceptingUndergradStudents();
             }
 
             if ($request->boolean('with_data')) {

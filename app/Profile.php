@@ -511,13 +511,14 @@ class Profile extends Model implements HasMedia, Auditable
         });
     }
     /**
-     * Query scope for Profiles that are not marked as "Not accepting undergrad students" or 
+     * Query scope for Profiles that are accepting undergrad students,
+     * i.e. not marked as "Not accepting undergrad students" or 
      * have not selected the option "Show not accepting students" on their pages
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeNotAcceptingUndergradStudents($query) {
+    public function scopeAcceptingUndergradStudents($query) {
         return $query->whereHas('information', function($q) {
                       $q->whereJsonDoesntContain('data->show_not_accepting_students','1')
                         ->orWhereJsonDoesntContain('data->not_accepting_students','1');
