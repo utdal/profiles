@@ -352,6 +352,10 @@ var profiles = (function ($, undefined) {
           api += '&from_school=' + $select.data('school');
       }
 
+      if ($select.data('accepting-undergrad')) {
+          api += '&accepting_undergrad=' + $select.data('accepting-undergrad');
+      }
+
       let profileSearch = new Bloodhound({
         datumTokenizer: (profiles) => Bloodhound.tokenizers.whitespace(profiles.value),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
