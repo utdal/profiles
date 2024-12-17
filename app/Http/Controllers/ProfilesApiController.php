@@ -18,16 +18,17 @@ class ProfilesApiController extends Controller
         // Set the response Cache-Control headers
         $this->middleware('cache.headers:' . config('app.api_cache_control'));
 
+        $this->middleware('can:view,profile')->only('show');
         // CORS middleware is auto-applied to all API routes
     }
 
     /**
-     * Get a listing of all Profiles.
+     * Get a listing of all public Profiles.
      */
     public function index(ProfilesApiRequest $request): JsonResponse
     {
         return Cache::tags(['profiles', 'profile_data', 'profile_tags'])->remember($request->fullUrl(), 3600, function() use ($request) {
-            $profile = Profile::select(Profile::apiAttributes())->with(['media']);
+            $profile = Profile::select(Profile::apiAttributes())->with(['media'])->public();
 
             if ($request->filled('person')) {
                 $profile = $profile->whereIn('slug', explode(';', $request->person));
@@ -51,14 +52,6 @@ class ProfilesApiController extends Controller
 
             if ($request->filled('tag')) {
                 $profile = $profile->withAnyTags(explode(';', $request->tag), Profile::class);
-            }
-
-            if ($request->filled('public')) {
-                if ($request->boolean('public')) {
-                    $profile = $profile->public();
-                } elseif ((bool)$request->input('public') === false) {
-                    $profile = $profile->private();
-                }
             }
 
             if ($request->boolean('accepting_undergrad')) {
