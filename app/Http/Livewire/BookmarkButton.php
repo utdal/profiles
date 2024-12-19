@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Policies\UserBookmarkPolicy;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
