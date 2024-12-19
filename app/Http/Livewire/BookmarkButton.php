@@ -12,8 +12,6 @@ class BookmarkButton extends Component
 
     public $model;
 
-    public $bookmark;
-
     public $user;
 
     public $mini = false;
