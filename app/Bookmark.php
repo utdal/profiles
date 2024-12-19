@@ -4,6 +4,8 @@ namespace App;
 
 use App\Profile;
 use App\User;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphPivot;
 
@@ -17,6 +19,18 @@ class Bookmark extends MorphPivot
 
     /** @var string The database table for this model. */
     public $table = 'bookmarks';
+
+    //////////////////
+    // Query Scopes //
+    //////////////////
+
+    /**
+     * Query scope to get bookmarks of a particular model type.
+     */
+    public function scopeOfType(Builder $q, Model|string $model): void
+    {
+        $q->where('userable_type', '=', is_object($model) ? get_class($model) : $model);
+    }
 
     //////////////
     // Relations//

@@ -41,10 +41,8 @@ class BookmarkButton extends Component
 
     public function unbookmark()
     {
-        $bookmark = $this->user->bookmarks->where('userable_id', '=', $this->model->getKey())->first();
+        $this->authorize('delete', $this->user->bookmarkFor($this->model));
 
-        $this->authorize('delete', $bookmark);
-        
         $this->user->unbookmark($this->model);
 
         $this->emit('alert', "Removed from your bookmarks", 'success');
