@@ -10,7 +10,7 @@ use App\Student;
 use App\UserSetting;
 use App\Traits\RoleTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Auditable as HasAudits;
 use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Notifications\Notifiable;
@@ -125,6 +125,21 @@ class User extends Authenticatable implements Auditable
         }
 
         return $this->bookmarked($model)->where('userable_id', '=', $model->getKey())->exists();
+    }
+
+    /**
+     * Returns the User's Bookmark of the given model
+     */
+    public function bookmarkFor(Model $model): ?Bookmark
+    {
+        if ($this->relationLoaded('bookmarks')) {
+            return $this->bookmarks->firstWhere(function($bookmark) use ($model) {
+                return $bookmark->userable_id === $model->getKey() &&
+                       $bookmark->userable_type === get_class($model);
+            });
+        }
+
+        return $this->bookmarks()->ofType($model)->firstWhere('userable_id', '=', $model->getKey());
     }
 
     /**
