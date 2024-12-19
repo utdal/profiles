@@ -3,6 +3,8 @@
 namespace App;
 
 use App\Profile;
+use App\User;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphPivot;
 
 class Bookmark extends MorphPivot
@@ -22,12 +24,18 @@ class Bookmark extends MorphPivot
 
     /**
      * Bookmark has one Profile (one-to-one)
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function profile()
+    public function profile(): BelongsTo
     {
         return $this->belongsTo(Profile::class, 'userable_id');
+    }
+
+    /**
+     * Bookmark(s) belong to one User (many-to-one)
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
 }
