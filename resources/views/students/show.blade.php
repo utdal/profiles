@@ -42,11 +42,9 @@
                     <div class="mr-2">
                     {!! Form::open(['url' => route('students.status', $student), 'method' => 'PATCH']) !!}
                         @if($student->status === 'drafted')
-                            {!!Form::hidden('status', 'submitted')!!}
-                            <button class="btn btn-secondary btn-sm" type="submit" data-toggle="tooltip" data-placement="auto" title="Submit this student application for consideration"><i class="fas fa-check"></i> Submit</button>
+                            <button class="btn btn-secondary btn-sm" type="submit" name="status" value="submitted" data-toggle="tooltip" data-placement="auto" title="Submit this student application for consideration"><i class="fas fa-check"></i> Submit</button>
                         @else
-                            {!!Form::hidden('status', 'drafted')!!}
-                            <button class="btn btn-secondary btn-sm" type="submit" data-toggle="tooltip" data-placement="auto" title="Un-submit if you've already joined a research group or want to remove your application from future consideration"><i class="fas fa-undo"></i> Un-submit</button>
+                            <button class="btn btn-secondary btn-sm" type="submit" name="status" value="drafted" data-toggle="tooltip" data-placement="auto" title="Un-submit if you've already joined a research group or want to remove your application from future consideration"><i class="fas fa-undo"></i> Un-submit</button>
                         @endif
                     {!! Form::close() !!}
                     </div>
