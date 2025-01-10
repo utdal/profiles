@@ -10494,8 +10494,8 @@ button.video-control .fa-play {
 }
 .profile .fancy_header .edit_banner_button {
   position: absolute;
-  bottom: 0px;
-  right: 0px;
+  bottom: 2px;
+  right: 2px;
 }
 .profile .profile_list_photo {
   width: 100%;
@@ -10640,13 +10640,8 @@ button.video-control .fa-play {
 
 a.edit_photo_button {
   position: relative;
-  top: -31px;
-}
-
-.edit_banner_button {
-  position: relative;
-  bottom: -40px;
-  right: -40px;
+  top: -33px;
+  right: 2px;
 }
 
 .student-card-img-overlay {

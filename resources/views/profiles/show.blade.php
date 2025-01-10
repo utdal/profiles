@@ -38,13 +38,14 @@
 					<div class="col-md-5 col-sm-6">
 						<img class="profile_photo" src="{{ $profile->image_url }}" alt="{{ $profile->full_name }}">
 						@if($editable)
-						<a class="btn-sm btn-info btn edit_photo_button offset-10 col-2" href="#" data-target="#profile_picture_editor" data-toggle="modal" role="button">
-							<small><i class="fas fa-camera"></i> Profile</small>
+						<a class="btn-sm btn-info btn edit_photo_button offset-10 col-2" href="#" data-target="#profile_header_editor" data-toggle="modal" role="button">
+							<small><i class="fas fa-camera"></i> Edit</small>
 						</a>
 						@endif
-						<livewire:profile-picture-editor-modal :profile="$profile" :info="$information">
+						
 					</div>
 				@endif
+				<livewire:profile-header-editor-modal :profile="$profile">
 				<div class="@if($information->fancy_header)col-lg-5 @else col-md-7 col-sm-6 @endif">
 					<div class="contact_info">
 
@@ -116,14 +117,14 @@
 				@endif
 			</div>
 		</div>
-		@if($editable)
+		@if($editable & $information->fancy_header)
 			<div class="d-flex align-items-end flex-column edit_banner_button">
-				<a class="btn-sm btn-info btn " href="#" data-target="#banner_picture_editor" data-toggle="modal" role="button">
-					<small><i class="fas fa-camera"></i> Banner</small>
+				<a class="btn-sm btn-info btn " href="#" data-target="#profile_header_editor" data-toggle="modal" role="button">
+					<small><i class="fas fa-camera"></i> Edit</small>
 				</a>
 			</div>
 		@endif
-		<livewire:banner-picture-editor-modal :profile="$profile" :info="$information">
+		
 	</div>
 	<nav id="links" class="container links" aria-label="profile sections">
 		<ul>
