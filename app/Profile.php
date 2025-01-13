@@ -529,6 +529,13 @@ class Profile extends Model implements HasMedia, Auditable
             });
     }
 
+    public function scopeNotAcceptingStudents($query) {
+        return $query->whereHas('data', function($q) {
+                    $q->where('type', 'information')
+                      ->whereJsonContains('data->not_accepting_students', '1');
+                });
+    }
+
     ///////////////////////////////////
     // Mutators & Virtual Attributes //
     ///////////////////////////////////

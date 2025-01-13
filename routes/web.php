@@ -15,6 +15,7 @@
  * Auth
  ******************/
 
+use App\Http\Controllers\InsightsController;
 use App\Http\Controllers\ProfilesController;
 use App\Http\Controllers\TagsController;
 use App\Http\Controllers\UsersController;
@@ -28,6 +29,7 @@ Route::name('logout')->get('/logout', 'Auth\LoginController@logout');
  ******************/
 Route::name('app.')->group(function () {
     Route::name('logs.index')->get('/logs', 'LogsController@index');
+    Route::name('insights.index')->get('insights', [InsightsController::class, 'index']);
     Route::name('settings.edit')->get('/settings', 'SettingsController@edit');
     Route::name('settings.update')->post('/settings', 'SettingsController@update');
     Route::name('settings.update-image')->post('/settings/image/{image}', 'SettingsController@updateImage')

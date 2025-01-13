@@ -313,6 +313,45 @@ class Student extends Model implements Auditable
         return $query;
     }
 
+    public function scopeDataOrContains($query, $key, $value)
+    {
+        if ($value !== '') {
+            $query->whereHas('research_profile', function ($q) use ($key, $value) {
+                $q->orWhereJsonContains("data->{$key}", $value);
+            });
+        }
+
+        return $query;
+    }
+
+    public function scopeWithDataSelected($query, $key)
+    {
+        $query->whereHas('research_profile', function ($q) use ($key) {
+            $q->orWhereJsonLength("data->{$key}", ">=", "1");
+        });
+
+        return $query;
+    }
+
+    // public function scopeWithSemesterSelected($query)
+    // {
+    //     return $query->whereHas('research_profile', function ($q) {
+    //         $q->whereJsonLength("data->semesters", ">=", "1");
+    //     });
+    // }
+    // public function scopeWithSchoolSelected($query)
+    // {
+    //     return $query->whereHas('research_profile', function ($q) {
+    //         $q->whereJsonLength("data->schools", ">=", "1");
+    //     });
+    // }
+    // public function scopeWithExistingStatus($query)
+    // {
+    //     return $query->whereHas('stats', function ($q) {
+    //         $q->whereJsonLength("data->status", ">=", "1");
+    //     });
+    // }
+
     public function scopeDataEquals($query, $key, $value)
     {
         if ($value !== '') {
@@ -350,6 +389,17 @@ class Student extends Model implements Auditable
     public function scopeWithStatusNotInterested($query)
     {
         return $query->where('profile_student.status', '=', 'not interested');
+    }
+
+    /**
+     * Query scope for Students whose application status is 'not interested'. To be used through the Profile relation.
+     * 
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeWithStatusAccepted($query)
+    {
+        return $query->where('profile_student.status', '=', 'accepted');
     }
 
     ///////////////

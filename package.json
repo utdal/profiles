@@ -36,6 +36,7 @@
     "trix": "^0.11.2"
   },
   "dependencies": {
+    "chart.js": "^4.4.3",
     "puppeteer": "^16.1.0"
   }
 }
