@@ -1,29 +1,7 @@
 <h1>Edit <a href="{{ action('ProfilesController@show', [$profile->slug]) }}">{{$profile->name}}</a>'s Contact Information</h1>
 <div class="row">
 	@foreach($data as $info)
-		<div class="col col-md-4">
-			<label for="file">Icon</label>
-			<img class="profile_photo" src="{{ $profile->image_url }}" alt="{{ $profile->full_name }}">
-			{!! Form::open(['url' => route('profiles.update-banner', [$profile->slug]), 'method' => 'POST', 'files' => true]) !!}
-			<label for="banner">Banner</label>
-			<img id="banner-img" class="profile_photo" src="{{ $profile->banner_url }}" />
-			<br />
-			<br />
-			<div class="control-group">
-				<div class="controls">
-					{!! Form::file('banner_image', ['id' => 'banner', 'name' => 'banner_image', 'required' => 'true', 'accept' => 'image/*', 'class' => 'd-none form-control']) !!}
-					<label for="banner" class="btn btn-secondary btn-block"><i class="fas fa-plus"></i> Select Image</label>
-					{!! Form::inlineErrors('banner_image') !!}
-				</div>
-			</div>
-			<button type="submit" class="btn btn-primary btn-block" data-toggle="replace-icon" data-newicon="fas fa-sync fa-spin" data-inputrequired="#banner">
-				<i class="fas fa-upload"></i> Replace Image
-			</button>
-			{!! Form::close() !!}
-			<br>
-			<br>
-		</div>
-		<div class="col col-md-8 col-12">
+		<div class="col">
 			{!! Form::model($profile, ['route' => ['profiles.update', 'profile' => $profile, 'section' => 'information']]) !!}
 			<div class="form-group">
 				{!! Form::label('full_name', 'Display Name') !!}
@@ -138,46 +116,6 @@
 				</div>
 				<div class="col col-12 col-xl-5">
 					<p class="text-muted">Refresh all publications via ORCID. All previous publications will be removed and fresh data will be pulled in at regular intervals. Keep unchecked to manually edit your publications.</p>
-				</div>
-			</fieldset>
-			<fieldset id="fancy_header" class="form-group row my-3 py-4 border-top">
-				<div class="col col-12 col-xl-7">
-					<div class="form-group form-check p-0">
-						<input type="hidden" name="data[{{$info->id}}][data][fancy_header]" value="0">
-						<input
-							type="checkbox"
-							name="data[{{$info->id}}][data][fancy_header]"
-							id="data[{{$info->id}}][data][fancy_header]"
-							@checked(old("data.{$info->id}.data.fancy_header", $info->fancy_header))
-							value="1"
-							data-toggle="show"
-							data-toggle-target="#fancy_header_options"
-						>
-						<label class="form-check-label" for="data[{{$info->id}}][data][fancy_header]">Fancy Header</label>
-					</div>
-					{{-- reset sub-options if main option is unchecked --}}
-					<input type="hidden" name="data[{{$info->id}}][data][fancy_header_right]" value="0">
-					<div
-						id="fancy_header_options"
-						class="border-left ml-3"
-						@style([
-							'display: none' => !old('data.show_accepting_students', $info->show_accepting_students)
-						])
-					>
-						<div class="form-group form-check">
-							<input
-								type="checkbox"
-								name="data[{{$info->id}}][data][fancy_header_right]"
-								id="data[{{$info->id}}][data][fancy_header_right]"
-								@checked(old("data.{$info->id}.data.fancy_header_right", $info->fancy_header_right))
-								value="1"
-							>
-							<label class="form-check-label" for="data[{{$info->id}}][data][fancy_header_right]">Align Header Right</label>
-						</div>
-					</div>
-				</div>
-				<div class="col col-12 col-xl-5">
-					<p class="text-muted">This will use a full-width header style - please make sure uploaded banner image is of sufficient quality!</p>
 				</div>
 			</fieldset>
 			<fieldset id="show_accepting" class="form-group row my-3 py-4 border-top">
