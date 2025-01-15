@@ -35,7 +35,9 @@ class ProfilePolicy
      */
     protected function checkSchoolEditor(User $user, Profile $profile)
     {
-        return $user->hasRoleOption('school_profiles_editor', 'schools', $profile->user->school_id ?? -1);
+        $profile_schools = $profile->user->schools;
+
+        return $profile_schools->contains(fn($school) => $user->hasRoleOption('school_profiles_editor', 'schools', $school->id ?? -1));
     }
 
     /**
@@ -47,7 +49,9 @@ class ProfilePolicy
      */
     protected function checkDepartmentEditor(User $user, Profile $profile)
     {
-        return $user->hasRoleOption('department_profiles_editor', 'departments', $profile->user->department ?? 'none');
+        $profile_departments = $profile->user->departments;
+
+        return $profile_departments->contains(fn($department) => $user->hasRoleOption('department_profiles_editor', 'departments', $department ?? 'none'));
     }
 
     /**
