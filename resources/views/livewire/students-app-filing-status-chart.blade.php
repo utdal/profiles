@@ -5,51 +5,52 @@
         labels: @entangle('labels'),
         selected_semesters: @entangle('selected_semesters'),
         init() {
-
-            const appCountFilingStatusChart = new Chart(
-                this.$refs.appCountFilingStatus,
-                {
-                    type: 'bar',
-                    data: {
-                        labels: this.labels,
-                        datasets: this.data.map((dataset, index) => ({
-                            ...dataset,
-                            backgroundColor: ['#9BD0F5', '#56CC9F', '#FFCFA0', '#FFB1C1'][index],
-                        })),    
-                    },
-                    options: {
-                        plugins: {
-                            legend: {
-                                position: 'bottom'
+            window.addEventListener('profiles-charts-module:loaded', () => {
+                const appCountFilingStatusChart = new Chart(
+                    this.$refs.appCountFilingStatus,
+                    {
+                        type: 'bar',
+                        data: {
+                            labels: this.labels,
+                            datasets: this.data.map((dataset, index) => ({
+                                ...dataset,
+                                backgroundColor: ['#9BD0F5', '#56CC9F', '#FFCFA0', '#FFB1C1'][index],
+                            })),    
+                        },
+                        options: {
+                            plugins: {
+                                legend: {
+                                    position: 'bottom'
+                                },
+                                datalabels: false,
                             },
-                            datalabels: false,
-                        },
-                        responsive: true,
-                        interaction: {
-                            intersect: true,
-                        },
-                        scales: {
-                            x: {
-                                stacked: false,
-                                type: 'category'
+                            responsive: true,
+                            interaction: {
+                                intersect: true,
                             },
-                            y: {
-                                stacked: false,
+                            scales: {
+                                x: {
+                                    stacked: false,
+                                    type: 'category'
+                                },
+                                y: {
+                                    stacked: false,
+                                },
+                            },
+                            animation: {
+                                onComplete: function() {
+                                    Livewire.emit('chartAnimationComplete');
+                                }
                             },
                         },
-                        animation: {
-                            onComplete: function() {
-                                Livewire.emit('chartAnimationComplete');
-                            }
-                        },
-                    },
-                    plugins: [highlightTickPlugin, validateEmptyDataPlugin],
-                }
-            );
-            Livewire.on('refreshChart1', (data, labels) => {
-                appCountFilingStatusChart.data.labels = labels;
-                appCountFilingStatusChart.data.datasets = data;
-                appCountFilingStatusChart.update();
+                        plugins: [highlightTickPlugin, validateEmptyDataPlugin],
+                    }
+                );
+                Livewire.on('refreshChart1', (data, labels) => {
+                    appCountFilingStatusChart.data.labels = labels;
+                    appCountFilingStatusChart.data.datasets = data;
+                    appCountFilingStatusChart.update();
+                });
             });
         }
     }"

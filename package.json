@@ -37,7 +37,9 @@
     "vue-template-compiler": "^2.6.14"
   },
   "dependencies": {
+    "alpinejs": "^3.14.8",
     "chart.js": "^4.4.3",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "puppeteer": "^16.1.0"
   }
 }

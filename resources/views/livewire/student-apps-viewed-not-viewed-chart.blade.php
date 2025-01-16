@@ -5,7 +5,7 @@
         labels: @entangle('labels'),
         selected_semesters: @entangle('selected_semesters'),
         init() {
-
+            window.addEventListener('profiles-charts-module:loaded', () => {
                 var progress = this.data[0];
                 var [data, labels, bg_color] = getChartData(this.data, this.labels);
 
@@ -75,7 +75,8 @@
                             }];
                     chart_instance.update();
                 });
-            }
+            });
+        }
     }"
 >
     <h5 class="d-md-flex justify-content-md-center">Applications Viewed</h5>

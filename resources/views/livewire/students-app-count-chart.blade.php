@@ -4,51 +4,52 @@
         data: @entangle('data'),
         labels: @entangle('labels'),
         init() {
-
-            const appCountBySemesterChart = new Chart(
-                this.$refs.appCountBySemester,
-                {
-                    type: 'bar',
-                    data: {
-                        labels: this.labels,
-                        datasets: this.data.map((dataset, index) => ({
-                            ...dataset,
-                            backgroundColor: ['#9BD0F5', '#56CC9F', '#FFCFA0', '#FFB1C1'][index],
-                        })),    
-                    },
-                    options: {
-                        plugins: {
-                            legend: {
-                                position: 'bottom'
+            window.addEventListener('profiles-charts-module:loaded', () => {
+                const appCountBySemesterChart = new Chart(
+                    this.$refs.appCountBySemester,
+                    {
+                        type: 'bar',
+                        data: {
+                            labels: this.labels,
+                            datasets: this.data.map((dataset, index) => ({
+                                ...dataset,
+                                backgroundColor: ['#9BD0F5', '#56CC9F', '#FFCFA0', '#FFB1C1'][index],
+                            })),    
+                        },
+                        options: {
+                            plugins: {
+                                legend: {
+                                    position: 'bottom'
+                                },
+                                datalabels: false,
                             },
-                            datalabels: false,
-                        },
-                        responsive: true,
-                        interaction: {
-                            intersect: true,
-                        },
-                        scales: {
-                            x: {
-                                stacked: false,
-                                type: 'category'
+                            responsive: true,
+                            interaction: {
+                                intersect: true,
                             },
-                            y: {
-                                stacked: false,
+                            scales: {
+                                x: {
+                                    stacked: false,
+                                    type: 'category'
+                                },
+                                y: {
+                                    stacked: false,
+                                },
+                            },
+                            animation: {
+                                onComplete: function() {
+                                    Livewire.emit('chartAnimationComplete');
+                                }
                             },
                         },
-                        animation: {
-                            onComplete: function() {
-                                Livewire.emit('chartAnimationComplete');
-                            }
-                        },
-                    },
-                    plugins: [highlightTickPlugin, validateEmptyDataPlugin],
-                }
-            );
-            Livewire.on('refreshChart2', (data, labels) => {
-                appCountBySemesterChart.data.labels = labels;
-                appCountBySemesterChart.data.datasets = data;
-                appCountBySemesterChart.update();
+                        plugins: [highlightTickPlugin, validateEmptyDataPlugin],
+                    }
+                );
+                Livewire.on('refreshChart2', (data, labels) => {
+                    appCountBySemesterChart.data.labels = labels;
+                    appCountBySemesterChart.data.datasets = data;
+                    appCountBySemesterChart.update();
+                });
             });
         }
     }"

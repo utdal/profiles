@@ -37,3 +37,7 @@ window.Bloodhound = require('corejs-typeahead');
 
 // Trix editor
 require('trix');
+
+import Alpine from 'alpinejs';
+window.Alpine = Alpine;
+Alpine.start();

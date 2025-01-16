@@ -39,6 +39,7 @@ mix.autoload({
 // Compile JS
 mix
     .js('resources/assets/js/app.js', 'public/js')
+    .js('resources/assets/js/profiles-charts.js', 'public/js')
     // extract these vendor libraries into one separate vendor.js file
     .extract([
         'jquery',
