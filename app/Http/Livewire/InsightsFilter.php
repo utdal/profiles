@@ -34,6 +34,6 @@ class InsightsFilter extends Component
 
     public function render()
     {
-        return view('livewire.insights-filter');
+        return view('livewire.charts.insights-filter');
     }
 }

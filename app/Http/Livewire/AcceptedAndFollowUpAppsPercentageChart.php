@@ -50,6 +50,6 @@ class AcceptedAndFollowUpAppsPercentageChart extends Component
 
     public function render()
     {
-        return view('livewire.accepted-and-follow-up-apps-percentage-chart');
+        return view('livewire.charts.accepted-and-follow-up-apps-percentage-chart');
     }
 }

@@ -53,6 +53,6 @@ class StudentsAppFilingStatusChart extends Component
 
     public function render()
     {
-        return view('livewire.students-app-filing-status-chart');
+        return view('livewire.charts.students-app-filing-status-chart');
     }
 }

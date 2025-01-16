@@ -44,6 +44,6 @@ class StudentsAppCountChart extends Component
 
     public function render()
     {
-        return view('livewire.students-app-count-chart');
+        return view('livewire.charts.students-app-count-chart');
     }
 }

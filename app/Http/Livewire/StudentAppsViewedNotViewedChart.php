@@ -45,6 +45,6 @@ class StudentAppsViewedNotViewedChart extends Component
 
     public function render()
     {
-        return view('livewire.student-apps-viewed-not-viewed-chart');
+        return view('livewire.charts.student-apps-viewed-not-viewed-chart');
     }
 }
