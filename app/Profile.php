@@ -574,7 +574,7 @@ class Profile extends Model implements HasMedia, Auditable
      */
     public function getBannerUrlAttribute()
     {
-        return url($this->getFirstMediaUrl('banners', 'large') ?: '/img/cover.png');
+        return url($this->getFirstMediaUrl('banners', 'large'));
     }
 
     /**

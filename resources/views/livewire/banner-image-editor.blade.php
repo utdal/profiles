@@ -10,18 +10,18 @@
                 @endforeach
             </div>
         @endif
-        <div class="d-flex align-items-center">
-            <div>
+        <div class="d-flex align-items-center justify-content-center">
+            <div @if(!$banner_image_exists) style="display:none" @endif>
                 <img id="banner-img" src="{{ $profile->banner_url }}" wire:ignore/>
             </div>
-            <div class="col-4">
+            <div @if($banner_image_exists) class="col-4" @endif>
                 {!! Form::file('banner_image', ['id' => 'banner', 'name' => 'banner_image', 'accept' => 'image/*', 'wire:model' => 'banner_image', 'class' => 'd-none form-control']) !!}
                 <label for="banner" class="btn btn-secondary btn-block"><i class="fas fa-plus"></i> Select Image</label>
                 <small class="text-muted">This will use a full-width header style - please use a high-quality image (1280 × 720 pixels or larger).</small>
             </div>
         </div>
 
-        <fieldset class="form-group row py-2">
+        <fieldset class="form-group row py-2" @if(!$banner_image_exists) style="display:none" @endif>
             <div>
                 <div id="fancy_header_options">
                     <div class="form-group">

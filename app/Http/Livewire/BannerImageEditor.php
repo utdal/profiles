@@ -2,15 +2,20 @@
 
 namespace App\Http\Livewire;
 
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+
 class BannerImageEditor extends ProfileHeaderEditorModal
 {
 
     public $fancy_header_right;
     public $banner_image;
+    public $banner_image_exists;
     protected $listeners = ['removeFancyHeader'];
 
     public function mount()
     {
+        $this->banner_image_exists = $this->profile->hasMedia('banners');
         $this->fancy_header_right = $this->profile->hasFancyHeaderRight();
     }
 
