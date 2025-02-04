@@ -604,7 +604,12 @@ class Profile extends Model implements HasMedia, Auditable
 
     public function hasFancyHeaderRight()
     {
-        return $this->information->first()->data['fancy_header_right'];
+        return $this->information->first()->data['fancy_header_right'] ?? false;
+    }
+    
+    public function hasImage($collection = null)
+    {
+        return $this->hasMedia($collection);
     }
 
     ///////////////

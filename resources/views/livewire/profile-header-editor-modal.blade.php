@@ -10,18 +10,18 @@
 
             <div class="modal-body">
                 <div class="container-md">
-                    <div class="d-flex justify-content-around">
+                    <div class="d-flex justify-content-around flex-wrap-sm-only">
                         <label class="card-radio mr-2">
-                        <div class="form-check form-check-inline">
-                            {!! Form::label("profile_enabled", "Avatar Layout (Default)", ['class' => 'form-check-label']) !!}
-                            {!! Form::radio("fancy_header", '0', $fancy_header === '0', ['wire:model' => 'fancy_header', 'id' => "profile_enabled", 'class' => 'form-check-input'])!!}
-                        </div>
+                            <div class="form-check form-check-inline">
+                                {!! Form::label("profile_enabled", "Avatar Layout (Default)", ['class' => 'form-check-label']) !!}
+                                {!! Form::radio("fancy_header", '0', $fancy_header === '0', ['wire:model' => 'fancy_header', 'id' => "profile_enabled", 'class' => 'form-check-input'])!!}
+                            </div>
                             <div class="d-flex">
                                 <div>
                                     <img class="card-img-top" src="{{ 'img/default.png' }}" alt="{{ 'profile photo example' }}">
                                 </div>
                             
-                                <div class="col-6">
+                                <div class="col-6 align-content-center">
                                     @include('profiles/profile_card_example')
                                 </div>
                             </div>
@@ -32,20 +32,26 @@
                                 {!! Form::label("banner_enabled", "Cover Layout", ['class' => 'form-check-label']) !!}
                                 {!! Form::radio("fancy_header", '1', $fancy_header === '1', ['wire:model' => 'fancy_header', 'id' => "banner_enabled", 'class' => 'form-check-input'])!!}
                             </div>
-                            <div class="d-flex" style="background-image: url('img/cover.png')">
-                                <div class="col-6 flex-grow-6" style="background-color: #fff; margin: 0.75rem;">
+                            <div class="d-flex" style="background-image: url('img/cover.png'); height: 90%;">
+                                <div class="col-6 align-content-center" style="background-color: #fff; margin: 0.75rem; padding: 0.75rem;">
                                     @include('profiles/profile_card_example')
                                 </div>
                             </div>
                         </label>
                     </div>
+                    @include('profiles.edit/profile_image', [
+                                                    'image_url' => $profile->image_url, 
+                                                    'trigger' => 'profile-header-editor-modal', 
+                                                    'key' => "profile-img", 
+                                                    'msg' => "This photo will appear on your profile page and as your application profile image - please use a high-quality image (300x300 pixels or larger)."
+                                                ])
 
-                    <div id="profile-image-editor" @if($fancy_header) style="display:none" @endif>
-                        <livewire:profile-image-editor :profile="$profile" :user="$user" :image_rules="$image_rules" wire-key="profile-image-editor">
-                    </div>
-                    <div id="banner-image-editor" @if(!$fancy_header) style="display:none" @endif>
-                        <livewire:banner-image-editor :profile="$profile" :user="$user" :image_rules="$image_rules" wire-key="banner-image-editor">
-                    </div>
+                    @include('profiles.edit/banner_image', [
+                                                    'banner_url' => $profile->banner_url,
+                                                    'trigger' => 'profile-header-editor-modal',
+                                                    'key' => "banner-img",
+                                                    'msg' => "This will use a full-width header style - please use a high-quality image (1280 × 720 pixels or larger)."
+                                                ])
                 </div>
             </div>
         </div>
