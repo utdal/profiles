@@ -41,8 +41,10 @@
                     </div>
 
                     @if(!$fancy_header)
+                        <h5>2- Select Avatar Image</h5>
                         @livewire('image-picker', $avatar_settings + ['model' => $profile])
                     @else
+                        <h5>2- Select Cover Image</h5>
                         @livewire('image-picker', $cover_settings + ['model' => $profile])
                     @endif
                    
