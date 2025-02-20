@@ -158,6 +158,18 @@ class Profile extends Model implements HasMedia, Auditable
         return $message;
     }
 
+    public function updateLayoutSettings($fancy_header, $fancy_header_right) 
+    {
+        $profile_info = $this->information->first();
+        
+        $profile_info->data = array_merge($profile_info->data ?? [], [
+                                'fancy_header' => $fancy_header,
+                                'fancy_header_right' => (bool) $fancy_header_right,
+                            ]);
+
+        $profile_info->save();
+    }
+
     /**
      * Checks if this profile has publications managed by ORCID
      *
@@ -599,7 +611,7 @@ class Profile extends Model implements HasMedia, Auditable
 
     public function hasFancyHeader()
     {
-        return $this->information->first()->data['fancy_header'];
+        return $this->information->first()->data['fancy_header'] ?? false;
     }
 
     public function hasFancyHeaderRight()

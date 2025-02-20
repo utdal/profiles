@@ -39,7 +39,7 @@
 						<img class="profile_photo" src="{{ $profile->image_url }}" alt="{{ $profile->full_name }}">
 						@if($editable)
 						<a class="btn-sm btn-info btn edit_photo_button offset-10 col-2" href="#" data-target="#profile_header_editor" data-toggle="modal" role="button">
-							<small><i class="fas fa-camera"></i> Edit</small>
+							<small class="d-flex"><i class="fas fa-camera"></i><span style="flex-wrap: nowrap;"> Edit</span></small>
 						</a>
 						@endif
 						
@@ -120,7 +120,7 @@
 		@if($editable & $information->fancy_header)
 			<div class="d-flex align-items-end flex-column edit_banner_button">
 				<a class="btn-sm btn-info btn " href="#" data-target="#profile_header_editor" data-toggle="modal" role="button">
-					<small><i class="fas fa-camera"></i> Edit</small>
+					<small class="d-flex"><i class="fas fa-camera"></i><span style="flex-wrap: nowrap;"> Edit</span></small>
 				</a>
 			</div>
 		@endif

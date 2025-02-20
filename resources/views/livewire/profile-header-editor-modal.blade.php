@@ -39,19 +39,13 @@
                             </div>
                         </label>
                     </div>
-                    @include('profiles.edit/profile_image', [
-                                                    'image_url' => $profile->image_url, 
-                                                    'trigger' => 'profile-header-editor-modal', 
-                                                    'key' => "profile-img", 
-                                                    'msg' => "This photo will appear on your profile page and as your application profile image - please use a high-quality image (300x300 pixels or larger)."
-                                                ])
 
-                    @include('profiles.edit/banner_image', [
-                                                    'banner_url' => $profile->banner_url,
-                                                    'trigger' => 'profile-header-editor-modal',
-                                                    'key' => "banner-img",
-                                                    'msg' => "This will use a full-width header style - please use a high-quality image (1280 × 720 pixels or larger)."
-                                                ])
+                    @if(!$fancy_header)
+                        @livewire('image-picker', $avatar_settings + ['model' => $profile])
+                    @else
+                        @livewire('image-picker', $cover_settings + ['model' => $profile])
+                    @endif
+                   
                 </div>
             </div>
         </div>
