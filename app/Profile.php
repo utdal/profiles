@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Enums\ProfileType;
 use App\ProfileData;
 use App\ProfileStudent;
 use App\Student;
@@ -52,28 +53,30 @@ class Profile extends Model implements HasMedia, Auditable
     ];
 
     /**
-        * The attributes that should be cast to native types.
-        *
-        * @var array
-        */
-       protected $casts = [
-           'public' => 'boolean',
-       ];
+    * The attributes that should be cast to native types.
+    *
+    * @var array
+    */
+    protected $casts = [
+        'public' => 'boolean',
+        'type' => ProfileType::class,
+    ];
 
     /**
     * The attributes that are mass assignable.
     *
     * @var array
     */
-   protected $fillable = [
-          'slug',
-          'full_name',
-          'first_name',
-          'middle_name',
-          'last_name',
-          'active',
-          'public'
-      ];
+    protected $fillable = [
+        'slug',
+        'full_name',
+        'first_name',
+        'middle_name',
+        'last_name',
+        'active',
+        'public',
+        'type',
+    ];
 
 
     /////////////////////
@@ -371,6 +374,16 @@ class Profile extends Model implements HasMedia, Auditable
             ->performOnCollections($collection);
     }
 
+    public function isType(ProfileType $type): bool
+    {
+        return $this->type === $type;
+    }
+
+    public function isUnlisted(): bool
+    {
+        return $this->isType(ProfileType::Unlisted);
+    }
+
     //////////////////
     // Query Scopes //
     //////////////////
@@ -395,6 +408,30 @@ class Profile extends Model implements HasMedia, Auditable
     public function scopePrivate($query)
     {
         return $query->where('public', 0);
+    }
+
+    /**
+     * Query scope for Profiles of a particular type
+     */
+    public function scopeOfType(Builder $query, ProfileType $type): void
+    {
+        $query->where('type', $type->value);
+    }
+
+    /**
+     * Query scope for Profiles of default/normal type
+     */
+    public function scopeDefault(Builder $query): void
+    {
+        $query->ofType(ProfileType::Default);
+    }
+
+    /**
+     * Query scope for unlisted Profiles
+     */
+    public function scopeUnlisted(Builder $query): void
+    {
+        $query->ofType(ProfileType::Unlisted);
     }
 
     /**

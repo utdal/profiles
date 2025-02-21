@@ -298,7 +298,7 @@
 					<p class="text-muted">This will show a standard note on your profile that you're <em>not</em> currently accepting students of the specified type(s).</p>
 				</div>
 			</fieldset>
-			<fieldset class="form-group row my-3 py-4 border-top border-bottom">
+			<fieldset class="form-group row my-3 py-4 border-top">
 				<div class="col col-12 col-xl-7">
 					<div class="form-group form-check p-0">
 						<input type="hidden" name="public" value="0">
@@ -316,6 +316,26 @@
 					<p class="text-muted">Make profile viewable and searchable by website visitors. If turned off, it will still be accessible to site administrators.</p>
 				</div>
 			</fieldset>
+			@can('updateAdvanced', $profile)
+			<fieldset class="form-group row my-3 py-4 border-top border-bottom">
+				<div class="col col-12 col-xl-7">
+					<div class="form-group form-check p-0">
+						<input type="hidden" name="unlisted" value="0">
+						<input
+							type="checkbox"
+							name="unlisted"
+							id="unlisted"
+							@checked(old('unlisted', $profile->isUnlisted()))
+							value="1"
+						>
+						<label class="form-check-label" for="public">Profile is Unlisted <span class="badge badge-secondary">Advanced</span></label>
+					</div>
+				</div>
+				<div class="col col-12 col-xl-5">
+					<p class="text-muted">Unlisted profiles do not appear in school, tag, or browse lists, but can still be searched and viewed (if public) by their URL.</p>
+				</div>
+			</fieldset>
+			@endcan
 			{!! Form::submit('Save', array('class' => 'btn btn-primary edit-button')) !!}
 			<a href="{{ $profile->url }}" class='btn btn-light edit-button'>Cancel</a>
 			{!! Form::close() !!}
