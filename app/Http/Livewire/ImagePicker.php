@@ -29,8 +29,13 @@ class ImagePicker extends Component
 
     public function mount() 
     {
-        $this->validateCallUserFunc('save_function');
-        $this->validateCallUserFunc('callback_function');
+        if (isset($this->save_function)) {
+            $this->validateCallUserFunc('save_function');
+        }
+
+        if (isset($this->callback_function)) {
+            $this->validateCallUserFunc('callback_function');
+        }
     }
     
     public function updatedImage()
