@@ -44,6 +44,7 @@ class ProfileHeaderEditorModal extends Component
             ],
             'redirect_route' => 'profiles.show',
             'message' => $message,
+            'auth_params' => ['update', [Profile::class, $this->profile]],
         ];
 
         $this->cover_settings = [

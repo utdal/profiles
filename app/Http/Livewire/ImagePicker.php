@@ -3,13 +3,14 @@
 namespace App\Http\Livewire;
 
 use App\Http\Requests\Concerns\HasImageUploads;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 class ImagePicker extends Component
 {
-    use WithFileUploads, HasImageUploads;
+    use WithFileUploads, HasImageUploads, AuthorizesRequests;
 
     public $image;
     public $existing_image_url;
@@ -24,6 +25,7 @@ class ImagePicker extends Component
     public $partial_view;
     public $redirect_route;
     public $message;
+    public $auth_params;
 
     public function mount() 
     {
@@ -44,6 +46,8 @@ class ImagePicker extends Component
 
     public function save()
     {
+        $this->authorize(...$this->auth_params);
+        
         if ($this->image) {
             $this->message = call_user_func([$this->model, $this->save_function], ...$this->save_params ?? []);
         }
