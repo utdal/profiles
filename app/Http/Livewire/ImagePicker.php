@@ -56,7 +56,7 @@ class ImagePicker extends Component
             call_user_func([$this->model, $this->callback_function], ...$this->callback_params ?? []);
         }
 
-        return redirect()->route($this->redirect_route, $this->model)->with('flash_message', $this->message);
+        return redirect($this->redirect_route)->with('flash_message', $this->message);
     }
 
     private function validateCallUserFunc($function_name)
