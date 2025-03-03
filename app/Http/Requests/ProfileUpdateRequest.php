@@ -51,7 +51,7 @@ class ProfileUpdateRequest extends FormRequest
             'data.*.data.url' => 'nullable|url',
             'data.*.data.secondary_url' => 'nullable|url',
             'data.*.data.tertiary_url' => 'nullable|url',
-            'data.*.data.orc_id' => 'nullable|regex:/^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$/',
+            'data.*.data.orc_id' => 'nullable|required_if_accepted:data.*.data.orc_id_managed|regex:/^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$/',
             'data.*.data.orc_id_managed' => 'required|boolean',
             'data.*.data.fancy_header' => 'required|boolean',
             'data.*.data.fancy_header_right' => 'required|boolean',
@@ -67,7 +67,8 @@ class ProfileUpdateRequest extends FormRequest
     {
         return [
             'data.*.image.max' => $this->uploadedImageMessages('max'),
-            'data.*.id.exists' => 'Some of the profile entries you are attempting to update might have been modified since you loaded this page. Please reload this page and try again.'
+            'data.*.id.exists' => 'Some of the profile entries you are attempting to update might have been modified since you loaded this page. Please reload this page and try again.',
+            'data.*.data.orc_id.required_if_accepted' => 'The ORCID field is required when Auto-update Publications is enabled.',
         ];
     }
 
