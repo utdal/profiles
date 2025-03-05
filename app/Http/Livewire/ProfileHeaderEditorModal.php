@@ -64,6 +64,7 @@ class ProfileHeaderEditorModal extends Component
             'redirect_route' => route('profiles.show', $this->profile),
             'message' => $message,
             'partial_view' => 'livewire.partials._fancy-header-settings',
+            'auth_params' => ['update', [Profile::class, $this->profile]],
         ];
     }
 
