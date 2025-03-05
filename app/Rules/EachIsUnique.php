@@ -9,20 +9,44 @@ use Illuminate\Support\Str;
 
 class EachIsUnique implements ValidationRule
 {
-    protected string $delimiter;
-    protected string $table;
-    protected string $column;
-    protected array $constraint;
+    /** Delimiter to split the field under validation into individual elements.
+     * @var string
+     * */
+    protected $delimiter;
+
+    /** Table where the uniqueness check will be performed.
+     * @var string
+     * */
+    protected $table;
+
+    /** Column in the table where uniqueness will be checked.
+     * @var string
+     * */
+    protected $column;
+
+    /** Constraint for the where method to apply when checking uniqueness in the format of ['column', 'value'].
+     * @var array|null
+     * */
+    protected $constraint;
+
+    /** The ID or model instance of the record to ignore.
+     * @var mixed|null
+     * */
     protected $ignore_id;
+
+    /** The column name of the primary key, if it's other than the ID.
+     * @var string|null
+     * */
     protected $ignore_column;
+
 
     /**
      * Create a new validation rule instance.
      *
-     * @param string $delimiter   Delimiter to split the field under validation into individual elements.
-     * @param string $table       Table where the uniqueness check will be performed.
-     * @param string $column      Column in the table where uniqueness will be checked.
-     * @param array  $constraint  Constraint for the where method to apply when checking uniqueness in the format of ['column', 'value'].
+     * @param string $delimiter
+     * @param string $table
+     * @param string $column
+     * @param array  $constraint
      */
     public function __construct($delimiter, $table, $column, $constraint = null)
     {
@@ -69,8 +93,8 @@ class EachIsUnique implements ValidationRule
     /**
      * Set values to be excluded or ignored by the unique checks.
      * 
-     * @param mixed $id - the ID or model instance of the record to ignore
-     * @param string|null $id_column - The column name of the primary key, if it's other than the ID
+     * @param mixed|null $id
+     * @param string|null $id_column
      */
     public function ignore($id, $idColumn = null)
     {
