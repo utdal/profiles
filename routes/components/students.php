@@ -17,7 +17,7 @@ Route::name('students.')->prefix('/students')->group(function () {
         Route::name('show')->get('/', [StudentsController::class, 'show']);
         Route::name('edit')->get('/edit', [StudentsController::class, 'edit']);
         Route::name('update')->post('/update', [StudentsController::class, 'update']);
-        Route::name('status')->get('/status', [StudentsController::class, 'setStatus']);
+        Route::name('status')->patch('/status', [StudentsController::class, 'setStatus']);
     });
 
 });

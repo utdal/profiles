@@ -6,6 +6,7 @@ use App\User;
 use App\Profile;
 use App\ProfileStudent;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Auth\Access\Response;
 
 class ProfilePolicy
 {
@@ -34,7 +35,9 @@ class ProfilePolicy
      */
     protected function checkSchoolEditor(User $user, Profile $profile)
     {
-        return $user->hasRoleOption('school_profiles_editor', 'schools', $profile->user->school_id ?? -1);
+        $profile_schools = $profile->user->schools;
+
+        return $profile_schools->contains(fn($school) => $user->hasRoleOption('school_profiles_editor', 'schools', $school->id ?? -1));
     }
 
     /**
@@ -46,7 +49,9 @@ class ProfilePolicy
      */
     protected function checkDepartmentEditor(User $user, Profile $profile)
     {
-        return $user->hasRoleOption('department_profiles_editor', 'departments', $profile->user->department ?? 'none');
+        $profile_departments = $profile->user->departments;
+
+        return $profile_departments->contains(fn($department) => $user->hasRoleOption('department_profiles_editor', 'departments', $department ?? 'none'));
     }
 
     /**
@@ -84,11 +89,11 @@ class ProfilePolicy
             return $profile->public;
         }
 
-        return $profile->public ||
-                $user->hasRole(['site_admin', 'profiles_editor']) ||
-                $user->owns($profile, true) ||
-                $this->checkSchoolEditor($user, $profile) ||
-                $this->checkDepartmentEditor($user, $profile);
+        return $profile->public || ($user && (
+            $user->owns($profile, true) ||
+            $this->checkSchoolEditor($user, $profile) ||
+            $this->checkDepartmentEditor($user, $profile)
+        )) ? Response::allow() : Response::denyAsNotFound();
     }
 
     /**

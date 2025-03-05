@@ -77,6 +77,7 @@
                 'aria-labelledby' => 'profiles-picker-label',
                 'multiple', 
                 'required',
+                'data-accepting-undergrad' => 'true',
                 ] + ($schools->isNotEmpty() ? ['data-school' => $schools->keys()->implode(';')] : [])) 
             !!}
         @else
