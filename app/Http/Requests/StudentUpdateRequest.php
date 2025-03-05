@@ -6,6 +6,7 @@ use App\Student;
 use App\StudentData;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Collection;
 
 class StudentUpdateRequest extends FormRequest
 {
@@ -13,11 +14,13 @@ class StudentUpdateRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
+     * @return array
      */
     public function rules(): array
     {
         $schools = Student::participatingSchools()->keys()->all();
+        /** @var array<Collection> $majors */
+        $majors = StudentData::majors();
 
         return [
             'full_name' => 'required|string',
@@ -27,7 +30,7 @@ class StudentUpdateRequest extends FormRequest
             ],
             'research_profile.major' => [
                 'required',
-                Rule::in(StudentData::majors())
+                Rule::in($majors)
             ],
             'research_profile.brief_intro' => 'sometimes|string|max:280',
             'research_profile.intro' => 'sometimes|string|max:280',
