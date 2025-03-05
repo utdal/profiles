@@ -632,7 +632,7 @@ $(function () {
 
   //show preview of uploaded image
   $('input[type="file"]').on('change', function (e) {
-    return profiles.preview_selected_image(e);
+    profiles.preview_selected_image(e);
   });
 
   // enable drag and drop sorting for items with sortable class

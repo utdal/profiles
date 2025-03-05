@@ -573,7 +573,9 @@ $(function() {
     $('.datepicker.month').datepicker(profiles.config.datepicker.month);
 
     //show preview of uploaded image
-    $('input[type="file"]').on('change', (e) => profiles.preview_selected_image(e));
+    $('input[type="file"]').on('change', function(e) {
+        profiles.preview_selected_image(e);
+    });
 
     // enable drag and drop sorting for items with sortable class
     if ($('.sortable').length > 0) {
