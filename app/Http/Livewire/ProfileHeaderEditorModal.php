@@ -42,7 +42,7 @@ class ProfileHeaderEditorModal extends Component
                 'fancy_header' => false,
                 'fancy_header_right' => $this->fancy_header_right,
             ],
-            'redirect_route' => route('profiles.show', $this->profile),
+            'redirect_route' => route('profiles.show', $this->profile->slug),
             'message' => $message,
             'auth_params' => ['update', [Profile::class, $this->profile]],
         ];
@@ -61,9 +61,10 @@ class ProfileHeaderEditorModal extends Component
                 'fancy_header' => true,
                 'fancy_header_right' => $this->fancy_header_right,
             ],
-            'redirect_route' => route('profiles.show', $this->profile),
+            'redirect_route' => route('profiles.show', $this->profile->slug),
             'message' => $message,
             'partial_view' => 'livewire.partials._fancy-header-settings',
+            'auth_params' => ['update', [Profile::class, $this->profile]],
         ];
     }
 

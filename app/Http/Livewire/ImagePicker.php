@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\TemporaryUploadedFile;
 
 class ImagePicker extends Component
 {
@@ -14,7 +15,7 @@ class ImagePicker extends Component
 
     /**
      * Uploaded image file
-     * @var $image
+     * @var TemporaryUploadedFile
      */ 
     public $image;
     
@@ -48,13 +49,13 @@ class ImagePicker extends Component
     
     /**
      * Method on the model used to save the image
-     * @var string
+     * @var string|null
      */ 
     public $save_function;
     
     /**
      * Parameters passed to the save function
-     * @var array
+     * @var array|null
      */ 
     public $save_params;
     
@@ -72,7 +73,7 @@ class ImagePicker extends Component
     
     /**
      * Parameters for the callback function
-     * @var array
+     * @var array|null
      */ 
     public $callback_params;
     
@@ -166,8 +167,8 @@ class ImagePicker extends Component
 
             $function_name => [
                 function ($attribute, $value, $fail) use ($class_name) {
+                    /** @var string|null $value */
                     if (!is_callable($value, true) || !method_exists($class_name, $value)) {
-                        /** @var string|null $value */
                         $fail('Please contact the app admin.');
                         logger()->error("The method {$value} does not exist in {$class_name}.");
                     }
