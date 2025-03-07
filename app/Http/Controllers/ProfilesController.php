@@ -270,19 +270,6 @@ class ProfilesController extends Controller
         return redirect()->route('profiles.show', $profile->slug)->with('flash_message', 'Profile updated.');
     }
 
-    public function updateImage(Profile $profile, ProfileImageRequest $request): RedirectResponse
-    {
-        return redirect()->route('profiles.show', [$profile->slug, 'information'])->with('flash_message', $profile->processImage($request->file('image'), 'images'));
-    }
-
-    /**
-     * Update a Profile's banner image
-     */
-    public function updateBanner(Profile $profile, ProfileBannerImageRequest $request): RedirectResponse
-    {
-        return redirect()->route('profiles.edit', [$profile->slug, 'information'])->with('flash_message', $profile->processImage($request->file('banner_image'), 'banners'));
-    }
-
     /**
      * Confirm deletion of a profile
      */

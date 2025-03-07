@@ -113,8 +113,6 @@ Route::name('profiles.')->prefix('/')->group(function() {
         Route::name('confirm-restore')->get('confirm-restore', [ProfilesController::class, 'confirmRestore'])->withTrashed();
         Route::name('archive')->delete('archive', [ProfilesController::class, 'archive']);
         Route::name('restore')->post('restore', [ProfilesController::class, 'restore'])->withTrashed();
-        Route::name('update-image')->post('/image', 'ProfilesController@updateImage');
-        Route::name('update-banner')->post('/banner', 'ProfilesController@updateBanner');
         Route::name('orcid')->get('/orcid', 'ProfilesController@orcid');
     });
 
