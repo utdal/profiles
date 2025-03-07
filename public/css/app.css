@@ -10638,10 +10638,10 @@ button.video-control .fa-play {
   width: 100%;
 }
 
-a.edit_photo_button {
-  position: relative;
-  top: -33px;
-  right: 2px;
+div.edit_photo_button {
+  position: absolute;
+  bottom: 2px;
+  right: 18px;
 }
 
 .student-card-img-overlay {
