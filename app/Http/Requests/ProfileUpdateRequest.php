@@ -48,8 +48,6 @@ class ProfileUpdateRequest extends FormRequest
             'data.*.data.tertiary_url' => 'nullable|url',
             'data.*.data.orc_id' => 'nullable|regex:/^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$/',
             'data.*.data.orc_id_managed' => 'required|boolean',
-            'data.*.data.fancy_header' => 'required|boolean',
-            'data.*.data.fancy_header_right' => 'required|boolean',
         ];
     }
 

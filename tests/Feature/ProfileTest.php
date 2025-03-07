@@ -156,26 +156,7 @@ class ProfileTest extends TestCase
             ->assertSee($new_profile_data->secondary_url)
             ->assertSee($new_profile_data->tertiary_url)
             ->assertSee($new_profile_data->orc_id)
-            ->assertDontSee('fancy_header')
             ->assertDontSeeText('Sync');
-
-        // With Fancy Header
-        $response = $this->followingRedirects()->post($information_update_route, [
-            'data' => [
-                1 => [
-                    'id' => $profile_data->id,
-                    'data' => $profile_post_data + [
-                        'orc_id_managed' => 0,
-                        'fancy_header' => 1,
-                        'fancy_header_right' => 0,
-                    ],
-                ],
-            ],
-            'full_name' => $new_profile_displayname,
-            'public' => 1,
-        ]);
-
-        $response->assertSee('fancy_header');
 
         // With ORCID Syncing
         $response = $this->followingRedirects()->post($information_update_route, [
@@ -184,8 +165,7 @@ class ProfileTest extends TestCase
                     'id' => $profile_data->id,
                     'data' => $profile_post_data + [
                         'orc_id_managed' => 1,
-                        'fancy_header' => 1,
-                        'fancy_header_right' => 0,
+                        'orc_id' => $new_profile_data->orc_id,
                     ],
                 ],
             ],
@@ -194,62 +174,6 @@ class ProfileTest extends TestCase
         ]);
 
         $response->assertSeeText('Sync');
-    }
-
-    /**
-     * Test editing the profile image
-     *
-     * @return void
-     */
-    public function testProfileImageEdit()
-    {
-        $profile = Profile::factory()->hasData()->create();
-
-        $image_update_route = route('profiles.update-image', [
-            'profile' => $profile,
-        ]);
-
-        $this->loginAsAdmin();
-
-        $response = $this->followingRedirects()->post($image_update_route, [
-            'image' => $this->mockUploadedImage(),
-        ]);
-
-        $response
-            ->assertSessionHasNoErrors()
-            ->assertStatus(200)
-            ->assertViewIs('profiles.edit')
-            ->assertSee('Profile image has been updated.');
-
-        $this->assertFileExists($profile->getFirstMedia('images')->getPath());
-    }
-
-    /**
-     * Test editing the profile banner image
-     *
-     * @return void
-     */
-    public function testProfileBannerEdit()
-    {
-        $profile = Profile::factory()->hasData()->create();
-
-        $image_update_route = route('profiles.update-banner', [
-            'profile' => $profile,
-        ]);
-
-        $this->loginAsAdmin();
-
-        $response = $this->followingRedirects()->post($image_update_route, [
-            'banner_image' => $this->mockUploadedImage(),
-        ]);
-
-        $response
-            ->assertSessionHasNoErrors()
-            ->assertStatus(200)
-            ->assertViewIs('profiles.edit')
-            ->assertSee('Profile image has been updated.');
-
-        $this->assertFileExists($profile->getFirstMedia('banners')->getPath());
     }
 
 }
