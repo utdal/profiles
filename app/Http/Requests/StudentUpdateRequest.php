@@ -19,8 +19,7 @@ class StudentUpdateRequest extends FormRequest
     public function rules(): array
     {
         $schools = Student::participatingSchools()->keys()->all();
-        /** @var array<Collection> $majors */
-        $majors = StudentData::majors()->merge(['Other' => 'Other']);
+        $majors = StudentData::majors()->merge(['Other' => 'Other'])->all();
 
         return [
             'full_name' => 'required|string',
