@@ -20,7 +20,7 @@ class StudentUpdateRequest extends FormRequest
     {
         $schools = Student::participatingSchools()->keys()->all();
         /** @var array<Collection> $majors */
-        $majors = StudentData::majors();
+        $majors = StudentData::majors()->merge(['Other' => 'Other']);
 
         return [
             'full_name' => 'required|string',
