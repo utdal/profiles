@@ -53,10 +53,9 @@ class StudentUpdateRequest extends FormRequest
             ],
             'research_profile.lang_proficiency' => 'sometimes|array',
             'research_profile.lang_proficiency.*' => 'string|in:limited,basic,professional,native',
-            'research_profile.*' => $this->validateCustomQuestions(),
             'research_profile.graduation_date' => 'required|date|after:today',
             'research_profile.credit' => 'required|numeric|between:-1,1',
-        ];
+        ] + $this->customQuestionRules();
     }
 
     /**
@@ -96,59 +95,35 @@ class StudentUpdateRequest extends FormRequest
             'research_profile.brief_intro' => 'research opportunity reasons',
             'research_profile.intro' => 'future goals',
             'research_profile.interest' => 'interest',
-        ];
+        ] + $this->customQuestionAttributes();
     }
 
-    /**
-     * Check if attr is a custom question and validates the value based on the question type.
-     * Supported question types:
-     * - `yes_no`: Validates that the value is either "1" or "0".
-     * - Other types: Ensures the value does not exceed 1000 characters if it is a string.
-     * 
-     * @return \Closure A validation closure to be used in validation rules.
-     */
-    public function validateCustomQuestions()
+    public function customQuestions(): Collection
     {
-        return function($attr, $value, $fail) {
-            
-            $errors = [];
-            
-            $questions = StudentData::customQuestions()->flatten(1);
-            $question_name = substr($attr, strpos($attr, '.') + 1);
-
-            $question_settings = $questions->first(fn($q) => isset($q['name'], $q['type']) && $q['name'] === $question_name);
-
-            if (is_null($question_settings)) {
-                return false;
-            }
-
-            switch ($question_settings['type']) {
-                case 'yes_no':
-                    if (!in_array($value, ["1", "0"], true)) {
-                        $formatted_question_name = $this->formatQuestionName($question_name);
-                        $errors[] = "The answer to {$formatted_question_name} must be Yes or No.";
-                    }
-                    break;
-                default:
-                    if (is_string($value) && strlen($value) > 1000) {
-                        $formatted_question_name = $this->formatQuestionName($question_name);
-                        $errors[] = "The value for the {$formatted_question_name} question cannot exceed 1000 characters.";
-                    }
-                    break;
-            }
-
-            foreach ($errors as $error) {
-                $fail($error);
-            }
-        };
+        return StudentData::customQuestions()->flatten(1);
     }
 
-    /**
-     * Helper function to format question name
-     * @param string $question_name
-     * @return string
-    */ 
-    function formatQuestionName($question_name) {
-        return strtolower(str_replace('_', ' ', $question_name));
+    public function customQuestionRules(): array
+    {
+        return $this->customQuestions()->mapWithKeys(function($question, $key) {
+            return [
+                "research_profile.{$question['name']}" => match ($question['type']) {
+                    'yes_no' => 'sometimes|boolean',
+                    'text' => 'sometimes|nullable|string|max:256',
+                    'textarea' => 'sometimes|nullable|string',
+                    default => 'sometimes|nullable',
+                }
+            ];
+        })->all();
     }
+
+    public function customQuestionAttributes(): array
+    {
+        return $this->customQuestions()->mapWithKeys(function($question, $key) {
+            return [
+                "research_profile.{$question['name']}" => "{$question['school']} research " . str_replace('_', ' ', $question['name'])
+            ];
+        })->all();
+    }
+
 }
