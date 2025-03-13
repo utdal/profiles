@@ -28,12 +28,13 @@ class StudentUpdateRequest extends FormRequest
                 Rule::exists('profiles', 'id')->where('public', 1),
             ],
             'research_profile.major' => [
-                'required',
+                'sometimes',
+                'nullable',
                 Rule::in($majors)
             ],
-            'research_profile.brief_intro' => 'sometimes|string|max:280',
-            'research_profile.intro' => 'sometimes|string|max:280',
-            'research_profile.interest' => 'sometimes|string|max:280',
+            'research_profile.brief_intro' => 'sometimes|string',
+            'research_profile.intro' => 'sometimes|string',
+            'research_profile.interest' => 'sometimes|string',
             'research_profile.schools' => 'required|array',
             'research_profile.schools.*' => [
                 'sometimes',
@@ -54,7 +55,7 @@ class StudentUpdateRequest extends FormRequest
             'research_profile.lang_proficiency' => 'sometimes|array',
             'research_profile.lang_proficiency.*' => 'string|in:limited,basic,professional,native',
             'research_profile.graduation_date' => 'required|date|after:today',
-            'research_profile.credit' => 'required|numeric|between:-1,1',
+            'research_profile.credit' => 'required|numeric|in:-1,0,1',
         ] + $this->customQuestionRules();
     }
 
@@ -66,8 +67,8 @@ class StudentUpdateRequest extends FormRequest
     public function messages()
     {
         return [
-            'faculty.*.exists' => 'The faculty member(s) selected could not be validated.',
-            'faculty.required' => 'You must selest at least one faculty member that you would like to work with.',
+            'faculty.*.exists' => 'One or more of your selected faculty members are not available. Please review and update your selections.',
+            'faculty.required' => 'You must select at least one faculty member that you would like to work with.',
             'research_profile.major.required' => 'The major field is required.',
             'research_profile.semesters.required' => 'At least one semester is required.',
             'research_profile.schools.required' => 'At least one school is required.',
@@ -88,6 +89,7 @@ class StudentUpdateRequest extends FormRequest
     {
         return [
             'full_name' => 'display name',
+            'research_profile.major' => 'major',
             'research_profile.semesters' => 'semesters',
             'research_profile.schools' => 'school',
             'research_profile.graduation_date' => 'graduation date',
