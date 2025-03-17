@@ -51,7 +51,7 @@ class StudentsController extends Controller
     /**
      * Create a new student research application.
      */
-    public function create(StudentUpdateRequest $request): RedirectResponse
+    public function create(Request $request): RedirectResponse
     {
         $student = $request->user()->studentProfiles->first() ?? $this->store($request);
 
