@@ -108,7 +108,7 @@ jobs:
           node-version: 16
 
       - name: Cache PHP security DB
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: cache-symfony-db
         with:
             path: ~/.symfony/cache
