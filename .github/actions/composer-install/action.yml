@@ -32,6 +32,11 @@ runs:
       run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
       shell: bash
 
+    - name: Debug composer cache path
+      run: |
+        echo "Cache dirr $(composer config cache-files-dir)"
+        echo "Cache dirr ${{ steps.composer-cache.outputs.dir }}"
+
     - name: Cache composer dependencies
       uses: actions/cache@v4
       id: cache-composer-dependencies
