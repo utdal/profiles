@@ -33,7 +33,7 @@ runs:
       shell: bash
 
     - name: Cache composer dependencies
-      uses: actions/cache@v4
+      uses: actions/cache@v3
       id: cache-composer-dependencies
       with:
         path: ${{ steps.composer-cache.outputs.dir }}

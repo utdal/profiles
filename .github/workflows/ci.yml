@@ -73,7 +73,7 @@ jobs:
           REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
 
       - name: Cache PSALM
-        uses: actions/cache@v4
+        uses: actions/cache@v3
         id: cache-psalm
         with:
             path: /tmp/psalm
@@ -108,7 +108,7 @@ jobs:
           node-version: 16
 
       - name: Cache PHP security DB
-        uses: actions/cache@v4
+        uses: actions/cache@v3
         id: cache-symfony-db
         with:
             path: ~/.symfony/cache
