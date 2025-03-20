@@ -328,7 +328,7 @@
 							@checked(old('unlisted', $profile->isUnlisted()))
 							value="1"
 						>
-						<label class="form-check-label" for="public">Profile is Unlisted <span class="badge badge-secondary">Advanced</span></label>
+						<label class="form-check-label" for="unlisted">Profile is Unlisted <span class="badge badge-secondary">Advanced</span></label>
 					</div>
 				</div>
 				<div class="col col-12 col-xl-5">

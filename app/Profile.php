@@ -294,10 +294,15 @@ class Profile extends Model implements HasMedia, Auditable
 
       }
 
-        // update overall profile visibility
-        if ($section == 'information' && $request->hasAny(['public', 'full_name'])) {
+        // update overall profile record
+        if ($section == 'information' && $request->hasAny(['public', 'unlisted', 'full_name'])) {
             $this->update([
                 'public' => $request->input('public') ?? $this->public,
+                'type' => match ($request->input('unlisted')) {
+                    '1' => ProfileType::Unlisted,
+                    '0' => ProfileType::Default,
+                    default => $this->type,
+                },
                 'full_name' => $request->input('full_name') ?? $this->full_name,
             ]);
         }
