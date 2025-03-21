@@ -40,9 +40,10 @@ class ProfileUpdateRequest extends FormRequest
         return [
             'full_name' => 'required|string',
             'public' => 'required|boolean',
-            'unlisted' => [
+            'type' => [
                 Rule::prohibitedIf(fn () => $this->user()->cannot('updateAdvanced', $this->route('profile'))),
-                'boolean',
+                'numeric',
+                'in:0,1,2',
             ],
             'data.*.data.title' => 'required|string',
             'data.*.data.email' => 'nullable|email',

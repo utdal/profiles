@@ -295,12 +295,13 @@ class Profile extends Model implements HasMedia, Auditable
       }
 
         // update overall profile record
-        if ($section == 'information' && $request->hasAny(['public', 'unlisted', 'full_name'])) {
+        if ($section == 'information' && $request->hasAny(['public', 'type', 'full_name'])) {
             $this->update([
                 'public' => $request->input('public') ?? $this->public,
-                'type' => match ($request->input('unlisted')) {
-                    '1' => ProfileType::Unlisted,
+                'type' => match ($request->input('type')) {
                     '0' => ProfileType::Default,
+                    '1' => ProfileType::Unlisted,
+                    '2' => ProfileType::InMemoriam,
                     default => $this->type,
                 },
                 'full_name' => $request->input('full_name') ?? $this->full_name,
@@ -384,9 +385,19 @@ class Profile extends Model implements HasMedia, Auditable
         return $this->type === $type;
     }
 
+    public function isDefault(): bool
+    {
+        return $this->isType(ProfileType::Default);
+    }
+
     public function isUnlisted(): bool
     {
         return $this->isType(ProfileType::Unlisted);
+    }
+
+    public function isInMemoriam(): bool
+    {
+        return $this->isType(ProfileType::InMemoriam);
     }
 
     //////////////////
@@ -448,11 +459,20 @@ class Profile extends Model implements HasMedia, Auditable
     }
 
     /**
+     * Query scope for unlisted Profiles
+     */
+    public function scopeInMemoriam(Builder $query): void
+    {
+        $query->ofType(ProfileType::InMemoriam);
+    }
+
+    /**
      * Query scope for excluding unlisted Profiles
      */
     public function scopeExcludingUnlisted(Builder $query): void
     {
         $query->excludingType(ProfileType::Unlisted);
+        $query->excludingType(ProfileType::InMemoriam);
     }
 
     /**

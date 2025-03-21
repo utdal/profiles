@@ -319,20 +319,43 @@
 			@can('updateAdvanced', $profile)
 			<fieldset class="form-group row my-3 py-4 border-top border-bottom">
 				<div class="col col-12 col-xl-7">
-					<div class="form-group form-check p-0">
-						<input type="hidden" name="unlisted" value="0">
-						<input
-							type="checkbox"
-							name="unlisted"
-							id="unlisted"
-							@checked(old('unlisted', $profile->isUnlisted()))
-							value="1"
-						>
-						<label class="form-check-label" for="unlisted">Profile is Unlisted <span class="badge badge-secondary">Advanced</span></label>
+					<legend class="col-form-label font-weight-bold p-0 mb-3">Profile Type <span class="badge badge-secondary">Advanced Setting</span></legend>
+					<div class="form-group">
+						<div class="form-check mb-1">
+							<input
+								type="radio"
+								name="type"
+								id="type_default"
+								@checked(old('type', $profile->isDefault()))
+								value="0"
+							>
+							<label class="form-check-label" for="type_default">Default</label>
+						</div>
+						<div class="form-check mb-1">
+							<input
+								type="radio"
+								name="type"
+								id="type_unlisted"
+								@checked(old('type', $profile->isUnlisted()))
+								value="1"
+							>
+							<label class="form-check-label" for="type_unlisted">Unlisted</label>
+						</div>
+						<div class="form-check mb-1">
+							<input
+								type="radio"
+								name="type"
+								id="type_in_memoriam"
+								@checked(old('type', $profile->isInMemoriam()))
+								value="2"
+							>
+							<label class="form-check-label" for="type_in_memoriam">In Memoriam</label>
+						</div>
 					</div>
 				</div>
 				<div class="col col-12 col-xl-5">
-					<p class="text-muted">Unlisted profiles do not appear in school, tag, or browse lists, but can still be searched and viewed (if public) by their URL.</p>
+					<p class="text-muted"><em>Unlisted</em> profiles do not appear in school, tag, or browse lists, but can still be searched and viewed (if public) by their URL.</p>
+					<p class="text-muted"><em>In Memoriam</em> profiles behave the same as unlisted but show an additional "In Memory of" label on the profile</p>
 				</div>
 			</fieldset>
 			@endcan

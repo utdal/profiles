@@ -26,7 +26,12 @@ class StudentUpdateRequest extends FormRequest
             'full_name' => 'required|string',
             'faculty.*' => [
                 'integer',
-                Rule::exists('profiles', 'id')->where('public', 1)->whereNot('type', ProfileType::Unlisted->value),
+                Rule::exists('profiles', 'id')
+                    ->where('public', 1)
+                    ->whereNotIn('type', [
+                        ProfileType::Unlisted->value,
+                        ProfileType::InMemoriam->value,
+                    ]),
             ],
             'research_profile.major' => [
                 'sometimes',
