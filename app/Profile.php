@@ -424,6 +424,14 @@ class Profile extends Model implements HasMedia, Auditable
     }
 
     /**
+     * Query scope for Profiles excluding a particular type
+     */
+    public function scopeExcludingType(Builder $query, ProfileType $type): void
+    {
+        $query->whereNot('type', $type->value);
+    }
+
+    /**
      * Query scope for Profiles of default/normal type
      */
     public function scopeDefault(Builder $query): void
@@ -437,6 +445,14 @@ class Profile extends Model implements HasMedia, Auditable
     public function scopeUnlisted(Builder $query): void
     {
         $query->ofType(ProfileType::Unlisted);
+    }
+
+    /**
+     * Query scope for excluding unlisted Profiles
+     */
+    public function scopeExcludingUnlisted(Builder $query): void
+    {
+        $query->excludingType(ProfileType::Unlisted);
     }
 
     /**

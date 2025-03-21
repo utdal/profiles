@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\ProfileType;
 use App\Student;
 use App\StudentData;
 use Illuminate\Foundation\Http\FormRequest;
@@ -25,7 +26,7 @@ class StudentUpdateRequest extends FormRequest
             'full_name' => 'required|string',
             'faculty.*' => [
                 'integer',
-                Rule::exists('profiles', 'id')->where('public', 1),
+                Rule::exists('profiles', 'id')->where('public', 1)->whereNot('type', ProfileType::Unlisted->value),
             ],
             'research_profile.major' => [
                 'sometimes',
