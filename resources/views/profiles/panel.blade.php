@@ -3,6 +3,9 @@
     <img class="card-img-top" src="{{ $profile->image_url }}" alt="profile image">
   </a>
   <div class="card-body">
+      @if($profile->isInMemoriam())
+        <small class="text-muted">In Memory of</small>
+      @endif
       <h5 class="card-title profile-name">
         <a href="{{ $profile->url }}">{{$profile->name}}</a>
       </h5>
