@@ -389,7 +389,7 @@ var profiles = function ($, undefined) {
    * @return {void}
    */
   var registerProfilePicker = function registerProfilePicker(selector, api) {
-    if (typeof api === 'undefined') api = this_url + '/api/v1?with_data=1&data_type=information&public=1';
+    if (typeof api === 'undefined') api = this_url + '/api/v1?with_data=1&data_type=information';
     var $select = $(selector);
     if ($select.length === 0) return;
     if ($select.data('school')) {
