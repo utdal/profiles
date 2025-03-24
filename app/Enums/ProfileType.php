@@ -16,4 +16,9 @@ enum ProfileType: int
             ProfileType::InMemoriam => 'In Memoriam',
         };
     }
+
+    public static function toArray(): array
+    {
+        return array_column(self::cases(), 'name', 'value');
+    }
 }
