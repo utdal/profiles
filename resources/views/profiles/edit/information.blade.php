@@ -298,7 +298,7 @@
 					<p class="text-muted">This will show a standard note on your profile that you're <em>not</em> currently accepting students of the specified type(s).</p>
 				</div>
 			</fieldset>
-			<fieldset class="form-group row my-3 py-4 border-top">
+			<fieldset class="form-group row my-3 py-4 border-top border-bottom">
 				<div class="col col-12 col-xl-7">
 					<div class="form-group form-check p-0">
 						<input type="hidden" name="public" value="0">
@@ -317,7 +317,7 @@
 				</div>
 			</fieldset>
 			@can('updateAdvanced', $profile)
-			<fieldset class="form-group row my-3 py-4 border-top border-bottom">
+			<fieldset class="form-group row my-3 py-4 border-bottom">
 				<div class="col col-12 col-xl-7">
 					<legend class="col-form-label font-weight-bold p-0 mb-3">Profile Type <span class="badge badge-secondary">Advanced Setting</span></legend>
 					<div class="form-group">
