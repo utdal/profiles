@@ -16,7 +16,7 @@ class v2_1_Seeder extends Seeder
     public function run(): void 
     {
         Student::query()
-            ->whereNotNull('slug')
+            ->whereNull('slug')
             ->orderBy('id')
             ->chunkById(200, function ($students) {
                 $this->command->withProgressBar($students, fn($student) => $this->updateStudent($student));
