@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\View;
 use App\Setting;
 use Collective\Html\FormFacade as Form;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Database\Eloquent\Builder;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -44,6 +45,28 @@ class AppServiceProvider extends ServiceProvider
                 return Setting::pluck('value', 'name')->toArray();
             });
             view()->share('settings', $settings);
+        });
+
+        Builder::macro('toCsv', function ($name = null) {
+            $query = $this;
+
+            return response()->streamDownload(function () use ($query) {
+                $results = $query->get();
+
+                if ($results->count() < 1) return;
+
+                $titles = implode(',', array_keys((array) $results->first()->getAttributes()));
+
+                $values = $results->map(function ($result) {
+                    return implode(',', collect($result->getAttributes())->map(function ($thing) {
+                        return '"'.$thing.'"';
+                    })->toArray());
+                });
+
+                $values->prepend($titles);
+
+                echo $values->implode("\n");
+            }, $name ?? 'export.csv');
         });
 
     }

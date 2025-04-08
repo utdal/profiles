@@ -56,7 +56,7 @@ class ProfileStudents extends Component
         'semester_filter' => ['except' => '', 'as' => 'semester'],
     ];
 
-    public function getStudentsProperty()
+    public function getStudentsBuilderProperty()
     {
         return $this->profile->students()
             ->submitted()
@@ -71,8 +71,12 @@ class ProfileStudents extends Component
             ->willWorkWithAnimals($this->animals_filter)
             ->needsResearchCredit($this->credit_filter)
             ->with('user:id,email')
-            ->orderBy('last_name')
-            ->get();
+            ->orderBy('last_name');
+    }
+
+    public function getStudentsProperty()
+    {
+        return $this->getStudentsBuilderProperty()->get();
     }
 
     public function updated($name, $value)
@@ -83,6 +87,11 @@ class ProfileStudents extends Component
     public function refreshStudents()
     {
         $this->students = $this->getStudentsProperty();
+    }
+
+    public function export()
+    {
+        return $this->getStudentsBuilderProperty()->toCsv();
     }
 
     public function render()

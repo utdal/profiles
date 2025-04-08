@@ -1,4 +1,7 @@
 <div class="row">
+    <div class="col-md-1 offset-md-11 mb-3 p-1">
+        <button class="btn btn-primary" wire:click="export"> Export</button>
+    </div>
     <div class="col-md-3 mb-md-0 mb-3">
         <div
             class="nav flex-column nav-pills h-100 border-right bg-light"
