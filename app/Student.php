@@ -125,6 +125,76 @@ class Student extends Model implements Auditable
         }
     }
 
+    public static function exportStudentApps(EloquentCollection $students)
+    {
+        $students->map(function ($student) {
+            
+            $st = clone $student;
+
+            $st->email = $st->user->email;
+            $st->link = "https://profiles.utdallas.edu/students/{$st->slug}";
+            $st->brief_intro = $st->research_profile->brief_intro;
+            $st->intro = $st->research_profile->intro;
+            $st->interest = $st->research_profile->interest;
+            $st->major = $st->research_profile->major;
+            $st->schools = $st->research_profile->schools;
+            $st->languages = $st->research_profile->languages;
+            $st->languages_other = $st->research_profile->language_other_name;
+            $st->languages_proficiency = $st->research_profile->lang_proficiency;
+            $st->semesters = $st->research_profile->semesters;
+            $st->availability = $st->research_profile->availability;
+            $st->earn_credit = $st->research_profile->credit;
+            $st->graduation_date = $st->research_profile->graduation_date;
+            $st->bbs_travel_centers = $st->research_profile->travel;
+            $st->bbs_travel_other = $st->research_profile->travel_other;
+            $st->bbs_comfortable_animals = $st->research_profile->animals;
+            $st->other_info = $st->research_profile->other_info;
+
+            $st->earn_credit = match ($st->earn_credit) {
+                '1' => 'credit',
+                '0' => 'volunteer',
+                '-1' => 'no preference',
+                default => $st->earn_credit,
+            };
+
+            foreach ([
+                'bbs_travel_centers',
+                'bbs_travel_other',
+                'bbs_comfortable_animals',
+            ] as $yes_no_field) {
+                $st->$yes_no_field = match ($st->$yes_no_field) {
+                    '1' => 'yes',
+                    '0' => 'no',
+                    default => $st->$yes_no_field,
+                };
+            }
+
+            $st->topics = $st->tags->pluck('name')->implode(", ");
+
+            foreach($st->getAttributes() as $attr => $value) {
+                if (is_array($value)) {
+                    if (array_is_list($value)) {
+                        $st->$attr = implode(", ", $value);
+                    } else {
+                        $json = json_encode($value, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
+                        $json = str_replace([',', ':'], [', ', ': '], $json);
+                        $json = str_replace(["\r", "\n"], ' ', $json);
+                        $st->$attr = $json;
+                    }
+                }
+                if ($value === null) {
+                    $st->$attr = '';
+                }
+            }
+
+            unset($st->id, $st->user_id, $st->type, $st->application, $st->tags, $st->research_profile, $st->user);
+
+            return $st;
+        });
+
+        return $students;
+    }
+
     /**
      * Increments the Student Application view count
      *
