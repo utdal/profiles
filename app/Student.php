@@ -127,7 +127,7 @@ class Student extends Model implements Auditable
 
     public static function exportStudentApps(EloquentCollection $students)
     {
-        $students->map(function ($student) {
+        $apps = $students->map(function ($student) {
             
             $st = clone $student;
 
@@ -192,7 +192,7 @@ class Student extends Model implements Auditable
             return $st;
         });
 
-        return $students;
+        return $apps;
     }
 
     /**
