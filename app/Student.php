@@ -125,6 +125,14 @@ class Student extends Model implements Auditable
         }
     }
 
+    /**
+     * Transforms a collection of students with their associated 'user' and 'research_profile' 
+     * data into a flat collection suitable for CSV export.
+     * 
+     * @param \Illuminate\Database\Eloquent\Collection $students
+     * @return \Illuminate\Support\Collection
+     * 
+     */
     public static function exportStudentApps(EloquentCollection $students)
     {
         $apps = $students->map(function ($student) {

@@ -87,7 +87,7 @@ class ProfileStudents extends Component
         $this->students = $this->getStudentsProperty();
     }
 
-    public function export()
+    public function exportToCsv()
     {
         $students = $this->students->where('application.status', $this->filing_status);
 
@@ -95,7 +95,7 @@ class ProfileStudents extends Component
             $this->emit('alert', "No records available for the filters applied", 'danger');
         }
         else {
-            $student_apps = Student::exportStudentApps($students, 'student_applications.csv');
+            $student_apps = Student::exportStudentApps($students);
             return $student_apps->toCsv('students_apps.csv');
         }
     }

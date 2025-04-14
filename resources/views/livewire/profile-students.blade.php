@@ -1,6 +1,15 @@
 <div class="row">
-    <div class="col-md-1 offset-md-11 mb-3 p-1">
-        <button class="btn btn-primary" wire:click="export"> Export</button>
+    <div class="col-12 d-flex justify-content-end mr-2 mb-2">
+        <button 
+            class="btn btn-primary btn-sm"
+            wire:click="exportToCsv"
+            type="button"
+            aria-label="Download student data as CSV"
+            title="Download as CSV"
+        >
+            <i class="fas fa-download"></i>
+            CSV
+        </button>
     </div>
     <div class="col-md-3 mb-md-0 mb-3">
         <div
