@@ -1,4 +1,16 @@
 <div class="row">
+    <div class="col-12 d-flex justify-content-end mr-2 mb-2">
+        <button 
+            class="btn btn-primary btn-sm"
+            wire:click="exportToCsv"
+            type="button"
+            aria-label="Download student data as CSV"
+            title="Download as CSV"
+        >
+            <i class="fas fa-download"></i>
+            CSV
+        </button>
+    </div>
     <div class="col-md-3 mb-md-0 mb-3">
         <div
             class="nav flex-column nav-pills h-100 border-right bg-light"
@@ -18,6 +30,7 @@
                     aria-controls="tab_{{ Str::slug($status) }}"
                     aria-selected="{{ $loop->first ? 'true' : 'false' }}"
                     wire:ignore.self
+                    wire:click="$set('filing_status', @js($status))"
                 >
                     <span class="fa-fw mr-2 {{ $status_icons[$status] }}" style="opacity:0.3"></span>
                     {{ $status_name }}
