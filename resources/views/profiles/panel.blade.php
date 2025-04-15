@@ -4,7 +4,7 @@
   </a>
   <div class="card-body">
       @if($profile->isInMemoriam())
-        <small class="text-muted">In Memory of</small>
+          <small class="badge badge-secondary">In Memory of</small>
       @endif
       <h5 class="card-title profile-name">
         <a href="{{ $profile->url }}">{{$profile->name}}</a>
@@ -17,6 +17,10 @@
       @endif
   </div>
   <a href="{{ $profile->url }}" class="card-footer card-link text-center" aria-label="{{$profile->name}}, view profile">
-    View Profile
+      @if($profile->isInMemoriam())
+          Profile In Memoriam
+      @else
+          View Profile
+      @endif
   </a>
 </div>
