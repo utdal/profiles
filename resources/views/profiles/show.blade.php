@@ -42,7 +42,11 @@
 				<div class="@if($information->fancy_header)col-lg-5 @else col-md-7 col-sm-6 @endif">
 					<div class="contact_info">
 
-						<h1 class="mt-sm-0">{{ $profile->name }}
+						<h1 class="mt-sm-0">
+							@if($profile->isInMemoriam())
+								<small class="text-muted">In Memory of</small><br>
+							@endif
+							{{ $profile->name }}
 							@can('delete', $profile)<a class="btn btn-danger btn-sm" href="{{ route('profiles.confirm-delete', [ $profile ]) }}" title="Archive"><i class="fas fa-archive"></i> Archive</a>@endcan 
 							@if($editable)<a class="btn btn-primary btn-sm" href="{{ route('profiles.edit', [$profile->slug, 'information']) }}" title="Edit"><i class="fas fa-edit"></i> Edit</a>@endif
 							<span title="Bookmark"><livewire:bookmark-button :model="$profile"></span>
@@ -87,6 +91,9 @@
 								@if($information->orc_id)<i class="fab fa-fw fa-orcid" aria-hidden="true"></i> <a href="https://orcid.org/{{$information->orc_id}}" target="_blank">ORCID</a><br />@endif
 								@if($information->show_accepting_students || $information->show_not_accepting_students)
 								<p class="mt-3 mb-0">
+									@if($profile->isUnlisted())
+										<p class="m-0 text-muted"><small><i class="fas fa-link"></i> Unlisted</small></p>
+									@endif
 									@if($information->show_accepting_students)
 										<p class="m-0"><small><i class="fas fa-fw fa-user-graduate" aria-hidden="true"></i> Currently accepting {{ collect(['undergraduate' => $information->accepting_students, 'graduate' => $information->accepting_grad_students])->filter()->keys()->implode(' and ') }} students</small></p>
 									@endif
