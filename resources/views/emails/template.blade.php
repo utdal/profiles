@@ -2,9 +2,9 @@
 <html lang="en-US">
 
 @php
-    $bg_primary = $settings['primary_color'] ?? '#008542';
-    $bg_secondary = $settings['secondary_color'] ?? '#008542';
-    $bg_tertiary = $settings['tertiary_color'] ?? '#69BE28';
+    $bg_primary = $settings['primary_color'] ?? '#154734';
+    $bg_secondary = $settings['secondary_color'] ?? '#C95100';
+    $bg_tertiary = $settings['tertiary_color'] ?? '#34827A';
 @endphp
 
 <head>
@@ -60,7 +60,7 @@
                 <td colspan="6" style="width:100%;text-align:center;padding-top:12px">
                 </td>
             </tr>
-            <tr style="color:#fff;margin:0;padding:0;width:100%;font-size:16px;background:#8B8178;" class="footer">
+            <tr style="color:#fff;margin:0;padding:0;width:100%;font-size:16px;background:#919191;background-image:url('{{asset('/img/60-lines.png')}}');" class="footer">
                 <td colspan="6" style="width:100%;text-align:center;padding:40px 40px;">
                     @if(isset($settings['footer']))
                         {!! $settings['footer'] !!}
@@ -72,5 +72,17 @@
         </tbody>
     </table>
 </body>
+
+<style>
+    tr.footer td{
+        > ul {
+            list-style: none;
+
+            > li {
+                display: inline;
+            }
+        }
+    }
+</style>
 
 </html>

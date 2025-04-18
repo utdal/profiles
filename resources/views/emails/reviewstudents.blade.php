@@ -1,7 +1,7 @@
 @extends('emails.template')
 
 @php
-    $primary_color = $settings['primary_color'] ?? '#008542';
+    $primary_color = $settings['primary_color'] ?? '#154734';
 @endphp
 
 @section('message')
