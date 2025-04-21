@@ -32,14 +32,14 @@
                 <table width="800" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; margin:0 auto; border-collapse:collapse;">
 
                     <!-- Header -->
-                    <tr>
+                    <tr style="height: 70px !important;">
                         <td align="center" style="background-color: {{ $bg_primary }}; padding: 20px 15px;">
-                            <a href="{{ url('/') }}" style="text-decoration: none; display: inline-block;">
+                            <a href="{{ url('/') }}" style="text-decoration: none;">
                                 <table cellpadding="0" cellspacing="0" border="0" align="center" role="presentation">
                                     <tr>
                                         @if(isset($settings['logo']))
                                         <td style="padding-right: 10px;">
-                                            <img src="{{ $settings['logo'] }}" alt="Logo" style="height: 70px; display: block;">
+                                            <img src="{{ $settings['logo'] }}" alt="Logo" width="70" height="70">
                                         </td>
                                         @endif
                                         <td style="color: #ffffff; font-size: 20px; white-space: nowrap; font-family: Helvetica, Arial, sans-serif;">
@@ -63,12 +63,17 @@
 
                     <!-- Footer -->
                     <tr style="background-color: {{ $bg_tertiary }};">
-                        <td colspan="6" style="width:100%;text-align:center;padding-top:12px"></td>
+                        <td colspan="6" style="text-align:center;padding-top:12px"></td>
                     </tr>
                     <tr style="background-color: #919191; padding: 40px; color: #ffffff; font-size: 14px; text-align: center;">
-                        <td class="footer-cell" colspan="6" style="width:100%;text-align:center;padding:40px 40px;">
+                        <td colspan="6" style="text-align:center;padding:40px 40px;">
+
                             @if(isset($settings['footer']))
-                                {!! Purify::config('trix_email')->clean($settings['footer']); !!}
+                                @php
+                                    $footer = Purify::config('trix_email')->clean($settings['footer']);
+                                    $footer = str_replace('<a ', '<a style="color:#ffffff; text-decoration:underline;" ', $footer);
+                                @endphp
+                                {!! $footer !!}
                             @else
                                 Questions? <a href="{{ url('/faq') }}">Check our FAQ</a> or <a href="mailto:{{ config('mail.from.address') }}?subject=Profiles">contact us.</a>
                             @endif
