@@ -15,12 +15,24 @@
 
     <p>If you would like to review these undergraduate student research applications, please visit the following page. On this page, you will also be able to delegate review of the applications to another person or indicate if you're not accepting students.</p>
 
-    <p style="text-align: center; margin: 2rem;">
-        <a
-            href="{{ route('profiles.students', ['profile' => $faculty, 'semester' => $semester]) }}"
-            style="color: white; background-color: {{ $primary_color }}; border: 1px solid {{ $primary_color }}; text-align: center; padding: 0.5rem 1.25rem; line-height: 1.5; font-weight: normal; text-decoration: none; box-shadow: 2px 2px 3px #ccc;"
-        >
-            Review Undergraduate Student Research Applications →
-        </a>
-    </p>
+    <table role="presentation" border="0" cellpadding="0" cellspacing="0" align="center" style="margin: 2rem auto;">
+        <tr>
+            <td align="center" bgcolor="{{ $primary_color }}" style="
+                background-color: {{ $primary_color }};
+                border: 1px solid {{ $primary_color }};
+                padding: 10px 20px;
+            ">
+                <a href="{{ route('profiles.students', ['profile' => $faculty, 'semester' => $semester]) }}"
+                style="
+                        color: white;
+                        text-decoration: none;
+                        font-family: Arial, sans-serif;
+                        font-size: 16px;
+                        display: inline-block;
+                ">
+                    Review Undergraduate Student Research Applications →
+                </a>
+            </td>
+        </tr>
+    </table>
 @stop
