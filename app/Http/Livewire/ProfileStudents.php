@@ -37,6 +37,8 @@ class ProfileStudents extends Component
     public $travel_other_filter = '';
 
     public $tag_filter = '';
+    
+    public $filing_status = '';
 
     protected $listeners = [
         'profileStudentStatusUpdated' => 'refreshStudents'
@@ -70,7 +72,7 @@ class ProfileStudents extends Component
             ->willTravelOther($this->travel_other_filter)
             ->willWorkWithAnimals($this->animals_filter)
             ->needsResearchCredit($this->credit_filter)
-            ->with('user:id,email')
+            ->with('user:id,email', 'research_profile', 'tags')
             ->orderBy('last_name')
             ->get();
     }
@@ -84,6 +86,19 @@ class ProfileStudents extends Component
     public function refreshStudents()
     {
         $this->students = $this->getStudentsProperty();
+    }
+
+    public function exportToCsv()
+    {
+        $students = $this->students->where('application.status', $this->filing_status);
+
+        if ($students->isEmpty()) {
+            $this->emit('alert', "No records available for the filters applied", 'danger');
+        }
+        else {
+            $student_apps = Student::exportStudentApps($students);
+            return $student_apps->toCsv('students_apps.csv');
+        }
     }
 
     public function render()
