@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Macros\CollectionMacros;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Pagination\Paginator;
@@ -46,6 +47,7 @@ class AppServiceProvider extends ServiceProvider
             view()->share('settings', $settings);
         });
 
+        CollectionMacros::register();
     }
 
     /**
