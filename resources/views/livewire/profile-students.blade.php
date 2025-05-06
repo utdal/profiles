@@ -18,6 +18,7 @@
                     aria-controls="tab_{{ Str::slug($status) }}"
                     aria-selected="{{ $loop->first ? 'true' : 'false' }}"
                     wire:ignore.self
+                    wire:click="$set('filing_status', @js($status))"
                 >
                     <span class="fa-fw mr-2 {{ $status_icons[$status] }}" style="opacity:0.3"></span>
                     {{ $status_name }}

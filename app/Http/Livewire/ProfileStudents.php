@@ -8,6 +8,7 @@ use App\ProfileStudent;
 use App\Student;
 use App\StudentData;
 use Livewire\Component;
+use Spatie\Browsershot\Browsershot;
 use Spatie\Tags\Tag;
 
 class ProfileStudents extends Component
@@ -38,8 +39,12 @@ class ProfileStudents extends Component
 
     public $tag_filter = '';
 
+    public $filing_status = '';
+
     protected $listeners = [
         'profileStudentStatusUpdated' => 'refreshStudents'
+        'profileStudentStatusUpdated' => 'refreshStudents',
+        'exportToPdf',
     ];
 
     protected $queryString = [
@@ -71,6 +76,7 @@ class ProfileStudents extends Component
             ->willWorkWithAnimals($this->animals_filter)
             ->needsResearchCredit($this->credit_filter)
             ->with('user:id,email')
+            ->with('user:id,email', 'research_profile', 'stats', 'faculty')
             ->orderBy('last_name')
             ->get();
     }
@@ -85,6 +91,7 @@ class ProfileStudents extends Component
         $this->students = $this->getStudentsProperty();
     }
 
+    public function exportToPdf($export_all = true)
     public function render()
     {
         return view('livewire.profile-students', [
