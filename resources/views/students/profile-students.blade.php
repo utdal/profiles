@@ -62,6 +62,27 @@
                         </p>
                     </div>
                 </span>
+                <span class="dropdown student-filer">
+                    <button
+                        class="btn btn-primary dropdown-toggle py-1 ml-3"
+                        type="button"
+                        id="exportAppsOptionsButton"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-controls="exportAppsOptionsMenu"
+                        aria-expanded="false"
+                    >
+					    <i class="fas fa-download"></i> Export student applications
+				    </button>
+                    <div
+                        id="exportAppsOptionsMenu"
+                        class="dropdown-menu p-3"
+                        style="min-width: 400px !important;"
+                        aria-labelledby="exportAppsOptionsButton"
+                    >
+                    <livewire:profile-students-export-menu :profile="$profile">
+                    </div>
+                </span>
                 @can('viewDelegations', $profile->user)
                     <a class="btn btn-primary ml-3 py-1" href="{{ route('users.delegations.show', ['user' => $profile->user]) }}" title="View/Edit {{ $profile->full_name }} Delegations"><i class="fas fa-user-friends fa-fw"></i> Let someone else do this</a>
                 @endcan

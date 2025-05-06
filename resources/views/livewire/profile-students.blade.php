@@ -144,7 +144,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <button type="button" class="btn btn-block btn-outline-primary" wire:click="resetFilters">Clear All Filters</button>
+                            <button type="button" id="reset_filters_button" class="btn btn-block btn-outline-primary" wire:click="resetFilters">Clear All Filters</button>
                         </div>
                     </div>
                 </div>
@@ -232,4 +232,10 @@
     </div>
 
     @include('livewire.partials._loading-fixed', ['loading_target' => 'resetFilter, resetFilters, animals_filter, credit_filter, graduation_filter, language_filter, search_filter, schools_filter, semester_filter, travel_filter, travel_other_filter, tag_filter'])
+
+    <script>
+        document.getElementById('reset_filters_button').addEventListener('click', function() {
+            Livewire.emitTo('profile-students-export-menu', 'clearFilterSummary');
+        });
+    </script>
 </div>

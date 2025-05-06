@@ -39,10 +39,11 @@ class ProfileStudents extends Component
 
     public $tag_filter = '';
 
+    public $filter_selection = [];
+
     public $filing_status = '';
 
     protected $listeners = [
-        'profileStudentStatusUpdated' => 'refreshStudents'
         'profileStudentStatusUpdated' => 'refreshStudents',
         'exportToPdf',
     ];
@@ -75,7 +76,6 @@ class ProfileStudents extends Component
             ->willTravelOther($this->travel_other_filter)
             ->willWorkWithAnimals($this->animals_filter)
             ->needsResearchCredit($this->credit_filter)
-            ->with('user:id,email')
             ->with('user:id,email', 'research_profile', 'stats', 'faculty')
             ->orderBy('last_name')
             ->get();
@@ -84,6 +84,29 @@ class ProfileStudents extends Component
     public function updated($name, $value)
     {
         $this->emitFilterUpdatedEvent($name, $value);
+
+        $this->updateFilterSelection($name);
+    }
+
+    public function updateFilterSelection($filter_name = null)
+    {
+        $filters_to_check = $filter_name ? [$filter_name] : $this->availableFilters();
+    
+        foreach ($filters_to_check as $filter) {
+            if (filled(trim($this->$filter ?? ''))) {
+                $this->filter_selection[$filter] = $this->$filter;
+            } else {
+                unset($this->filter_selection[$filter]);
+            }
+        }
+    
+        if (!empty($this->filter_selection)) {
+            $filter_summary = $this->humanizeFilters(collect($this->filter_selection));
+            $this->emitTo('profile-students-export-menu', 'updateFilterSummary', $filter_summary);
+        }
+        else {
+            $this->emitTo('profile-students-export-menu', 'resetExportAll');
+        }
     }
 
     public function refreshStudents()
@@ -92,12 +115,71 @@ class ProfileStudents extends Component
     }
 
     public function exportToPdf($export_all = true)
+    {
+        if ($export_all) {
+            $students = $this->students;
+        }
+        else{
+            $students = $this->students->where('application.status', $this->filing_status);
+        }
+
+        if ($students->isEmpty()) {
+            $this->emit('alert', "No records available for the filters applied", 'danger');
+        }
+        else {
+            $html = '';
+            $html .= view('students.export', [
+                'students' => $students,
+                'schools' => Student::participatingSchools(),
+                'custom_questions' => StudentData::customQuestions(),
+                'languages' => StudentData::$languages,
+                'majors' => StudentData::majors(),
+            ])->render();
+
+            $pdf_content = Browsershot::html($html)
+                            ->waitUntilNetworkIdle()
+                            ->ignoreHttpsErrors()
+                            ->margins(30, 15, 30, 15);
+
+            if (config('pdf.node')) {
+                $pdf_content = $pdf_content->setNodeBinary(config('pdf.node'));
+            }
+
+            if (config('pdf.npm')) {
+                $pdf_content = $pdf_content->setNpmBinary(config('pdf.npm'));
+            }
+
+            if (config('pdf.modules')) {
+                $pdf_content = $pdf_content->setIncludePath(config('pdf.modules'));
+            }
+
+            if (config('pdf.chrome')) {
+                $pdf_content = $pdf_content->setChromePath(config('pdf.chrome'));
+            }
+
+            if (config('pdf.chrome_arguments')) {
+                $pdf_content = $pdf_content->addChromiumArguments(config('pdf.chrome_arguments'));
+            }
+
+            return response()->streamDownload(function () use ($pdf_content) {
+                echo $pdf_content->pdf();
+            }, 'student_applications.pdf', [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'attachment; filename="student_applications.pdf"',
+            ]);
+            
+        }
+    }
+
     public function render()
     {
         return view('livewire.profile-students', [
             'filter_names' => $this->availableFilters(),
             'languages' => StudentData::$languages,
-            'graduation_dates' => StudentData::uniqueValuesFor('research_profile', 'graduation_date')->sort()->values(),
+            'graduation_dates' => StudentData::uniqueValuesFor('research_profile', 'graduation_date')->sort()->values()
+                ->filter(function ($date) {
+                    return preg_match('/^(January|February|March|April|May|June|July|August|September|October|November|December)\s\d{4}$/', $date);
+                }),
             'majors' => StudentData::uniqueValuesFor('research_profile', 'major')->sort()->values(),
             'schools' => StudentData::uniqueValuesFor('research_profile', 'schools')->sort()->values(),
             'semesters' => StudentData::uniqueValuesFor('research_profile', 'semesters')
