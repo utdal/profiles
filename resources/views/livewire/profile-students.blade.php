@@ -54,7 +54,7 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="studentNameSearch">Name</label>
-                                <input wire:model.debounce.250ms="search_filter" type="text" id="studentNameSearch" class="form-control" placeholder="Search...">
+                                <input wire:model.debounce.250ms="search_filter" type="text" id="studentNameSearch" class="form-control" placeholder="Search..." autocomplete="name">
                             </div>
                             <div class="form-group">
                                 <label for="studentSemesterSearch">Semester</label>
@@ -202,12 +202,12 @@
                                     <div class="col-lg-3">
                                         <div>
                                             <a href="{{ route('students.show', ['student' => $student]) }}" target="_blank" title="View in new tab/window">
-                                                <i class="far fa-fw fa-window-restore"></i> View
+                                                <i class="far fa-fw mr-1 fa-window-restore"></i>View
                                             </a>
                                         </div>
                                         <div>
                                             <a href="mailto:{{ optional($student->user)->email }}" title="Email the student">
-                                                <i class="fas fa-fw fa-envelope"></i> Email
+                                                <i class="fas fa-fw mr-1 fa-envelope"></i>Email
                                             </a>
                                         </div>
                                         <div>

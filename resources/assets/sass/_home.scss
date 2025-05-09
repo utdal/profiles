@@ -1,0 +1,132 @@
+@use "sass:map";
+
+// homepage
+$home-top-height: 60vh;
+
+.full-width {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    margin-left: -50vw;
+    padding: 10px;
+}
+
+#home-bottom {
+  background-size: cover;
+    min-height: 65vh;
+    padding: 10vh 10px 10px;
+    margin-bottom: -100px;
+}
+
+#stats {
+    background-color: $utd-flame-orange;
+    color: white;
+    padding: 10px;
+    min-height: 200px;
+    opacity: .96;
+
+    .stats-label {
+        font-size: 1.5rem;
+        font-weight: 300;
+    }
+
+    .col{
+        padding: 55px 40px 60px;
+        text-align: center;
+    }
+}
+
+#home-top {
+    background-size: cover;
+    color: white;
+    padding: 10px;
+    min-height: $home-top-height;
+
+    @media (max-width: map-get($grid-breakpoints, lg)) {
+            min-height: 35vh;
+    }
+
+    #home-search {
+        padding: 30px 40px;
+        opacity: 0.97;
+        width: 42rem;
+
+        form {
+            display: none;
+        }
+
+        #search-terms {
+            padding: 20px 0;
+            gap: 0.8rem;
+
+            .badge {
+                font-size: 92%;
+                border: 1px solid $link-color;
+                background-color: white;
+            }
+        }
+
+        .terms {
+            padding: 10px 0px;
+        }
+    }
+}
+
+.info {
+    background-color: white;
+    padding: 10px 40px;
+    border-radius: 5px;
+    width: 24rem;
+    height: 100%;
+}
+
+.num {
+    font-size: 3.5rem;
+}
+
+.form-inline .input-group {
+    width: 100%;
+}
+
+#home-video {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+        z-index: -100;
+}
+
+button.video-control {
+    $video-btn-size: 45px;
+    $video-btn-spacing: map.get($spacers, 3);
+    position: absolute;
+    height: $video-btn-size;
+    width: $video-btn-size;
+    top: calc(76px + #{$home-top-height} - #{$video-btn-size} - #{$video-btn-spacing});
+    right: $video-btn-spacing;
+    background-color: $utd-warm-gray2;
+    border: 4px solid $black;
+    opacity: 55%;
+    z-index: 1000;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: opacity 0.3s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    .video-control-icon {
+        width: 24px;
+        height: 24px;
+        fill: $white;
+    }
+
+    .fa-play {
+        margin-left: 0.1rem;
+    }
+
+    @media (max-width: 991.98px) {
+        display: none;
+    }
+}

@@ -8,7 +8,10 @@
 
 /* provided dependency */ var jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/src/jquery.js");
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/src/jquery.js");
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -82,66 +85,171 @@ var profiles = function ($, undefined) {
   };
 
   /**
+   * Reindex numbers in field ids, names, and labels to match sort order,
+   * e.g. if the first item's name is "thing[3]", rename it to "thing[0]"
+   * 
+   * @param {NodeList} list_items - the ordered list of items to reindex
+   */
+  var reindex_sorted_list = function reindex_sorted_list(list_items) {
+    for (var i = 0; i < list_items.length; i++) {
+      if (list_items[i].dataset.rowId) {
+        list_items[i].dataset.rowId = i;
+      }
+      var search_for = /\[\d+\]/g;
+      var replace_with = "[".concat(i, "]");
+      var _iterator = _createForOfIteratorHelper(list_items[i].querySelectorAll('[name]')),
+        _step;
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var field = _step.value;
+          field.name = field.name.replace(search_for, replace_with);
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+      var _iterator2 = _createForOfIteratorHelper(list_items[i].querySelectorAll('[id]')),
+        _step2;
+      try {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var _field = _step2.value;
+          _field.id = _field.id.replace(search_for, replace_with);
+        }
+      } catch (err) {
+        _iterator2.e(err);
+      } finally {
+        _iterator2.f();
+      }
+      var _iterator3 = _createForOfIteratorHelper(list_items[i].querySelectorAll('label[for]')),
+        _step3;
+      try {
+        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+          var _field2 = _step3.value;
+          _field2.htmlFor = _field2.htmlFor.replace(search_for, replace_with);
+        }
+      } catch (err) {
+        _iterator3.e(err);
+      } finally {
+        _iterator3.f();
+      }
+    }
+  };
+
+  /**
+   * Actions to take after updating a list
+   * 
+   * @param {HTMLElement} el - the container for the sorted elements
+   * @param {string} actions - the action(s) to take, comma-separated
+   * @return {void}
+   */
+  var on_list_updated = function on_list_updated(el, actions) {
+    if (typeof actions !== 'string') {
+      return;
+    }
+    var _iterator4 = _createForOfIteratorHelper(actions.split(',').map(function (i) {
+        return i.trim();
+      })),
+      _step4;
+    try {
+      for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+        var action = _step4.value;
+        if (action === 'reindex') {
+          reindex_sorted_list(el.children);
+        }
+        if (action === 'reset-next-row-id') {
+          el.dataset.nextRowId = String(Number(el.dataset.nextRowId) > 0 ? el.children.length : -1);
+        }
+      }
+    } catch (err) {
+      _iterator4.e(err);
+    } finally {
+      _iterator4.f();
+    }
+  };
+
+  /**
+   * Display spinner animation and disable form submit button
+   *
+   * @param {HTMLElement} form that gets submitted 
+   */
+  var wait_when_submitting = function wait_when_submitting(form) {
+    elem = form.querySelector('button[type=submit]');
+    elem_text = elem.innerHTML.replace(/<i[^>]*>(.*?)<\/i>/g, '');
+    elem.innerHTML = "<i class=\"fas fa-spinner fa-spin fa-fw\"></i> ".concat(elem_text);
+    elem.classList.add('btn-primary', 'disabled');
+    elem.classList.remove('btn-light', 'btn-dark', 'btn-secondary', 'btn-info', 'btn-success', 'btn-warning', 'btn-danger');
+    elem.disabled = true;
+  };
+
+  /**
    * Adds a new item input row
    *
    * @param {Event} event the triggered event
    * @this {HTMLElement} the DOM element that was clicked
    */
   var add_row = function add_row(event) {
+    var _options$template, _document$querySelect;
     var options = event.target.dataset;
-    var item_template = document.querySelector('form .record');
+    var item_template = document.querySelector((_options$template = options.template) !== null && _options$template !== void 0 ? _options$template : 'form .record');
+    var item_container = (_document$querySelect = document.querySelector(options.insertInto)) !== null && _document$querySelect !== void 0 ? _document$querySelect : item_template.parentElement;
     if (item_template) {
       var _new_item$querySelect, _new_item$querySelect2, _new_item$querySelect3, _new_item$querySelect4, _new_item$querySelect5, _new_item$querySelect6, _new_item$querySelect7, _new_item$querySelect8, _new_item$querySelect9, _new_item$querySelect10;
       var old_id = item_template.dataset.rowId;
-      var new_id = String(item_template.parentElement.dataset.nextRowId--);
+      var new_id;
+      if (Number(item_container.dataset.nextRowId) >= 0) {
+        new_id = String(item_container.dataset.nextRowId++);
+      } else {
+        new_id = String(item_container.dataset.nextRowId--);
+      }
       var new_item = item_template.cloneNode(true);
       new_item.dataset.rowId = new_id;
-      (_new_item$querySelect = new_item.querySelectorAll('input:not([type="button"]), textarea, select')) === null || _new_item$querySelect === void 0 ? void 0 : _new_item$querySelect.forEach(function (el) {
+      (_new_item$querySelect = new_item.querySelectorAll('input:not([type="button"]), textarea, select')) === null || _new_item$querySelect === void 0 || _new_item$querySelect.forEach(function (el) {
         el.id = el.id.replace(old_id, new_id);
         el.setAttribute('name', el.name.replace(old_id, new_id));
         el.setAttribute('value', '');
         el.value = '';
       });
-      (_new_item$querySelect2 = new_item.querySelectorAll("input[type=\"hidden\"][name$=\"[id]\"]")) === null || _new_item$querySelect2 === void 0 ? void 0 : _new_item$querySelect2.forEach(function (el) {
+      (_new_item$querySelect2 = new_item.querySelectorAll("input[type=\"hidden\"][name$=\"[id]\"]")) === null || _new_item$querySelect2 === void 0 || _new_item$querySelect2.forEach(function (el) {
         el.id = el.name;
         el.value = new_id;
       });
-      (_new_item$querySelect3 = new_item.querySelectorAll('label')) === null || _new_item$querySelect3 === void 0 ? void 0 : _new_item$querySelect3.forEach(function (el) {
+      (_new_item$querySelect3 = new_item.querySelectorAll('label')) === null || _new_item$querySelect3 === void 0 || _new_item$querySelect3.forEach(function (el) {
         var _el$getAttribute;
         el.setAttribute('for', (_el$getAttribute = el.getAttribute('for')) === null || _el$getAttribute === void 0 ? void 0 : _el$getAttribute.replace(old_id, new_id));
       });
-      (_new_item$querySelect4 = new_item.querySelectorAll('trix-editor')) === null || _new_item$querySelect4 === void 0 ? void 0 : _new_item$querySelect4.forEach(function (el) {
+      (_new_item$querySelect4 = new_item.querySelectorAll('trix-editor')) === null || _new_item$querySelect4 === void 0 || _new_item$querySelect4.forEach(function (el) {
         el.setAttribute('input', el.getAttribute('input').replace(old_id, new_id));
       });
-      (_new_item$querySelect5 = new_item.querySelectorAll('img')) === null || _new_item$querySelect5 === void 0 ? void 0 : _new_item$querySelect5.forEach(function (el) {
+      (_new_item$querySelect5 = new_item.querySelectorAll('img')) === null || _new_item$querySelect5 === void 0 || _new_item$querySelect5.forEach(function (el) {
         el.id = el.id.replace(old_id, new_id);
         el.src = '';
       });
-      (_new_item$querySelect6 = new_item.querySelectorAll('.custom-file-label')) === null || _new_item$querySelect6 === void 0 ? void 0 : _new_item$querySelect6.forEach(function (el) {
+      (_new_item$querySelect6 = new_item.querySelectorAll('.custom-file-label')) === null || _new_item$querySelect6 === void 0 || _new_item$querySelect6.forEach(function (el) {
         el.id = el.id.replace(old_id, new_id);
         el.innerHTML = 'Select an image';
       });
-      (_new_item$querySelect7 = new_item.querySelectorAll('.actions .trash')) === null || _new_item$querySelect7 === void 0 ? void 0 : _new_item$querySelect7.forEach(function (el) {
+      (_new_item$querySelect7 = new_item.querySelectorAll('.actions .trash')) === null || _new_item$querySelect7 === void 0 || _new_item$querySelect7.forEach(function (el) {
         $(el).on('click', function () {
           return clear_row(el);
         });
       });
-      (_new_item$querySelect8 = new_item.querySelectorAll('input[type="file"][accept^="image"]')) === null || _new_item$querySelect8 === void 0 ? void 0 : _new_item$querySelect8.forEach(function (el) {
+      (_new_item$querySelect8 = new_item.querySelectorAll('input[type="file"][accept^="image"]')) === null || _new_item$querySelect8 === void 0 || _new_item$querySelect8.forEach(function (el) {
         $(el).on('change', function (event) {
           return preview_selected_image(event);
         });
       });
-      (_new_item$querySelect9 = new_item.querySelectorAll('.datepicker.year')) === null || _new_item$querySelect9 === void 0 ? void 0 : _new_item$querySelect9.forEach(function (el) {
+      (_new_item$querySelect9 = new_item.querySelectorAll('.datepicker.year')) === null || _new_item$querySelect9 === void 0 || _new_item$querySelect9.forEach(function (el) {
         $(el).datepicker(config.datepicker.year);
       });
-      (_new_item$querySelect10 = new_item.querySelectorAll('.datepicker.month')) === null || _new_item$querySelect10 === void 0 ? void 0 : _new_item$querySelect10.forEach(function (el) {
+      (_new_item$querySelect10 = new_item.querySelectorAll('.datepicker.month')) === null || _new_item$querySelect10 === void 0 || _new_item$querySelect10.forEach(function (el) {
         $(el).datepicker(config.datepicker.month);
       });
       $(new_item).hide();
       if ('insertType' in options && options.insertType === 'prepend') {
-        item_template.parentElement.prepend(new_item);
+        item_container.prepend(new_item);
       } else {
-        item_template.parentElement.append(new_item);
+        item_container.append(new_item);
       }
       $(new_item).slideDown();
     }
@@ -155,6 +263,13 @@ var profiles = function ($, undefined) {
   var clear_row = function clear_row(elem) {
     parent_elem = $(elem).parent().parent();
     parent_elem.slideUp().find("input[type=text], input[type=url], input[type=month], input.clearable, textarea, select").val('');
+    var list_container = parent_elem[0].parentElement;
+    if (elem.dataset.remove === 'true') {
+      parent_elem.remove();
+    }
+    if (elem.dataset.onRemove) {
+      on_list_updated(list_container, elem.dataset.onRemove);
+    }
   };
 
   /**
@@ -274,11 +389,14 @@ var profiles = function ($, undefined) {
    * @return {void}
    */
   var registerProfilePicker = function registerProfilePicker(selector, api) {
-    if (typeof api === 'undefined') api = this_url + '/api/v1?with_data=1&data_type=information';
+    if (typeof api === 'undefined') api = this_url + '/api/v1?with_data=1&data_type=information&public=1';
     var $select = $(selector);
     if ($select.length === 0) return;
     if ($select.data('school')) {
       api += '&from_school=' + $select.data('school');
+    }
+    if ($select.data('accepting-undergrad')) {
+      api += '&accepting_undergrad=' + $select.data('accepting-undergrad');
     }
     var profileSearch = new Bloodhound({
       datumTokenizer: function datumTokenizer(profiles) {
@@ -445,18 +563,64 @@ var profiles = function ($, undefined) {
       }
     });
   };
+
+  /**
+   * Register playPauseVideo function for video control button(s)
+   * 
+   * @return {void}
+   */
+  var registerVideoControls = function registerVideoControls() {
+    var play_pause_buttons = document.querySelectorAll('button.video-control.play-pause');
+    var prefers_reduced_motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    play_pause_buttons.forEach(function (bt) {
+      return bt.addEventListener('click', function (evt) {
+        var button = evt.currentTarget;
+        var video = document.getElementById(button === null || button === void 0 ? void 0 : button.getAttribute('aria-controls'));
+        if (video instanceof HTMLVideoElement && button instanceof HTMLButtonElement) {
+          toggleVideoPlay(video, button);
+        }
+      });
+    });
+    if (prefers_reduced_motion.matches) {
+      play_pause_buttons.forEach(function (bt) {
+        return bt.click();
+      });
+    }
+  };
+
+  /**
+   * Play/pause video and controls the video and button attributes
+   * @param {HTMLVideoElement} vid 
+   * @param {HTMLButtonElement} btn 
+   * @return {void}
+   */
+  var toggleVideoPlay = function toggleVideoPlay(vid, btn) {
+    var icon = btn.querySelector('[data-fa-i2svg],.fas');
+    if (vid.paused) {
+      vid.play();
+      btn.ariaPressed = "true";
+      icon.className = "fas fa-pause";
+    } else {
+      vid.pause();
+      btn.ariaPressed = "false";
+      icon.className = "fas fa-play";
+    }
+  };
   return {
     add_row: add_row,
     clear_row: clear_row,
     config: config,
     deobfuscate_mail_links: deobfuscate_mail_links,
+    on_list_updated: on_list_updated,
     preview_selected_image: preview_selected_image,
     replace_icon: replace_icon,
     registerTagEditors: registerTagEditors,
     registerProfilePickers: registerProfilePickers,
     toast: toast,
     toggle_class: toggle_class,
-    toggle_show: toggle_show
+    toggle_show: toggle_show,
+    wait_when_submitting: wait_when_submitting,
+    registerVideoControls: registerVideoControls
   };
 }(jQuery);
 window.profiles = profiles;
@@ -471,13 +635,17 @@ $(function () {
     return profiles.preview_selected_image(e);
   });
 
-  //enable drag and drop sorting for items with sotable class
+  // enable drag and drop sorting for items with sortable class
   if ($('.sortable').length > 0) {
     Sortable.create($('.sortable')[0], {
       handle: '.handle',
       scroll: true,
       scrollSpeed: 50,
-      ghostClass: "sortable-ghost"
+      ghostClass: 'sortable-ghost',
+      onUpdate: function onUpdate(evt) {
+        var _evt$target$dataset$o;
+        return profiles.on_list_updated(evt.target, (_evt$target$dataset$o = evt.target.dataset.onsort) !== null && _evt$target$dataset$o !== void 0 ? _evt$target$dataset$o : '');
+      }
     });
   }
 
@@ -529,6 +697,9 @@ $(function () {
       return typeof content === 'string' && $(content).length ? $(content).html() : '';
     }
   });
+  if (document.querySelectorAll('.video-cover video').length > 0 && document.querySelectorAll('.video-cover .video-control').length > 0) {
+    profiles.registerVideoControls();
+  }
 });
 
 // Livewire global hooks

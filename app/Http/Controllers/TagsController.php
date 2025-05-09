@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\View\View as ViewContract;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\View\View;
 use Spatie\Tags\Tag;
 use App\Http\Requests\TagsUpdateRequest;
+use App\Http\Requests\TagUpdateRequest;
+use Illuminate\Http\JsonResponse;
 
 class TagsController extends Controller
 {
@@ -23,14 +28,18 @@ class TagsController extends Controller
             'create',
             'store',
         ]);
+
+        $this->middleware('can:update,tag,'.Tag::class)->only([
+            'editTag',
+            'updateTag',
+        ]);
+
     }
 
     /**
      * Show the index of all associated tags.
-     *
-     * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): View|ViewContract
     {
         $tags = Tag::whereExists(function($query) {
             $query->select(\DB::raw(1))->from('taggables')->whereRaw('tags.id = taggables.tag_id');
@@ -47,30 +56,24 @@ class TagsController extends Controller
 
     /**
      * Show the index table of all associated tags.
-     *
-     * @return \Illuminate\View\View
      */
-    public function table()
+    public function table(): View|ViewContract
     {
         return view('tags.table');
     }
 
     /**
      * Show the index table of all associated tags.
-     *
-     * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(): View|ViewContract
     {
         return view('tags.create');
     }
 
     /**
      * Save the tag in the database.
-     *
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         Tag::findOrCreate(preg_split('/\r\n|\r|\n/', $request->tag_name ?? ''), $request->tag_type);
 
@@ -80,24 +83,20 @@ class TagsController extends Controller
 
     /**
      * Search for Tags.
-     * 
-     * @param  Request $request
-     * @return array of tag names
      */
-    public function search(Request $request)
+    public function search(Request $request): JsonResponse
     {
         $name = '%' . strtolower($request->input('name')) . '%';
 
-        return Tag::whereRaw("LOWER(name) like ?", [$name])->select('name')->get()->pluck('name');
+        $tags = Tag::whereRaw("LOWER(name) like ?", [$name])->select('name')->get();
+
+        return response()->json($tags->pluck('name')->all());
     }
 
     /**
      * Update the tags on a model.
-     *
-     * @param  TagsUpdateRequest  $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
-    public function update(TagsUpdateRequest $request)
+    public function update(TagsUpdateRequest $request): RedirectResponse|JsonResponse
     {
         $model = null;
         $view = '';
@@ -117,5 +116,25 @@ class TagsController extends Controller
         }
 
         return back()->with('flash_message', $message);
+    }
+
+    /**
+     * Edit a tag record.
+     */
+    public function editTag(Tag $tag)
+    {
+        return view('tags.edit', compact('tag'));
+    }
+
+    /**
+     * Update a single tag record.
+     */
+    public function updateTag(Tag $tag, TagUpdateRequest $request) 
+    {
+        $tag->update($request->all());
+
+        return redirect()
+                ->route('tags.table')
+                ->with('flash_message', 'The tag has been updated.');
     }
 }

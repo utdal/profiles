@@ -77,6 +77,7 @@ class ProfileStudents extends Component
 
     public function updated($name, $value)
     {
+        $this->refreshStudents();
         $this->emitFilterUpdatedEvent($name, $value);
     }
 
@@ -97,7 +98,7 @@ class ProfileStudents extends Component
                 ->sortBy(function ($semester, $key) {
                     return Semester::date($semester)->toDateString();
                 })->values(),
-            'tags' => Tag::getWithType(Student::class),
+            'tags' => Student::possibleTags(),
             'statuses' => ProfileStudent::$statuses,
             'status_icons' => ProfileStudent::$icons,
         ]);

@@ -9,17 +9,17 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "config": () => (/* binding */ config),
-/* harmony export */   "counter": () => (/* binding */ counter),
-/* harmony export */   "dom": () => (/* binding */ dom),
-/* harmony export */   "findIconDefinition": () => (/* binding */ findIconDefinition),
-/* harmony export */   "icon": () => (/* binding */ icon),
-/* harmony export */   "layer": () => (/* binding */ layer),
-/* harmony export */   "library": () => (/* binding */ library),
-/* harmony export */   "noAuto": () => (/* binding */ noAuto),
-/* harmony export */   "parse": () => (/* binding */ parse),
-/* harmony export */   "text": () => (/* binding */ text),
-/* harmony export */   "toHtml": () => (/* binding */ toHtml)
+/* harmony export */   config: () => (/* binding */ config),
+/* harmony export */   counter: () => (/* binding */ counter),
+/* harmony export */   dom: () => (/* binding */ dom),
+/* harmony export */   findIconDefinition: () => (/* binding */ findIconDefinition),
+/* harmony export */   icon: () => (/* binding */ icon),
+/* harmony export */   layer: () => (/* binding */ layer),
+/* harmony export */   library: () => (/* binding */ library),
+/* harmony export */   noAuto: () => (/* binding */ noAuto),
+/* harmony export */   parse: () => (/* binding */ parse),
+/* harmony export */   text: () => (/* binding */ text),
+/* harmony export */   toHtml: () => (/* binding */ toHtml)
 /* harmony export */ });
 /*!
  * Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com
@@ -2469,465 +2469,465 @@ var autoReplace = function autoReplace() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "fa500px": () => (/* binding */ fa500px),
-/* harmony export */   "faAccessibleIcon": () => (/* binding */ faAccessibleIcon),
-/* harmony export */   "faAccusoft": () => (/* binding */ faAccusoft),
-/* harmony export */   "faAcquisitionsIncorporated": () => (/* binding */ faAcquisitionsIncorporated),
-/* harmony export */   "faAdn": () => (/* binding */ faAdn),
-/* harmony export */   "faAdversal": () => (/* binding */ faAdversal),
-/* harmony export */   "faAffiliatetheme": () => (/* binding */ faAffiliatetheme),
-/* harmony export */   "faAirbnb": () => (/* binding */ faAirbnb),
-/* harmony export */   "faAlgolia": () => (/* binding */ faAlgolia),
-/* harmony export */   "faAlipay": () => (/* binding */ faAlipay),
-/* harmony export */   "faAmazon": () => (/* binding */ faAmazon),
-/* harmony export */   "faAmazonPay": () => (/* binding */ faAmazonPay),
-/* harmony export */   "faAmilia": () => (/* binding */ faAmilia),
-/* harmony export */   "faAndroid": () => (/* binding */ faAndroid),
-/* harmony export */   "faAngellist": () => (/* binding */ faAngellist),
-/* harmony export */   "faAngrycreative": () => (/* binding */ faAngrycreative),
-/* harmony export */   "faAngular": () => (/* binding */ faAngular),
-/* harmony export */   "faAppStore": () => (/* binding */ faAppStore),
-/* harmony export */   "faAppStoreIos": () => (/* binding */ faAppStoreIos),
-/* harmony export */   "faApper": () => (/* binding */ faApper),
-/* harmony export */   "faApple": () => (/* binding */ faApple),
-/* harmony export */   "faApplePay": () => (/* binding */ faApplePay),
-/* harmony export */   "faArtstation": () => (/* binding */ faArtstation),
-/* harmony export */   "faAsymmetrik": () => (/* binding */ faAsymmetrik),
-/* harmony export */   "faAtlassian": () => (/* binding */ faAtlassian),
-/* harmony export */   "faAudible": () => (/* binding */ faAudible),
-/* harmony export */   "faAutoprefixer": () => (/* binding */ faAutoprefixer),
-/* harmony export */   "faAvianex": () => (/* binding */ faAvianex),
-/* harmony export */   "faAviato": () => (/* binding */ faAviato),
-/* harmony export */   "faAws": () => (/* binding */ faAws),
-/* harmony export */   "faBandcamp": () => (/* binding */ faBandcamp),
-/* harmony export */   "faBattleNet": () => (/* binding */ faBattleNet),
-/* harmony export */   "faBehance": () => (/* binding */ faBehance),
-/* harmony export */   "faBehanceSquare": () => (/* binding */ faBehanceSquare),
-/* harmony export */   "faBimobject": () => (/* binding */ faBimobject),
-/* harmony export */   "faBitbucket": () => (/* binding */ faBitbucket),
-/* harmony export */   "faBitcoin": () => (/* binding */ faBitcoin),
-/* harmony export */   "faBity": () => (/* binding */ faBity),
-/* harmony export */   "faBlackTie": () => (/* binding */ faBlackTie),
-/* harmony export */   "faBlackberry": () => (/* binding */ faBlackberry),
-/* harmony export */   "faBlogger": () => (/* binding */ faBlogger),
-/* harmony export */   "faBloggerB": () => (/* binding */ faBloggerB),
-/* harmony export */   "faBluetooth": () => (/* binding */ faBluetooth),
-/* harmony export */   "faBluetoothB": () => (/* binding */ faBluetoothB),
-/* harmony export */   "faBootstrap": () => (/* binding */ faBootstrap),
-/* harmony export */   "faBtc": () => (/* binding */ faBtc),
-/* harmony export */   "faBuffer": () => (/* binding */ faBuffer),
-/* harmony export */   "faBuromobelexperte": () => (/* binding */ faBuromobelexperte),
-/* harmony export */   "faBuyNLarge": () => (/* binding */ faBuyNLarge),
-/* harmony export */   "faBuysellads": () => (/* binding */ faBuysellads),
-/* harmony export */   "faCanadianMapleLeaf": () => (/* binding */ faCanadianMapleLeaf),
-/* harmony export */   "faCcAmazonPay": () => (/* binding */ faCcAmazonPay),
-/* harmony export */   "faCcAmex": () => (/* binding */ faCcAmex),
-/* harmony export */   "faCcApplePay": () => (/* binding */ faCcApplePay),
-/* harmony export */   "faCcDinersClub": () => (/* binding */ faCcDinersClub),
-/* harmony export */   "faCcDiscover": () => (/* binding */ faCcDiscover),
-/* harmony export */   "faCcJcb": () => (/* binding */ faCcJcb),
-/* harmony export */   "faCcMastercard": () => (/* binding */ faCcMastercard),
-/* harmony export */   "faCcPaypal": () => (/* binding */ faCcPaypal),
-/* harmony export */   "faCcStripe": () => (/* binding */ faCcStripe),
-/* harmony export */   "faCcVisa": () => (/* binding */ faCcVisa),
-/* harmony export */   "faCentercode": () => (/* binding */ faCentercode),
-/* harmony export */   "faCentos": () => (/* binding */ faCentos),
-/* harmony export */   "faChrome": () => (/* binding */ faChrome),
-/* harmony export */   "faChromecast": () => (/* binding */ faChromecast),
-/* harmony export */   "faCloudflare": () => (/* binding */ faCloudflare),
-/* harmony export */   "faCloudscale": () => (/* binding */ faCloudscale),
-/* harmony export */   "faCloudsmith": () => (/* binding */ faCloudsmith),
-/* harmony export */   "faCloudversify": () => (/* binding */ faCloudversify),
-/* harmony export */   "faCodepen": () => (/* binding */ faCodepen),
-/* harmony export */   "faCodiepie": () => (/* binding */ faCodiepie),
-/* harmony export */   "faConfluence": () => (/* binding */ faConfluence),
-/* harmony export */   "faConnectdevelop": () => (/* binding */ faConnectdevelop),
-/* harmony export */   "faContao": () => (/* binding */ faContao),
-/* harmony export */   "faCottonBureau": () => (/* binding */ faCottonBureau),
-/* harmony export */   "faCpanel": () => (/* binding */ faCpanel),
-/* harmony export */   "faCreativeCommons": () => (/* binding */ faCreativeCommons),
-/* harmony export */   "faCreativeCommonsBy": () => (/* binding */ faCreativeCommonsBy),
-/* harmony export */   "faCreativeCommonsNc": () => (/* binding */ faCreativeCommonsNc),
-/* harmony export */   "faCreativeCommonsNcEu": () => (/* binding */ faCreativeCommonsNcEu),
-/* harmony export */   "faCreativeCommonsNcJp": () => (/* binding */ faCreativeCommonsNcJp),
-/* harmony export */   "faCreativeCommonsNd": () => (/* binding */ faCreativeCommonsNd),
-/* harmony export */   "faCreativeCommonsPd": () => (/* binding */ faCreativeCommonsPd),
-/* harmony export */   "faCreativeCommonsPdAlt": () => (/* binding */ faCreativeCommonsPdAlt),
-/* harmony export */   "faCreativeCommonsRemix": () => (/* binding */ faCreativeCommonsRemix),
-/* harmony export */   "faCreativeCommonsSa": () => (/* binding */ faCreativeCommonsSa),
-/* harmony export */   "faCreativeCommonsSampling": () => (/* binding */ faCreativeCommonsSampling),
-/* harmony export */   "faCreativeCommonsSamplingPlus": () => (/* binding */ faCreativeCommonsSamplingPlus),
-/* harmony export */   "faCreativeCommonsShare": () => (/* binding */ faCreativeCommonsShare),
-/* harmony export */   "faCreativeCommonsZero": () => (/* binding */ faCreativeCommonsZero),
-/* harmony export */   "faCriticalRole": () => (/* binding */ faCriticalRole),
-/* harmony export */   "faCss3": () => (/* binding */ faCss3),
-/* harmony export */   "faCss3Alt": () => (/* binding */ faCss3Alt),
-/* harmony export */   "faCuttlefish": () => (/* binding */ faCuttlefish),
-/* harmony export */   "faDAndD": () => (/* binding */ faDAndD),
-/* harmony export */   "faDAndDBeyond": () => (/* binding */ faDAndDBeyond),
-/* harmony export */   "faDailymotion": () => (/* binding */ faDailymotion),
-/* harmony export */   "faDashcube": () => (/* binding */ faDashcube),
-/* harmony export */   "faDeezer": () => (/* binding */ faDeezer),
-/* harmony export */   "faDelicious": () => (/* binding */ faDelicious),
-/* harmony export */   "faDeploydog": () => (/* binding */ faDeploydog),
-/* harmony export */   "faDeskpro": () => (/* binding */ faDeskpro),
-/* harmony export */   "faDev": () => (/* binding */ faDev),
-/* harmony export */   "faDeviantart": () => (/* binding */ faDeviantart),
-/* harmony export */   "faDhl": () => (/* binding */ faDhl),
-/* harmony export */   "faDiaspora": () => (/* binding */ faDiaspora),
-/* harmony export */   "faDigg": () => (/* binding */ faDigg),
-/* harmony export */   "faDigitalOcean": () => (/* binding */ faDigitalOcean),
-/* harmony export */   "faDiscord": () => (/* binding */ faDiscord),
-/* harmony export */   "faDiscourse": () => (/* binding */ faDiscourse),
-/* harmony export */   "faDochub": () => (/* binding */ faDochub),
-/* harmony export */   "faDocker": () => (/* binding */ faDocker),
-/* harmony export */   "faDraft2digital": () => (/* binding */ faDraft2digital),
-/* harmony export */   "faDribbble": () => (/* binding */ faDribbble),
-/* harmony export */   "faDribbbleSquare": () => (/* binding */ faDribbbleSquare),
-/* harmony export */   "faDropbox": () => (/* binding */ faDropbox),
-/* harmony export */   "faDrupal": () => (/* binding */ faDrupal),
-/* harmony export */   "faDyalog": () => (/* binding */ faDyalog),
-/* harmony export */   "faEarlybirds": () => (/* binding */ faEarlybirds),
-/* harmony export */   "faEbay": () => (/* binding */ faEbay),
-/* harmony export */   "faEdge": () => (/* binding */ faEdge),
-/* harmony export */   "faEdgeLegacy": () => (/* binding */ faEdgeLegacy),
-/* harmony export */   "faElementor": () => (/* binding */ faElementor),
-/* harmony export */   "faEllo": () => (/* binding */ faEllo),
-/* harmony export */   "faEmber": () => (/* binding */ faEmber),
-/* harmony export */   "faEmpire": () => (/* binding */ faEmpire),
-/* harmony export */   "faEnvira": () => (/* binding */ faEnvira),
-/* harmony export */   "faErlang": () => (/* binding */ faErlang),
-/* harmony export */   "faEthereum": () => (/* binding */ faEthereum),
-/* harmony export */   "faEtsy": () => (/* binding */ faEtsy),
-/* harmony export */   "faEvernote": () => (/* binding */ faEvernote),
-/* harmony export */   "faExpeditedssl": () => (/* binding */ faExpeditedssl),
-/* harmony export */   "faFacebook": () => (/* binding */ faFacebook),
-/* harmony export */   "faFacebookF": () => (/* binding */ faFacebookF),
-/* harmony export */   "faFacebookMessenger": () => (/* binding */ faFacebookMessenger),
-/* harmony export */   "faFacebookSquare": () => (/* binding */ faFacebookSquare),
-/* harmony export */   "faFantasyFlightGames": () => (/* binding */ faFantasyFlightGames),
-/* harmony export */   "faFedex": () => (/* binding */ faFedex),
-/* harmony export */   "faFedora": () => (/* binding */ faFedora),
-/* harmony export */   "faFigma": () => (/* binding */ faFigma),
-/* harmony export */   "faFirefox": () => (/* binding */ faFirefox),
-/* harmony export */   "faFirefoxBrowser": () => (/* binding */ faFirefoxBrowser),
-/* harmony export */   "faFirstOrder": () => (/* binding */ faFirstOrder),
-/* harmony export */   "faFirstOrderAlt": () => (/* binding */ faFirstOrderAlt),
-/* harmony export */   "faFirstdraft": () => (/* binding */ faFirstdraft),
-/* harmony export */   "faFlickr": () => (/* binding */ faFlickr),
-/* harmony export */   "faFlipboard": () => (/* binding */ faFlipboard),
-/* harmony export */   "faFly": () => (/* binding */ faFly),
-/* harmony export */   "faFontAwesome": () => (/* binding */ faFontAwesome),
-/* harmony export */   "faFontAwesomeAlt": () => (/* binding */ faFontAwesomeAlt),
-/* harmony export */   "faFontAwesomeFlag": () => (/* binding */ faFontAwesomeFlag),
-/* harmony export */   "faFontAwesomeLogoFull": () => (/* binding */ faFontAwesomeLogoFull),
-/* harmony export */   "faFonticons": () => (/* binding */ faFonticons),
-/* harmony export */   "faFonticonsFi": () => (/* binding */ faFonticonsFi),
-/* harmony export */   "faFortAwesome": () => (/* binding */ faFortAwesome),
-/* harmony export */   "faFortAwesomeAlt": () => (/* binding */ faFortAwesomeAlt),
-/* harmony export */   "faForumbee": () => (/* binding */ faForumbee),
-/* harmony export */   "faFoursquare": () => (/* binding */ faFoursquare),
-/* harmony export */   "faFreeCodeCamp": () => (/* binding */ faFreeCodeCamp),
-/* harmony export */   "faFreebsd": () => (/* binding */ faFreebsd),
-/* harmony export */   "faFulcrum": () => (/* binding */ faFulcrum),
-/* harmony export */   "faGalacticRepublic": () => (/* binding */ faGalacticRepublic),
-/* harmony export */   "faGalacticSenate": () => (/* binding */ faGalacticSenate),
-/* harmony export */   "faGetPocket": () => (/* binding */ faGetPocket),
-/* harmony export */   "faGg": () => (/* binding */ faGg),
-/* harmony export */   "faGgCircle": () => (/* binding */ faGgCircle),
-/* harmony export */   "faGit": () => (/* binding */ faGit),
-/* harmony export */   "faGitAlt": () => (/* binding */ faGitAlt),
-/* harmony export */   "faGitSquare": () => (/* binding */ faGitSquare),
-/* harmony export */   "faGithub": () => (/* binding */ faGithub),
-/* harmony export */   "faGithubAlt": () => (/* binding */ faGithubAlt),
-/* harmony export */   "faGithubSquare": () => (/* binding */ faGithubSquare),
-/* harmony export */   "faGitkraken": () => (/* binding */ faGitkraken),
-/* harmony export */   "faGitlab": () => (/* binding */ faGitlab),
-/* harmony export */   "faGitter": () => (/* binding */ faGitter),
-/* harmony export */   "faGlide": () => (/* binding */ faGlide),
-/* harmony export */   "faGlideG": () => (/* binding */ faGlideG),
-/* harmony export */   "faGofore": () => (/* binding */ faGofore),
-/* harmony export */   "faGoodreads": () => (/* binding */ faGoodreads),
-/* harmony export */   "faGoodreadsG": () => (/* binding */ faGoodreadsG),
-/* harmony export */   "faGoogle": () => (/* binding */ faGoogle),
-/* harmony export */   "faGoogleDrive": () => (/* binding */ faGoogleDrive),
-/* harmony export */   "faGooglePay": () => (/* binding */ faGooglePay),
-/* harmony export */   "faGooglePlay": () => (/* binding */ faGooglePlay),
-/* harmony export */   "faGooglePlus": () => (/* binding */ faGooglePlus),
-/* harmony export */   "faGooglePlusG": () => (/* binding */ faGooglePlusG),
-/* harmony export */   "faGooglePlusSquare": () => (/* binding */ faGooglePlusSquare),
-/* harmony export */   "faGoogleWallet": () => (/* binding */ faGoogleWallet),
-/* harmony export */   "faGratipay": () => (/* binding */ faGratipay),
-/* harmony export */   "faGrav": () => (/* binding */ faGrav),
-/* harmony export */   "faGripfire": () => (/* binding */ faGripfire),
-/* harmony export */   "faGrunt": () => (/* binding */ faGrunt),
-/* harmony export */   "faGuilded": () => (/* binding */ faGuilded),
-/* harmony export */   "faGulp": () => (/* binding */ faGulp),
-/* harmony export */   "faHackerNews": () => (/* binding */ faHackerNews),
-/* harmony export */   "faHackerNewsSquare": () => (/* binding */ faHackerNewsSquare),
-/* harmony export */   "faHackerrank": () => (/* binding */ faHackerrank),
-/* harmony export */   "faHips": () => (/* binding */ faHips),
-/* harmony export */   "faHireAHelper": () => (/* binding */ faHireAHelper),
-/* harmony export */   "faHive": () => (/* binding */ faHive),
-/* harmony export */   "faHooli": () => (/* binding */ faHooli),
-/* harmony export */   "faHornbill": () => (/* binding */ faHornbill),
-/* harmony export */   "faHotjar": () => (/* binding */ faHotjar),
-/* harmony export */   "faHouzz": () => (/* binding */ faHouzz),
-/* harmony export */   "faHtml5": () => (/* binding */ faHtml5),
-/* harmony export */   "faHubspot": () => (/* binding */ faHubspot),
-/* harmony export */   "faIdeal": () => (/* binding */ faIdeal),
-/* harmony export */   "faImdb": () => (/* binding */ faImdb),
-/* harmony export */   "faInnosoft": () => (/* binding */ faInnosoft),
-/* harmony export */   "faInstagram": () => (/* binding */ faInstagram),
-/* harmony export */   "faInstagramSquare": () => (/* binding */ faInstagramSquare),
-/* harmony export */   "faInstalod": () => (/* binding */ faInstalod),
-/* harmony export */   "faIntercom": () => (/* binding */ faIntercom),
-/* harmony export */   "faInternetExplorer": () => (/* binding */ faInternetExplorer),
-/* harmony export */   "faInvision": () => (/* binding */ faInvision),
-/* harmony export */   "faIoxhost": () => (/* binding */ faIoxhost),
-/* harmony export */   "faItchIo": () => (/* binding */ faItchIo),
-/* harmony export */   "faItunes": () => (/* binding */ faItunes),
-/* harmony export */   "faItunesNote": () => (/* binding */ faItunesNote),
-/* harmony export */   "faJava": () => (/* binding */ faJava),
-/* harmony export */   "faJediOrder": () => (/* binding */ faJediOrder),
-/* harmony export */   "faJenkins": () => (/* binding */ faJenkins),
-/* harmony export */   "faJira": () => (/* binding */ faJira),
-/* harmony export */   "faJoget": () => (/* binding */ faJoget),
-/* harmony export */   "faJoomla": () => (/* binding */ faJoomla),
-/* harmony export */   "faJs": () => (/* binding */ faJs),
-/* harmony export */   "faJsSquare": () => (/* binding */ faJsSquare),
-/* harmony export */   "faJsfiddle": () => (/* binding */ faJsfiddle),
-/* harmony export */   "faKaggle": () => (/* binding */ faKaggle),
-/* harmony export */   "faKeybase": () => (/* binding */ faKeybase),
-/* harmony export */   "faKeycdn": () => (/* binding */ faKeycdn),
-/* harmony export */   "faKickstarter": () => (/* binding */ faKickstarter),
-/* harmony export */   "faKickstarterK": () => (/* binding */ faKickstarterK),
-/* harmony export */   "faKorvue": () => (/* binding */ faKorvue),
-/* harmony export */   "faLaravel": () => (/* binding */ faLaravel),
-/* harmony export */   "faLastfm": () => (/* binding */ faLastfm),
-/* harmony export */   "faLastfmSquare": () => (/* binding */ faLastfmSquare),
-/* harmony export */   "faLeanpub": () => (/* binding */ faLeanpub),
-/* harmony export */   "faLess": () => (/* binding */ faLess),
-/* harmony export */   "faLine": () => (/* binding */ faLine),
-/* harmony export */   "faLinkedin": () => (/* binding */ faLinkedin),
-/* harmony export */   "faLinkedinIn": () => (/* binding */ faLinkedinIn),
-/* harmony export */   "faLinode": () => (/* binding */ faLinode),
-/* harmony export */   "faLinux": () => (/* binding */ faLinux),
-/* harmony export */   "faLyft": () => (/* binding */ faLyft),
-/* harmony export */   "faMagento": () => (/* binding */ faMagento),
-/* harmony export */   "faMailchimp": () => (/* binding */ faMailchimp),
-/* harmony export */   "faMandalorian": () => (/* binding */ faMandalorian),
-/* harmony export */   "faMarkdown": () => (/* binding */ faMarkdown),
-/* harmony export */   "faMastodon": () => (/* binding */ faMastodon),
-/* harmony export */   "faMaxcdn": () => (/* binding */ faMaxcdn),
-/* harmony export */   "faMdb": () => (/* binding */ faMdb),
-/* harmony export */   "faMedapps": () => (/* binding */ faMedapps),
-/* harmony export */   "faMedium": () => (/* binding */ faMedium),
-/* harmony export */   "faMediumM": () => (/* binding */ faMediumM),
-/* harmony export */   "faMedrt": () => (/* binding */ faMedrt),
-/* harmony export */   "faMeetup": () => (/* binding */ faMeetup),
-/* harmony export */   "faMegaport": () => (/* binding */ faMegaport),
-/* harmony export */   "faMendeley": () => (/* binding */ faMendeley),
-/* harmony export */   "faMicroblog": () => (/* binding */ faMicroblog),
-/* harmony export */   "faMicrosoft": () => (/* binding */ faMicrosoft),
-/* harmony export */   "faMix": () => (/* binding */ faMix),
-/* harmony export */   "faMixcloud": () => (/* binding */ faMixcloud),
-/* harmony export */   "faMixer": () => (/* binding */ faMixer),
-/* harmony export */   "faMizuni": () => (/* binding */ faMizuni),
-/* harmony export */   "faModx": () => (/* binding */ faModx),
-/* harmony export */   "faMonero": () => (/* binding */ faMonero),
-/* harmony export */   "faNapster": () => (/* binding */ faNapster),
-/* harmony export */   "faNeos": () => (/* binding */ faNeos),
-/* harmony export */   "faNimblr": () => (/* binding */ faNimblr),
-/* harmony export */   "faNode": () => (/* binding */ faNode),
-/* harmony export */   "faNodeJs": () => (/* binding */ faNodeJs),
-/* harmony export */   "faNpm": () => (/* binding */ faNpm),
-/* harmony export */   "faNs8": () => (/* binding */ faNs8),
-/* harmony export */   "faNutritionix": () => (/* binding */ faNutritionix),
-/* harmony export */   "faOctopusDeploy": () => (/* binding */ faOctopusDeploy),
-/* harmony export */   "faOdnoklassniki": () => (/* binding */ faOdnoklassniki),
-/* harmony export */   "faOdnoklassnikiSquare": () => (/* binding */ faOdnoklassnikiSquare),
-/* harmony export */   "faOldRepublic": () => (/* binding */ faOldRepublic),
-/* harmony export */   "faOpencart": () => (/* binding */ faOpencart),
-/* harmony export */   "faOpenid": () => (/* binding */ faOpenid),
-/* harmony export */   "faOpera": () => (/* binding */ faOpera),
-/* harmony export */   "faOptinMonster": () => (/* binding */ faOptinMonster),
-/* harmony export */   "faOrcid": () => (/* binding */ faOrcid),
-/* harmony export */   "faOsi": () => (/* binding */ faOsi),
-/* harmony export */   "faPage4": () => (/* binding */ faPage4),
-/* harmony export */   "faPagelines": () => (/* binding */ faPagelines),
-/* harmony export */   "faPalfed": () => (/* binding */ faPalfed),
-/* harmony export */   "faPatreon": () => (/* binding */ faPatreon),
-/* harmony export */   "faPaypal": () => (/* binding */ faPaypal),
-/* harmony export */   "faPennyArcade": () => (/* binding */ faPennyArcade),
-/* harmony export */   "faPerbyte": () => (/* binding */ faPerbyte),
-/* harmony export */   "faPeriscope": () => (/* binding */ faPeriscope),
-/* harmony export */   "faPhabricator": () => (/* binding */ faPhabricator),
-/* harmony export */   "faPhoenixFramework": () => (/* binding */ faPhoenixFramework),
-/* harmony export */   "faPhoenixSquadron": () => (/* binding */ faPhoenixSquadron),
-/* harmony export */   "faPhp": () => (/* binding */ faPhp),
-/* harmony export */   "faPiedPiper": () => (/* binding */ faPiedPiper),
-/* harmony export */   "faPiedPiperAlt": () => (/* binding */ faPiedPiperAlt),
-/* harmony export */   "faPiedPiperHat": () => (/* binding */ faPiedPiperHat),
-/* harmony export */   "faPiedPiperPp": () => (/* binding */ faPiedPiperPp),
-/* harmony export */   "faPiedPiperSquare": () => (/* binding */ faPiedPiperSquare),
-/* harmony export */   "faPinterest": () => (/* binding */ faPinterest),
-/* harmony export */   "faPinterestP": () => (/* binding */ faPinterestP),
-/* harmony export */   "faPinterestSquare": () => (/* binding */ faPinterestSquare),
-/* harmony export */   "faPlaystation": () => (/* binding */ faPlaystation),
-/* harmony export */   "faProductHunt": () => (/* binding */ faProductHunt),
-/* harmony export */   "faPushed": () => (/* binding */ faPushed),
-/* harmony export */   "faPython": () => (/* binding */ faPython),
-/* harmony export */   "faQq": () => (/* binding */ faQq),
-/* harmony export */   "faQuinscape": () => (/* binding */ faQuinscape),
-/* harmony export */   "faQuora": () => (/* binding */ faQuora),
-/* harmony export */   "faRProject": () => (/* binding */ faRProject),
-/* harmony export */   "faRaspberryPi": () => (/* binding */ faRaspberryPi),
-/* harmony export */   "faRavelry": () => (/* binding */ faRavelry),
-/* harmony export */   "faReact": () => (/* binding */ faReact),
-/* harmony export */   "faReacteurope": () => (/* binding */ faReacteurope),
-/* harmony export */   "faReadme": () => (/* binding */ faReadme),
-/* harmony export */   "faRebel": () => (/* binding */ faRebel),
-/* harmony export */   "faRedRiver": () => (/* binding */ faRedRiver),
-/* harmony export */   "faReddit": () => (/* binding */ faReddit),
-/* harmony export */   "faRedditAlien": () => (/* binding */ faRedditAlien),
-/* harmony export */   "faRedditSquare": () => (/* binding */ faRedditSquare),
-/* harmony export */   "faRedhat": () => (/* binding */ faRedhat),
-/* harmony export */   "faRenren": () => (/* binding */ faRenren),
-/* harmony export */   "faReplyd": () => (/* binding */ faReplyd),
-/* harmony export */   "faResearchgate": () => (/* binding */ faResearchgate),
-/* harmony export */   "faResolving": () => (/* binding */ faResolving),
-/* harmony export */   "faRev": () => (/* binding */ faRev),
-/* harmony export */   "faRocketchat": () => (/* binding */ faRocketchat),
-/* harmony export */   "faRockrms": () => (/* binding */ faRockrms),
-/* harmony export */   "faRust": () => (/* binding */ faRust),
-/* harmony export */   "faSafari": () => (/* binding */ faSafari),
-/* harmony export */   "faSalesforce": () => (/* binding */ faSalesforce),
-/* harmony export */   "faSass": () => (/* binding */ faSass),
-/* harmony export */   "faSchlix": () => (/* binding */ faSchlix),
-/* harmony export */   "faScribd": () => (/* binding */ faScribd),
-/* harmony export */   "faSearchengin": () => (/* binding */ faSearchengin),
-/* harmony export */   "faSellcast": () => (/* binding */ faSellcast),
-/* harmony export */   "faSellsy": () => (/* binding */ faSellsy),
-/* harmony export */   "faServicestack": () => (/* binding */ faServicestack),
-/* harmony export */   "faShirtsinbulk": () => (/* binding */ faShirtsinbulk),
-/* harmony export */   "faShopify": () => (/* binding */ faShopify),
-/* harmony export */   "faShopware": () => (/* binding */ faShopware),
-/* harmony export */   "faSimplybuilt": () => (/* binding */ faSimplybuilt),
-/* harmony export */   "faSistrix": () => (/* binding */ faSistrix),
-/* harmony export */   "faSith": () => (/* binding */ faSith),
-/* harmony export */   "faSketch": () => (/* binding */ faSketch),
-/* harmony export */   "faSkyatlas": () => (/* binding */ faSkyatlas),
-/* harmony export */   "faSkype": () => (/* binding */ faSkype),
-/* harmony export */   "faSlack": () => (/* binding */ faSlack),
-/* harmony export */   "faSlackHash": () => (/* binding */ faSlackHash),
-/* harmony export */   "faSlideshare": () => (/* binding */ faSlideshare),
-/* harmony export */   "faSnapchat": () => (/* binding */ faSnapchat),
-/* harmony export */   "faSnapchatGhost": () => (/* binding */ faSnapchatGhost),
-/* harmony export */   "faSnapchatSquare": () => (/* binding */ faSnapchatSquare),
-/* harmony export */   "faSoundcloud": () => (/* binding */ faSoundcloud),
-/* harmony export */   "faSourcetree": () => (/* binding */ faSourcetree),
-/* harmony export */   "faSpeakap": () => (/* binding */ faSpeakap),
-/* harmony export */   "faSpeakerDeck": () => (/* binding */ faSpeakerDeck),
-/* harmony export */   "faSpotify": () => (/* binding */ faSpotify),
-/* harmony export */   "faSquarespace": () => (/* binding */ faSquarespace),
-/* harmony export */   "faStackExchange": () => (/* binding */ faStackExchange),
-/* harmony export */   "faStackOverflow": () => (/* binding */ faStackOverflow),
-/* harmony export */   "faStackpath": () => (/* binding */ faStackpath),
-/* harmony export */   "faStaylinked": () => (/* binding */ faStaylinked),
-/* harmony export */   "faSteam": () => (/* binding */ faSteam),
-/* harmony export */   "faSteamSquare": () => (/* binding */ faSteamSquare),
-/* harmony export */   "faSteamSymbol": () => (/* binding */ faSteamSymbol),
-/* harmony export */   "faStickerMule": () => (/* binding */ faStickerMule),
-/* harmony export */   "faStrava": () => (/* binding */ faStrava),
-/* harmony export */   "faStripe": () => (/* binding */ faStripe),
-/* harmony export */   "faStripeS": () => (/* binding */ faStripeS),
-/* harmony export */   "faStudiovinari": () => (/* binding */ faStudiovinari),
-/* harmony export */   "faStumbleupon": () => (/* binding */ faStumbleupon),
-/* harmony export */   "faStumbleuponCircle": () => (/* binding */ faStumbleuponCircle),
-/* harmony export */   "faSuperpowers": () => (/* binding */ faSuperpowers),
-/* harmony export */   "faSupple": () => (/* binding */ faSupple),
-/* harmony export */   "faSuse": () => (/* binding */ faSuse),
-/* harmony export */   "faSwift": () => (/* binding */ faSwift),
-/* harmony export */   "faSymfony": () => (/* binding */ faSymfony),
-/* harmony export */   "faTeamspeak": () => (/* binding */ faTeamspeak),
-/* harmony export */   "faTelegram": () => (/* binding */ faTelegram),
-/* harmony export */   "faTelegramPlane": () => (/* binding */ faTelegramPlane),
-/* harmony export */   "faTencentWeibo": () => (/* binding */ faTencentWeibo),
-/* harmony export */   "faTheRedYeti": () => (/* binding */ faTheRedYeti),
-/* harmony export */   "faThemeco": () => (/* binding */ faThemeco),
-/* harmony export */   "faThemeisle": () => (/* binding */ faThemeisle),
-/* harmony export */   "faThinkPeaks": () => (/* binding */ faThinkPeaks),
-/* harmony export */   "faTiktok": () => (/* binding */ faTiktok),
-/* harmony export */   "faTradeFederation": () => (/* binding */ faTradeFederation),
-/* harmony export */   "faTrello": () => (/* binding */ faTrello),
-/* harmony export */   "faTumblr": () => (/* binding */ faTumblr),
-/* harmony export */   "faTumblrSquare": () => (/* binding */ faTumblrSquare),
-/* harmony export */   "faTwitch": () => (/* binding */ faTwitch),
-/* harmony export */   "faTwitter": () => (/* binding */ faTwitter),
-/* harmony export */   "faTwitterSquare": () => (/* binding */ faTwitterSquare),
-/* harmony export */   "faTypo3": () => (/* binding */ faTypo3),
-/* harmony export */   "faUber": () => (/* binding */ faUber),
-/* harmony export */   "faUbuntu": () => (/* binding */ faUbuntu),
-/* harmony export */   "faUikit": () => (/* binding */ faUikit),
-/* harmony export */   "faUmbraco": () => (/* binding */ faUmbraco),
-/* harmony export */   "faUncharted": () => (/* binding */ faUncharted),
-/* harmony export */   "faUniregistry": () => (/* binding */ faUniregistry),
-/* harmony export */   "faUnity": () => (/* binding */ faUnity),
-/* harmony export */   "faUnsplash": () => (/* binding */ faUnsplash),
-/* harmony export */   "faUntappd": () => (/* binding */ faUntappd),
-/* harmony export */   "faUps": () => (/* binding */ faUps),
-/* harmony export */   "faUsb": () => (/* binding */ faUsb),
-/* harmony export */   "faUsps": () => (/* binding */ faUsps),
-/* harmony export */   "faUssunnah": () => (/* binding */ faUssunnah),
-/* harmony export */   "faVaadin": () => (/* binding */ faVaadin),
-/* harmony export */   "faViacoin": () => (/* binding */ faViacoin),
-/* harmony export */   "faViadeo": () => (/* binding */ faViadeo),
-/* harmony export */   "faViadeoSquare": () => (/* binding */ faViadeoSquare),
-/* harmony export */   "faViber": () => (/* binding */ faViber),
-/* harmony export */   "faVimeo": () => (/* binding */ faVimeo),
-/* harmony export */   "faVimeoSquare": () => (/* binding */ faVimeoSquare),
-/* harmony export */   "faVimeoV": () => (/* binding */ faVimeoV),
-/* harmony export */   "faVine": () => (/* binding */ faVine),
-/* harmony export */   "faVk": () => (/* binding */ faVk),
-/* harmony export */   "faVnv": () => (/* binding */ faVnv),
-/* harmony export */   "faVuejs": () => (/* binding */ faVuejs),
-/* harmony export */   "faWatchmanMonitoring": () => (/* binding */ faWatchmanMonitoring),
-/* harmony export */   "faWaze": () => (/* binding */ faWaze),
-/* harmony export */   "faWeebly": () => (/* binding */ faWeebly),
-/* harmony export */   "faWeibo": () => (/* binding */ faWeibo),
-/* harmony export */   "faWeixin": () => (/* binding */ faWeixin),
-/* harmony export */   "faWhatsapp": () => (/* binding */ faWhatsapp),
-/* harmony export */   "faWhatsappSquare": () => (/* binding */ faWhatsappSquare),
-/* harmony export */   "faWhmcs": () => (/* binding */ faWhmcs),
-/* harmony export */   "faWikipediaW": () => (/* binding */ faWikipediaW),
-/* harmony export */   "faWindows": () => (/* binding */ faWindows),
-/* harmony export */   "faWix": () => (/* binding */ faWix),
-/* harmony export */   "faWizardsOfTheCoast": () => (/* binding */ faWizardsOfTheCoast),
-/* harmony export */   "faWodu": () => (/* binding */ faWodu),
-/* harmony export */   "faWolfPackBattalion": () => (/* binding */ faWolfPackBattalion),
-/* harmony export */   "faWordpress": () => (/* binding */ faWordpress),
-/* harmony export */   "faWordpressSimple": () => (/* binding */ faWordpressSimple),
-/* harmony export */   "faWpbeginner": () => (/* binding */ faWpbeginner),
-/* harmony export */   "faWpexplorer": () => (/* binding */ faWpexplorer),
-/* harmony export */   "faWpforms": () => (/* binding */ faWpforms),
-/* harmony export */   "faWpressr": () => (/* binding */ faWpressr),
-/* harmony export */   "faXbox": () => (/* binding */ faXbox),
-/* harmony export */   "faXing": () => (/* binding */ faXing),
-/* harmony export */   "faXingSquare": () => (/* binding */ faXingSquare),
-/* harmony export */   "faYCombinator": () => (/* binding */ faYCombinator),
-/* harmony export */   "faYahoo": () => (/* binding */ faYahoo),
-/* harmony export */   "faYammer": () => (/* binding */ faYammer),
-/* harmony export */   "faYandex": () => (/* binding */ faYandex),
-/* harmony export */   "faYandexInternational": () => (/* binding */ faYandexInternational),
-/* harmony export */   "faYarn": () => (/* binding */ faYarn),
-/* harmony export */   "faYelp": () => (/* binding */ faYelp),
-/* harmony export */   "faYoast": () => (/* binding */ faYoast),
-/* harmony export */   "faYoutube": () => (/* binding */ faYoutube),
-/* harmony export */   "faYoutubeSquare": () => (/* binding */ faYoutubeSquare),
-/* harmony export */   "faZhihu": () => (/* binding */ faZhihu),
-/* harmony export */   "fab": () => (/* binding */ _iconsCache),
-/* harmony export */   "prefix": () => (/* binding */ prefix)
+/* harmony export */   fa500px: () => (/* binding */ fa500px),
+/* harmony export */   faAccessibleIcon: () => (/* binding */ faAccessibleIcon),
+/* harmony export */   faAccusoft: () => (/* binding */ faAccusoft),
+/* harmony export */   faAcquisitionsIncorporated: () => (/* binding */ faAcquisitionsIncorporated),
+/* harmony export */   faAdn: () => (/* binding */ faAdn),
+/* harmony export */   faAdversal: () => (/* binding */ faAdversal),
+/* harmony export */   faAffiliatetheme: () => (/* binding */ faAffiliatetheme),
+/* harmony export */   faAirbnb: () => (/* binding */ faAirbnb),
+/* harmony export */   faAlgolia: () => (/* binding */ faAlgolia),
+/* harmony export */   faAlipay: () => (/* binding */ faAlipay),
+/* harmony export */   faAmazon: () => (/* binding */ faAmazon),
+/* harmony export */   faAmazonPay: () => (/* binding */ faAmazonPay),
+/* harmony export */   faAmilia: () => (/* binding */ faAmilia),
+/* harmony export */   faAndroid: () => (/* binding */ faAndroid),
+/* harmony export */   faAngellist: () => (/* binding */ faAngellist),
+/* harmony export */   faAngrycreative: () => (/* binding */ faAngrycreative),
+/* harmony export */   faAngular: () => (/* binding */ faAngular),
+/* harmony export */   faAppStore: () => (/* binding */ faAppStore),
+/* harmony export */   faAppStoreIos: () => (/* binding */ faAppStoreIos),
+/* harmony export */   faApper: () => (/* binding */ faApper),
+/* harmony export */   faApple: () => (/* binding */ faApple),
+/* harmony export */   faApplePay: () => (/* binding */ faApplePay),
+/* harmony export */   faArtstation: () => (/* binding */ faArtstation),
+/* harmony export */   faAsymmetrik: () => (/* binding */ faAsymmetrik),
+/* harmony export */   faAtlassian: () => (/* binding */ faAtlassian),
+/* harmony export */   faAudible: () => (/* binding */ faAudible),
+/* harmony export */   faAutoprefixer: () => (/* binding */ faAutoprefixer),
+/* harmony export */   faAvianex: () => (/* binding */ faAvianex),
+/* harmony export */   faAviato: () => (/* binding */ faAviato),
+/* harmony export */   faAws: () => (/* binding */ faAws),
+/* harmony export */   faBandcamp: () => (/* binding */ faBandcamp),
+/* harmony export */   faBattleNet: () => (/* binding */ faBattleNet),
+/* harmony export */   faBehance: () => (/* binding */ faBehance),
+/* harmony export */   faBehanceSquare: () => (/* binding */ faBehanceSquare),
+/* harmony export */   faBimobject: () => (/* binding */ faBimobject),
+/* harmony export */   faBitbucket: () => (/* binding */ faBitbucket),
+/* harmony export */   faBitcoin: () => (/* binding */ faBitcoin),
+/* harmony export */   faBity: () => (/* binding */ faBity),
+/* harmony export */   faBlackTie: () => (/* binding */ faBlackTie),
+/* harmony export */   faBlackberry: () => (/* binding */ faBlackberry),
+/* harmony export */   faBlogger: () => (/* binding */ faBlogger),
+/* harmony export */   faBloggerB: () => (/* binding */ faBloggerB),
+/* harmony export */   faBluetooth: () => (/* binding */ faBluetooth),
+/* harmony export */   faBluetoothB: () => (/* binding */ faBluetoothB),
+/* harmony export */   faBootstrap: () => (/* binding */ faBootstrap),
+/* harmony export */   faBtc: () => (/* binding */ faBtc),
+/* harmony export */   faBuffer: () => (/* binding */ faBuffer),
+/* harmony export */   faBuromobelexperte: () => (/* binding */ faBuromobelexperte),
+/* harmony export */   faBuyNLarge: () => (/* binding */ faBuyNLarge),
+/* harmony export */   faBuysellads: () => (/* binding */ faBuysellads),
+/* harmony export */   faCanadianMapleLeaf: () => (/* binding */ faCanadianMapleLeaf),
+/* harmony export */   faCcAmazonPay: () => (/* binding */ faCcAmazonPay),
+/* harmony export */   faCcAmex: () => (/* binding */ faCcAmex),
+/* harmony export */   faCcApplePay: () => (/* binding */ faCcApplePay),
+/* harmony export */   faCcDinersClub: () => (/* binding */ faCcDinersClub),
+/* harmony export */   faCcDiscover: () => (/* binding */ faCcDiscover),
+/* harmony export */   faCcJcb: () => (/* binding */ faCcJcb),
+/* harmony export */   faCcMastercard: () => (/* binding */ faCcMastercard),
+/* harmony export */   faCcPaypal: () => (/* binding */ faCcPaypal),
+/* harmony export */   faCcStripe: () => (/* binding */ faCcStripe),
+/* harmony export */   faCcVisa: () => (/* binding */ faCcVisa),
+/* harmony export */   faCentercode: () => (/* binding */ faCentercode),
+/* harmony export */   faCentos: () => (/* binding */ faCentos),
+/* harmony export */   faChrome: () => (/* binding */ faChrome),
+/* harmony export */   faChromecast: () => (/* binding */ faChromecast),
+/* harmony export */   faCloudflare: () => (/* binding */ faCloudflare),
+/* harmony export */   faCloudscale: () => (/* binding */ faCloudscale),
+/* harmony export */   faCloudsmith: () => (/* binding */ faCloudsmith),
+/* harmony export */   faCloudversify: () => (/* binding */ faCloudversify),
+/* harmony export */   faCodepen: () => (/* binding */ faCodepen),
+/* harmony export */   faCodiepie: () => (/* binding */ faCodiepie),
+/* harmony export */   faConfluence: () => (/* binding */ faConfluence),
+/* harmony export */   faConnectdevelop: () => (/* binding */ faConnectdevelop),
+/* harmony export */   faContao: () => (/* binding */ faContao),
+/* harmony export */   faCottonBureau: () => (/* binding */ faCottonBureau),
+/* harmony export */   faCpanel: () => (/* binding */ faCpanel),
+/* harmony export */   faCreativeCommons: () => (/* binding */ faCreativeCommons),
+/* harmony export */   faCreativeCommonsBy: () => (/* binding */ faCreativeCommonsBy),
+/* harmony export */   faCreativeCommonsNc: () => (/* binding */ faCreativeCommonsNc),
+/* harmony export */   faCreativeCommonsNcEu: () => (/* binding */ faCreativeCommonsNcEu),
+/* harmony export */   faCreativeCommonsNcJp: () => (/* binding */ faCreativeCommonsNcJp),
+/* harmony export */   faCreativeCommonsNd: () => (/* binding */ faCreativeCommonsNd),
+/* harmony export */   faCreativeCommonsPd: () => (/* binding */ faCreativeCommonsPd),
+/* harmony export */   faCreativeCommonsPdAlt: () => (/* binding */ faCreativeCommonsPdAlt),
+/* harmony export */   faCreativeCommonsRemix: () => (/* binding */ faCreativeCommonsRemix),
+/* harmony export */   faCreativeCommonsSa: () => (/* binding */ faCreativeCommonsSa),
+/* harmony export */   faCreativeCommonsSampling: () => (/* binding */ faCreativeCommonsSampling),
+/* harmony export */   faCreativeCommonsSamplingPlus: () => (/* binding */ faCreativeCommonsSamplingPlus),
+/* harmony export */   faCreativeCommonsShare: () => (/* binding */ faCreativeCommonsShare),
+/* harmony export */   faCreativeCommonsZero: () => (/* binding */ faCreativeCommonsZero),
+/* harmony export */   faCriticalRole: () => (/* binding */ faCriticalRole),
+/* harmony export */   faCss3: () => (/* binding */ faCss3),
+/* harmony export */   faCss3Alt: () => (/* binding */ faCss3Alt),
+/* harmony export */   faCuttlefish: () => (/* binding */ faCuttlefish),
+/* harmony export */   faDAndD: () => (/* binding */ faDAndD),
+/* harmony export */   faDAndDBeyond: () => (/* binding */ faDAndDBeyond),
+/* harmony export */   faDailymotion: () => (/* binding */ faDailymotion),
+/* harmony export */   faDashcube: () => (/* binding */ faDashcube),
+/* harmony export */   faDeezer: () => (/* binding */ faDeezer),
+/* harmony export */   faDelicious: () => (/* binding */ faDelicious),
+/* harmony export */   faDeploydog: () => (/* binding */ faDeploydog),
+/* harmony export */   faDeskpro: () => (/* binding */ faDeskpro),
+/* harmony export */   faDev: () => (/* binding */ faDev),
+/* harmony export */   faDeviantart: () => (/* binding */ faDeviantart),
+/* harmony export */   faDhl: () => (/* binding */ faDhl),
+/* harmony export */   faDiaspora: () => (/* binding */ faDiaspora),
+/* harmony export */   faDigg: () => (/* binding */ faDigg),
+/* harmony export */   faDigitalOcean: () => (/* binding */ faDigitalOcean),
+/* harmony export */   faDiscord: () => (/* binding */ faDiscord),
+/* harmony export */   faDiscourse: () => (/* binding */ faDiscourse),
+/* harmony export */   faDochub: () => (/* binding */ faDochub),
+/* harmony export */   faDocker: () => (/* binding */ faDocker),
+/* harmony export */   faDraft2digital: () => (/* binding */ faDraft2digital),
+/* harmony export */   faDribbble: () => (/* binding */ faDribbble),
+/* harmony export */   faDribbbleSquare: () => (/* binding */ faDribbbleSquare),
+/* harmony export */   faDropbox: () => (/* binding */ faDropbox),
+/* harmony export */   faDrupal: () => (/* binding */ faDrupal),
+/* harmony export */   faDyalog: () => (/* binding */ faDyalog),
+/* harmony export */   faEarlybirds: () => (/* binding */ faEarlybirds),
+/* harmony export */   faEbay: () => (/* binding */ faEbay),
+/* harmony export */   faEdge: () => (/* binding */ faEdge),
+/* harmony export */   faEdgeLegacy: () => (/* binding */ faEdgeLegacy),
+/* harmony export */   faElementor: () => (/* binding */ faElementor),
+/* harmony export */   faEllo: () => (/* binding */ faEllo),
+/* harmony export */   faEmber: () => (/* binding */ faEmber),
+/* harmony export */   faEmpire: () => (/* binding */ faEmpire),
+/* harmony export */   faEnvira: () => (/* binding */ faEnvira),
+/* harmony export */   faErlang: () => (/* binding */ faErlang),
+/* harmony export */   faEthereum: () => (/* binding */ faEthereum),
+/* harmony export */   faEtsy: () => (/* binding */ faEtsy),
+/* harmony export */   faEvernote: () => (/* binding */ faEvernote),
+/* harmony export */   faExpeditedssl: () => (/* binding */ faExpeditedssl),
+/* harmony export */   faFacebook: () => (/* binding */ faFacebook),
+/* harmony export */   faFacebookF: () => (/* binding */ faFacebookF),
+/* harmony export */   faFacebookMessenger: () => (/* binding */ faFacebookMessenger),
+/* harmony export */   faFacebookSquare: () => (/* binding */ faFacebookSquare),
+/* harmony export */   faFantasyFlightGames: () => (/* binding */ faFantasyFlightGames),
+/* harmony export */   faFedex: () => (/* binding */ faFedex),
+/* harmony export */   faFedora: () => (/* binding */ faFedora),
+/* harmony export */   faFigma: () => (/* binding */ faFigma),
+/* harmony export */   faFirefox: () => (/* binding */ faFirefox),
+/* harmony export */   faFirefoxBrowser: () => (/* binding */ faFirefoxBrowser),
+/* harmony export */   faFirstOrder: () => (/* binding */ faFirstOrder),
+/* harmony export */   faFirstOrderAlt: () => (/* binding */ faFirstOrderAlt),
+/* harmony export */   faFirstdraft: () => (/* binding */ faFirstdraft),
+/* harmony export */   faFlickr: () => (/* binding */ faFlickr),
+/* harmony export */   faFlipboard: () => (/* binding */ faFlipboard),
+/* harmony export */   faFly: () => (/* binding */ faFly),
+/* harmony export */   faFontAwesome: () => (/* binding */ faFontAwesome),
+/* harmony export */   faFontAwesomeAlt: () => (/* binding */ faFontAwesomeAlt),
+/* harmony export */   faFontAwesomeFlag: () => (/* binding */ faFontAwesomeFlag),
+/* harmony export */   faFontAwesomeLogoFull: () => (/* binding */ faFontAwesomeLogoFull),
+/* harmony export */   faFonticons: () => (/* binding */ faFonticons),
+/* harmony export */   faFonticonsFi: () => (/* binding */ faFonticonsFi),
+/* harmony export */   faFortAwesome: () => (/* binding */ faFortAwesome),
+/* harmony export */   faFortAwesomeAlt: () => (/* binding */ faFortAwesomeAlt),
+/* harmony export */   faForumbee: () => (/* binding */ faForumbee),
+/* harmony export */   faFoursquare: () => (/* binding */ faFoursquare),
+/* harmony export */   faFreeCodeCamp: () => (/* binding */ faFreeCodeCamp),
+/* harmony export */   faFreebsd: () => (/* binding */ faFreebsd),
+/* harmony export */   faFulcrum: () => (/* binding */ faFulcrum),
+/* harmony export */   faGalacticRepublic: () => (/* binding */ faGalacticRepublic),
+/* harmony export */   faGalacticSenate: () => (/* binding */ faGalacticSenate),
+/* harmony export */   faGetPocket: () => (/* binding */ faGetPocket),
+/* harmony export */   faGg: () => (/* binding */ faGg),
+/* harmony export */   faGgCircle: () => (/* binding */ faGgCircle),
+/* harmony export */   faGit: () => (/* binding */ faGit),
+/* harmony export */   faGitAlt: () => (/* binding */ faGitAlt),
+/* harmony export */   faGitSquare: () => (/* binding */ faGitSquare),
+/* harmony export */   faGithub: () => (/* binding */ faGithub),
+/* harmony export */   faGithubAlt: () => (/* binding */ faGithubAlt),
+/* harmony export */   faGithubSquare: () => (/* binding */ faGithubSquare),
+/* harmony export */   faGitkraken: () => (/* binding */ faGitkraken),
+/* harmony export */   faGitlab: () => (/* binding */ faGitlab),
+/* harmony export */   faGitter: () => (/* binding */ faGitter),
+/* harmony export */   faGlide: () => (/* binding */ faGlide),
+/* harmony export */   faGlideG: () => (/* binding */ faGlideG),
+/* harmony export */   faGofore: () => (/* binding */ faGofore),
+/* harmony export */   faGoodreads: () => (/* binding */ faGoodreads),
+/* harmony export */   faGoodreadsG: () => (/* binding */ faGoodreadsG),
+/* harmony export */   faGoogle: () => (/* binding */ faGoogle),
+/* harmony export */   faGoogleDrive: () => (/* binding */ faGoogleDrive),
+/* harmony export */   faGooglePay: () => (/* binding */ faGooglePay),
+/* harmony export */   faGooglePlay: () => (/* binding */ faGooglePlay),
+/* harmony export */   faGooglePlus: () => (/* binding */ faGooglePlus),
+/* harmony export */   faGooglePlusG: () => (/* binding */ faGooglePlusG),
+/* harmony export */   faGooglePlusSquare: () => (/* binding */ faGooglePlusSquare),
+/* harmony export */   faGoogleWallet: () => (/* binding */ faGoogleWallet),
+/* harmony export */   faGratipay: () => (/* binding */ faGratipay),
+/* harmony export */   faGrav: () => (/* binding */ faGrav),
+/* harmony export */   faGripfire: () => (/* binding */ faGripfire),
+/* harmony export */   faGrunt: () => (/* binding */ faGrunt),
+/* harmony export */   faGuilded: () => (/* binding */ faGuilded),
+/* harmony export */   faGulp: () => (/* binding */ faGulp),
+/* harmony export */   faHackerNews: () => (/* binding */ faHackerNews),
+/* harmony export */   faHackerNewsSquare: () => (/* binding */ faHackerNewsSquare),
+/* harmony export */   faHackerrank: () => (/* binding */ faHackerrank),
+/* harmony export */   faHips: () => (/* binding */ faHips),
+/* harmony export */   faHireAHelper: () => (/* binding */ faHireAHelper),
+/* harmony export */   faHive: () => (/* binding */ faHive),
+/* harmony export */   faHooli: () => (/* binding */ faHooli),
+/* harmony export */   faHornbill: () => (/* binding */ faHornbill),
+/* harmony export */   faHotjar: () => (/* binding */ faHotjar),
+/* harmony export */   faHouzz: () => (/* binding */ faHouzz),
+/* harmony export */   faHtml5: () => (/* binding */ faHtml5),
+/* harmony export */   faHubspot: () => (/* binding */ faHubspot),
+/* harmony export */   faIdeal: () => (/* binding */ faIdeal),
+/* harmony export */   faImdb: () => (/* binding */ faImdb),
+/* harmony export */   faInnosoft: () => (/* binding */ faInnosoft),
+/* harmony export */   faInstagram: () => (/* binding */ faInstagram),
+/* harmony export */   faInstagramSquare: () => (/* binding */ faInstagramSquare),
+/* harmony export */   faInstalod: () => (/* binding */ faInstalod),
+/* harmony export */   faIntercom: () => (/* binding */ faIntercom),
+/* harmony export */   faInternetExplorer: () => (/* binding */ faInternetExplorer),
+/* harmony export */   faInvision: () => (/* binding */ faInvision),
+/* harmony export */   faIoxhost: () => (/* binding */ faIoxhost),
+/* harmony export */   faItchIo: () => (/* binding */ faItchIo),
+/* harmony export */   faItunes: () => (/* binding */ faItunes),
+/* harmony export */   faItunesNote: () => (/* binding */ faItunesNote),
+/* harmony export */   faJava: () => (/* binding */ faJava),
+/* harmony export */   faJediOrder: () => (/* binding */ faJediOrder),
+/* harmony export */   faJenkins: () => (/* binding */ faJenkins),
+/* harmony export */   faJira: () => (/* binding */ faJira),
+/* harmony export */   faJoget: () => (/* binding */ faJoget),
+/* harmony export */   faJoomla: () => (/* binding */ faJoomla),
+/* harmony export */   faJs: () => (/* binding */ faJs),
+/* harmony export */   faJsSquare: () => (/* binding */ faJsSquare),
+/* harmony export */   faJsfiddle: () => (/* binding */ faJsfiddle),
+/* harmony export */   faKaggle: () => (/* binding */ faKaggle),
+/* harmony export */   faKeybase: () => (/* binding */ faKeybase),
+/* harmony export */   faKeycdn: () => (/* binding */ faKeycdn),
+/* harmony export */   faKickstarter: () => (/* binding */ faKickstarter),
+/* harmony export */   faKickstarterK: () => (/* binding */ faKickstarterK),
+/* harmony export */   faKorvue: () => (/* binding */ faKorvue),
+/* harmony export */   faLaravel: () => (/* binding */ faLaravel),
+/* harmony export */   faLastfm: () => (/* binding */ faLastfm),
+/* harmony export */   faLastfmSquare: () => (/* binding */ faLastfmSquare),
+/* harmony export */   faLeanpub: () => (/* binding */ faLeanpub),
+/* harmony export */   faLess: () => (/* binding */ faLess),
+/* harmony export */   faLine: () => (/* binding */ faLine),
+/* harmony export */   faLinkedin: () => (/* binding */ faLinkedin),
+/* harmony export */   faLinkedinIn: () => (/* binding */ faLinkedinIn),
+/* harmony export */   faLinode: () => (/* binding */ faLinode),
+/* harmony export */   faLinux: () => (/* binding */ faLinux),
+/* harmony export */   faLyft: () => (/* binding */ faLyft),
+/* harmony export */   faMagento: () => (/* binding */ faMagento),
+/* harmony export */   faMailchimp: () => (/* binding */ faMailchimp),
+/* harmony export */   faMandalorian: () => (/* binding */ faMandalorian),
+/* harmony export */   faMarkdown: () => (/* binding */ faMarkdown),
+/* harmony export */   faMastodon: () => (/* binding */ faMastodon),
+/* harmony export */   faMaxcdn: () => (/* binding */ faMaxcdn),
+/* harmony export */   faMdb: () => (/* binding */ faMdb),
+/* harmony export */   faMedapps: () => (/* binding */ faMedapps),
+/* harmony export */   faMedium: () => (/* binding */ faMedium),
+/* harmony export */   faMediumM: () => (/* binding */ faMediumM),
+/* harmony export */   faMedrt: () => (/* binding */ faMedrt),
+/* harmony export */   faMeetup: () => (/* binding */ faMeetup),
+/* harmony export */   faMegaport: () => (/* binding */ faMegaport),
+/* harmony export */   faMendeley: () => (/* binding */ faMendeley),
+/* harmony export */   faMicroblog: () => (/* binding */ faMicroblog),
+/* harmony export */   faMicrosoft: () => (/* binding */ faMicrosoft),
+/* harmony export */   faMix: () => (/* binding */ faMix),
+/* harmony export */   faMixcloud: () => (/* binding */ faMixcloud),
+/* harmony export */   faMixer: () => (/* binding */ faMixer),
+/* harmony export */   faMizuni: () => (/* binding */ faMizuni),
+/* harmony export */   faModx: () => (/* binding */ faModx),
+/* harmony export */   faMonero: () => (/* binding */ faMonero),
+/* harmony export */   faNapster: () => (/* binding */ faNapster),
+/* harmony export */   faNeos: () => (/* binding */ faNeos),
+/* harmony export */   faNimblr: () => (/* binding */ faNimblr),
+/* harmony export */   faNode: () => (/* binding */ faNode),
+/* harmony export */   faNodeJs: () => (/* binding */ faNodeJs),
+/* harmony export */   faNpm: () => (/* binding */ faNpm),
+/* harmony export */   faNs8: () => (/* binding */ faNs8),
+/* harmony export */   faNutritionix: () => (/* binding */ faNutritionix),
+/* harmony export */   faOctopusDeploy: () => (/* binding */ faOctopusDeploy),
+/* harmony export */   faOdnoklassniki: () => (/* binding */ faOdnoklassniki),
+/* harmony export */   faOdnoklassnikiSquare: () => (/* binding */ faOdnoklassnikiSquare),
+/* harmony export */   faOldRepublic: () => (/* binding */ faOldRepublic),
+/* harmony export */   faOpencart: () => (/* binding */ faOpencart),
+/* harmony export */   faOpenid: () => (/* binding */ faOpenid),
+/* harmony export */   faOpera: () => (/* binding */ faOpera),
+/* harmony export */   faOptinMonster: () => (/* binding */ faOptinMonster),
+/* harmony export */   faOrcid: () => (/* binding */ faOrcid),
+/* harmony export */   faOsi: () => (/* binding */ faOsi),
+/* harmony export */   faPage4: () => (/* binding */ faPage4),
+/* harmony export */   faPagelines: () => (/* binding */ faPagelines),
+/* harmony export */   faPalfed: () => (/* binding */ faPalfed),
+/* harmony export */   faPatreon: () => (/* binding */ faPatreon),
+/* harmony export */   faPaypal: () => (/* binding */ faPaypal),
+/* harmony export */   faPennyArcade: () => (/* binding */ faPennyArcade),
+/* harmony export */   faPerbyte: () => (/* binding */ faPerbyte),
+/* harmony export */   faPeriscope: () => (/* binding */ faPeriscope),
+/* harmony export */   faPhabricator: () => (/* binding */ faPhabricator),
+/* harmony export */   faPhoenixFramework: () => (/* binding */ faPhoenixFramework),
+/* harmony export */   faPhoenixSquadron: () => (/* binding */ faPhoenixSquadron),
+/* harmony export */   faPhp: () => (/* binding */ faPhp),
+/* harmony export */   faPiedPiper: () => (/* binding */ faPiedPiper),
+/* harmony export */   faPiedPiperAlt: () => (/* binding */ faPiedPiperAlt),
+/* harmony export */   faPiedPiperHat: () => (/* binding */ faPiedPiperHat),
+/* harmony export */   faPiedPiperPp: () => (/* binding */ faPiedPiperPp),
+/* harmony export */   faPiedPiperSquare: () => (/* binding */ faPiedPiperSquare),
+/* harmony export */   faPinterest: () => (/* binding */ faPinterest),
+/* harmony export */   faPinterestP: () => (/* binding */ faPinterestP),
+/* harmony export */   faPinterestSquare: () => (/* binding */ faPinterestSquare),
+/* harmony export */   faPlaystation: () => (/* binding */ faPlaystation),
+/* harmony export */   faProductHunt: () => (/* binding */ faProductHunt),
+/* harmony export */   faPushed: () => (/* binding */ faPushed),
+/* harmony export */   faPython: () => (/* binding */ faPython),
+/* harmony export */   faQq: () => (/* binding */ faQq),
+/* harmony export */   faQuinscape: () => (/* binding */ faQuinscape),
+/* harmony export */   faQuora: () => (/* binding */ faQuora),
+/* harmony export */   faRProject: () => (/* binding */ faRProject),
+/* harmony export */   faRaspberryPi: () => (/* binding */ faRaspberryPi),
+/* harmony export */   faRavelry: () => (/* binding */ faRavelry),
+/* harmony export */   faReact: () => (/* binding */ faReact),
+/* harmony export */   faReacteurope: () => (/* binding */ faReacteurope),
+/* harmony export */   faReadme: () => (/* binding */ faReadme),
+/* harmony export */   faRebel: () => (/* binding */ faRebel),
+/* harmony export */   faRedRiver: () => (/* binding */ faRedRiver),
+/* harmony export */   faReddit: () => (/* binding */ faReddit),
+/* harmony export */   faRedditAlien: () => (/* binding */ faRedditAlien),
+/* harmony export */   faRedditSquare: () => (/* binding */ faRedditSquare),
+/* harmony export */   faRedhat: () => (/* binding */ faRedhat),
+/* harmony export */   faRenren: () => (/* binding */ faRenren),
+/* harmony export */   faReplyd: () => (/* binding */ faReplyd),
+/* harmony export */   faResearchgate: () => (/* binding */ faResearchgate),
+/* harmony export */   faResolving: () => (/* binding */ faResolving),
+/* harmony export */   faRev: () => (/* binding */ faRev),
+/* harmony export */   faRocketchat: () => (/* binding */ faRocketchat),
+/* harmony export */   faRockrms: () => (/* binding */ faRockrms),
+/* harmony export */   faRust: () => (/* binding */ faRust),
+/* harmony export */   faSafari: () => (/* binding */ faSafari),
+/* harmony export */   faSalesforce: () => (/* binding */ faSalesforce),
+/* harmony export */   faSass: () => (/* binding */ faSass),
+/* harmony export */   faSchlix: () => (/* binding */ faSchlix),
+/* harmony export */   faScribd: () => (/* binding */ faScribd),
+/* harmony export */   faSearchengin: () => (/* binding */ faSearchengin),
+/* harmony export */   faSellcast: () => (/* binding */ faSellcast),
+/* harmony export */   faSellsy: () => (/* binding */ faSellsy),
+/* harmony export */   faServicestack: () => (/* binding */ faServicestack),
+/* harmony export */   faShirtsinbulk: () => (/* binding */ faShirtsinbulk),
+/* harmony export */   faShopify: () => (/* binding */ faShopify),
+/* harmony export */   faShopware: () => (/* binding */ faShopware),
+/* harmony export */   faSimplybuilt: () => (/* binding */ faSimplybuilt),
+/* harmony export */   faSistrix: () => (/* binding */ faSistrix),
+/* harmony export */   faSith: () => (/* binding */ faSith),
+/* harmony export */   faSketch: () => (/* binding */ faSketch),
+/* harmony export */   faSkyatlas: () => (/* binding */ faSkyatlas),
+/* harmony export */   faSkype: () => (/* binding */ faSkype),
+/* harmony export */   faSlack: () => (/* binding */ faSlack),
+/* harmony export */   faSlackHash: () => (/* binding */ faSlackHash),
+/* harmony export */   faSlideshare: () => (/* binding */ faSlideshare),
+/* harmony export */   faSnapchat: () => (/* binding */ faSnapchat),
+/* harmony export */   faSnapchatGhost: () => (/* binding */ faSnapchatGhost),
+/* harmony export */   faSnapchatSquare: () => (/* binding */ faSnapchatSquare),
+/* harmony export */   faSoundcloud: () => (/* binding */ faSoundcloud),
+/* harmony export */   faSourcetree: () => (/* binding */ faSourcetree),
+/* harmony export */   faSpeakap: () => (/* binding */ faSpeakap),
+/* harmony export */   faSpeakerDeck: () => (/* binding */ faSpeakerDeck),
+/* harmony export */   faSpotify: () => (/* binding */ faSpotify),
+/* harmony export */   faSquarespace: () => (/* binding */ faSquarespace),
+/* harmony export */   faStackExchange: () => (/* binding */ faStackExchange),
+/* harmony export */   faStackOverflow: () => (/* binding */ faStackOverflow),
+/* harmony export */   faStackpath: () => (/* binding */ faStackpath),
+/* harmony export */   faStaylinked: () => (/* binding */ faStaylinked),
+/* harmony export */   faSteam: () => (/* binding */ faSteam),
+/* harmony export */   faSteamSquare: () => (/* binding */ faSteamSquare),
+/* harmony export */   faSteamSymbol: () => (/* binding */ faSteamSymbol),
+/* harmony export */   faStickerMule: () => (/* binding */ faStickerMule),
+/* harmony export */   faStrava: () => (/* binding */ faStrava),
+/* harmony export */   faStripe: () => (/* binding */ faStripe),
+/* harmony export */   faStripeS: () => (/* binding */ faStripeS),
+/* harmony export */   faStudiovinari: () => (/* binding */ faStudiovinari),
+/* harmony export */   faStumbleupon: () => (/* binding */ faStumbleupon),
+/* harmony export */   faStumbleuponCircle: () => (/* binding */ faStumbleuponCircle),
+/* harmony export */   faSuperpowers: () => (/* binding */ faSuperpowers),
+/* harmony export */   faSupple: () => (/* binding */ faSupple),
+/* harmony export */   faSuse: () => (/* binding */ faSuse),
+/* harmony export */   faSwift: () => (/* binding */ faSwift),
+/* harmony export */   faSymfony: () => (/* binding */ faSymfony),
+/* harmony export */   faTeamspeak: () => (/* binding */ faTeamspeak),
+/* harmony export */   faTelegram: () => (/* binding */ faTelegram),
+/* harmony export */   faTelegramPlane: () => (/* binding */ faTelegramPlane),
+/* harmony export */   faTencentWeibo: () => (/* binding */ faTencentWeibo),
+/* harmony export */   faTheRedYeti: () => (/* binding */ faTheRedYeti),
+/* harmony export */   faThemeco: () => (/* binding */ faThemeco),
+/* harmony export */   faThemeisle: () => (/* binding */ faThemeisle),
+/* harmony export */   faThinkPeaks: () => (/* binding */ faThinkPeaks),
+/* harmony export */   faTiktok: () => (/* binding */ faTiktok),
+/* harmony export */   faTradeFederation: () => (/* binding */ faTradeFederation),
+/* harmony export */   faTrello: () => (/* binding */ faTrello),
+/* harmony export */   faTumblr: () => (/* binding */ faTumblr),
+/* harmony export */   faTumblrSquare: () => (/* binding */ faTumblrSquare),
+/* harmony export */   faTwitch: () => (/* binding */ faTwitch),
+/* harmony export */   faTwitter: () => (/* binding */ faTwitter),
+/* harmony export */   faTwitterSquare: () => (/* binding */ faTwitterSquare),
+/* harmony export */   faTypo3: () => (/* binding */ faTypo3),
+/* harmony export */   faUber: () => (/* binding */ faUber),
+/* harmony export */   faUbuntu: () => (/* binding */ faUbuntu),
+/* harmony export */   faUikit: () => (/* binding */ faUikit),
+/* harmony export */   faUmbraco: () => (/* binding */ faUmbraco),
+/* harmony export */   faUncharted: () => (/* binding */ faUncharted),
+/* harmony export */   faUniregistry: () => (/* binding */ faUniregistry),
+/* harmony export */   faUnity: () => (/* binding */ faUnity),
+/* harmony export */   faUnsplash: () => (/* binding */ faUnsplash),
+/* harmony export */   faUntappd: () => (/* binding */ faUntappd),
+/* harmony export */   faUps: () => (/* binding */ faUps),
+/* harmony export */   faUsb: () => (/* binding */ faUsb),
+/* harmony export */   faUsps: () => (/* binding */ faUsps),
+/* harmony export */   faUssunnah: () => (/* binding */ faUssunnah),
+/* harmony export */   faVaadin: () => (/* binding */ faVaadin),
+/* harmony export */   faViacoin: () => (/* binding */ faViacoin),
+/* harmony export */   faViadeo: () => (/* binding */ faViadeo),
+/* harmony export */   faViadeoSquare: () => (/* binding */ faViadeoSquare),
+/* harmony export */   faViber: () => (/* binding */ faViber),
+/* harmony export */   faVimeo: () => (/* binding */ faVimeo),
+/* harmony export */   faVimeoSquare: () => (/* binding */ faVimeoSquare),
+/* harmony export */   faVimeoV: () => (/* binding */ faVimeoV),
+/* harmony export */   faVine: () => (/* binding */ faVine),
+/* harmony export */   faVk: () => (/* binding */ faVk),
+/* harmony export */   faVnv: () => (/* binding */ faVnv),
+/* harmony export */   faVuejs: () => (/* binding */ faVuejs),
+/* harmony export */   faWatchmanMonitoring: () => (/* binding */ faWatchmanMonitoring),
+/* harmony export */   faWaze: () => (/* binding */ faWaze),
+/* harmony export */   faWeebly: () => (/* binding */ faWeebly),
+/* harmony export */   faWeibo: () => (/* binding */ faWeibo),
+/* harmony export */   faWeixin: () => (/* binding */ faWeixin),
+/* harmony export */   faWhatsapp: () => (/* binding */ faWhatsapp),
+/* harmony export */   faWhatsappSquare: () => (/* binding */ faWhatsappSquare),
+/* harmony export */   faWhmcs: () => (/* binding */ faWhmcs),
+/* harmony export */   faWikipediaW: () => (/* binding */ faWikipediaW),
+/* harmony export */   faWindows: () => (/* binding */ faWindows),
+/* harmony export */   faWix: () => (/* binding */ faWix),
+/* harmony export */   faWizardsOfTheCoast: () => (/* binding */ faWizardsOfTheCoast),
+/* harmony export */   faWodu: () => (/* binding */ faWodu),
+/* harmony export */   faWolfPackBattalion: () => (/* binding */ faWolfPackBattalion),
+/* harmony export */   faWordpress: () => (/* binding */ faWordpress),
+/* harmony export */   faWordpressSimple: () => (/* binding */ faWordpressSimple),
+/* harmony export */   faWpbeginner: () => (/* binding */ faWpbeginner),
+/* harmony export */   faWpexplorer: () => (/* binding */ faWpexplorer),
+/* harmony export */   faWpforms: () => (/* binding */ faWpforms),
+/* harmony export */   faWpressr: () => (/* binding */ faWpressr),
+/* harmony export */   faXbox: () => (/* binding */ faXbox),
+/* harmony export */   faXing: () => (/* binding */ faXing),
+/* harmony export */   faXingSquare: () => (/* binding */ faXingSquare),
+/* harmony export */   faYCombinator: () => (/* binding */ faYCombinator),
+/* harmony export */   faYahoo: () => (/* binding */ faYahoo),
+/* harmony export */   faYammer: () => (/* binding */ faYammer),
+/* harmony export */   faYandex: () => (/* binding */ faYandex),
+/* harmony export */   faYandexInternational: () => (/* binding */ faYandexInternational),
+/* harmony export */   faYarn: () => (/* binding */ faYarn),
+/* harmony export */   faYelp: () => (/* binding */ faYelp),
+/* harmony export */   faYoast: () => (/* binding */ faYoast),
+/* harmony export */   faYoutube: () => (/* binding */ faYoutube),
+/* harmony export */   faYoutubeSquare: () => (/* binding */ faYoutubeSquare),
+/* harmony export */   faZhihu: () => (/* binding */ faZhihu),
+/* harmony export */   fab: () => (/* binding */ _iconsCache),
+/* harmony export */   prefix: () => (/* binding */ prefix)
 /* harmony export */ });
 /*!
  * Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com
@@ -5693,160 +5693,160 @@ var _iconsCache = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "faAddressBook": () => (/* binding */ faAddressBook),
-/* harmony export */   "faAddressCard": () => (/* binding */ faAddressCard),
-/* harmony export */   "faAngry": () => (/* binding */ faAngry),
-/* harmony export */   "faArrowAltCircleDown": () => (/* binding */ faArrowAltCircleDown),
-/* harmony export */   "faArrowAltCircleLeft": () => (/* binding */ faArrowAltCircleLeft),
-/* harmony export */   "faArrowAltCircleRight": () => (/* binding */ faArrowAltCircleRight),
-/* harmony export */   "faArrowAltCircleUp": () => (/* binding */ faArrowAltCircleUp),
-/* harmony export */   "faBell": () => (/* binding */ faBell),
-/* harmony export */   "faBellSlash": () => (/* binding */ faBellSlash),
-/* harmony export */   "faBookmark": () => (/* binding */ faBookmark),
-/* harmony export */   "faBuilding": () => (/* binding */ faBuilding),
-/* harmony export */   "faCalendar": () => (/* binding */ faCalendar),
-/* harmony export */   "faCalendarAlt": () => (/* binding */ faCalendarAlt),
-/* harmony export */   "faCalendarCheck": () => (/* binding */ faCalendarCheck),
-/* harmony export */   "faCalendarMinus": () => (/* binding */ faCalendarMinus),
-/* harmony export */   "faCalendarPlus": () => (/* binding */ faCalendarPlus),
-/* harmony export */   "faCalendarTimes": () => (/* binding */ faCalendarTimes),
-/* harmony export */   "faCaretSquareDown": () => (/* binding */ faCaretSquareDown),
-/* harmony export */   "faCaretSquareLeft": () => (/* binding */ faCaretSquareLeft),
-/* harmony export */   "faCaretSquareRight": () => (/* binding */ faCaretSquareRight),
-/* harmony export */   "faCaretSquareUp": () => (/* binding */ faCaretSquareUp),
-/* harmony export */   "faChartBar": () => (/* binding */ faChartBar),
-/* harmony export */   "faCheckCircle": () => (/* binding */ faCheckCircle),
-/* harmony export */   "faCheckSquare": () => (/* binding */ faCheckSquare),
-/* harmony export */   "faCircle": () => (/* binding */ faCircle),
-/* harmony export */   "faClipboard": () => (/* binding */ faClipboard),
-/* harmony export */   "faClock": () => (/* binding */ faClock),
-/* harmony export */   "faClone": () => (/* binding */ faClone),
-/* harmony export */   "faClosedCaptioning": () => (/* binding */ faClosedCaptioning),
-/* harmony export */   "faComment": () => (/* binding */ faComment),
-/* harmony export */   "faCommentAlt": () => (/* binding */ faCommentAlt),
-/* harmony export */   "faCommentDots": () => (/* binding */ faCommentDots),
-/* harmony export */   "faComments": () => (/* binding */ faComments),
-/* harmony export */   "faCompass": () => (/* binding */ faCompass),
-/* harmony export */   "faCopy": () => (/* binding */ faCopy),
-/* harmony export */   "faCopyright": () => (/* binding */ faCopyright),
-/* harmony export */   "faCreditCard": () => (/* binding */ faCreditCard),
-/* harmony export */   "faDizzy": () => (/* binding */ faDizzy),
-/* harmony export */   "faDotCircle": () => (/* binding */ faDotCircle),
-/* harmony export */   "faEdit": () => (/* binding */ faEdit),
-/* harmony export */   "faEnvelope": () => (/* binding */ faEnvelope),
-/* harmony export */   "faEnvelopeOpen": () => (/* binding */ faEnvelopeOpen),
-/* harmony export */   "faEye": () => (/* binding */ faEye),
-/* harmony export */   "faEyeSlash": () => (/* binding */ faEyeSlash),
-/* harmony export */   "faFile": () => (/* binding */ faFile),
-/* harmony export */   "faFileAlt": () => (/* binding */ faFileAlt),
-/* harmony export */   "faFileArchive": () => (/* binding */ faFileArchive),
-/* harmony export */   "faFileAudio": () => (/* binding */ faFileAudio),
-/* harmony export */   "faFileCode": () => (/* binding */ faFileCode),
-/* harmony export */   "faFileExcel": () => (/* binding */ faFileExcel),
-/* harmony export */   "faFileImage": () => (/* binding */ faFileImage),
-/* harmony export */   "faFilePdf": () => (/* binding */ faFilePdf),
-/* harmony export */   "faFilePowerpoint": () => (/* binding */ faFilePowerpoint),
-/* harmony export */   "faFileVideo": () => (/* binding */ faFileVideo),
-/* harmony export */   "faFileWord": () => (/* binding */ faFileWord),
-/* harmony export */   "faFlag": () => (/* binding */ faFlag),
-/* harmony export */   "faFlushed": () => (/* binding */ faFlushed),
-/* harmony export */   "faFolder": () => (/* binding */ faFolder),
-/* harmony export */   "faFolderOpen": () => (/* binding */ faFolderOpen),
-/* harmony export */   "faFontAwesomeLogoFull": () => (/* binding */ faFontAwesomeLogoFull),
-/* harmony export */   "faFrown": () => (/* binding */ faFrown),
-/* harmony export */   "faFrownOpen": () => (/* binding */ faFrownOpen),
-/* harmony export */   "faFutbol": () => (/* binding */ faFutbol),
-/* harmony export */   "faGem": () => (/* binding */ faGem),
-/* harmony export */   "faGrimace": () => (/* binding */ faGrimace),
-/* harmony export */   "faGrin": () => (/* binding */ faGrin),
-/* harmony export */   "faGrinAlt": () => (/* binding */ faGrinAlt),
-/* harmony export */   "faGrinBeam": () => (/* binding */ faGrinBeam),
-/* harmony export */   "faGrinBeamSweat": () => (/* binding */ faGrinBeamSweat),
-/* harmony export */   "faGrinHearts": () => (/* binding */ faGrinHearts),
-/* harmony export */   "faGrinSquint": () => (/* binding */ faGrinSquint),
-/* harmony export */   "faGrinSquintTears": () => (/* binding */ faGrinSquintTears),
-/* harmony export */   "faGrinStars": () => (/* binding */ faGrinStars),
-/* harmony export */   "faGrinTears": () => (/* binding */ faGrinTears),
-/* harmony export */   "faGrinTongue": () => (/* binding */ faGrinTongue),
-/* harmony export */   "faGrinTongueSquint": () => (/* binding */ faGrinTongueSquint),
-/* harmony export */   "faGrinTongueWink": () => (/* binding */ faGrinTongueWink),
-/* harmony export */   "faGrinWink": () => (/* binding */ faGrinWink),
-/* harmony export */   "faHandLizard": () => (/* binding */ faHandLizard),
-/* harmony export */   "faHandPaper": () => (/* binding */ faHandPaper),
-/* harmony export */   "faHandPeace": () => (/* binding */ faHandPeace),
-/* harmony export */   "faHandPointDown": () => (/* binding */ faHandPointDown),
-/* harmony export */   "faHandPointLeft": () => (/* binding */ faHandPointLeft),
-/* harmony export */   "faHandPointRight": () => (/* binding */ faHandPointRight),
-/* harmony export */   "faHandPointUp": () => (/* binding */ faHandPointUp),
-/* harmony export */   "faHandPointer": () => (/* binding */ faHandPointer),
-/* harmony export */   "faHandRock": () => (/* binding */ faHandRock),
-/* harmony export */   "faHandScissors": () => (/* binding */ faHandScissors),
-/* harmony export */   "faHandSpock": () => (/* binding */ faHandSpock),
-/* harmony export */   "faHandshake": () => (/* binding */ faHandshake),
-/* harmony export */   "faHdd": () => (/* binding */ faHdd),
-/* harmony export */   "faHeart": () => (/* binding */ faHeart),
-/* harmony export */   "faHospital": () => (/* binding */ faHospital),
-/* harmony export */   "faHourglass": () => (/* binding */ faHourglass),
-/* harmony export */   "faIdBadge": () => (/* binding */ faIdBadge),
-/* harmony export */   "faIdCard": () => (/* binding */ faIdCard),
-/* harmony export */   "faImage": () => (/* binding */ faImage),
-/* harmony export */   "faImages": () => (/* binding */ faImages),
-/* harmony export */   "faKeyboard": () => (/* binding */ faKeyboard),
-/* harmony export */   "faKiss": () => (/* binding */ faKiss),
-/* harmony export */   "faKissBeam": () => (/* binding */ faKissBeam),
-/* harmony export */   "faKissWinkHeart": () => (/* binding */ faKissWinkHeart),
-/* harmony export */   "faLaugh": () => (/* binding */ faLaugh),
-/* harmony export */   "faLaughBeam": () => (/* binding */ faLaughBeam),
-/* harmony export */   "faLaughSquint": () => (/* binding */ faLaughSquint),
-/* harmony export */   "faLaughWink": () => (/* binding */ faLaughWink),
-/* harmony export */   "faLemon": () => (/* binding */ faLemon),
-/* harmony export */   "faLifeRing": () => (/* binding */ faLifeRing),
-/* harmony export */   "faLightbulb": () => (/* binding */ faLightbulb),
-/* harmony export */   "faListAlt": () => (/* binding */ faListAlt),
-/* harmony export */   "faMap": () => (/* binding */ faMap),
-/* harmony export */   "faMeh": () => (/* binding */ faMeh),
-/* harmony export */   "faMehBlank": () => (/* binding */ faMehBlank),
-/* harmony export */   "faMehRollingEyes": () => (/* binding */ faMehRollingEyes),
-/* harmony export */   "faMinusSquare": () => (/* binding */ faMinusSquare),
-/* harmony export */   "faMoneyBillAlt": () => (/* binding */ faMoneyBillAlt),
-/* harmony export */   "faMoon": () => (/* binding */ faMoon),
-/* harmony export */   "faNewspaper": () => (/* binding */ faNewspaper),
-/* harmony export */   "faObjectGroup": () => (/* binding */ faObjectGroup),
-/* harmony export */   "faObjectUngroup": () => (/* binding */ faObjectUngroup),
-/* harmony export */   "faPaperPlane": () => (/* binding */ faPaperPlane),
-/* harmony export */   "faPauseCircle": () => (/* binding */ faPauseCircle),
-/* harmony export */   "faPlayCircle": () => (/* binding */ faPlayCircle),
-/* harmony export */   "faPlusSquare": () => (/* binding */ faPlusSquare),
-/* harmony export */   "faQuestionCircle": () => (/* binding */ faQuestionCircle),
-/* harmony export */   "faRegistered": () => (/* binding */ faRegistered),
-/* harmony export */   "faSadCry": () => (/* binding */ faSadCry),
-/* harmony export */   "faSadTear": () => (/* binding */ faSadTear),
-/* harmony export */   "faSave": () => (/* binding */ faSave),
-/* harmony export */   "faShareSquare": () => (/* binding */ faShareSquare),
-/* harmony export */   "faSmile": () => (/* binding */ faSmile),
-/* harmony export */   "faSmileBeam": () => (/* binding */ faSmileBeam),
-/* harmony export */   "faSmileWink": () => (/* binding */ faSmileWink),
-/* harmony export */   "faSnowflake": () => (/* binding */ faSnowflake),
-/* harmony export */   "faSquare": () => (/* binding */ faSquare),
-/* harmony export */   "faStar": () => (/* binding */ faStar),
-/* harmony export */   "faStarHalf": () => (/* binding */ faStarHalf),
-/* harmony export */   "faStickyNote": () => (/* binding */ faStickyNote),
-/* harmony export */   "faStopCircle": () => (/* binding */ faStopCircle),
-/* harmony export */   "faSun": () => (/* binding */ faSun),
-/* harmony export */   "faSurprise": () => (/* binding */ faSurprise),
-/* harmony export */   "faThumbsDown": () => (/* binding */ faThumbsDown),
-/* harmony export */   "faThumbsUp": () => (/* binding */ faThumbsUp),
-/* harmony export */   "faTimesCircle": () => (/* binding */ faTimesCircle),
-/* harmony export */   "faTired": () => (/* binding */ faTired),
-/* harmony export */   "faTrashAlt": () => (/* binding */ faTrashAlt),
-/* harmony export */   "faUser": () => (/* binding */ faUser),
-/* harmony export */   "faUserCircle": () => (/* binding */ faUserCircle),
-/* harmony export */   "faWindowClose": () => (/* binding */ faWindowClose),
-/* harmony export */   "faWindowMaximize": () => (/* binding */ faWindowMaximize),
-/* harmony export */   "faWindowMinimize": () => (/* binding */ faWindowMinimize),
-/* harmony export */   "faWindowRestore": () => (/* binding */ faWindowRestore),
-/* harmony export */   "far": () => (/* binding */ _iconsCache),
-/* harmony export */   "prefix": () => (/* binding */ prefix)
+/* harmony export */   faAddressBook: () => (/* binding */ faAddressBook),
+/* harmony export */   faAddressCard: () => (/* binding */ faAddressCard),
+/* harmony export */   faAngry: () => (/* binding */ faAngry),
+/* harmony export */   faArrowAltCircleDown: () => (/* binding */ faArrowAltCircleDown),
+/* harmony export */   faArrowAltCircleLeft: () => (/* binding */ faArrowAltCircleLeft),
+/* harmony export */   faArrowAltCircleRight: () => (/* binding */ faArrowAltCircleRight),
+/* harmony export */   faArrowAltCircleUp: () => (/* binding */ faArrowAltCircleUp),
+/* harmony export */   faBell: () => (/* binding */ faBell),
+/* harmony export */   faBellSlash: () => (/* binding */ faBellSlash),
+/* harmony export */   faBookmark: () => (/* binding */ faBookmark),
+/* harmony export */   faBuilding: () => (/* binding */ faBuilding),
+/* harmony export */   faCalendar: () => (/* binding */ faCalendar),
+/* harmony export */   faCalendarAlt: () => (/* binding */ faCalendarAlt),
+/* harmony export */   faCalendarCheck: () => (/* binding */ faCalendarCheck),
+/* harmony export */   faCalendarMinus: () => (/* binding */ faCalendarMinus),
+/* harmony export */   faCalendarPlus: () => (/* binding */ faCalendarPlus),
+/* harmony export */   faCalendarTimes: () => (/* binding */ faCalendarTimes),
+/* harmony export */   faCaretSquareDown: () => (/* binding */ faCaretSquareDown),
+/* harmony export */   faCaretSquareLeft: () => (/* binding */ faCaretSquareLeft),
+/* harmony export */   faCaretSquareRight: () => (/* binding */ faCaretSquareRight),
+/* harmony export */   faCaretSquareUp: () => (/* binding */ faCaretSquareUp),
+/* harmony export */   faChartBar: () => (/* binding */ faChartBar),
+/* harmony export */   faCheckCircle: () => (/* binding */ faCheckCircle),
+/* harmony export */   faCheckSquare: () => (/* binding */ faCheckSquare),
+/* harmony export */   faCircle: () => (/* binding */ faCircle),
+/* harmony export */   faClipboard: () => (/* binding */ faClipboard),
+/* harmony export */   faClock: () => (/* binding */ faClock),
+/* harmony export */   faClone: () => (/* binding */ faClone),
+/* harmony export */   faClosedCaptioning: () => (/* binding */ faClosedCaptioning),
+/* harmony export */   faComment: () => (/* binding */ faComment),
+/* harmony export */   faCommentAlt: () => (/* binding */ faCommentAlt),
+/* harmony export */   faCommentDots: () => (/* binding */ faCommentDots),
+/* harmony export */   faComments: () => (/* binding */ faComments),
+/* harmony export */   faCompass: () => (/* binding */ faCompass),
+/* harmony export */   faCopy: () => (/* binding */ faCopy),
+/* harmony export */   faCopyright: () => (/* binding */ faCopyright),
+/* harmony export */   faCreditCard: () => (/* binding */ faCreditCard),
+/* harmony export */   faDizzy: () => (/* binding */ faDizzy),
+/* harmony export */   faDotCircle: () => (/* binding */ faDotCircle),
+/* harmony export */   faEdit: () => (/* binding */ faEdit),
+/* harmony export */   faEnvelope: () => (/* binding */ faEnvelope),
+/* harmony export */   faEnvelopeOpen: () => (/* binding */ faEnvelopeOpen),
+/* harmony export */   faEye: () => (/* binding */ faEye),
+/* harmony export */   faEyeSlash: () => (/* binding */ faEyeSlash),
+/* harmony export */   faFile: () => (/* binding */ faFile),
+/* harmony export */   faFileAlt: () => (/* binding */ faFileAlt),
+/* harmony export */   faFileArchive: () => (/* binding */ faFileArchive),
+/* harmony export */   faFileAudio: () => (/* binding */ faFileAudio),
+/* harmony export */   faFileCode: () => (/* binding */ faFileCode),
+/* harmony export */   faFileExcel: () => (/* binding */ faFileExcel),
+/* harmony export */   faFileImage: () => (/* binding */ faFileImage),
+/* harmony export */   faFilePdf: () => (/* binding */ faFilePdf),
+/* harmony export */   faFilePowerpoint: () => (/* binding */ faFilePowerpoint),
+/* harmony export */   faFileVideo: () => (/* binding */ faFileVideo),
+/* harmony export */   faFileWord: () => (/* binding */ faFileWord),
+/* harmony export */   faFlag: () => (/* binding */ faFlag),
+/* harmony export */   faFlushed: () => (/* binding */ faFlushed),
+/* harmony export */   faFolder: () => (/* binding */ faFolder),
+/* harmony export */   faFolderOpen: () => (/* binding */ faFolderOpen),
+/* harmony export */   faFontAwesomeLogoFull: () => (/* binding */ faFontAwesomeLogoFull),
+/* harmony export */   faFrown: () => (/* binding */ faFrown),
+/* harmony export */   faFrownOpen: () => (/* binding */ faFrownOpen),
+/* harmony export */   faFutbol: () => (/* binding */ faFutbol),
+/* harmony export */   faGem: () => (/* binding */ faGem),
+/* harmony export */   faGrimace: () => (/* binding */ faGrimace),
+/* harmony export */   faGrin: () => (/* binding */ faGrin),
+/* harmony export */   faGrinAlt: () => (/* binding */ faGrinAlt),
+/* harmony export */   faGrinBeam: () => (/* binding */ faGrinBeam),
+/* harmony export */   faGrinBeamSweat: () => (/* binding */ faGrinBeamSweat),
+/* harmony export */   faGrinHearts: () => (/* binding */ faGrinHearts),
+/* harmony export */   faGrinSquint: () => (/* binding */ faGrinSquint),
+/* harmony export */   faGrinSquintTears: () => (/* binding */ faGrinSquintTears),
+/* harmony export */   faGrinStars: () => (/* binding */ faGrinStars),
+/* harmony export */   faGrinTears: () => (/* binding */ faGrinTears),
+/* harmony export */   faGrinTongue: () => (/* binding */ faGrinTongue),
+/* harmony export */   faGrinTongueSquint: () => (/* binding */ faGrinTongueSquint),
+/* harmony export */   faGrinTongueWink: () => (/* binding */ faGrinTongueWink),
+/* harmony export */   faGrinWink: () => (/* binding */ faGrinWink),
+/* harmony export */   faHandLizard: () => (/* binding */ faHandLizard),
+/* harmony export */   faHandPaper: () => (/* binding */ faHandPaper),
+/* harmony export */   faHandPeace: () => (/* binding */ faHandPeace),
+/* harmony export */   faHandPointDown: () => (/* binding */ faHandPointDown),
+/* harmony export */   faHandPointLeft: () => (/* binding */ faHandPointLeft),
+/* harmony export */   faHandPointRight: () => (/* binding */ faHandPointRight),
+/* harmony export */   faHandPointUp: () => (/* binding */ faHandPointUp),
+/* harmony export */   faHandPointer: () => (/* binding */ faHandPointer),
+/* harmony export */   faHandRock: () => (/* binding */ faHandRock),
+/* harmony export */   faHandScissors: () => (/* binding */ faHandScissors),
+/* harmony export */   faHandSpock: () => (/* binding */ faHandSpock),
+/* harmony export */   faHandshake: () => (/* binding */ faHandshake),
+/* harmony export */   faHdd: () => (/* binding */ faHdd),
+/* harmony export */   faHeart: () => (/* binding */ faHeart),
+/* harmony export */   faHospital: () => (/* binding */ faHospital),
+/* harmony export */   faHourglass: () => (/* binding */ faHourglass),
+/* harmony export */   faIdBadge: () => (/* binding */ faIdBadge),
+/* harmony export */   faIdCard: () => (/* binding */ faIdCard),
+/* harmony export */   faImage: () => (/* binding */ faImage),
+/* harmony export */   faImages: () => (/* binding */ faImages),
+/* harmony export */   faKeyboard: () => (/* binding */ faKeyboard),
+/* harmony export */   faKiss: () => (/* binding */ faKiss),
+/* harmony export */   faKissBeam: () => (/* binding */ faKissBeam),
+/* harmony export */   faKissWinkHeart: () => (/* binding */ faKissWinkHeart),
+/* harmony export */   faLaugh: () => (/* binding */ faLaugh),
+/* harmony export */   faLaughBeam: () => (/* binding */ faLaughBeam),
+/* harmony export */   faLaughSquint: () => (/* binding */ faLaughSquint),
+/* harmony export */   faLaughWink: () => (/* binding */ faLaughWink),
+/* harmony export */   faLemon: () => (/* binding */ faLemon),
+/* harmony export */   faLifeRing: () => (/* binding */ faLifeRing),
+/* harmony export */   faLightbulb: () => (/* binding */ faLightbulb),
+/* harmony export */   faListAlt: () => (/* binding */ faListAlt),
+/* harmony export */   faMap: () => (/* binding */ faMap),
+/* harmony export */   faMeh: () => (/* binding */ faMeh),
+/* harmony export */   faMehBlank: () => (/* binding */ faMehBlank),
+/* harmony export */   faMehRollingEyes: () => (/* binding */ faMehRollingEyes),
+/* harmony export */   faMinusSquare: () => (/* binding */ faMinusSquare),
+/* harmony export */   faMoneyBillAlt: () => (/* binding */ faMoneyBillAlt),
+/* harmony export */   faMoon: () => (/* binding */ faMoon),
+/* harmony export */   faNewspaper: () => (/* binding */ faNewspaper),
+/* harmony export */   faObjectGroup: () => (/* binding */ faObjectGroup),
+/* harmony export */   faObjectUngroup: () => (/* binding */ faObjectUngroup),
+/* harmony export */   faPaperPlane: () => (/* binding */ faPaperPlane),
+/* harmony export */   faPauseCircle: () => (/* binding */ faPauseCircle),
+/* harmony export */   faPlayCircle: () => (/* binding */ faPlayCircle),
+/* harmony export */   faPlusSquare: () => (/* binding */ faPlusSquare),
+/* harmony export */   faQuestionCircle: () => (/* binding */ faQuestionCircle),
+/* harmony export */   faRegistered: () => (/* binding */ faRegistered),
+/* harmony export */   faSadCry: () => (/* binding */ faSadCry),
+/* harmony export */   faSadTear: () => (/* binding */ faSadTear),
+/* harmony export */   faSave: () => (/* binding */ faSave),
+/* harmony export */   faShareSquare: () => (/* binding */ faShareSquare),
+/* harmony export */   faSmile: () => (/* binding */ faSmile),
+/* harmony export */   faSmileBeam: () => (/* binding */ faSmileBeam),
+/* harmony export */   faSmileWink: () => (/* binding */ faSmileWink),
+/* harmony export */   faSnowflake: () => (/* binding */ faSnowflake),
+/* harmony export */   faSquare: () => (/* binding */ faSquare),
+/* harmony export */   faStar: () => (/* binding */ faStar),
+/* harmony export */   faStarHalf: () => (/* binding */ faStarHalf),
+/* harmony export */   faStickyNote: () => (/* binding */ faStickyNote),
+/* harmony export */   faStopCircle: () => (/* binding */ faStopCircle),
+/* harmony export */   faSun: () => (/* binding */ faSun),
+/* harmony export */   faSurprise: () => (/* binding */ faSurprise),
+/* harmony export */   faThumbsDown: () => (/* binding */ faThumbsDown),
+/* harmony export */   faThumbsUp: () => (/* binding */ faThumbsUp),
+/* harmony export */   faTimesCircle: () => (/* binding */ faTimesCircle),
+/* harmony export */   faTired: () => (/* binding */ faTired),
+/* harmony export */   faTrashAlt: () => (/* binding */ faTrashAlt),
+/* harmony export */   faUser: () => (/* binding */ faUser),
+/* harmony export */   faUserCircle: () => (/* binding */ faUserCircle),
+/* harmony export */   faWindowClose: () => (/* binding */ faWindowClose),
+/* harmony export */   faWindowMaximize: () => (/* binding */ faWindowMaximize),
+/* harmony export */   faWindowMinimize: () => (/* binding */ faWindowMinimize),
+/* harmony export */   faWindowRestore: () => (/* binding */ faWindowRestore),
+/* harmony export */   far: () => (/* binding */ _iconsCache),
+/* harmony export */   prefix: () => (/* binding */ prefix)
 /* harmony export */ });
 /*!
  * Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com
@@ -6782,1010 +6782,1010 @@ var _iconsCache = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "faAd": () => (/* binding */ faAd),
-/* harmony export */   "faAddressBook": () => (/* binding */ faAddressBook),
-/* harmony export */   "faAddressCard": () => (/* binding */ faAddressCard),
-/* harmony export */   "faAdjust": () => (/* binding */ faAdjust),
-/* harmony export */   "faAirFreshener": () => (/* binding */ faAirFreshener),
-/* harmony export */   "faAlignCenter": () => (/* binding */ faAlignCenter),
-/* harmony export */   "faAlignJustify": () => (/* binding */ faAlignJustify),
-/* harmony export */   "faAlignLeft": () => (/* binding */ faAlignLeft),
-/* harmony export */   "faAlignRight": () => (/* binding */ faAlignRight),
-/* harmony export */   "faAllergies": () => (/* binding */ faAllergies),
-/* harmony export */   "faAmbulance": () => (/* binding */ faAmbulance),
-/* harmony export */   "faAmericanSignLanguageInterpreting": () => (/* binding */ faAmericanSignLanguageInterpreting),
-/* harmony export */   "faAnchor": () => (/* binding */ faAnchor),
-/* harmony export */   "faAngleDoubleDown": () => (/* binding */ faAngleDoubleDown),
-/* harmony export */   "faAngleDoubleLeft": () => (/* binding */ faAngleDoubleLeft),
-/* harmony export */   "faAngleDoubleRight": () => (/* binding */ faAngleDoubleRight),
-/* harmony export */   "faAngleDoubleUp": () => (/* binding */ faAngleDoubleUp),
-/* harmony export */   "faAngleDown": () => (/* binding */ faAngleDown),
-/* harmony export */   "faAngleLeft": () => (/* binding */ faAngleLeft),
-/* harmony export */   "faAngleRight": () => (/* binding */ faAngleRight),
-/* harmony export */   "faAngleUp": () => (/* binding */ faAngleUp),
-/* harmony export */   "faAngry": () => (/* binding */ faAngry),
-/* harmony export */   "faAnkh": () => (/* binding */ faAnkh),
-/* harmony export */   "faAppleAlt": () => (/* binding */ faAppleAlt),
-/* harmony export */   "faArchive": () => (/* binding */ faArchive),
-/* harmony export */   "faArchway": () => (/* binding */ faArchway),
-/* harmony export */   "faArrowAltCircleDown": () => (/* binding */ faArrowAltCircleDown),
-/* harmony export */   "faArrowAltCircleLeft": () => (/* binding */ faArrowAltCircleLeft),
-/* harmony export */   "faArrowAltCircleRight": () => (/* binding */ faArrowAltCircleRight),
-/* harmony export */   "faArrowAltCircleUp": () => (/* binding */ faArrowAltCircleUp),
-/* harmony export */   "faArrowCircleDown": () => (/* binding */ faArrowCircleDown),
-/* harmony export */   "faArrowCircleLeft": () => (/* binding */ faArrowCircleLeft),
-/* harmony export */   "faArrowCircleRight": () => (/* binding */ faArrowCircleRight),
-/* harmony export */   "faArrowCircleUp": () => (/* binding */ faArrowCircleUp),
-/* harmony export */   "faArrowDown": () => (/* binding */ faArrowDown),
-/* harmony export */   "faArrowLeft": () => (/* binding */ faArrowLeft),
-/* harmony export */   "faArrowRight": () => (/* binding */ faArrowRight),
-/* harmony export */   "faArrowUp": () => (/* binding */ faArrowUp),
-/* harmony export */   "faArrowsAlt": () => (/* binding */ faArrowsAlt),
-/* harmony export */   "faArrowsAltH": () => (/* binding */ faArrowsAltH),
-/* harmony export */   "faArrowsAltV": () => (/* binding */ faArrowsAltV),
-/* harmony export */   "faAssistiveListeningSystems": () => (/* binding */ faAssistiveListeningSystems),
-/* harmony export */   "faAsterisk": () => (/* binding */ faAsterisk),
-/* harmony export */   "faAt": () => (/* binding */ faAt),
-/* harmony export */   "faAtlas": () => (/* binding */ faAtlas),
-/* harmony export */   "faAtom": () => (/* binding */ faAtom),
-/* harmony export */   "faAudioDescription": () => (/* binding */ faAudioDescription),
-/* harmony export */   "faAward": () => (/* binding */ faAward),
-/* harmony export */   "faBaby": () => (/* binding */ faBaby),
-/* harmony export */   "faBabyCarriage": () => (/* binding */ faBabyCarriage),
-/* harmony export */   "faBackspace": () => (/* binding */ faBackspace),
-/* harmony export */   "faBackward": () => (/* binding */ faBackward),
-/* harmony export */   "faBacon": () => (/* binding */ faBacon),
-/* harmony export */   "faBacteria": () => (/* binding */ faBacteria),
-/* harmony export */   "faBacterium": () => (/* binding */ faBacterium),
-/* harmony export */   "faBahai": () => (/* binding */ faBahai),
-/* harmony export */   "faBalanceScale": () => (/* binding */ faBalanceScale),
-/* harmony export */   "faBalanceScaleLeft": () => (/* binding */ faBalanceScaleLeft),
-/* harmony export */   "faBalanceScaleRight": () => (/* binding */ faBalanceScaleRight),
-/* harmony export */   "faBan": () => (/* binding */ faBan),
-/* harmony export */   "faBandAid": () => (/* binding */ faBandAid),
-/* harmony export */   "faBarcode": () => (/* binding */ faBarcode),
-/* harmony export */   "faBars": () => (/* binding */ faBars),
-/* harmony export */   "faBaseballBall": () => (/* binding */ faBaseballBall),
-/* harmony export */   "faBasketballBall": () => (/* binding */ faBasketballBall),
-/* harmony export */   "faBath": () => (/* binding */ faBath),
-/* harmony export */   "faBatteryEmpty": () => (/* binding */ faBatteryEmpty),
-/* harmony export */   "faBatteryFull": () => (/* binding */ faBatteryFull),
-/* harmony export */   "faBatteryHalf": () => (/* binding */ faBatteryHalf),
-/* harmony export */   "faBatteryQuarter": () => (/* binding */ faBatteryQuarter),
-/* harmony export */   "faBatteryThreeQuarters": () => (/* binding */ faBatteryThreeQuarters),
-/* harmony export */   "faBed": () => (/* binding */ faBed),
-/* harmony export */   "faBeer": () => (/* binding */ faBeer),
-/* harmony export */   "faBell": () => (/* binding */ faBell),
-/* harmony export */   "faBellSlash": () => (/* binding */ faBellSlash),
-/* harmony export */   "faBezierCurve": () => (/* binding */ faBezierCurve),
-/* harmony export */   "faBible": () => (/* binding */ faBible),
-/* harmony export */   "faBicycle": () => (/* binding */ faBicycle),
-/* harmony export */   "faBiking": () => (/* binding */ faBiking),
-/* harmony export */   "faBinoculars": () => (/* binding */ faBinoculars),
-/* harmony export */   "faBiohazard": () => (/* binding */ faBiohazard),
-/* harmony export */   "faBirthdayCake": () => (/* binding */ faBirthdayCake),
-/* harmony export */   "faBlender": () => (/* binding */ faBlender),
-/* harmony export */   "faBlenderPhone": () => (/* binding */ faBlenderPhone),
-/* harmony export */   "faBlind": () => (/* binding */ faBlind),
-/* harmony export */   "faBlog": () => (/* binding */ faBlog),
-/* harmony export */   "faBold": () => (/* binding */ faBold),
-/* harmony export */   "faBolt": () => (/* binding */ faBolt),
-/* harmony export */   "faBomb": () => (/* binding */ faBomb),
-/* harmony export */   "faBone": () => (/* binding */ faBone),
-/* harmony export */   "faBong": () => (/* binding */ faBong),
-/* harmony export */   "faBook": () => (/* binding */ faBook),
-/* harmony export */   "faBookDead": () => (/* binding */ faBookDead),
-/* harmony export */   "faBookMedical": () => (/* binding */ faBookMedical),
-/* harmony export */   "faBookOpen": () => (/* binding */ faBookOpen),
-/* harmony export */   "faBookReader": () => (/* binding */ faBookReader),
-/* harmony export */   "faBookmark": () => (/* binding */ faBookmark),
-/* harmony export */   "faBorderAll": () => (/* binding */ faBorderAll),
-/* harmony export */   "faBorderNone": () => (/* binding */ faBorderNone),
-/* harmony export */   "faBorderStyle": () => (/* binding */ faBorderStyle),
-/* harmony export */   "faBowlingBall": () => (/* binding */ faBowlingBall),
-/* harmony export */   "faBox": () => (/* binding */ faBox),
-/* harmony export */   "faBoxOpen": () => (/* binding */ faBoxOpen),
-/* harmony export */   "faBoxTissue": () => (/* binding */ faBoxTissue),
-/* harmony export */   "faBoxes": () => (/* binding */ faBoxes),
-/* harmony export */   "faBraille": () => (/* binding */ faBraille),
-/* harmony export */   "faBrain": () => (/* binding */ faBrain),
-/* harmony export */   "faBreadSlice": () => (/* binding */ faBreadSlice),
-/* harmony export */   "faBriefcase": () => (/* binding */ faBriefcase),
-/* harmony export */   "faBriefcaseMedical": () => (/* binding */ faBriefcaseMedical),
-/* harmony export */   "faBroadcastTower": () => (/* binding */ faBroadcastTower),
-/* harmony export */   "faBroom": () => (/* binding */ faBroom),
-/* harmony export */   "faBrush": () => (/* binding */ faBrush),
-/* harmony export */   "faBug": () => (/* binding */ faBug),
-/* harmony export */   "faBuilding": () => (/* binding */ faBuilding),
-/* harmony export */   "faBullhorn": () => (/* binding */ faBullhorn),
-/* harmony export */   "faBullseye": () => (/* binding */ faBullseye),
-/* harmony export */   "faBurn": () => (/* binding */ faBurn),
-/* harmony export */   "faBus": () => (/* binding */ faBus),
-/* harmony export */   "faBusAlt": () => (/* binding */ faBusAlt),
-/* harmony export */   "faBusinessTime": () => (/* binding */ faBusinessTime),
-/* harmony export */   "faCalculator": () => (/* binding */ faCalculator),
-/* harmony export */   "faCalendar": () => (/* binding */ faCalendar),
-/* harmony export */   "faCalendarAlt": () => (/* binding */ faCalendarAlt),
-/* harmony export */   "faCalendarCheck": () => (/* binding */ faCalendarCheck),
-/* harmony export */   "faCalendarDay": () => (/* binding */ faCalendarDay),
-/* harmony export */   "faCalendarMinus": () => (/* binding */ faCalendarMinus),
-/* harmony export */   "faCalendarPlus": () => (/* binding */ faCalendarPlus),
-/* harmony export */   "faCalendarTimes": () => (/* binding */ faCalendarTimes),
-/* harmony export */   "faCalendarWeek": () => (/* binding */ faCalendarWeek),
-/* harmony export */   "faCamera": () => (/* binding */ faCamera),
-/* harmony export */   "faCameraRetro": () => (/* binding */ faCameraRetro),
-/* harmony export */   "faCampground": () => (/* binding */ faCampground),
-/* harmony export */   "faCandyCane": () => (/* binding */ faCandyCane),
-/* harmony export */   "faCannabis": () => (/* binding */ faCannabis),
-/* harmony export */   "faCapsules": () => (/* binding */ faCapsules),
-/* harmony export */   "faCar": () => (/* binding */ faCar),
-/* harmony export */   "faCarAlt": () => (/* binding */ faCarAlt),
-/* harmony export */   "faCarBattery": () => (/* binding */ faCarBattery),
-/* harmony export */   "faCarCrash": () => (/* binding */ faCarCrash),
-/* harmony export */   "faCarSide": () => (/* binding */ faCarSide),
-/* harmony export */   "faCaravan": () => (/* binding */ faCaravan),
-/* harmony export */   "faCaretDown": () => (/* binding */ faCaretDown),
-/* harmony export */   "faCaretLeft": () => (/* binding */ faCaretLeft),
-/* harmony export */   "faCaretRight": () => (/* binding */ faCaretRight),
-/* harmony export */   "faCaretSquareDown": () => (/* binding */ faCaretSquareDown),
-/* harmony export */   "faCaretSquareLeft": () => (/* binding */ faCaretSquareLeft),
-/* harmony export */   "faCaretSquareRight": () => (/* binding */ faCaretSquareRight),
-/* harmony export */   "faCaretSquareUp": () => (/* binding */ faCaretSquareUp),
-/* harmony export */   "faCaretUp": () => (/* binding */ faCaretUp),
-/* harmony export */   "faCarrot": () => (/* binding */ faCarrot),
-/* harmony export */   "faCartArrowDown": () => (/* binding */ faCartArrowDown),
-/* harmony export */   "faCartPlus": () => (/* binding */ faCartPlus),
-/* harmony export */   "faCashRegister": () => (/* binding */ faCashRegister),
-/* harmony export */   "faCat": () => (/* binding */ faCat),
-/* harmony export */   "faCertificate": () => (/* binding */ faCertificate),
-/* harmony export */   "faChair": () => (/* binding */ faChair),
-/* harmony export */   "faChalkboard": () => (/* binding */ faChalkboard),
-/* harmony export */   "faChalkboardTeacher": () => (/* binding */ faChalkboardTeacher),
-/* harmony export */   "faChargingStation": () => (/* binding */ faChargingStation),
-/* harmony export */   "faChartArea": () => (/* binding */ faChartArea),
-/* harmony export */   "faChartBar": () => (/* binding */ faChartBar),
-/* harmony export */   "faChartLine": () => (/* binding */ faChartLine),
-/* harmony export */   "faChartPie": () => (/* binding */ faChartPie),
-/* harmony export */   "faCheck": () => (/* binding */ faCheck),
-/* harmony export */   "faCheckCircle": () => (/* binding */ faCheckCircle),
-/* harmony export */   "faCheckDouble": () => (/* binding */ faCheckDouble),
-/* harmony export */   "faCheckSquare": () => (/* binding */ faCheckSquare),
-/* harmony export */   "faCheese": () => (/* binding */ faCheese),
-/* harmony export */   "faChess": () => (/* binding */ faChess),
-/* harmony export */   "faChessBishop": () => (/* binding */ faChessBishop),
-/* harmony export */   "faChessBoard": () => (/* binding */ faChessBoard),
-/* harmony export */   "faChessKing": () => (/* binding */ faChessKing),
-/* harmony export */   "faChessKnight": () => (/* binding */ faChessKnight),
-/* harmony export */   "faChessPawn": () => (/* binding */ faChessPawn),
-/* harmony export */   "faChessQueen": () => (/* binding */ faChessQueen),
-/* harmony export */   "faChessRook": () => (/* binding */ faChessRook),
-/* harmony export */   "faChevronCircleDown": () => (/* binding */ faChevronCircleDown),
-/* harmony export */   "faChevronCircleLeft": () => (/* binding */ faChevronCircleLeft),
-/* harmony export */   "faChevronCircleRight": () => (/* binding */ faChevronCircleRight),
-/* harmony export */   "faChevronCircleUp": () => (/* binding */ faChevronCircleUp),
-/* harmony export */   "faChevronDown": () => (/* binding */ faChevronDown),
-/* harmony export */   "faChevronLeft": () => (/* binding */ faChevronLeft),
-/* harmony export */   "faChevronRight": () => (/* binding */ faChevronRight),
-/* harmony export */   "faChevronUp": () => (/* binding */ faChevronUp),
-/* harmony export */   "faChild": () => (/* binding */ faChild),
-/* harmony export */   "faChurch": () => (/* binding */ faChurch),
-/* harmony export */   "faCircle": () => (/* binding */ faCircle),
-/* harmony export */   "faCircleNotch": () => (/* binding */ faCircleNotch),
-/* harmony export */   "faCity": () => (/* binding */ faCity),
-/* harmony export */   "faClinicMedical": () => (/* binding */ faClinicMedical),
-/* harmony export */   "faClipboard": () => (/* binding */ faClipboard),
-/* harmony export */   "faClipboardCheck": () => (/* binding */ faClipboardCheck),
-/* harmony export */   "faClipboardList": () => (/* binding */ faClipboardList),
-/* harmony export */   "faClock": () => (/* binding */ faClock),
-/* harmony export */   "faClone": () => (/* binding */ faClone),
-/* harmony export */   "faClosedCaptioning": () => (/* binding */ faClosedCaptioning),
-/* harmony export */   "faCloud": () => (/* binding */ faCloud),
-/* harmony export */   "faCloudDownloadAlt": () => (/* binding */ faCloudDownloadAlt),
-/* harmony export */   "faCloudMeatball": () => (/* binding */ faCloudMeatball),
-/* harmony export */   "faCloudMoon": () => (/* binding */ faCloudMoon),
-/* harmony export */   "faCloudMoonRain": () => (/* binding */ faCloudMoonRain),
-/* harmony export */   "faCloudRain": () => (/* binding */ faCloudRain),
-/* harmony export */   "faCloudShowersHeavy": () => (/* binding */ faCloudShowersHeavy),
-/* harmony export */   "faCloudSun": () => (/* binding */ faCloudSun),
-/* harmony export */   "faCloudSunRain": () => (/* binding */ faCloudSunRain),
-/* harmony export */   "faCloudUploadAlt": () => (/* binding */ faCloudUploadAlt),
-/* harmony export */   "faCocktail": () => (/* binding */ faCocktail),
-/* harmony export */   "faCode": () => (/* binding */ faCode),
-/* harmony export */   "faCodeBranch": () => (/* binding */ faCodeBranch),
-/* harmony export */   "faCoffee": () => (/* binding */ faCoffee),
-/* harmony export */   "faCog": () => (/* binding */ faCog),
-/* harmony export */   "faCogs": () => (/* binding */ faCogs),
-/* harmony export */   "faCoins": () => (/* binding */ faCoins),
-/* harmony export */   "faColumns": () => (/* binding */ faColumns),
-/* harmony export */   "faComment": () => (/* binding */ faComment),
-/* harmony export */   "faCommentAlt": () => (/* binding */ faCommentAlt),
-/* harmony export */   "faCommentDollar": () => (/* binding */ faCommentDollar),
-/* harmony export */   "faCommentDots": () => (/* binding */ faCommentDots),
-/* harmony export */   "faCommentMedical": () => (/* binding */ faCommentMedical),
-/* harmony export */   "faCommentSlash": () => (/* binding */ faCommentSlash),
-/* harmony export */   "faComments": () => (/* binding */ faComments),
-/* harmony export */   "faCommentsDollar": () => (/* binding */ faCommentsDollar),
-/* harmony export */   "faCompactDisc": () => (/* binding */ faCompactDisc),
-/* harmony export */   "faCompass": () => (/* binding */ faCompass),
-/* harmony export */   "faCompress": () => (/* binding */ faCompress),
-/* harmony export */   "faCompressAlt": () => (/* binding */ faCompressAlt),
-/* harmony export */   "faCompressArrowsAlt": () => (/* binding */ faCompressArrowsAlt),
-/* harmony export */   "faConciergeBell": () => (/* binding */ faConciergeBell),
-/* harmony export */   "faCookie": () => (/* binding */ faCookie),
-/* harmony export */   "faCookieBite": () => (/* binding */ faCookieBite),
-/* harmony export */   "faCopy": () => (/* binding */ faCopy),
-/* harmony export */   "faCopyright": () => (/* binding */ faCopyright),
-/* harmony export */   "faCouch": () => (/* binding */ faCouch),
-/* harmony export */   "faCreditCard": () => (/* binding */ faCreditCard),
-/* harmony export */   "faCrop": () => (/* binding */ faCrop),
-/* harmony export */   "faCropAlt": () => (/* binding */ faCropAlt),
-/* harmony export */   "faCross": () => (/* binding */ faCross),
-/* harmony export */   "faCrosshairs": () => (/* binding */ faCrosshairs),
-/* harmony export */   "faCrow": () => (/* binding */ faCrow),
-/* harmony export */   "faCrown": () => (/* binding */ faCrown),
-/* harmony export */   "faCrutch": () => (/* binding */ faCrutch),
-/* harmony export */   "faCube": () => (/* binding */ faCube),
-/* harmony export */   "faCubes": () => (/* binding */ faCubes),
-/* harmony export */   "faCut": () => (/* binding */ faCut),
-/* harmony export */   "faDatabase": () => (/* binding */ faDatabase),
-/* harmony export */   "faDeaf": () => (/* binding */ faDeaf),
-/* harmony export */   "faDemocrat": () => (/* binding */ faDemocrat),
-/* harmony export */   "faDesktop": () => (/* binding */ faDesktop),
-/* harmony export */   "faDharmachakra": () => (/* binding */ faDharmachakra),
-/* harmony export */   "faDiagnoses": () => (/* binding */ faDiagnoses),
-/* harmony export */   "faDice": () => (/* binding */ faDice),
-/* harmony export */   "faDiceD20": () => (/* binding */ faDiceD20),
-/* harmony export */   "faDiceD6": () => (/* binding */ faDiceD6),
-/* harmony export */   "faDiceFive": () => (/* binding */ faDiceFive),
-/* harmony export */   "faDiceFour": () => (/* binding */ faDiceFour),
-/* harmony export */   "faDiceOne": () => (/* binding */ faDiceOne),
-/* harmony export */   "faDiceSix": () => (/* binding */ faDiceSix),
-/* harmony export */   "faDiceThree": () => (/* binding */ faDiceThree),
-/* harmony export */   "faDiceTwo": () => (/* binding */ faDiceTwo),
-/* harmony export */   "faDigitalTachograph": () => (/* binding */ faDigitalTachograph),
-/* harmony export */   "faDirections": () => (/* binding */ faDirections),
-/* harmony export */   "faDisease": () => (/* binding */ faDisease),
-/* harmony export */   "faDivide": () => (/* binding */ faDivide),
-/* harmony export */   "faDizzy": () => (/* binding */ faDizzy),
-/* harmony export */   "faDna": () => (/* binding */ faDna),
-/* harmony export */   "faDog": () => (/* binding */ faDog),
-/* harmony export */   "faDollarSign": () => (/* binding */ faDollarSign),
-/* harmony export */   "faDolly": () => (/* binding */ faDolly),
-/* harmony export */   "faDollyFlatbed": () => (/* binding */ faDollyFlatbed),
-/* harmony export */   "faDonate": () => (/* binding */ faDonate),
-/* harmony export */   "faDoorClosed": () => (/* binding */ faDoorClosed),
-/* harmony export */   "faDoorOpen": () => (/* binding */ faDoorOpen),
-/* harmony export */   "faDotCircle": () => (/* binding */ faDotCircle),
-/* harmony export */   "faDove": () => (/* binding */ faDove),
-/* harmony export */   "faDownload": () => (/* binding */ faDownload),
-/* harmony export */   "faDraftingCompass": () => (/* binding */ faDraftingCompass),
-/* harmony export */   "faDragon": () => (/* binding */ faDragon),
-/* harmony export */   "faDrawPolygon": () => (/* binding */ faDrawPolygon),
-/* harmony export */   "faDrum": () => (/* binding */ faDrum),
-/* harmony export */   "faDrumSteelpan": () => (/* binding */ faDrumSteelpan),
-/* harmony export */   "faDrumstickBite": () => (/* binding */ faDrumstickBite),
-/* harmony export */   "faDumbbell": () => (/* binding */ faDumbbell),
-/* harmony export */   "faDumpster": () => (/* binding */ faDumpster),
-/* harmony export */   "faDumpsterFire": () => (/* binding */ faDumpsterFire),
-/* harmony export */   "faDungeon": () => (/* binding */ faDungeon),
-/* harmony export */   "faEdit": () => (/* binding */ faEdit),
-/* harmony export */   "faEgg": () => (/* binding */ faEgg),
-/* harmony export */   "faEject": () => (/* binding */ faEject),
-/* harmony export */   "faEllipsisH": () => (/* binding */ faEllipsisH),
-/* harmony export */   "faEllipsisV": () => (/* binding */ faEllipsisV),
-/* harmony export */   "faEnvelope": () => (/* binding */ faEnvelope),
-/* harmony export */   "faEnvelopeOpen": () => (/* binding */ faEnvelopeOpen),
-/* harmony export */   "faEnvelopeOpenText": () => (/* binding */ faEnvelopeOpenText),
-/* harmony export */   "faEnvelopeSquare": () => (/* binding */ faEnvelopeSquare),
-/* harmony export */   "faEquals": () => (/* binding */ faEquals),
-/* harmony export */   "faEraser": () => (/* binding */ faEraser),
-/* harmony export */   "faEthernet": () => (/* binding */ faEthernet),
-/* harmony export */   "faEuroSign": () => (/* binding */ faEuroSign),
-/* harmony export */   "faExchangeAlt": () => (/* binding */ faExchangeAlt),
-/* harmony export */   "faExclamation": () => (/* binding */ faExclamation),
-/* harmony export */   "faExclamationCircle": () => (/* binding */ faExclamationCircle),
-/* harmony export */   "faExclamationTriangle": () => (/* binding */ faExclamationTriangle),
-/* harmony export */   "faExpand": () => (/* binding */ faExpand),
-/* harmony export */   "faExpandAlt": () => (/* binding */ faExpandAlt),
-/* harmony export */   "faExpandArrowsAlt": () => (/* binding */ faExpandArrowsAlt),
-/* harmony export */   "faExternalLinkAlt": () => (/* binding */ faExternalLinkAlt),
-/* harmony export */   "faExternalLinkSquareAlt": () => (/* binding */ faExternalLinkSquareAlt),
-/* harmony export */   "faEye": () => (/* binding */ faEye),
-/* harmony export */   "faEyeDropper": () => (/* binding */ faEyeDropper),
-/* harmony export */   "faEyeSlash": () => (/* binding */ faEyeSlash),
-/* harmony export */   "faFan": () => (/* binding */ faFan),
-/* harmony export */   "faFastBackward": () => (/* binding */ faFastBackward),
-/* harmony export */   "faFastForward": () => (/* binding */ faFastForward),
-/* harmony export */   "faFaucet": () => (/* binding */ faFaucet),
-/* harmony export */   "faFax": () => (/* binding */ faFax),
-/* harmony export */   "faFeather": () => (/* binding */ faFeather),
-/* harmony export */   "faFeatherAlt": () => (/* binding */ faFeatherAlt),
-/* harmony export */   "faFemale": () => (/* binding */ faFemale),
-/* harmony export */   "faFighterJet": () => (/* binding */ faFighterJet),
-/* harmony export */   "faFile": () => (/* binding */ faFile),
-/* harmony export */   "faFileAlt": () => (/* binding */ faFileAlt),
-/* harmony export */   "faFileArchive": () => (/* binding */ faFileArchive),
-/* harmony export */   "faFileAudio": () => (/* binding */ faFileAudio),
-/* harmony export */   "faFileCode": () => (/* binding */ faFileCode),
-/* harmony export */   "faFileContract": () => (/* binding */ faFileContract),
-/* harmony export */   "faFileCsv": () => (/* binding */ faFileCsv),
-/* harmony export */   "faFileDownload": () => (/* binding */ faFileDownload),
-/* harmony export */   "faFileExcel": () => (/* binding */ faFileExcel),
-/* harmony export */   "faFileExport": () => (/* binding */ faFileExport),
-/* harmony export */   "faFileImage": () => (/* binding */ faFileImage),
-/* harmony export */   "faFileImport": () => (/* binding */ faFileImport),
-/* harmony export */   "faFileInvoice": () => (/* binding */ faFileInvoice),
-/* harmony export */   "faFileInvoiceDollar": () => (/* binding */ faFileInvoiceDollar),
-/* harmony export */   "faFileMedical": () => (/* binding */ faFileMedical),
-/* harmony export */   "faFileMedicalAlt": () => (/* binding */ faFileMedicalAlt),
-/* harmony export */   "faFilePdf": () => (/* binding */ faFilePdf),
-/* harmony export */   "faFilePowerpoint": () => (/* binding */ faFilePowerpoint),
-/* harmony export */   "faFilePrescription": () => (/* binding */ faFilePrescription),
-/* harmony export */   "faFileSignature": () => (/* binding */ faFileSignature),
-/* harmony export */   "faFileUpload": () => (/* binding */ faFileUpload),
-/* harmony export */   "faFileVideo": () => (/* binding */ faFileVideo),
-/* harmony export */   "faFileWord": () => (/* binding */ faFileWord),
-/* harmony export */   "faFill": () => (/* binding */ faFill),
-/* harmony export */   "faFillDrip": () => (/* binding */ faFillDrip),
-/* harmony export */   "faFilm": () => (/* binding */ faFilm),
-/* harmony export */   "faFilter": () => (/* binding */ faFilter),
-/* harmony export */   "faFingerprint": () => (/* binding */ faFingerprint),
-/* harmony export */   "faFire": () => (/* binding */ faFire),
-/* harmony export */   "faFireAlt": () => (/* binding */ faFireAlt),
-/* harmony export */   "faFireExtinguisher": () => (/* binding */ faFireExtinguisher),
-/* harmony export */   "faFirstAid": () => (/* binding */ faFirstAid),
-/* harmony export */   "faFish": () => (/* binding */ faFish),
-/* harmony export */   "faFistRaised": () => (/* binding */ faFistRaised),
-/* harmony export */   "faFlag": () => (/* binding */ faFlag),
-/* harmony export */   "faFlagCheckered": () => (/* binding */ faFlagCheckered),
-/* harmony export */   "faFlagUsa": () => (/* binding */ faFlagUsa),
-/* harmony export */   "faFlask": () => (/* binding */ faFlask),
-/* harmony export */   "faFlushed": () => (/* binding */ faFlushed),
-/* harmony export */   "faFolder": () => (/* binding */ faFolder),
-/* harmony export */   "faFolderMinus": () => (/* binding */ faFolderMinus),
-/* harmony export */   "faFolderOpen": () => (/* binding */ faFolderOpen),
-/* harmony export */   "faFolderPlus": () => (/* binding */ faFolderPlus),
-/* harmony export */   "faFont": () => (/* binding */ faFont),
-/* harmony export */   "faFontAwesomeLogoFull": () => (/* binding */ faFontAwesomeLogoFull),
-/* harmony export */   "faFootballBall": () => (/* binding */ faFootballBall),
-/* harmony export */   "faForward": () => (/* binding */ faForward),
-/* harmony export */   "faFrog": () => (/* binding */ faFrog),
-/* harmony export */   "faFrown": () => (/* binding */ faFrown),
-/* harmony export */   "faFrownOpen": () => (/* binding */ faFrownOpen),
-/* harmony export */   "faFunnelDollar": () => (/* binding */ faFunnelDollar),
-/* harmony export */   "faFutbol": () => (/* binding */ faFutbol),
-/* harmony export */   "faGamepad": () => (/* binding */ faGamepad),
-/* harmony export */   "faGasPump": () => (/* binding */ faGasPump),
-/* harmony export */   "faGavel": () => (/* binding */ faGavel),
-/* harmony export */   "faGem": () => (/* binding */ faGem),
-/* harmony export */   "faGenderless": () => (/* binding */ faGenderless),
-/* harmony export */   "faGhost": () => (/* binding */ faGhost),
-/* harmony export */   "faGift": () => (/* binding */ faGift),
-/* harmony export */   "faGifts": () => (/* binding */ faGifts),
-/* harmony export */   "faGlassCheers": () => (/* binding */ faGlassCheers),
-/* harmony export */   "faGlassMartini": () => (/* binding */ faGlassMartini),
-/* harmony export */   "faGlassMartiniAlt": () => (/* binding */ faGlassMartiniAlt),
-/* harmony export */   "faGlassWhiskey": () => (/* binding */ faGlassWhiskey),
-/* harmony export */   "faGlasses": () => (/* binding */ faGlasses),
-/* harmony export */   "faGlobe": () => (/* binding */ faGlobe),
-/* harmony export */   "faGlobeAfrica": () => (/* binding */ faGlobeAfrica),
-/* harmony export */   "faGlobeAmericas": () => (/* binding */ faGlobeAmericas),
-/* harmony export */   "faGlobeAsia": () => (/* binding */ faGlobeAsia),
-/* harmony export */   "faGlobeEurope": () => (/* binding */ faGlobeEurope),
-/* harmony export */   "faGolfBall": () => (/* binding */ faGolfBall),
-/* harmony export */   "faGopuram": () => (/* binding */ faGopuram),
-/* harmony export */   "faGraduationCap": () => (/* binding */ faGraduationCap),
-/* harmony export */   "faGreaterThan": () => (/* binding */ faGreaterThan),
-/* harmony export */   "faGreaterThanEqual": () => (/* binding */ faGreaterThanEqual),
-/* harmony export */   "faGrimace": () => (/* binding */ faGrimace),
-/* harmony export */   "faGrin": () => (/* binding */ faGrin),
-/* harmony export */   "faGrinAlt": () => (/* binding */ faGrinAlt),
-/* harmony export */   "faGrinBeam": () => (/* binding */ faGrinBeam),
-/* harmony export */   "faGrinBeamSweat": () => (/* binding */ faGrinBeamSweat),
-/* harmony export */   "faGrinHearts": () => (/* binding */ faGrinHearts),
-/* harmony export */   "faGrinSquint": () => (/* binding */ faGrinSquint),
-/* harmony export */   "faGrinSquintTears": () => (/* binding */ faGrinSquintTears),
-/* harmony export */   "faGrinStars": () => (/* binding */ faGrinStars),
-/* harmony export */   "faGrinTears": () => (/* binding */ faGrinTears),
-/* harmony export */   "faGrinTongue": () => (/* binding */ faGrinTongue),
-/* harmony export */   "faGrinTongueSquint": () => (/* binding */ faGrinTongueSquint),
-/* harmony export */   "faGrinTongueWink": () => (/* binding */ faGrinTongueWink),
-/* harmony export */   "faGrinWink": () => (/* binding */ faGrinWink),
-/* harmony export */   "faGripHorizontal": () => (/* binding */ faGripHorizontal),
-/* harmony export */   "faGripLines": () => (/* binding */ faGripLines),
-/* harmony export */   "faGripLinesVertical": () => (/* binding */ faGripLinesVertical),
-/* harmony export */   "faGripVertical": () => (/* binding */ faGripVertical),
-/* harmony export */   "faGuitar": () => (/* binding */ faGuitar),
-/* harmony export */   "faHSquare": () => (/* binding */ faHSquare),
-/* harmony export */   "faHamburger": () => (/* binding */ faHamburger),
-/* harmony export */   "faHammer": () => (/* binding */ faHammer),
-/* harmony export */   "faHamsa": () => (/* binding */ faHamsa),
-/* harmony export */   "faHandHolding": () => (/* binding */ faHandHolding),
-/* harmony export */   "faHandHoldingHeart": () => (/* binding */ faHandHoldingHeart),
-/* harmony export */   "faHandHoldingMedical": () => (/* binding */ faHandHoldingMedical),
-/* harmony export */   "faHandHoldingUsd": () => (/* binding */ faHandHoldingUsd),
-/* harmony export */   "faHandHoldingWater": () => (/* binding */ faHandHoldingWater),
-/* harmony export */   "faHandLizard": () => (/* binding */ faHandLizard),
-/* harmony export */   "faHandMiddleFinger": () => (/* binding */ faHandMiddleFinger),
-/* harmony export */   "faHandPaper": () => (/* binding */ faHandPaper),
-/* harmony export */   "faHandPeace": () => (/* binding */ faHandPeace),
-/* harmony export */   "faHandPointDown": () => (/* binding */ faHandPointDown),
-/* harmony export */   "faHandPointLeft": () => (/* binding */ faHandPointLeft),
-/* harmony export */   "faHandPointRight": () => (/* binding */ faHandPointRight),
-/* harmony export */   "faHandPointUp": () => (/* binding */ faHandPointUp),
-/* harmony export */   "faHandPointer": () => (/* binding */ faHandPointer),
-/* harmony export */   "faHandRock": () => (/* binding */ faHandRock),
-/* harmony export */   "faHandScissors": () => (/* binding */ faHandScissors),
-/* harmony export */   "faHandSparkles": () => (/* binding */ faHandSparkles),
-/* harmony export */   "faHandSpock": () => (/* binding */ faHandSpock),
-/* harmony export */   "faHands": () => (/* binding */ faHands),
-/* harmony export */   "faHandsHelping": () => (/* binding */ faHandsHelping),
-/* harmony export */   "faHandsWash": () => (/* binding */ faHandsWash),
-/* harmony export */   "faHandshake": () => (/* binding */ faHandshake),
-/* harmony export */   "faHandshakeAltSlash": () => (/* binding */ faHandshakeAltSlash),
-/* harmony export */   "faHandshakeSlash": () => (/* binding */ faHandshakeSlash),
-/* harmony export */   "faHanukiah": () => (/* binding */ faHanukiah),
-/* harmony export */   "faHardHat": () => (/* binding */ faHardHat),
-/* harmony export */   "faHashtag": () => (/* binding */ faHashtag),
-/* harmony export */   "faHatCowboy": () => (/* binding */ faHatCowboy),
-/* harmony export */   "faHatCowboySide": () => (/* binding */ faHatCowboySide),
-/* harmony export */   "faHatWizard": () => (/* binding */ faHatWizard),
-/* harmony export */   "faHdd": () => (/* binding */ faHdd),
-/* harmony export */   "faHeadSideCough": () => (/* binding */ faHeadSideCough),
-/* harmony export */   "faHeadSideCoughSlash": () => (/* binding */ faHeadSideCoughSlash),
-/* harmony export */   "faHeadSideMask": () => (/* binding */ faHeadSideMask),
-/* harmony export */   "faHeadSideVirus": () => (/* binding */ faHeadSideVirus),
-/* harmony export */   "faHeading": () => (/* binding */ faHeading),
-/* harmony export */   "faHeadphones": () => (/* binding */ faHeadphones),
-/* harmony export */   "faHeadphonesAlt": () => (/* binding */ faHeadphonesAlt),
-/* harmony export */   "faHeadset": () => (/* binding */ faHeadset),
-/* harmony export */   "faHeart": () => (/* binding */ faHeart),
-/* harmony export */   "faHeartBroken": () => (/* binding */ faHeartBroken),
-/* harmony export */   "faHeartbeat": () => (/* binding */ faHeartbeat),
-/* harmony export */   "faHelicopter": () => (/* binding */ faHelicopter),
-/* harmony export */   "faHighlighter": () => (/* binding */ faHighlighter),
-/* harmony export */   "faHiking": () => (/* binding */ faHiking),
-/* harmony export */   "faHippo": () => (/* binding */ faHippo),
-/* harmony export */   "faHistory": () => (/* binding */ faHistory),
-/* harmony export */   "faHockeyPuck": () => (/* binding */ faHockeyPuck),
-/* harmony export */   "faHollyBerry": () => (/* binding */ faHollyBerry),
-/* harmony export */   "faHome": () => (/* binding */ faHome),
-/* harmony export */   "faHorse": () => (/* binding */ faHorse),
-/* harmony export */   "faHorseHead": () => (/* binding */ faHorseHead),
-/* harmony export */   "faHospital": () => (/* binding */ faHospital),
-/* harmony export */   "faHospitalAlt": () => (/* binding */ faHospitalAlt),
-/* harmony export */   "faHospitalSymbol": () => (/* binding */ faHospitalSymbol),
-/* harmony export */   "faHospitalUser": () => (/* binding */ faHospitalUser),
-/* harmony export */   "faHotTub": () => (/* binding */ faHotTub),
-/* harmony export */   "faHotdog": () => (/* binding */ faHotdog),
-/* harmony export */   "faHotel": () => (/* binding */ faHotel),
-/* harmony export */   "faHourglass": () => (/* binding */ faHourglass),
-/* harmony export */   "faHourglassEnd": () => (/* binding */ faHourglassEnd),
-/* harmony export */   "faHourglassHalf": () => (/* binding */ faHourglassHalf),
-/* harmony export */   "faHourglassStart": () => (/* binding */ faHourglassStart),
-/* harmony export */   "faHouseDamage": () => (/* binding */ faHouseDamage),
-/* harmony export */   "faHouseUser": () => (/* binding */ faHouseUser),
-/* harmony export */   "faHryvnia": () => (/* binding */ faHryvnia),
-/* harmony export */   "faICursor": () => (/* binding */ faICursor),
-/* harmony export */   "faIceCream": () => (/* binding */ faIceCream),
-/* harmony export */   "faIcicles": () => (/* binding */ faIcicles),
-/* harmony export */   "faIcons": () => (/* binding */ faIcons),
-/* harmony export */   "faIdBadge": () => (/* binding */ faIdBadge),
-/* harmony export */   "faIdCard": () => (/* binding */ faIdCard),
-/* harmony export */   "faIdCardAlt": () => (/* binding */ faIdCardAlt),
-/* harmony export */   "faIgloo": () => (/* binding */ faIgloo),
-/* harmony export */   "faImage": () => (/* binding */ faImage),
-/* harmony export */   "faImages": () => (/* binding */ faImages),
-/* harmony export */   "faInbox": () => (/* binding */ faInbox),
-/* harmony export */   "faIndent": () => (/* binding */ faIndent),
-/* harmony export */   "faIndustry": () => (/* binding */ faIndustry),
-/* harmony export */   "faInfinity": () => (/* binding */ faInfinity),
-/* harmony export */   "faInfo": () => (/* binding */ faInfo),
-/* harmony export */   "faInfoCircle": () => (/* binding */ faInfoCircle),
-/* harmony export */   "faItalic": () => (/* binding */ faItalic),
-/* harmony export */   "faJedi": () => (/* binding */ faJedi),
-/* harmony export */   "faJoint": () => (/* binding */ faJoint),
-/* harmony export */   "faJournalWhills": () => (/* binding */ faJournalWhills),
-/* harmony export */   "faKaaba": () => (/* binding */ faKaaba),
-/* harmony export */   "faKey": () => (/* binding */ faKey),
-/* harmony export */   "faKeyboard": () => (/* binding */ faKeyboard),
-/* harmony export */   "faKhanda": () => (/* binding */ faKhanda),
-/* harmony export */   "faKiss": () => (/* binding */ faKiss),
-/* harmony export */   "faKissBeam": () => (/* binding */ faKissBeam),
-/* harmony export */   "faKissWinkHeart": () => (/* binding */ faKissWinkHeart),
-/* harmony export */   "faKiwiBird": () => (/* binding */ faKiwiBird),
-/* harmony export */   "faLandmark": () => (/* binding */ faLandmark),
-/* harmony export */   "faLanguage": () => (/* binding */ faLanguage),
-/* harmony export */   "faLaptop": () => (/* binding */ faLaptop),
-/* harmony export */   "faLaptopCode": () => (/* binding */ faLaptopCode),
-/* harmony export */   "faLaptopHouse": () => (/* binding */ faLaptopHouse),
-/* harmony export */   "faLaptopMedical": () => (/* binding */ faLaptopMedical),
-/* harmony export */   "faLaugh": () => (/* binding */ faLaugh),
-/* harmony export */   "faLaughBeam": () => (/* binding */ faLaughBeam),
-/* harmony export */   "faLaughSquint": () => (/* binding */ faLaughSquint),
-/* harmony export */   "faLaughWink": () => (/* binding */ faLaughWink),
-/* harmony export */   "faLayerGroup": () => (/* binding */ faLayerGroup),
-/* harmony export */   "faLeaf": () => (/* binding */ faLeaf),
-/* harmony export */   "faLemon": () => (/* binding */ faLemon),
-/* harmony export */   "faLessThan": () => (/* binding */ faLessThan),
-/* harmony export */   "faLessThanEqual": () => (/* binding */ faLessThanEqual),
-/* harmony export */   "faLevelDownAlt": () => (/* binding */ faLevelDownAlt),
-/* harmony export */   "faLevelUpAlt": () => (/* binding */ faLevelUpAlt),
-/* harmony export */   "faLifeRing": () => (/* binding */ faLifeRing),
-/* harmony export */   "faLightbulb": () => (/* binding */ faLightbulb),
-/* harmony export */   "faLink": () => (/* binding */ faLink),
-/* harmony export */   "faLiraSign": () => (/* binding */ faLiraSign),
-/* harmony export */   "faList": () => (/* binding */ faList),
-/* harmony export */   "faListAlt": () => (/* binding */ faListAlt),
-/* harmony export */   "faListOl": () => (/* binding */ faListOl),
-/* harmony export */   "faListUl": () => (/* binding */ faListUl),
-/* harmony export */   "faLocationArrow": () => (/* binding */ faLocationArrow),
-/* harmony export */   "faLock": () => (/* binding */ faLock),
-/* harmony export */   "faLockOpen": () => (/* binding */ faLockOpen),
-/* harmony export */   "faLongArrowAltDown": () => (/* binding */ faLongArrowAltDown),
-/* harmony export */   "faLongArrowAltLeft": () => (/* binding */ faLongArrowAltLeft),
-/* harmony export */   "faLongArrowAltRight": () => (/* binding */ faLongArrowAltRight),
-/* harmony export */   "faLongArrowAltUp": () => (/* binding */ faLongArrowAltUp),
-/* harmony export */   "faLowVision": () => (/* binding */ faLowVision),
-/* harmony export */   "faLuggageCart": () => (/* binding */ faLuggageCart),
-/* harmony export */   "faLungs": () => (/* binding */ faLungs),
-/* harmony export */   "faLungsVirus": () => (/* binding */ faLungsVirus),
-/* harmony export */   "faMagic": () => (/* binding */ faMagic),
-/* harmony export */   "faMagnet": () => (/* binding */ faMagnet),
-/* harmony export */   "faMailBulk": () => (/* binding */ faMailBulk),
-/* harmony export */   "faMale": () => (/* binding */ faMale),
-/* harmony export */   "faMap": () => (/* binding */ faMap),
-/* harmony export */   "faMapMarked": () => (/* binding */ faMapMarked),
-/* harmony export */   "faMapMarkedAlt": () => (/* binding */ faMapMarkedAlt),
-/* harmony export */   "faMapMarker": () => (/* binding */ faMapMarker),
-/* harmony export */   "faMapMarkerAlt": () => (/* binding */ faMapMarkerAlt),
-/* harmony export */   "faMapPin": () => (/* binding */ faMapPin),
-/* harmony export */   "faMapSigns": () => (/* binding */ faMapSigns),
-/* harmony export */   "faMarker": () => (/* binding */ faMarker),
-/* harmony export */   "faMars": () => (/* binding */ faMars),
-/* harmony export */   "faMarsDouble": () => (/* binding */ faMarsDouble),
-/* harmony export */   "faMarsStroke": () => (/* binding */ faMarsStroke),
-/* harmony export */   "faMarsStrokeH": () => (/* binding */ faMarsStrokeH),
-/* harmony export */   "faMarsStrokeV": () => (/* binding */ faMarsStrokeV),
-/* harmony export */   "faMask": () => (/* binding */ faMask),
-/* harmony export */   "faMedal": () => (/* binding */ faMedal),
-/* harmony export */   "faMedkit": () => (/* binding */ faMedkit),
-/* harmony export */   "faMeh": () => (/* binding */ faMeh),
-/* harmony export */   "faMehBlank": () => (/* binding */ faMehBlank),
-/* harmony export */   "faMehRollingEyes": () => (/* binding */ faMehRollingEyes),
-/* harmony export */   "faMemory": () => (/* binding */ faMemory),
-/* harmony export */   "faMenorah": () => (/* binding */ faMenorah),
-/* harmony export */   "faMercury": () => (/* binding */ faMercury),
-/* harmony export */   "faMeteor": () => (/* binding */ faMeteor),
-/* harmony export */   "faMicrochip": () => (/* binding */ faMicrochip),
-/* harmony export */   "faMicrophone": () => (/* binding */ faMicrophone),
-/* harmony export */   "faMicrophoneAlt": () => (/* binding */ faMicrophoneAlt),
-/* harmony export */   "faMicrophoneAltSlash": () => (/* binding */ faMicrophoneAltSlash),
-/* harmony export */   "faMicrophoneSlash": () => (/* binding */ faMicrophoneSlash),
-/* harmony export */   "faMicroscope": () => (/* binding */ faMicroscope),
-/* harmony export */   "faMinus": () => (/* binding */ faMinus),
-/* harmony export */   "faMinusCircle": () => (/* binding */ faMinusCircle),
-/* harmony export */   "faMinusSquare": () => (/* binding */ faMinusSquare),
-/* harmony export */   "faMitten": () => (/* binding */ faMitten),
-/* harmony export */   "faMobile": () => (/* binding */ faMobile),
-/* harmony export */   "faMobileAlt": () => (/* binding */ faMobileAlt),
-/* harmony export */   "faMoneyBill": () => (/* binding */ faMoneyBill),
-/* harmony export */   "faMoneyBillAlt": () => (/* binding */ faMoneyBillAlt),
-/* harmony export */   "faMoneyBillWave": () => (/* binding */ faMoneyBillWave),
-/* harmony export */   "faMoneyBillWaveAlt": () => (/* binding */ faMoneyBillWaveAlt),
-/* harmony export */   "faMoneyCheck": () => (/* binding */ faMoneyCheck),
-/* harmony export */   "faMoneyCheckAlt": () => (/* binding */ faMoneyCheckAlt),
-/* harmony export */   "faMonument": () => (/* binding */ faMonument),
-/* harmony export */   "faMoon": () => (/* binding */ faMoon),
-/* harmony export */   "faMortarPestle": () => (/* binding */ faMortarPestle),
-/* harmony export */   "faMosque": () => (/* binding */ faMosque),
-/* harmony export */   "faMotorcycle": () => (/* binding */ faMotorcycle),
-/* harmony export */   "faMountain": () => (/* binding */ faMountain),
-/* harmony export */   "faMouse": () => (/* binding */ faMouse),
-/* harmony export */   "faMousePointer": () => (/* binding */ faMousePointer),
-/* harmony export */   "faMugHot": () => (/* binding */ faMugHot),
-/* harmony export */   "faMusic": () => (/* binding */ faMusic),
-/* harmony export */   "faNetworkWired": () => (/* binding */ faNetworkWired),
-/* harmony export */   "faNeuter": () => (/* binding */ faNeuter),
-/* harmony export */   "faNewspaper": () => (/* binding */ faNewspaper),
-/* harmony export */   "faNotEqual": () => (/* binding */ faNotEqual),
-/* harmony export */   "faNotesMedical": () => (/* binding */ faNotesMedical),
-/* harmony export */   "faObjectGroup": () => (/* binding */ faObjectGroup),
-/* harmony export */   "faObjectUngroup": () => (/* binding */ faObjectUngroup),
-/* harmony export */   "faOilCan": () => (/* binding */ faOilCan),
-/* harmony export */   "faOm": () => (/* binding */ faOm),
-/* harmony export */   "faOtter": () => (/* binding */ faOtter),
-/* harmony export */   "faOutdent": () => (/* binding */ faOutdent),
-/* harmony export */   "faPager": () => (/* binding */ faPager),
-/* harmony export */   "faPaintBrush": () => (/* binding */ faPaintBrush),
-/* harmony export */   "faPaintRoller": () => (/* binding */ faPaintRoller),
-/* harmony export */   "faPalette": () => (/* binding */ faPalette),
-/* harmony export */   "faPallet": () => (/* binding */ faPallet),
-/* harmony export */   "faPaperPlane": () => (/* binding */ faPaperPlane),
-/* harmony export */   "faPaperclip": () => (/* binding */ faPaperclip),
-/* harmony export */   "faParachuteBox": () => (/* binding */ faParachuteBox),
-/* harmony export */   "faParagraph": () => (/* binding */ faParagraph),
-/* harmony export */   "faParking": () => (/* binding */ faParking),
-/* harmony export */   "faPassport": () => (/* binding */ faPassport),
-/* harmony export */   "faPastafarianism": () => (/* binding */ faPastafarianism),
-/* harmony export */   "faPaste": () => (/* binding */ faPaste),
-/* harmony export */   "faPause": () => (/* binding */ faPause),
-/* harmony export */   "faPauseCircle": () => (/* binding */ faPauseCircle),
-/* harmony export */   "faPaw": () => (/* binding */ faPaw),
-/* harmony export */   "faPeace": () => (/* binding */ faPeace),
-/* harmony export */   "faPen": () => (/* binding */ faPen),
-/* harmony export */   "faPenAlt": () => (/* binding */ faPenAlt),
-/* harmony export */   "faPenFancy": () => (/* binding */ faPenFancy),
-/* harmony export */   "faPenNib": () => (/* binding */ faPenNib),
-/* harmony export */   "faPenSquare": () => (/* binding */ faPenSquare),
-/* harmony export */   "faPencilAlt": () => (/* binding */ faPencilAlt),
-/* harmony export */   "faPencilRuler": () => (/* binding */ faPencilRuler),
-/* harmony export */   "faPeopleArrows": () => (/* binding */ faPeopleArrows),
-/* harmony export */   "faPeopleCarry": () => (/* binding */ faPeopleCarry),
-/* harmony export */   "faPepperHot": () => (/* binding */ faPepperHot),
-/* harmony export */   "faPercent": () => (/* binding */ faPercent),
-/* harmony export */   "faPercentage": () => (/* binding */ faPercentage),
-/* harmony export */   "faPersonBooth": () => (/* binding */ faPersonBooth),
-/* harmony export */   "faPhone": () => (/* binding */ faPhone),
-/* harmony export */   "faPhoneAlt": () => (/* binding */ faPhoneAlt),
-/* harmony export */   "faPhoneSlash": () => (/* binding */ faPhoneSlash),
-/* harmony export */   "faPhoneSquare": () => (/* binding */ faPhoneSquare),
-/* harmony export */   "faPhoneSquareAlt": () => (/* binding */ faPhoneSquareAlt),
-/* harmony export */   "faPhoneVolume": () => (/* binding */ faPhoneVolume),
-/* harmony export */   "faPhotoVideo": () => (/* binding */ faPhotoVideo),
-/* harmony export */   "faPiggyBank": () => (/* binding */ faPiggyBank),
-/* harmony export */   "faPills": () => (/* binding */ faPills),
-/* harmony export */   "faPizzaSlice": () => (/* binding */ faPizzaSlice),
-/* harmony export */   "faPlaceOfWorship": () => (/* binding */ faPlaceOfWorship),
-/* harmony export */   "faPlane": () => (/* binding */ faPlane),
-/* harmony export */   "faPlaneArrival": () => (/* binding */ faPlaneArrival),
-/* harmony export */   "faPlaneDeparture": () => (/* binding */ faPlaneDeparture),
-/* harmony export */   "faPlaneSlash": () => (/* binding */ faPlaneSlash),
-/* harmony export */   "faPlay": () => (/* binding */ faPlay),
-/* harmony export */   "faPlayCircle": () => (/* binding */ faPlayCircle),
-/* harmony export */   "faPlug": () => (/* binding */ faPlug),
-/* harmony export */   "faPlus": () => (/* binding */ faPlus),
-/* harmony export */   "faPlusCircle": () => (/* binding */ faPlusCircle),
-/* harmony export */   "faPlusSquare": () => (/* binding */ faPlusSquare),
-/* harmony export */   "faPodcast": () => (/* binding */ faPodcast),
-/* harmony export */   "faPoll": () => (/* binding */ faPoll),
-/* harmony export */   "faPollH": () => (/* binding */ faPollH),
-/* harmony export */   "faPoo": () => (/* binding */ faPoo),
-/* harmony export */   "faPooStorm": () => (/* binding */ faPooStorm),
-/* harmony export */   "faPoop": () => (/* binding */ faPoop),
-/* harmony export */   "faPortrait": () => (/* binding */ faPortrait),
-/* harmony export */   "faPoundSign": () => (/* binding */ faPoundSign),
-/* harmony export */   "faPowerOff": () => (/* binding */ faPowerOff),
-/* harmony export */   "faPray": () => (/* binding */ faPray),
-/* harmony export */   "faPrayingHands": () => (/* binding */ faPrayingHands),
-/* harmony export */   "faPrescription": () => (/* binding */ faPrescription),
-/* harmony export */   "faPrescriptionBottle": () => (/* binding */ faPrescriptionBottle),
-/* harmony export */   "faPrescriptionBottleAlt": () => (/* binding */ faPrescriptionBottleAlt),
-/* harmony export */   "faPrint": () => (/* binding */ faPrint),
-/* harmony export */   "faProcedures": () => (/* binding */ faProcedures),
-/* harmony export */   "faProjectDiagram": () => (/* binding */ faProjectDiagram),
-/* harmony export */   "faPumpMedical": () => (/* binding */ faPumpMedical),
-/* harmony export */   "faPumpSoap": () => (/* binding */ faPumpSoap),
-/* harmony export */   "faPuzzlePiece": () => (/* binding */ faPuzzlePiece),
-/* harmony export */   "faQrcode": () => (/* binding */ faQrcode),
-/* harmony export */   "faQuestion": () => (/* binding */ faQuestion),
-/* harmony export */   "faQuestionCircle": () => (/* binding */ faQuestionCircle),
-/* harmony export */   "faQuidditch": () => (/* binding */ faQuidditch),
-/* harmony export */   "faQuoteLeft": () => (/* binding */ faQuoteLeft),
-/* harmony export */   "faQuoteRight": () => (/* binding */ faQuoteRight),
-/* harmony export */   "faQuran": () => (/* binding */ faQuran),
-/* harmony export */   "faRadiation": () => (/* binding */ faRadiation),
-/* harmony export */   "faRadiationAlt": () => (/* binding */ faRadiationAlt),
-/* harmony export */   "faRainbow": () => (/* binding */ faRainbow),
-/* harmony export */   "faRandom": () => (/* binding */ faRandom),
-/* harmony export */   "faReceipt": () => (/* binding */ faReceipt),
-/* harmony export */   "faRecordVinyl": () => (/* binding */ faRecordVinyl),
-/* harmony export */   "faRecycle": () => (/* binding */ faRecycle),
-/* harmony export */   "faRedo": () => (/* binding */ faRedo),
-/* harmony export */   "faRedoAlt": () => (/* binding */ faRedoAlt),
-/* harmony export */   "faRegistered": () => (/* binding */ faRegistered),
-/* harmony export */   "faRemoveFormat": () => (/* binding */ faRemoveFormat),
-/* harmony export */   "faReply": () => (/* binding */ faReply),
-/* harmony export */   "faReplyAll": () => (/* binding */ faReplyAll),
-/* harmony export */   "faRepublican": () => (/* binding */ faRepublican),
-/* harmony export */   "faRestroom": () => (/* binding */ faRestroom),
-/* harmony export */   "faRetweet": () => (/* binding */ faRetweet),
-/* harmony export */   "faRibbon": () => (/* binding */ faRibbon),
-/* harmony export */   "faRing": () => (/* binding */ faRing),
-/* harmony export */   "faRoad": () => (/* binding */ faRoad),
-/* harmony export */   "faRobot": () => (/* binding */ faRobot),
-/* harmony export */   "faRocket": () => (/* binding */ faRocket),
-/* harmony export */   "faRoute": () => (/* binding */ faRoute),
-/* harmony export */   "faRss": () => (/* binding */ faRss),
-/* harmony export */   "faRssSquare": () => (/* binding */ faRssSquare),
-/* harmony export */   "faRubleSign": () => (/* binding */ faRubleSign),
-/* harmony export */   "faRuler": () => (/* binding */ faRuler),
-/* harmony export */   "faRulerCombined": () => (/* binding */ faRulerCombined),
-/* harmony export */   "faRulerHorizontal": () => (/* binding */ faRulerHorizontal),
-/* harmony export */   "faRulerVertical": () => (/* binding */ faRulerVertical),
-/* harmony export */   "faRunning": () => (/* binding */ faRunning),
-/* harmony export */   "faRupeeSign": () => (/* binding */ faRupeeSign),
-/* harmony export */   "faSadCry": () => (/* binding */ faSadCry),
-/* harmony export */   "faSadTear": () => (/* binding */ faSadTear),
-/* harmony export */   "faSatellite": () => (/* binding */ faSatellite),
-/* harmony export */   "faSatelliteDish": () => (/* binding */ faSatelliteDish),
-/* harmony export */   "faSave": () => (/* binding */ faSave),
-/* harmony export */   "faSchool": () => (/* binding */ faSchool),
-/* harmony export */   "faScrewdriver": () => (/* binding */ faScrewdriver),
-/* harmony export */   "faScroll": () => (/* binding */ faScroll),
-/* harmony export */   "faSdCard": () => (/* binding */ faSdCard),
-/* harmony export */   "faSearch": () => (/* binding */ faSearch),
-/* harmony export */   "faSearchDollar": () => (/* binding */ faSearchDollar),
-/* harmony export */   "faSearchLocation": () => (/* binding */ faSearchLocation),
-/* harmony export */   "faSearchMinus": () => (/* binding */ faSearchMinus),
-/* harmony export */   "faSearchPlus": () => (/* binding */ faSearchPlus),
-/* harmony export */   "faSeedling": () => (/* binding */ faSeedling),
-/* harmony export */   "faServer": () => (/* binding */ faServer),
-/* harmony export */   "faShapes": () => (/* binding */ faShapes),
-/* harmony export */   "faShare": () => (/* binding */ faShare),
-/* harmony export */   "faShareAlt": () => (/* binding */ faShareAlt),
-/* harmony export */   "faShareAltSquare": () => (/* binding */ faShareAltSquare),
-/* harmony export */   "faShareSquare": () => (/* binding */ faShareSquare),
-/* harmony export */   "faShekelSign": () => (/* binding */ faShekelSign),
-/* harmony export */   "faShieldAlt": () => (/* binding */ faShieldAlt),
-/* harmony export */   "faShieldVirus": () => (/* binding */ faShieldVirus),
-/* harmony export */   "faShip": () => (/* binding */ faShip),
-/* harmony export */   "faShippingFast": () => (/* binding */ faShippingFast),
-/* harmony export */   "faShoePrints": () => (/* binding */ faShoePrints),
-/* harmony export */   "faShoppingBag": () => (/* binding */ faShoppingBag),
-/* harmony export */   "faShoppingBasket": () => (/* binding */ faShoppingBasket),
-/* harmony export */   "faShoppingCart": () => (/* binding */ faShoppingCart),
-/* harmony export */   "faShower": () => (/* binding */ faShower),
-/* harmony export */   "faShuttleVan": () => (/* binding */ faShuttleVan),
-/* harmony export */   "faSign": () => (/* binding */ faSign),
-/* harmony export */   "faSignInAlt": () => (/* binding */ faSignInAlt),
-/* harmony export */   "faSignLanguage": () => (/* binding */ faSignLanguage),
-/* harmony export */   "faSignOutAlt": () => (/* binding */ faSignOutAlt),
-/* harmony export */   "faSignal": () => (/* binding */ faSignal),
-/* harmony export */   "faSignature": () => (/* binding */ faSignature),
-/* harmony export */   "faSimCard": () => (/* binding */ faSimCard),
-/* harmony export */   "faSink": () => (/* binding */ faSink),
-/* harmony export */   "faSitemap": () => (/* binding */ faSitemap),
-/* harmony export */   "faSkating": () => (/* binding */ faSkating),
-/* harmony export */   "faSkiing": () => (/* binding */ faSkiing),
-/* harmony export */   "faSkiingNordic": () => (/* binding */ faSkiingNordic),
-/* harmony export */   "faSkull": () => (/* binding */ faSkull),
-/* harmony export */   "faSkullCrossbones": () => (/* binding */ faSkullCrossbones),
-/* harmony export */   "faSlash": () => (/* binding */ faSlash),
-/* harmony export */   "faSleigh": () => (/* binding */ faSleigh),
-/* harmony export */   "faSlidersH": () => (/* binding */ faSlidersH),
-/* harmony export */   "faSmile": () => (/* binding */ faSmile),
-/* harmony export */   "faSmileBeam": () => (/* binding */ faSmileBeam),
-/* harmony export */   "faSmileWink": () => (/* binding */ faSmileWink),
-/* harmony export */   "faSmog": () => (/* binding */ faSmog),
-/* harmony export */   "faSmoking": () => (/* binding */ faSmoking),
-/* harmony export */   "faSmokingBan": () => (/* binding */ faSmokingBan),
-/* harmony export */   "faSms": () => (/* binding */ faSms),
-/* harmony export */   "faSnowboarding": () => (/* binding */ faSnowboarding),
-/* harmony export */   "faSnowflake": () => (/* binding */ faSnowflake),
-/* harmony export */   "faSnowman": () => (/* binding */ faSnowman),
-/* harmony export */   "faSnowplow": () => (/* binding */ faSnowplow),
-/* harmony export */   "faSoap": () => (/* binding */ faSoap),
-/* harmony export */   "faSocks": () => (/* binding */ faSocks),
-/* harmony export */   "faSolarPanel": () => (/* binding */ faSolarPanel),
-/* harmony export */   "faSort": () => (/* binding */ faSort),
-/* harmony export */   "faSortAlphaDown": () => (/* binding */ faSortAlphaDown),
-/* harmony export */   "faSortAlphaDownAlt": () => (/* binding */ faSortAlphaDownAlt),
-/* harmony export */   "faSortAlphaUp": () => (/* binding */ faSortAlphaUp),
-/* harmony export */   "faSortAlphaUpAlt": () => (/* binding */ faSortAlphaUpAlt),
-/* harmony export */   "faSortAmountDown": () => (/* binding */ faSortAmountDown),
-/* harmony export */   "faSortAmountDownAlt": () => (/* binding */ faSortAmountDownAlt),
-/* harmony export */   "faSortAmountUp": () => (/* binding */ faSortAmountUp),
-/* harmony export */   "faSortAmountUpAlt": () => (/* binding */ faSortAmountUpAlt),
-/* harmony export */   "faSortDown": () => (/* binding */ faSortDown),
-/* harmony export */   "faSortNumericDown": () => (/* binding */ faSortNumericDown),
-/* harmony export */   "faSortNumericDownAlt": () => (/* binding */ faSortNumericDownAlt),
-/* harmony export */   "faSortNumericUp": () => (/* binding */ faSortNumericUp),
-/* harmony export */   "faSortNumericUpAlt": () => (/* binding */ faSortNumericUpAlt),
-/* harmony export */   "faSortUp": () => (/* binding */ faSortUp),
-/* harmony export */   "faSpa": () => (/* binding */ faSpa),
-/* harmony export */   "faSpaceShuttle": () => (/* binding */ faSpaceShuttle),
-/* harmony export */   "faSpellCheck": () => (/* binding */ faSpellCheck),
-/* harmony export */   "faSpider": () => (/* binding */ faSpider),
-/* harmony export */   "faSpinner": () => (/* binding */ faSpinner),
-/* harmony export */   "faSplotch": () => (/* binding */ faSplotch),
-/* harmony export */   "faSprayCan": () => (/* binding */ faSprayCan),
-/* harmony export */   "faSquare": () => (/* binding */ faSquare),
-/* harmony export */   "faSquareFull": () => (/* binding */ faSquareFull),
-/* harmony export */   "faSquareRootAlt": () => (/* binding */ faSquareRootAlt),
-/* harmony export */   "faStamp": () => (/* binding */ faStamp),
-/* harmony export */   "faStar": () => (/* binding */ faStar),
-/* harmony export */   "faStarAndCrescent": () => (/* binding */ faStarAndCrescent),
-/* harmony export */   "faStarHalf": () => (/* binding */ faStarHalf),
-/* harmony export */   "faStarHalfAlt": () => (/* binding */ faStarHalfAlt),
-/* harmony export */   "faStarOfDavid": () => (/* binding */ faStarOfDavid),
-/* harmony export */   "faStarOfLife": () => (/* binding */ faStarOfLife),
-/* harmony export */   "faStepBackward": () => (/* binding */ faStepBackward),
-/* harmony export */   "faStepForward": () => (/* binding */ faStepForward),
-/* harmony export */   "faStethoscope": () => (/* binding */ faStethoscope),
-/* harmony export */   "faStickyNote": () => (/* binding */ faStickyNote),
-/* harmony export */   "faStop": () => (/* binding */ faStop),
-/* harmony export */   "faStopCircle": () => (/* binding */ faStopCircle),
-/* harmony export */   "faStopwatch": () => (/* binding */ faStopwatch),
-/* harmony export */   "faStopwatch20": () => (/* binding */ faStopwatch20),
-/* harmony export */   "faStore": () => (/* binding */ faStore),
-/* harmony export */   "faStoreAlt": () => (/* binding */ faStoreAlt),
-/* harmony export */   "faStoreAltSlash": () => (/* binding */ faStoreAltSlash),
-/* harmony export */   "faStoreSlash": () => (/* binding */ faStoreSlash),
-/* harmony export */   "faStream": () => (/* binding */ faStream),
-/* harmony export */   "faStreetView": () => (/* binding */ faStreetView),
-/* harmony export */   "faStrikethrough": () => (/* binding */ faStrikethrough),
-/* harmony export */   "faStroopwafel": () => (/* binding */ faStroopwafel),
-/* harmony export */   "faSubscript": () => (/* binding */ faSubscript),
-/* harmony export */   "faSubway": () => (/* binding */ faSubway),
-/* harmony export */   "faSuitcase": () => (/* binding */ faSuitcase),
-/* harmony export */   "faSuitcaseRolling": () => (/* binding */ faSuitcaseRolling),
-/* harmony export */   "faSun": () => (/* binding */ faSun),
-/* harmony export */   "faSuperscript": () => (/* binding */ faSuperscript),
-/* harmony export */   "faSurprise": () => (/* binding */ faSurprise),
-/* harmony export */   "faSwatchbook": () => (/* binding */ faSwatchbook),
-/* harmony export */   "faSwimmer": () => (/* binding */ faSwimmer),
-/* harmony export */   "faSwimmingPool": () => (/* binding */ faSwimmingPool),
-/* harmony export */   "faSynagogue": () => (/* binding */ faSynagogue),
-/* harmony export */   "faSync": () => (/* binding */ faSync),
-/* harmony export */   "faSyncAlt": () => (/* binding */ faSyncAlt),
-/* harmony export */   "faSyringe": () => (/* binding */ faSyringe),
-/* harmony export */   "faTable": () => (/* binding */ faTable),
-/* harmony export */   "faTableTennis": () => (/* binding */ faTableTennis),
-/* harmony export */   "faTablet": () => (/* binding */ faTablet),
-/* harmony export */   "faTabletAlt": () => (/* binding */ faTabletAlt),
-/* harmony export */   "faTablets": () => (/* binding */ faTablets),
-/* harmony export */   "faTachometerAlt": () => (/* binding */ faTachometerAlt),
-/* harmony export */   "faTag": () => (/* binding */ faTag),
-/* harmony export */   "faTags": () => (/* binding */ faTags),
-/* harmony export */   "faTape": () => (/* binding */ faTape),
-/* harmony export */   "faTasks": () => (/* binding */ faTasks),
-/* harmony export */   "faTaxi": () => (/* binding */ faTaxi),
-/* harmony export */   "faTeeth": () => (/* binding */ faTeeth),
-/* harmony export */   "faTeethOpen": () => (/* binding */ faTeethOpen),
-/* harmony export */   "faTemperatureHigh": () => (/* binding */ faTemperatureHigh),
-/* harmony export */   "faTemperatureLow": () => (/* binding */ faTemperatureLow),
-/* harmony export */   "faTenge": () => (/* binding */ faTenge),
-/* harmony export */   "faTerminal": () => (/* binding */ faTerminal),
-/* harmony export */   "faTextHeight": () => (/* binding */ faTextHeight),
-/* harmony export */   "faTextWidth": () => (/* binding */ faTextWidth),
-/* harmony export */   "faTh": () => (/* binding */ faTh),
-/* harmony export */   "faThLarge": () => (/* binding */ faThLarge),
-/* harmony export */   "faThList": () => (/* binding */ faThList),
-/* harmony export */   "faTheaterMasks": () => (/* binding */ faTheaterMasks),
-/* harmony export */   "faThermometer": () => (/* binding */ faThermometer),
-/* harmony export */   "faThermometerEmpty": () => (/* binding */ faThermometerEmpty),
-/* harmony export */   "faThermometerFull": () => (/* binding */ faThermometerFull),
-/* harmony export */   "faThermometerHalf": () => (/* binding */ faThermometerHalf),
-/* harmony export */   "faThermometerQuarter": () => (/* binding */ faThermometerQuarter),
-/* harmony export */   "faThermometerThreeQuarters": () => (/* binding */ faThermometerThreeQuarters),
-/* harmony export */   "faThumbsDown": () => (/* binding */ faThumbsDown),
-/* harmony export */   "faThumbsUp": () => (/* binding */ faThumbsUp),
-/* harmony export */   "faThumbtack": () => (/* binding */ faThumbtack),
-/* harmony export */   "faTicketAlt": () => (/* binding */ faTicketAlt),
-/* harmony export */   "faTimes": () => (/* binding */ faTimes),
-/* harmony export */   "faTimesCircle": () => (/* binding */ faTimesCircle),
-/* harmony export */   "faTint": () => (/* binding */ faTint),
-/* harmony export */   "faTintSlash": () => (/* binding */ faTintSlash),
-/* harmony export */   "faTired": () => (/* binding */ faTired),
-/* harmony export */   "faToggleOff": () => (/* binding */ faToggleOff),
-/* harmony export */   "faToggleOn": () => (/* binding */ faToggleOn),
-/* harmony export */   "faToilet": () => (/* binding */ faToilet),
-/* harmony export */   "faToiletPaper": () => (/* binding */ faToiletPaper),
-/* harmony export */   "faToiletPaperSlash": () => (/* binding */ faToiletPaperSlash),
-/* harmony export */   "faToolbox": () => (/* binding */ faToolbox),
-/* harmony export */   "faTools": () => (/* binding */ faTools),
-/* harmony export */   "faTooth": () => (/* binding */ faTooth),
-/* harmony export */   "faTorah": () => (/* binding */ faTorah),
-/* harmony export */   "faToriiGate": () => (/* binding */ faToriiGate),
-/* harmony export */   "faTractor": () => (/* binding */ faTractor),
-/* harmony export */   "faTrademark": () => (/* binding */ faTrademark),
-/* harmony export */   "faTrafficLight": () => (/* binding */ faTrafficLight),
-/* harmony export */   "faTrailer": () => (/* binding */ faTrailer),
-/* harmony export */   "faTrain": () => (/* binding */ faTrain),
-/* harmony export */   "faTram": () => (/* binding */ faTram),
-/* harmony export */   "faTransgender": () => (/* binding */ faTransgender),
-/* harmony export */   "faTransgenderAlt": () => (/* binding */ faTransgenderAlt),
-/* harmony export */   "faTrash": () => (/* binding */ faTrash),
-/* harmony export */   "faTrashAlt": () => (/* binding */ faTrashAlt),
-/* harmony export */   "faTrashRestore": () => (/* binding */ faTrashRestore),
-/* harmony export */   "faTrashRestoreAlt": () => (/* binding */ faTrashRestoreAlt),
-/* harmony export */   "faTree": () => (/* binding */ faTree),
-/* harmony export */   "faTrophy": () => (/* binding */ faTrophy),
-/* harmony export */   "faTruck": () => (/* binding */ faTruck),
-/* harmony export */   "faTruckLoading": () => (/* binding */ faTruckLoading),
-/* harmony export */   "faTruckMonster": () => (/* binding */ faTruckMonster),
-/* harmony export */   "faTruckMoving": () => (/* binding */ faTruckMoving),
-/* harmony export */   "faTruckPickup": () => (/* binding */ faTruckPickup),
-/* harmony export */   "faTshirt": () => (/* binding */ faTshirt),
-/* harmony export */   "faTty": () => (/* binding */ faTty),
-/* harmony export */   "faTv": () => (/* binding */ faTv),
-/* harmony export */   "faUmbrella": () => (/* binding */ faUmbrella),
-/* harmony export */   "faUmbrellaBeach": () => (/* binding */ faUmbrellaBeach),
-/* harmony export */   "faUnderline": () => (/* binding */ faUnderline),
-/* harmony export */   "faUndo": () => (/* binding */ faUndo),
-/* harmony export */   "faUndoAlt": () => (/* binding */ faUndoAlt),
-/* harmony export */   "faUniversalAccess": () => (/* binding */ faUniversalAccess),
-/* harmony export */   "faUniversity": () => (/* binding */ faUniversity),
-/* harmony export */   "faUnlink": () => (/* binding */ faUnlink),
-/* harmony export */   "faUnlock": () => (/* binding */ faUnlock),
-/* harmony export */   "faUnlockAlt": () => (/* binding */ faUnlockAlt),
-/* harmony export */   "faUpload": () => (/* binding */ faUpload),
-/* harmony export */   "faUser": () => (/* binding */ faUser),
-/* harmony export */   "faUserAlt": () => (/* binding */ faUserAlt),
-/* harmony export */   "faUserAltSlash": () => (/* binding */ faUserAltSlash),
-/* harmony export */   "faUserAstronaut": () => (/* binding */ faUserAstronaut),
-/* harmony export */   "faUserCheck": () => (/* binding */ faUserCheck),
-/* harmony export */   "faUserCircle": () => (/* binding */ faUserCircle),
-/* harmony export */   "faUserClock": () => (/* binding */ faUserClock),
-/* harmony export */   "faUserCog": () => (/* binding */ faUserCog),
-/* harmony export */   "faUserEdit": () => (/* binding */ faUserEdit),
-/* harmony export */   "faUserFriends": () => (/* binding */ faUserFriends),
-/* harmony export */   "faUserGraduate": () => (/* binding */ faUserGraduate),
-/* harmony export */   "faUserInjured": () => (/* binding */ faUserInjured),
-/* harmony export */   "faUserLock": () => (/* binding */ faUserLock),
-/* harmony export */   "faUserMd": () => (/* binding */ faUserMd),
-/* harmony export */   "faUserMinus": () => (/* binding */ faUserMinus),
-/* harmony export */   "faUserNinja": () => (/* binding */ faUserNinja),
-/* harmony export */   "faUserNurse": () => (/* binding */ faUserNurse),
-/* harmony export */   "faUserPlus": () => (/* binding */ faUserPlus),
-/* harmony export */   "faUserSecret": () => (/* binding */ faUserSecret),
-/* harmony export */   "faUserShield": () => (/* binding */ faUserShield),
-/* harmony export */   "faUserSlash": () => (/* binding */ faUserSlash),
-/* harmony export */   "faUserTag": () => (/* binding */ faUserTag),
-/* harmony export */   "faUserTie": () => (/* binding */ faUserTie),
-/* harmony export */   "faUserTimes": () => (/* binding */ faUserTimes),
-/* harmony export */   "faUsers": () => (/* binding */ faUsers),
-/* harmony export */   "faUsersCog": () => (/* binding */ faUsersCog),
-/* harmony export */   "faUsersSlash": () => (/* binding */ faUsersSlash),
-/* harmony export */   "faUtensilSpoon": () => (/* binding */ faUtensilSpoon),
-/* harmony export */   "faUtensils": () => (/* binding */ faUtensils),
-/* harmony export */   "faVectorSquare": () => (/* binding */ faVectorSquare),
-/* harmony export */   "faVenus": () => (/* binding */ faVenus),
-/* harmony export */   "faVenusDouble": () => (/* binding */ faVenusDouble),
-/* harmony export */   "faVenusMars": () => (/* binding */ faVenusMars),
-/* harmony export */   "faVest": () => (/* binding */ faVest),
-/* harmony export */   "faVestPatches": () => (/* binding */ faVestPatches),
-/* harmony export */   "faVial": () => (/* binding */ faVial),
-/* harmony export */   "faVials": () => (/* binding */ faVials),
-/* harmony export */   "faVideo": () => (/* binding */ faVideo),
-/* harmony export */   "faVideoSlash": () => (/* binding */ faVideoSlash),
-/* harmony export */   "faVihara": () => (/* binding */ faVihara),
-/* harmony export */   "faVirus": () => (/* binding */ faVirus),
-/* harmony export */   "faVirusSlash": () => (/* binding */ faVirusSlash),
-/* harmony export */   "faViruses": () => (/* binding */ faViruses),
-/* harmony export */   "faVoicemail": () => (/* binding */ faVoicemail),
-/* harmony export */   "faVolleyballBall": () => (/* binding */ faVolleyballBall),
-/* harmony export */   "faVolumeDown": () => (/* binding */ faVolumeDown),
-/* harmony export */   "faVolumeMute": () => (/* binding */ faVolumeMute),
-/* harmony export */   "faVolumeOff": () => (/* binding */ faVolumeOff),
-/* harmony export */   "faVolumeUp": () => (/* binding */ faVolumeUp),
-/* harmony export */   "faVoteYea": () => (/* binding */ faVoteYea),
-/* harmony export */   "faVrCardboard": () => (/* binding */ faVrCardboard),
-/* harmony export */   "faWalking": () => (/* binding */ faWalking),
-/* harmony export */   "faWallet": () => (/* binding */ faWallet),
-/* harmony export */   "faWarehouse": () => (/* binding */ faWarehouse),
-/* harmony export */   "faWater": () => (/* binding */ faWater),
-/* harmony export */   "faWaveSquare": () => (/* binding */ faWaveSquare),
-/* harmony export */   "faWeight": () => (/* binding */ faWeight),
-/* harmony export */   "faWeightHanging": () => (/* binding */ faWeightHanging),
-/* harmony export */   "faWheelchair": () => (/* binding */ faWheelchair),
-/* harmony export */   "faWifi": () => (/* binding */ faWifi),
-/* harmony export */   "faWind": () => (/* binding */ faWind),
-/* harmony export */   "faWindowClose": () => (/* binding */ faWindowClose),
-/* harmony export */   "faWindowMaximize": () => (/* binding */ faWindowMaximize),
-/* harmony export */   "faWindowMinimize": () => (/* binding */ faWindowMinimize),
-/* harmony export */   "faWindowRestore": () => (/* binding */ faWindowRestore),
-/* harmony export */   "faWineBottle": () => (/* binding */ faWineBottle),
-/* harmony export */   "faWineGlass": () => (/* binding */ faWineGlass),
-/* harmony export */   "faWineGlassAlt": () => (/* binding */ faWineGlassAlt),
-/* harmony export */   "faWonSign": () => (/* binding */ faWonSign),
-/* harmony export */   "faWrench": () => (/* binding */ faWrench),
-/* harmony export */   "faXRay": () => (/* binding */ faXRay),
-/* harmony export */   "faYenSign": () => (/* binding */ faYenSign),
-/* harmony export */   "faYinYang": () => (/* binding */ faYinYang),
-/* harmony export */   "fas": () => (/* binding */ _iconsCache),
-/* harmony export */   "prefix": () => (/* binding */ prefix)
+/* harmony export */   faAd: () => (/* binding */ faAd),
+/* harmony export */   faAddressBook: () => (/* binding */ faAddressBook),
+/* harmony export */   faAddressCard: () => (/* binding */ faAddressCard),
+/* harmony export */   faAdjust: () => (/* binding */ faAdjust),
+/* harmony export */   faAirFreshener: () => (/* binding */ faAirFreshener),
+/* harmony export */   faAlignCenter: () => (/* binding */ faAlignCenter),
+/* harmony export */   faAlignJustify: () => (/* binding */ faAlignJustify),
+/* harmony export */   faAlignLeft: () => (/* binding */ faAlignLeft),
+/* harmony export */   faAlignRight: () => (/* binding */ faAlignRight),
+/* harmony export */   faAllergies: () => (/* binding */ faAllergies),
+/* harmony export */   faAmbulance: () => (/* binding */ faAmbulance),
+/* harmony export */   faAmericanSignLanguageInterpreting: () => (/* binding */ faAmericanSignLanguageInterpreting),
+/* harmony export */   faAnchor: () => (/* binding */ faAnchor),
+/* harmony export */   faAngleDoubleDown: () => (/* binding */ faAngleDoubleDown),
+/* harmony export */   faAngleDoubleLeft: () => (/* binding */ faAngleDoubleLeft),
+/* harmony export */   faAngleDoubleRight: () => (/* binding */ faAngleDoubleRight),
+/* harmony export */   faAngleDoubleUp: () => (/* binding */ faAngleDoubleUp),
+/* harmony export */   faAngleDown: () => (/* binding */ faAngleDown),
+/* harmony export */   faAngleLeft: () => (/* binding */ faAngleLeft),
+/* harmony export */   faAngleRight: () => (/* binding */ faAngleRight),
+/* harmony export */   faAngleUp: () => (/* binding */ faAngleUp),
+/* harmony export */   faAngry: () => (/* binding */ faAngry),
+/* harmony export */   faAnkh: () => (/* binding */ faAnkh),
+/* harmony export */   faAppleAlt: () => (/* binding */ faAppleAlt),
+/* harmony export */   faArchive: () => (/* binding */ faArchive),
+/* harmony export */   faArchway: () => (/* binding */ faArchway),
+/* harmony export */   faArrowAltCircleDown: () => (/* binding */ faArrowAltCircleDown),
+/* harmony export */   faArrowAltCircleLeft: () => (/* binding */ faArrowAltCircleLeft),
+/* harmony export */   faArrowAltCircleRight: () => (/* binding */ faArrowAltCircleRight),
+/* harmony export */   faArrowAltCircleUp: () => (/* binding */ faArrowAltCircleUp),
+/* harmony export */   faArrowCircleDown: () => (/* binding */ faArrowCircleDown),
+/* harmony export */   faArrowCircleLeft: () => (/* binding */ faArrowCircleLeft),
+/* harmony export */   faArrowCircleRight: () => (/* binding */ faArrowCircleRight),
+/* harmony export */   faArrowCircleUp: () => (/* binding */ faArrowCircleUp),
+/* harmony export */   faArrowDown: () => (/* binding */ faArrowDown),
+/* harmony export */   faArrowLeft: () => (/* binding */ faArrowLeft),
+/* harmony export */   faArrowRight: () => (/* binding */ faArrowRight),
+/* harmony export */   faArrowUp: () => (/* binding */ faArrowUp),
+/* harmony export */   faArrowsAlt: () => (/* binding */ faArrowsAlt),
+/* harmony export */   faArrowsAltH: () => (/* binding */ faArrowsAltH),
+/* harmony export */   faArrowsAltV: () => (/* binding */ faArrowsAltV),
+/* harmony export */   faAssistiveListeningSystems: () => (/* binding */ faAssistiveListeningSystems),
+/* harmony export */   faAsterisk: () => (/* binding */ faAsterisk),
+/* harmony export */   faAt: () => (/* binding */ faAt),
+/* harmony export */   faAtlas: () => (/* binding */ faAtlas),
+/* harmony export */   faAtom: () => (/* binding */ faAtom),
+/* harmony export */   faAudioDescription: () => (/* binding */ faAudioDescription),
+/* harmony export */   faAward: () => (/* binding */ faAward),
+/* harmony export */   faBaby: () => (/* binding */ faBaby),
+/* harmony export */   faBabyCarriage: () => (/* binding */ faBabyCarriage),
+/* harmony export */   faBackspace: () => (/* binding */ faBackspace),
+/* harmony export */   faBackward: () => (/* binding */ faBackward),
+/* harmony export */   faBacon: () => (/* binding */ faBacon),
+/* harmony export */   faBacteria: () => (/* binding */ faBacteria),
+/* harmony export */   faBacterium: () => (/* binding */ faBacterium),
+/* harmony export */   faBahai: () => (/* binding */ faBahai),
+/* harmony export */   faBalanceScale: () => (/* binding */ faBalanceScale),
+/* harmony export */   faBalanceScaleLeft: () => (/* binding */ faBalanceScaleLeft),
+/* harmony export */   faBalanceScaleRight: () => (/* binding */ faBalanceScaleRight),
+/* harmony export */   faBan: () => (/* binding */ faBan),
+/* harmony export */   faBandAid: () => (/* binding */ faBandAid),
+/* harmony export */   faBarcode: () => (/* binding */ faBarcode),
+/* harmony export */   faBars: () => (/* binding */ faBars),
+/* harmony export */   faBaseballBall: () => (/* binding */ faBaseballBall),
+/* harmony export */   faBasketballBall: () => (/* binding */ faBasketballBall),
+/* harmony export */   faBath: () => (/* binding */ faBath),
+/* harmony export */   faBatteryEmpty: () => (/* binding */ faBatteryEmpty),
+/* harmony export */   faBatteryFull: () => (/* binding */ faBatteryFull),
+/* harmony export */   faBatteryHalf: () => (/* binding */ faBatteryHalf),
+/* harmony export */   faBatteryQuarter: () => (/* binding */ faBatteryQuarter),
+/* harmony export */   faBatteryThreeQuarters: () => (/* binding */ faBatteryThreeQuarters),
+/* harmony export */   faBed: () => (/* binding */ faBed),
+/* harmony export */   faBeer: () => (/* binding */ faBeer),
+/* harmony export */   faBell: () => (/* binding */ faBell),
+/* harmony export */   faBellSlash: () => (/* binding */ faBellSlash),
+/* harmony export */   faBezierCurve: () => (/* binding */ faBezierCurve),
+/* harmony export */   faBible: () => (/* binding */ faBible),
+/* harmony export */   faBicycle: () => (/* binding */ faBicycle),
+/* harmony export */   faBiking: () => (/* binding */ faBiking),
+/* harmony export */   faBinoculars: () => (/* binding */ faBinoculars),
+/* harmony export */   faBiohazard: () => (/* binding */ faBiohazard),
+/* harmony export */   faBirthdayCake: () => (/* binding */ faBirthdayCake),
+/* harmony export */   faBlender: () => (/* binding */ faBlender),
+/* harmony export */   faBlenderPhone: () => (/* binding */ faBlenderPhone),
+/* harmony export */   faBlind: () => (/* binding */ faBlind),
+/* harmony export */   faBlog: () => (/* binding */ faBlog),
+/* harmony export */   faBold: () => (/* binding */ faBold),
+/* harmony export */   faBolt: () => (/* binding */ faBolt),
+/* harmony export */   faBomb: () => (/* binding */ faBomb),
+/* harmony export */   faBone: () => (/* binding */ faBone),
+/* harmony export */   faBong: () => (/* binding */ faBong),
+/* harmony export */   faBook: () => (/* binding */ faBook),
+/* harmony export */   faBookDead: () => (/* binding */ faBookDead),
+/* harmony export */   faBookMedical: () => (/* binding */ faBookMedical),
+/* harmony export */   faBookOpen: () => (/* binding */ faBookOpen),
+/* harmony export */   faBookReader: () => (/* binding */ faBookReader),
+/* harmony export */   faBookmark: () => (/* binding */ faBookmark),
+/* harmony export */   faBorderAll: () => (/* binding */ faBorderAll),
+/* harmony export */   faBorderNone: () => (/* binding */ faBorderNone),
+/* harmony export */   faBorderStyle: () => (/* binding */ faBorderStyle),
+/* harmony export */   faBowlingBall: () => (/* binding */ faBowlingBall),
+/* harmony export */   faBox: () => (/* binding */ faBox),
+/* harmony export */   faBoxOpen: () => (/* binding */ faBoxOpen),
+/* harmony export */   faBoxTissue: () => (/* binding */ faBoxTissue),
+/* harmony export */   faBoxes: () => (/* binding */ faBoxes),
+/* harmony export */   faBraille: () => (/* binding */ faBraille),
+/* harmony export */   faBrain: () => (/* binding */ faBrain),
+/* harmony export */   faBreadSlice: () => (/* binding */ faBreadSlice),
+/* harmony export */   faBriefcase: () => (/* binding */ faBriefcase),
+/* harmony export */   faBriefcaseMedical: () => (/* binding */ faBriefcaseMedical),
+/* harmony export */   faBroadcastTower: () => (/* binding */ faBroadcastTower),
+/* harmony export */   faBroom: () => (/* binding */ faBroom),
+/* harmony export */   faBrush: () => (/* binding */ faBrush),
+/* harmony export */   faBug: () => (/* binding */ faBug),
+/* harmony export */   faBuilding: () => (/* binding */ faBuilding),
+/* harmony export */   faBullhorn: () => (/* binding */ faBullhorn),
+/* harmony export */   faBullseye: () => (/* binding */ faBullseye),
+/* harmony export */   faBurn: () => (/* binding */ faBurn),
+/* harmony export */   faBus: () => (/* binding */ faBus),
+/* harmony export */   faBusAlt: () => (/* binding */ faBusAlt),
+/* harmony export */   faBusinessTime: () => (/* binding */ faBusinessTime),
+/* harmony export */   faCalculator: () => (/* binding */ faCalculator),
+/* harmony export */   faCalendar: () => (/* binding */ faCalendar),
+/* harmony export */   faCalendarAlt: () => (/* binding */ faCalendarAlt),
+/* harmony export */   faCalendarCheck: () => (/* binding */ faCalendarCheck),
+/* harmony export */   faCalendarDay: () => (/* binding */ faCalendarDay),
+/* harmony export */   faCalendarMinus: () => (/* binding */ faCalendarMinus),
+/* harmony export */   faCalendarPlus: () => (/* binding */ faCalendarPlus),
+/* harmony export */   faCalendarTimes: () => (/* binding */ faCalendarTimes),
+/* harmony export */   faCalendarWeek: () => (/* binding */ faCalendarWeek),
+/* harmony export */   faCamera: () => (/* binding */ faCamera),
+/* harmony export */   faCameraRetro: () => (/* binding */ faCameraRetro),
+/* harmony export */   faCampground: () => (/* binding */ faCampground),
+/* harmony export */   faCandyCane: () => (/* binding */ faCandyCane),
+/* harmony export */   faCannabis: () => (/* binding */ faCannabis),
+/* harmony export */   faCapsules: () => (/* binding */ faCapsules),
+/* harmony export */   faCar: () => (/* binding */ faCar),
+/* harmony export */   faCarAlt: () => (/* binding */ faCarAlt),
+/* harmony export */   faCarBattery: () => (/* binding */ faCarBattery),
+/* harmony export */   faCarCrash: () => (/* binding */ faCarCrash),
+/* harmony export */   faCarSide: () => (/* binding */ faCarSide),
+/* harmony export */   faCaravan: () => (/* binding */ faCaravan),
+/* harmony export */   faCaretDown: () => (/* binding */ faCaretDown),
+/* harmony export */   faCaretLeft: () => (/* binding */ faCaretLeft),
+/* harmony export */   faCaretRight: () => (/* binding */ faCaretRight),
+/* harmony export */   faCaretSquareDown: () => (/* binding */ faCaretSquareDown),
+/* harmony export */   faCaretSquareLeft: () => (/* binding */ faCaretSquareLeft),
+/* harmony export */   faCaretSquareRight: () => (/* binding */ faCaretSquareRight),
+/* harmony export */   faCaretSquareUp: () => (/* binding */ faCaretSquareUp),
+/* harmony export */   faCaretUp: () => (/* binding */ faCaretUp),
+/* harmony export */   faCarrot: () => (/* binding */ faCarrot),
+/* harmony export */   faCartArrowDown: () => (/* binding */ faCartArrowDown),
+/* harmony export */   faCartPlus: () => (/* binding */ faCartPlus),
+/* harmony export */   faCashRegister: () => (/* binding */ faCashRegister),
+/* harmony export */   faCat: () => (/* binding */ faCat),
+/* harmony export */   faCertificate: () => (/* binding */ faCertificate),
+/* harmony export */   faChair: () => (/* binding */ faChair),
+/* harmony export */   faChalkboard: () => (/* binding */ faChalkboard),
+/* harmony export */   faChalkboardTeacher: () => (/* binding */ faChalkboardTeacher),
+/* harmony export */   faChargingStation: () => (/* binding */ faChargingStation),
+/* harmony export */   faChartArea: () => (/* binding */ faChartArea),
+/* harmony export */   faChartBar: () => (/* binding */ faChartBar),
+/* harmony export */   faChartLine: () => (/* binding */ faChartLine),
+/* harmony export */   faChartPie: () => (/* binding */ faChartPie),
+/* harmony export */   faCheck: () => (/* binding */ faCheck),
+/* harmony export */   faCheckCircle: () => (/* binding */ faCheckCircle),
+/* harmony export */   faCheckDouble: () => (/* binding */ faCheckDouble),
+/* harmony export */   faCheckSquare: () => (/* binding */ faCheckSquare),
+/* harmony export */   faCheese: () => (/* binding */ faCheese),
+/* harmony export */   faChess: () => (/* binding */ faChess),
+/* harmony export */   faChessBishop: () => (/* binding */ faChessBishop),
+/* harmony export */   faChessBoard: () => (/* binding */ faChessBoard),
+/* harmony export */   faChessKing: () => (/* binding */ faChessKing),
+/* harmony export */   faChessKnight: () => (/* binding */ faChessKnight),
+/* harmony export */   faChessPawn: () => (/* binding */ faChessPawn),
+/* harmony export */   faChessQueen: () => (/* binding */ faChessQueen),
+/* harmony export */   faChessRook: () => (/* binding */ faChessRook),
+/* harmony export */   faChevronCircleDown: () => (/* binding */ faChevronCircleDown),
+/* harmony export */   faChevronCircleLeft: () => (/* binding */ faChevronCircleLeft),
+/* harmony export */   faChevronCircleRight: () => (/* binding */ faChevronCircleRight),
+/* harmony export */   faChevronCircleUp: () => (/* binding */ faChevronCircleUp),
+/* harmony export */   faChevronDown: () => (/* binding */ faChevronDown),
+/* harmony export */   faChevronLeft: () => (/* binding */ faChevronLeft),
+/* harmony export */   faChevronRight: () => (/* binding */ faChevronRight),
+/* harmony export */   faChevronUp: () => (/* binding */ faChevronUp),
+/* harmony export */   faChild: () => (/* binding */ faChild),
+/* harmony export */   faChurch: () => (/* binding */ faChurch),
+/* harmony export */   faCircle: () => (/* binding */ faCircle),
+/* harmony export */   faCircleNotch: () => (/* binding */ faCircleNotch),
+/* harmony export */   faCity: () => (/* binding */ faCity),
+/* harmony export */   faClinicMedical: () => (/* binding */ faClinicMedical),
+/* harmony export */   faClipboard: () => (/* binding */ faClipboard),
+/* harmony export */   faClipboardCheck: () => (/* binding */ faClipboardCheck),
+/* harmony export */   faClipboardList: () => (/* binding */ faClipboardList),
+/* harmony export */   faClock: () => (/* binding */ faClock),
+/* harmony export */   faClone: () => (/* binding */ faClone),
+/* harmony export */   faClosedCaptioning: () => (/* binding */ faClosedCaptioning),
+/* harmony export */   faCloud: () => (/* binding */ faCloud),
+/* harmony export */   faCloudDownloadAlt: () => (/* binding */ faCloudDownloadAlt),
+/* harmony export */   faCloudMeatball: () => (/* binding */ faCloudMeatball),
+/* harmony export */   faCloudMoon: () => (/* binding */ faCloudMoon),
+/* harmony export */   faCloudMoonRain: () => (/* binding */ faCloudMoonRain),
+/* harmony export */   faCloudRain: () => (/* binding */ faCloudRain),
+/* harmony export */   faCloudShowersHeavy: () => (/* binding */ faCloudShowersHeavy),
+/* harmony export */   faCloudSun: () => (/* binding */ faCloudSun),
+/* harmony export */   faCloudSunRain: () => (/* binding */ faCloudSunRain),
+/* harmony export */   faCloudUploadAlt: () => (/* binding */ faCloudUploadAlt),
+/* harmony export */   faCocktail: () => (/* binding */ faCocktail),
+/* harmony export */   faCode: () => (/* binding */ faCode),
+/* harmony export */   faCodeBranch: () => (/* binding */ faCodeBranch),
+/* harmony export */   faCoffee: () => (/* binding */ faCoffee),
+/* harmony export */   faCog: () => (/* binding */ faCog),
+/* harmony export */   faCogs: () => (/* binding */ faCogs),
+/* harmony export */   faCoins: () => (/* binding */ faCoins),
+/* harmony export */   faColumns: () => (/* binding */ faColumns),
+/* harmony export */   faComment: () => (/* binding */ faComment),
+/* harmony export */   faCommentAlt: () => (/* binding */ faCommentAlt),
+/* harmony export */   faCommentDollar: () => (/* binding */ faCommentDollar),
+/* harmony export */   faCommentDots: () => (/* binding */ faCommentDots),
+/* harmony export */   faCommentMedical: () => (/* binding */ faCommentMedical),
+/* harmony export */   faCommentSlash: () => (/* binding */ faCommentSlash),
+/* harmony export */   faComments: () => (/* binding */ faComments),
+/* harmony export */   faCommentsDollar: () => (/* binding */ faCommentsDollar),
+/* harmony export */   faCompactDisc: () => (/* binding */ faCompactDisc),
+/* harmony export */   faCompass: () => (/* binding */ faCompass),
+/* harmony export */   faCompress: () => (/* binding */ faCompress),
+/* harmony export */   faCompressAlt: () => (/* binding */ faCompressAlt),
+/* harmony export */   faCompressArrowsAlt: () => (/* binding */ faCompressArrowsAlt),
+/* harmony export */   faConciergeBell: () => (/* binding */ faConciergeBell),
+/* harmony export */   faCookie: () => (/* binding */ faCookie),
+/* harmony export */   faCookieBite: () => (/* binding */ faCookieBite),
+/* harmony export */   faCopy: () => (/* binding */ faCopy),
+/* harmony export */   faCopyright: () => (/* binding */ faCopyright),
+/* harmony export */   faCouch: () => (/* binding */ faCouch),
+/* harmony export */   faCreditCard: () => (/* binding */ faCreditCard),
+/* harmony export */   faCrop: () => (/* binding */ faCrop),
+/* harmony export */   faCropAlt: () => (/* binding */ faCropAlt),
+/* harmony export */   faCross: () => (/* binding */ faCross),
+/* harmony export */   faCrosshairs: () => (/* binding */ faCrosshairs),
+/* harmony export */   faCrow: () => (/* binding */ faCrow),
+/* harmony export */   faCrown: () => (/* binding */ faCrown),
+/* harmony export */   faCrutch: () => (/* binding */ faCrutch),
+/* harmony export */   faCube: () => (/* binding */ faCube),
+/* harmony export */   faCubes: () => (/* binding */ faCubes),
+/* harmony export */   faCut: () => (/* binding */ faCut),
+/* harmony export */   faDatabase: () => (/* binding */ faDatabase),
+/* harmony export */   faDeaf: () => (/* binding */ faDeaf),
+/* harmony export */   faDemocrat: () => (/* binding */ faDemocrat),
+/* harmony export */   faDesktop: () => (/* binding */ faDesktop),
+/* harmony export */   faDharmachakra: () => (/* binding */ faDharmachakra),
+/* harmony export */   faDiagnoses: () => (/* binding */ faDiagnoses),
+/* harmony export */   faDice: () => (/* binding */ faDice),
+/* harmony export */   faDiceD20: () => (/* binding */ faDiceD20),
+/* harmony export */   faDiceD6: () => (/* binding */ faDiceD6),
+/* harmony export */   faDiceFive: () => (/* binding */ faDiceFive),
+/* harmony export */   faDiceFour: () => (/* binding */ faDiceFour),
+/* harmony export */   faDiceOne: () => (/* binding */ faDiceOne),
+/* harmony export */   faDiceSix: () => (/* binding */ faDiceSix),
+/* harmony export */   faDiceThree: () => (/* binding */ faDiceThree),
+/* harmony export */   faDiceTwo: () => (/* binding */ faDiceTwo),
+/* harmony export */   faDigitalTachograph: () => (/* binding */ faDigitalTachograph),
+/* harmony export */   faDirections: () => (/* binding */ faDirections),
+/* harmony export */   faDisease: () => (/* binding */ faDisease),
+/* harmony export */   faDivide: () => (/* binding */ faDivide),
+/* harmony export */   faDizzy: () => (/* binding */ faDizzy),
+/* harmony export */   faDna: () => (/* binding */ faDna),
+/* harmony export */   faDog: () => (/* binding */ faDog),
+/* harmony export */   faDollarSign: () => (/* binding */ faDollarSign),
+/* harmony export */   faDolly: () => (/* binding */ faDolly),
+/* harmony export */   faDollyFlatbed: () => (/* binding */ faDollyFlatbed),
+/* harmony export */   faDonate: () => (/* binding */ faDonate),
+/* harmony export */   faDoorClosed: () => (/* binding */ faDoorClosed),
+/* harmony export */   faDoorOpen: () => (/* binding */ faDoorOpen),
+/* harmony export */   faDotCircle: () => (/* binding */ faDotCircle),
+/* harmony export */   faDove: () => (/* binding */ faDove),
+/* harmony export */   faDownload: () => (/* binding */ faDownload),
+/* harmony export */   faDraftingCompass: () => (/* binding */ faDraftingCompass),
+/* harmony export */   faDragon: () => (/* binding */ faDragon),
+/* harmony export */   faDrawPolygon: () => (/* binding */ faDrawPolygon),
+/* harmony export */   faDrum: () => (/* binding */ faDrum),
+/* harmony export */   faDrumSteelpan: () => (/* binding */ faDrumSteelpan),
+/* harmony export */   faDrumstickBite: () => (/* binding */ faDrumstickBite),
+/* harmony export */   faDumbbell: () => (/* binding */ faDumbbell),
+/* harmony export */   faDumpster: () => (/* binding */ faDumpster),
+/* harmony export */   faDumpsterFire: () => (/* binding */ faDumpsterFire),
+/* harmony export */   faDungeon: () => (/* binding */ faDungeon),
+/* harmony export */   faEdit: () => (/* binding */ faEdit),
+/* harmony export */   faEgg: () => (/* binding */ faEgg),
+/* harmony export */   faEject: () => (/* binding */ faEject),
+/* harmony export */   faEllipsisH: () => (/* binding */ faEllipsisH),
+/* harmony export */   faEllipsisV: () => (/* binding */ faEllipsisV),
+/* harmony export */   faEnvelope: () => (/* binding */ faEnvelope),
+/* harmony export */   faEnvelopeOpen: () => (/* binding */ faEnvelopeOpen),
+/* harmony export */   faEnvelopeOpenText: () => (/* binding */ faEnvelopeOpenText),
+/* harmony export */   faEnvelopeSquare: () => (/* binding */ faEnvelopeSquare),
+/* harmony export */   faEquals: () => (/* binding */ faEquals),
+/* harmony export */   faEraser: () => (/* binding */ faEraser),
+/* harmony export */   faEthernet: () => (/* binding */ faEthernet),
+/* harmony export */   faEuroSign: () => (/* binding */ faEuroSign),
+/* harmony export */   faExchangeAlt: () => (/* binding */ faExchangeAlt),
+/* harmony export */   faExclamation: () => (/* binding */ faExclamation),
+/* harmony export */   faExclamationCircle: () => (/* binding */ faExclamationCircle),
+/* harmony export */   faExclamationTriangle: () => (/* binding */ faExclamationTriangle),
+/* harmony export */   faExpand: () => (/* binding */ faExpand),
+/* harmony export */   faExpandAlt: () => (/* binding */ faExpandAlt),
+/* harmony export */   faExpandArrowsAlt: () => (/* binding */ faExpandArrowsAlt),
+/* harmony export */   faExternalLinkAlt: () => (/* binding */ faExternalLinkAlt),
+/* harmony export */   faExternalLinkSquareAlt: () => (/* binding */ faExternalLinkSquareAlt),
+/* harmony export */   faEye: () => (/* binding */ faEye),
+/* harmony export */   faEyeDropper: () => (/* binding */ faEyeDropper),
+/* harmony export */   faEyeSlash: () => (/* binding */ faEyeSlash),
+/* harmony export */   faFan: () => (/* binding */ faFan),
+/* harmony export */   faFastBackward: () => (/* binding */ faFastBackward),
+/* harmony export */   faFastForward: () => (/* binding */ faFastForward),
+/* harmony export */   faFaucet: () => (/* binding */ faFaucet),
+/* harmony export */   faFax: () => (/* binding */ faFax),
+/* harmony export */   faFeather: () => (/* binding */ faFeather),
+/* harmony export */   faFeatherAlt: () => (/* binding */ faFeatherAlt),
+/* harmony export */   faFemale: () => (/* binding */ faFemale),
+/* harmony export */   faFighterJet: () => (/* binding */ faFighterJet),
+/* harmony export */   faFile: () => (/* binding */ faFile),
+/* harmony export */   faFileAlt: () => (/* binding */ faFileAlt),
+/* harmony export */   faFileArchive: () => (/* binding */ faFileArchive),
+/* harmony export */   faFileAudio: () => (/* binding */ faFileAudio),
+/* harmony export */   faFileCode: () => (/* binding */ faFileCode),
+/* harmony export */   faFileContract: () => (/* binding */ faFileContract),
+/* harmony export */   faFileCsv: () => (/* binding */ faFileCsv),
+/* harmony export */   faFileDownload: () => (/* binding */ faFileDownload),
+/* harmony export */   faFileExcel: () => (/* binding */ faFileExcel),
+/* harmony export */   faFileExport: () => (/* binding */ faFileExport),
+/* harmony export */   faFileImage: () => (/* binding */ faFileImage),
+/* harmony export */   faFileImport: () => (/* binding */ faFileImport),
+/* harmony export */   faFileInvoice: () => (/* binding */ faFileInvoice),
+/* harmony export */   faFileInvoiceDollar: () => (/* binding */ faFileInvoiceDollar),
+/* harmony export */   faFileMedical: () => (/* binding */ faFileMedical),
+/* harmony export */   faFileMedicalAlt: () => (/* binding */ faFileMedicalAlt),
+/* harmony export */   faFilePdf: () => (/* binding */ faFilePdf),
+/* harmony export */   faFilePowerpoint: () => (/* binding */ faFilePowerpoint),
+/* harmony export */   faFilePrescription: () => (/* binding */ faFilePrescription),
+/* harmony export */   faFileSignature: () => (/* binding */ faFileSignature),
+/* harmony export */   faFileUpload: () => (/* binding */ faFileUpload),
+/* harmony export */   faFileVideo: () => (/* binding */ faFileVideo),
+/* harmony export */   faFileWord: () => (/* binding */ faFileWord),
+/* harmony export */   faFill: () => (/* binding */ faFill),
+/* harmony export */   faFillDrip: () => (/* binding */ faFillDrip),
+/* harmony export */   faFilm: () => (/* binding */ faFilm),
+/* harmony export */   faFilter: () => (/* binding */ faFilter),
+/* harmony export */   faFingerprint: () => (/* binding */ faFingerprint),
+/* harmony export */   faFire: () => (/* binding */ faFire),
+/* harmony export */   faFireAlt: () => (/* binding */ faFireAlt),
+/* harmony export */   faFireExtinguisher: () => (/* binding */ faFireExtinguisher),
+/* harmony export */   faFirstAid: () => (/* binding */ faFirstAid),
+/* harmony export */   faFish: () => (/* binding */ faFish),
+/* harmony export */   faFistRaised: () => (/* binding */ faFistRaised),
+/* harmony export */   faFlag: () => (/* binding */ faFlag),
+/* harmony export */   faFlagCheckered: () => (/* binding */ faFlagCheckered),
+/* harmony export */   faFlagUsa: () => (/* binding */ faFlagUsa),
+/* harmony export */   faFlask: () => (/* binding */ faFlask),
+/* harmony export */   faFlushed: () => (/* binding */ faFlushed),
+/* harmony export */   faFolder: () => (/* binding */ faFolder),
+/* harmony export */   faFolderMinus: () => (/* binding */ faFolderMinus),
+/* harmony export */   faFolderOpen: () => (/* binding */ faFolderOpen),
+/* harmony export */   faFolderPlus: () => (/* binding */ faFolderPlus),
+/* harmony export */   faFont: () => (/* binding */ faFont),
+/* harmony export */   faFontAwesomeLogoFull: () => (/* binding */ faFontAwesomeLogoFull),
+/* harmony export */   faFootballBall: () => (/* binding */ faFootballBall),
+/* harmony export */   faForward: () => (/* binding */ faForward),
+/* harmony export */   faFrog: () => (/* binding */ faFrog),
+/* harmony export */   faFrown: () => (/* binding */ faFrown),
+/* harmony export */   faFrownOpen: () => (/* binding */ faFrownOpen),
+/* harmony export */   faFunnelDollar: () => (/* binding */ faFunnelDollar),
+/* harmony export */   faFutbol: () => (/* binding */ faFutbol),
+/* harmony export */   faGamepad: () => (/* binding */ faGamepad),
+/* harmony export */   faGasPump: () => (/* binding */ faGasPump),
+/* harmony export */   faGavel: () => (/* binding */ faGavel),
+/* harmony export */   faGem: () => (/* binding */ faGem),
+/* harmony export */   faGenderless: () => (/* binding */ faGenderless),
+/* harmony export */   faGhost: () => (/* binding */ faGhost),
+/* harmony export */   faGift: () => (/* binding */ faGift),
+/* harmony export */   faGifts: () => (/* binding */ faGifts),
+/* harmony export */   faGlassCheers: () => (/* binding */ faGlassCheers),
+/* harmony export */   faGlassMartini: () => (/* binding */ faGlassMartini),
+/* harmony export */   faGlassMartiniAlt: () => (/* binding */ faGlassMartiniAlt),
+/* harmony export */   faGlassWhiskey: () => (/* binding */ faGlassWhiskey),
+/* harmony export */   faGlasses: () => (/* binding */ faGlasses),
+/* harmony export */   faGlobe: () => (/* binding */ faGlobe),
+/* harmony export */   faGlobeAfrica: () => (/* binding */ faGlobeAfrica),
+/* harmony export */   faGlobeAmericas: () => (/* binding */ faGlobeAmericas),
+/* harmony export */   faGlobeAsia: () => (/* binding */ faGlobeAsia),
+/* harmony export */   faGlobeEurope: () => (/* binding */ faGlobeEurope),
+/* harmony export */   faGolfBall: () => (/* binding */ faGolfBall),
+/* harmony export */   faGopuram: () => (/* binding */ faGopuram),
+/* harmony export */   faGraduationCap: () => (/* binding */ faGraduationCap),
+/* harmony export */   faGreaterThan: () => (/* binding */ faGreaterThan),
+/* harmony export */   faGreaterThanEqual: () => (/* binding */ faGreaterThanEqual),
+/* harmony export */   faGrimace: () => (/* binding */ faGrimace),
+/* harmony export */   faGrin: () => (/* binding */ faGrin),
+/* harmony export */   faGrinAlt: () => (/* binding */ faGrinAlt),
+/* harmony export */   faGrinBeam: () => (/* binding */ faGrinBeam),
+/* harmony export */   faGrinBeamSweat: () => (/* binding */ faGrinBeamSweat),
+/* harmony export */   faGrinHearts: () => (/* binding */ faGrinHearts),
+/* harmony export */   faGrinSquint: () => (/* binding */ faGrinSquint),
+/* harmony export */   faGrinSquintTears: () => (/* binding */ faGrinSquintTears),
+/* harmony export */   faGrinStars: () => (/* binding */ faGrinStars),
+/* harmony export */   faGrinTears: () => (/* binding */ faGrinTears),
+/* harmony export */   faGrinTongue: () => (/* binding */ faGrinTongue),
+/* harmony export */   faGrinTongueSquint: () => (/* binding */ faGrinTongueSquint),
+/* harmony export */   faGrinTongueWink: () => (/* binding */ faGrinTongueWink),
+/* harmony export */   faGrinWink: () => (/* binding */ faGrinWink),
+/* harmony export */   faGripHorizontal: () => (/* binding */ faGripHorizontal),
+/* harmony export */   faGripLines: () => (/* binding */ faGripLines),
+/* harmony export */   faGripLinesVertical: () => (/* binding */ faGripLinesVertical),
+/* harmony export */   faGripVertical: () => (/* binding */ faGripVertical),
+/* harmony export */   faGuitar: () => (/* binding */ faGuitar),
+/* harmony export */   faHSquare: () => (/* binding */ faHSquare),
+/* harmony export */   faHamburger: () => (/* binding */ faHamburger),
+/* harmony export */   faHammer: () => (/* binding */ faHammer),
+/* harmony export */   faHamsa: () => (/* binding */ faHamsa),
+/* harmony export */   faHandHolding: () => (/* binding */ faHandHolding),
+/* harmony export */   faHandHoldingHeart: () => (/* binding */ faHandHoldingHeart),
+/* harmony export */   faHandHoldingMedical: () => (/* binding */ faHandHoldingMedical),
+/* harmony export */   faHandHoldingUsd: () => (/* binding */ faHandHoldingUsd),
+/* harmony export */   faHandHoldingWater: () => (/* binding */ faHandHoldingWater),
+/* harmony export */   faHandLizard: () => (/* binding */ faHandLizard),
+/* harmony export */   faHandMiddleFinger: () => (/* binding */ faHandMiddleFinger),
+/* harmony export */   faHandPaper: () => (/* binding */ faHandPaper),
+/* harmony export */   faHandPeace: () => (/* binding */ faHandPeace),
+/* harmony export */   faHandPointDown: () => (/* binding */ faHandPointDown),
+/* harmony export */   faHandPointLeft: () => (/* binding */ faHandPointLeft),
+/* harmony export */   faHandPointRight: () => (/* binding */ faHandPointRight),
+/* harmony export */   faHandPointUp: () => (/* binding */ faHandPointUp),
+/* harmony export */   faHandPointer: () => (/* binding */ faHandPointer),
+/* harmony export */   faHandRock: () => (/* binding */ faHandRock),
+/* harmony export */   faHandScissors: () => (/* binding */ faHandScissors),
+/* harmony export */   faHandSparkles: () => (/* binding */ faHandSparkles),
+/* harmony export */   faHandSpock: () => (/* binding */ faHandSpock),
+/* harmony export */   faHands: () => (/* binding */ faHands),
+/* harmony export */   faHandsHelping: () => (/* binding */ faHandsHelping),
+/* harmony export */   faHandsWash: () => (/* binding */ faHandsWash),
+/* harmony export */   faHandshake: () => (/* binding */ faHandshake),
+/* harmony export */   faHandshakeAltSlash: () => (/* binding */ faHandshakeAltSlash),
+/* harmony export */   faHandshakeSlash: () => (/* binding */ faHandshakeSlash),
+/* harmony export */   faHanukiah: () => (/* binding */ faHanukiah),
+/* harmony export */   faHardHat: () => (/* binding */ faHardHat),
+/* harmony export */   faHashtag: () => (/* binding */ faHashtag),
+/* harmony export */   faHatCowboy: () => (/* binding */ faHatCowboy),
+/* harmony export */   faHatCowboySide: () => (/* binding */ faHatCowboySide),
+/* harmony export */   faHatWizard: () => (/* binding */ faHatWizard),
+/* harmony export */   faHdd: () => (/* binding */ faHdd),
+/* harmony export */   faHeadSideCough: () => (/* binding */ faHeadSideCough),
+/* harmony export */   faHeadSideCoughSlash: () => (/* binding */ faHeadSideCoughSlash),
+/* harmony export */   faHeadSideMask: () => (/* binding */ faHeadSideMask),
+/* harmony export */   faHeadSideVirus: () => (/* binding */ faHeadSideVirus),
+/* harmony export */   faHeading: () => (/* binding */ faHeading),
+/* harmony export */   faHeadphones: () => (/* binding */ faHeadphones),
+/* harmony export */   faHeadphonesAlt: () => (/* binding */ faHeadphonesAlt),
+/* harmony export */   faHeadset: () => (/* binding */ faHeadset),
+/* harmony export */   faHeart: () => (/* binding */ faHeart),
+/* harmony export */   faHeartBroken: () => (/* binding */ faHeartBroken),
+/* harmony export */   faHeartbeat: () => (/* binding */ faHeartbeat),
+/* harmony export */   faHelicopter: () => (/* binding */ faHelicopter),
+/* harmony export */   faHighlighter: () => (/* binding */ faHighlighter),
+/* harmony export */   faHiking: () => (/* binding */ faHiking),
+/* harmony export */   faHippo: () => (/* binding */ faHippo),
+/* harmony export */   faHistory: () => (/* binding */ faHistory),
+/* harmony export */   faHockeyPuck: () => (/* binding */ faHockeyPuck),
+/* harmony export */   faHollyBerry: () => (/* binding */ faHollyBerry),
+/* harmony export */   faHome: () => (/* binding */ faHome),
+/* harmony export */   faHorse: () => (/* binding */ faHorse),
+/* harmony export */   faHorseHead: () => (/* binding */ faHorseHead),
+/* harmony export */   faHospital: () => (/* binding */ faHospital),
+/* harmony export */   faHospitalAlt: () => (/* binding */ faHospitalAlt),
+/* harmony export */   faHospitalSymbol: () => (/* binding */ faHospitalSymbol),
+/* harmony export */   faHospitalUser: () => (/* binding */ faHospitalUser),
+/* harmony export */   faHotTub: () => (/* binding */ faHotTub),
+/* harmony export */   faHotdog: () => (/* binding */ faHotdog),
+/* harmony export */   faHotel: () => (/* binding */ faHotel),
+/* harmony export */   faHourglass: () => (/* binding */ faHourglass),
+/* harmony export */   faHourglassEnd: () => (/* binding */ faHourglassEnd),
+/* harmony export */   faHourglassHalf: () => (/* binding */ faHourglassHalf),
+/* harmony export */   faHourglassStart: () => (/* binding */ faHourglassStart),
+/* harmony export */   faHouseDamage: () => (/* binding */ faHouseDamage),
+/* harmony export */   faHouseUser: () => (/* binding */ faHouseUser),
+/* harmony export */   faHryvnia: () => (/* binding */ faHryvnia),
+/* harmony export */   faICursor: () => (/* binding */ faICursor),
+/* harmony export */   faIceCream: () => (/* binding */ faIceCream),
+/* harmony export */   faIcicles: () => (/* binding */ faIcicles),
+/* harmony export */   faIcons: () => (/* binding */ faIcons),
+/* harmony export */   faIdBadge: () => (/* binding */ faIdBadge),
+/* harmony export */   faIdCard: () => (/* binding */ faIdCard),
+/* harmony export */   faIdCardAlt: () => (/* binding */ faIdCardAlt),
+/* harmony export */   faIgloo: () => (/* binding */ faIgloo),
+/* harmony export */   faImage: () => (/* binding */ faImage),
+/* harmony export */   faImages: () => (/* binding */ faImages),
+/* harmony export */   faInbox: () => (/* binding */ faInbox),
+/* harmony export */   faIndent: () => (/* binding */ faIndent),
+/* harmony export */   faIndustry: () => (/* binding */ faIndustry),
+/* harmony export */   faInfinity: () => (/* binding */ faInfinity),
+/* harmony export */   faInfo: () => (/* binding */ faInfo),
+/* harmony export */   faInfoCircle: () => (/* binding */ faInfoCircle),
+/* harmony export */   faItalic: () => (/* binding */ faItalic),
+/* harmony export */   faJedi: () => (/* binding */ faJedi),
+/* harmony export */   faJoint: () => (/* binding */ faJoint),
+/* harmony export */   faJournalWhills: () => (/* binding */ faJournalWhills),
+/* harmony export */   faKaaba: () => (/* binding */ faKaaba),
+/* harmony export */   faKey: () => (/* binding */ faKey),
+/* harmony export */   faKeyboard: () => (/* binding */ faKeyboard),
+/* harmony export */   faKhanda: () => (/* binding */ faKhanda),
+/* harmony export */   faKiss: () => (/* binding */ faKiss),
+/* harmony export */   faKissBeam: () => (/* binding */ faKissBeam),
+/* harmony export */   faKissWinkHeart: () => (/* binding */ faKissWinkHeart),
+/* harmony export */   faKiwiBird: () => (/* binding */ faKiwiBird),
+/* harmony export */   faLandmark: () => (/* binding */ faLandmark),
+/* harmony export */   faLanguage: () => (/* binding */ faLanguage),
+/* harmony export */   faLaptop: () => (/* binding */ faLaptop),
+/* harmony export */   faLaptopCode: () => (/* binding */ faLaptopCode),
+/* harmony export */   faLaptopHouse: () => (/* binding */ faLaptopHouse),
+/* harmony export */   faLaptopMedical: () => (/* binding */ faLaptopMedical),
+/* harmony export */   faLaugh: () => (/* binding */ faLaugh),
+/* harmony export */   faLaughBeam: () => (/* binding */ faLaughBeam),
+/* harmony export */   faLaughSquint: () => (/* binding */ faLaughSquint),
+/* harmony export */   faLaughWink: () => (/* binding */ faLaughWink),
+/* harmony export */   faLayerGroup: () => (/* binding */ faLayerGroup),
+/* harmony export */   faLeaf: () => (/* binding */ faLeaf),
+/* harmony export */   faLemon: () => (/* binding */ faLemon),
+/* harmony export */   faLessThan: () => (/* binding */ faLessThan),
+/* harmony export */   faLessThanEqual: () => (/* binding */ faLessThanEqual),
+/* harmony export */   faLevelDownAlt: () => (/* binding */ faLevelDownAlt),
+/* harmony export */   faLevelUpAlt: () => (/* binding */ faLevelUpAlt),
+/* harmony export */   faLifeRing: () => (/* binding */ faLifeRing),
+/* harmony export */   faLightbulb: () => (/* binding */ faLightbulb),
+/* harmony export */   faLink: () => (/* binding */ faLink),
+/* harmony export */   faLiraSign: () => (/* binding */ faLiraSign),
+/* harmony export */   faList: () => (/* binding */ faList),
+/* harmony export */   faListAlt: () => (/* binding */ faListAlt),
+/* harmony export */   faListOl: () => (/* binding */ faListOl),
+/* harmony export */   faListUl: () => (/* binding */ faListUl),
+/* harmony export */   faLocationArrow: () => (/* binding */ faLocationArrow),
+/* harmony export */   faLock: () => (/* binding */ faLock),
+/* harmony export */   faLockOpen: () => (/* binding */ faLockOpen),
+/* harmony export */   faLongArrowAltDown: () => (/* binding */ faLongArrowAltDown),
+/* harmony export */   faLongArrowAltLeft: () => (/* binding */ faLongArrowAltLeft),
+/* harmony export */   faLongArrowAltRight: () => (/* binding */ faLongArrowAltRight),
+/* harmony export */   faLongArrowAltUp: () => (/* binding */ faLongArrowAltUp),
+/* harmony export */   faLowVision: () => (/* binding */ faLowVision),
+/* harmony export */   faLuggageCart: () => (/* binding */ faLuggageCart),
+/* harmony export */   faLungs: () => (/* binding */ faLungs),
+/* harmony export */   faLungsVirus: () => (/* binding */ faLungsVirus),
+/* harmony export */   faMagic: () => (/* binding */ faMagic),
+/* harmony export */   faMagnet: () => (/* binding */ faMagnet),
+/* harmony export */   faMailBulk: () => (/* binding */ faMailBulk),
+/* harmony export */   faMale: () => (/* binding */ faMale),
+/* harmony export */   faMap: () => (/* binding */ faMap),
+/* harmony export */   faMapMarked: () => (/* binding */ faMapMarked),
+/* harmony export */   faMapMarkedAlt: () => (/* binding */ faMapMarkedAlt),
+/* harmony export */   faMapMarker: () => (/* binding */ faMapMarker),
+/* harmony export */   faMapMarkerAlt: () => (/* binding */ faMapMarkerAlt),
+/* harmony export */   faMapPin: () => (/* binding */ faMapPin),
+/* harmony export */   faMapSigns: () => (/* binding */ faMapSigns),
+/* harmony export */   faMarker: () => (/* binding */ faMarker),
+/* harmony export */   faMars: () => (/* binding */ faMars),
+/* harmony export */   faMarsDouble: () => (/* binding */ faMarsDouble),
+/* harmony export */   faMarsStroke: () => (/* binding */ faMarsStroke),
+/* harmony export */   faMarsStrokeH: () => (/* binding */ faMarsStrokeH),
+/* harmony export */   faMarsStrokeV: () => (/* binding */ faMarsStrokeV),
+/* harmony export */   faMask: () => (/* binding */ faMask),
+/* harmony export */   faMedal: () => (/* binding */ faMedal),
+/* harmony export */   faMedkit: () => (/* binding */ faMedkit),
+/* harmony export */   faMeh: () => (/* binding */ faMeh),
+/* harmony export */   faMehBlank: () => (/* binding */ faMehBlank),
+/* harmony export */   faMehRollingEyes: () => (/* binding */ faMehRollingEyes),
+/* harmony export */   faMemory: () => (/* binding */ faMemory),
+/* harmony export */   faMenorah: () => (/* binding */ faMenorah),
+/* harmony export */   faMercury: () => (/* binding */ faMercury),
+/* harmony export */   faMeteor: () => (/* binding */ faMeteor),
+/* harmony export */   faMicrochip: () => (/* binding */ faMicrochip),
+/* harmony export */   faMicrophone: () => (/* binding */ faMicrophone),
+/* harmony export */   faMicrophoneAlt: () => (/* binding */ faMicrophoneAlt),
+/* harmony export */   faMicrophoneAltSlash: () => (/* binding */ faMicrophoneAltSlash),
+/* harmony export */   faMicrophoneSlash: () => (/* binding */ faMicrophoneSlash),
+/* harmony export */   faMicroscope: () => (/* binding */ faMicroscope),
+/* harmony export */   faMinus: () => (/* binding */ faMinus),
+/* harmony export */   faMinusCircle: () => (/* binding */ faMinusCircle),
+/* harmony export */   faMinusSquare: () => (/* binding */ faMinusSquare),
+/* harmony export */   faMitten: () => (/* binding */ faMitten),
+/* harmony export */   faMobile: () => (/* binding */ faMobile),
+/* harmony export */   faMobileAlt: () => (/* binding */ faMobileAlt),
+/* harmony export */   faMoneyBill: () => (/* binding */ faMoneyBill),
+/* harmony export */   faMoneyBillAlt: () => (/* binding */ faMoneyBillAlt),
+/* harmony export */   faMoneyBillWave: () => (/* binding */ faMoneyBillWave),
+/* harmony export */   faMoneyBillWaveAlt: () => (/* binding */ faMoneyBillWaveAlt),
+/* harmony export */   faMoneyCheck: () => (/* binding */ faMoneyCheck),
+/* harmony export */   faMoneyCheckAlt: () => (/* binding */ faMoneyCheckAlt),
+/* harmony export */   faMonument: () => (/* binding */ faMonument),
+/* harmony export */   faMoon: () => (/* binding */ faMoon),
+/* harmony export */   faMortarPestle: () => (/* binding */ faMortarPestle),
+/* harmony export */   faMosque: () => (/* binding */ faMosque),
+/* harmony export */   faMotorcycle: () => (/* binding */ faMotorcycle),
+/* harmony export */   faMountain: () => (/* binding */ faMountain),
+/* harmony export */   faMouse: () => (/* binding */ faMouse),
+/* harmony export */   faMousePointer: () => (/* binding */ faMousePointer),
+/* harmony export */   faMugHot: () => (/* binding */ faMugHot),
+/* harmony export */   faMusic: () => (/* binding */ faMusic),
+/* harmony export */   faNetworkWired: () => (/* binding */ faNetworkWired),
+/* harmony export */   faNeuter: () => (/* binding */ faNeuter),
+/* harmony export */   faNewspaper: () => (/* binding */ faNewspaper),
+/* harmony export */   faNotEqual: () => (/* binding */ faNotEqual),
+/* harmony export */   faNotesMedical: () => (/* binding */ faNotesMedical),
+/* harmony export */   faObjectGroup: () => (/* binding */ faObjectGroup),
+/* harmony export */   faObjectUngroup: () => (/* binding */ faObjectUngroup),
+/* harmony export */   faOilCan: () => (/* binding */ faOilCan),
+/* harmony export */   faOm: () => (/* binding */ faOm),
+/* harmony export */   faOtter: () => (/* binding */ faOtter),
+/* harmony export */   faOutdent: () => (/* binding */ faOutdent),
+/* harmony export */   faPager: () => (/* binding */ faPager),
+/* harmony export */   faPaintBrush: () => (/* binding */ faPaintBrush),
+/* harmony export */   faPaintRoller: () => (/* binding */ faPaintRoller),
+/* harmony export */   faPalette: () => (/* binding */ faPalette),
+/* harmony export */   faPallet: () => (/* binding */ faPallet),
+/* harmony export */   faPaperPlane: () => (/* binding */ faPaperPlane),
+/* harmony export */   faPaperclip: () => (/* binding */ faPaperclip),
+/* harmony export */   faParachuteBox: () => (/* binding */ faParachuteBox),
+/* harmony export */   faParagraph: () => (/* binding */ faParagraph),
+/* harmony export */   faParking: () => (/* binding */ faParking),
+/* harmony export */   faPassport: () => (/* binding */ faPassport),
+/* harmony export */   faPastafarianism: () => (/* binding */ faPastafarianism),
+/* harmony export */   faPaste: () => (/* binding */ faPaste),
+/* harmony export */   faPause: () => (/* binding */ faPause),
+/* harmony export */   faPauseCircle: () => (/* binding */ faPauseCircle),
+/* harmony export */   faPaw: () => (/* binding */ faPaw),
+/* harmony export */   faPeace: () => (/* binding */ faPeace),
+/* harmony export */   faPen: () => (/* binding */ faPen),
+/* harmony export */   faPenAlt: () => (/* binding */ faPenAlt),
+/* harmony export */   faPenFancy: () => (/* binding */ faPenFancy),
+/* harmony export */   faPenNib: () => (/* binding */ faPenNib),
+/* harmony export */   faPenSquare: () => (/* binding */ faPenSquare),
+/* harmony export */   faPencilAlt: () => (/* binding */ faPencilAlt),
+/* harmony export */   faPencilRuler: () => (/* binding */ faPencilRuler),
+/* harmony export */   faPeopleArrows: () => (/* binding */ faPeopleArrows),
+/* harmony export */   faPeopleCarry: () => (/* binding */ faPeopleCarry),
+/* harmony export */   faPepperHot: () => (/* binding */ faPepperHot),
+/* harmony export */   faPercent: () => (/* binding */ faPercent),
+/* harmony export */   faPercentage: () => (/* binding */ faPercentage),
+/* harmony export */   faPersonBooth: () => (/* binding */ faPersonBooth),
+/* harmony export */   faPhone: () => (/* binding */ faPhone),
+/* harmony export */   faPhoneAlt: () => (/* binding */ faPhoneAlt),
+/* harmony export */   faPhoneSlash: () => (/* binding */ faPhoneSlash),
+/* harmony export */   faPhoneSquare: () => (/* binding */ faPhoneSquare),
+/* harmony export */   faPhoneSquareAlt: () => (/* binding */ faPhoneSquareAlt),
+/* harmony export */   faPhoneVolume: () => (/* binding */ faPhoneVolume),
+/* harmony export */   faPhotoVideo: () => (/* binding */ faPhotoVideo),
+/* harmony export */   faPiggyBank: () => (/* binding */ faPiggyBank),
+/* harmony export */   faPills: () => (/* binding */ faPills),
+/* harmony export */   faPizzaSlice: () => (/* binding */ faPizzaSlice),
+/* harmony export */   faPlaceOfWorship: () => (/* binding */ faPlaceOfWorship),
+/* harmony export */   faPlane: () => (/* binding */ faPlane),
+/* harmony export */   faPlaneArrival: () => (/* binding */ faPlaneArrival),
+/* harmony export */   faPlaneDeparture: () => (/* binding */ faPlaneDeparture),
+/* harmony export */   faPlaneSlash: () => (/* binding */ faPlaneSlash),
+/* harmony export */   faPlay: () => (/* binding */ faPlay),
+/* harmony export */   faPlayCircle: () => (/* binding */ faPlayCircle),
+/* harmony export */   faPlug: () => (/* binding */ faPlug),
+/* harmony export */   faPlus: () => (/* binding */ faPlus),
+/* harmony export */   faPlusCircle: () => (/* binding */ faPlusCircle),
+/* harmony export */   faPlusSquare: () => (/* binding */ faPlusSquare),
+/* harmony export */   faPodcast: () => (/* binding */ faPodcast),
+/* harmony export */   faPoll: () => (/* binding */ faPoll),
+/* harmony export */   faPollH: () => (/* binding */ faPollH),
+/* harmony export */   faPoo: () => (/* binding */ faPoo),
+/* harmony export */   faPooStorm: () => (/* binding */ faPooStorm),
+/* harmony export */   faPoop: () => (/* binding */ faPoop),
+/* harmony export */   faPortrait: () => (/* binding */ faPortrait),
+/* harmony export */   faPoundSign: () => (/* binding */ faPoundSign),
+/* harmony export */   faPowerOff: () => (/* binding */ faPowerOff),
+/* harmony export */   faPray: () => (/* binding */ faPray),
+/* harmony export */   faPrayingHands: () => (/* binding */ faPrayingHands),
+/* harmony export */   faPrescription: () => (/* binding */ faPrescription),
+/* harmony export */   faPrescriptionBottle: () => (/* binding */ faPrescriptionBottle),
+/* harmony export */   faPrescriptionBottleAlt: () => (/* binding */ faPrescriptionBottleAlt),
+/* harmony export */   faPrint: () => (/* binding */ faPrint),
+/* harmony export */   faProcedures: () => (/* binding */ faProcedures),
+/* harmony export */   faProjectDiagram: () => (/* binding */ faProjectDiagram),
+/* harmony export */   faPumpMedical: () => (/* binding */ faPumpMedical),
+/* harmony export */   faPumpSoap: () => (/* binding */ faPumpSoap),
+/* harmony export */   faPuzzlePiece: () => (/* binding */ faPuzzlePiece),
+/* harmony export */   faQrcode: () => (/* binding */ faQrcode),
+/* harmony export */   faQuestion: () => (/* binding */ faQuestion),
+/* harmony export */   faQuestionCircle: () => (/* binding */ faQuestionCircle),
+/* harmony export */   faQuidditch: () => (/* binding */ faQuidditch),
+/* harmony export */   faQuoteLeft: () => (/* binding */ faQuoteLeft),
+/* harmony export */   faQuoteRight: () => (/* binding */ faQuoteRight),
+/* harmony export */   faQuran: () => (/* binding */ faQuran),
+/* harmony export */   faRadiation: () => (/* binding */ faRadiation),
+/* harmony export */   faRadiationAlt: () => (/* binding */ faRadiationAlt),
+/* harmony export */   faRainbow: () => (/* binding */ faRainbow),
+/* harmony export */   faRandom: () => (/* binding */ faRandom),
+/* harmony export */   faReceipt: () => (/* binding */ faReceipt),
+/* harmony export */   faRecordVinyl: () => (/* binding */ faRecordVinyl),
+/* harmony export */   faRecycle: () => (/* binding */ faRecycle),
+/* harmony export */   faRedo: () => (/* binding */ faRedo),
+/* harmony export */   faRedoAlt: () => (/* binding */ faRedoAlt),
+/* harmony export */   faRegistered: () => (/* binding */ faRegistered),
+/* harmony export */   faRemoveFormat: () => (/* binding */ faRemoveFormat),
+/* harmony export */   faReply: () => (/* binding */ faReply),
+/* harmony export */   faReplyAll: () => (/* binding */ faReplyAll),
+/* harmony export */   faRepublican: () => (/* binding */ faRepublican),
+/* harmony export */   faRestroom: () => (/* binding */ faRestroom),
+/* harmony export */   faRetweet: () => (/* binding */ faRetweet),
+/* harmony export */   faRibbon: () => (/* binding */ faRibbon),
+/* harmony export */   faRing: () => (/* binding */ faRing),
+/* harmony export */   faRoad: () => (/* binding */ faRoad),
+/* harmony export */   faRobot: () => (/* binding */ faRobot),
+/* harmony export */   faRocket: () => (/* binding */ faRocket),
+/* harmony export */   faRoute: () => (/* binding */ faRoute),
+/* harmony export */   faRss: () => (/* binding */ faRss),
+/* harmony export */   faRssSquare: () => (/* binding */ faRssSquare),
+/* harmony export */   faRubleSign: () => (/* binding */ faRubleSign),
+/* harmony export */   faRuler: () => (/* binding */ faRuler),
+/* harmony export */   faRulerCombined: () => (/* binding */ faRulerCombined),
+/* harmony export */   faRulerHorizontal: () => (/* binding */ faRulerHorizontal),
+/* harmony export */   faRulerVertical: () => (/* binding */ faRulerVertical),
+/* harmony export */   faRunning: () => (/* binding */ faRunning),
+/* harmony export */   faRupeeSign: () => (/* binding */ faRupeeSign),
+/* harmony export */   faSadCry: () => (/* binding */ faSadCry),
+/* harmony export */   faSadTear: () => (/* binding */ faSadTear),
+/* harmony export */   faSatellite: () => (/* binding */ faSatellite),
+/* harmony export */   faSatelliteDish: () => (/* binding */ faSatelliteDish),
+/* harmony export */   faSave: () => (/* binding */ faSave),
+/* harmony export */   faSchool: () => (/* binding */ faSchool),
+/* harmony export */   faScrewdriver: () => (/* binding */ faScrewdriver),
+/* harmony export */   faScroll: () => (/* binding */ faScroll),
+/* harmony export */   faSdCard: () => (/* binding */ faSdCard),
+/* harmony export */   faSearch: () => (/* binding */ faSearch),
+/* harmony export */   faSearchDollar: () => (/* binding */ faSearchDollar),
+/* harmony export */   faSearchLocation: () => (/* binding */ faSearchLocation),
+/* harmony export */   faSearchMinus: () => (/* binding */ faSearchMinus),
+/* harmony export */   faSearchPlus: () => (/* binding */ faSearchPlus),
+/* harmony export */   faSeedling: () => (/* binding */ faSeedling),
+/* harmony export */   faServer: () => (/* binding */ faServer),
+/* harmony export */   faShapes: () => (/* binding */ faShapes),
+/* harmony export */   faShare: () => (/* binding */ faShare),
+/* harmony export */   faShareAlt: () => (/* binding */ faShareAlt),
+/* harmony export */   faShareAltSquare: () => (/* binding */ faShareAltSquare),
+/* harmony export */   faShareSquare: () => (/* binding */ faShareSquare),
+/* harmony export */   faShekelSign: () => (/* binding */ faShekelSign),
+/* harmony export */   faShieldAlt: () => (/* binding */ faShieldAlt),
+/* harmony export */   faShieldVirus: () => (/* binding */ faShieldVirus),
+/* harmony export */   faShip: () => (/* binding */ faShip),
+/* harmony export */   faShippingFast: () => (/* binding */ faShippingFast),
+/* harmony export */   faShoePrints: () => (/* binding */ faShoePrints),
+/* harmony export */   faShoppingBag: () => (/* binding */ faShoppingBag),
+/* harmony export */   faShoppingBasket: () => (/* binding */ faShoppingBasket),
+/* harmony export */   faShoppingCart: () => (/* binding */ faShoppingCart),
+/* harmony export */   faShower: () => (/* binding */ faShower),
+/* harmony export */   faShuttleVan: () => (/* binding */ faShuttleVan),
+/* harmony export */   faSign: () => (/* binding */ faSign),
+/* harmony export */   faSignInAlt: () => (/* binding */ faSignInAlt),
+/* harmony export */   faSignLanguage: () => (/* binding */ faSignLanguage),
+/* harmony export */   faSignOutAlt: () => (/* binding */ faSignOutAlt),
+/* harmony export */   faSignal: () => (/* binding */ faSignal),
+/* harmony export */   faSignature: () => (/* binding */ faSignature),
+/* harmony export */   faSimCard: () => (/* binding */ faSimCard),
+/* harmony export */   faSink: () => (/* binding */ faSink),
+/* harmony export */   faSitemap: () => (/* binding */ faSitemap),
+/* harmony export */   faSkating: () => (/* binding */ faSkating),
+/* harmony export */   faSkiing: () => (/* binding */ faSkiing),
+/* harmony export */   faSkiingNordic: () => (/* binding */ faSkiingNordic),
+/* harmony export */   faSkull: () => (/* binding */ faSkull),
+/* harmony export */   faSkullCrossbones: () => (/* binding */ faSkullCrossbones),
+/* harmony export */   faSlash: () => (/* binding */ faSlash),
+/* harmony export */   faSleigh: () => (/* binding */ faSleigh),
+/* harmony export */   faSlidersH: () => (/* binding */ faSlidersH),
+/* harmony export */   faSmile: () => (/* binding */ faSmile),
+/* harmony export */   faSmileBeam: () => (/* binding */ faSmileBeam),
+/* harmony export */   faSmileWink: () => (/* binding */ faSmileWink),
+/* harmony export */   faSmog: () => (/* binding */ faSmog),
+/* harmony export */   faSmoking: () => (/* binding */ faSmoking),
+/* harmony export */   faSmokingBan: () => (/* binding */ faSmokingBan),
+/* harmony export */   faSms: () => (/* binding */ faSms),
+/* harmony export */   faSnowboarding: () => (/* binding */ faSnowboarding),
+/* harmony export */   faSnowflake: () => (/* binding */ faSnowflake),
+/* harmony export */   faSnowman: () => (/* binding */ faSnowman),
+/* harmony export */   faSnowplow: () => (/* binding */ faSnowplow),
+/* harmony export */   faSoap: () => (/* binding */ faSoap),
+/* harmony export */   faSocks: () => (/* binding */ faSocks),
+/* harmony export */   faSolarPanel: () => (/* binding */ faSolarPanel),
+/* harmony export */   faSort: () => (/* binding */ faSort),
+/* harmony export */   faSortAlphaDown: () => (/* binding */ faSortAlphaDown),
+/* harmony export */   faSortAlphaDownAlt: () => (/* binding */ faSortAlphaDownAlt),
+/* harmony export */   faSortAlphaUp: () => (/* binding */ faSortAlphaUp),
+/* harmony export */   faSortAlphaUpAlt: () => (/* binding */ faSortAlphaUpAlt),
+/* harmony export */   faSortAmountDown: () => (/* binding */ faSortAmountDown),
+/* harmony export */   faSortAmountDownAlt: () => (/* binding */ faSortAmountDownAlt),
+/* harmony export */   faSortAmountUp: () => (/* binding */ faSortAmountUp),
+/* harmony export */   faSortAmountUpAlt: () => (/* binding */ faSortAmountUpAlt),
+/* harmony export */   faSortDown: () => (/* binding */ faSortDown),
+/* harmony export */   faSortNumericDown: () => (/* binding */ faSortNumericDown),
+/* harmony export */   faSortNumericDownAlt: () => (/* binding */ faSortNumericDownAlt),
+/* harmony export */   faSortNumericUp: () => (/* binding */ faSortNumericUp),
+/* harmony export */   faSortNumericUpAlt: () => (/* binding */ faSortNumericUpAlt),
+/* harmony export */   faSortUp: () => (/* binding */ faSortUp),
+/* harmony export */   faSpa: () => (/* binding */ faSpa),
+/* harmony export */   faSpaceShuttle: () => (/* binding */ faSpaceShuttle),
+/* harmony export */   faSpellCheck: () => (/* binding */ faSpellCheck),
+/* harmony export */   faSpider: () => (/* binding */ faSpider),
+/* harmony export */   faSpinner: () => (/* binding */ faSpinner),
+/* harmony export */   faSplotch: () => (/* binding */ faSplotch),
+/* harmony export */   faSprayCan: () => (/* binding */ faSprayCan),
+/* harmony export */   faSquare: () => (/* binding */ faSquare),
+/* harmony export */   faSquareFull: () => (/* binding */ faSquareFull),
+/* harmony export */   faSquareRootAlt: () => (/* binding */ faSquareRootAlt),
+/* harmony export */   faStamp: () => (/* binding */ faStamp),
+/* harmony export */   faStar: () => (/* binding */ faStar),
+/* harmony export */   faStarAndCrescent: () => (/* binding */ faStarAndCrescent),
+/* harmony export */   faStarHalf: () => (/* binding */ faStarHalf),
+/* harmony export */   faStarHalfAlt: () => (/* binding */ faStarHalfAlt),
+/* harmony export */   faStarOfDavid: () => (/* binding */ faStarOfDavid),
+/* harmony export */   faStarOfLife: () => (/* binding */ faStarOfLife),
+/* harmony export */   faStepBackward: () => (/* binding */ faStepBackward),
+/* harmony export */   faStepForward: () => (/* binding */ faStepForward),
+/* harmony export */   faStethoscope: () => (/* binding */ faStethoscope),
+/* harmony export */   faStickyNote: () => (/* binding */ faStickyNote),
+/* harmony export */   faStop: () => (/* binding */ faStop),
+/* harmony export */   faStopCircle: () => (/* binding */ faStopCircle),
+/* harmony export */   faStopwatch: () => (/* binding */ faStopwatch),
+/* harmony export */   faStopwatch20: () => (/* binding */ faStopwatch20),
+/* harmony export */   faStore: () => (/* binding */ faStore),
+/* harmony export */   faStoreAlt: () => (/* binding */ faStoreAlt),
+/* harmony export */   faStoreAltSlash: () => (/* binding */ faStoreAltSlash),
+/* harmony export */   faStoreSlash: () => (/* binding */ faStoreSlash),
+/* harmony export */   faStream: () => (/* binding */ faStream),
+/* harmony export */   faStreetView: () => (/* binding */ faStreetView),
+/* harmony export */   faStrikethrough: () => (/* binding */ faStrikethrough),
+/* harmony export */   faStroopwafel: () => (/* binding */ faStroopwafel),
+/* harmony export */   faSubscript: () => (/* binding */ faSubscript),
+/* harmony export */   faSubway: () => (/* binding */ faSubway),
+/* harmony export */   faSuitcase: () => (/* binding */ faSuitcase),
+/* harmony export */   faSuitcaseRolling: () => (/* binding */ faSuitcaseRolling),
+/* harmony export */   faSun: () => (/* binding */ faSun),
+/* harmony export */   faSuperscript: () => (/* binding */ faSuperscript),
+/* harmony export */   faSurprise: () => (/* binding */ faSurprise),
+/* harmony export */   faSwatchbook: () => (/* binding */ faSwatchbook),
+/* harmony export */   faSwimmer: () => (/* binding */ faSwimmer),
+/* harmony export */   faSwimmingPool: () => (/* binding */ faSwimmingPool),
+/* harmony export */   faSynagogue: () => (/* binding */ faSynagogue),
+/* harmony export */   faSync: () => (/* binding */ faSync),
+/* harmony export */   faSyncAlt: () => (/* binding */ faSyncAlt),
+/* harmony export */   faSyringe: () => (/* binding */ faSyringe),
+/* harmony export */   faTable: () => (/* binding */ faTable),
+/* harmony export */   faTableTennis: () => (/* binding */ faTableTennis),
+/* harmony export */   faTablet: () => (/* binding */ faTablet),
+/* harmony export */   faTabletAlt: () => (/* binding */ faTabletAlt),
+/* harmony export */   faTablets: () => (/* binding */ faTablets),
+/* harmony export */   faTachometerAlt: () => (/* binding */ faTachometerAlt),
+/* harmony export */   faTag: () => (/* binding */ faTag),
+/* harmony export */   faTags: () => (/* binding */ faTags),
+/* harmony export */   faTape: () => (/* binding */ faTape),
+/* harmony export */   faTasks: () => (/* binding */ faTasks),
+/* harmony export */   faTaxi: () => (/* binding */ faTaxi),
+/* harmony export */   faTeeth: () => (/* binding */ faTeeth),
+/* harmony export */   faTeethOpen: () => (/* binding */ faTeethOpen),
+/* harmony export */   faTemperatureHigh: () => (/* binding */ faTemperatureHigh),
+/* harmony export */   faTemperatureLow: () => (/* binding */ faTemperatureLow),
+/* harmony export */   faTenge: () => (/* binding */ faTenge),
+/* harmony export */   faTerminal: () => (/* binding */ faTerminal),
+/* harmony export */   faTextHeight: () => (/* binding */ faTextHeight),
+/* harmony export */   faTextWidth: () => (/* binding */ faTextWidth),
+/* harmony export */   faTh: () => (/* binding */ faTh),
+/* harmony export */   faThLarge: () => (/* binding */ faThLarge),
+/* harmony export */   faThList: () => (/* binding */ faThList),
+/* harmony export */   faTheaterMasks: () => (/* binding */ faTheaterMasks),
+/* harmony export */   faThermometer: () => (/* binding */ faThermometer),
+/* harmony export */   faThermometerEmpty: () => (/* binding */ faThermometerEmpty),
+/* harmony export */   faThermometerFull: () => (/* binding */ faThermometerFull),
+/* harmony export */   faThermometerHalf: () => (/* binding */ faThermometerHalf),
+/* harmony export */   faThermometerQuarter: () => (/* binding */ faThermometerQuarter),
+/* harmony export */   faThermometerThreeQuarters: () => (/* binding */ faThermometerThreeQuarters),
+/* harmony export */   faThumbsDown: () => (/* binding */ faThumbsDown),
+/* harmony export */   faThumbsUp: () => (/* binding */ faThumbsUp),
+/* harmony export */   faThumbtack: () => (/* binding */ faThumbtack),
+/* harmony export */   faTicketAlt: () => (/* binding */ faTicketAlt),
+/* harmony export */   faTimes: () => (/* binding */ faTimes),
+/* harmony export */   faTimesCircle: () => (/* binding */ faTimesCircle),
+/* harmony export */   faTint: () => (/* binding */ faTint),
+/* harmony export */   faTintSlash: () => (/* binding */ faTintSlash),
+/* harmony export */   faTired: () => (/* binding */ faTired),
+/* harmony export */   faToggleOff: () => (/* binding */ faToggleOff),
+/* harmony export */   faToggleOn: () => (/* binding */ faToggleOn),
+/* harmony export */   faToilet: () => (/* binding */ faToilet),
+/* harmony export */   faToiletPaper: () => (/* binding */ faToiletPaper),
+/* harmony export */   faToiletPaperSlash: () => (/* binding */ faToiletPaperSlash),
+/* harmony export */   faToolbox: () => (/* binding */ faToolbox),
+/* harmony export */   faTools: () => (/* binding */ faTools),
+/* harmony export */   faTooth: () => (/* binding */ faTooth),
+/* harmony export */   faTorah: () => (/* binding */ faTorah),
+/* harmony export */   faToriiGate: () => (/* binding */ faToriiGate),
+/* harmony export */   faTractor: () => (/* binding */ faTractor),
+/* harmony export */   faTrademark: () => (/* binding */ faTrademark),
+/* harmony export */   faTrafficLight: () => (/* binding */ faTrafficLight),
+/* harmony export */   faTrailer: () => (/* binding */ faTrailer),
+/* harmony export */   faTrain: () => (/* binding */ faTrain),
+/* harmony export */   faTram: () => (/* binding */ faTram),
+/* harmony export */   faTransgender: () => (/* binding */ faTransgender),
+/* harmony export */   faTransgenderAlt: () => (/* binding */ faTransgenderAlt),
+/* harmony export */   faTrash: () => (/* binding */ faTrash),
+/* harmony export */   faTrashAlt: () => (/* binding */ faTrashAlt),
+/* harmony export */   faTrashRestore: () => (/* binding */ faTrashRestore),
+/* harmony export */   faTrashRestoreAlt: () => (/* binding */ faTrashRestoreAlt),
+/* harmony export */   faTree: () => (/* binding */ faTree),
+/* harmony export */   faTrophy: () => (/* binding */ faTrophy),
+/* harmony export */   faTruck: () => (/* binding */ faTruck),
+/* harmony export */   faTruckLoading: () => (/* binding */ faTruckLoading),
+/* harmony export */   faTruckMonster: () => (/* binding */ faTruckMonster),
+/* harmony export */   faTruckMoving: () => (/* binding */ faTruckMoving),
+/* harmony export */   faTruckPickup: () => (/* binding */ faTruckPickup),
+/* harmony export */   faTshirt: () => (/* binding */ faTshirt),
+/* harmony export */   faTty: () => (/* binding */ faTty),
+/* harmony export */   faTv: () => (/* binding */ faTv),
+/* harmony export */   faUmbrella: () => (/* binding */ faUmbrella),
+/* harmony export */   faUmbrellaBeach: () => (/* binding */ faUmbrellaBeach),
+/* harmony export */   faUnderline: () => (/* binding */ faUnderline),
+/* harmony export */   faUndo: () => (/* binding */ faUndo),
+/* harmony export */   faUndoAlt: () => (/* binding */ faUndoAlt),
+/* harmony export */   faUniversalAccess: () => (/* binding */ faUniversalAccess),
+/* harmony export */   faUniversity: () => (/* binding */ faUniversity),
+/* harmony export */   faUnlink: () => (/* binding */ faUnlink),
+/* harmony export */   faUnlock: () => (/* binding */ faUnlock),
+/* harmony export */   faUnlockAlt: () => (/* binding */ faUnlockAlt),
+/* harmony export */   faUpload: () => (/* binding */ faUpload),
+/* harmony export */   faUser: () => (/* binding */ faUser),
+/* harmony export */   faUserAlt: () => (/* binding */ faUserAlt),
+/* harmony export */   faUserAltSlash: () => (/* binding */ faUserAltSlash),
+/* harmony export */   faUserAstronaut: () => (/* binding */ faUserAstronaut),
+/* harmony export */   faUserCheck: () => (/* binding */ faUserCheck),
+/* harmony export */   faUserCircle: () => (/* binding */ faUserCircle),
+/* harmony export */   faUserClock: () => (/* binding */ faUserClock),
+/* harmony export */   faUserCog: () => (/* binding */ faUserCog),
+/* harmony export */   faUserEdit: () => (/* binding */ faUserEdit),
+/* harmony export */   faUserFriends: () => (/* binding */ faUserFriends),
+/* harmony export */   faUserGraduate: () => (/* binding */ faUserGraduate),
+/* harmony export */   faUserInjured: () => (/* binding */ faUserInjured),
+/* harmony export */   faUserLock: () => (/* binding */ faUserLock),
+/* harmony export */   faUserMd: () => (/* binding */ faUserMd),
+/* harmony export */   faUserMinus: () => (/* binding */ faUserMinus),
+/* harmony export */   faUserNinja: () => (/* binding */ faUserNinja),
+/* harmony export */   faUserNurse: () => (/* binding */ faUserNurse),
+/* harmony export */   faUserPlus: () => (/* binding */ faUserPlus),
+/* harmony export */   faUserSecret: () => (/* binding */ faUserSecret),
+/* harmony export */   faUserShield: () => (/* binding */ faUserShield),
+/* harmony export */   faUserSlash: () => (/* binding */ faUserSlash),
+/* harmony export */   faUserTag: () => (/* binding */ faUserTag),
+/* harmony export */   faUserTie: () => (/* binding */ faUserTie),
+/* harmony export */   faUserTimes: () => (/* binding */ faUserTimes),
+/* harmony export */   faUsers: () => (/* binding */ faUsers),
+/* harmony export */   faUsersCog: () => (/* binding */ faUsersCog),
+/* harmony export */   faUsersSlash: () => (/* binding */ faUsersSlash),
+/* harmony export */   faUtensilSpoon: () => (/* binding */ faUtensilSpoon),
+/* harmony export */   faUtensils: () => (/* binding */ faUtensils),
+/* harmony export */   faVectorSquare: () => (/* binding */ faVectorSquare),
+/* harmony export */   faVenus: () => (/* binding */ faVenus),
+/* harmony export */   faVenusDouble: () => (/* binding */ faVenusDouble),
+/* harmony export */   faVenusMars: () => (/* binding */ faVenusMars),
+/* harmony export */   faVest: () => (/* binding */ faVest),
+/* harmony export */   faVestPatches: () => (/* binding */ faVestPatches),
+/* harmony export */   faVial: () => (/* binding */ faVial),
+/* harmony export */   faVials: () => (/* binding */ faVials),
+/* harmony export */   faVideo: () => (/* binding */ faVideo),
+/* harmony export */   faVideoSlash: () => (/* binding */ faVideoSlash),
+/* harmony export */   faVihara: () => (/* binding */ faVihara),
+/* harmony export */   faVirus: () => (/* binding */ faVirus),
+/* harmony export */   faVirusSlash: () => (/* binding */ faVirusSlash),
+/* harmony export */   faViruses: () => (/* binding */ faViruses),
+/* harmony export */   faVoicemail: () => (/* binding */ faVoicemail),
+/* harmony export */   faVolleyballBall: () => (/* binding */ faVolleyballBall),
+/* harmony export */   faVolumeDown: () => (/* binding */ faVolumeDown),
+/* harmony export */   faVolumeMute: () => (/* binding */ faVolumeMute),
+/* harmony export */   faVolumeOff: () => (/* binding */ faVolumeOff),
+/* harmony export */   faVolumeUp: () => (/* binding */ faVolumeUp),
+/* harmony export */   faVoteYea: () => (/* binding */ faVoteYea),
+/* harmony export */   faVrCardboard: () => (/* binding */ faVrCardboard),
+/* harmony export */   faWalking: () => (/* binding */ faWalking),
+/* harmony export */   faWallet: () => (/* binding */ faWallet),
+/* harmony export */   faWarehouse: () => (/* binding */ faWarehouse),
+/* harmony export */   faWater: () => (/* binding */ faWater),
+/* harmony export */   faWaveSquare: () => (/* binding */ faWaveSquare),
+/* harmony export */   faWeight: () => (/* binding */ faWeight),
+/* harmony export */   faWeightHanging: () => (/* binding */ faWeightHanging),
+/* harmony export */   faWheelchair: () => (/* binding */ faWheelchair),
+/* harmony export */   faWifi: () => (/* binding */ faWifi),
+/* harmony export */   faWind: () => (/* binding */ faWind),
+/* harmony export */   faWindowClose: () => (/* binding */ faWindowClose),
+/* harmony export */   faWindowMaximize: () => (/* binding */ faWindowMaximize),
+/* harmony export */   faWindowMinimize: () => (/* binding */ faWindowMinimize),
+/* harmony export */   faWindowRestore: () => (/* binding */ faWindowRestore),
+/* harmony export */   faWineBottle: () => (/* binding */ faWineBottle),
+/* harmony export */   faWineGlass: () => (/* binding */ faWineGlass),
+/* harmony export */   faWineGlassAlt: () => (/* binding */ faWineGlassAlt),
+/* harmony export */   faWonSign: () => (/* binding */ faWonSign),
+/* harmony export */   faWrench: () => (/* binding */ faWrench),
+/* harmony export */   faXRay: () => (/* binding */ faXRay),
+/* harmony export */   faYenSign: () => (/* binding */ faYenSign),
+/* harmony export */   faYinYang: () => (/* binding */ faYinYang),
+/* harmony export */   fas: () => (/* binding */ _iconsCache),
+/* harmony export */   prefix: () => (/* binding */ prefix)
 /* harmony export */ });
 /*!
  * Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com
@@ -13819,9 +13819,9 @@ var _iconsCache = {
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
- * Datepicker for Bootstrap v1.9.0 (https://github.com/uxsolutions/bootstrap-datepicker)
+ * Datepicker for Bootstrap v1.10.0 (https://github.com/uxsolutions/bootstrap-datepicker)
  *
- * Licensed under the Apache License v2.0 (http://www.apache.org/licenses/LICENSE-2.0)
+ * Licensed under the Apache License v2.0 (https://www.apache.org/licenses/LICENSE-2.0)
  */
 
 (function(factory){
@@ -13880,7 +13880,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 			replace: function(new_array){
 				if (!new_array)
 					return;
-				if (!$.isArray(new_array))
+				if (!Array.isArray(new_array))
 					new_array = [new_array];
 				this.clear();
 				this.push.apply(this, new_array);
@@ -13922,9 +13922,15 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 		this.isInput = this.element.is('input');
 		this.inputField = this.isInput ? this.element : this.element.find('input');
 		this.component = this.element.hasClass('date') ? this.element.find('.add-on, .input-group-addon, .input-group-append, .input-group-prepend, .btn') : false;
-		if (this.component && this.component.length === 0)
+		if (this.component && this.component.length === 0){
 			this.component = false;
-		this.isInline = !this.component && this.element.is('div');
+    }
+
+		if (this.o.isInline === null){
+			this.isInline = !this.component && !this.isInput;
+		} else {
+			this.isInline = this.o.isInline;
+		}
 
 		this.picker = $(DPGlobal.template);
 
@@ -13995,7 +14001,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 		},
 
 		_resolveDaysOfWeek: function(daysOfWeek){
-			if (!$.isArray(daysOfWeek))
+			if (!Array.isArray(daysOfWeek))
 				daysOfWeek = daysOfWeek.split(/[,\s]*/);
 			return $.map(daysOfWeek, Number);
 		},
@@ -14082,7 +14088,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 			o.daysOfWeekHighlighted = this._resolveDaysOfWeek(o.daysOfWeekHighlighted||[]);
 
 			o.datesDisabled = o.datesDisabled||[];
-			if (!$.isArray(o.datesDisabled)) {
+			if (!Array.isArray(o.datesDisabled)) {
 				o.datesDisabled = o.datesDisabled.split(',');
 			}
 			o.datesDisabled = $.map(o.datesDisabled, function(d){
@@ -14389,16 +14395,15 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 		clearDates: function(){
 			this.inputField.val('');
-			this.update();
 			this._trigger('changeDate');
-
+			this.update();
 			if (this.o.autoclose) {
 				this.hide();
 			}
 		},
 
 		setDates: function(){
-			var args = $.isArray(arguments[0]) ? arguments[0] : arguments;
+			var args = Array.isArray(arguments[0]) ? arguments[0] : arguments;
 			this.update.apply(this, args);
 			this._trigger('changeDate');
 			this.setValue();
@@ -14406,7 +14411,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 		},
 
 		setUTCDates: function(){
-			var args = $.isArray(arguments[0]) ? arguments[0] : arguments;
+			var args = Array.isArray(arguments[0]) ? arguments[0] : arguments;
 			this.setDates.apply(this, $.map(args, this._utc_to_local));
 			return this;
 		},
@@ -14858,7 +14863,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 				//Check if uniqueSort exists (supported by jquery >=1.12 and >=2.2)
 				//Fallback to unique function for older jquery versions
-				if ($.isFunction($.uniqueSort)) {
+				if (typeof $.uniqueSort === "function") {
 					clsName = $.uniqueSort(clsName);
 				} else {
 					clsName = $.unique(clsName);
@@ -15390,12 +15395,12 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 			if (new_date < this.dates[j]){
 				// Date being moved earlier/left
-				while (j >= 0 && new_date < this.dates[j]){
+				while (j >= 0 && new_date < this.dates[j] && (this.pickers[j].element.val() || "").length > 0) {
 					this.pickers[j--].setUTCDate(new_date);
 				}
 			} else if (new_date > this.dates[k]){
 				// Date being moved later/right
-				while (k < l && new_date > this.dates[k]){
+				while (k < l && new_date > this.dates[k] && (this.pickers[k].element.val() || "").length > 0) {
 					this.pickers[k++].setUTCDate(new_date);
 				}
 			}
@@ -15509,6 +15514,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 		endDate: Infinity,
 		forceParse: true,
 		format: 'mm/dd/yyyy',
+		isInline: null,
 		keepEmptyValues: false,
 		keyboardNavigation: true,
 		language: 'en',
@@ -15826,7 +15832,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 	/* DATEPICKER VERSION
 	 * =================== */
-	$.fn.datepicker.version = '1.9.0';
+	$.fn.datepicker.version = '1.10.0';
 
 	$.fn.datepicker.deprecated = function(msg){
 		var console = window.console;
@@ -20233,7 +20239,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /* provided dependency */ var jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/src/jquery.js");
 /*
- * bootstrap4-tagsinput v4.2.2
+ * bootstrap4-tagsinput v4.2.3
  * 
  */
 
@@ -20291,9 +20297,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
     this.objectItems = options && options.itemValue;
     this.placeholderText = element.hasAttribute('placeholder') ? this.$element.attr('placeholder') : '';
     this.inputSize = Math.max(1, this.placeholderText.length);
+    this.ariaLabelledBy = element.hasAttribute('aria-labelledBy') ? this.$element.attr('aria-labelledby') : '';
 
     this.$container = $('<div class="bootstrap-tagsinput"></div>');
-    this.$input = $('<input type="text" placeholder="' + this.placeholderText + '"/>').appendTo(this.$container);
+    this.$input = $('<input aria-labelledby="' + this.ariaLabelledBy + '" type="text" placeholder="' + this.placeholderText + '"/>').appendTo(this.$container);
 
     this.$element.before(this.$container);
 
@@ -20940,9 +20947,9 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
- * typeahead.js 1.3.1
+ * typeahead.js 1.3.3
  * https://github.com/corejavascript/typeahead.js
- * Copyright 2013-2020 Twitter, Inc. and other contributors; Licensed MIT
+ * Copyright 2013-2024 Twitter, Inc. and other contributors; Licensed MIT
  */
 
 
@@ -21097,7 +21104,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __WEBPACK_AM
             noop: function() {}
         };
     }();
-    var VERSION = "1.3.1";
+    var VERSION = "1.3.3";
     var tokenizers = function() {
         "use strict";
         return {
@@ -22381,6 +22388,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __WEBPACK_AM
             });
             this.$input.attr({
                 "aria-owns": id + "_listbox",
+                "aria-controls": id + "_listbox",
                 role: "combobox",
                 "aria-autocomplete": "list",
                 "aria-expanded": false
@@ -23574,2491 +23582,6 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __WEBPACK_AM
         }
     })();
 });
-
-/***/ }),
-
-/***/ "./node_modules/jquery/external/sizzle/dist/sizzle.js":
-/*!************************************************************!*\
-  !*** ./node_modules/jquery/external/sizzle/dist/sizzle.js ***!
-  \************************************************************/
-/***/ ((module, exports, __webpack_require__) => {
-
-var __WEBPACK_AMD_DEFINE_RESULT__;/*!
- * Sizzle CSS Selector Engine v2.3.6
- * https://sizzlejs.com/
- *
- * Copyright JS Foundation and other contributors
- * Released under the MIT license
- * https://js.foundation/
- *
- * Date: 2021-02-16
- */
-( function( window ) {
-var i,
-	support,
-	Expr,
-	getText,
-	isXML,
-	tokenize,
-	compile,
-	select,
-	outermostContext,
-	sortInput,
-	hasDuplicate,
-
-	// Local document vars
-	setDocument,
-	document,
-	docElem,
-	documentIsHTML,
-	rbuggyQSA,
-	rbuggyMatches,
-	matches,
-	contains,
-
-	// Instance-specific data
-	expando = "sizzle" + 1 * new Date(),
-	preferredDoc = window.document,
-	dirruns = 0,
-	done = 0,
-	classCache = createCache(),
-	tokenCache = createCache(),
-	compilerCache = createCache(),
-	nonnativeSelectorCache = createCache(),
-	sortOrder = function( a, b ) {
-		if ( a === b ) {
-			hasDuplicate = true;
-		}
-		return 0;
-	},
-
-	// Instance methods
-	hasOwn = ( {} ).hasOwnProperty,
-	arr = [],
-	pop = arr.pop,
-	pushNative = arr.push,
-	push = arr.push,
-	slice = arr.slice,
-
-	// Use a stripped-down indexOf as it's faster than native
-	// https://jsperf.com/thor-indexof-vs-for/5
-	indexOf = function( list, elem ) {
-		var i = 0,
-			len = list.length;
-		for ( ; i < len; i++ ) {
-			if ( list[ i ] === elem ) {
-				return i;
-			}
-		}
-		return -1;
-	},
-
-	booleans = "checked|selected|async|autofocus|autoplay|controls|defer|disabled|hidden|" +
-		"ismap|loop|multiple|open|readonly|required|scoped",
-
-	// Regular expressions
-
-	// http://www.w3.org/TR/css3-selectors/#whitespace
-	whitespace = "[\\x20\\t\\r\\n\\f]",
-
-	// https://www.w3.org/TR/css-syntax-3/#ident-token-diagram
-	identifier = "(?:\\\\[\\da-fA-F]{1,6}" + whitespace +
-		"?|\\\\[^\\r\\n\\f]|[\\w-]|[^\0-\\x7f])+",
-
-	// Attribute selectors: http://www.w3.org/TR/selectors/#attribute-selectors
-	attributes = "\\[" + whitespace + "*(" + identifier + ")(?:" + whitespace +
-
-		// Operator (capture 2)
-		"*([*^$|!~]?=)" + whitespace +
-
-		// "Attribute values must be CSS identifiers [capture 5]
-		// or strings [capture 3 or capture 4]"
-		"*(?:'((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\"|(" + identifier + "))|)" +
-		whitespace + "*\\]",
-
-	pseudos = ":(" + identifier + ")(?:\\((" +
-
-		// To reduce the number of selectors needing tokenize in the preFilter, prefer arguments:
-		// 1. quoted (capture 3; capture 4 or capture 5)
-		"('((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\")|" +
-
-		// 2. simple (capture 6)
-		"((?:\\\\.|[^\\\\()[\\]]|" + attributes + ")*)|" +
-
-		// 3. anything else (capture 2)
-		".*" +
-		")\\)|)",
-
-	// Leading and non-escaped trailing whitespace, capturing some non-whitespace characters preceding the latter
-	rwhitespace = new RegExp( whitespace + "+", "g" ),
-	rtrim = new RegExp( "^" + whitespace + "+|((?:^|[^\\\\])(?:\\\\.)*)" +
-		whitespace + "+$", "g" ),
-
-	rcomma = new RegExp( "^" + whitespace + "*," + whitespace + "*" ),
-	rcombinators = new RegExp( "^" + whitespace + "*([>+~]|" + whitespace + ")" + whitespace +
-		"*" ),
-	rdescend = new RegExp( whitespace + "|>" ),
-
-	rpseudo = new RegExp( pseudos ),
-	ridentifier = new RegExp( "^" + identifier + "$" ),
-
-	matchExpr = {
-		"ID": new RegExp( "^#(" + identifier + ")" ),
-		"CLASS": new RegExp( "^\\.(" + identifier + ")" ),
-		"TAG": new RegExp( "^(" + identifier + "|[*])" ),
-		"ATTR": new RegExp( "^" + attributes ),
-		"PSEUDO": new RegExp( "^" + pseudos ),
-		"CHILD": new RegExp( "^:(only|first|last|nth|nth-last)-(child|of-type)(?:\\(" +
-			whitespace + "*(even|odd|(([+-]|)(\\d*)n|)" + whitespace + "*(?:([+-]|)" +
-			whitespace + "*(\\d+)|))" + whitespace + "*\\)|)", "i" ),
-		"bool": new RegExp( "^(?:" + booleans + ")$", "i" ),
-
-		// For use in libraries implementing .is()
-		// We use this for POS matching in `select`
-		"needsContext": new RegExp( "^" + whitespace +
-			"*[>+~]|:(even|odd|eq|gt|lt|nth|first|last)(?:\\(" + whitespace +
-			"*((?:-\\d)?\\d*)" + whitespace + "*\\)|)(?=[^-]|$)", "i" )
-	},
-
-	rhtml = /HTML$/i,
-	rinputs = /^(?:input|select|textarea|button)$/i,
-	rheader = /^h\d$/i,
-
-	rnative = /^[^{]+\{\s*\[native \w/,
-
-	// Easily-parseable/retrievable ID or TAG or CLASS selectors
-	rquickExpr = /^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/,
-
-	rsibling = /[+~]/,
-
-	// CSS escapes
-	// http://www.w3.org/TR/CSS21/syndata.html#escaped-characters
-	runescape = new RegExp( "\\\\[\\da-fA-F]{1,6}" + whitespace + "?|\\\\([^\\r\\n\\f])", "g" ),
-	funescape = function( escape, nonHex ) {
-		var high = "0x" + escape.slice( 1 ) - 0x10000;
-
-		return nonHex ?
-
-			// Strip the backslash prefix from a non-hex escape sequence
-			nonHex :
-
-			// Replace a hexadecimal escape sequence with the encoded Unicode code point
-			// Support: IE <=11+
-			// For values outside the Basic Multilingual Plane (BMP), manually construct a
-			// surrogate pair
-			high < 0 ?
-				String.fromCharCode( high + 0x10000 ) :
-				String.fromCharCode( high >> 10 | 0xD800, high & 0x3FF | 0xDC00 );
-	},
-
-	// CSS string/identifier serialization
-	// https://drafts.csswg.org/cssom/#common-serializing-idioms
-	rcssescape = /([\0-\x1f\x7f]|^-?\d)|^-$|[^\0-\x1f\x7f-\uFFFF\w-]/g,
-	fcssescape = function( ch, asCodePoint ) {
-		if ( asCodePoint ) {
-
-			// U+0000 NULL becomes U+FFFD REPLACEMENT CHARACTER
-			if ( ch === "\0" ) {
-				return "\uFFFD";
-			}
-
-			// Control characters and (dependent upon position) numbers get escaped as code points
-			return ch.slice( 0, -1 ) + "\\" +
-				ch.charCodeAt( ch.length - 1 ).toString( 16 ) + " ";
-		}
-
-		// Other potentially-special ASCII characters get backslash-escaped
-		return "\\" + ch;
-	},
-
-	// Used for iframes
-	// See setDocument()
-	// Removing the function wrapper causes a "Permission Denied"
-	// error in IE
-	unloadHandler = function() {
-		setDocument();
-	},
-
-	inDisabledFieldset = addCombinator(
-		function( elem ) {
-			return elem.disabled === true && elem.nodeName.toLowerCase() === "fieldset";
-		},
-		{ dir: "parentNode", next: "legend" }
-	);
-
-// Optimize for push.apply( _, NodeList )
-try {
-	push.apply(
-		( arr = slice.call( preferredDoc.childNodes ) ),
-		preferredDoc.childNodes
-	);
-
-	// Support: Android<4.0
-	// Detect silently failing push.apply
-	// eslint-disable-next-line no-unused-expressions
-	arr[ preferredDoc.childNodes.length ].nodeType;
-} catch ( e ) {
-	push = { apply: arr.length ?
-
-		// Leverage slice if possible
-		function( target, els ) {
-			pushNative.apply( target, slice.call( els ) );
-		} :
-
-		// Support: IE<9
-		// Otherwise append directly
-		function( target, els ) {
-			var j = target.length,
-				i = 0;
-
-			// Can't trust NodeList.length
-			while ( ( target[ j++ ] = els[ i++ ] ) ) {}
-			target.length = j - 1;
-		}
-	};
-}
-
-function Sizzle( selector, context, results, seed ) {
-	var m, i, elem, nid, match, groups, newSelector,
-		newContext = context && context.ownerDocument,
-
-		// nodeType defaults to 9, since context defaults to document
-		nodeType = context ? context.nodeType : 9;
-
-	results = results || [];
-
-	// Return early from calls with invalid selector or context
-	if ( typeof selector !== "string" || !selector ||
-		nodeType !== 1 && nodeType !== 9 && nodeType !== 11 ) {
-
-		return results;
-	}
-
-	// Try to shortcut find operations (as opposed to filters) in HTML documents
-	if ( !seed ) {
-		setDocument( context );
-		context = context || document;
-
-		if ( documentIsHTML ) {
-
-			// If the selector is sufficiently simple, try using a "get*By*" DOM method
-			// (excepting DocumentFragment context, where the methods don't exist)
-			if ( nodeType !== 11 && ( match = rquickExpr.exec( selector ) ) ) {
-
-				// ID selector
-				if ( ( m = match[ 1 ] ) ) {
-
-					// Document context
-					if ( nodeType === 9 ) {
-						if ( ( elem = context.getElementById( m ) ) ) {
-
-							// Support: IE, Opera, Webkit
-							// TODO: identify versions
-							// getElementById can match elements by name instead of ID
-							if ( elem.id === m ) {
-								results.push( elem );
-								return results;
-							}
-						} else {
-							return results;
-						}
-
-					// Element context
-					} else {
-
-						// Support: IE, Opera, Webkit
-						// TODO: identify versions
-						// getElementById can match elements by name instead of ID
-						if ( newContext && ( elem = newContext.getElementById( m ) ) &&
-							contains( context, elem ) &&
-							elem.id === m ) {
-
-							results.push( elem );
-							return results;
-						}
-					}
-
-				// Type selector
-				} else if ( match[ 2 ] ) {
-					push.apply( results, context.getElementsByTagName( selector ) );
-					return results;
-
-				// Class selector
-				} else if ( ( m = match[ 3 ] ) && support.getElementsByClassName &&
-					context.getElementsByClassName ) {
-
-					push.apply( results, context.getElementsByClassName( m ) );
-					return results;
-				}
-			}
-
-			// Take advantage of querySelectorAll
-			if ( support.qsa &&
-				!nonnativeSelectorCache[ selector + " " ] &&
-				( !rbuggyQSA || !rbuggyQSA.test( selector ) ) &&
-
-				// Support: IE 8 only
-				// Exclude object elements
-				( nodeType !== 1 || context.nodeName.toLowerCase() !== "object" ) ) {
-
-				newSelector = selector;
-				newContext = context;
-
-				// qSA considers elements outside a scoping root when evaluating child or
-				// descendant combinators, which is not what we want.
-				// In such cases, we work around the behavior by prefixing every selector in the
-				// list with an ID selector referencing the scope context.
-				// The technique has to be used as well when a leading combinator is used
-				// as such selectors are not recognized by querySelectorAll.
-				// Thanks to Andrew Dupont for this technique.
-				if ( nodeType === 1 &&
-					( rdescend.test( selector ) || rcombinators.test( selector ) ) ) {
-
-					// Expand context for sibling selectors
-					newContext = rsibling.test( selector ) && testContext( context.parentNode ) ||
-						context;
-
-					// We can use :scope instead of the ID hack if the browser
-					// supports it & if we're not changing the context.
-					if ( newContext !== context || !support.scope ) {
-
-						// Capture the context ID, setting it first if necessary
-						if ( ( nid = context.getAttribute( "id" ) ) ) {
-							nid = nid.replace( rcssescape, fcssescape );
-						} else {
-							context.setAttribute( "id", ( nid = expando ) );
-						}
-					}
-
-					// Prefix every selector in the list
-					groups = tokenize( selector );
-					i = groups.length;
-					while ( i-- ) {
-						groups[ i ] = ( nid ? "#" + nid : ":scope" ) + " " +
-							toSelector( groups[ i ] );
-					}
-					newSelector = groups.join( "," );
-				}
-
-				try {
-					push.apply( results,
-						newContext.querySelectorAll( newSelector )
-					);
-					return results;
-				} catch ( qsaError ) {
-					nonnativeSelectorCache( selector, true );
-				} finally {
-					if ( nid === expando ) {
-						context.removeAttribute( "id" );
-					}
-				}
-			}
-		}
-	}
-
-	// All others
-	return select( selector.replace( rtrim, "$1" ), context, results, seed );
-}
-
-/**
- * Create key-value caches of limited size
- * @returns {function(string, object)} Returns the Object data after storing it on itself with
- *	property name the (space-suffixed) string and (if the cache is larger than Expr.cacheLength)
- *	deleting the oldest entry
- */
-function createCache() {
-	var keys = [];
-
-	function cache( key, value ) {
-
-		// Use (key + " ") to avoid collision with native prototype properties (see Issue #157)
-		if ( keys.push( key + " " ) > Expr.cacheLength ) {
-
-			// Only keep the most recent entries
-			delete cache[ keys.shift() ];
-		}
-		return ( cache[ key + " " ] = value );
-	}
-	return cache;
-}
-
-/**
- * Mark a function for special use by Sizzle
- * @param {Function} fn The function to mark
- */
-function markFunction( fn ) {
-	fn[ expando ] = true;
-	return fn;
-}
-
-/**
- * Support testing using an element
- * @param {Function} fn Passed the created element and returns a boolean result
- */
-function assert( fn ) {
-	var el = document.createElement( "fieldset" );
-
-	try {
-		return !!fn( el );
-	} catch ( e ) {
-		return false;
-	} finally {
-
-		// Remove from its parent by default
-		if ( el.parentNode ) {
-			el.parentNode.removeChild( el );
-		}
-
-		// release memory in IE
-		el = null;
-	}
-}
-
-/**
- * Adds the same handler for all of the specified attrs
- * @param {String} attrs Pipe-separated list of attributes
- * @param {Function} handler The method that will be applied
- */
-function addHandle( attrs, handler ) {
-	var arr = attrs.split( "|" ),
-		i = arr.length;
-
-	while ( i-- ) {
-		Expr.attrHandle[ arr[ i ] ] = handler;
-	}
-}
-
-/**
- * Checks document order of two siblings
- * @param {Element} a
- * @param {Element} b
- * @returns {Number} Returns less than 0 if a precedes b, greater than 0 if a follows b
- */
-function siblingCheck( a, b ) {
-	var cur = b && a,
-		diff = cur && a.nodeType === 1 && b.nodeType === 1 &&
-			a.sourceIndex - b.sourceIndex;
-
-	// Use IE sourceIndex if available on both nodes
-	if ( diff ) {
-		return diff;
-	}
-
-	// Check if b follows a
-	if ( cur ) {
-		while ( ( cur = cur.nextSibling ) ) {
-			if ( cur === b ) {
-				return -1;
-			}
-		}
-	}
-
-	return a ? 1 : -1;
-}
-
-/**
- * Returns a function to use in pseudos for input types
- * @param {String} type
- */
-function createInputPseudo( type ) {
-	return function( elem ) {
-		var name = elem.nodeName.toLowerCase();
-		return name === "input" && elem.type === type;
-	};
-}
-
-/**
- * Returns a function to use in pseudos for buttons
- * @param {String} type
- */
-function createButtonPseudo( type ) {
-	return function( elem ) {
-		var name = elem.nodeName.toLowerCase();
-		return ( name === "input" || name === "button" ) && elem.type === type;
-	};
-}
-
-/**
- * Returns a function to use in pseudos for :enabled/:disabled
- * @param {Boolean} disabled true for :disabled; false for :enabled
- */
-function createDisabledPseudo( disabled ) {
-
-	// Known :disabled false positives: fieldset[disabled] > legend:nth-of-type(n+2) :can-disable
-	return function( elem ) {
-
-		// Only certain elements can match :enabled or :disabled
-		// https://html.spec.whatwg.org/multipage/scripting.html#selector-enabled
-		// https://html.spec.whatwg.org/multipage/scripting.html#selector-disabled
-		if ( "form" in elem ) {
-
-			// Check for inherited disabledness on relevant non-disabled elements:
-			// * listed form-associated elements in a disabled fieldset
-			//   https://html.spec.whatwg.org/multipage/forms.html#category-listed
-			//   https://html.spec.whatwg.org/multipage/forms.html#concept-fe-disabled
-			// * option elements in a disabled optgroup
-			//   https://html.spec.whatwg.org/multipage/forms.html#concept-option-disabled
-			// All such elements have a "form" property.
-			if ( elem.parentNode && elem.disabled === false ) {
-
-				// Option elements defer to a parent optgroup if present
-				if ( "label" in elem ) {
-					if ( "label" in elem.parentNode ) {
-						return elem.parentNode.disabled === disabled;
-					} else {
-						return elem.disabled === disabled;
-					}
-				}
-
-				// Support: IE 6 - 11
-				// Use the isDisabled shortcut property to check for disabled fieldset ancestors
-				return elem.isDisabled === disabled ||
-
-					// Where there is no isDisabled, check manually
-					/* jshint -W018 */
-					elem.isDisabled !== !disabled &&
-					inDisabledFieldset( elem ) === disabled;
-			}
-
-			return elem.disabled === disabled;
-
-		// Try to winnow out elements that can't be disabled before trusting the disabled property.
-		// Some victims get caught in our net (label, legend, menu, track), but it shouldn't
-		// even exist on them, let alone have a boolean value.
-		} else if ( "label" in elem ) {
-			return elem.disabled === disabled;
-		}
-
-		// Remaining elements are neither :enabled nor :disabled
-		return false;
-	};
-}
-
-/**
- * Returns a function to use in pseudos for positionals
- * @param {Function} fn
- */
-function createPositionalPseudo( fn ) {
-	return markFunction( function( argument ) {
-		argument = +argument;
-		return markFunction( function( seed, matches ) {
-			var j,
-				matchIndexes = fn( [], seed.length, argument ),
-				i = matchIndexes.length;
-
-			// Match elements found at the specified indexes
-			while ( i-- ) {
-				if ( seed[ ( j = matchIndexes[ i ] ) ] ) {
-					seed[ j ] = !( matches[ j ] = seed[ j ] );
-				}
-			}
-		} );
-	} );
-}
-
-/**
- * Checks a node for validity as a Sizzle context
- * @param {Element|Object=} context
- * @returns {Element|Object|Boolean} The input node if acceptable, otherwise a falsy value
- */
-function testContext( context ) {
-	return context && typeof context.getElementsByTagName !== "undefined" && context;
-}
-
-// Expose support vars for convenience
-support = Sizzle.support = {};
-
-/**
- * Detects XML nodes
- * @param {Element|Object} elem An element or a document
- * @returns {Boolean} True iff elem is a non-HTML XML node
- */
-isXML = Sizzle.isXML = function( elem ) {
-	var namespace = elem && elem.namespaceURI,
-		docElem = elem && ( elem.ownerDocument || elem ).documentElement;
-
-	// Support: IE <=8
-	// Assume HTML when documentElement doesn't yet exist, such as inside loading iframes
-	// https://bugs.jquery.com/ticket/4833
-	return !rhtml.test( namespace || docElem && docElem.nodeName || "HTML" );
-};
-
-/**
- * Sets document-related variables once based on the current document
- * @param {Element|Object} [doc] An element or document object to use to set the document
- * @returns {Object} Returns the current document
- */
-setDocument = Sizzle.setDocument = function( node ) {
-	var hasCompare, subWindow,
-		doc = node ? node.ownerDocument || node : preferredDoc;
-
-	// Return early if doc is invalid or already selected
-	// Support: IE 11+, Edge 17 - 18+
-	// IE/Edge sometimes throw a "Permission denied" error when strict-comparing
-	// two documents; shallow comparisons work.
-	// eslint-disable-next-line eqeqeq
-	if ( doc == document || doc.nodeType !== 9 || !doc.documentElement ) {
-		return document;
-	}
-
-	// Update global variables
-	document = doc;
-	docElem = document.documentElement;
-	documentIsHTML = !isXML( document );
-
-	// Support: IE 9 - 11+, Edge 12 - 18+
-	// Accessing iframe documents after unload throws "permission denied" errors (jQuery #13936)
-	// Support: IE 11+, Edge 17 - 18+
-	// IE/Edge sometimes throw a "Permission denied" error when strict-comparing
-	// two documents; shallow comparisons work.
-	// eslint-disable-next-line eqeqeq
-	if ( preferredDoc != document &&
-		( subWindow = document.defaultView ) && subWindow.top !== subWindow ) {
-
-		// Support: IE 11, Edge
-		if ( subWindow.addEventListener ) {
-			subWindow.addEventListener( "unload", unloadHandler, false );
-
-		// Support: IE 9 - 10 only
-		} else if ( subWindow.attachEvent ) {
-			subWindow.attachEvent( "onunload", unloadHandler );
-		}
-	}
-
-	// Support: IE 8 - 11+, Edge 12 - 18+, Chrome <=16 - 25 only, Firefox <=3.6 - 31 only,
-	// Safari 4 - 5 only, Opera <=11.6 - 12.x only
-	// IE/Edge & older browsers don't support the :scope pseudo-class.
-	// Support: Safari 6.0 only
-	// Safari 6.0 supports :scope but it's an alias of :root there.
-	support.scope = assert( function( el ) {
-		docElem.appendChild( el ).appendChild( document.createElement( "div" ) );
-		return typeof el.querySelectorAll !== "undefined" &&
-			!el.querySelectorAll( ":scope fieldset div" ).length;
-	} );
-
-	/* Attributes
-	---------------------------------------------------------------------- */
-
-	// Support: IE<8
-	// Verify that getAttribute really returns attributes and not properties
-	// (excepting IE8 booleans)
-	support.attributes = assert( function( el ) {
-		el.className = "i";
-		return !el.getAttribute( "className" );
-	} );
-
-	/* getElement(s)By*
-	---------------------------------------------------------------------- */
-
-	// Check if getElementsByTagName("*") returns only elements
-	support.getElementsByTagName = assert( function( el ) {
-		el.appendChild( document.createComment( "" ) );
-		return !el.getElementsByTagName( "*" ).length;
-	} );
-
-	// Support: IE<9
-	support.getElementsByClassName = rnative.test( document.getElementsByClassName );
-
-	// Support: IE<10
-	// Check if getElementById returns elements by name
-	// The broken getElementById methods don't pick up programmatically-set names,
-	// so use a roundabout getElementsByName test
-	support.getById = assert( function( el ) {
-		docElem.appendChild( el ).id = expando;
-		return !document.getElementsByName || !document.getElementsByName( expando ).length;
-	} );
-
-	// ID filter and find
-	if ( support.getById ) {
-		Expr.filter[ "ID" ] = function( id ) {
-			var attrId = id.replace( runescape, funescape );
-			return function( elem ) {
-				return elem.getAttribute( "id" ) === attrId;
-			};
-		};
-		Expr.find[ "ID" ] = function( id, context ) {
-			if ( typeof context.getElementById !== "undefined" && documentIsHTML ) {
-				var elem = context.getElementById( id );
-				return elem ? [ elem ] : [];
-			}
-		};
-	} else {
-		Expr.filter[ "ID" ] =  function( id ) {
-			var attrId = id.replace( runescape, funescape );
-			return function( elem ) {
-				var node = typeof elem.getAttributeNode !== "undefined" &&
-					elem.getAttributeNode( "id" );
-				return node && node.value === attrId;
-			};
-		};
-
-		// Support: IE 6 - 7 only
-		// getElementById is not reliable as a find shortcut
-		Expr.find[ "ID" ] = function( id, context ) {
-			if ( typeof context.getElementById !== "undefined" && documentIsHTML ) {
-				var node, i, elems,
-					elem = context.getElementById( id );
-
-				if ( elem ) {
-
-					// Verify the id attribute
-					node = elem.getAttributeNode( "id" );
-					if ( node && node.value === id ) {
-						return [ elem ];
-					}
-
-					// Fall back on getElementsByName
-					elems = context.getElementsByName( id );
-					i = 0;
-					while ( ( elem = elems[ i++ ] ) ) {
-						node = elem.getAttributeNode( "id" );
-						if ( node && node.value === id ) {
-							return [ elem ];
-						}
-					}
-				}
-
-				return [];
-			}
-		};
-	}
-
-	// Tag
-	Expr.find[ "TAG" ] = support.getElementsByTagName ?
-		function( tag, context ) {
-			if ( typeof context.getElementsByTagName !== "undefined" ) {
-				return context.getElementsByTagName( tag );
-
-			// DocumentFragment nodes don't have gEBTN
-			} else if ( support.qsa ) {
-				return context.querySelectorAll( tag );
-			}
-		} :
-
-		function( tag, context ) {
-			var elem,
-				tmp = [],
-				i = 0,
-
-				// By happy coincidence, a (broken) gEBTN appears on DocumentFragment nodes too
-				results = context.getElementsByTagName( tag );
-
-			// Filter out possible comments
-			if ( tag === "*" ) {
-				while ( ( elem = results[ i++ ] ) ) {
-					if ( elem.nodeType === 1 ) {
-						tmp.push( elem );
-					}
-				}
-
-				return tmp;
-			}
-			return results;
-		};
-
-	// Class
-	Expr.find[ "CLASS" ] = support.getElementsByClassName && function( className, context ) {
-		if ( typeof context.getElementsByClassName !== "undefined" && documentIsHTML ) {
-			return context.getElementsByClassName( className );
-		}
-	};
-
-	/* QSA/matchesSelector
-	---------------------------------------------------------------------- */
-
-	// QSA and matchesSelector support
-
-	// matchesSelector(:active) reports false when true (IE9/Opera 11.5)
-	rbuggyMatches = [];
-
-	// qSa(:focus) reports false when true (Chrome 21)
-	// We allow this because of a bug in IE8/9 that throws an error
-	// whenever `document.activeElement` is accessed on an iframe
-	// So, we allow :focus to pass through QSA all the time to avoid the IE error
-	// See https://bugs.jquery.com/ticket/13378
-	rbuggyQSA = [];
-
-	if ( ( support.qsa = rnative.test( document.querySelectorAll ) ) ) {
-
-		// Build QSA regex
-		// Regex strategy adopted from Diego Perini
-		assert( function( el ) {
-
-			var input;
-
-			// Select is set to empty string on purpose
-			// This is to test IE's treatment of not explicitly
-			// setting a boolean content attribute,
-			// since its presence should be enough
-			// https://bugs.jquery.com/ticket/12359
-			docElem.appendChild( el ).innerHTML = "<a id='" + expando + "'></a>" +
-				"<select id='" + expando + "-\r\\' msallowcapture=''>" +
-				"<option selected=''></option></select>";
-
-			// Support: IE8, Opera 11-12.16
-			// Nothing should be selected when empty strings follow ^= or $= or *=
-			// The test attribute must be unknown in Opera but "safe" for WinRT
-			// https://msdn.microsoft.com/en-us/library/ie/hh465388.aspx#attribute_section
-			if ( el.querySelectorAll( "[msallowcapture^='']" ).length ) {
-				rbuggyQSA.push( "[*^$]=" + whitespace + "*(?:''|\"\")" );
-			}
-
-			// Support: IE8
-			// Boolean attributes and "value" are not treated correctly
-			if ( !el.querySelectorAll( "[selected]" ).length ) {
-				rbuggyQSA.push( "\\[" + whitespace + "*(?:value|" + booleans + ")" );
-			}
-
-			// Support: Chrome<29, Android<4.4, Safari<7.0+, iOS<7.0+, PhantomJS<1.9.8+
-			if ( !el.querySelectorAll( "[id~=" + expando + "-]" ).length ) {
-				rbuggyQSA.push( "~=" );
-			}
-
-			// Support: IE 11+, Edge 15 - 18+
-			// IE 11/Edge don't find elements on a `[name='']` query in some cases.
-			// Adding a temporary attribute to the document before the selection works
-			// around the issue.
-			// Interestingly, IE 10 & older don't seem to have the issue.
-			input = document.createElement( "input" );
-			input.setAttribute( "name", "" );
-			el.appendChild( input );
-			if ( !el.querySelectorAll( "[name='']" ).length ) {
-				rbuggyQSA.push( "\\[" + whitespace + "*name" + whitespace + "*=" +
-					whitespace + "*(?:''|\"\")" );
-			}
-
-			// Webkit/Opera - :checked should return selected option elements
-			// http://www.w3.org/TR/2011/REC-css3-selectors-20110929/#checked
-			// IE8 throws error here and will not see later tests
-			if ( !el.querySelectorAll( ":checked" ).length ) {
-				rbuggyQSA.push( ":checked" );
-			}
-
-			// Support: Safari 8+, iOS 8+
-			// https://bugs.webkit.org/show_bug.cgi?id=136851
-			// In-page `selector#id sibling-combinator selector` fails
-			if ( !el.querySelectorAll( "a#" + expando + "+*" ).length ) {
-				rbuggyQSA.push( ".#.+[+~]" );
-			}
-
-			// Support: Firefox <=3.6 - 5 only
-			// Old Firefox doesn't throw on a badly-escaped identifier.
-			el.querySelectorAll( "\\\f" );
-			rbuggyQSA.push( "[\\r\\n\\f]" );
-		} );
-
-		assert( function( el ) {
-			el.innerHTML = "<a href='' disabled='disabled'></a>" +
-				"<select disabled='disabled'><option/></select>";
-
-			// Support: Windows 8 Native Apps
-			// The type and name attributes are restricted during .innerHTML assignment
-			var input = document.createElement( "input" );
-			input.setAttribute( "type", "hidden" );
-			el.appendChild( input ).setAttribute( "name", "D" );
-
-			// Support: IE8
-			// Enforce case-sensitivity of name attribute
-			if ( el.querySelectorAll( "[name=d]" ).length ) {
-				rbuggyQSA.push( "name" + whitespace + "*[*^$|!~]?=" );
-			}
-
-			// FF 3.5 - :enabled/:disabled and hidden elements (hidden elements are still enabled)
-			// IE8 throws error here and will not see later tests
-			if ( el.querySelectorAll( ":enabled" ).length !== 2 ) {
-				rbuggyQSA.push( ":enabled", ":disabled" );
-			}
-
-			// Support: IE9-11+
-			// IE's :disabled selector does not pick up the children of disabled fieldsets
-			docElem.appendChild( el ).disabled = true;
-			if ( el.querySelectorAll( ":disabled" ).length !== 2 ) {
-				rbuggyQSA.push( ":enabled", ":disabled" );
-			}
-
-			// Support: Opera 10 - 11 only
-			// Opera 10-11 does not throw on post-comma invalid pseudos
-			el.querySelectorAll( "*,:x" );
-			rbuggyQSA.push( ",.*:" );
-		} );
-	}
-
-	if ( ( support.matchesSelector = rnative.test( ( matches = docElem.matches ||
-		docElem.webkitMatchesSelector ||
-		docElem.mozMatchesSelector ||
-		docElem.oMatchesSelector ||
-		docElem.msMatchesSelector ) ) ) ) {
-
-		assert( function( el ) {
-
-			// Check to see if it's possible to do matchesSelector
-			// on a disconnected node (IE 9)
-			support.disconnectedMatch = matches.call( el, "*" );
-
-			// This should fail with an exception
-			// Gecko does not error, returns false instead
-			matches.call( el, "[s!='']:x" );
-			rbuggyMatches.push( "!=", pseudos );
-		} );
-	}
-
-	rbuggyQSA = rbuggyQSA.length && new RegExp( rbuggyQSA.join( "|" ) );
-	rbuggyMatches = rbuggyMatches.length && new RegExp( rbuggyMatches.join( "|" ) );
-
-	/* Contains
-	---------------------------------------------------------------------- */
-	hasCompare = rnative.test( docElem.compareDocumentPosition );
-
-	// Element contains another
-	// Purposefully self-exclusive
-	// As in, an element does not contain itself
-	contains = hasCompare || rnative.test( docElem.contains ) ?
-		function( a, b ) {
-			var adown = a.nodeType === 9 ? a.documentElement : a,
-				bup = b && b.parentNode;
-			return a === bup || !!( bup && bup.nodeType === 1 && (
-				adown.contains ?
-					adown.contains( bup ) :
-					a.compareDocumentPosition && a.compareDocumentPosition( bup ) & 16
-			) );
-		} :
-		function( a, b ) {
-			if ( b ) {
-				while ( ( b = b.parentNode ) ) {
-					if ( b === a ) {
-						return true;
-					}
-				}
-			}
-			return false;
-		};
-
-	/* Sorting
-	---------------------------------------------------------------------- */
-
-	// Document order sorting
-	sortOrder = hasCompare ?
-	function( a, b ) {
-
-		// Flag for duplicate removal
-		if ( a === b ) {
-			hasDuplicate = true;
-			return 0;
-		}
-
-		// Sort on method existence if only one input has compareDocumentPosition
-		var compare = !a.compareDocumentPosition - !b.compareDocumentPosition;
-		if ( compare ) {
-			return compare;
-		}
-
-		// Calculate position if both inputs belong to the same document
-		// Support: IE 11+, Edge 17 - 18+
-		// IE/Edge sometimes throw a "Permission denied" error when strict-comparing
-		// two documents; shallow comparisons work.
-		// eslint-disable-next-line eqeqeq
-		compare = ( a.ownerDocument || a ) == ( b.ownerDocument || b ) ?
-			a.compareDocumentPosition( b ) :
-
-			// Otherwise we know they are disconnected
-			1;
-
-		// Disconnected nodes
-		if ( compare & 1 ||
-			( !support.sortDetached && b.compareDocumentPosition( a ) === compare ) ) {
-
-			// Choose the first element that is related to our preferred document
-			// Support: IE 11+, Edge 17 - 18+
-			// IE/Edge sometimes throw a "Permission denied" error when strict-comparing
-			// two documents; shallow comparisons work.
-			// eslint-disable-next-line eqeqeq
-			if ( a == document || a.ownerDocument == preferredDoc &&
-				contains( preferredDoc, a ) ) {
-				return -1;
-			}
-
-			// Support: IE 11+, Edge 17 - 18+
-			// IE/Edge sometimes throw a "Permission denied" error when strict-comparing
-			// two documents; shallow comparisons work.
-			// eslint-disable-next-line eqeqeq
-			if ( b == document || b.ownerDocument == preferredDoc &&
-				contains( preferredDoc, b ) ) {
-				return 1;
-			}
-
-			// Maintain original order
-			return sortInput ?
-				( indexOf( sortInput, a ) - indexOf( sortInput, b ) ) :
-				0;
-		}
-
-		return compare & 4 ? -1 : 1;
-	} :
-	function( a, b ) {
-
-		// Exit early if the nodes are identical
-		if ( a === b ) {
-			hasDuplicate = true;
-			return 0;
-		}
-
-		var cur,
-			i = 0,
-			aup = a.parentNode,
-			bup = b.parentNode,
-			ap = [ a ],
-			bp = [ b ];
-
-		// Parentless nodes are either documents or disconnected
-		if ( !aup || !bup ) {
-
-			// Support: IE 11+, Edge 17 - 18+
-			// IE/Edge sometimes throw a "Permission denied" error when strict-comparing
-			// two documents; shallow comparisons work.
-			/* eslint-disable eqeqeq */
-			return a == document ? -1 :
-				b == document ? 1 :
-				/* eslint-enable eqeqeq */
-				aup ? -1 :
-				bup ? 1 :
-				sortInput ?
-				( indexOf( sortInput, a ) - indexOf( sortInput, b ) ) :
-				0;
-
-		// If the nodes are siblings, we can do a quick check
-		} else if ( aup === bup ) {
-			return siblingCheck( a, b );
-		}
-
-		// Otherwise we need full lists of their ancestors for comparison
-		cur = a;
-		while ( ( cur = cur.parentNode ) ) {
-			ap.unshift( cur );
-		}
-		cur = b;
-		while ( ( cur = cur.parentNode ) ) {
-			bp.unshift( cur );
-		}
-
-		// Walk down the tree looking for a discrepancy
-		while ( ap[ i ] === bp[ i ] ) {
-			i++;
-		}
-
-		return i ?
-
-			// Do a sibling check if the nodes have a common ancestor
-			siblingCheck( ap[ i ], bp[ i ] ) :
-
-			// Otherwise nodes in our document sort first
-			// Support: IE 11+, Edge 17 - 18+
-			// IE/Edge sometimes throw a "Permission denied" error when strict-comparing
-			// two documents; shallow comparisons work.
-			/* eslint-disable eqeqeq */
-			ap[ i ] == preferredDoc ? -1 :
-			bp[ i ] == preferredDoc ? 1 :
-			/* eslint-enable eqeqeq */
-			0;
-	};
-
-	return document;
-};
-
-Sizzle.matches = function( expr, elements ) {
-	return Sizzle( expr, null, null, elements );
-};
-
-Sizzle.matchesSelector = function( elem, expr ) {
-	setDocument( elem );
-
-	if ( support.matchesSelector && documentIsHTML &&
-		!nonnativeSelectorCache[ expr + " " ] &&
-		( !rbuggyMatches || !rbuggyMatches.test( expr ) ) &&
-		( !rbuggyQSA     || !rbuggyQSA.test( expr ) ) ) {
-
-		try {
-			var ret = matches.call( elem, expr );
-
-			// IE 9's matchesSelector returns false on disconnected nodes
-			if ( ret || support.disconnectedMatch ||
-
-				// As well, disconnected nodes are said to be in a document
-				// fragment in IE 9
-				elem.document && elem.document.nodeType !== 11 ) {
-				return ret;
-			}
-		} catch ( e ) {
-			nonnativeSelectorCache( expr, true );
-		}
-	}
-
-	return Sizzle( expr, document, null, [ elem ] ).length > 0;
-};
-
-Sizzle.contains = function( context, elem ) {
-
-	// Set document vars if needed
-	// Support: IE 11+, Edge 17 - 18+
-	// IE/Edge sometimes throw a "Permission denied" error when strict-comparing
-	// two documents; shallow comparisons work.
-	// eslint-disable-next-line eqeqeq
-	if ( ( context.ownerDocument || context ) != document ) {
-		setDocument( context );
-	}
-	return contains( context, elem );
-};
-
-Sizzle.attr = function( elem, name ) {
-
-	// Set document vars if needed
-	// Support: IE 11+, Edge 17 - 18+
-	// IE/Edge sometimes throw a "Permission denied" error when strict-comparing
-	// two documents; shallow comparisons work.
-	// eslint-disable-next-line eqeqeq
-	if ( ( elem.ownerDocument || elem ) != document ) {
-		setDocument( elem );
-	}
-
-	var fn = Expr.attrHandle[ name.toLowerCase() ],
-
-		// Don't get fooled by Object.prototype properties (jQuery #13807)
-		val = fn && hasOwn.call( Expr.attrHandle, name.toLowerCase() ) ?
-			fn( elem, name, !documentIsHTML ) :
-			undefined;
-
-	return val !== undefined ?
-		val :
-		support.attributes || !documentIsHTML ?
-			elem.getAttribute( name ) :
-			( val = elem.getAttributeNode( name ) ) && val.specified ?
-				val.value :
-				null;
-};
-
-Sizzle.escape = function( sel ) {
-	return ( sel + "" ).replace( rcssescape, fcssescape );
-};
-
-Sizzle.error = function( msg ) {
-	throw new Error( "Syntax error, unrecognized expression: " + msg );
-};
-
-/**
- * Document sorting and removing duplicates
- * @param {ArrayLike} results
- */
-Sizzle.uniqueSort = function( results ) {
-	var elem,
-		duplicates = [],
-		j = 0,
-		i = 0;
-
-	// Unless we *know* we can detect duplicates, assume their presence
-	hasDuplicate = !support.detectDuplicates;
-	sortInput = !support.sortStable && results.slice( 0 );
-	results.sort( sortOrder );
-
-	if ( hasDuplicate ) {
-		while ( ( elem = results[ i++ ] ) ) {
-			if ( elem === results[ i ] ) {
-				j = duplicates.push( i );
-			}
-		}
-		while ( j-- ) {
-			results.splice( duplicates[ j ], 1 );
-		}
-	}
-
-	// Clear input after sorting to release objects
-	// See https://github.com/jquery/sizzle/pull/225
-	sortInput = null;
-
-	return results;
-};
-
-/**
- * Utility function for retrieving the text value of an array of DOM nodes
- * @param {Array|Element} elem
- */
-getText = Sizzle.getText = function( elem ) {
-	var node,
-		ret = "",
-		i = 0,
-		nodeType = elem.nodeType;
-
-	if ( !nodeType ) {
-
-		// If no nodeType, this is expected to be an array
-		while ( ( node = elem[ i++ ] ) ) {
-
-			// Do not traverse comment nodes
-			ret += getText( node );
-		}
-	} else if ( nodeType === 1 || nodeType === 9 || nodeType === 11 ) {
-
-		// Use textContent for elements
-		// innerText usage removed for consistency of new lines (jQuery #11153)
-		if ( typeof elem.textContent === "string" ) {
-			return elem.textContent;
-		} else {
-
-			// Traverse its children
-			for ( elem = elem.firstChild; elem; elem = elem.nextSibling ) {
-				ret += getText( elem );
-			}
-		}
-	} else if ( nodeType === 3 || nodeType === 4 ) {
-		return elem.nodeValue;
-	}
-
-	// Do not include comment or processing instruction nodes
-
-	return ret;
-};
-
-Expr = Sizzle.selectors = {
-
-	// Can be adjusted by the user
-	cacheLength: 50,
-
-	createPseudo: markFunction,
-
-	match: matchExpr,
-
-	attrHandle: {},
-
-	find: {},
-
-	relative: {
-		">": { dir: "parentNode", first: true },
-		" ": { dir: "parentNode" },
-		"+": { dir: "previousSibling", first: true },
-		"~": { dir: "previousSibling" }
-	},
-
-	preFilter: {
-		"ATTR": function( match ) {
-			match[ 1 ] = match[ 1 ].replace( runescape, funescape );
-
-			// Move the given value to match[3] whether quoted or unquoted
-			match[ 3 ] = ( match[ 3 ] || match[ 4 ] ||
-				match[ 5 ] || "" ).replace( runescape, funescape );
-
-			if ( match[ 2 ] === "~=" ) {
-				match[ 3 ] = " " + match[ 3 ] + " ";
-			}
-
-			return match.slice( 0, 4 );
-		},
-
-		"CHILD": function( match ) {
-
-			/* matches from matchExpr["CHILD"]
-				1 type (only|nth|...)
-				2 what (child|of-type)
-				3 argument (even|odd|\d*|\d*n([+-]\d+)?|...)
-				4 xn-component of xn+y argument ([+-]?\d*n|)
-				5 sign of xn-component
-				6 x of xn-component
-				7 sign of y-component
-				8 y of y-component
-			*/
-			match[ 1 ] = match[ 1 ].toLowerCase();
-
-			if ( match[ 1 ].slice( 0, 3 ) === "nth" ) {
-
-				// nth-* requires argument
-				if ( !match[ 3 ] ) {
-					Sizzle.error( match[ 0 ] );
-				}
-
-				// numeric x and y parameters for Expr.filter.CHILD
-				// remember that false/true cast respectively to 0/1
-				match[ 4 ] = +( match[ 4 ] ?
-					match[ 5 ] + ( match[ 6 ] || 1 ) :
-					2 * ( match[ 3 ] === "even" || match[ 3 ] === "odd" ) );
-				match[ 5 ] = +( ( match[ 7 ] + match[ 8 ] ) || match[ 3 ] === "odd" );
-
-				// other types prohibit arguments
-			} else if ( match[ 3 ] ) {
-				Sizzle.error( match[ 0 ] );
-			}
-
-			return match;
-		},
-
-		"PSEUDO": function( match ) {
-			var excess,
-				unquoted = !match[ 6 ] && match[ 2 ];
-
-			if ( matchExpr[ "CHILD" ].test( match[ 0 ] ) ) {
-				return null;
-			}
-
-			// Accept quoted arguments as-is
-			if ( match[ 3 ] ) {
-				match[ 2 ] = match[ 4 ] || match[ 5 ] || "";
-
-			// Strip excess characters from unquoted arguments
-			} else if ( unquoted && rpseudo.test( unquoted ) &&
-
-				// Get excess from tokenize (recursively)
-				( excess = tokenize( unquoted, true ) ) &&
-
-				// advance to the next closing parenthesis
-				( excess = unquoted.indexOf( ")", unquoted.length - excess ) - unquoted.length ) ) {
-
-				// excess is a negative index
-				match[ 0 ] = match[ 0 ].slice( 0, excess );
-				match[ 2 ] = unquoted.slice( 0, excess );
-			}
-
-			// Return only captures needed by the pseudo filter method (type and argument)
-			return match.slice( 0, 3 );
-		}
-	},
-
-	filter: {
-
-		"TAG": function( nodeNameSelector ) {
-			var nodeName = nodeNameSelector.replace( runescape, funescape ).toLowerCase();
-			return nodeNameSelector === "*" ?
-				function() {
-					return true;
-				} :
-				function( elem ) {
-					return elem.nodeName && elem.nodeName.toLowerCase() === nodeName;
-				};
-		},
-
-		"CLASS": function( className ) {
-			var pattern = classCache[ className + " " ];
-
-			return pattern ||
-				( pattern = new RegExp( "(^|" + whitespace +
-					")" + className + "(" + whitespace + "|$)" ) ) && classCache(
-						className, function( elem ) {
-							return pattern.test(
-								typeof elem.className === "string" && elem.className ||
-								typeof elem.getAttribute !== "undefined" &&
-									elem.getAttribute( "class" ) ||
-								""
-							);
-				} );
-		},
-
-		"ATTR": function( name, operator, check ) {
-			return function( elem ) {
-				var result = Sizzle.attr( elem, name );
-
-				if ( result == null ) {
-					return operator === "!=";
-				}
-				if ( !operator ) {
-					return true;
-				}
-
-				result += "";
-
-				/* eslint-disable max-len */
-
-				return operator === "=" ? result === check :
-					operator === "!=" ? result !== check :
-					operator === "^=" ? check && result.indexOf( check ) === 0 :
-					operator === "*=" ? check && result.indexOf( check ) > -1 :
-					operator === "$=" ? check && result.slice( -check.length ) === check :
-					operator === "~=" ? ( " " + result.replace( rwhitespace, " " ) + " " ).indexOf( check ) > -1 :
-					operator === "|=" ? result === check || result.slice( 0, check.length + 1 ) === check + "-" :
-					false;
-				/* eslint-enable max-len */
-
-			};
-		},
-
-		"CHILD": function( type, what, _argument, first, last ) {
-			var simple = type.slice( 0, 3 ) !== "nth",
-				forward = type.slice( -4 ) !== "last",
-				ofType = what === "of-type";
-
-			return first === 1 && last === 0 ?
-
-				// Shortcut for :nth-*(n)
-				function( elem ) {
-					return !!elem.parentNode;
-				} :
-
-				function( elem, _context, xml ) {
-					var cache, uniqueCache, outerCache, node, nodeIndex, start,
-						dir = simple !== forward ? "nextSibling" : "previousSibling",
-						parent = elem.parentNode,
-						name = ofType && elem.nodeName.toLowerCase(),
-						useCache = !xml && !ofType,
-						diff = false;
-
-					if ( parent ) {
-
-						// :(first|last|only)-(child|of-type)
-						if ( simple ) {
-							while ( dir ) {
-								node = elem;
-								while ( ( node = node[ dir ] ) ) {
-									if ( ofType ?
-										node.nodeName.toLowerCase() === name :
-										node.nodeType === 1 ) {
-
-										return false;
-									}
-								}
-
-								// Reverse direction for :only-* (if we haven't yet done so)
-								start = dir = type === "only" && !start && "nextSibling";
-							}
-							return true;
-						}
-
-						start = [ forward ? parent.firstChild : parent.lastChild ];
-
-						// non-xml :nth-child(...) stores cache data on `parent`
-						if ( forward && useCache ) {
-
-							// Seek `elem` from a previously-cached index
-
-							// ...in a gzip-friendly way
-							node = parent;
-							outerCache = node[ expando ] || ( node[ expando ] = {} );
-
-							// Support: IE <9 only
-							// Defend against cloned attroperties (jQuery gh-1709)
-							uniqueCache = outerCache[ node.uniqueID ] ||
-								( outerCache[ node.uniqueID ] = {} );
-
-							cache = uniqueCache[ type ] || [];
-							nodeIndex = cache[ 0 ] === dirruns && cache[ 1 ];
-							diff = nodeIndex && cache[ 2 ];
-							node = nodeIndex && parent.childNodes[ nodeIndex ];
-
-							while ( ( node = ++nodeIndex && node && node[ dir ] ||
-
-								// Fallback to seeking `elem` from the start
-								( diff = nodeIndex = 0 ) || start.pop() ) ) {
-
-								// When found, cache indexes on `parent` and break
-								if ( node.nodeType === 1 && ++diff && node === elem ) {
-									uniqueCache[ type ] = [ dirruns, nodeIndex, diff ];
-									break;
-								}
-							}
-
-						} else {
-
-							// Use previously-cached element index if available
-							if ( useCache ) {
-
-								// ...in a gzip-friendly way
-								node = elem;
-								outerCache = node[ expando ] || ( node[ expando ] = {} );
-
-								// Support: IE <9 only
-								// Defend against cloned attroperties (jQuery gh-1709)
-								uniqueCache = outerCache[ node.uniqueID ] ||
-									( outerCache[ node.uniqueID ] = {} );
-
-								cache = uniqueCache[ type ] || [];
-								nodeIndex = cache[ 0 ] === dirruns && cache[ 1 ];
-								diff = nodeIndex;
-							}
-
-							// xml :nth-child(...)
-							// or :nth-last-child(...) or :nth(-last)?-of-type(...)
-							if ( diff === false ) {
-
-								// Use the same loop as above to seek `elem` from the start
-								while ( ( node = ++nodeIndex && node && node[ dir ] ||
-									( diff = nodeIndex = 0 ) || start.pop() ) ) {
-
-									if ( ( ofType ?
-										node.nodeName.toLowerCase() === name :
-										node.nodeType === 1 ) &&
-										++diff ) {
-
-										// Cache the index of each encountered element
-										if ( useCache ) {
-											outerCache = node[ expando ] ||
-												( node[ expando ] = {} );
-
-											// Support: IE <9 only
-											// Defend against cloned attroperties (jQuery gh-1709)
-											uniqueCache = outerCache[ node.uniqueID ] ||
-												( outerCache[ node.uniqueID ] = {} );
-
-											uniqueCache[ type ] = [ dirruns, diff ];
-										}
-
-										if ( node === elem ) {
-											break;
-										}
-									}
-								}
-							}
-						}
-
-						// Incorporate the offset, then check against cycle size
-						diff -= last;
-						return diff === first || ( diff % first === 0 && diff / first >= 0 );
-					}
-				};
-		},
-
-		"PSEUDO": function( pseudo, argument ) {
-
-			// pseudo-class names are case-insensitive
-			// http://www.w3.org/TR/selectors/#pseudo-classes
-			// Prioritize by case sensitivity in case custom pseudos are added with uppercase letters
-			// Remember that setFilters inherits from pseudos
-			var args,
-				fn = Expr.pseudos[ pseudo ] || Expr.setFilters[ pseudo.toLowerCase() ] ||
-					Sizzle.error( "unsupported pseudo: " + pseudo );
-
-			// The user may use createPseudo to indicate that
-			// arguments are needed to create the filter function
-			// just as Sizzle does
-			if ( fn[ expando ] ) {
-				return fn( argument );
-			}
-
-			// But maintain support for old signatures
-			if ( fn.length > 1 ) {
-				args = [ pseudo, pseudo, "", argument ];
-				return Expr.setFilters.hasOwnProperty( pseudo.toLowerCase() ) ?
-					markFunction( function( seed, matches ) {
-						var idx,
-							matched = fn( seed, argument ),
-							i = matched.length;
-						while ( i-- ) {
-							idx = indexOf( seed, matched[ i ] );
-							seed[ idx ] = !( matches[ idx ] = matched[ i ] );
-						}
-					} ) :
-					function( elem ) {
-						return fn( elem, 0, args );
-					};
-			}
-
-			return fn;
-		}
-	},
-
-	pseudos: {
-
-		// Potentially complex pseudos
-		"not": markFunction( function( selector ) {
-
-			// Trim the selector passed to compile
-			// to avoid treating leading and trailing
-			// spaces as combinators
-			var input = [],
-				results = [],
-				matcher = compile( selector.replace( rtrim, "$1" ) );
-
-			return matcher[ expando ] ?
-				markFunction( function( seed, matches, _context, xml ) {
-					var elem,
-						unmatched = matcher( seed, null, xml, [] ),
-						i = seed.length;
-
-					// Match elements unmatched by `matcher`
-					while ( i-- ) {
-						if ( ( elem = unmatched[ i ] ) ) {
-							seed[ i ] = !( matches[ i ] = elem );
-						}
-					}
-				} ) :
-				function( elem, _context, xml ) {
-					input[ 0 ] = elem;
-					matcher( input, null, xml, results );
-
-					// Don't keep the element (issue #299)
-					input[ 0 ] = null;
-					return !results.pop();
-				};
-		} ),
-
-		"has": markFunction( function( selector ) {
-			return function( elem ) {
-				return Sizzle( selector, elem ).length > 0;
-			};
-		} ),
-
-		"contains": markFunction( function( text ) {
-			text = text.replace( runescape, funescape );
-			return function( elem ) {
-				return ( elem.textContent || getText( elem ) ).indexOf( text ) > -1;
-			};
-		} ),
-
-		// "Whether an element is represented by a :lang() selector
-		// is based solely on the element's language value
-		// being equal to the identifier C,
-		// or beginning with the identifier C immediately followed by "-".
-		// The matching of C against the element's language value is performed case-insensitively.
-		// The identifier C does not have to be a valid language name."
-		// http://www.w3.org/TR/selectors/#lang-pseudo
-		"lang": markFunction( function( lang ) {
-
-			// lang value must be a valid identifier
-			if ( !ridentifier.test( lang || "" ) ) {
-				Sizzle.error( "unsupported lang: " + lang );
-			}
-			lang = lang.replace( runescape, funescape ).toLowerCase();
-			return function( elem ) {
-				var elemLang;
-				do {
-					if ( ( elemLang = documentIsHTML ?
-						elem.lang :
-						elem.getAttribute( "xml:lang" ) || elem.getAttribute( "lang" ) ) ) {
-
-						elemLang = elemLang.toLowerCase();
-						return elemLang === lang || elemLang.indexOf( lang + "-" ) === 0;
-					}
-				} while ( ( elem = elem.parentNode ) && elem.nodeType === 1 );
-				return false;
-			};
-		} ),
-
-		// Miscellaneous
-		"target": function( elem ) {
-			var hash = window.location && window.location.hash;
-			return hash && hash.slice( 1 ) === elem.id;
-		},
-
-		"root": function( elem ) {
-			return elem === docElem;
-		},
-
-		"focus": function( elem ) {
-			return elem === document.activeElement &&
-				( !document.hasFocus || document.hasFocus() ) &&
-				!!( elem.type || elem.href || ~elem.tabIndex );
-		},
-
-		// Boolean properties
-		"enabled": createDisabledPseudo( false ),
-		"disabled": createDisabledPseudo( true ),
-
-		"checked": function( elem ) {
-
-			// In CSS3, :checked should return both checked and selected elements
-			// http://www.w3.org/TR/2011/REC-css3-selectors-20110929/#checked
-			var nodeName = elem.nodeName.toLowerCase();
-			return ( nodeName === "input" && !!elem.checked ) ||
-				( nodeName === "option" && !!elem.selected );
-		},
-
-		"selected": function( elem ) {
-
-			// Accessing this property makes selected-by-default
-			// options in Safari work properly
-			if ( elem.parentNode ) {
-				// eslint-disable-next-line no-unused-expressions
-				elem.parentNode.selectedIndex;
-			}
-
-			return elem.selected === true;
-		},
-
-		// Contents
-		"empty": function( elem ) {
-
-			// http://www.w3.org/TR/selectors/#empty-pseudo
-			// :empty is negated by element (1) or content nodes (text: 3; cdata: 4; entity ref: 5),
-			//   but not by others (comment: 8; processing instruction: 7; etc.)
-			// nodeType < 6 works because attributes (2) do not appear as children
-			for ( elem = elem.firstChild; elem; elem = elem.nextSibling ) {
-				if ( elem.nodeType < 6 ) {
-					return false;
-				}
-			}
-			return true;
-		},
-
-		"parent": function( elem ) {
-			return !Expr.pseudos[ "empty" ]( elem );
-		},
-
-		// Element/input types
-		"header": function( elem ) {
-			return rheader.test( elem.nodeName );
-		},
-
-		"input": function( elem ) {
-			return rinputs.test( elem.nodeName );
-		},
-
-		"button": function( elem ) {
-			var name = elem.nodeName.toLowerCase();
-			return name === "input" && elem.type === "button" || name === "button";
-		},
-
-		"text": function( elem ) {
-			var attr;
-			return elem.nodeName.toLowerCase() === "input" &&
-				elem.type === "text" &&
-
-				// Support: IE<8
-				// New HTML5 attribute values (e.g., "search") appear with elem.type === "text"
-				( ( attr = elem.getAttribute( "type" ) ) == null ||
-					attr.toLowerCase() === "text" );
-		},
-
-		// Position-in-collection
-		"first": createPositionalPseudo( function() {
-			return [ 0 ];
-		} ),
-
-		"last": createPositionalPseudo( function( _matchIndexes, length ) {
-			return [ length - 1 ];
-		} ),
-
-		"eq": createPositionalPseudo( function( _matchIndexes, length, argument ) {
-			return [ argument < 0 ? argument + length : argument ];
-		} ),
-
-		"even": createPositionalPseudo( function( matchIndexes, length ) {
-			var i = 0;
-			for ( ; i < length; i += 2 ) {
-				matchIndexes.push( i );
-			}
-			return matchIndexes;
-		} ),
-
-		"odd": createPositionalPseudo( function( matchIndexes, length ) {
-			var i = 1;
-			for ( ; i < length; i += 2 ) {
-				matchIndexes.push( i );
-			}
-			return matchIndexes;
-		} ),
-
-		"lt": createPositionalPseudo( function( matchIndexes, length, argument ) {
-			var i = argument < 0 ?
-				argument + length :
-				argument > length ?
-					length :
-					argument;
-			for ( ; --i >= 0; ) {
-				matchIndexes.push( i );
-			}
-			return matchIndexes;
-		} ),
-
-		"gt": createPositionalPseudo( function( matchIndexes, length, argument ) {
-			var i = argument < 0 ? argument + length : argument;
-			for ( ; ++i < length; ) {
-				matchIndexes.push( i );
-			}
-			return matchIndexes;
-		} )
-	}
-};
-
-Expr.pseudos[ "nth" ] = Expr.pseudos[ "eq" ];
-
-// Add button/input type pseudos
-for ( i in { radio: true, checkbox: true, file: true, password: true, image: true } ) {
-	Expr.pseudos[ i ] = createInputPseudo( i );
-}
-for ( i in { submit: true, reset: true } ) {
-	Expr.pseudos[ i ] = createButtonPseudo( i );
-}
-
-// Easy API for creating new setFilters
-function setFilters() {}
-setFilters.prototype = Expr.filters = Expr.pseudos;
-Expr.setFilters = new setFilters();
-
-tokenize = Sizzle.tokenize = function( selector, parseOnly ) {
-	var matched, match, tokens, type,
-		soFar, groups, preFilters,
-		cached = tokenCache[ selector + " " ];
-
-	if ( cached ) {
-		return parseOnly ? 0 : cached.slice( 0 );
-	}
-
-	soFar = selector;
-	groups = [];
-	preFilters = Expr.preFilter;
-
-	while ( soFar ) {
-
-		// Comma and first run
-		if ( !matched || ( match = rcomma.exec( soFar ) ) ) {
-			if ( match ) {
-
-				// Don't consume trailing commas as valid
-				soFar = soFar.slice( match[ 0 ].length ) || soFar;
-			}
-			groups.push( ( tokens = [] ) );
-		}
-
-		matched = false;
-
-		// Combinators
-		if ( ( match = rcombinators.exec( soFar ) ) ) {
-			matched = match.shift();
-			tokens.push( {
-				value: matched,
-
-				// Cast descendant combinators to space
-				type: match[ 0 ].replace( rtrim, " " )
-			} );
-			soFar = soFar.slice( matched.length );
-		}
-
-		// Filters
-		for ( type in Expr.filter ) {
-			if ( ( match = matchExpr[ type ].exec( soFar ) ) && ( !preFilters[ type ] ||
-				( match = preFilters[ type ]( match ) ) ) ) {
-				matched = match.shift();
-				tokens.push( {
-					value: matched,
-					type: type,
-					matches: match
-				} );
-				soFar = soFar.slice( matched.length );
-			}
-		}
-
-		if ( !matched ) {
-			break;
-		}
-	}
-
-	// Return the length of the invalid excess
-	// if we're just parsing
-	// Otherwise, throw an error or return tokens
-	return parseOnly ?
-		soFar.length :
-		soFar ?
-			Sizzle.error( selector ) :
-
-			// Cache the tokens
-			tokenCache( selector, groups ).slice( 0 );
-};
-
-function toSelector( tokens ) {
-	var i = 0,
-		len = tokens.length,
-		selector = "";
-	for ( ; i < len; i++ ) {
-		selector += tokens[ i ].value;
-	}
-	return selector;
-}
-
-function addCombinator( matcher, combinator, base ) {
-	var dir = combinator.dir,
-		skip = combinator.next,
-		key = skip || dir,
-		checkNonElements = base && key === "parentNode",
-		doneName = done++;
-
-	return combinator.first ?
-
-		// Check against closest ancestor/preceding element
-		function( elem, context, xml ) {
-			while ( ( elem = elem[ dir ] ) ) {
-				if ( elem.nodeType === 1 || checkNonElements ) {
-					return matcher( elem, context, xml );
-				}
-			}
-			return false;
-		} :
-
-		// Check against all ancestor/preceding elements
-		function( elem, context, xml ) {
-			var oldCache, uniqueCache, outerCache,
-				newCache = [ dirruns, doneName ];
-
-			// We can't set arbitrary data on XML nodes, so they don't benefit from combinator caching
-			if ( xml ) {
-				while ( ( elem = elem[ dir ] ) ) {
-					if ( elem.nodeType === 1 || checkNonElements ) {
-						if ( matcher( elem, context, xml ) ) {
-							return true;
-						}
-					}
-				}
-			} else {
-				while ( ( elem = elem[ dir ] ) ) {
-					if ( elem.nodeType === 1 || checkNonElements ) {
-						outerCache = elem[ expando ] || ( elem[ expando ] = {} );
-
-						// Support: IE <9 only
-						// Defend against cloned attroperties (jQuery gh-1709)
-						uniqueCache = outerCache[ elem.uniqueID ] ||
-							( outerCache[ elem.uniqueID ] = {} );
-
-						if ( skip && skip === elem.nodeName.toLowerCase() ) {
-							elem = elem[ dir ] || elem;
-						} else if ( ( oldCache = uniqueCache[ key ] ) &&
-							oldCache[ 0 ] === dirruns && oldCache[ 1 ] === doneName ) {
-
-							// Assign to newCache so results back-propagate to previous elements
-							return ( newCache[ 2 ] = oldCache[ 2 ] );
-						} else {
-
-							// Reuse newcache so results back-propagate to previous elements
-							uniqueCache[ key ] = newCache;
-
-							// A match means we're done; a fail means we have to keep checking
-							if ( ( newCache[ 2 ] = matcher( elem, context, xml ) ) ) {
-								return true;
-							}
-						}
-					}
-				}
-			}
-			return false;
-		};
-}
-
-function elementMatcher( matchers ) {
-	return matchers.length > 1 ?
-		function( elem, context, xml ) {
-			var i = matchers.length;
-			while ( i-- ) {
-				if ( !matchers[ i ]( elem, context, xml ) ) {
-					return false;
-				}
-			}
-			return true;
-		} :
-		matchers[ 0 ];
-}
-
-function multipleContexts( selector, contexts, results ) {
-	var i = 0,
-		len = contexts.length;
-	for ( ; i < len; i++ ) {
-		Sizzle( selector, contexts[ i ], results );
-	}
-	return results;
-}
-
-function condense( unmatched, map, filter, context, xml ) {
-	var elem,
-		newUnmatched = [],
-		i = 0,
-		len = unmatched.length,
-		mapped = map != null;
-
-	for ( ; i < len; i++ ) {
-		if ( ( elem = unmatched[ i ] ) ) {
-			if ( !filter || filter( elem, context, xml ) ) {
-				newUnmatched.push( elem );
-				if ( mapped ) {
-					map.push( i );
-				}
-			}
-		}
-	}
-
-	return newUnmatched;
-}
-
-function setMatcher( preFilter, selector, matcher, postFilter, postFinder, postSelector ) {
-	if ( postFilter && !postFilter[ expando ] ) {
-		postFilter = setMatcher( postFilter );
-	}
-	if ( postFinder && !postFinder[ expando ] ) {
-		postFinder = setMatcher( postFinder, postSelector );
-	}
-	return markFunction( function( seed, results, context, xml ) {
-		var temp, i, elem,
-			preMap = [],
-			postMap = [],
-			preexisting = results.length,
-
-			// Get initial elements from seed or context
-			elems = seed || multipleContexts(
-				selector || "*",
-				context.nodeType ? [ context ] : context,
-				[]
-			),
-
-			// Prefilter to get matcher input, preserving a map for seed-results synchronization
-			matcherIn = preFilter && ( seed || !selector ) ?
-				condense( elems, preMap, preFilter, context, xml ) :
-				elems,
-
-			matcherOut = matcher ?
-
-				// If we have a postFinder, or filtered seed, or non-seed postFilter or preexisting results,
-				postFinder || ( seed ? preFilter : preexisting || postFilter ) ?
-
-					// ...intermediate processing is necessary
-					[] :
-
-					// ...otherwise use results directly
-					results :
-				matcherIn;
-
-		// Find primary matches
-		if ( matcher ) {
-			matcher( matcherIn, matcherOut, context, xml );
-		}
-
-		// Apply postFilter
-		if ( postFilter ) {
-			temp = condense( matcherOut, postMap );
-			postFilter( temp, [], context, xml );
-
-			// Un-match failing elements by moving them back to matcherIn
-			i = temp.length;
-			while ( i-- ) {
-				if ( ( elem = temp[ i ] ) ) {
-					matcherOut[ postMap[ i ] ] = !( matcherIn[ postMap[ i ] ] = elem );
-				}
-			}
-		}
-
-		if ( seed ) {
-			if ( postFinder || preFilter ) {
-				if ( postFinder ) {
-
-					// Get the final matcherOut by condensing this intermediate into postFinder contexts
-					temp = [];
-					i = matcherOut.length;
-					while ( i-- ) {
-						if ( ( elem = matcherOut[ i ] ) ) {
-
-							// Restore matcherIn since elem is not yet a final match
-							temp.push( ( matcherIn[ i ] = elem ) );
-						}
-					}
-					postFinder( null, ( matcherOut = [] ), temp, xml );
-				}
-
-				// Move matched elements from seed to results to keep them synchronized
-				i = matcherOut.length;
-				while ( i-- ) {
-					if ( ( elem = matcherOut[ i ] ) &&
-						( temp = postFinder ? indexOf( seed, elem ) : preMap[ i ] ) > -1 ) {
-
-						seed[ temp ] = !( results[ temp ] = elem );
-					}
-				}
-			}
-
-		// Add elements to results, through postFinder if defined
-		} else {
-			matcherOut = condense(
-				matcherOut === results ?
-					matcherOut.splice( preexisting, matcherOut.length ) :
-					matcherOut
-			);
-			if ( postFinder ) {
-				postFinder( null, results, matcherOut, xml );
-			} else {
-				push.apply( results, matcherOut );
-			}
-		}
-	} );
-}
-
-function matcherFromTokens( tokens ) {
-	var checkContext, matcher, j,
-		len = tokens.length,
-		leadingRelative = Expr.relative[ tokens[ 0 ].type ],
-		implicitRelative = leadingRelative || Expr.relative[ " " ],
-		i = leadingRelative ? 1 : 0,
-
-		// The foundational matcher ensures that elements are reachable from top-level context(s)
-		matchContext = addCombinator( function( elem ) {
-			return elem === checkContext;
-		}, implicitRelative, true ),
-		matchAnyContext = addCombinator( function( elem ) {
-			return indexOf( checkContext, elem ) > -1;
-		}, implicitRelative, true ),
-		matchers = [ function( elem, context, xml ) {
-			var ret = ( !leadingRelative && ( xml || context !== outermostContext ) ) || (
-				( checkContext = context ).nodeType ?
-					matchContext( elem, context, xml ) :
-					matchAnyContext( elem, context, xml ) );
-
-			// Avoid hanging onto element (issue #299)
-			checkContext = null;
-			return ret;
-		} ];
-
-	for ( ; i < len; i++ ) {
-		if ( ( matcher = Expr.relative[ tokens[ i ].type ] ) ) {
-			matchers = [ addCombinator( elementMatcher( matchers ), matcher ) ];
-		} else {
-			matcher = Expr.filter[ tokens[ i ].type ].apply( null, tokens[ i ].matches );
-
-			// Return special upon seeing a positional matcher
-			if ( matcher[ expando ] ) {
-
-				// Find the next relative operator (if any) for proper handling
-				j = ++i;
-				for ( ; j < len; j++ ) {
-					if ( Expr.relative[ tokens[ j ].type ] ) {
-						break;
-					}
-				}
-				return setMatcher(
-					i > 1 && elementMatcher( matchers ),
-					i > 1 && toSelector(
-
-					// If the preceding token was a descendant combinator, insert an implicit any-element `*`
-					tokens
-						.slice( 0, i - 1 )
-						.concat( { value: tokens[ i - 2 ].type === " " ? "*" : "" } )
-					).replace( rtrim, "$1" ),
-					matcher,
-					i < j && matcherFromTokens( tokens.slice( i, j ) ),
-					j < len && matcherFromTokens( ( tokens = tokens.slice( j ) ) ),
-					j < len && toSelector( tokens )
-				);
-			}
-			matchers.push( matcher );
-		}
-	}
-
-	return elementMatcher( matchers );
-}
-
-function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
-	var bySet = setMatchers.length > 0,
-		byElement = elementMatchers.length > 0,
-		superMatcher = function( seed, context, xml, results, outermost ) {
-			var elem, j, matcher,
-				matchedCount = 0,
-				i = "0",
-				unmatched = seed && [],
-				setMatched = [],
-				contextBackup = outermostContext,
-
-				// We must always have either seed elements or outermost context
-				elems = seed || byElement && Expr.find[ "TAG" ]( "*", outermost ),
-
-				// Use integer dirruns iff this is the outermost matcher
-				dirrunsUnique = ( dirruns += contextBackup == null ? 1 : Math.random() || 0.1 ),
-				len = elems.length;
-
-			if ( outermost ) {
-
-				// Support: IE 11+, Edge 17 - 18+
-				// IE/Edge sometimes throw a "Permission denied" error when strict-comparing
-				// two documents; shallow comparisons work.
-				// eslint-disable-next-line eqeqeq
-				outermostContext = context == document || context || outermost;
-			}
-
-			// Add elements passing elementMatchers directly to results
-			// Support: IE<9, Safari
-			// Tolerate NodeList properties (IE: "length"; Safari: <number>) matching elements by id
-			for ( ; i !== len && ( elem = elems[ i ] ) != null; i++ ) {
-				if ( byElement && elem ) {
-					j = 0;
-
-					// Support: IE 11+, Edge 17 - 18+
-					// IE/Edge sometimes throw a "Permission denied" error when strict-comparing
-					// two documents; shallow comparisons work.
-					// eslint-disable-next-line eqeqeq
-					if ( !context && elem.ownerDocument != document ) {
-						setDocument( elem );
-						xml = !documentIsHTML;
-					}
-					while ( ( matcher = elementMatchers[ j++ ] ) ) {
-						if ( matcher( elem, context || document, xml ) ) {
-							results.push( elem );
-							break;
-						}
-					}
-					if ( outermost ) {
-						dirruns = dirrunsUnique;
-					}
-				}
-
-				// Track unmatched elements for set filters
-				if ( bySet ) {
-
-					// They will have gone through all possible matchers
-					if ( ( elem = !matcher && elem ) ) {
-						matchedCount--;
-					}
-
-					// Lengthen the array for every element, matched or not
-					if ( seed ) {
-						unmatched.push( elem );
-					}
-				}
-			}
-
-			// `i` is now the count of elements visited above, and adding it to `matchedCount`
-			// makes the latter nonnegative.
-			matchedCount += i;
-
-			// Apply set filters to unmatched elements
-			// NOTE: This can be skipped if there are no unmatched elements (i.e., `matchedCount`
-			// equals `i`), unless we didn't visit _any_ elements in the above loop because we have
-			// no element matchers and no seed.
-			// Incrementing an initially-string "0" `i` allows `i` to remain a string only in that
-			// case, which will result in a "00" `matchedCount` that differs from `i` but is also
-			// numerically zero.
-			if ( bySet && i !== matchedCount ) {
-				j = 0;
-				while ( ( matcher = setMatchers[ j++ ] ) ) {
-					matcher( unmatched, setMatched, context, xml );
-				}
-
-				if ( seed ) {
-
-					// Reintegrate element matches to eliminate the need for sorting
-					if ( matchedCount > 0 ) {
-						while ( i-- ) {
-							if ( !( unmatched[ i ] || setMatched[ i ] ) ) {
-								setMatched[ i ] = pop.call( results );
-							}
-						}
-					}
-
-					// Discard index placeholder values to get only actual matches
-					setMatched = condense( setMatched );
-				}
-
-				// Add matches to results
-				push.apply( results, setMatched );
-
-				// Seedless set matches succeeding multiple successful matchers stipulate sorting
-				if ( outermost && !seed && setMatched.length > 0 &&
-					( matchedCount + setMatchers.length ) > 1 ) {
-
-					Sizzle.uniqueSort( results );
-				}
-			}
-
-			// Override manipulation of globals by nested matchers
-			if ( outermost ) {
-				dirruns = dirrunsUnique;
-				outermostContext = contextBackup;
-			}
-
-			return unmatched;
-		};
-
-	return bySet ?
-		markFunction( superMatcher ) :
-		superMatcher;
-}
-
-compile = Sizzle.compile = function( selector, match /* Internal Use Only */ ) {
-	var i,
-		setMatchers = [],
-		elementMatchers = [],
-		cached = compilerCache[ selector + " " ];
-
-	if ( !cached ) {
-
-		// Generate a function of recursive functions that can be used to check each element
-		if ( !match ) {
-			match = tokenize( selector );
-		}
-		i = match.length;
-		while ( i-- ) {
-			cached = matcherFromTokens( match[ i ] );
-			if ( cached[ expando ] ) {
-				setMatchers.push( cached );
-			} else {
-				elementMatchers.push( cached );
-			}
-		}
-
-		// Cache the compiled function
-		cached = compilerCache(
-			selector,
-			matcherFromGroupMatchers( elementMatchers, setMatchers )
-		);
-
-		// Save selector and tokenization
-		cached.selector = selector;
-	}
-	return cached;
-};
-
-/**
- * A low-level selection function that works with Sizzle's compiled
- *  selector functions
- * @param {String|Function} selector A selector or a pre-compiled
- *  selector function built with Sizzle.compile
- * @param {Element} context
- * @param {Array} [results]
- * @param {Array} [seed] A set of elements to match against
- */
-select = Sizzle.select = function( selector, context, results, seed ) {
-	var i, tokens, token, type, find,
-		compiled = typeof selector === "function" && selector,
-		match = !seed && tokenize( ( selector = compiled.selector || selector ) );
-
-	results = results || [];
-
-	// Try to minimize operations if there is only one selector in the list and no seed
-	// (the latter of which guarantees us context)
-	if ( match.length === 1 ) {
-
-		// Reduce context if the leading compound selector is an ID
-		tokens = match[ 0 ] = match[ 0 ].slice( 0 );
-		if ( tokens.length > 2 && ( token = tokens[ 0 ] ).type === "ID" &&
-			context.nodeType === 9 && documentIsHTML && Expr.relative[ tokens[ 1 ].type ] ) {
-
-			context = ( Expr.find[ "ID" ]( token.matches[ 0 ]
-				.replace( runescape, funescape ), context ) || [] )[ 0 ];
-			if ( !context ) {
-				return results;
-
-			// Precompiled matchers will still verify ancestry, so step up a level
-			} else if ( compiled ) {
-				context = context.parentNode;
-			}
-
-			selector = selector.slice( tokens.shift().value.length );
-		}
-
-		// Fetch a seed set for right-to-left matching
-		i = matchExpr[ "needsContext" ].test( selector ) ? 0 : tokens.length;
-		while ( i-- ) {
-			token = tokens[ i ];
-
-			// Abort if we hit a combinator
-			if ( Expr.relative[ ( type = token.type ) ] ) {
-				break;
-			}
-			if ( ( find = Expr.find[ type ] ) ) {
-
-				// Search, expanding context for leading sibling combinators
-				if ( ( seed = find(
-					token.matches[ 0 ].replace( runescape, funescape ),
-					rsibling.test( tokens[ 0 ].type ) && testContext( context.parentNode ) ||
-						context
-				) ) ) {
-
-					// If seed is empty or no tokens remain, we can return early
-					tokens.splice( i, 1 );
-					selector = seed.length && toSelector( tokens );
-					if ( !selector ) {
-						push.apply( results, seed );
-						return results;
-					}
-
-					break;
-				}
-			}
-		}
-	}
-
-	// Compile and execute a filtering function if one is not provided
-	// Provide `match` to avoid retokenization if we modified the selector above
-	( compiled || compile( selector, match ) )(
-		seed,
-		context,
-		!documentIsHTML,
-		results,
-		!context || rsibling.test( selector ) && testContext( context.parentNode ) || context
-	);
-	return results;
-};
-
-// One-time assignments
-
-// Sort stability
-support.sortStable = expando.split( "" ).sort( sortOrder ).join( "" ) === expando;
-
-// Support: Chrome 14-35+
-// Always assume duplicates if they aren't passed to the comparison function
-support.detectDuplicates = !!hasDuplicate;
-
-// Initialize against the default document
-setDocument();
-
-// Support: Webkit<537.32 - Safari 6.0.3/Chrome 25 (fixed in Chrome 27)
-// Detached nodes confoundingly follow *each other*
-support.sortDetached = assert( function( el ) {
-
-	// Should return 1, but returns 4 (following)
-	return el.compareDocumentPosition( document.createElement( "fieldset" ) ) & 1;
-} );
-
-// Support: IE<8
-// Prevent attribute/property "interpolation"
-// https://msdn.microsoft.com/en-us/library/ms536429%28VS.85%29.aspx
-if ( !assert( function( el ) {
-	el.innerHTML = "<a href='#'></a>";
-	return el.firstChild.getAttribute( "href" ) === "#";
-} ) ) {
-	addHandle( "type|href|height|width", function( elem, name, isXML ) {
-		if ( !isXML ) {
-			return elem.getAttribute( name, name.toLowerCase() === "type" ? 1 : 2 );
-		}
-	} );
-}
-
-// Support: IE<9
-// Use defaultValue in place of getAttribute("value")
-if ( !support.attributes || !assert( function( el ) {
-	el.innerHTML = "<input/>";
-	el.firstChild.setAttribute( "value", "" );
-	return el.firstChild.getAttribute( "value" ) === "";
-} ) ) {
-	addHandle( "value", function( elem, _name, isXML ) {
-		if ( !isXML && elem.nodeName.toLowerCase() === "input" ) {
-			return elem.defaultValue;
-		}
-	} );
-}
-
-// Support: IE<9
-// Use getAttributeNode to fetch booleans when getAttribute lies
-if ( !assert( function( el ) {
-	return el.getAttribute( "disabled" ) == null;
-} ) ) {
-	addHandle( booleans, function( elem, name, isXML ) {
-		var val;
-		if ( !isXML ) {
-			return elem[ name ] === true ? name.toLowerCase() :
-				( val = elem.getAttributeNode( name ) ) && val.specified ?
-					val.value :
-					null;
-		}
-	} );
-}
-
-// EXPOSE
-var _sizzle = window.Sizzle;
-
-Sizzle.noConflict = function() {
-	if ( window.Sizzle === Sizzle ) {
-		window.Sizzle = _sizzle;
-	}
-
-	return Sizzle;
-};
-
-if ( true ) {
-	!(__WEBPACK_AMD_DEFINE_RESULT__ = (function() {
-		return Sizzle;
-	}).call(exports, __webpack_require__, exports, module),
-		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-
-// Sizzle requires that there be a global window in Common-JS like environments
-} else {}
-
-// EXPOSE
-
-} )( window );
-
 
 /***/ }),
 
@@ -28515,8 +26038,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* global Symbol
 
 "use strict";
 
-var
-	version = "3.6.1",
+var version = "3.7.1",
+
+	rhtmlSuffix = /HTML$/i,
 
 	// Define a local copy of jQuery
 	jQuery = function( selector, context ) {
@@ -28762,6 +26286,38 @@ jQuery.extend( {
 		return obj;
 	},
 
+
+	// Retrieve the text value of an array of DOM nodes
+	text: function( elem ) {
+		var node,
+			ret = "",
+			i = 0,
+			nodeType = elem.nodeType;
+
+		if ( !nodeType ) {
+
+			// If no nodeType, this is expected to be an array
+			while ( ( node = elem[ i++ ] ) ) {
+
+				// Do not traverse comment nodes
+				ret += jQuery.text( node );
+			}
+		}
+		if ( nodeType === 1 || nodeType === 11 ) {
+			return elem.textContent;
+		}
+		if ( nodeType === 9 ) {
+			return elem.documentElement.textContent;
+		}
+		if ( nodeType === 3 || nodeType === 4 ) {
+			return elem.nodeValue;
+		}
+
+		// Do not include comment or processing instruction nodes
+
+		return ret;
+	},
+
 	// results is for internal usage only
 	makeArray: function( arr, results ) {
 		var ret = results || [];
@@ -28782,6 +26338,15 @@ jQuery.extend( {
 
 	inArray: function( elem, arr, i ) {
 		return arr == null ? -1 : indexOf.call( arr, elem, i );
+	},
+
+	isXMLDoc: function( elem ) {
+		var namespace = elem && elem.namespaceURI,
+			docElem = elem && ( elem.ownerDocument || elem ).documentElement;
+
+		// Assume HTML when documentElement doesn't yet exist, such as inside
+		// document fragments.
+		return !rhtmlSuffix.test( namespace || docElem && docElem.nodeName || "HTML" );
 	},
 
 	// Support: Android <=4.0 only, PhantomJS 1 only
@@ -29213,7 +26778,7 @@ return init;
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [
 	__webpack_require__(/*! ../core */ "./node_modules/jquery/src/core.js"),
 	__webpack_require__(/*! ../var/documentElement */ "./node_modules/jquery/src/var/documentElement.js"),
-	__webpack_require__(/*! ../selector */ "./node_modules/jquery/src/selector.js") // jQuery.contains
+	__webpack_require__(/*! ../selector/contains */ "./node_modules/jquery/src/selector/contains.js") // jQuery.contains
 ], __WEBPACK_AMD_DEFINE_RESULT__ = (function( jQuery, documentElement ) {
 	"use strict";
 
@@ -29672,7 +27237,8 @@ function setPositiveNumber( _elem, value, subtract ) {
 function boxModelAdjustment( elem, dimension, box, isBorderBox, styles, computedVal ) {
 	var i = dimension === "width" ? 1 : 0,
 		extra = 0,
-		delta = 0;
+		delta = 0,
+		marginDelta = 0;
 
 	// Adjustment may not be necessary
 	if ( box === ( isBorderBox ? "border" : "content" ) ) {
@@ -29682,8 +27248,10 @@ function boxModelAdjustment( elem, dimension, box, isBorderBox, styles, computed
 	for ( ; i < 4; i += 2 ) {
 
 		// Both box models exclude margin
+		// Count margin delta separately to only add it after scroll gutter adjustment.
+		// This is needed to make negative margins work with `outerHeight( true )` (gh-3982).
 		if ( box === "margin" ) {
-			delta += jQuery.css( elem, box + cssExpand[ i ], true, styles );
+			marginDelta += jQuery.css( elem, box + cssExpand[ i ], true, styles );
 		}
 
 		// If we get here with a content-box, we're seeking "padding" or "border" or "margin"
@@ -29734,7 +27302,7 @@ function boxModelAdjustment( elem, dimension, box, isBorderBox, styles, computed
 		) ) || 0;
 	}
 
-	return delta;
+	return delta + marginDelta;
 }
 
 function getWidthOrHeight( elem, dimension, extra ) {
@@ -29832,26 +27400,35 @@ jQuery.extend( {
 
 	// Don't automatically add "px" to these possibly-unitless properties
 	cssNumber: {
-		"animationIterationCount": true,
-		"columnCount": true,
-		"fillOpacity": true,
-		"flexGrow": true,
-		"flexShrink": true,
-		"fontWeight": true,
-		"gridArea": true,
-		"gridColumn": true,
-		"gridColumnEnd": true,
-		"gridColumnStart": true,
-		"gridRow": true,
-		"gridRowEnd": true,
-		"gridRowStart": true,
-		"lineHeight": true,
-		"opacity": true,
-		"order": true,
-		"orphans": true,
-		"widows": true,
-		"zIndex": true,
-		"zoom": true
+		animationIterationCount: true,
+		aspectRatio: true,
+		borderImageSlice: true,
+		columnCount: true,
+		flexGrow: true,
+		flexShrink: true,
+		fontWeight: true,
+		gridArea: true,
+		gridColumn: true,
+		gridColumnEnd: true,
+		gridColumnStart: true,
+		gridRow: true,
+		gridRowEnd: true,
+		gridRowStart: true,
+		lineHeight: true,
+		opacity: true,
+		order: true,
+		orphans: true,
+		scale: true,
+		widows: true,
+		zIndex: true,
+		zoom: true,
+
+		// SVG-related
+		fillOpacity: true,
+		floodOpacity: true,
+		stopOpacity: true,
+		strokeMiterlimit: true,
+		strokeOpacity: true
 	},
 
 	// Add in properties whose names you wish to fix before
@@ -30277,17 +27854,37 @@ function curCSS( elem, name, computed ) {
 	//   .css('filter') (IE 9 only, trac-12537)
 	//   .css('--customProperty) (gh-3144)
 	if ( computed ) {
+
+		// Support: IE <=9 - 11+
+		// IE only supports `"float"` in `getPropertyValue`; in computed styles
+		// it's only available as `"cssFloat"`. We no longer modify properties
+		// sent to `.css()` apart from camelCasing, so we need to check both.
+		// Normally, this would create difference in behavior: if
+		// `getPropertyValue` returns an empty string, the value returned
+		// by `.css()` would be `undefined`. This is usually the case for
+		// disconnected elements. However, in IE even disconnected elements
+		// with no styles return `"none"` for `getPropertyValue( "float" )`
 		ret = computed.getPropertyValue( name ) || computed[ name ];
 
-		// trim whitespace for custom property (issue gh-4926)
-		if ( isCustomProp ) {
+		if ( isCustomProp && ret ) {
 
-			// rtrim treats U+000D CARRIAGE RETURN and U+000C FORM FEED
+			// Support: Firefox 105+, Chrome <=105+
+			// Spec requires trimming whitespace for custom properties (gh-4926).
+			// Firefox only trims leading whitespace. Chrome just collapses
+			// both leading & trailing whitespace to a single space.
+			//
+			// Fall back to `undefined` if empty string returned.
+			// This collapses a missing definition with property defined
+			// and set to an empty string but there's no standard API
+			// allowing us to differentiate them without a performance penalty
+			// and returning `undefined` aligns with older jQuery.
+			//
+			// rtrimCSS treats U+000D CARRIAGE RETURN and U+000C FORM FEED
 			// as whitespace while CSS does not, but this is not a problem
 			// because CSS preprocessing replaces them with U+000A LINE FEED
 			// (which *is* CSS whitespace)
 			// https://www.w3.org/TR/css-syntax-3/#input-preprocessing
-			ret = ret.replace( rtrimCSS, "$1" );
+			ret = ret.replace( rtrimCSS, "$1" ) || undefined;
 		}
 
 		if ( ret === "" && !isAttached( elem ) ) {
@@ -30649,7 +28246,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 				trChild = document.createElement( "div" );
 
 				table.style.cssText = "position:absolute;left:-11111px;border-collapse:separate";
-				tr.style.cssText = "border:1px solid";
+				tr.style.cssText = "box-sizing:content-box;border:1px solid";
 
 				// Support: Chrome 86+
 				// Height set through cssText does not get applied.
@@ -30661,7 +28258,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 				// In our bodyBackground.html iframe,
 				// display for all div elements is set to "inline",
 				// which causes a problem only in Android 8 Chrome 86.
-				// Ensuring the div is display: block
+				// Ensuring the div is `display: block`
 				// gets around this issue.
 				trChild.style.display = "block";
 
@@ -31502,7 +29099,7 @@ jQuery.extend( {
 
 											if ( jQuery.Deferred.exceptionHook ) {
 												jQuery.Deferred.exceptionHook( e,
-													process.stackTrace );
+													process.error );
 											}
 
 											// Support: Promises/A+ section 2.3.3.3.4.1
@@ -31530,10 +29127,17 @@ jQuery.extend( {
 								process();
 							} else {
 
-								// Call an optional hook to record the stack, in case of exception
+								// Call an optional hook to record the error, in case of exception
 								// since it's otherwise lost when execution goes async
-								if ( jQuery.Deferred.getStackHook ) {
-									process.stackTrace = jQuery.Deferred.getStackHook();
+								if ( jQuery.Deferred.getErrorHook ) {
+									process.error = jQuery.Deferred.getErrorHook();
+
+								// The deprecated alias of the above. While the name suggests
+								// returning the stack, not an error instance, jQuery just passes
+								// it directly to `console.warn` so both will work; an instance
+								// just better cooperates with source maps.
+								} else if ( jQuery.Deferred.getStackHook ) {
+									process.error = jQuery.Deferred.getStackHook();
 								}
 								window.setTimeout( process );
 							}
@@ -31727,12 +29331,16 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 // warn about them ASAP rather than swallowing them by default.
 var rerrorNames = /^(Eval|Internal|Range|Reference|Syntax|Type|URI)Error$/;
 
-jQuery.Deferred.exceptionHook = function( error, stack ) {
+// If `jQuery.Deferred.getErrorHook` is defined, `asyncError` is an error
+// captured before the async barrier to get the original error cause
+// which may otherwise be hidden.
+jQuery.Deferred.exceptionHook = function( error, asyncError ) {
 
 	// Support: IE 8 - 9 only
 	// Console exists when dev tools are open, which can happen at any time
 	if ( window.console && window.console.warn && error && rerrorNames.test( error.name ) ) {
-		window.console.warn( "jQuery.Deferred exception: " + error.message, error.stack, stack );
+		window.console.warn( "jQuery.Deferred exception: " + error.message,
+			error.stack, asyncError );
 	}
 };
 
@@ -31911,7 +29519,9 @@ jQuery.fn.extend( {
 	},
 
 	hover: function( fnOver, fnOut ) {
-		return this.mouseenter( fnOver ).mouseleave( fnOut || fnOver );
+		return this
+			.on( "mouseenter", fnOver )
+			.on( "mouseleave", fnOut || fnOver );
 	}
 } );
 
@@ -32917,25 +30527,6 @@ function returnFalse() {
 	return false;
 }
 
-// Support: IE <=9 - 11+
-// focus() and blur() are asynchronous, except when they are no-op.
-// So expect focus to be synchronous when the element is already active,
-// and blur to be synchronous when the element is not already active.
-// (focus and blur are always synchronous in other supported browsers,
-// this just defines when we can count on it).
-function expectSync( elem, type ) {
-	return ( elem === safeActiveElement() ) === ( type === "focus" );
-}
-
-// Support: IE <=9 only
-// Accessing document.activeElement can throw unexpectedly
-// https://bugs.jquery.com/ticket/13393
-function safeActiveElement() {
-	try {
-		return document.activeElement;
-	} catch ( err ) { }
-}
-
 function on( elem, types, selector, data, fn, one ) {
 	var origFn, type;
 
@@ -33373,7 +30964,7 @@ jQuery.event = {
 					el.click && nodeName( el, "input" ) ) {
 
 					// dataPriv.set( el, "click", ... )
-					leverageNative( el, "click", returnTrue );
+					leverageNative( el, "click", true );
 				}
 
 				// Return false to allow normal processing in the caller
@@ -33424,10 +31015,10 @@ jQuery.event = {
 // synthetic events by interrupting progress until reinvoked in response to
 // *native* events that it fires directly, ensuring that state changes have
 // already occurred before other listeners are invoked.
-function leverageNative( el, type, expectSync ) {
+function leverageNative( el, type, isSetup ) {
 
-	// Missing expectSync indicates a trigger call, which must force setup through jQuery.event.add
-	if ( !expectSync ) {
+	// Missing `isSetup` indicates a trigger call, which must force setup through jQuery.event.add
+	if ( !isSetup ) {
 		if ( dataPriv.get( el, type ) === undefined ) {
 			jQuery.event.add( el, type, returnTrue );
 		}
@@ -33439,15 +31030,13 @@ function leverageNative( el, type, expectSync ) {
 	jQuery.event.add( el, type, {
 		namespace: false,
 		handler: function( event ) {
-			var notAsync, result,
+			var result,
 				saved = dataPriv.get( this, type );
 
 			if ( ( event.isTrigger & 1 ) && this[ type ] ) {
 
 				// Interrupt processing of the outer synthetic .trigger()ed event
-				// Saved data should be false in such cases, but might be a leftover capture object
-				// from an async native handler (gh-4350)
-				if ( !saved.length ) {
+				if ( !saved ) {
 
 					// Store arguments for use when handling the inner native event
 					// There will always be at least one argument (an event object), so this array
@@ -33456,33 +31045,22 @@ function leverageNative( el, type, expectSync ) {
 					dataPriv.set( this, type, saved );
 
 					// Trigger the native event and capture its result
-					// Support: IE <=9 - 11+
-					// focus() and blur() are asynchronous
-					notAsync = expectSync( this, type );
 					this[ type ]();
 					result = dataPriv.get( this, type );
-					if ( saved !== result || notAsync ) {
-						dataPriv.set( this, type, false );
-					} else {
-						result = {};
-					}
+					dataPriv.set( this, type, false );
+
 					if ( saved !== result ) {
 
 						// Cancel the outer synthetic event
 						event.stopImmediatePropagation();
 						event.preventDefault();
 
-						// Support: Chrome 86+
-						// In Chrome, if an element having a focusout handler is blurred by
-						// clicking outside of it, it invokes the handler synchronously. If
-						// that handler calls `.remove()` on the element, the data is cleared,
-						// leaving `result` undefined. We need to guard against this.
-						return result && result.value;
+						return result;
 					}
 
 				// If this is an inner synthetic event for an event with a bubbling surrogate
-				// (focus or blur), assume that the surrogate already propagated from triggering the
-				// native event and prevent that from happening again here.
+				// (focus or blur), assume that the surrogate already propagated from triggering
+				// the native event and prevent that from happening again here.
 				// This technically gets the ordering wrong w.r.t. to `.trigger()` (in which the
 				// bubbling surrogate propagates *after* the non-bubbling base), but that seems
 				// less bad than duplication.
@@ -33492,22 +31070,25 @@ function leverageNative( el, type, expectSync ) {
 
 			// If this is a native event triggered above, everything is now in order
 			// Fire an inner synthetic event with the original arguments
-			} else if ( saved.length ) {
+			} else if ( saved ) {
 
 				// ...and capture the result
-				dataPriv.set( this, type, {
-					value: jQuery.event.trigger(
+				dataPriv.set( this, type, jQuery.event.trigger(
+					saved[ 0 ],
+					saved.slice( 1 ),
+					this
+				) );
 
-						// Support: IE <=9 - 11+
-						// Extend with the prototype to reset the above stopImmediatePropagation()
-						jQuery.extend( saved[ 0 ], jQuery.Event.prototype ),
-						saved.slice( 1 ),
-						this
-					)
-				} );
-
-				// Abort handling of the native event
-				event.stopImmediatePropagation();
+				// Abort handling of the native event by all jQuery handlers while allowing
+				// native handlers on the same element to run. On target, this is achieved
+				// by stopping immediate propagation just on the jQuery event. However,
+				// the native event is re-wrapped by a jQuery one on each level of the
+				// propagation so the only way to stop it for jQuery is to stop it for
+				// everyone via native `stopPropagation()`. This is not a problem for
+				// focus/blur which don't bubble, but it does also stop click on checkboxes
+				// and radios. We accept this limitation.
+				event.stopPropagation();
+				event.isImmediatePropagationStopped = returnTrue;
 			}
 		}
 	} );
@@ -33646,18 +31227,73 @@ jQuery.each( {
 }, jQuery.event.addProp );
 
 jQuery.each( { focus: "focusin", blur: "focusout" }, function( type, delegateType ) {
+
+	function focusMappedHandler( nativeEvent ) {
+		if ( document.documentMode ) {
+
+			// Support: IE 11+
+			// Attach a single focusin/focusout handler on the document while someone wants
+			// focus/blur. This is because the former are synchronous in IE while the latter
+			// are async. In other browsers, all those handlers are invoked synchronously.
+
+			// `handle` from private data would already wrap the event, but we need
+			// to change the `type` here.
+			var handle = dataPriv.get( this, "handle" ),
+				event = jQuery.event.fix( nativeEvent );
+			event.type = nativeEvent.type === "focusin" ? "focus" : "blur";
+			event.isSimulated = true;
+
+			// First, handle focusin/focusout
+			handle( nativeEvent );
+
+			// ...then, handle focus/blur
+			//
+			// focus/blur don't bubble while focusin/focusout do; simulate the former by only
+			// invoking the handler at the lower level.
+			if ( event.target === event.currentTarget ) {
+
+				// The setup part calls `leverageNative`, which, in turn, calls
+				// `jQuery.event.add`, so event handle will already have been set
+				// by this point.
+				handle( event );
+			}
+		} else {
+
+			// For non-IE browsers, attach a single capturing handler on the document
+			// while someone wants focusin/focusout.
+			jQuery.event.simulate( delegateType, nativeEvent.target,
+				jQuery.event.fix( nativeEvent ) );
+		}
+	}
+
 	jQuery.event.special[ type ] = {
 
 		// Utilize native event if possible so blur/focus sequence is correct
 		setup: function() {
 
+			var attaches;
+
 			// Claim the first handler
 			// dataPriv.set( this, "focus", ... )
 			// dataPriv.set( this, "blur", ... )
-			leverageNative( this, type, expectSync );
+			leverageNative( this, type, true );
 
-			// Return false to allow normal processing in the caller
-			return false;
+			if ( document.documentMode ) {
+
+				// Support: IE 9 - 11+
+				// We use the same native handler for focusin & focus (and focusout & blur)
+				// so we need to coordinate setup & teardown parts between those events.
+				// Use `delegateType` as the key as `type` is already used by `leverageNative`.
+				attaches = dataPriv.get( this, delegateType );
+				if ( !attaches ) {
+					this.addEventListener( delegateType, focusMappedHandler );
+				}
+				dataPriv.set( this, delegateType, ( attaches || 0 ) + 1 );
+			} else {
+
+				// Return false to allow normal processing in the caller
+				return false;
+			}
 		},
 		trigger: function() {
 
@@ -33668,6 +31304,24 @@ jQuery.each( { focus: "focusin", blur: "focusout" }, function( type, delegateTyp
 			return true;
 		},
 
+		teardown: function() {
+			var attaches;
+
+			if ( document.documentMode ) {
+				attaches = dataPriv.get( this, delegateType ) - 1;
+				if ( !attaches ) {
+					this.removeEventListener( delegateType, focusMappedHandler );
+					dataPriv.remove( this, delegateType );
+				} else {
+					dataPriv.set( this, delegateType, attaches );
+				}
+			} else {
+
+				// Return false to indicate standard teardown should be applied
+				return false;
+			}
+		},
+
 		// Suppress native focus or blur if we're currently inside
 		// a leveraged native-event stack
 		_default: function( event ) {
@@ -33675,6 +31329,58 @@ jQuery.each( { focus: "focusin", blur: "focusout" }, function( type, delegateTyp
 		},
 
 		delegateType: delegateType
+	};
+
+	// Support: Firefox <=44
+	// Firefox doesn't have focus(in | out) events
+	// Related ticket - https://bugzilla.mozilla.org/show_bug.cgi?id=687787
+	//
+	// Support: Chrome <=48 - 49, Safari <=9.0 - 9.1
+	// focus(in | out) events fire after focus & blur events,
+	// which is spec violation - http://www.w3.org/TR/DOM-Level-3-Events/#events-focusevent-event-order
+	// Related ticket - https://bugs.chromium.org/p/chromium/issues/detail?id=449857
+	//
+	// Support: IE 9 - 11+
+	// To preserve relative focusin/focus & focusout/blur event order guaranteed on the 3.x branch,
+	// attach a single handler for both events in IE.
+	jQuery.event.special[ delegateType ] = {
+		setup: function() {
+
+			// Handle: regular nodes (via `this.ownerDocument`), window
+			// (via `this.document`) & document (via `this`).
+			var doc = this.ownerDocument || this.document || this,
+				dataHolder = document.documentMode ? this : doc,
+				attaches = dataPriv.get( dataHolder, delegateType );
+
+			// Support: IE 9 - 11+
+			// We use the same native handler for focusin & focus (and focusout & blur)
+			// so we need to coordinate setup & teardown parts between those events.
+			// Use `delegateType` as the key as `type` is already used by `leverageNative`.
+			if ( !attaches ) {
+				if ( document.documentMode ) {
+					this.addEventListener( delegateType, focusMappedHandler );
+				} else {
+					doc.addEventListener( type, focusMappedHandler, true );
+				}
+			}
+			dataPriv.set( dataHolder, delegateType, ( attaches || 0 ) + 1 );
+		},
+		teardown: function() {
+			var doc = this.ownerDocument || this.document || this,
+				dataHolder = document.documentMode ? this : doc,
+				attaches = dataPriv.get( dataHolder, delegateType ) - 1;
+
+			if ( !attaches ) {
+				if ( document.documentMode ) {
+					this.removeEventListener( delegateType, focusMappedHandler );
+				} else {
+					doc.removeEventListener( type, focusMappedHandler, true );
+				}
+				dataPriv.remove( dataHolder, delegateType );
+			} else {
+				dataPriv.set( dataHolder, delegateType, attaches );
+			}
+		}
 	};
 } );
 
@@ -33761,97 +31467,6 @@ jQuery.fn.extend( {
 } );
 
 return jQuery;
-}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-
-
-/***/ }),
-
-/***/ "./node_modules/jquery/src/event/focusin.js":
-/*!**************************************************!*\
-  !*** ./node_modules/jquery/src/event/focusin.js ***!
-  \**************************************************/
-/***/ ((module, exports, __webpack_require__) => {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [
-	__webpack_require__(/*! ../core */ "./node_modules/jquery/src/core.js"),
-	__webpack_require__(/*! ../data/var/dataPriv */ "./node_modules/jquery/src/data/var/dataPriv.js"),
-	__webpack_require__(/*! ./support */ "./node_modules/jquery/src/event/support.js"),
-
-	__webpack_require__(/*! ../event */ "./node_modules/jquery/src/event.js"),
-	__webpack_require__(/*! ./trigger */ "./node_modules/jquery/src/event/trigger.js")
-], __WEBPACK_AMD_DEFINE_RESULT__ = (function( jQuery, dataPriv, support ) {
-
-"use strict";
-
-// Support: Firefox <=44
-// Firefox doesn't have focus(in | out) events
-// Related ticket - https://bugzilla.mozilla.org/show_bug.cgi?id=687787
-//
-// Support: Chrome <=48 - 49, Safari <=9.0 - 9.1
-// focus(in | out) events fire after focus & blur events,
-// which is spec violation - http://www.w3.org/TR/DOM-Level-3-Events/#events-focusevent-event-order
-// Related ticket - https://bugs.chromium.org/p/chromium/issues/detail?id=449857
-if ( !support.focusin ) {
-	jQuery.each( { focus: "focusin", blur: "focusout" }, function( orig, fix ) {
-
-		// Attach a single capturing handler on the document while someone wants focusin/focusout
-		var handler = function( event ) {
-			jQuery.event.simulate( fix, event.target, jQuery.event.fix( event ) );
-		};
-
-		jQuery.event.special[ fix ] = {
-			setup: function() {
-
-				// Handle: regular nodes (via `this.ownerDocument`), window
-				// (via `this.document`) & document (via `this`).
-				var doc = this.ownerDocument || this.document || this,
-					attaches = dataPriv.access( doc, fix );
-
-				if ( !attaches ) {
-					doc.addEventListener( orig, handler, true );
-				}
-				dataPriv.access( doc, fix, ( attaches || 0 ) + 1 );
-			},
-			teardown: function() {
-				var doc = this.ownerDocument || this.document || this,
-					attaches = dataPriv.access( doc, fix ) - 1;
-
-				if ( !attaches ) {
-					doc.removeEventListener( orig, handler, true );
-					dataPriv.remove( doc, fix );
-
-				} else {
-					dataPriv.access( doc, fix, attaches );
-				}
-			}
-		};
-	} );
-}
-
-return jQuery;
-}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-
-
-/***/ }),
-
-/***/ "./node_modules/jquery/src/event/support.js":
-/*!**************************************************!*\
-  !*** ./node_modules/jquery/src/event/support.js ***!
-  \**************************************************/
-/***/ ((module, exports, __webpack_require__) => {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [
-	__webpack_require__(/*! ../var/support */ "./node_modules/jquery/src/var/support.js")
-], __WEBPACK_AMD_DEFINE_RESULT__ = (function( support ) {
-
-"use strict";
-
-support.focusin = "onfocusin" in window;
-
-return support;
-
 }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
@@ -34171,7 +31786,6 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 	__webpack_require__(/*! ./queue/delay */ "./node_modules/jquery/src/queue/delay.js"),
 	__webpack_require__(/*! ./attributes */ "./node_modules/jquery/src/attributes.js"),
 	__webpack_require__(/*! ./event */ "./node_modules/jquery/src/event.js"),
-	__webpack_require__(/*! ./event/focusin */ "./node_modules/jquery/src/event/focusin.js"),
 	__webpack_require__(/*! ./manipulation */ "./node_modules/jquery/src/manipulation.js"),
 	__webpack_require__(/*! ./manipulation/_evalUrl */ "./node_modules/jquery/src/manipulation/_evalUrl.js"),
 	__webpack_require__(/*! ./wrap */ "./node_modules/jquery/src/wrap.js"),
@@ -34389,7 +32003,7 @@ function domManip( collection, args, callback, ignored ) {
 			if ( hasScripts ) {
 				doc = scripts[ scripts.length - 1 ].ownerDocument;
 
-				// Reenable scripts
+				// Re-enable scripts
 				jQuery.map( scripts, restoreScript );
 
 				// Evaluate executable scripts on first document insertion
@@ -34460,7 +32074,8 @@ jQuery.extend( {
 		if ( !support.noCloneChecked && ( elem.nodeType === 1 || elem.nodeType === 11 ) &&
 				!jQuery.isXMLDoc( elem ) ) {
 
-			// We eschew Sizzle here for performance reasons: https://jsperf.com/getall-vs-sizzle/2
+			// We eschew jQuery#find here for performance reasons:
+			// https://jsperf.com/getall-vs-sizzle/2
 			destElements = getAll( clone );
 			srcElements = getAll( elem );
 
@@ -35499,29 +33114,2127 @@ return jQuery.fn.delay;
 
 /***/ }),
 
-/***/ "./node_modules/jquery/src/selector-sizzle.js":
-/*!****************************************************!*\
-  !*** ./node_modules/jquery/src/selector-sizzle.js ***!
-  \****************************************************/
+/***/ "./node_modules/jquery/src/selector.js":
+/*!*********************************************!*\
+  !*** ./node_modules/jquery/src/selector.js ***!
+  \*********************************************/
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [
 	__webpack_require__(/*! ./core */ "./node_modules/jquery/src/core.js"),
-	__webpack_require__(/*! ../external/sizzle/dist/sizzle */ "./node_modules/jquery/external/sizzle/dist/sizzle.js")
-], __WEBPACK_AMD_DEFINE_RESULT__ = (function( jQuery, Sizzle ) {
+	__webpack_require__(/*! ./core/nodeName */ "./node_modules/jquery/src/core/nodeName.js"),
+	__webpack_require__(/*! ./var/arr */ "./node_modules/jquery/src/var/arr.js"),
+	__webpack_require__(/*! ./var/document */ "./node_modules/jquery/src/var/document.js"),
+	__webpack_require__(/*! ./var/indexOf */ "./node_modules/jquery/src/var/indexOf.js"),
+	__webpack_require__(/*! ./var/hasOwn */ "./node_modules/jquery/src/var/hasOwn.js"),
+	__webpack_require__(/*! ./var/pop */ "./node_modules/jquery/src/var/pop.js"),
+	__webpack_require__(/*! ./var/push */ "./node_modules/jquery/src/var/push.js"),
+	__webpack_require__(/*! ./var/slice */ "./node_modules/jquery/src/var/slice.js"),
+	__webpack_require__(/*! ./var/sort */ "./node_modules/jquery/src/var/sort.js"),
+	__webpack_require__(/*! ./var/splice */ "./node_modules/jquery/src/var/splice.js"),
+	__webpack_require__(/*! ./var/whitespace */ "./node_modules/jquery/src/var/whitespace.js"),
+	__webpack_require__(/*! ./var/rtrimCSS */ "./node_modules/jquery/src/var/rtrimCSS.js"),
+	__webpack_require__(/*! ./var/support */ "./node_modules/jquery/src/var/support.js"),
+
+	// The following utils are attached directly to the jQuery object.
+	__webpack_require__(/*! ./selector/contains */ "./node_modules/jquery/src/selector/contains.js"),
+	__webpack_require__(/*! ./selector/escapeSelector */ "./node_modules/jquery/src/selector/escapeSelector.js")
+], __WEBPACK_AMD_DEFINE_RESULT__ = (function( jQuery, nodeName, arr, document, indexOf, hasOwn, pop, push,
+	slice, sort, splice, whitespace, rtrimCSS, support ) {
 
 "use strict";
 
-jQuery.find = Sizzle;
-jQuery.expr = Sizzle.selectors;
+var preferredDoc = document,
+	pushNative = push;
+
+( function() {
+
+var i,
+	Expr,
+	outermostContext,
+	sortInput,
+	hasDuplicate,
+	push = pushNative,
+
+	// Local document vars
+	document,
+	documentElement,
+	documentIsHTML,
+	rbuggyQSA,
+	matches,
+
+	// Instance-specific data
+	expando = jQuery.expando,
+	dirruns = 0,
+	done = 0,
+	classCache = createCache(),
+	tokenCache = createCache(),
+	compilerCache = createCache(),
+	nonnativeSelectorCache = createCache(),
+	sortOrder = function( a, b ) {
+		if ( a === b ) {
+			hasDuplicate = true;
+		}
+		return 0;
+	},
+
+	booleans = "checked|selected|async|autofocus|autoplay|controls|defer|disabled|hidden|ismap|" +
+		"loop|multiple|open|readonly|required|scoped",
+
+	// Regular expressions
+
+	// https://www.w3.org/TR/css-syntax-3/#ident-token-diagram
+	identifier = "(?:\\\\[\\da-fA-F]{1,6}" + whitespace +
+		"?|\\\\[^\\r\\n\\f]|[\\w-]|[^\0-\\x7f])+",
+
+	// Attribute selectors: https://www.w3.org/TR/selectors/#attribute-selectors
+	attributes = "\\[" + whitespace + "*(" + identifier + ")(?:" + whitespace +
+
+		// Operator (capture 2)
+		"*([*^$|!~]?=)" + whitespace +
+
+		// "Attribute values must be CSS identifiers [capture 5] or strings [capture 3 or capture 4]"
+		"*(?:'((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\"|(" + identifier + "))|)" +
+		whitespace + "*\\]",
+
+	pseudos = ":(" + identifier + ")(?:\\((" +
+
+		// To reduce the number of selectors needing tokenize in the preFilter, prefer arguments:
+		// 1. quoted (capture 3; capture 4 or capture 5)
+		"('((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\")|" +
+
+		// 2. simple (capture 6)
+		"((?:\\\\.|[^\\\\()[\\]]|" + attributes + ")*)|" +
+
+		// 3. anything else (capture 2)
+		".*" +
+		")\\)|)",
+
+	// Leading and non-escaped trailing whitespace, capturing some non-whitespace characters preceding the latter
+	rwhitespace = new RegExp( whitespace + "+", "g" ),
+
+	rcomma = new RegExp( "^" + whitespace + "*," + whitespace + "*" ),
+	rleadingCombinator = new RegExp( "^" + whitespace + "*([>+~]|" + whitespace + ")" +
+		whitespace + "*" ),
+	rdescend = new RegExp( whitespace + "|>" ),
+
+	rpseudo = new RegExp( pseudos ),
+	ridentifier = new RegExp( "^" + identifier + "$" ),
+
+	matchExpr = {
+		ID: new RegExp( "^#(" + identifier + ")" ),
+		CLASS: new RegExp( "^\\.(" + identifier + ")" ),
+		TAG: new RegExp( "^(" + identifier + "|[*])" ),
+		ATTR: new RegExp( "^" + attributes ),
+		PSEUDO: new RegExp( "^" + pseudos ),
+		CHILD: new RegExp(
+			"^:(only|first|last|nth|nth-last)-(child|of-type)(?:\\(" +
+				whitespace + "*(even|odd|(([+-]|)(\\d*)n|)" + whitespace + "*(?:([+-]|)" +
+				whitespace + "*(\\d+)|))" + whitespace + "*\\)|)", "i" ),
+		bool: new RegExp( "^(?:" + booleans + ")$", "i" ),
+
+		// For use in libraries implementing .is()
+		// We use this for POS matching in `select`
+		needsContext: new RegExp( "^" + whitespace +
+			"*[>+~]|:(even|odd|eq|gt|lt|nth|first|last)(?:\\(" + whitespace +
+			"*((?:-\\d)?\\d*)" + whitespace + "*\\)|)(?=[^-]|$)", "i" )
+	},
+
+	rinputs = /^(?:input|select|textarea|button)$/i,
+	rheader = /^h\d$/i,
+
+	// Easily-parseable/retrievable ID or TAG or CLASS selectors
+	rquickExpr = /^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/,
+
+	rsibling = /[+~]/,
+
+	// CSS escapes
+	// https://www.w3.org/TR/CSS21/syndata.html#escaped-characters
+	runescape = new RegExp( "\\\\[\\da-fA-F]{1,6}" + whitespace +
+		"?|\\\\([^\\r\\n\\f])", "g" ),
+	funescape = function( escape, nonHex ) {
+		var high = "0x" + escape.slice( 1 ) - 0x10000;
+
+		if ( nonHex ) {
+
+			// Strip the backslash prefix from a non-hex escape sequence
+			return nonHex;
+		}
+
+		// Replace a hexadecimal escape sequence with the encoded Unicode code point
+		// Support: IE <=11+
+		// For values outside the Basic Multilingual Plane (BMP), manually construct a
+		// surrogate pair
+		return high < 0 ?
+			String.fromCharCode( high + 0x10000 ) :
+			String.fromCharCode( high >> 10 | 0xD800, high & 0x3FF | 0xDC00 );
+	},
+
+	// Used for iframes; see `setDocument`.
+	// Support: IE 9 - 11+, Edge 12 - 18+
+	// Removing the function wrapper causes a "Permission Denied"
+	// error in IE/Edge.
+	unloadHandler = function() {
+		setDocument();
+	},
+
+	inDisabledFieldset = addCombinator(
+		function( elem ) {
+			return elem.disabled === true && nodeName( elem, "fieldset" );
+		},
+		{ dir: "parentNode", next: "legend" }
+	);
+
+// Support: IE <=9 only
+// Accessing document.activeElement can throw unexpectedly
+// https://bugs.jquery.com/ticket/13393
+function safeActiveElement() {
+	try {
+		return document.activeElement;
+	} catch ( err ) { }
+}
+
+// Optimize for push.apply( _, NodeList )
+try {
+	push.apply(
+		( arr = slice.call( preferredDoc.childNodes ) ),
+		preferredDoc.childNodes
+	);
+
+	// Support: Android <=4.0
+	// Detect silently failing push.apply
+	// eslint-disable-next-line no-unused-expressions
+	arr[ preferredDoc.childNodes.length ].nodeType;
+} catch ( e ) {
+	push = {
+		apply: function( target, els ) {
+			pushNative.apply( target, slice.call( els ) );
+		},
+		call: function( target ) {
+			pushNative.apply( target, slice.call( arguments, 1 ) );
+		}
+	};
+}
+
+function find( selector, context, results, seed ) {
+	var m, i, elem, nid, match, groups, newSelector,
+		newContext = context && context.ownerDocument,
+
+		// nodeType defaults to 9, since context defaults to document
+		nodeType = context ? context.nodeType : 9;
+
+	results = results || [];
+
+	// Return early from calls with invalid selector or context
+	if ( typeof selector !== "string" || !selector ||
+		nodeType !== 1 && nodeType !== 9 && nodeType !== 11 ) {
+
+		return results;
+	}
+
+	// Try to shortcut find operations (as opposed to filters) in HTML documents
+	if ( !seed ) {
+		setDocument( context );
+		context = context || document;
+
+		if ( documentIsHTML ) {
+
+			// If the selector is sufficiently simple, try using a "get*By*" DOM method
+			// (excepting DocumentFragment context, where the methods don't exist)
+			if ( nodeType !== 11 && ( match = rquickExpr.exec( selector ) ) ) {
+
+				// ID selector
+				if ( ( m = match[ 1 ] ) ) {
+
+					// Document context
+					if ( nodeType === 9 ) {
+						if ( ( elem = context.getElementById( m ) ) ) {
+
+							// Support: IE 9 only
+							// getElementById can match elements by name instead of ID
+							if ( elem.id === m ) {
+								push.call( results, elem );
+								return results;
+							}
+						} else {
+							return results;
+						}
+
+					// Element context
+					} else {
+
+						// Support: IE 9 only
+						// getElementById can match elements by name instead of ID
+						if ( newContext && ( elem = newContext.getElementById( m ) ) &&
+							find.contains( context, elem ) &&
+							elem.id === m ) {
+
+							push.call( results, elem );
+							return results;
+						}
+					}
+
+				// Type selector
+				} else if ( match[ 2 ] ) {
+					push.apply( results, context.getElementsByTagName( selector ) );
+					return results;
+
+				// Class selector
+				} else if ( ( m = match[ 3 ] ) && context.getElementsByClassName ) {
+					push.apply( results, context.getElementsByClassName( m ) );
+					return results;
+				}
+			}
+
+			// Take advantage of querySelectorAll
+			if ( !nonnativeSelectorCache[ selector + " " ] &&
+				( !rbuggyQSA || !rbuggyQSA.test( selector ) ) ) {
+
+				newSelector = selector;
+				newContext = context;
+
+				// qSA considers elements outside a scoping root when evaluating child or
+				// descendant combinators, which is not what we want.
+				// In such cases, we work around the behavior by prefixing every selector in the
+				// list with an ID selector referencing the scope context.
+				// The technique has to be used as well when a leading combinator is used
+				// as such selectors are not recognized by querySelectorAll.
+				// Thanks to Andrew Dupont for this technique.
+				if ( nodeType === 1 &&
+					( rdescend.test( selector ) || rleadingCombinator.test( selector ) ) ) {
+
+					// Expand context for sibling selectors
+					newContext = rsibling.test( selector ) && testContext( context.parentNode ) ||
+						context;
+
+					// We can use :scope instead of the ID hack if the browser
+					// supports it & if we're not changing the context.
+					// Support: IE 11+, Edge 17 - 18+
+					// IE/Edge sometimes throw a "Permission denied" error when
+					// strict-comparing two documents; shallow comparisons work.
+					// eslint-disable-next-line eqeqeq
+					if ( newContext != context || !support.scope ) {
+
+						// Capture the context ID, setting it first if necessary
+						if ( ( nid = context.getAttribute( "id" ) ) ) {
+							nid = jQuery.escapeSelector( nid );
+						} else {
+							context.setAttribute( "id", ( nid = expando ) );
+						}
+					}
+
+					// Prefix every selector in the list
+					groups = tokenize( selector );
+					i = groups.length;
+					while ( i-- ) {
+						groups[ i ] = ( nid ? "#" + nid : ":scope" ) + " " +
+							toSelector( groups[ i ] );
+					}
+					newSelector = groups.join( "," );
+				}
+
+				try {
+					push.apply( results,
+						newContext.querySelectorAll( newSelector )
+					);
+					return results;
+				} catch ( qsaError ) {
+					nonnativeSelectorCache( selector, true );
+				} finally {
+					if ( nid === expando ) {
+						context.removeAttribute( "id" );
+					}
+				}
+			}
+		}
+	}
+
+	// All others
+	return select( selector.replace( rtrimCSS, "$1" ), context, results, seed );
+}
+
+/**
+ * Create key-value caches of limited size
+ * @returns {function(string, object)} Returns the Object data after storing it on itself with
+ *	property name the (space-suffixed) string and (if the cache is larger than Expr.cacheLength)
+ *	deleting the oldest entry
+ */
+function createCache() {
+	var keys = [];
+
+	function cache( key, value ) {
+
+		// Use (key + " ") to avoid collision with native prototype properties
+		// (see https://github.com/jquery/sizzle/issues/157)
+		if ( keys.push( key + " " ) > Expr.cacheLength ) {
+
+			// Only keep the most recent entries
+			delete cache[ keys.shift() ];
+		}
+		return ( cache[ key + " " ] = value );
+	}
+	return cache;
+}
+
+/**
+ * Mark a function for special use by jQuery selector module
+ * @param {Function} fn The function to mark
+ */
+function markFunction( fn ) {
+	fn[ expando ] = true;
+	return fn;
+}
+
+/**
+ * Support testing using an element
+ * @param {Function} fn Passed the created element and returns a boolean result
+ */
+function assert( fn ) {
+	var el = document.createElement( "fieldset" );
+
+	try {
+		return !!fn( el );
+	} catch ( e ) {
+		return false;
+	} finally {
+
+		// Remove from its parent by default
+		if ( el.parentNode ) {
+			el.parentNode.removeChild( el );
+		}
+
+		// release memory in IE
+		el = null;
+	}
+}
+
+/**
+ * Returns a function to use in pseudos for input types
+ * @param {String} type
+ */
+function createInputPseudo( type ) {
+	return function( elem ) {
+		return nodeName( elem, "input" ) && elem.type === type;
+	};
+}
+
+/**
+ * Returns a function to use in pseudos for buttons
+ * @param {String} type
+ */
+function createButtonPseudo( type ) {
+	return function( elem ) {
+		return ( nodeName( elem, "input" ) || nodeName( elem, "button" ) ) &&
+			elem.type === type;
+	};
+}
+
+/**
+ * Returns a function to use in pseudos for :enabled/:disabled
+ * @param {Boolean} disabled true for :disabled; false for :enabled
+ */
+function createDisabledPseudo( disabled ) {
+
+	// Known :disabled false positives: fieldset[disabled] > legend:nth-of-type(n+2) :can-disable
+	return function( elem ) {
+
+		// Only certain elements can match :enabled or :disabled
+		// https://html.spec.whatwg.org/multipage/scripting.html#selector-enabled
+		// https://html.spec.whatwg.org/multipage/scripting.html#selector-disabled
+		if ( "form" in elem ) {
+
+			// Check for inherited disabledness on relevant non-disabled elements:
+			// * listed form-associated elements in a disabled fieldset
+			//   https://html.spec.whatwg.org/multipage/forms.html#category-listed
+			//   https://html.spec.whatwg.org/multipage/forms.html#concept-fe-disabled
+			// * option elements in a disabled optgroup
+			//   https://html.spec.whatwg.org/multipage/forms.html#concept-option-disabled
+			// All such elements have a "form" property.
+			if ( elem.parentNode && elem.disabled === false ) {
+
+				// Option elements defer to a parent optgroup if present
+				if ( "label" in elem ) {
+					if ( "label" in elem.parentNode ) {
+						return elem.parentNode.disabled === disabled;
+					} else {
+						return elem.disabled === disabled;
+					}
+				}
+
+				// Support: IE 6 - 11+
+				// Use the isDisabled shortcut property to check for disabled fieldset ancestors
+				return elem.isDisabled === disabled ||
+
+					// Where there is no isDisabled, check manually
+					elem.isDisabled !== !disabled &&
+						inDisabledFieldset( elem ) === disabled;
+			}
+
+			return elem.disabled === disabled;
+
+		// Try to winnow out elements that can't be disabled before trusting the disabled property.
+		// Some victims get caught in our net (label, legend, menu, track), but it shouldn't
+		// even exist on them, let alone have a boolean value.
+		} else if ( "label" in elem ) {
+			return elem.disabled === disabled;
+		}
+
+		// Remaining elements are neither :enabled nor :disabled
+		return false;
+	};
+}
+
+/**
+ * Returns a function to use in pseudos for positionals
+ * @param {Function} fn
+ */
+function createPositionalPseudo( fn ) {
+	return markFunction( function( argument ) {
+		argument = +argument;
+		return markFunction( function( seed, matches ) {
+			var j,
+				matchIndexes = fn( [], seed.length, argument ),
+				i = matchIndexes.length;
+
+			// Match elements found at the specified indexes
+			while ( i-- ) {
+				if ( seed[ ( j = matchIndexes[ i ] ) ] ) {
+					seed[ j ] = !( matches[ j ] = seed[ j ] );
+				}
+			}
+		} );
+	} );
+}
+
+/**
+ * Checks a node for validity as a jQuery selector context
+ * @param {Element|Object=} context
+ * @returns {Element|Object|Boolean} The input node if acceptable, otherwise a falsy value
+ */
+function testContext( context ) {
+	return context && typeof context.getElementsByTagName !== "undefined" && context;
+}
+
+/**
+ * Sets document-related variables once based on the current document
+ * @param {Element|Object} [node] An element or document object to use to set the document
+ * @returns {Object} Returns the current document
+ */
+function setDocument( node ) {
+	var subWindow,
+		doc = node ? node.ownerDocument || node : preferredDoc;
+
+	// Return early if doc is invalid or already selected
+	// Support: IE 11+, Edge 17 - 18+
+	// IE/Edge sometimes throw a "Permission denied" error when strict-comparing
+	// two documents; shallow comparisons work.
+	// eslint-disable-next-line eqeqeq
+	if ( doc == document || doc.nodeType !== 9 || !doc.documentElement ) {
+		return document;
+	}
+
+	// Update global variables
+	document = doc;
+	documentElement = document.documentElement;
+	documentIsHTML = !jQuery.isXMLDoc( document );
+
+	// Support: iOS 7 only, IE 9 - 11+
+	// Older browsers didn't support unprefixed `matches`.
+	matches = documentElement.matches ||
+		documentElement.webkitMatchesSelector ||
+		documentElement.msMatchesSelector;
+
+	// Support: IE 9 - 11+, Edge 12 - 18+
+	// Accessing iframe documents after unload throws "permission denied" errors
+	// (see trac-13936).
+	// Limit the fix to IE & Edge Legacy; despite Edge 15+ implementing `matches`,
+	// all IE 9+ and Edge Legacy versions implement `msMatchesSelector` as well.
+	if ( documentElement.msMatchesSelector &&
+
+		// Support: IE 11+, Edge 17 - 18+
+		// IE/Edge sometimes throw a "Permission denied" error when strict-comparing
+		// two documents; shallow comparisons work.
+		// eslint-disable-next-line eqeqeq
+		preferredDoc != document &&
+		( subWindow = document.defaultView ) && subWindow.top !== subWindow ) {
+
+		// Support: IE 9 - 11+, Edge 12 - 18+
+		subWindow.addEventListener( "unload", unloadHandler );
+	}
+
+	// Support: IE <10
+	// Check if getElementById returns elements by name
+	// The broken getElementById methods don't pick up programmatically-set names,
+	// so use a roundabout getElementsByName test
+	support.getById = assert( function( el ) {
+		documentElement.appendChild( el ).id = jQuery.expando;
+		return !document.getElementsByName ||
+			!document.getElementsByName( jQuery.expando ).length;
+	} );
+
+	// Support: IE 9 only
+	// Check to see if it's possible to do matchesSelector
+	// on a disconnected node.
+	support.disconnectedMatch = assert( function( el ) {
+		return matches.call( el, "*" );
+	} );
+
+	// Support: IE 9 - 11+, Edge 12 - 18+
+	// IE/Edge don't support the :scope pseudo-class.
+	support.scope = assert( function() {
+		return document.querySelectorAll( ":scope" );
+	} );
+
+	// Support: Chrome 105 - 111 only, Safari 15.4 - 16.3 only
+	// Make sure the `:has()` argument is parsed unforgivingly.
+	// We include `*` in the test to detect buggy implementations that are
+	// _selectively_ forgiving (specifically when the list includes at least
+	// one valid selector).
+	// Note that we treat complete lack of support for `:has()` as if it were
+	// spec-compliant support, which is fine because use of `:has()` in such
+	// environments will fail in the qSA path and fall back to jQuery traversal
+	// anyway.
+	support.cssHas = assert( function() {
+		try {
+			document.querySelector( ":has(*,:jqfake)" );
+			return false;
+		} catch ( e ) {
+			return true;
+		}
+	} );
+
+	// ID filter and find
+	if ( support.getById ) {
+		Expr.filter.ID = function( id ) {
+			var attrId = id.replace( runescape, funescape );
+			return function( elem ) {
+				return elem.getAttribute( "id" ) === attrId;
+			};
+		};
+		Expr.find.ID = function( id, context ) {
+			if ( typeof context.getElementById !== "undefined" && documentIsHTML ) {
+				var elem = context.getElementById( id );
+				return elem ? [ elem ] : [];
+			}
+		};
+	} else {
+		Expr.filter.ID =  function( id ) {
+			var attrId = id.replace( runescape, funescape );
+			return function( elem ) {
+				var node = typeof elem.getAttributeNode !== "undefined" &&
+					elem.getAttributeNode( "id" );
+				return node && node.value === attrId;
+			};
+		};
+
+		// Support: IE 6 - 7 only
+		// getElementById is not reliable as a find shortcut
+		Expr.find.ID = function( id, context ) {
+			if ( typeof context.getElementById !== "undefined" && documentIsHTML ) {
+				var node, i, elems,
+					elem = context.getElementById( id );
+
+				if ( elem ) {
+
+					// Verify the id attribute
+					node = elem.getAttributeNode( "id" );
+					if ( node && node.value === id ) {
+						return [ elem ];
+					}
+
+					// Fall back on getElementsByName
+					elems = context.getElementsByName( id );
+					i = 0;
+					while ( ( elem = elems[ i++ ] ) ) {
+						node = elem.getAttributeNode( "id" );
+						if ( node && node.value === id ) {
+							return [ elem ];
+						}
+					}
+				}
+
+				return [];
+			}
+		};
+	}
+
+	// Tag
+	Expr.find.TAG = function( tag, context ) {
+		if ( typeof context.getElementsByTagName !== "undefined" ) {
+			return context.getElementsByTagName( tag );
+
+		// DocumentFragment nodes don't have gEBTN
+		} else {
+			return context.querySelectorAll( tag );
+		}
+	};
+
+	// Class
+	Expr.find.CLASS = function( className, context ) {
+		if ( typeof context.getElementsByClassName !== "undefined" && documentIsHTML ) {
+			return context.getElementsByClassName( className );
+		}
+	};
+
+	/* QSA/matchesSelector
+	---------------------------------------------------------------------- */
+
+	// QSA and matchesSelector support
+
+	rbuggyQSA = [];
+
+	// Build QSA regex
+	// Regex strategy adopted from Diego Perini
+	assert( function( el ) {
+
+		var input;
+
+		documentElement.appendChild( el ).innerHTML =
+			"<a id='" + expando + "' href='' disabled='disabled'></a>" +
+			"<select id='" + expando + "-\r\\' disabled='disabled'>" +
+			"<option selected=''></option></select>";
+
+		// Support: iOS <=7 - 8 only
+		// Boolean attributes and "value" are not treated correctly in some XML documents
+		if ( !el.querySelectorAll( "[selected]" ).length ) {
+			rbuggyQSA.push( "\\[" + whitespace + "*(?:value|" + booleans + ")" );
+		}
+
+		// Support: iOS <=7 - 8 only
+		if ( !el.querySelectorAll( "[id~=" + expando + "-]" ).length ) {
+			rbuggyQSA.push( "~=" );
+		}
+
+		// Support: iOS 8 only
+		// https://bugs.webkit.org/show_bug.cgi?id=136851
+		// In-page `selector#id sibling-combinator selector` fails
+		if ( !el.querySelectorAll( "a#" + expando + "+*" ).length ) {
+			rbuggyQSA.push( ".#.+[+~]" );
+		}
+
+		// Support: Chrome <=105+, Firefox <=104+, Safari <=15.4+
+		// In some of the document kinds, these selectors wouldn't work natively.
+		// This is probably OK but for backwards compatibility we want to maintain
+		// handling them through jQuery traversal in jQuery 3.x.
+		if ( !el.querySelectorAll( ":checked" ).length ) {
+			rbuggyQSA.push( ":checked" );
+		}
+
+		// Support: Windows 8 Native Apps
+		// The type and name attributes are restricted during .innerHTML assignment
+		input = document.createElement( "input" );
+		input.setAttribute( "type", "hidden" );
+		el.appendChild( input ).setAttribute( "name", "D" );
+
+		// Support: IE 9 - 11+
+		// IE's :disabled selector does not pick up the children of disabled fieldsets
+		// Support: Chrome <=105+, Firefox <=104+, Safari <=15.4+
+		// In some of the document kinds, these selectors wouldn't work natively.
+		// This is probably OK but for backwards compatibility we want to maintain
+		// handling them through jQuery traversal in jQuery 3.x.
+		documentElement.appendChild( el ).disabled = true;
+		if ( el.querySelectorAll( ":disabled" ).length !== 2 ) {
+			rbuggyQSA.push( ":enabled", ":disabled" );
+		}
+
+		// Support: IE 11+, Edge 15 - 18+
+		// IE 11/Edge don't find elements on a `[name='']` query in some cases.
+		// Adding a temporary attribute to the document before the selection works
+		// around the issue.
+		// Interestingly, IE 10 & older don't seem to have the issue.
+		input = document.createElement( "input" );
+		input.setAttribute( "name", "" );
+		el.appendChild( input );
+		if ( !el.querySelectorAll( "[name='']" ).length ) {
+			rbuggyQSA.push( "\\[" + whitespace + "*name" + whitespace + "*=" +
+				whitespace + "*(?:''|\"\")" );
+		}
+	} );
+
+	if ( !support.cssHas ) {
+
+		// Support: Chrome 105 - 110+, Safari 15.4 - 16.3+
+		// Our regular `try-catch` mechanism fails to detect natively-unsupported
+		// pseudo-classes inside `:has()` (such as `:has(:contains("Foo"))`)
+		// in browsers that parse the `:has()` argument as a forgiving selector list.
+		// https://drafts.csswg.org/selectors/#relational now requires the argument
+		// to be parsed unforgivingly, but browsers have not yet fully adjusted.
+		rbuggyQSA.push( ":has" );
+	}
+
+	rbuggyQSA = rbuggyQSA.length && new RegExp( rbuggyQSA.join( "|" ) );
+
+	/* Sorting
+	---------------------------------------------------------------------- */
+
+	// Document order sorting
+	sortOrder = function( a, b ) {
+
+		// Flag for duplicate removal
+		if ( a === b ) {
+			hasDuplicate = true;
+			return 0;
+		}
+
+		// Sort on method existence if only one input has compareDocumentPosition
+		var compare = !a.compareDocumentPosition - !b.compareDocumentPosition;
+		if ( compare ) {
+			return compare;
+		}
+
+		// Calculate position if both inputs belong to the same document
+		// Support: IE 11+, Edge 17 - 18+
+		// IE/Edge sometimes throw a "Permission denied" error when strict-comparing
+		// two documents; shallow comparisons work.
+		// eslint-disable-next-line eqeqeq
+		compare = ( a.ownerDocument || a ) == ( b.ownerDocument || b ) ?
+			a.compareDocumentPosition( b ) :
+
+			// Otherwise we know they are disconnected
+			1;
+
+		// Disconnected nodes
+		if ( compare & 1 ||
+			( !support.sortDetached && b.compareDocumentPosition( a ) === compare ) ) {
+
+			// Choose the first element that is related to our preferred document
+			// Support: IE 11+, Edge 17 - 18+
+			// IE/Edge sometimes throw a "Permission denied" error when strict-comparing
+			// two documents; shallow comparisons work.
+			// eslint-disable-next-line eqeqeq
+			if ( a === document || a.ownerDocument == preferredDoc &&
+				find.contains( preferredDoc, a ) ) {
+				return -1;
+			}
+
+			// Support: IE 11+, Edge 17 - 18+
+			// IE/Edge sometimes throw a "Permission denied" error when strict-comparing
+			// two documents; shallow comparisons work.
+			// eslint-disable-next-line eqeqeq
+			if ( b === document || b.ownerDocument == preferredDoc &&
+				find.contains( preferredDoc, b ) ) {
+				return 1;
+			}
+
+			// Maintain original order
+			return sortInput ?
+				( indexOf.call( sortInput, a ) - indexOf.call( sortInput, b ) ) :
+				0;
+		}
+
+		return compare & 4 ? -1 : 1;
+	};
+
+	return document;
+}
+
+find.matches = function( expr, elements ) {
+	return find( expr, null, null, elements );
+};
+
+find.matchesSelector = function( elem, expr ) {
+	setDocument( elem );
+
+	if ( documentIsHTML &&
+		!nonnativeSelectorCache[ expr + " " ] &&
+		( !rbuggyQSA || !rbuggyQSA.test( expr ) ) ) {
+
+		try {
+			var ret = matches.call( elem, expr );
+
+			// IE 9's matchesSelector returns false on disconnected nodes
+			if ( ret || support.disconnectedMatch ||
+
+					// As well, disconnected nodes are said to be in a document
+					// fragment in IE 9
+					elem.document && elem.document.nodeType !== 11 ) {
+				return ret;
+			}
+		} catch ( e ) {
+			nonnativeSelectorCache( expr, true );
+		}
+	}
+
+	return find( expr, document, null, [ elem ] ).length > 0;
+};
+
+find.contains = function( context, elem ) {
+
+	// Set document vars if needed
+	// Support: IE 11+, Edge 17 - 18+
+	// IE/Edge sometimes throw a "Permission denied" error when strict-comparing
+	// two documents; shallow comparisons work.
+	// eslint-disable-next-line eqeqeq
+	if ( ( context.ownerDocument || context ) != document ) {
+		setDocument( context );
+	}
+	return jQuery.contains( context, elem );
+};
+
+
+find.attr = function( elem, name ) {
+
+	// Set document vars if needed
+	// Support: IE 11+, Edge 17 - 18+
+	// IE/Edge sometimes throw a "Permission denied" error when strict-comparing
+	// two documents; shallow comparisons work.
+	// eslint-disable-next-line eqeqeq
+	if ( ( elem.ownerDocument || elem ) != document ) {
+		setDocument( elem );
+	}
+
+	var fn = Expr.attrHandle[ name.toLowerCase() ],
+
+		// Don't get fooled by Object.prototype properties (see trac-13807)
+		val = fn && hasOwn.call( Expr.attrHandle, name.toLowerCase() ) ?
+			fn( elem, name, !documentIsHTML ) :
+			undefined;
+
+	if ( val !== undefined ) {
+		return val;
+	}
+
+	return elem.getAttribute( name );
+};
+
+find.error = function( msg ) {
+	throw new Error( "Syntax error, unrecognized expression: " + msg );
+};
+
+/**
+ * Document sorting and removing duplicates
+ * @param {ArrayLike} results
+ */
+jQuery.uniqueSort = function( results ) {
+	var elem,
+		duplicates = [],
+		j = 0,
+		i = 0;
+
+	// Unless we *know* we can detect duplicates, assume their presence
+	//
+	// Support: Android <=4.0+
+	// Testing for detecting duplicates is unpredictable so instead assume we can't
+	// depend on duplicate detection in all browsers without a stable sort.
+	hasDuplicate = !support.sortStable;
+	sortInput = !support.sortStable && slice.call( results, 0 );
+	sort.call( results, sortOrder );
+
+	if ( hasDuplicate ) {
+		while ( ( elem = results[ i++ ] ) ) {
+			if ( elem === results[ i ] ) {
+				j = duplicates.push( i );
+			}
+		}
+		while ( j-- ) {
+			splice.call( results, duplicates[ j ], 1 );
+		}
+	}
+
+	// Clear input after sorting to release objects
+	// See https://github.com/jquery/sizzle/pull/225
+	sortInput = null;
+
+	return results;
+};
+
+jQuery.fn.uniqueSort = function() {
+	return this.pushStack( jQuery.uniqueSort( slice.apply( this ) ) );
+};
+
+Expr = jQuery.expr = {
+
+	// Can be adjusted by the user
+	cacheLength: 50,
+
+	createPseudo: markFunction,
+
+	match: matchExpr,
+
+	attrHandle: {},
+
+	find: {},
+
+	relative: {
+		">": { dir: "parentNode", first: true },
+		" ": { dir: "parentNode" },
+		"+": { dir: "previousSibling", first: true },
+		"~": { dir: "previousSibling" }
+	},
+
+	preFilter: {
+		ATTR: function( match ) {
+			match[ 1 ] = match[ 1 ].replace( runescape, funescape );
+
+			// Move the given value to match[3] whether quoted or unquoted
+			match[ 3 ] = ( match[ 3 ] || match[ 4 ] || match[ 5 ] || "" )
+				.replace( runescape, funescape );
+
+			if ( match[ 2 ] === "~=" ) {
+				match[ 3 ] = " " + match[ 3 ] + " ";
+			}
+
+			return match.slice( 0, 4 );
+		},
+
+		CHILD: function( match ) {
+
+			/* matches from matchExpr["CHILD"]
+				1 type (only|nth|...)
+				2 what (child|of-type)
+				3 argument (even|odd|\d*|\d*n([+-]\d+)?|...)
+				4 xn-component of xn+y argument ([+-]?\d*n|)
+				5 sign of xn-component
+				6 x of xn-component
+				7 sign of y-component
+				8 y of y-component
+			*/
+			match[ 1 ] = match[ 1 ].toLowerCase();
+
+			if ( match[ 1 ].slice( 0, 3 ) === "nth" ) {
+
+				// nth-* requires argument
+				if ( !match[ 3 ] ) {
+					find.error( match[ 0 ] );
+				}
+
+				// numeric x and y parameters for Expr.filter.CHILD
+				// remember that false/true cast respectively to 0/1
+				match[ 4 ] = +( match[ 4 ] ?
+					match[ 5 ] + ( match[ 6 ] || 1 ) :
+					2 * ( match[ 3 ] === "even" || match[ 3 ] === "odd" )
+				);
+				match[ 5 ] = +( ( match[ 7 ] + match[ 8 ] ) || match[ 3 ] === "odd" );
+
+			// other types prohibit arguments
+			} else if ( match[ 3 ] ) {
+				find.error( match[ 0 ] );
+			}
+
+			return match;
+		},
+
+		PSEUDO: function( match ) {
+			var excess,
+				unquoted = !match[ 6 ] && match[ 2 ];
+
+			if ( matchExpr.CHILD.test( match[ 0 ] ) ) {
+				return null;
+			}
+
+			// Accept quoted arguments as-is
+			if ( match[ 3 ] ) {
+				match[ 2 ] = match[ 4 ] || match[ 5 ] || "";
+
+			// Strip excess characters from unquoted arguments
+			} else if ( unquoted && rpseudo.test( unquoted ) &&
+
+				// Get excess from tokenize (recursively)
+				( excess = tokenize( unquoted, true ) ) &&
+
+				// advance to the next closing parenthesis
+				( excess = unquoted.indexOf( ")", unquoted.length - excess ) - unquoted.length ) ) {
+
+				// excess is a negative index
+				match[ 0 ] = match[ 0 ].slice( 0, excess );
+				match[ 2 ] = unquoted.slice( 0, excess );
+			}
+
+			// Return only captures needed by the pseudo filter method (type and argument)
+			return match.slice( 0, 3 );
+		}
+	},
+
+	filter: {
+
+		TAG: function( nodeNameSelector ) {
+			var expectedNodeName = nodeNameSelector.replace( runescape, funescape ).toLowerCase();
+			return nodeNameSelector === "*" ?
+				function() {
+					return true;
+				} :
+				function( elem ) {
+					return nodeName( elem, expectedNodeName );
+				};
+		},
+
+		CLASS: function( className ) {
+			var pattern = classCache[ className + " " ];
+
+			return pattern ||
+				( pattern = new RegExp( "(^|" + whitespace + ")" + className +
+					"(" + whitespace + "|$)" ) ) &&
+				classCache( className, function( elem ) {
+					return pattern.test(
+						typeof elem.className === "string" && elem.className ||
+							typeof elem.getAttribute !== "undefined" &&
+								elem.getAttribute( "class" ) ||
+							""
+					);
+				} );
+		},
+
+		ATTR: function( name, operator, check ) {
+			return function( elem ) {
+				var result = find.attr( elem, name );
+
+				if ( result == null ) {
+					return operator === "!=";
+				}
+				if ( !operator ) {
+					return true;
+				}
+
+				result += "";
+
+				if ( operator === "=" ) {
+					return result === check;
+				}
+				if ( operator === "!=" ) {
+					return result !== check;
+				}
+				if ( operator === "^=" ) {
+					return check && result.indexOf( check ) === 0;
+				}
+				if ( operator === "*=" ) {
+					return check && result.indexOf( check ) > -1;
+				}
+				if ( operator === "$=" ) {
+					return check && result.slice( -check.length ) === check;
+				}
+				if ( operator === "~=" ) {
+					return ( " " + result.replace( rwhitespace, " " ) + " " )
+						.indexOf( check ) > -1;
+				}
+				if ( operator === "|=" ) {
+					return result === check || result.slice( 0, check.length + 1 ) === check + "-";
+				}
+
+				return false;
+			};
+		},
+
+		CHILD: function( type, what, _argument, first, last ) {
+			var simple = type.slice( 0, 3 ) !== "nth",
+				forward = type.slice( -4 ) !== "last",
+				ofType = what === "of-type";
+
+			return first === 1 && last === 0 ?
+
+				// Shortcut for :nth-*(n)
+				function( elem ) {
+					return !!elem.parentNode;
+				} :
+
+				function( elem, _context, xml ) {
+					var cache, outerCache, node, nodeIndex, start,
+						dir = simple !== forward ? "nextSibling" : "previousSibling",
+						parent = elem.parentNode,
+						name = ofType && elem.nodeName.toLowerCase(),
+						useCache = !xml && !ofType,
+						diff = false;
+
+					if ( parent ) {
+
+						// :(first|last|only)-(child|of-type)
+						if ( simple ) {
+							while ( dir ) {
+								node = elem;
+								while ( ( node = node[ dir ] ) ) {
+									if ( ofType ?
+										nodeName( node, name ) :
+										node.nodeType === 1 ) {
+
+										return false;
+									}
+								}
+
+								// Reverse direction for :only-* (if we haven't yet done so)
+								start = dir = type === "only" && !start && "nextSibling";
+							}
+							return true;
+						}
+
+						start = [ forward ? parent.firstChild : parent.lastChild ];
+
+						// non-xml :nth-child(...) stores cache data on `parent`
+						if ( forward && useCache ) {
+
+							// Seek `elem` from a previously-cached index
+							outerCache = parent[ expando ] || ( parent[ expando ] = {} );
+							cache = outerCache[ type ] || [];
+							nodeIndex = cache[ 0 ] === dirruns && cache[ 1 ];
+							diff = nodeIndex && cache[ 2 ];
+							node = nodeIndex && parent.childNodes[ nodeIndex ];
+
+							while ( ( node = ++nodeIndex && node && node[ dir ] ||
+
+								// Fallback to seeking `elem` from the start
+								( diff = nodeIndex = 0 ) || start.pop() ) ) {
+
+								// When found, cache indexes on `parent` and break
+								if ( node.nodeType === 1 && ++diff && node === elem ) {
+									outerCache[ type ] = [ dirruns, nodeIndex, diff ];
+									break;
+								}
+							}
+
+						} else {
+
+							// Use previously-cached element index if available
+							if ( useCache ) {
+								outerCache = elem[ expando ] || ( elem[ expando ] = {} );
+								cache = outerCache[ type ] || [];
+								nodeIndex = cache[ 0 ] === dirruns && cache[ 1 ];
+								diff = nodeIndex;
+							}
+
+							// xml :nth-child(...)
+							// or :nth-last-child(...) or :nth(-last)?-of-type(...)
+							if ( diff === false ) {
+
+								// Use the same loop as above to seek `elem` from the start
+								while ( ( node = ++nodeIndex && node && node[ dir ] ||
+									( diff = nodeIndex = 0 ) || start.pop() ) ) {
+
+									if ( ( ofType ?
+										nodeName( node, name ) :
+										node.nodeType === 1 ) &&
+										++diff ) {
+
+										// Cache the index of each encountered element
+										if ( useCache ) {
+											outerCache = node[ expando ] ||
+												( node[ expando ] = {} );
+											outerCache[ type ] = [ dirruns, diff ];
+										}
+
+										if ( node === elem ) {
+											break;
+										}
+									}
+								}
+							}
+						}
+
+						// Incorporate the offset, then check against cycle size
+						diff -= last;
+						return diff === first || ( diff % first === 0 && diff / first >= 0 );
+					}
+				};
+		},
+
+		PSEUDO: function( pseudo, argument ) {
+
+			// pseudo-class names are case-insensitive
+			// https://www.w3.org/TR/selectors/#pseudo-classes
+			// Prioritize by case sensitivity in case custom pseudos are added with uppercase letters
+			// Remember that setFilters inherits from pseudos
+			var args,
+				fn = Expr.pseudos[ pseudo ] || Expr.setFilters[ pseudo.toLowerCase() ] ||
+					find.error( "unsupported pseudo: " + pseudo );
+
+			// The user may use createPseudo to indicate that
+			// arguments are needed to create the filter function
+			// just as jQuery does
+			if ( fn[ expando ] ) {
+				return fn( argument );
+			}
+
+			// But maintain support for old signatures
+			if ( fn.length > 1 ) {
+				args = [ pseudo, pseudo, "", argument ];
+				return Expr.setFilters.hasOwnProperty( pseudo.toLowerCase() ) ?
+					markFunction( function( seed, matches ) {
+						var idx,
+							matched = fn( seed, argument ),
+							i = matched.length;
+						while ( i-- ) {
+							idx = indexOf.call( seed, matched[ i ] );
+							seed[ idx ] = !( matches[ idx ] = matched[ i ] );
+						}
+					} ) :
+					function( elem ) {
+						return fn( elem, 0, args );
+					};
+			}
+
+			return fn;
+		}
+	},
+
+	pseudos: {
+
+		// Potentially complex pseudos
+		not: markFunction( function( selector ) {
+
+			// Trim the selector passed to compile
+			// to avoid treating leading and trailing
+			// spaces as combinators
+			var input = [],
+				results = [],
+				matcher = compile( selector.replace( rtrimCSS, "$1" ) );
+
+			return matcher[ expando ] ?
+				markFunction( function( seed, matches, _context, xml ) {
+					var elem,
+						unmatched = matcher( seed, null, xml, [] ),
+						i = seed.length;
+
+					// Match elements unmatched by `matcher`
+					while ( i-- ) {
+						if ( ( elem = unmatched[ i ] ) ) {
+							seed[ i ] = !( matches[ i ] = elem );
+						}
+					}
+				} ) :
+				function( elem, _context, xml ) {
+					input[ 0 ] = elem;
+					matcher( input, null, xml, results );
+
+					// Don't keep the element
+					// (see https://github.com/jquery/sizzle/issues/299)
+					input[ 0 ] = null;
+					return !results.pop();
+				};
+		} ),
+
+		has: markFunction( function( selector ) {
+			return function( elem ) {
+				return find( selector, elem ).length > 0;
+			};
+		} ),
+
+		contains: markFunction( function( text ) {
+			text = text.replace( runescape, funescape );
+			return function( elem ) {
+				return ( elem.textContent || jQuery.text( elem ) ).indexOf( text ) > -1;
+			};
+		} ),
+
+		// "Whether an element is represented by a :lang() selector
+		// is based solely on the element's language value
+		// being equal to the identifier C,
+		// or beginning with the identifier C immediately followed by "-".
+		// The matching of C against the element's language value is performed case-insensitively.
+		// The identifier C does not have to be a valid language name."
+		// https://www.w3.org/TR/selectors/#lang-pseudo
+		lang: markFunction( function( lang ) {
+
+			// lang value must be a valid identifier
+			if ( !ridentifier.test( lang || "" ) ) {
+				find.error( "unsupported lang: " + lang );
+			}
+			lang = lang.replace( runescape, funescape ).toLowerCase();
+			return function( elem ) {
+				var elemLang;
+				do {
+					if ( ( elemLang = documentIsHTML ?
+						elem.lang :
+						elem.getAttribute( "xml:lang" ) || elem.getAttribute( "lang" ) ) ) {
+
+						elemLang = elemLang.toLowerCase();
+						return elemLang === lang || elemLang.indexOf( lang + "-" ) === 0;
+					}
+				} while ( ( elem = elem.parentNode ) && elem.nodeType === 1 );
+				return false;
+			};
+		} ),
+
+		// Miscellaneous
+		target: function( elem ) {
+			var hash = window.location && window.location.hash;
+			return hash && hash.slice( 1 ) === elem.id;
+		},
+
+		root: function( elem ) {
+			return elem === documentElement;
+		},
+
+		focus: function( elem ) {
+			return elem === safeActiveElement() &&
+				document.hasFocus() &&
+				!!( elem.type || elem.href || ~elem.tabIndex );
+		},
+
+		// Boolean properties
+		enabled: createDisabledPseudo( false ),
+		disabled: createDisabledPseudo( true ),
+
+		checked: function( elem ) {
+
+			// In CSS3, :checked should return both checked and selected elements
+			// https://www.w3.org/TR/2011/REC-css3-selectors-20110929/#checked
+			return ( nodeName( elem, "input" ) && !!elem.checked ) ||
+				( nodeName( elem, "option" ) && !!elem.selected );
+		},
+
+		selected: function( elem ) {
+
+			// Support: IE <=11+
+			// Accessing the selectedIndex property
+			// forces the browser to treat the default option as
+			// selected when in an optgroup.
+			if ( elem.parentNode ) {
+				// eslint-disable-next-line no-unused-expressions
+				elem.parentNode.selectedIndex;
+			}
+
+			return elem.selected === true;
+		},
+
+		// Contents
+		empty: function( elem ) {
+
+			// https://www.w3.org/TR/selectors/#empty-pseudo
+			// :empty is negated by element (1) or content nodes (text: 3; cdata: 4; entity ref: 5),
+			//   but not by others (comment: 8; processing instruction: 7; etc.)
+			// nodeType < 6 works because attributes (2) do not appear as children
+			for ( elem = elem.firstChild; elem; elem = elem.nextSibling ) {
+				if ( elem.nodeType < 6 ) {
+					return false;
+				}
+			}
+			return true;
+		},
+
+		parent: function( elem ) {
+			return !Expr.pseudos.empty( elem );
+		},
+
+		// Element/input types
+		header: function( elem ) {
+			return rheader.test( elem.nodeName );
+		},
+
+		input: function( elem ) {
+			return rinputs.test( elem.nodeName );
+		},
+
+		button: function( elem ) {
+			return nodeName( elem, "input" ) && elem.type === "button" ||
+				nodeName( elem, "button" );
+		},
+
+		text: function( elem ) {
+			var attr;
+			return nodeName( elem, "input" ) && elem.type === "text" &&
+
+				// Support: IE <10 only
+				// New HTML5 attribute values (e.g., "search") appear
+				// with elem.type === "text"
+				( ( attr = elem.getAttribute( "type" ) ) == null ||
+					attr.toLowerCase() === "text" );
+		},
+
+		// Position-in-collection
+		first: createPositionalPseudo( function() {
+			return [ 0 ];
+		} ),
+
+		last: createPositionalPseudo( function( _matchIndexes, length ) {
+			return [ length - 1 ];
+		} ),
+
+		eq: createPositionalPseudo( function( _matchIndexes, length, argument ) {
+			return [ argument < 0 ? argument + length : argument ];
+		} ),
+
+		even: createPositionalPseudo( function( matchIndexes, length ) {
+			var i = 0;
+			for ( ; i < length; i += 2 ) {
+				matchIndexes.push( i );
+			}
+			return matchIndexes;
+		} ),
+
+		odd: createPositionalPseudo( function( matchIndexes, length ) {
+			var i = 1;
+			for ( ; i < length; i += 2 ) {
+				matchIndexes.push( i );
+			}
+			return matchIndexes;
+		} ),
+
+		lt: createPositionalPseudo( function( matchIndexes, length, argument ) {
+			var i;
+
+			if ( argument < 0 ) {
+				i = argument + length;
+			} else if ( argument > length ) {
+				i = length;
+			} else {
+				i = argument;
+			}
+
+			for ( ; --i >= 0; ) {
+				matchIndexes.push( i );
+			}
+			return matchIndexes;
+		} ),
+
+		gt: createPositionalPseudo( function( matchIndexes, length, argument ) {
+			var i = argument < 0 ? argument + length : argument;
+			for ( ; ++i < length; ) {
+				matchIndexes.push( i );
+			}
+			return matchIndexes;
+		} )
+	}
+};
+
+Expr.pseudos.nth = Expr.pseudos.eq;
+
+// Add button/input type pseudos
+for ( i in { radio: true, checkbox: true, file: true, password: true, image: true } ) {
+	Expr.pseudos[ i ] = createInputPseudo( i );
+}
+for ( i in { submit: true, reset: true } ) {
+	Expr.pseudos[ i ] = createButtonPseudo( i );
+}
+
+// Easy API for creating new setFilters
+function setFilters() {}
+setFilters.prototype = Expr.filters = Expr.pseudos;
+Expr.setFilters = new setFilters();
+
+function tokenize( selector, parseOnly ) {
+	var matched, match, tokens, type,
+		soFar, groups, preFilters,
+		cached = tokenCache[ selector + " " ];
+
+	if ( cached ) {
+		return parseOnly ? 0 : cached.slice( 0 );
+	}
+
+	soFar = selector;
+	groups = [];
+	preFilters = Expr.preFilter;
+
+	while ( soFar ) {
+
+		// Comma and first run
+		if ( !matched || ( match = rcomma.exec( soFar ) ) ) {
+			if ( match ) {
+
+				// Don't consume trailing commas as valid
+				soFar = soFar.slice( match[ 0 ].length ) || soFar;
+			}
+			groups.push( ( tokens = [] ) );
+		}
+
+		matched = false;
+
+		// Combinators
+		if ( ( match = rleadingCombinator.exec( soFar ) ) ) {
+			matched = match.shift();
+			tokens.push( {
+				value: matched,
+
+				// Cast descendant combinators to space
+				type: match[ 0 ].replace( rtrimCSS, " " )
+			} );
+			soFar = soFar.slice( matched.length );
+		}
+
+		// Filters
+		for ( type in Expr.filter ) {
+			if ( ( match = matchExpr[ type ].exec( soFar ) ) && ( !preFilters[ type ] ||
+				( match = preFilters[ type ]( match ) ) ) ) {
+				matched = match.shift();
+				tokens.push( {
+					value: matched,
+					type: type,
+					matches: match
+				} );
+				soFar = soFar.slice( matched.length );
+			}
+		}
+
+		if ( !matched ) {
+			break;
+		}
+	}
+
+	// Return the length of the invalid excess
+	// if we're just parsing
+	// Otherwise, throw an error or return tokens
+	if ( parseOnly ) {
+		return soFar.length;
+	}
+
+	return soFar ?
+		find.error( selector ) :
+
+		// Cache the tokens
+		tokenCache( selector, groups ).slice( 0 );
+}
+
+function toSelector( tokens ) {
+	var i = 0,
+		len = tokens.length,
+		selector = "";
+	for ( ; i < len; i++ ) {
+		selector += tokens[ i ].value;
+	}
+	return selector;
+}
+
+function addCombinator( matcher, combinator, base ) {
+	var dir = combinator.dir,
+		skip = combinator.next,
+		key = skip || dir,
+		checkNonElements = base && key === "parentNode",
+		doneName = done++;
+
+	return combinator.first ?
+
+		// Check against closest ancestor/preceding element
+		function( elem, context, xml ) {
+			while ( ( elem = elem[ dir ] ) ) {
+				if ( elem.nodeType === 1 || checkNonElements ) {
+					return matcher( elem, context, xml );
+				}
+			}
+			return false;
+		} :
+
+		// Check against all ancestor/preceding elements
+		function( elem, context, xml ) {
+			var oldCache, outerCache,
+				newCache = [ dirruns, doneName ];
+
+			// We can't set arbitrary data on XML nodes, so they don't benefit from combinator caching
+			if ( xml ) {
+				while ( ( elem = elem[ dir ] ) ) {
+					if ( elem.nodeType === 1 || checkNonElements ) {
+						if ( matcher( elem, context, xml ) ) {
+							return true;
+						}
+					}
+				}
+			} else {
+				while ( ( elem = elem[ dir ] ) ) {
+					if ( elem.nodeType === 1 || checkNonElements ) {
+						outerCache = elem[ expando ] || ( elem[ expando ] = {} );
+
+						if ( skip && nodeName( elem, skip ) ) {
+							elem = elem[ dir ] || elem;
+						} else if ( ( oldCache = outerCache[ key ] ) &&
+							oldCache[ 0 ] === dirruns && oldCache[ 1 ] === doneName ) {
+
+							// Assign to newCache so results back-propagate to previous elements
+							return ( newCache[ 2 ] = oldCache[ 2 ] );
+						} else {
+
+							// Reuse newcache so results back-propagate to previous elements
+							outerCache[ key ] = newCache;
+
+							// A match means we're done; a fail means we have to keep checking
+							if ( ( newCache[ 2 ] = matcher( elem, context, xml ) ) ) {
+								return true;
+							}
+						}
+					}
+				}
+			}
+			return false;
+		};
+}
+
+function elementMatcher( matchers ) {
+	return matchers.length > 1 ?
+		function( elem, context, xml ) {
+			var i = matchers.length;
+			while ( i-- ) {
+				if ( !matchers[ i ]( elem, context, xml ) ) {
+					return false;
+				}
+			}
+			return true;
+		} :
+		matchers[ 0 ];
+}
+
+function multipleContexts( selector, contexts, results ) {
+	var i = 0,
+		len = contexts.length;
+	for ( ; i < len; i++ ) {
+		find( selector, contexts[ i ], results );
+	}
+	return results;
+}
+
+function condense( unmatched, map, filter, context, xml ) {
+	var elem,
+		newUnmatched = [],
+		i = 0,
+		len = unmatched.length,
+		mapped = map != null;
+
+	for ( ; i < len; i++ ) {
+		if ( ( elem = unmatched[ i ] ) ) {
+			if ( !filter || filter( elem, context, xml ) ) {
+				newUnmatched.push( elem );
+				if ( mapped ) {
+					map.push( i );
+				}
+			}
+		}
+	}
+
+	return newUnmatched;
+}
+
+function setMatcher( preFilter, selector, matcher, postFilter, postFinder, postSelector ) {
+	if ( postFilter && !postFilter[ expando ] ) {
+		postFilter = setMatcher( postFilter );
+	}
+	if ( postFinder && !postFinder[ expando ] ) {
+		postFinder = setMatcher( postFinder, postSelector );
+	}
+	return markFunction( function( seed, results, context, xml ) {
+		var temp, i, elem, matcherOut,
+			preMap = [],
+			postMap = [],
+			preexisting = results.length,
+
+			// Get initial elements from seed or context
+			elems = seed ||
+				multipleContexts( selector || "*",
+					context.nodeType ? [ context ] : context, [] ),
+
+			// Prefilter to get matcher input, preserving a map for seed-results synchronization
+			matcherIn = preFilter && ( seed || !selector ) ?
+				condense( elems, preMap, preFilter, context, xml ) :
+				elems;
+
+		if ( matcher ) {
+
+			// If we have a postFinder, or filtered seed, or non-seed postFilter
+			// or preexisting results,
+			matcherOut = postFinder || ( seed ? preFilter : preexisting || postFilter ) ?
+
+				// ...intermediate processing is necessary
+				[] :
+
+				// ...otherwise use results directly
+				results;
+
+			// Find primary matches
+			matcher( matcherIn, matcherOut, context, xml );
+		} else {
+			matcherOut = matcherIn;
+		}
+
+		// Apply postFilter
+		if ( postFilter ) {
+			temp = condense( matcherOut, postMap );
+			postFilter( temp, [], context, xml );
+
+			// Un-match failing elements by moving them back to matcherIn
+			i = temp.length;
+			while ( i-- ) {
+				if ( ( elem = temp[ i ] ) ) {
+					matcherOut[ postMap[ i ] ] = !( matcherIn[ postMap[ i ] ] = elem );
+				}
+			}
+		}
+
+		if ( seed ) {
+			if ( postFinder || preFilter ) {
+				if ( postFinder ) {
+
+					// Get the final matcherOut by condensing this intermediate into postFinder contexts
+					temp = [];
+					i = matcherOut.length;
+					while ( i-- ) {
+						if ( ( elem = matcherOut[ i ] ) ) {
+
+							// Restore matcherIn since elem is not yet a final match
+							temp.push( ( matcherIn[ i ] = elem ) );
+						}
+					}
+					postFinder( null, ( matcherOut = [] ), temp, xml );
+				}
+
+				// Move matched elements from seed to results to keep them synchronized
+				i = matcherOut.length;
+				while ( i-- ) {
+					if ( ( elem = matcherOut[ i ] ) &&
+						( temp = postFinder ? indexOf.call( seed, elem ) : preMap[ i ] ) > -1 ) {
+
+						seed[ temp ] = !( results[ temp ] = elem );
+					}
+				}
+			}
+
+		// Add elements to results, through postFinder if defined
+		} else {
+			matcherOut = condense(
+				matcherOut === results ?
+					matcherOut.splice( preexisting, matcherOut.length ) :
+					matcherOut
+			);
+			if ( postFinder ) {
+				postFinder( null, results, matcherOut, xml );
+			} else {
+				push.apply( results, matcherOut );
+			}
+		}
+	} );
+}
+
+function matcherFromTokens( tokens ) {
+	var checkContext, matcher, j,
+		len = tokens.length,
+		leadingRelative = Expr.relative[ tokens[ 0 ].type ],
+		implicitRelative = leadingRelative || Expr.relative[ " " ],
+		i = leadingRelative ? 1 : 0,
+
+		// The foundational matcher ensures that elements are reachable from top-level context(s)
+		matchContext = addCombinator( function( elem ) {
+			return elem === checkContext;
+		}, implicitRelative, true ),
+		matchAnyContext = addCombinator( function( elem ) {
+			return indexOf.call( checkContext, elem ) > -1;
+		}, implicitRelative, true ),
+		matchers = [ function( elem, context, xml ) {
+
+			// Support: IE 11+, Edge 17 - 18+
+			// IE/Edge sometimes throw a "Permission denied" error when strict-comparing
+			// two documents; shallow comparisons work.
+			// eslint-disable-next-line eqeqeq
+			var ret = ( !leadingRelative && ( xml || context != outermostContext ) ) || (
+				( checkContext = context ).nodeType ?
+					matchContext( elem, context, xml ) :
+					matchAnyContext( elem, context, xml ) );
+
+			// Avoid hanging onto element
+			// (see https://github.com/jquery/sizzle/issues/299)
+			checkContext = null;
+			return ret;
+		} ];
+
+	for ( ; i < len; i++ ) {
+		if ( ( matcher = Expr.relative[ tokens[ i ].type ] ) ) {
+			matchers = [ addCombinator( elementMatcher( matchers ), matcher ) ];
+		} else {
+			matcher = Expr.filter[ tokens[ i ].type ].apply( null, tokens[ i ].matches );
+
+			// Return special upon seeing a positional matcher
+			if ( matcher[ expando ] ) {
+
+				// Find the next relative operator (if any) for proper handling
+				j = ++i;
+				for ( ; j < len; j++ ) {
+					if ( Expr.relative[ tokens[ j ].type ] ) {
+						break;
+					}
+				}
+				return setMatcher(
+					i > 1 && elementMatcher( matchers ),
+					i > 1 && toSelector(
+
+						// If the preceding token was a descendant combinator, insert an implicit any-element `*`
+						tokens.slice( 0, i - 1 )
+							.concat( { value: tokens[ i - 2 ].type === " " ? "*" : "" } )
+					).replace( rtrimCSS, "$1" ),
+					matcher,
+					i < j && matcherFromTokens( tokens.slice( i, j ) ),
+					j < len && matcherFromTokens( ( tokens = tokens.slice( j ) ) ),
+					j < len && toSelector( tokens )
+				);
+			}
+			matchers.push( matcher );
+		}
+	}
+
+	return elementMatcher( matchers );
+}
+
+function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
+	var bySet = setMatchers.length > 0,
+		byElement = elementMatchers.length > 0,
+		superMatcher = function( seed, context, xml, results, outermost ) {
+			var elem, j, matcher,
+				matchedCount = 0,
+				i = "0",
+				unmatched = seed && [],
+				setMatched = [],
+				contextBackup = outermostContext,
+
+				// We must always have either seed elements or outermost context
+				elems = seed || byElement && Expr.find.TAG( "*", outermost ),
+
+				// Use integer dirruns iff this is the outermost matcher
+				dirrunsUnique = ( dirruns += contextBackup == null ? 1 : Math.random() || 0.1 ),
+				len = elems.length;
+
+			if ( outermost ) {
+
+				// Support: IE 11+, Edge 17 - 18+
+				// IE/Edge sometimes throw a "Permission denied" error when strict-comparing
+				// two documents; shallow comparisons work.
+				// eslint-disable-next-line eqeqeq
+				outermostContext = context == document || context || outermost;
+			}
+
+			// Add elements passing elementMatchers directly to results
+			// Support: iOS <=7 - 9 only
+			// Tolerate NodeList properties (IE: "length"; Safari: <number>) matching
+			// elements by id. (see trac-14142)
+			for ( ; i !== len && ( elem = elems[ i ] ) != null; i++ ) {
+				if ( byElement && elem ) {
+					j = 0;
+
+					// Support: IE 11+, Edge 17 - 18+
+					// IE/Edge sometimes throw a "Permission denied" error when strict-comparing
+					// two documents; shallow comparisons work.
+					// eslint-disable-next-line eqeqeq
+					if ( !context && elem.ownerDocument != document ) {
+						setDocument( elem );
+						xml = !documentIsHTML;
+					}
+					while ( ( matcher = elementMatchers[ j++ ] ) ) {
+						if ( matcher( elem, context || document, xml ) ) {
+							push.call( results, elem );
+							break;
+						}
+					}
+					if ( outermost ) {
+						dirruns = dirrunsUnique;
+					}
+				}
+
+				// Track unmatched elements for set filters
+				if ( bySet ) {
+
+					// They will have gone through all possible matchers
+					if ( ( elem = !matcher && elem ) ) {
+						matchedCount--;
+					}
+
+					// Lengthen the array for every element, matched or not
+					if ( seed ) {
+						unmatched.push( elem );
+					}
+				}
+			}
+
+			// `i` is now the count of elements visited above, and adding it to `matchedCount`
+			// makes the latter nonnegative.
+			matchedCount += i;
+
+			// Apply set filters to unmatched elements
+			// NOTE: This can be skipped if there are no unmatched elements (i.e., `matchedCount`
+			// equals `i`), unless we didn't visit _any_ elements in the above loop because we have
+			// no element matchers and no seed.
+			// Incrementing an initially-string "0" `i` allows `i` to remain a string only in that
+			// case, which will result in a "00" `matchedCount` that differs from `i` but is also
+			// numerically zero.
+			if ( bySet && i !== matchedCount ) {
+				j = 0;
+				while ( ( matcher = setMatchers[ j++ ] ) ) {
+					matcher( unmatched, setMatched, context, xml );
+				}
+
+				if ( seed ) {
+
+					// Reintegrate element matches to eliminate the need for sorting
+					if ( matchedCount > 0 ) {
+						while ( i-- ) {
+							if ( !( unmatched[ i ] || setMatched[ i ] ) ) {
+								setMatched[ i ] = pop.call( results );
+							}
+						}
+					}
+
+					// Discard index placeholder values to get only actual matches
+					setMatched = condense( setMatched );
+				}
+
+				// Add matches to results
+				push.apply( results, setMatched );
+
+				// Seedless set matches succeeding multiple successful matchers stipulate sorting
+				if ( outermost && !seed && setMatched.length > 0 &&
+					( matchedCount + setMatchers.length ) > 1 ) {
+
+					jQuery.uniqueSort( results );
+				}
+			}
+
+			// Override manipulation of globals by nested matchers
+			if ( outermost ) {
+				dirruns = dirrunsUnique;
+				outermostContext = contextBackup;
+			}
+
+			return unmatched;
+		};
+
+	return bySet ?
+		markFunction( superMatcher ) :
+		superMatcher;
+}
+
+function compile( selector, match /* Internal Use Only */ ) {
+	var i,
+		setMatchers = [],
+		elementMatchers = [],
+		cached = compilerCache[ selector + " " ];
+
+	if ( !cached ) {
+
+		// Generate a function of recursive functions that can be used to check each element
+		if ( !match ) {
+			match = tokenize( selector );
+		}
+		i = match.length;
+		while ( i-- ) {
+			cached = matcherFromTokens( match[ i ] );
+			if ( cached[ expando ] ) {
+				setMatchers.push( cached );
+			} else {
+				elementMatchers.push( cached );
+			}
+		}
+
+		// Cache the compiled function
+		cached = compilerCache( selector,
+			matcherFromGroupMatchers( elementMatchers, setMatchers ) );
+
+		// Save selector and tokenization
+		cached.selector = selector;
+	}
+	return cached;
+}
+
+/**
+ * A low-level selection function that works with jQuery's compiled
+ *  selector functions
+ * @param {String|Function} selector A selector or a pre-compiled
+ *  selector function built with jQuery selector compile
+ * @param {Element} context
+ * @param {Array} [results]
+ * @param {Array} [seed] A set of elements to match against
+ */
+function select( selector, context, results, seed ) {
+	var i, tokens, token, type, find,
+		compiled = typeof selector === "function" && selector,
+		match = !seed && tokenize( ( selector = compiled.selector || selector ) );
+
+	results = results || [];
+
+	// Try to minimize operations if there is only one selector in the list and no seed
+	// (the latter of which guarantees us context)
+	if ( match.length === 1 ) {
+
+		// Reduce context if the leading compound selector is an ID
+		tokens = match[ 0 ] = match[ 0 ].slice( 0 );
+		if ( tokens.length > 2 && ( token = tokens[ 0 ] ).type === "ID" &&
+				context.nodeType === 9 && documentIsHTML && Expr.relative[ tokens[ 1 ].type ] ) {
+
+			context = ( Expr.find.ID(
+				token.matches[ 0 ].replace( runescape, funescape ),
+				context
+			) || [] )[ 0 ];
+			if ( !context ) {
+				return results;
+
+			// Precompiled matchers will still verify ancestry, so step up a level
+			} else if ( compiled ) {
+				context = context.parentNode;
+			}
+
+			selector = selector.slice( tokens.shift().value.length );
+		}
+
+		// Fetch a seed set for right-to-left matching
+		i = matchExpr.needsContext.test( selector ) ? 0 : tokens.length;
+		while ( i-- ) {
+			token = tokens[ i ];
+
+			// Abort if we hit a combinator
+			if ( Expr.relative[ ( type = token.type ) ] ) {
+				break;
+			}
+			if ( ( find = Expr.find[ type ] ) ) {
+
+				// Search, expanding context for leading sibling combinators
+				if ( ( seed = find(
+					token.matches[ 0 ].replace( runescape, funescape ),
+					rsibling.test( tokens[ 0 ].type ) &&
+						testContext( context.parentNode ) || context
+				) ) ) {
+
+					// If seed is empty or no tokens remain, we can return early
+					tokens.splice( i, 1 );
+					selector = seed.length && toSelector( tokens );
+					if ( !selector ) {
+						push.apply( results, seed );
+						return results;
+					}
+
+					break;
+				}
+			}
+		}
+	}
+
+	// Compile and execute a filtering function if one is not provided
+	// Provide `match` to avoid retokenization if we modified the selector above
+	( compiled || compile( selector, match ) )(
+		seed,
+		context,
+		!documentIsHTML,
+		results,
+		!context || rsibling.test( selector ) && testContext( context.parentNode ) || context
+	);
+	return results;
+}
+
+// One-time assignments
+
+// Support: Android <=4.0 - 4.1+
+// Sort stability
+support.sortStable = expando.split( "" ).sort( sortOrder ).join( "" ) === expando;
+
+// Initialize against the default document
+setDocument();
+
+// Support: Android <=4.0 - 4.1+
+// Detached nodes confoundingly follow *each other*
+support.sortDetached = assert( function( el ) {
+
+	// Should return 1, but returns 4 (following)
+	return el.compareDocumentPosition( document.createElement( "fieldset" ) ) & 1;
+} );
+
+jQuery.find = find;
 
 // Deprecated
 jQuery.expr[ ":" ] = jQuery.expr.pseudos;
-jQuery.uniqueSort = jQuery.unique = Sizzle.uniqueSort;
-jQuery.text = Sizzle.getText;
-jQuery.isXMLDoc = Sizzle.isXML;
-jQuery.contains = Sizzle.contains;
-jQuery.escapeSelector = Sizzle.escape;
+jQuery.unique = jQuery.uniqueSort;
+
+// These have always been private, but they used to be documented as part of
+// Sizzle so let's maintain them for now for backwards compatibility purposes.
+find.compile = compile;
+find.select = select;
+find.setDocument = setDocument;
+find.tokenize = tokenize;
+
+find.escape = jQuery.escapeSelector;
+find.getText = jQuery.text;
+find.isXML = jQuery.isXMLDoc;
+find.selectors = jQuery.expr;
+find.support = jQuery.support;
+find.uniqueSort = jQuery.uniqueSort;
+
+	/* eslint-enable */
+
+} )();
 
 }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -35529,14 +35242,74 @@ jQuery.escapeSelector = Sizzle.escape;
 
 /***/ }),
 
-/***/ "./node_modules/jquery/src/selector.js":
-/*!*********************************************!*\
-  !*** ./node_modules/jquery/src/selector.js ***!
-  \*********************************************/
+/***/ "./node_modules/jquery/src/selector/contains.js":
+/*!******************************************************!*\
+  !*** ./node_modules/jquery/src/selector/contains.js ***!
+  \******************************************************/
 /***/ ((module, exports, __webpack_require__) => {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [ __webpack_require__(/*! ./selector-sizzle */ "./node_modules/jquery/src/selector-sizzle.js") ], __WEBPACK_AMD_DEFINE_RESULT__ = (function() {
-	"use strict";
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [
+	__webpack_require__(/*! ../core */ "./node_modules/jquery/src/core.js")
+], __WEBPACK_AMD_DEFINE_RESULT__ = (function( jQuery ) {
+
+"use strict";
+
+// Note: an element does not contain itself
+jQuery.contains = function( a, b ) {
+	var bup = b && b.parentNode;
+
+	return a === bup || !!( bup && bup.nodeType === 1 && (
+
+		// Support: IE 9 - 11+
+		// IE doesn't have `contains` on SVG.
+		a.contains ?
+			a.contains( bup ) :
+			a.compareDocumentPosition && a.compareDocumentPosition( bup ) & 16
+	) );
+};
+
+}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+
+/***/ "./node_modules/jquery/src/selector/escapeSelector.js":
+/*!************************************************************!*\
+  !*** ./node_modules/jquery/src/selector/escapeSelector.js ***!
+  \************************************************************/
+/***/ ((module, exports, __webpack_require__) => {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [
+	__webpack_require__(/*! ../core */ "./node_modules/jquery/src/core.js")
+], __WEBPACK_AMD_DEFINE_RESULT__ = (function( jQuery ) {
+
+"use strict";
+
+// CSS string/identifier serialization
+// https://drafts.csswg.org/cssom/#common-serializing-idioms
+var rcssescape = /([\0-\x1f\x7f]|^-?\d)|^-$|[^\x80-\uFFFF\w-]/g;
+
+function fcssescape( ch, asCodePoint ) {
+	if ( asCodePoint ) {
+
+		// U+0000 NULL becomes U+FFFD REPLACEMENT CHARACTER
+		if ( ch === "\0" ) {
+			return "\uFFFD";
+		}
+
+		// Control characters and (dependent upon position) numbers get escaped as code points
+		return ch.slice( 0, -1 ) + "\\" + ch.charCodeAt( ch.length - 1 ).toString( 16 ) + " ";
+	}
+
+	// Other potentially-special ASCII characters get backslash-escaped
+	return "\\" + ch;
+}
+
+jQuery.escapeSelector = function( sel ) {
+	return ( sel + "" ).replace( rcssescape, fcssescape );
+};
+
 }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
@@ -35751,7 +35524,7 @@ jQuery.fn.extend( {
 					if ( cur.nodeType < 11 && ( targets ?
 						targets.index( cur ) > -1 :
 
-						// Don't pass non-elements to Sizzle
+						// Don't pass non-elements to jQuery#find
 						cur.nodeType === 1 &&
 							jQuery.find.matchesSelector( cur, selectors ) ) ) {
 
@@ -36330,6 +36103,26 @@ var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = (function() 
 
 /***/ }),
 
+/***/ "./node_modules/jquery/src/var/pop.js":
+/*!********************************************!*\
+  !*** ./node_modules/jquery/src/var/pop.js ***!
+  \********************************************/
+/***/ ((module, exports, __webpack_require__) => {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [
+	__webpack_require__(/*! ./arr */ "./node_modules/jquery/src/var/arr.js")
+], __WEBPACK_AMD_DEFINE_RESULT__ = (function( arr ) {
+
+"use strict";
+
+return arr.pop;
+
+}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+
 /***/ "./node_modules/jquery/src/var/push.js":
 /*!*********************************************!*\
   !*** ./node_modules/jquery/src/var/push.js ***!
@@ -36438,6 +36231,46 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 	"use strict";
 
 	return arr.slice;
+}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+
+/***/ "./node_modules/jquery/src/var/sort.js":
+/*!*********************************************!*\
+  !*** ./node_modules/jquery/src/var/sort.js ***!
+  \*********************************************/
+/***/ ((module, exports, __webpack_require__) => {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [
+	__webpack_require__(/*! ./arr */ "./node_modules/jquery/src/var/arr.js")
+], __WEBPACK_AMD_DEFINE_RESULT__ = (function( arr ) {
+
+"use strict";
+
+return arr.sort;
+
+}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+
+/***/ "./node_modules/jquery/src/var/splice.js":
+/*!***********************************************!*\
+  !*** ./node_modules/jquery/src/var/splice.js ***!
+  \***********************************************/
+/***/ ((module, exports, __webpack_require__) => {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [
+	__webpack_require__(/*! ./arr */ "./node_modules/jquery/src/var/arr.js")
+], __WEBPACK_AMD_DEFINE_RESULT__ = (function( arr ) {
+
+"use strict";
+
+return arr.splice;
+
 }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
@@ -39226,7 +39059,7 @@ Popper.Defaults = Defaults;
 
 /* provided dependency */ var __webpack_provided_window_dot_jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/src/jquery.js");
 /**!
- * Sortable 1.15.0
+ * Sortable 1.15.2
  * @author	RubaXa   <trash@rubaxa.org>
  * @author	owenm    <owen23355@gmail.com>
  * @license MIT
@@ -39238,26 +39071,20 @@ Popper.Defaults = Defaults;
 
   function ownKeys(object, enumerableOnly) {
     var keys = Object.keys(object);
-
     if (Object.getOwnPropertySymbols) {
       var symbols = Object.getOwnPropertySymbols(object);
-
       if (enumerableOnly) {
         symbols = symbols.filter(function (sym) {
           return Object.getOwnPropertyDescriptor(object, sym).enumerable;
         });
       }
-
       keys.push.apply(keys, symbols);
     }
-
     return keys;
   }
-
   function _objectSpread2(target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i] != null ? arguments[i] : {};
-
       if (i % 2) {
         ownKeys(Object(source), true).forEach(function (key) {
           _defineProperty(target, key, source[key]);
@@ -39270,10 +39097,8 @@ Popper.Defaults = Defaults;
         });
       }
     }
-
     return target;
   }
-
   function _typeof(obj) {
     "@babel/helpers - typeof";
 
@@ -39286,10 +39111,8 @@ Popper.Defaults = Defaults;
         return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
       };
     }
-
     return _typeof(obj);
   }
-
   function _defineProperty(obj, key, value) {
     if (key in obj) {
       Object.defineProperty(obj, key, {
@@ -39301,53 +39124,40 @@ Popper.Defaults = Defaults;
     } else {
       obj[key] = value;
     }
-
     return obj;
   }
-
   function _extends() {
     _extends = Object.assign || function (target) {
       for (var i = 1; i < arguments.length; i++) {
         var source = arguments[i];
-
         for (var key in source) {
           if (Object.prototype.hasOwnProperty.call(source, key)) {
             target[key] = source[key];
           }
         }
       }
-
       return target;
     };
-
     return _extends.apply(this, arguments);
   }
-
   function _objectWithoutPropertiesLoose(source, excluded) {
     if (source == null) return {};
     var target = {};
     var sourceKeys = Object.keys(source);
     var key, i;
-
     for (i = 0; i < sourceKeys.length; i++) {
       key = sourceKeys[i];
       if (excluded.indexOf(key) >= 0) continue;
       target[key] = source[key];
     }
-
     return target;
   }
-
   function _objectWithoutProperties(source, excluded) {
     if (source == null) return {};
-
     var target = _objectWithoutPropertiesLoose(source, excluded);
-
     var key, i;
-
     if (Object.getOwnPropertySymbols) {
       var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-
       for (i = 0; i < sourceSymbolKeys.length; i++) {
         key = sourceSymbolKeys[i];
         if (excluded.indexOf(key) >= 0) continue;
@@ -39355,22 +39165,17 @@ Popper.Defaults = Defaults;
         target[key] = source[key];
       }
     }
-
     return target;
   }
-
   function _toConsumableArray(arr) {
     return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
   }
-
   function _arrayWithoutHoles(arr) {
     if (Array.isArray(arr)) return _arrayLikeToArray(arr);
   }
-
   function _iterableToArray(iter) {
     if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
   }
-
   function _unsupportedIterableToArray(o, minLen) {
     if (!o) return;
     if (typeof o === "string") return _arrayLikeToArray(o, minLen);
@@ -39379,27 +39184,22 @@ Popper.Defaults = Defaults;
     if (n === "Map" || n === "Set") return Array.from(o);
     if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
   }
-
   function _arrayLikeToArray(arr, len) {
     if (len == null || len > arr.length) len = arr.length;
-
     for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
-
     return arr2;
   }
-
   function _nonIterableSpread() {
     throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
 
-  var version = "1.15.0";
+  var version = "1.15.2";
 
   function userAgent(pattern) {
     if (typeof window !== 'undefined' && window.navigator) {
       return !! /*@__PURE__*/navigator.userAgent.match(pattern);
     }
   }
-
   var IE11OrLess = userAgent(/(?:Trident.*rv[ :]?11\.|msie|iemobile|Windows Phone)/i);
   var Edge = userAgent(/Edge/i);
   var FireFox = userAgent(/firefox/i);
@@ -39411,23 +39211,15 @@ Popper.Defaults = Defaults;
     capture: false,
     passive: false
   };
-
   function on(el, event, fn) {
     el.addEventListener(event, fn, !IE11OrLess && captureMode);
   }
-
   function off(el, event, fn) {
     el.removeEventListener(event, fn, !IE11OrLess && captureMode);
   }
-
-  function matches(
-  /**HTMLElement*/
-  el,
-  /**String*/
-  selector) {
+  function matches( /**HTMLElement*/el, /**String*/selector) {
     if (!selector) return;
     selector[0] === '>' && (selector = selector.substring(1));
-
     if (el) {
       try {
         if (el.matches) {
@@ -39441,39 +39233,25 @@ Popper.Defaults = Defaults;
         return false;
       }
     }
-
     return false;
   }
-
   function getParentOrHost(el) {
     return el.host && el !== document && el.host.nodeType ? el.host : el.parentNode;
   }
-
-  function closest(
-  /**HTMLElement*/
-  el,
-  /**String*/
-  selector,
-  /**HTMLElement*/
-  ctx, includeCTX) {
+  function closest( /**HTMLElement*/el, /**String*/selector, /**HTMLElement*/ctx, includeCTX) {
     if (el) {
       ctx = ctx || document;
-
       do {
         if (selector != null && (selector[0] === '>' ? el.parentNode === ctx && matches(el, selector) : matches(el, selector)) || includeCTX && el === ctx) {
           return el;
         }
-
         if (el === ctx) break;
         /* jshint boss:true */
       } while (el = getParentOrHost(el));
     }
-
     return null;
   }
-
   var R_SPACE = /\s+/g;
-
   function toggleClass(el, name, state) {
     if (el && name) {
       if (el.classList) {
@@ -39484,10 +39262,8 @@ Popper.Defaults = Defaults;
       }
     }
   }
-
   function css(el, prop, val) {
     var style = el && el.style;
-
     if (style) {
       if (val === void 0) {
         if (document.defaultView && document.defaultView.getComputedStyle) {
@@ -39495,68 +39271,55 @@ Popper.Defaults = Defaults;
         } else if (el.currentStyle) {
           val = el.currentStyle;
         }
-
         return prop === void 0 ? val : val[prop];
       } else {
         if (!(prop in style) && prop.indexOf('webkit') === -1) {
           prop = '-webkit-' + prop;
         }
-
         style[prop] = val + (typeof val === 'string' ? '' : 'px');
       }
     }
   }
-
   function matrix(el, selfOnly) {
     var appliedTransforms = '';
-
     if (typeof el === 'string') {
       appliedTransforms = el;
     } else {
       do {
         var transform = css(el, 'transform');
-
         if (transform && transform !== 'none') {
           appliedTransforms = transform + ' ' + appliedTransforms;
         }
         /* jshint boss:true */
-
       } while (!selfOnly && (el = el.parentNode));
     }
-
     var matrixFn = window.DOMMatrix || window.WebKitCSSMatrix || window.CSSMatrix || window.MSCSSMatrix;
     /*jshint -W056 */
-
     return matrixFn && new matrixFn(appliedTransforms);
   }
-
   function find(ctx, tagName, iterator) {
     if (ctx) {
       var list = ctx.getElementsByTagName(tagName),
-          i = 0,
-          n = list.length;
-
+        i = 0,
+        n = list.length;
       if (iterator) {
         for (; i < n; i++) {
           iterator(list[i], i);
         }
       }
-
       return list;
     }
-
     return [];
   }
-
   function getWindowScrollingElement() {
     var scrollingElement = document.scrollingElement;
-
     if (scrollingElement) {
       return scrollingElement;
     } else {
       return document.documentElement;
     }
   }
+
   /**
    * Returns the "bounding client rect" of given element
    * @param  {HTMLElement} el                       The element whose boundingClientRect is wanted
@@ -39566,12 +39329,9 @@ Popper.Defaults = Defaults;
    * @param  {[HTMLElement]} container              The parent the element will be placed in
    * @return {Object}                               The boundingClientRect of el, with specified adjustments
    */
-
-
   function getRect(el, relativeToContainingBlock, relativeToNonStaticParent, undoScale, container) {
     if (!el.getBoundingClientRect && el !== window) return;
     var elRect, top, left, bottom, right, height, width;
-
     if (el !== window && el.parentNode && el !== getWindowScrollingElement()) {
       elRect = el.getBoundingClientRect();
       top = elRect.top;
@@ -39588,17 +39348,18 @@ Popper.Defaults = Defaults;
       height = window.innerHeight;
       width = window.innerWidth;
     }
-
     if ((relativeToContainingBlock || relativeToNonStaticParent) && el !== window) {
       // Adjust for translate()
-      container = container || el.parentNode; // solves #1123 (see: https://stackoverflow.com/a/37953806/6088312)
-      // Not needed on <= IE11
+      container = container || el.parentNode;
 
+      // solves #1123 (see: https://stackoverflow.com/a/37953806/6088312)
+      // Not needed on <= IE11
       if (!IE11OrLess) {
         do {
           if (container && container.getBoundingClientRect && (css(container, 'transform') !== 'none' || relativeToNonStaticParent && css(container, 'position') !== 'static')) {
-            var containerRect = container.getBoundingClientRect(); // Set relative to edges of padding box of container
+            var containerRect = container.getBoundingClientRect();
 
+            // Set relative to edges of padding box of container
             top -= containerRect.top + parseInt(css(container, 'border-top-width'));
             left -= containerRect.left + parseInt(css(container, 'border-left-width'));
             bottom = top + elRect.height;
@@ -39606,17 +39367,14 @@ Popper.Defaults = Defaults;
             break;
           }
           /* jshint boss:true */
-
         } while (container = container.parentNode);
       }
     }
-
     if (undoScale && el !== window) {
       // Adjust for scale()
       var elMatrix = matrix(container || el),
-          scaleX = elMatrix && elMatrix.a,
-          scaleY = elMatrix && elMatrix.d;
-
+        scaleX = elMatrix && elMatrix.a,
+        scaleY = elMatrix && elMatrix.d;
       if (elMatrix) {
         top /= scaleY;
         left /= scaleX;
@@ -39626,7 +39384,6 @@ Popper.Defaults = Defaults;
         right = left + width;
       }
     }
-
     return {
       top: top,
       left: left,
@@ -39636,6 +39393,7 @@ Popper.Defaults = Defaults;
       height: height
     };
   }
+
   /**
    * Checks if a side of an element is scrolled past a side of its parents
    * @param  {HTMLElement}  el           The element who's side being scrolled out of view is in question
@@ -39643,30 +39401,26 @@ Popper.Defaults = Defaults;
    * @param  {String}       parentSide   Side of the parent in question ('top', 'left', 'right', 'bottom')
    * @return {HTMLElement}               The parent scroll element that the el's side is scrolled past, or null if there is no such element
    */
-
-
   function isScrolledPast(el, elSide, parentSide) {
     var parent = getParentAutoScrollElement(el, true),
-        elSideVal = getRect(el)[elSide];
-    /* jshint boss:true */
+      elSideVal = getRect(el)[elSide];
 
+    /* jshint boss:true */
     while (parent) {
       var parentSideVal = getRect(parent)[parentSide],
-          visible = void 0;
-
+        visible = void 0;
       if (parentSide === 'top' || parentSide === 'left') {
         visible = elSideVal >= parentSideVal;
       } else {
         visible = elSideVal <= parentSideVal;
       }
-
       if (!visible) return parent;
       if (parent === getWindowScrollingElement()) break;
       parent = getParentAutoScrollElement(parent, false);
     }
-
     return false;
   }
+
   /**
    * Gets nth child of el, ignoring hidden children, sortable's elements (does not ignore clone if it's visible)
    * and non-draggable elements
@@ -39675,44 +39429,36 @@ Popper.Defaults = Defaults;
    * @param  {Object} options       Parent Sortable's options
    * @return {HTMLElement}          The child at index childNum, or null if not found
    */
-
-
   function getChild(el, childNum, options, includeDragEl) {
     var currentChild = 0,
-        i = 0,
-        children = el.children;
-
+      i = 0,
+      children = el.children;
     while (i < children.length) {
       if (children[i].style.display !== 'none' && children[i] !== Sortable.ghost && (includeDragEl || children[i] !== Sortable.dragged) && closest(children[i], options.draggable, el, false)) {
         if (currentChild === childNum) {
           return children[i];
         }
-
         currentChild++;
       }
-
       i++;
     }
-
     return null;
   }
+
   /**
    * Gets the last child in the el, ignoring ghostEl or invisible elements (clones)
    * @param  {HTMLElement} el       Parent element
    * @param  {selector} selector    Any other elements that should be ignored
    * @return {HTMLElement}          The last child, ignoring ghostEl
    */
-
-
   function lastChild(el, selector) {
     var last = el.lastElementChild;
-
     while (last && (last === Sortable.ghost || css(last, 'display') === 'none' || selector && !matches(last, selector))) {
       last = last.previousElementSibling;
     }
-
     return last || null;
   }
+
   /**
    * Returns the index of an element within its parent for a selected set of
    * elements
@@ -39720,81 +39466,67 @@ Popper.Defaults = Defaults;
    * @param  {selector} selector
    * @return {number}
    */
-
-
   function index(el, selector) {
     var index = 0;
-
     if (!el || !el.parentNode) {
       return -1;
     }
+
     /* jshint boss:true */
-
-
     while (el = el.previousElementSibling) {
       if (el.nodeName.toUpperCase() !== 'TEMPLATE' && el !== Sortable.clone && (!selector || matches(el, selector))) {
         index++;
       }
     }
-
     return index;
   }
+
   /**
    * Returns the scroll offset of the given element, added with all the scroll offsets of parent elements.
    * The value is returned in real pixels.
    * @param  {HTMLElement} el
    * @return {Array}             Offsets in the format of [left, top]
    */
-
-
   function getRelativeScrollOffset(el) {
     var offsetLeft = 0,
-        offsetTop = 0,
-        winScroller = getWindowScrollingElement();
-
+      offsetTop = 0,
+      winScroller = getWindowScrollingElement();
     if (el) {
       do {
         var elMatrix = matrix(el),
-            scaleX = elMatrix.a,
-            scaleY = elMatrix.d;
+          scaleX = elMatrix.a,
+          scaleY = elMatrix.d;
         offsetLeft += el.scrollLeft * scaleX;
         offsetTop += el.scrollTop * scaleY;
       } while (el !== winScroller && (el = el.parentNode));
     }
-
     return [offsetLeft, offsetTop];
   }
+
   /**
    * Returns the index of the object within the given array
    * @param  {Array} arr   Array that may or may not hold the object
    * @param  {Object} obj  An object that has a key-value pair unique to and identical to a key-value pair in the object you want to find
    * @return {Number}      The index of the object in the array, or -1
    */
-
-
   function indexOfObject(arr, obj) {
     for (var i in arr) {
       if (!arr.hasOwnProperty(i)) continue;
-
       for (var key in obj) {
         if (obj.hasOwnProperty(key) && obj[key] === arr[i][key]) return Number(i);
       }
     }
-
     return -1;
   }
-
   function getParentAutoScrollElement(el, includeSelf) {
     // skip to window
     if (!el || !el.getBoundingClientRect) return getWindowScrollingElement();
     var elem = el;
     var gotSelf = false;
-
     do {
       // we don't need to get elem css if it isn't even overflowing in the first place (performance)
       if (elem.clientWidth < elem.scrollWidth || elem.clientHeight < elem.scrollHeight) {
         var elemCSS = css(elem);
-
         if (elem.clientWidth < elem.scrollWidth && (elemCSS.overflowX == 'auto' || elemCSS.overflowX == 'scroll') || elem.clientHeight < elem.scrollHeight && (elemCSS.overflowY == 'auto' || elemCSS.overflowY == 'scroll')) {
           if (!elem.getBoundingClientRect || elem === document.body) return getWindowScrollingElement();
           if (gotSelf || includeSelf) return elem;
@@ -39802,12 +39534,9 @@ Popper.Defaults = Defaults;
         }
       }
       /* jshint boss:true */
-
     } while (elem = elem.parentNode);
-
     return getWindowScrollingElement();
   }
-
   function extend(dst, src) {
     if (dst && src) {
       for (var key in src) {
@@ -39816,49 +39545,39 @@ Popper.Defaults = Defaults;
         }
       }
     }
-
     return dst;
   }
-
   function isRectEqual(rect1, rect2) {
     return Math.round(rect1.top) === Math.round(rect2.top) && Math.round(rect1.left) === Math.round(rect2.left) && Math.round(rect1.height) === Math.round(rect2.height) && Math.round(rect1.width) === Math.round(rect2.width);
   }
-
   var _throttleTimeout;
-
   function throttle(callback, ms) {
     return function () {
       if (!_throttleTimeout) {
         var args = arguments,
-            _this = this;
-
+          _this = this;
         if (args.length === 1) {
           callback.call(_this, args[0]);
         } else {
           callback.apply(_this, args);
         }
-
         _throttleTimeout = setTimeout(function () {
           _throttleTimeout = void 0;
         }, ms);
       }
     };
   }
-
   function cancelThrottle() {
     clearTimeout(_throttleTimeout);
     _throttleTimeout = void 0;
   }
-
   function scrollBy(el, x, y) {
     el.scrollLeft += x;
     el.scrollTop += y;
   }
-
   function clone(el) {
     var Polymer = window.Polymer;
     var $ = __webpack_provided_window_dot_jQuery || window.Zepto;
-
     if (Polymer && Polymer.dom) {
       return Polymer.dom(el).cloneNode(true);
     } else if ($) {
@@ -39867,7 +39586,6 @@ Popper.Defaults = Defaults;
       return el.cloneNode(true);
     }
   }
-
   function setRect(el, rect) {
     css(el, 'position', 'absolute');
     css(el, 'top', rect.top);
@@ -39875,7 +39593,6 @@ Popper.Defaults = Defaults;
     css(el, 'width', rect.width);
     css(el, 'height', rect.height);
   }
-
   function unsetRect(el) {
     css(el, 'position', '');
     css(el, 'top', '');
@@ -39883,12 +39600,28 @@ Popper.Defaults = Defaults;
     css(el, 'width', '');
     css(el, 'height', '');
   }
-
+  function getChildContainingRectFromElement(container, options, ghostEl) {
+    var rect = {};
+    Array.from(container.children).forEach(function (child) {
+      var _rect$left, _rect$top, _rect$right, _rect$bottom;
+      if (!closest(child, options.draggable, container, false) || child.animated || child === ghostEl) return;
+      var childRect = getRect(child);
+      rect.left = Math.min((_rect$left = rect.left) !== null && _rect$left !== void 0 ? _rect$left : Infinity, childRect.left);
+      rect.top = Math.min((_rect$top = rect.top) !== null && _rect$top !== void 0 ? _rect$top : Infinity, childRect.top);
+      rect.right = Math.max((_rect$right = rect.right) !== null && _rect$right !== void 0 ? _rect$right : -Infinity, childRect.right);
+      rect.bottom = Math.max((_rect$bottom = rect.bottom) !== null && _rect$bottom !== void 0 ? _rect$bottom : -Infinity, childRect.bottom);
+    });
+    rect.width = rect.right - rect.left;
+    rect.height = rect.bottom - rect.top;
+    rect.x = rect.left;
+    rect.y = rect.top;
+    return rect;
+  }
   var expando = 'Sortable' + new Date().getTime();
 
   function AnimationStateManager() {
     var animationStates = [],
-        animationCallbackId;
+      animationCallbackId;
     return {
       captureAnimationState: function captureAnimationState() {
         animationStates = [];
@@ -39900,19 +39633,16 @@ Popper.Defaults = Defaults;
             target: child,
             rect: getRect(child)
           });
+          var fromRect = _objectSpread2({}, animationStates[animationStates.length - 1].rect);
 
-          var fromRect = _objectSpread2({}, animationStates[animationStates.length - 1].rect); // If animating: compensate for current animation
-
-
+          // If animating: compensate for current animation
           if (child.thisAnimationDuration) {
             var childMatrix = matrix(child, true);
-
             if (childMatrix) {
               fromRect.top -= childMatrix.f;
               fromRect.left -= childMatrix.e;
             }
           }
-
           child.fromRect = fromRect;
         });
       },
@@ -39926,54 +39656,47 @@ Popper.Defaults = Defaults;
       },
       animateAll: function animateAll(callback) {
         var _this = this;
-
         if (!this.options.animation) {
           clearTimeout(animationCallbackId);
           if (typeof callback === 'function') callback();
           return;
         }
-
         var animating = false,
-            animationTime = 0;
+          animationTime = 0;
         animationStates.forEach(function (state) {
           var time = 0,
-              target = state.target,
-              fromRect = target.fromRect,
-              toRect = getRect(target),
-              prevFromRect = target.prevFromRect,
-              prevToRect = target.prevToRect,
-              animatingRect = state.rect,
-              targetMatrix = matrix(target, true);
-
+            target = state.target,
+            fromRect = target.fromRect,
+            toRect = getRect(target),
+            prevFromRect = target.prevFromRect,
+            prevToRect = target.prevToRect,
+            animatingRect = state.rect,
+            targetMatrix = matrix(target, true);
           if (targetMatrix) {
             // Compensate for current animation
             toRect.top -= targetMatrix.f;
             toRect.left -= targetMatrix.e;
           }
-
           target.toRect = toRect;
-
           if (target.thisAnimationDuration) {
             // Could also check if animatingRect is between fromRect and toRect
-            if (isRectEqual(prevFromRect, toRect) && !isRectEqual(fromRect, toRect) && // Make sure animatingRect is on line between toRect & fromRect
+            if (isRectEqual(prevFromRect, toRect) && !isRectEqual(fromRect, toRect) &&
+            // Make sure animatingRect is on line between toRect & fromRect
             (animatingRect.top - toRect.top) / (animatingRect.left - toRect.left) === (fromRect.top - toRect.top) / (fromRect.left - toRect.left)) {
               // If returning to same place as started from animation and on same axis
               time = calculateRealTime(animatingRect, prevFromRect, prevToRect, _this.options);
             }
-          } // if fromRect != toRect: animate
+          }
 
-
+          // if fromRect != toRect: animate
           if (!isRectEqual(toRect, fromRect)) {
             target.prevFromRect = fromRect;
             target.prevToRect = toRect;
-
             if (!time) {
               time = _this.options.animation;
             }
-
             _this.animate(target, animatingRect, toRect, time);
           }
-
           if (time) {
             animating = true;
             animationTime = Math.max(animationTime, time);
@@ -39989,7 +39712,6 @@ Popper.Defaults = Defaults;
           }
         });
         clearTimeout(animationCallbackId);
-
         if (!animating) {
           if (typeof callback === 'function') callback();
         } else {
@@ -39997,7 +39719,6 @@ Popper.Defaults = Defaults;
             if (typeof callback === 'function') callback();
           }, animationTime);
         }
-
         animationStates = [];
       },
       animate: function animate(target, currentRect, toRect, duration) {
@@ -40005,10 +39726,10 @@ Popper.Defaults = Defaults;
           css(target, 'transition', '');
           css(target, 'transform', '');
           var elMatrix = matrix(this.el),
-              scaleX = elMatrix && elMatrix.a,
-              scaleY = elMatrix && elMatrix.d,
-              translateX = (currentRect.left - toRect.left) / (scaleX || 1),
-              translateY = (currentRect.top - toRect.top) / (scaleY || 1);
+            scaleX = elMatrix && elMatrix.a,
+            scaleY = elMatrix && elMatrix.d,
+            translateX = (currentRect.left - toRect.left) / (scaleX || 1),
+            translateY = (currentRect.top - toRect.top) / (scaleY || 1);
           target.animatingX = !!translateX;
           target.animatingY = !!translateY;
           css(target, 'transform', 'translate3d(' + translateX + 'px,' + translateY + 'px,0)');
@@ -40028,11 +39749,9 @@ Popper.Defaults = Defaults;
       }
     };
   }
-
   function repaint(target) {
     return target.offsetWidth;
   }
-
   function calculateRealTime(animatingRect, fromRect, toRect, options) {
     return Math.sqrt(Math.pow(fromRect.top - animatingRect.top, 2) + Math.pow(fromRect.left - animatingRect.left, 2)) / Math.sqrt(Math.pow(fromRect.top - toRect.top, 2) + Math.pow(fromRect.left - toRect.left, 2)) * options.animation;
   }
@@ -40049,7 +39768,6 @@ Popper.Defaults = Defaults;
           plugin[option] = defaults[option];
         }
       }
-
       plugins.forEach(function (p) {
         if (p.pluginName === plugin.pluginName) {
           throw "Sortable: Cannot mount plugin ".concat(plugin.pluginName, " more than once");
@@ -40059,25 +39777,22 @@ Popper.Defaults = Defaults;
     },
     pluginEvent: function pluginEvent(eventName, sortable, evt) {
       var _this = this;
-
       this.eventCanceled = false;
-
       evt.cancel = function () {
         _this.eventCanceled = true;
       };
-
       var eventNameGlobal = eventName + 'Global';
       plugins.forEach(function (plugin) {
-        if (!sortable[plugin.pluginName]) return; // Fire global events if it exists in this sortable
-
+        if (!sortable[plugin.pluginName]) return;
+        // Fire global events if it exists in this sortable
         if (sortable[plugin.pluginName][eventNameGlobal]) {
           sortable[plugin.pluginName][eventNameGlobal](_objectSpread2({
             sortable: sortable
           }, evt));
-        } // Only fire plugin event if plugin is enabled in this sortable,
+        }
+
+        // Only fire plugin event if plugin is enabled in this sortable,
         // and plugin has event defined
-
-
         if (sortable.options[plugin.pluginName] && sortable[plugin.pluginName][eventName]) {
           sortable[plugin.pluginName][eventName](_objectSpread2({
             sortable: sortable
@@ -40092,15 +39807,14 @@ Popper.Defaults = Defaults;
         var initialized = new plugin(sortable, el, sortable.options);
         initialized.sortable = sortable;
         initialized.options = sortable.options;
-        sortable[pluginName] = initialized; // Add default options from plugin
+        sortable[pluginName] = initialized;
 
+        // Add default options from plugin
         _extends(defaults, initialized.defaults);
       });
-
       for (var option in sortable.options) {
         if (!sortable.options.hasOwnProperty(option)) continue;
         var modified = this.modifyOption(sortable, option, sortable.options[option]);
-
         if (typeof modified !== 'undefined') {
           sortable.options[option] = modified;
         }
@@ -40110,7 +39824,6 @@ Popper.Defaults = Defaults;
       var eventProperties = {};
       plugins.forEach(function (plugin) {
         if (typeof plugin.eventProperties !== 'function') return;
-
         _extends(eventProperties, plugin.eventProperties.call(sortable[plugin.pluginName], name));
       });
       return eventProperties;
@@ -40119,8 +39832,9 @@ Popper.Defaults = Defaults;
       var modifiedValue;
       plugins.forEach(function (plugin) {
         // Plugin must exist on the Sortable
-        if (!sortable[plugin.pluginName]) return; // If static option listener exists for this option, call in the context of the Sortable's instance of this plugin
+        if (!sortable[plugin.pluginName]) return;
 
+        // If static option listener exists for this option, call in the context of the Sortable's instance of this plugin
         if (plugin.optionListeners && typeof plugin.optionListeners[name] === 'function') {
           modifiedValue = plugin.optionListeners[name].call(sortable[plugin.pluginName], value);
         }
@@ -40131,25 +39845,25 @@ Popper.Defaults = Defaults;
 
   function dispatchEvent(_ref) {
     var sortable = _ref.sortable,
-        rootEl = _ref.rootEl,
-        name = _ref.name,
-        targetEl = _ref.targetEl,
-        cloneEl = _ref.cloneEl,
-        toEl = _ref.toEl,
-        fromEl = _ref.fromEl,
-        oldIndex = _ref.oldIndex,
-        newIndex = _ref.newIndex,
-        oldDraggableIndex = _ref.oldDraggableIndex,
-        newDraggableIndex = _ref.newDraggableIndex,
-        originalEvent = _ref.originalEvent,
-        putSortable = _ref.putSortable,
-        extraEventProperties = _ref.extraEventProperties;
+      rootEl = _ref.rootEl,
+      name = _ref.name,
+      targetEl = _ref.targetEl,
+      cloneEl = _ref.cloneEl,
+      toEl = _ref.toEl,
+      fromEl = _ref.fromEl,
+      oldIndex = _ref.oldIndex,
+      newIndex = _ref.newIndex,
+      oldDraggableIndex = _ref.oldDraggableIndex,
+      newDraggableIndex = _ref.newDraggableIndex,
+      originalEvent = _ref.originalEvent,
+      putSortable = _ref.putSortable,
+      extraEventProperties = _ref.extraEventProperties;
     sortable = sortable || rootEl && rootEl[expando];
     if (!sortable) return;
     var evt,
-        options = sortable.options,
-        onName = 'on' + name.charAt(0).toUpperCase() + name.substr(1); // Support for new CustomEvent feature
-
+      options = sortable.options,
+      onName = 'on' + name.charAt(0).toUpperCase() + name.substr(1);
+    // Support for new CustomEvent feature
     if (window.CustomEvent && !IE11OrLess && !Edge) {
       evt = new CustomEvent(name, {
         bubbles: true,
@@ -40159,7 +39873,6 @@ Popper.Defaults = Defaults;
       evt = document.createEvent('Event');
       evt.initEvent(name, true, true);
     }
-
     evt.to = toEl || rootEl;
     evt.from = fromEl || rootEl;
     evt.item = targetEl || rootEl;
@@ -40170,29 +39883,23 @@ Popper.Defaults = Defaults;
     evt.newDraggableIndex = newDraggableIndex;
     evt.originalEvent = originalEvent;
     evt.pullMode = putSortable ? putSortable.lastPutMode : undefined;
-
     var allEventProperties = _objectSpread2(_objectSpread2({}, extraEventProperties), PluginManager.getEventProperties(name, sortable));
-
     for (var option in allEventProperties) {
       evt[option] = allEventProperties[option];
     }
-
     if (rootEl) {
       rootEl.dispatchEvent(evt);
     }
-
     if (options[onName]) {
       options[onName].call(sortable, evt);
     }
   }
 
   var _excluded = ["evt"];
-
   var pluginEvent = function pluginEvent(eventName, sortable) {
     var _ref = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        originalEvent = _ref.evt,
-        data = _objectWithoutProperties(_ref, _excluded);
-
+      originalEvent = _ref.evt,
+      data = _objectWithoutProperties(_ref, _excluded);
     PluginManager.pluginEvent.bind(Sortable)(eventName, sortable, _objectSpread2({
       dragEl: dragEl,
       parentEl: parentEl,
@@ -40227,7 +39934,6 @@ Popper.Defaults = Defaults;
       }
     }, data));
   };
-
   function _dispatchEvent(info) {
     dispatchEvent(_objectSpread2({
       putSortable: putSortable,
@@ -40240,62 +39946,61 @@ Popper.Defaults = Defaults;
       newDraggableIndex: newDraggableIndex
     }, info));
   }
-
   var dragEl,
-      parentEl,
-      ghostEl,
-      rootEl,
-      nextEl,
-      lastDownEl,
-      cloneEl,
-      cloneHidden,
-      oldIndex,
-      newIndex,
-      oldDraggableIndex,
-      newDraggableIndex,
-      activeGroup,
-      putSortable,
-      awaitingDragStarted = false,
-      ignoreNextClick = false,
-      sortables = [],
-      tapEvt,
-      touchEvt,
-      lastDx,
-      lastDy,
-      tapDistanceLeft,
-      tapDistanceTop,
-      moved,
-      lastTarget,
-      lastDirection,
-      pastFirstInvertThresh = false,
-      isCircumstantialInvert = false,
-      targetMoveDistance,
-      // For positioning ghost absolutely
-  ghostRelativeParent,
-      ghostRelativeParentInitialScroll = [],
-      // (left, top)
-  _silent = false,
-      savedInputChecked = [];
+    parentEl,
+    ghostEl,
+    rootEl,
+    nextEl,
+    lastDownEl,
+    cloneEl,
+    cloneHidden,
+    oldIndex,
+    newIndex,
+    oldDraggableIndex,
+    newDraggableIndex,
+    activeGroup,
+    putSortable,
+    awaitingDragStarted = false,
+    ignoreNextClick = false,
+    sortables = [],
+    tapEvt,
+    touchEvt,
+    lastDx,
+    lastDy,
+    tapDistanceLeft,
+    tapDistanceTop,
+    moved,
+    lastTarget,
+    lastDirection,
+    pastFirstInvertThresh = false,
+    isCircumstantialInvert = false,
+    targetMoveDistance,
+    // For positioning ghost absolutely
+    ghostRelativeParent,
+    ghostRelativeParentInitialScroll = [],
+    // (left, top)
+
+    _silent = false,
+    savedInputChecked = [];
+
   /** @const */
-
   var documentExists = typeof document !== 'undefined',
-      PositionGhostAbsolutely = IOS,
-      CSSFloatProperty = Edge || IE11OrLess ? 'cssFloat' : 'float',
-      // This will not pass for IE9, because IE9 DnD only works on anchors
-  supportDraggable = documentExists && !ChromeForAndroid && !IOS && 'draggable' in document.createElement('div'),
-      supportCssPointerEvents = function () {
-    if (!documentExists) return; // false when <= IE11
-
-    if (IE11OrLess) {
-      return false;
-    }
-
-    var el = document.createElement('x');
-    el.style.cssText = 'pointer-events:auto';
-    return el.style.pointerEvents === 'auto';
-  }(),
-      _detectDirection = function _detectDirection(el, options) {
-    var elCSS = css(el),
+    PositionGhostAbsolutely = IOS,
+    CSSFloatProperty = Edge || IE11OrLess ? 'cssFloat' : 'float',
+    // This will not pass for IE9, because IE9 DnD only works on anchors
+    supportDraggable = documentExists && !ChromeForAndroid && !IOS && 'draggable' in document.createElement('div'),
+    supportCssPointerEvents = function () {
+      if (!documentExists) return;
+      // false when <= IE11
+      if (IE11OrLess) {
+        return false;
+      }
+      var el = document.createElement('x');
+      el.style.cssText = 'pointer-events:auto';
+      return el.style.pointerEvents === 'auto';
+    }(),
+    _detectDirection = function _detectDirection(el, options) {
+      var elCSS = css(el),
         elWidth = parseInt(elCSS.width) - parseInt(elCSS.paddingLeft) - parseInt(elCSS.paddingRight) - parseInt(elCSS.borderLeftWidth) - parseInt(elCSS.borderRightWidth),
         child1 = getChild(el, 0, options),
         child2 = getChild(el, 1, options),
@@ -40303,102 +40008,92 @@ Popper.Defaults = Defaults;
         secondChildCSS = child2 && css(child2),
         firstChildWidth = firstChildCSS && parseInt(firstChildCSS.marginLeft) + parseInt(firstChildCSS.marginRight) + getRect(child1).width,
         secondChildWidth = secondChildCSS && parseInt(secondChildCSS.marginLeft) + parseInt(secondChildCSS.marginRight) + getRect(child2).width;
-
-    if (elCSS.display === 'flex') {
-      return elCSS.flexDirection === 'column' || elCSS.flexDirection === 'column-reverse' ? 'vertical' : 'horizontal';
-    }
-
-    if (elCSS.display === 'grid') {
-      return elCSS.gridTemplateColumns.split(' ').length <= 1 ? 'vertical' : 'horizontal';
-    }
-
-    if (child1 && firstChildCSS["float"] && firstChildCSS["float"] !== 'none') {
-      var touchingSideChild2 = firstChildCSS["float"] === 'left' ? 'left' : 'right';
-      return child2 && (secondChildCSS.clear === 'both' || secondChildCSS.clear === touchingSideChild2) ? 'vertical' : 'horizontal';
-    }
-
-    return child1 && (firstChildCSS.display === 'block' || firstChildCSS.display === 'flex' || firstChildCSS.display === 'table' || firstChildCSS.display === 'grid' || firstChildWidth >= elWidth && elCSS[CSSFloatProperty] === 'none' || child2 && elCSS[CSSFloatProperty] === 'none' && firstChildWidth + secondChildWidth > elWidth) ? 'vertical' : 'horizontal';
-  },
-      _dragElInRowColumn = function _dragElInRowColumn(dragRect, targetRect, vertical) {
-    var dragElS1Opp = vertical ? dragRect.left : dragRect.top,
+      if (elCSS.display === 'flex') {
+        return elCSS.flexDirection === 'column' || elCSS.flexDirection === 'column-reverse' ? 'vertical' : 'horizontal';
+      }
+      if (elCSS.display === 'grid') {
+        return elCSS.gridTemplateColumns.split(' ').length <= 1 ? 'vertical' : 'horizontal';
+      }
+      if (child1 && firstChildCSS["float"] && firstChildCSS["float"] !== 'none') {
+        var touchingSideChild2 = firstChildCSS["float"] === 'left' ? 'left' : 'right';
+        return child2 && (secondChildCSS.clear === 'both' || secondChildCSS.clear === touchingSideChild2) ? 'vertical' : 'horizontal';
+      }
+      return child1 && (firstChildCSS.display === 'block' || firstChildCSS.display === 'flex' || firstChildCSS.display === 'table' || firstChildCSS.display === 'grid' || firstChildWidth >= elWidth && elCSS[CSSFloatProperty] === 'none' || child2 && elCSS[CSSFloatProperty] === 'none' && firstChildWidth + secondChildWidth > elWidth) ? 'vertical' : 'horizontal';
+    },
+    _dragElInRowColumn = function _dragElInRowColumn(dragRect, targetRect, vertical) {
+      var dragElS1Opp = vertical ? dragRect.left : dragRect.top,
         dragElS2Opp = vertical ? dragRect.right : dragRect.bottom,
         dragElOppLength = vertical ? dragRect.width : dragRect.height,
         targetS1Opp = vertical ? targetRect.left : targetRect.top,
         targetS2Opp = vertical ? targetRect.right : targetRect.bottom,
         targetOppLength = vertical ? targetRect.width : targetRect.height;
-    return dragElS1Opp === targetS1Opp || dragElS2Opp === targetS2Opp || dragElS1Opp + dragElOppLength / 2 === targetS1Opp + targetOppLength / 2;
-  },
-
-  /**
-   * Detects first nearest empty sortable to X and Y position using emptyInsertThreshold.
-   * @param  {Number} x      X position
-   * @param  {Number} y      Y position
-   * @return {HTMLElement}   Element of the first found nearest Sortable
-   */
-  _detectNearestEmptySortable = function _detectNearestEmptySortable(x, y) {
-    var ret;
-    sortables.some(function (sortable) {
-      var threshold = sortable[expando].options.emptyInsertThreshold;
-      if (!threshold || lastChild(sortable)) return;
-      var rect = getRect(sortable),
+      return dragElS1Opp === targetS1Opp || dragElS2Opp === targetS2Opp || dragElS1Opp + dragElOppLength / 2 === targetS1Opp + targetOppLength / 2;
+    },
+    /**
+     * Detects first nearest empty sortable to X and Y position using emptyInsertThreshold.
+     * @param  {Number} x      X position
+     * @param  {Number} y      Y position
+     * @return {HTMLElement}   Element of the first found nearest Sortable
+     */
+    _detectNearestEmptySortable = function _detectNearestEmptySortable(x, y) {
+      var ret;
+      sortables.some(function (sortable) {
+        var threshold = sortable[expando].options.emptyInsertThreshold;
+        if (!threshold || lastChild(sortable)) return;
+        var rect = getRect(sortable),
           insideHorizontally = x >= rect.left - threshold && x <= rect.right + threshold,
           insideVertically = y >= rect.top - threshold && y <= rect.bottom + threshold;
-
-      if (insideHorizontally && insideVertically) {
-        return ret = sortable;
-      }
-    });
-    return ret;
-  },
-      _prepareGroup = function _prepareGroup(options) {
-    function toFn(value, pull) {
-      return function (to, from, dragEl, evt) {
-        var sameGroup = to.options.group.name && from.options.group.name && to.options.group.name === from.options.group.name;
-
-        if (value == null && (pull || sameGroup)) {
-          // Default pull value
-          // Default pull and put value if same group
-          return true;
-        } else if (value == null || value === false) {
-          return false;
-        } else if (pull && value === 'clone') {
-          return value;
-        } else if (typeof value === 'function') {
-          return toFn(value(to, from, dragEl, evt), pull)(to, from, dragEl, evt);
-        } else {
-          var otherGroup = (pull ? to : from).options.group.name;
-          return value === true || typeof value === 'string' && value === otherGroup || value.join && value.indexOf(otherGroup) > -1;
+        if (insideHorizontally && insideVertically) {
+          return ret = sortable;
         }
-      };
-    }
+      });
+      return ret;
+    },
+    _prepareGroup = function _prepareGroup(options) {
+      function toFn(value, pull) {
+        return function (to, from, dragEl, evt) {
+          var sameGroup = to.options.group.name && from.options.group.name && to.options.group.name === from.options.group.name;
+          if (value == null && (pull || sameGroup)) {
+            // Default pull value
+            // Default pull and put value if same group
+            return true;
+          } else if (value == null || value === false) {
+            return false;
+          } else if (pull && value === 'clone') {
+            return value;
+          } else if (typeof value === 'function') {
+            return toFn(value(to, from, dragEl, evt), pull)(to, from, dragEl, evt);
+          } else {
+            var otherGroup = (pull ? to : from).options.group.name;
+            return value === true || typeof value === 'string' && value === otherGroup || value.join && value.indexOf(otherGroup) > -1;
+          }
+        };
+      }
+      var group = {};
+      var originalGroup = options.group;
+      if (!originalGroup || _typeof(originalGroup) != 'object') {
+        originalGroup = {
+          name: originalGroup
+        };
+      }
+      group.name = originalGroup.name;
+      group.checkPull = toFn(originalGroup.pull, true);
+      group.checkPut = toFn(originalGroup.put);
+      group.revertClone = originalGroup.revertClone;
+      options.group = group;
+    },
+    _hideGhostForTarget = function _hideGhostForTarget() {
+      if (!supportCssPointerEvents && ghostEl) {
+        css(ghostEl, 'display', 'none');
+      }
+    },
+    _unhideGhostForTarget = function _unhideGhostForTarget() {
+      if (!supportCssPointerEvents && ghostEl) {
+        css(ghostEl, 'display', '');
+      }
+    };
 
-    var group = {};
-    var originalGroup = options.group;
-
-    if (!originalGroup || _typeof(originalGroup) != 'object') {
-      originalGroup = {
-        name: originalGroup
-      };
-    }
-
-    group.name = originalGroup.name;
-    group.checkPull = toFn(originalGroup.pull, true);
-    group.checkPut = toFn(originalGroup.put);
-    group.revertClone = originalGroup.revertClone;
-    options.group = group;
-  },
-      _hideGhostForTarget = function _hideGhostForTarget() {
-    if (!supportCssPointerEvents && ghostEl) {
-      css(ghostEl, 'display', 'none');
-    }
-  },
-      _unhideGhostForTarget = function _unhideGhostForTarget() {
-    if (!supportCssPointerEvents && ghostEl) {
-      css(ghostEl, 'display', '');
-    }
-  }; // #1184 fix - Prevent click event on fallback if dragged but item not changed position
-
-
+  // #1184 fix - Prevent click event on fallback if dragged but item not changed position
   if (documentExists && !ChromeForAndroid) {
     document.addEventListener('click', function (evt) {
       if (ignoreNextClick) {
@@ -40410,53 +40105,44 @@ Popper.Defaults = Defaults;
       }
     }, true);
   }
-
   var nearestEmptyInsertDetectEvent = function nearestEmptyInsertDetectEvent(evt) {
     if (dragEl) {
       evt = evt.touches ? evt.touches[0] : evt;
-
       var nearest = _detectNearestEmptySortable(evt.clientX, evt.clientY);
-
       if (nearest) {
         // Create imitation event
         var event = {};
-
         for (var i in evt) {
           if (evt.hasOwnProperty(i)) {
             event[i] = evt[i];
           }
         }
-
         event.target = event.rootEl = nearest;
         event.preventDefault = void 0;
         event.stopPropagation = void 0;
-
         nearest[expando]._onDragOver(event);
       }
     }
   };
-
   var _checkOutsideTargetEl = function _checkOutsideTargetEl(evt) {
     if (dragEl) {
       dragEl.parentNode[expando]._isOutsideThisEl(evt.target);
     }
   };
+
   /**
    * @class  Sortable
    * @param  {HTMLElement}  el
    * @param  {Object}       [options]
    */
-
-
   function Sortable(el, options) {
     if (!(el && el.nodeType && el.nodeType === 1)) {
       throw "Sortable: `el` must be an HTMLElement, not ".concat({}.toString.call(el));
     }
-
     this.el = el; // root element
+    this.options = options = _extends({}, options);
 
-    this.options = options = _extends({}, options); // Export instance
-
+    // Export instance
     el[expando] = this;
     var defaults = {
       group: null,
@@ -40503,52 +40189,48 @@ Popper.Defaults = Defaults;
       supportPointer: Sortable.supportPointer !== false && 'PointerEvent' in window && !Safari,
       emptyInsertThreshold: 5
     };
-    PluginManager.initializePlugins(this, el, defaults); // Set default options
+    PluginManager.initializePlugins(this, el, defaults);
 
+    // Set default options
     for (var name in defaults) {
       !(name in options) && (options[name] = defaults[name]);
     }
+    _prepareGroup(options);
 
-    _prepareGroup(options); // Bind all private methods
-
-
+    // Bind all private methods
     for (var fn in this) {
       if (fn.charAt(0) === '_' && typeof this[fn] === 'function') {
         this[fn] = this[fn].bind(this);
       }
-    } // Setup drag mode
+    }
 
-
+    // Setup drag mode
     this.nativeDraggable = options.forceFallback ? false : supportDraggable;
-
     if (this.nativeDraggable) {
       // Touch start threshold cannot be greater than the native dragstart threshold
       this.options.touchStartThreshold = 1;
-    } // Bind events
+    }
 
-
+    // Bind events
     if (options.supportPointer) {
       on(el, 'pointerdown', this._onTapStart);
     } else {
       on(el, 'mousedown', this._onTapStart);
       on(el, 'touchstart', this._onTapStart);
     }
-
     if (this.nativeDraggable) {
       on(el, 'dragover', this);
       on(el, 'dragenter', this);
     }
+    sortables.push(this.el);
 
-    sortables.push(this.el); // Restore sorting
+    // Restore sorting
+    options.store && options.store.get && this.sort(options.store.get(this) || []);
 
-    options.store && options.store.get && this.sort(options.store.get(this) || []); // Add animation state manager
-
+    // Add animation state manager
     _extends(this, AnimationStateManager());
   }
-
-  Sortable.prototype =
-  /** @lends Sortable.prototype */
-  {
+  Sortable.prototype = /** @lends Sortable.prototype */{
     constructor: Sortable,
     _isOutsideThisEl: function _isOutsideThisEl(target) {
       if (!this.el.contains(target) && target !== this.el) {
@@ -40558,57 +40240,50 @@ Popper.Defaults = Defaults;
     _getDirection: function _getDirection(evt, target) {
       return typeof this.options.direction === 'function' ? this.options.direction.call(this, evt, target, dragEl) : this.options.direction;
     },
-    _onTapStart: function _onTapStart(
-    /** Event|TouchEvent */
-    evt) {
+    _onTapStart: function _onTapStart( /** Event|TouchEvent */evt) {
       if (!evt.cancelable) return;
-
       var _this = this,
-          el = this.el,
-          options = this.options,
-          preventOnFilter = options.preventOnFilter,
-          type = evt.type,
-          touch = evt.touches && evt.touches[0] || evt.pointerType && evt.pointerType === 'touch' && evt,
-          target = (touch || evt).target,
-          originalTarget = evt.target.shadowRoot && (evt.path && evt.path[0] || evt.composedPath && evt.composedPath()[0]) || target,
-          filter = options.filter;
+        el = this.el,
+        options = this.options,
+        preventOnFilter = options.preventOnFilter,
+        type = evt.type,
+        touch = evt.touches && evt.touches[0] || evt.pointerType && evt.pointerType === 'touch' && evt,
+        target = (touch || evt).target,
+        originalTarget = evt.target.shadowRoot && (evt.path && evt.path[0] || evt.composedPath && evt.composedPath()[0]) || target,
+        filter = options.filter;
+      _saveInputCheckedState(el);
 
-      _saveInputCheckedState(el); // Don't trigger start event when an element is been dragged, otherwise the evt.oldindex always wrong when set option.group.
-
-
+      // Don't trigger start event when an element is been dragged, otherwise the evt.oldindex always wrong when set option.group.
       if (dragEl) {
         return;
       }
-
       if (/mousedown|pointerdown/.test(type) && evt.button !== 0 || options.disabled) {
         return; // only left button and enabled
-      } // cancel dnd if original target is content editable
+      }
 
-
+      // cancel dnd if original target is content editable
       if (originalTarget.isContentEditable) {
         return;
-      } // Safari ignores further event handling after mousedown
+      }
 
-
+      // Safari ignores further event handling after mousedown
       if (!this.nativeDraggable && Safari && target && target.tagName.toUpperCase() === 'SELECT') {
         return;
       }
-
       target = closest(target, options.draggable, el, false);
-
       if (target && target.animated) {
         return;
       }
-
       if (lastDownEl === target) {
         // Ignoring duplicate `down`
         return;
-      } // Get the index of the dragged element within its parent
+      }
 
-
+      // Get the index of the dragged element within its parent
       oldIndex = index(target);
-      oldDraggableIndex = index(target, options.draggable); // Check filter
+      oldDraggableIndex = index(target, options.draggable);
 
+      // Check filter
       if (typeof filter === 'function') {
         if (filter.call(this, evt, target, this)) {
           _dispatchEvent({
@@ -40619,7 +40294,6 @@ Popper.Defaults = Defaults;
             toEl: el,
             fromEl: el
           });
-
           pluginEvent('filter', _this, {
             evt: evt
           });
@@ -40629,7 +40303,6 @@ Popper.Defaults = Defaults;
       } else if (filter) {
         filter = filter.split(',').some(function (criteria) {
           criteria = closest(originalTarget, criteria.trim(), el, false);
-
           if (criteria) {
             _dispatchEvent({
               sortable: _this,
@@ -40639,40 +40312,30 @@ Popper.Defaults = Defaults;
               fromEl: el,
               toEl: el
             });
-
             pluginEvent('filter', _this, {
               evt: evt
             });
             return true;
           }
         });
-
         if (filter) {
           preventOnFilter && evt.cancelable && evt.preventDefault();
           return; // cancel dnd
         }
       }
-
       if (options.handle && !closest(originalTarget, options.handle, el, false)) {
         return;
-      } // Prepare `dragstart`
+      }
 
-
+      // Prepare `dragstart`
       this._prepareDragStart(evt, touch, target);
     },
-    _prepareDragStart: function _prepareDragStart(
-    /** Event */
-    evt,
-    /** Touch */
-    touch,
-    /** HTMLElement */
-    target) {
+    _prepareDragStart: function _prepareDragStart( /** Event */evt, /** Touch */touch, /** HTMLElement */target) {
       var _this = this,
-          el = _this.el,
-          options = _this.options,
-          ownerDocument = el.ownerDocument,
-          dragStartFn;
-
+        el = _this.el,
+        options = _this.options,
+        ownerDocument = el.ownerDocument,
+        dragStartFn;
       if (target && !dragEl && target.parentNode === el) {
         var dragRect = getRect(target);
         rootEl = el;
@@ -40692,41 +40355,36 @@ Popper.Defaults = Defaults;
         this._lastX = (touch || evt).clientX;
         this._lastY = (touch || evt).clientY;
         dragEl.style['will-change'] = 'all';
-
         dragStartFn = function dragStartFn() {
           pluginEvent('delayEnded', _this, {
             evt: evt
           });
-
           if (Sortable.eventCanceled) {
             _this._onDrop();
-
             return;
-          } // Delayed drag has been triggered
+          }
+          // Delayed drag has been triggered
           // we can re-enable the events: touchmove/mousemove
-
-
           _this._disableDelayedDragEvents();
-
           if (!FireFox && _this.nativeDraggable) {
             dragEl.draggable = true;
-          } // Bind the events: dragstart/dragend
+          }
 
+          // Bind the events: dragstart/dragend
+          _this._triggerDragStart(evt, touch);
 
-          _this._triggerDragStart(evt, touch); // Drag start event
-
-
+          // Drag start event
           _dispatchEvent({
             sortable: _this,
             name: 'choose',
             originalEvent: evt
-          }); // Chosen item
+          });
 
-
+          // Chosen item
           toggleClass(dragEl, options.chosenClass, true);
-        }; // Disable "draggable"
+        };
 
-
+        // Disable "draggable"
         options.ignore.split(',').forEach(function (criteria) {
           find(dragEl, criteria.trim(), _disableDraggable);
         });
@@ -40735,27 +40393,26 @@ Popper.Defaults = Defaults;
         on(ownerDocument, 'touchmove', nearestEmptyInsertDetectEvent);
         on(ownerDocument, 'mouseup', _this._onDrop);
         on(ownerDocument, 'touchend', _this._onDrop);
-        on(ownerDocument, 'touchcancel', _this._onDrop); // Make dragEl draggable (must be before delay for FireFox)
+        on(ownerDocument, 'touchcancel', _this._onDrop);
 
+        // Make dragEl draggable (must be before delay for FireFox)
         if (FireFox && this.nativeDraggable) {
           this.options.touchStartThreshold = 4;
           dragEl.draggable = true;
         }
-
         pluginEvent('delayStart', this, {
           evt: evt
-        }); // Delay is impossible for native DnD in Edge or IE
+        });
 
+        // Delay is impossible for native DnD in Edge or IE
         if (options.delay && (!options.delayOnTouchOnly || touch) && (!this.nativeDraggable || !(Edge || IE11OrLess))) {
           if (Sortable.eventCanceled) {
             this._onDrop();
-
             return;
-          } // If the user moves the pointer or let go the click or touch
+          }
+          // If the user moves the pointer or let go the click or touch
           // before the delay has been reached:
           // disable the delayed drag
-
-
           on(ownerDocument, 'mouseup', _this._disableDelayedDrag);
           on(ownerDocument, 'touchend', _this._disableDelayedDrag);
           on(ownerDocument, 'touchcancel', _this._disableDelayedDrag);
@@ -40768,11 +40425,8 @@ Popper.Defaults = Defaults;
         }
       }
     },
-    _delayedDragTouchMoveHandler: function _delayedDragTouchMoveHandler(
-    /** TouchEvent|PointerEvent **/
-    e) {
+    _delayedDragTouchMoveHandler: function _delayedDragTouchMoveHandler( /** TouchEvent|PointerEvent **/e) {
       var touch = e.touches ? e.touches[0] : e;
-
       if (Math.max(Math.abs(touch.clientX - this._lastX), Math.abs(touch.clientY - this._lastY)) >= Math.floor(this.options.touchStartThreshold / (this.nativeDraggable && window.devicePixelRatio || 1))) {
         this._disableDelayedDrag();
       }
@@ -40780,7 +40434,6 @@ Popper.Defaults = Defaults;
     _disableDelayedDrag: function _disableDelayedDrag() {
       dragEl && _disableDraggable(dragEl);
       clearTimeout(this._dragStartTimer);
-
       this._disableDelayedDragEvents();
     },
     _disableDelayedDragEvents: function _disableDelayedDragEvents() {
@@ -40792,13 +40445,8 @@ Popper.Defaults = Defaults;
       off(ownerDocument, 'touchmove', this._delayedDragTouchMoveHandler);
       off(ownerDocument, 'pointermove', this._delayedDragTouchMoveHandler);
     },
-    _triggerDragStart: function _triggerDragStart(
-    /** Event */
-    evt,
-    /** Touch */
-    touch) {
+    _triggerDragStart: function _triggerDragStart( /** Event */evt, /** Touch */touch) {
       touch = touch || evt.pointerType == 'touch' && evt;
-
       if (!this.nativeDraggable || touch) {
         if (this.options.supportPointer) {
           on(document, 'pointermove', this._onTouchMove);
@@ -40811,7 +40459,6 @@ Popper.Defaults = Defaults;
         on(dragEl, 'dragend', this);
         on(rootEl, 'dragstart', this._onDragStart);
       }
-
       try {
         if (document.selection) {
           // Timeout neccessary for IE9
@@ -40824,25 +40471,23 @@ Popper.Defaults = Defaults;
       } catch (err) {}
     },
     _dragStarted: function _dragStarted(fallback, evt) {
-
       awaitingDragStarted = false;
-
       if (rootEl && dragEl) {
         pluginEvent('dragStarted', this, {
           evt: evt
         });
-
         if (this.nativeDraggable) {
           on(document, 'dragover', _checkOutsideTargetEl);
         }
+        var options = this.options;
 
-        var options = this.options; // Apply effect
-
+        // Apply effect
         !fallback && toggleClass(dragEl, options.dragClass, false);
         toggleClass(dragEl, options.ghostClass, true);
         Sortable.active = this;
-        fallback && this._appendGhost(); // Drag start event
+        fallback && this._appendGhost();
 
+        // Drag start event
         _dispatchEvent({
           sortable: this,
           name: 'start',
@@ -40856,20 +40501,15 @@ Popper.Defaults = Defaults;
       if (touchEvt) {
         this._lastX = touchEvt.clientX;
         this._lastY = touchEvt.clientY;
-
         _hideGhostForTarget();
-
         var target = document.elementFromPoint(touchEvt.clientX, touchEvt.clientY);
         var parent = target;
-
         while (target && target.shadowRoot) {
           target = target.shadowRoot.elementFromPoint(touchEvt.clientX, touchEvt.clientY);
           if (target === parent) break;
           parent = target;
         }
-
         dragEl.parentNode[expando]._isOutsideThisEl(target);
-
         if (parent) {
           do {
             if (parent[expando]) {
@@ -40880,44 +40520,37 @@ Popper.Defaults = Defaults;
                 target: target,
                 rootEl: parent
               });
-
               if (inserted && !this.options.dragoverBubble) {
                 break;
               }
             }
-
             target = parent; // store last element
           }
-          /* jshint boss:true */
-          while (parent = parent.parentNode);
+          /* jshint boss:true */ while (parent = parent.parentNode);
         }
-
         _unhideGhostForTarget();
       }
     },
-    _onTouchMove: function _onTouchMove(
-    /**TouchEvent*/
-    evt) {
+    _onTouchMove: function _onTouchMove( /**TouchEvent*/evt) {
       if (tapEvt) {
         var options = this.options,
-            fallbackTolerance = options.fallbackTolerance,
-            fallbackOffset = options.fallbackOffset,
-            touch = evt.touches ? evt.touches[0] : evt,
-            ghostMatrix = ghostEl && matrix(ghostEl, true),
-            scaleX = ghostEl && ghostMatrix && ghostMatrix.a,
-            scaleY = ghostEl && ghostMatrix && ghostMatrix.d,
-            relativeScrollOffset = PositionGhostAbsolutely && ghostRelativeParent && getRelativeScrollOffset(ghostRelativeParent),
-            dx = (touch.clientX - tapEvt.clientX + fallbackOffset.x) / (scaleX || 1) + (relativeScrollOffset ? relativeScrollOffset[0] - ghostRelativeParentInitialScroll[0] : 0) / (scaleX || 1),
-            dy = (touch.clientY - tapEvt.clientY + fallbackOffset.y) / (scaleY || 1) + (relativeScrollOffset ? relativeScrollOffset[1] - ghostRelativeParentInitialScroll[1] : 0) / (scaleY || 1); // only set the status to dragging, when we are actually dragging
+          fallbackTolerance = options.fallbackTolerance,
+          fallbackOffset = options.fallbackOffset,
+          touch = evt.touches ? evt.touches[0] : evt,
+          ghostMatrix = ghostEl && matrix(ghostEl, true),
+          scaleX = ghostEl && ghostMatrix && ghostMatrix.a,
+          scaleY = ghostEl && ghostMatrix && ghostMatrix.d,
+          relativeScrollOffset = PositionGhostAbsolutely && ghostRelativeParent && getRelativeScrollOffset(ghostRelativeParent),
+          dx = (touch.clientX - tapEvt.clientX + fallbackOffset.x) / (scaleX || 1) + (relativeScrollOffset ? relativeScrollOffset[0] - ghostRelativeParentInitialScroll[0] : 0) / (scaleX || 1),
+          dy = (touch.clientY - tapEvt.clientY + fallbackOffset.y) / (scaleY || 1) + (relativeScrollOffset ? relativeScrollOffset[1] - ghostRelativeParentInitialScroll[1] : 0) / (scaleY || 1);
 
+        // only set the status to dragging, when we are actually dragging
         if (!Sortable.active && !awaitingDragStarted) {
           if (fallbackTolerance && Math.max(Math.abs(touch.clientX - this._lastX), Math.abs(touch.clientY - this._lastY)) < fallbackTolerance) {
             return;
           }
-
           this._onDragStart(evt, true);
         }
-
         if (ghostEl) {
           if (ghostMatrix) {
             ghostMatrix.e += dx - (lastDx || 0);
@@ -40932,7 +40565,6 @@ Popper.Defaults = Defaults;
               f: dy
             };
           }
-
           var cssMatrix = "matrix(".concat(ghostMatrix.a, ",").concat(ghostMatrix.b, ",").concat(ghostMatrix.c, ",").concat(ghostMatrix.d, ",").concat(ghostMatrix.e, ",").concat(ghostMatrix.f, ")");
           css(ghostEl, 'webkitTransform', cssMatrix);
           css(ghostEl, 'mozTransform', cssMatrix);
@@ -40942,7 +40574,6 @@ Popper.Defaults = Defaults;
           lastDy = dy;
           touchEvt = touch;
         }
-
         evt.cancelable && evt.preventDefault();
       }
     },
@@ -40951,17 +40582,16 @@ Popper.Defaults = Defaults;
       // Not being adjusted for
       if (!ghostEl) {
         var container = this.options.fallbackOnBody ? document.body : rootEl,
-            rect = getRect(dragEl, true, PositionGhostAbsolutely, true, container),
-            options = this.options; // Position absolutely
+          rect = getRect(dragEl, true, PositionGhostAbsolutely, true, container),
+          options = this.options;
 
+        // Position absolutely
         if (PositionGhostAbsolutely) {
           // Get relatively positioned parent
           ghostRelativeParent = container;
-
           while (css(ghostRelativeParent, 'position') === 'static' && css(ghostRelativeParent, 'transform') === 'none' && ghostRelativeParent !== document) {
             ghostRelativeParent = ghostRelativeParent.parentNode;
           }
-
           if (ghostRelativeParent !== document.body && ghostRelativeParent !== document.documentElement) {
             if (ghostRelativeParent === document) ghostRelativeParent = getWindowScrollingElement();
             rect.top += ghostRelativeParent.scrollTop;
@@ -40969,10 +40599,8 @@ Popper.Defaults = Defaults;
           } else {
             ghostRelativeParent = getWindowScrollingElement();
           }
-
           ghostRelativeParentInitialScroll = getRelativeScrollOffset(ghostRelativeParent);
         }
-
         ghostEl = dragEl.cloneNode(true);
         toggleClass(ghostEl, options.ghostClass, false);
         toggleClass(ghostEl, options.fallbackClass, true);
@@ -40990,62 +40618,50 @@ Popper.Defaults = Defaults;
         css(ghostEl, 'zIndex', '100000');
         css(ghostEl, 'pointerEvents', 'none');
         Sortable.ghost = ghostEl;
-        container.appendChild(ghostEl); // Set transform-origin
+        container.appendChild(ghostEl);
 
+        // Set transform-origin
         css(ghostEl, 'transform-origin', tapDistanceLeft / parseInt(ghostEl.style.width) * 100 + '% ' + tapDistanceTop / parseInt(ghostEl.style.height) * 100 + '%');
       }
     },
-    _onDragStart: function _onDragStart(
-    /**Event*/
-    evt,
-    /**boolean*/
-    fallback) {
+    _onDragStart: function _onDragStart( /**Event*/evt, /**boolean*/fallback) {
       var _this = this;
-
       var dataTransfer = evt.dataTransfer;
       var options = _this.options;
       pluginEvent('dragStart', this, {
         evt: evt
       });
-
       if (Sortable.eventCanceled) {
         this._onDrop();
-
         return;
       }
-
       pluginEvent('setupClone', this);
-
       if (!Sortable.eventCanceled) {
         cloneEl = clone(dragEl);
         cloneEl.removeAttribute("id");
         cloneEl.draggable = false;
         cloneEl.style['will-change'] = '';
-
         this._hideClone();
-
         toggleClass(cloneEl, this.options.chosenClass, false);
         Sortable.clone = cloneEl;
-      } // #1143: IFrame support workaround
+      }
 
-
+      // #1143: IFrame support workaround
       _this.cloneId = _nextTick(function () {
         pluginEvent('clone', _this);
         if (Sortable.eventCanceled) return;
-
         if (!_this.options.removeCloneOnHide) {
           rootEl.insertBefore(cloneEl, dragEl);
         }
-
         _this._hideClone();
-
         _dispatchEvent({
           sortable: _this,
           name: 'clone'
         });
       });
-      !fallback && toggleClass(dragEl, options.dragClass, true); // Set proper drop events
+      !fallback && toggleClass(dragEl, options.dragClass, true);
 
+      // Set proper drop events
       if (fallback) {
         ignoreNextClick = true;
         _this._loopId = setInterval(_this._emulateDragOver, 50);
@@ -41054,47 +40670,40 @@ Popper.Defaults = Defaults;
         off(document, 'mouseup', _this._onDrop);
         off(document, 'touchend', _this._onDrop);
         off(document, 'touchcancel', _this._onDrop);
-
         if (dataTransfer) {
           dataTransfer.effectAllowed = 'move';
           options.setData && options.setData.call(_this, dataTransfer, dragEl);
         }
+        on(document, 'drop', _this);
 
-        on(document, 'drop', _this); // #1276 fix:
-
+        // #1276 fix:
         css(dragEl, 'transform', 'translateZ(0)');
       }
-
       awaitingDragStarted = true;
       _this._dragStartId = _nextTick(_this._dragStarted.bind(_this, fallback, evt));
       on(document, 'selectstart', _this);
       moved = true;
-
       if (Safari) {
         css(document.body, 'user-select', 'none');
       }
     },
     // Returns true - if no further action is needed (either inserted or another condition)
-    _onDragOver: function _onDragOver(
-    /**Event*/
-    evt) {
+    _onDragOver: function _onDragOver( /**Event*/evt) {
       var el = this.el,
-          target = evt.target,
-          dragRect,
-          targetRect,
-          revert,
-          options = this.options,
-          group = options.group,
-          activeSortable = Sortable.active,
-          isOwner = activeGroup === group,
-          canSort = options.sort,
-          fromSortable = putSortable || activeSortable,
-          vertical,
-          _this = this,
-          completedFired = false;
-
+        target = evt.target,
+        dragRect,
+        targetRect,
+        revert,
+        options = this.options,
+        group = options.group,
+        activeSortable = Sortable.active,
+        isOwner = activeGroup === group,
+        canSort = options.sort,
+        fromSortable = putSortable || activeSortable,
+        vertical,
+        _this = this,
+        completedFired = false;
       if (_silent) return;
-
       function dragOverEvent(name, extra) {
         pluginEvent(name, _this, _objectSpread2({
           evt: evt,
@@ -41112,25 +40721,22 @@ Popper.Defaults = Defaults;
           },
           changed: changed
         }, extra));
-      } // Capture animation state
+      }
 
-
+      // Capture animation state
       function capture() {
         dragOverEvent('dragOverAnimationCapture');
-
         _this.captureAnimationState();
-
         if (_this !== fromSortable) {
           fromSortable.captureAnimationState();
         }
-      } // Return invocation when dragEl is inserted (or completed)
+      }
 
-
+      // Return invocation when dragEl is inserted (or completed)
       function completed(insertion) {
         dragOverEvent('dragOverCompleted', {
           insertion: insertion
         });
-
         if (insertion) {
           // Clones must be hidden before folding animation to capture dragRectAbsolute properly
           if (isOwner) {
@@ -41138,57 +40744,51 @@ Popper.Defaults = Defaults;
           } else {
             activeSortable._showClone(_this);
           }
-
           if (_this !== fromSortable) {
             // Set ghost class to new sortable's ghost class
             toggleClass(dragEl, putSortable ? putSortable.options.ghostClass : activeSortable.options.ghostClass, false);
             toggleClass(dragEl, options.ghostClass, true);
           }
-
           if (putSortable !== _this && _this !== Sortable.active) {
             putSortable = _this;
           } else if (_this === Sortable.active && putSortable) {
             putSortable = null;
-          } // Animation
+          }
 
-
+          // Animation
           if (fromSortable === _this) {
             _this._ignoreWhileAnimating = target;
           }
-
           _this.animateAll(function () {
             dragOverEvent('dragOverAnimationComplete');
             _this._ignoreWhileAnimating = null;
           });
-
           if (_this !== fromSortable) {
             fromSortable.animateAll();
             fromSortable._ignoreWhileAnimating = null;
           }
-        } // Null lastTarget if it is not inside a previously swapped element
-
-
-        if (target === dragEl && !dragEl.animated || target === el && !target.animated) {
-          lastTarget = null;
-        } // no bubbling and not fallback
-
-
-        if (!options.dragoverBubble && !evt.rootEl && target !== document) {
-          dragEl.parentNode[expando]._isOutsideThisEl(evt.target); // Do not detect for empty insert if already inserted
-
-
-          !insertion && nearestEmptyInsertDetectEvent(evt);
         }
 
+        // Null lastTarget if it is not inside a previously swapped element
+        if (target === dragEl && !dragEl.animated || target === el && !target.animated) {
+          lastTarget = null;
+        }
+
+        // no bubbling and not fallback
+        if (!options.dragoverBubble && !evt.rootEl && target !== document) {
+          dragEl.parentNode[expando]._isOutsideThisEl(evt.target);
+
+          // Do not detect for empty insert if already inserted
+          !insertion && nearestEmptyInsertDetectEvent(evt);
+        }
         !options.dragoverBubble && evt.stopPropagation && evt.stopPropagation();
         return completedFired = true;
-      } // Call when dragEl has been inserted
+      }
 
-
+      // Call when dragEl has been inserted
       function changed() {
         newIndex = index(dragEl);
         newDraggableIndex = index(dragEl, options.draggable);
-
         _dispatchEvent({
           sortable: _this,
           name: 'change',
@@ -41198,37 +40798,27 @@ Popper.Defaults = Defaults;
           originalEvent: evt
         });
       }
-
       if (evt.preventDefault !== void 0) {
         evt.cancelable && evt.preventDefault();
       }
-
       target = closest(target, options.draggable, el, true);
       dragOverEvent('dragOver');
       if (Sortable.eventCanceled) return completedFired;
-
       if (dragEl.contains(evt.target) || target.animated && target.animatingX && target.animatingY || _this._ignoreWhileAnimating === target) {
         return completed(false);
       }
-
       ignoreNextClick = false;
-
       if (activeSortable && !options.disabled && (isOwner ? canSort || (revert = parentEl !== rootEl) // Reverting item into the original list
       : putSortable === this || (this.lastPutMode = activeGroup.checkPull(this, activeSortable, dragEl, evt)) && group.checkPut(this, activeSortable, dragEl, evt))) {
         vertical = this._getDirection(evt, target) === 'vertical';
         dragRect = getRect(dragEl);
         dragOverEvent('dragOverValid');
         if (Sortable.eventCanceled) return completedFired;
-
         if (revert) {
           parentEl = rootEl; // actualization
-
           capture();
-
           this._hideClone();
-
           dragOverEvent('revert');
-
           if (!Sortable.eventCanceled) {
             if (nextEl) {
               rootEl.insertBefore(dragEl, nextEl);
@@ -41236,38 +40826,32 @@ Popper.Defaults = Defaults;
               rootEl.appendChild(dragEl);
             }
           }
-
           return completed(true);
         }
-
         var elLastChild = lastChild(el, options.draggable);
-
         if (!elLastChild || _ghostIsLast(evt, vertical, this) && !elLastChild.animated) {
           // Insert to end of list
+
           // If already at end of list: Do not insert
           if (elLastChild === dragEl) {
             return completed(false);
-          } // if there is a last element, it is the target
+          }
 
-
+          // if there is a last element, it is the target
           if (elLastChild && el === evt.target) {
             target = elLastChild;
           }
-
           if (target) {
             targetRect = getRect(target);
           }
-
           if (_onMove(rootEl, el, dragEl, dragRect, target, targetRect, evt, !!target) !== false) {
             capture();
-
             if (elLastChild && elLastChild.nextSibling) {
               // the last draggable element is not the last node
               el.insertBefore(dragEl, elLastChild.nextSibling);
             } else {
               el.appendChild(dragEl);
             }
-
             parentEl = el; // actualization
 
             changed();
@@ -41276,14 +40860,11 @@ Popper.Defaults = Defaults;
         } else if (elLastChild && _ghostIsFirst(evt, vertical, this)) {
           // Insert to start of list
           var firstChild = getChild(el, 0, options, true);
-
           if (firstChild === dragEl) {
             return completed(false);
           }
-
           target = firstChild;
           targetRect = getRect(target);
-
           if (_onMove(rootEl, el, dragEl, dragRect, target, targetRect, evt, false) !== false) {
             capture();
             el.insertBefore(dragEl, firstChild);
@@ -41295,82 +40876,68 @@ Popper.Defaults = Defaults;
         } else if (target.parentNode === el) {
           targetRect = getRect(target);
           var direction = 0,
-              targetBeforeFirstSwap,
-              differentLevel = dragEl.parentNode !== el,
-              differentRowCol = !_dragElInRowColumn(dragEl.animated && dragEl.toRect || dragRect, target.animated && target.toRect || targetRect, vertical),
-              side1 = vertical ? 'top' : 'left',
-              scrolledPastTop = isScrolledPast(target, 'top', 'top') || isScrolledPast(dragEl, 'top', 'top'),
-              scrollBefore = scrolledPastTop ? scrolledPastTop.scrollTop : void 0;
-
+            targetBeforeFirstSwap,
+            differentLevel = dragEl.parentNode !== el,
+            differentRowCol = !_dragElInRowColumn(dragEl.animated && dragEl.toRect || dragRect, target.animated && target.toRect || targetRect, vertical),
+            side1 = vertical ? 'top' : 'left',
+            scrolledPastTop = isScrolledPast(target, 'top', 'top') || isScrolledPast(dragEl, 'top', 'top'),
+            scrollBefore = scrolledPastTop ? scrolledPastTop.scrollTop : void 0;
           if (lastTarget !== target) {
             targetBeforeFirstSwap = targetRect[side1];
             pastFirstInvertThresh = false;
             isCircumstantialInvert = !differentRowCol && options.invertSwap || differentLevel;
           }
-
           direction = _getSwapDirection(evt, target, targetRect, vertical, differentRowCol ? 1 : options.swapThreshold, options.invertedSwapThreshold == null ? options.swapThreshold : options.invertedSwapThreshold, isCircumstantialInvert, lastTarget === target);
           var sibling;
-
           if (direction !== 0) {
             // Check if target is beside dragEl in respective direction (ignoring hidden elements)
             var dragIndex = index(dragEl);
-
             do {
               dragIndex -= direction;
               sibling = parentEl.children[dragIndex];
             } while (sibling && (css(sibling, 'display') === 'none' || sibling === ghostEl));
-          } // If dragEl is already beside target: Do not insert
-
-
+          }
+          // If dragEl is already beside target: Do not insert
           if (direction === 0 || sibling === target) {
             return completed(false);
           }
-
           lastTarget = target;
           lastDirection = direction;
           var nextSibling = target.nextElementSibling,
-              after = false;
+            after = false;
           after = direction === 1;
-
           var moveVector = _onMove(rootEl, el, dragEl, dragRect, target, targetRect, evt, after);
-
           if (moveVector !== false) {
             if (moveVector === 1 || moveVector === -1) {
               after = moveVector === 1;
             }
-
             _silent = true;
             setTimeout(_unsilent, 30);
             capture();
-
             if (after && !nextSibling) {
               el.appendChild(dragEl);
             } else {
               target.parentNode.insertBefore(dragEl, after ? nextSibling : target);
-            } // Undo chrome's scroll adjustment (has no effect on other browsers)
+            }
 
-
+            // Undo chrome's scroll adjustment (has no effect on other browsers)
             if (scrolledPastTop) {
               scrollBy(scrolledPastTop, 0, scrollBefore - scrolledPastTop.scrollTop);
             }
-
             parentEl = dragEl.parentNode; // actualization
-            // must be done before animation
 
+            // must be done before animation
             if (targetBeforeFirstSwap !== undefined && !isCircumstantialInvert) {
               targetMoveDistance = Math.abs(targetBeforeFirstSwap - getRect(target)[side1]);
             }
-
             changed();
             return completed(true);
           }
         }
-
         if (el.contains(dragEl)) {
           return completed(false);
         }
       }
-
       return false;
     },
     _ignoreWhileAnimating: null,
@@ -41390,83 +40957,69 @@ Popper.Defaults = Defaults;
       off(ownerDocument, 'touchcancel', this._onDrop);
       off(document, 'selectstart', this);
     },
-    _onDrop: function _onDrop(
-    /**Event*/
-    evt) {
+    _onDrop: function _onDrop( /**Event*/evt) {
       var el = this.el,
-          options = this.options; // Get the index of the dragged element within its parent
+        options = this.options;
 
+      // Get the index of the dragged element within its parent
       newIndex = index(dragEl);
       newDraggableIndex = index(dragEl, options.draggable);
       pluginEvent('drop', this, {
         evt: evt
       });
-      parentEl = dragEl && dragEl.parentNode; // Get again after plugin event
+      parentEl = dragEl && dragEl.parentNode;
 
+      // Get again after plugin event
       newIndex = index(dragEl);
       newDraggableIndex = index(dragEl, options.draggable);
-
       if (Sortable.eventCanceled) {
         this._nulling();
-
         return;
       }
-
       awaitingDragStarted = false;
       isCircumstantialInvert = false;
       pastFirstInvertThresh = false;
       clearInterval(this._loopId);
       clearTimeout(this._dragStartTimer);
-
       _cancelNextTick(this.cloneId);
+      _cancelNextTick(this._dragStartId);
 
-      _cancelNextTick(this._dragStartId); // Unbind events
-
-
+      // Unbind events
       if (this.nativeDraggable) {
         off(document, 'drop', this);
         off(el, 'dragstart', this._onDragStart);
       }
-
       this._offMoveEvents();
-
       this._offUpEvents();
-
       if (Safari) {
         css(document.body, 'user-select', '');
       }
-
       css(dragEl, 'transform', '');
-
       if (evt) {
         if (moved) {
           evt.cancelable && evt.preventDefault();
           !options.dropBubble && evt.stopPropagation();
         }
-
         ghostEl && ghostEl.parentNode && ghostEl.parentNode.removeChild(ghostEl);
-
         if (rootEl === parentEl || putSortable && putSortable.lastPutMode !== 'clone') {
           // Remove clone(s)
           cloneEl && cloneEl.parentNode && cloneEl.parentNode.removeChild(cloneEl);
         }
-
         if (dragEl) {
           if (this.nativeDraggable) {
             off(dragEl, 'dragend', this);
           }
-
           _disableDraggable(dragEl);
+          dragEl.style['will-change'] = '';
 
-          dragEl.style['will-change'] = ''; // Remove classes
+          // Remove classes
           // ghostClass is added in dragStarted
-
           if (moved && !awaitingDragStarted) {
             toggleClass(dragEl, putSortable ? putSortable.options.ghostClass : this.options.ghostClass, false);
           }
+          toggleClass(dragEl, this.options.chosenClass, false);
 
-          toggleClass(dragEl, this.options.chosenClass, false); // Drag stop event
-
+          // Drag stop event
           _dispatchEvent({
             sortable: this,
             name: 'unchoose',
@@ -41475,7 +41028,6 @@ Popper.Defaults = Defaults;
             newDraggableIndex: null,
             originalEvent: evt
           });
-
           if (rootEl !== parentEl) {
             if (newIndex >= 0) {
               // Add event
@@ -41485,17 +41037,17 @@ Popper.Defaults = Defaults;
                 toEl: parentEl,
                 fromEl: rootEl,
                 originalEvent: evt
-              }); // Remove event
+              });
 
-
+              // Remove event
               _dispatchEvent({
                 sortable: this,
                 name: 'remove',
                 toEl: parentEl,
                 originalEvent: evt
-              }); // drag from one list and drop into another
+              });
 
-
+              // drag from one list and drop into another
               _dispatchEvent({
                 rootEl: parentEl,
                 name: 'sort',
@@ -41503,7 +41055,6 @@ Popper.Defaults = Defaults;
                 fromEl: rootEl,
                 originalEvent: evt
               });
-
               _dispatchEvent({
                 sortable: this,
                 name: 'sort',
@@ -41511,7 +41062,6 @@ Popper.Defaults = Defaults;
                 originalEvent: evt
               });
             }
-
             putSortable && putSortable.save();
           } else {
             if (newIndex !== oldIndex) {
@@ -41523,7 +41073,6 @@ Popper.Defaults = Defaults;
                   toEl: parentEl,
                   originalEvent: evt
                 });
-
                 _dispatchEvent({
                   sortable: this,
                   name: 'sort',
@@ -41533,27 +41082,24 @@ Popper.Defaults = Defaults;
               }
             }
           }
-
           if (Sortable.active) {
             /* jshint eqnull:true */
             if (newIndex == null || newIndex === -1) {
               newIndex = oldIndex;
               newDraggableIndex = oldDraggableIndex;
             }
-
             _dispatchEvent({
               sortable: this,
               name: 'end',
               toEl: parentEl,
               originalEvent: evt
-            }); // Save sorting
+            });
 
-
+            // Save sorting
             this.save();
           }
         }
       }
-
       this._nulling();
     },
     _nulling: function _nulling() {
@@ -41564,65 +41110,52 @@ Popper.Defaults = Defaults;
       });
       savedInputChecked.length = lastDx = lastDy = 0;
     },
-    handleEvent: function handleEvent(
-    /**Event*/
-    evt) {
+    handleEvent: function handleEvent( /**Event*/evt) {
       switch (evt.type) {
         case 'drop':
         case 'dragend':
           this._onDrop(evt);
-
           break;
-
         case 'dragenter':
         case 'dragover':
           if (dragEl) {
             this._onDragOver(evt);
-
             _globalDragOver(evt);
           }
-
           break;
-
         case 'selectstart':
           evt.preventDefault();
           break;
       }
     },
-
     /**
      * Serializes the item into an array of string.
      * @returns {String[]}
      */
     toArray: function toArray() {
       var order = [],
-          el,
-          children = this.el.children,
-          i = 0,
-          n = children.length,
-          options = this.options;
-
+        el,
+        children = this.el.children,
+        i = 0,
+        n = children.length,
+        options = this.options;
       for (; i < n; i++) {
         el = children[i];
-
         if (closest(el, options.draggable, this.el, false)) {
           order.push(el.getAttribute(options.dataIdAttr) || _generateId(el));
         }
       }
-
       return order;
     },
-
     /**
      * Sorts the elements according to the array.
      * @param  {String[]}  order  order of the items
      */
     sort: function sort(order, useAnimation) {
       var items = {},
-          rootEl = this.el;
+        rootEl = this.el;
       this.toArray().forEach(function (id, i) {
         var el = rootEl.children[i];
-
         if (closest(el, this.options.draggable, rootEl, false)) {
           items[id] = el;
         }
@@ -41636,7 +41169,6 @@ Popper.Defaults = Defaults;
       });
       useAnimation && this.animateAll();
     },
-
     /**
      * Save the current sorting
      */
@@ -41644,7 +41176,6 @@ Popper.Defaults = Defaults;
       var store = this.options.store;
       store && store.set && store.set(this);
     },
-
     /**
      * For each element in the set, get the first element that matches the selector by testing the element itself and traversing up through its ancestors in the DOM tree.
      * @param   {HTMLElement}  el
@@ -41654,7 +41185,6 @@ Popper.Defaults = Defaults;
     closest: function closest$1(el, selector) {
       return closest(el, selector || this.options.draggable, this.el, false);
     },
-
     /**
      * Set/get option
      * @param   {string} name
@@ -41663,24 +41193,20 @@ Popper.Defaults = Defaults;
      */
     option: function option(name, value) {
       var options = this.options;
-
       if (value === void 0) {
         return options[name];
       } else {
         var modifiedValue = PluginManager.modifyOption(this, name, value);
-
         if (typeof modifiedValue !== 'undefined') {
           options[name] = modifiedValue;
         } else {
           options[name] = value;
         }
-
         if (name === 'group') {
           _prepareGroup(options);
         }
       }
     },
-
     /**
      * Destroy
      */
@@ -41691,21 +41217,16 @@ Popper.Defaults = Defaults;
       off(el, 'mousedown', this._onTapStart);
       off(el, 'touchstart', this._onTapStart);
       off(el, 'pointerdown', this._onTapStart);
-
       if (this.nativeDraggable) {
         off(el, 'dragover', this);
         off(el, 'dragenter', this);
-      } // Remove draggable attributes
-
-
+      }
+      // Remove draggable attributes
       Array.prototype.forEach.call(el.querySelectorAll('[draggable]'), function (el) {
         el.removeAttribute('draggable');
       });
-
       this._onDrop();
-
       this._disableDelayedDragEvents();
-
       sortables.splice(sortables.indexOf(this.el), 1);
       this.el = el = null;
     },
@@ -41714,25 +41235,22 @@ Popper.Defaults = Defaults;
         pluginEvent('hideClone', this);
         if (Sortable.eventCanceled) return;
         css(cloneEl, 'display', 'none');
-
         if (this.options.removeCloneOnHide && cloneEl.parentNode) {
           cloneEl.parentNode.removeChild(cloneEl);
         }
-
         cloneHidden = true;
       }
     },
     _showClone: function _showClone(putSortable) {
       if (putSortable.lastPutMode !== 'clone') {
         this._hideClone();
-
         return;
       }
-
       if (cloneHidden) {
         pluginEvent('showClone', this);
-        if (Sortable.eventCanceled) return; // show clone at dragEl or original position
+        if (Sortable.eventCanceled) return;
 
+        // show clone at dragEl or original position
         if (dragEl.parentNode == rootEl && !this.options.group.revertClone) {
           rootEl.insertBefore(cloneEl, dragEl);
         } else if (nextEl) {
@@ -41740,33 +41258,26 @@ Popper.Defaults = Defaults;
         } else {
           rootEl.appendChild(cloneEl);
         }
-
         if (this.options.group.revertClone) {
           this.animate(dragEl, cloneEl);
         }
-
         css(cloneEl, 'display', '');
         cloneHidden = false;
       }
     }
   };
-
-  function _globalDragOver(
-  /**Event*/
-  evt) {
+  function _globalDragOver( /**Event*/evt) {
     if (evt.dataTransfer) {
       evt.dataTransfer.dropEffect = 'move';
     }
-
     evt.cancelable && evt.preventDefault();
   }
-
   function _onMove(fromEl, toEl, dragEl, dragRect, targetEl, targetRect, originalEvent, willInsertAfter) {
     var evt,
-        sortable = fromEl[expando],
-        onMoveFn = sortable.options.onMove,
-        retVal; // Support for new CustomEvent feature
-
+      sortable = fromEl[expando],
+      onMoveFn = sortable.options.onMove,
+      retVal;
+    // Support for new CustomEvent feature
     if (window.CustomEvent && !IE11OrLess && !Edge) {
       evt = new CustomEvent('move', {
         bubbles: true,
@@ -41776,7 +41287,6 @@ Popper.Defaults = Defaults;
       evt = document.createEvent('Event');
       evt.initEvent('move', true, true);
     }
-
     evt.to = toEl;
     evt.from = fromEl;
     evt.dragged = dragEl;
@@ -41786,41 +41296,35 @@ Popper.Defaults = Defaults;
     evt.willInsertAfter = willInsertAfter;
     evt.originalEvent = originalEvent;
     fromEl.dispatchEvent(evt);
-
     if (onMoveFn) {
       retVal = onMoveFn.call(sortable, evt, originalEvent);
     }
-
     return retVal;
   }
-
   function _disableDraggable(el) {
     el.draggable = false;
   }
-
   function _unsilent() {
     _silent = false;
   }
-
   function _ghostIsFirst(evt, vertical, sortable) {
-    var rect = getRect(getChild(sortable.el, 0, sortable.options, true));
+    var firstElRect = getRect(getChild(sortable.el, 0, sortable.options, true));
+    var childContainingRect = getChildContainingRectFromElement(sortable.el, sortable.options, ghostEl);
     var spacer = 10;
-    return vertical ? evt.clientX < rect.left - spacer || evt.clientY < rect.top && evt.clientX < rect.right : evt.clientY < rect.top - spacer || evt.clientY < rect.bottom && evt.clientX < rect.left;
+    return vertical ? evt.clientX < childContainingRect.left - spacer || evt.clientY < firstElRect.top && evt.clientX < firstElRect.right : evt.clientY < childContainingRect.top - spacer || evt.clientY < firstElRect.bottom && evt.clientX < firstElRect.left;
   }
-
   function _ghostIsLast(evt, vertical, sortable) {
-    var rect = getRect(lastChild(sortable.el, sortable.options.draggable));
+    var lastElRect = getRect(lastChild(sortable.el, sortable.options.draggable));
+    var childContainingRect = getChildContainingRectFromElement(sortable.el, sortable.options, ghostEl);
     var spacer = 10;
-    return vertical ? evt.clientX > rect.right + spacer || evt.clientX <= rect.right && evt.clientY > rect.bottom && evt.clientX >= rect.left : evt.clientX > rect.right && evt.clientY > rect.top || evt.clientX <= rect.right && evt.clientY > rect.bottom + spacer;
+    return vertical ? evt.clientX > childContainingRect.right + spacer || evt.clientY > lastElRect.bottom && evt.clientX > lastElRect.left : evt.clientY > childContainingRect.bottom + spacer || evt.clientX > lastElRect.right && evt.clientY > lastElRect.top;
   }
-
   function _getSwapDirection(evt, target, targetRect, vertical, swapThreshold, invertedSwapThreshold, invertSwap, isLastTarget) {
     var mouseOnAxis = vertical ? evt.clientY : evt.clientX,
-        targetLength = vertical ? targetRect.height : targetRect.width,
-        targetS1 = vertical ? targetRect.top : targetRect.left,
-        targetS2 = vertical ? targetRect.bottom : targetRect.right,
-        invert = false;
-
+      targetLength = vertical ? targetRect.height : targetRect.width,
+      targetS1 = vertical ? targetRect.top : targetRect.left,
+      targetS2 = vertical ? targetRect.bottom : targetRect.right,
+      invert = false;
     if (!invertSwap) {
       // Never invert or create dragEl shadow when target movemenet causes mouse to move past the end of regular swapThreshold
       if (isLastTarget && targetMoveDistance < targetLength * swapThreshold) {
@@ -41830,7 +41334,6 @@ Popper.Defaults = Defaults;
           // past first invert threshold, do not restrict inverted threshold to dragEl shadow
           pastFirstInvertThresh = true;
         }
-
         if (!pastFirstInvertThresh) {
           // dragEl shadow (target move distance shadow)
           if (lastDirection === 1 ? mouseOnAxis < targetS1 + targetMoveDistance // over dragEl shadow
@@ -41847,26 +41350,22 @@ Popper.Defaults = Defaults;
         }
       }
     }
-
     invert = invert || invertSwap;
-
     if (invert) {
       // Invert of regular
       if (mouseOnAxis < targetS1 + targetLength * invertedSwapThreshold / 2 || mouseOnAxis > targetS2 - targetLength * invertedSwapThreshold / 2) {
         return mouseOnAxis > targetS1 + targetLength / 2 ? 1 : -1;
       }
     }
-
     return 0;
   }
+
   /**
    * Gets the direction dragEl must be swapped relative to target in order to make it
    * seem that dragEl has been "inserted" into that element's position
    * @param  {HTMLElement} target       The target whose position dragEl is being inserted at
    * @return {Number}                   Direction dragEl must be swapped
    */
-
-
   function _getInsertDirection(target) {
     if (index(dragEl) < index(target)) {
       return 1;
@@ -41874,55 +41373,48 @@ Popper.Defaults = Defaults;
       return -1;
     }
   }
+
   /**
    * Generate id
    * @param   {HTMLElement} el
    * @returns {String}
    * @private
    */
-
-
   function _generateId(el) {
     var str = el.tagName + el.className + el.src + el.href + el.textContent,
-        i = str.length,
-        sum = 0;
-
+      i = str.length,
+      sum = 0;
     while (i--) {
       sum += str.charCodeAt(i);
     }
-
     return sum.toString(36);
   }
-
   function _saveInputCheckedState(root) {
     savedInputChecked.length = 0;
     var inputs = root.getElementsByTagName('input');
     var idx = inputs.length;
-
     while (idx--) {
       var el = inputs[idx];
       el.checked && savedInputChecked.push(el);
     }
   }
-
   function _nextTick(fn) {
     return setTimeout(fn, 0);
   }
-
   function _cancelNextTick(id) {
     return clearTimeout(id);
-  } // Fixed #973:
+  }
 
-
+  // Fixed #973:
   if (documentExists) {
     on(document, 'touchmove', function (evt) {
       if ((Sortable.active || awaitingDragStarted) && evt.cancelable) {
         evt.preventDefault();
       }
     });
-  } // Export utils
+  }
 
-
+  // Export utils
   Sortable.utils = {
     on: on,
     off: off,
@@ -41942,59 +41434,54 @@ Popper.Defaults = Defaults;
     detectDirection: _detectDirection,
     getChild: getChild
   };
+
   /**
    * Get the Sortable instance of an element
    * @param  {HTMLElement} element The element
    * @return {Sortable|undefined}         The instance of Sortable
    */
-
   Sortable.get = function (element) {
     return element[expando];
   };
+
   /**
    * Mount a plugin to Sortable
    * @param  {...SortablePlugin|SortablePlugin[]} plugins       Plugins being mounted
    */
-
-
   Sortable.mount = function () {
     for (var _len = arguments.length, plugins = new Array(_len), _key = 0; _key < _len; _key++) {
       plugins[_key] = arguments[_key];
     }
-
     if (plugins[0].constructor === Array) plugins = plugins[0];
     plugins.forEach(function (plugin) {
       if (!plugin.prototype || !plugin.prototype.constructor) {
         throw "Sortable: Mounted plugin must be a constructor function, not ".concat({}.toString.call(plugin));
       }
-
       if (plugin.utils) Sortable.utils = _objectSpread2(_objectSpread2({}, Sortable.utils), plugin.utils);
       PluginManager.mount(plugin);
     });
   };
+
   /**
    * Create sortable instance
    * @param {HTMLElement}  el
    * @param {Object}      [options]
    */
-
-
   Sortable.create = function (el, options) {
     return new Sortable(el, options);
-  }; // Export
+  };
 
-
+  // Export
   Sortable.version = version;
 
   var autoScrolls = [],
-      scrollEl,
-      scrollRootEl,
-      scrolling = false,
-      lastAutoScrollX,
-      lastAutoScrollY,
-      touchEvt$1,
-      pointerElemChangedInterval;
-
+    scrollEl,
+    scrollRootEl,
+    scrolling = false,
+    lastAutoScrollX,
+    lastAutoScrollY,
+    touchEvt$1,
+    pointerElemChangedInterval;
   function AutoScrollPlugin() {
     function AutoScroll() {
       this.defaults = {
@@ -42003,19 +41490,18 @@ Popper.Defaults = Defaults;
         scrollSensitivity: 30,
         scrollSpeed: 10,
         bubbleScroll: true
-      }; // Bind all private methods
+      };
 
+      // Bind all private methods
       for (var fn in this) {
         if (fn.charAt(0) === '_' && typeof this[fn] === 'function') {
           this[fn] = this[fn].bind(this);
         }
       }
     }
-
     AutoScroll.prototype = {
       dragStarted: function dragStarted(_ref) {
         var originalEvent = _ref.originalEvent;
-
         if (this.sortable.nativeDraggable) {
           on(document, 'dragover', this._handleAutoScroll);
         } else {
@@ -42030,7 +41516,6 @@ Popper.Defaults = Defaults;
       },
       dragOverCompleted: function dragOverCompleted(_ref2) {
         var originalEvent = _ref2.originalEvent;
-
         // For when bubbling is canceled and using fallback (fallback 'touchmove' always reached)
         if (!this.options.dragOverBubble && !originalEvent.rootEl) {
           this._handleAutoScroll(originalEvent);
@@ -42044,7 +41529,6 @@ Popper.Defaults = Defaults;
           off(document, 'touchmove', this._handleFallbackAutoScroll);
           off(document, 'mousemove', this._handleFallbackAutoScroll);
         }
-
         clearPointerElemChangedInterval();
         clearAutoScrolls();
         cancelThrottle();
@@ -42058,31 +41542,29 @@ Popper.Defaults = Defaults;
       },
       _handleAutoScroll: function _handleAutoScroll(evt, fallback) {
         var _this = this;
-
         var x = (evt.touches ? evt.touches[0] : evt).clientX,
-            y = (evt.touches ? evt.touches[0] : evt).clientY,
-            elem = document.elementFromPoint(x, y);
-        touchEvt$1 = evt; // IE does not seem to have native autoscroll,
+          y = (evt.touches ? evt.touches[0] : evt).clientY,
+          elem = document.elementFromPoint(x, y);
+        touchEvt$1 = evt;
+
+        // IE does not seem to have native autoscroll,
         // Edge's autoscroll seems too conditional,
         // MACOS Safari does not have autoscroll,
         // Firefox and Chrome are good
-
         if (fallback || this.options.forceAutoScrollFallback || Edge || IE11OrLess || Safari) {
-          autoScroll(evt, this.options, elem, fallback); // Listener for pointer element change
+          autoScroll(evt, this.options, elem, fallback);
 
+          // Listener for pointer element change
           var ogElemScroller = getParentAutoScrollElement(elem, true);
-
           if (scrolling && (!pointerElemChangedInterval || x !== lastAutoScrollX || y !== lastAutoScrollY)) {
-            pointerElemChangedInterval && clearPointerElemChangedInterval(); // Detect for pointer elem change, emulating native DnD behaviour
-
+            pointerElemChangedInterval && clearPointerElemChangedInterval();
+            // Detect for pointer elem change, emulating native DnD behaviour
             pointerElemChangedInterval = setInterval(function () {
               var newElem = getParentAutoScrollElement(document.elementFromPoint(x, y), true);
-
               if (newElem !== ogElemScroller) {
                 ogElemScroller = newElem;
                 clearAutoScrolls();
               }
-
               autoScroll(evt, _this.options, newElem, fallback);
             }, 10);
             lastAutoScrollX = x;
@@ -42094,7 +41576,6 @@ Popper.Defaults = Defaults;
             clearAutoScrolls();
             return;
           }
-
           autoScroll(evt, this.options, getParentAutoScrollElement(elem, false), false);
         }
       }
@@ -42104,60 +41585,54 @@ Popper.Defaults = Defaults;
       initializeByDefault: true
     });
   }
-
   function clearAutoScrolls() {
     autoScrolls.forEach(function (autoScroll) {
       clearInterval(autoScroll.pid);
     });
     autoScrolls = [];
   }
-
   function clearPointerElemChangedInterval() {
     clearInterval(pointerElemChangedInterval);
   }
-
   var autoScroll = throttle(function (evt, options, rootEl, isFallback) {
     // Bug: https://bugzilla.mozilla.org/show_bug.cgi?id=505521
     if (!options.scroll) return;
     var x = (evt.touches ? evt.touches[0] : evt).clientX,
-        y = (evt.touches ? evt.touches[0] : evt).clientY,
-        sens = options.scrollSensitivity,
-        speed = options.scrollSpeed,
-        winScroller = getWindowScrollingElement();
+      y = (evt.touches ? evt.touches[0] : evt).clientY,
+      sens = options.scrollSensitivity,
+      speed = options.scrollSpeed,
+      winScroller = getWindowScrollingElement();
     var scrollThisInstance = false,
-        scrollCustomFn; // New scroll root, set scrollEl
+      scrollCustomFn;
 
+    // New scroll root, set scrollEl
     if (scrollRootEl !== rootEl) {
       scrollRootEl = rootEl;
       clearAutoScrolls();
       scrollEl = options.scroll;
       scrollCustomFn = options.scrollFn;
-
       if (scrollEl === true) {
         scrollEl = getParentAutoScrollElement(rootEl, true);
       }
     }
-
     var layersOut = 0;
     var currentParent = scrollEl;
-
     do {
       var el = currentParent,
-          rect = getRect(el),
-          top = rect.top,
-          bottom = rect.bottom,
-          left = rect.left,
-          right = rect.right,
-          width = rect.width,
-          height = rect.height,
-          canScrollX = void 0,
-          canScrollY = void 0,
-          scrollWidth = el.scrollWidth,
-          scrollHeight = el.scrollHeight,
-          elCSS = css(el),
-          scrollPosX = el.scrollLeft,
-          scrollPosY = el.scrollTop;
-
+        rect = getRect(el),
+        top = rect.top,
+        bottom = rect.bottom,
+        left = rect.left,
+        right = rect.right,
+        width = rect.width,
+        height = rect.height,
+        canScrollX = void 0,
+        canScrollY = void 0,
+        scrollWidth = el.scrollWidth,
+        scrollHeight = el.scrollHeight,
+        elCSS = css(el),
+        scrollPosX = el.scrollLeft,
+        scrollPosY = el.scrollTop;
       if (el === winScroller) {
         canScrollX = width < scrollWidth && (elCSS.overflowX === 'auto' || elCSS.overflowX === 'scroll' || elCSS.overflowX === 'visible');
         canScrollY = height < scrollHeight && (elCSS.overflowY === 'auto' || elCSS.overflowY === 'scroll' || elCSS.overflowY === 'visible');
@@ -42165,10 +41640,8 @@ Popper.Defaults = Defaults;
         canScrollX = width < scrollWidth && (elCSS.overflowX === 'auto' || elCSS.overflowX === 'scroll');
         canScrollY = height < scrollHeight && (elCSS.overflowY === 'auto' || elCSS.overflowY === 'scroll');
       }
-
       var vx = canScrollX && (Math.abs(right - x) <= sens && scrollPosX + width < scrollWidth) - (Math.abs(left - x) <= sens && !!scrollPosX);
       var vy = canScrollY && (Math.abs(bottom - y) <= sens && scrollPosY + height < scrollHeight) - (Math.abs(top - y) <= sens && !!scrollPosY);
-
       if (!autoScrolls[layersOut]) {
         for (var i = 0; i <= layersOut; i++) {
           if (!autoScrolls[i]) {
@@ -42176,61 +41649,51 @@ Popper.Defaults = Defaults;
           }
         }
       }
-
       if (autoScrolls[layersOut].vx != vx || autoScrolls[layersOut].vy != vy || autoScrolls[layersOut].el !== el) {
         autoScrolls[layersOut].el = el;
         autoScrolls[layersOut].vx = vx;
         autoScrolls[layersOut].vy = vy;
         clearInterval(autoScrolls[layersOut].pid);
-
         if (vx != 0 || vy != 0) {
           scrollThisInstance = true;
           /* jshint loopfunc:true */
-
           autoScrolls[layersOut].pid = setInterval(function () {
             // emulate drag over during autoscroll (fallback), emulating native DnD behaviour
             if (isFallback && this.layer === 0) {
               Sortable.active._onTouchMove(touchEvt$1); // To move ghost if it is positioned absolutely
-
             }
-
             var scrollOffsetY = autoScrolls[this.layer].vy ? autoScrolls[this.layer].vy * speed : 0;
             var scrollOffsetX = autoScrolls[this.layer].vx ? autoScrolls[this.layer].vx * speed : 0;
-
             if (typeof scrollCustomFn === 'function') {
               if (scrollCustomFn.call(Sortable.dragged.parentNode[expando], scrollOffsetX, scrollOffsetY, evt, touchEvt$1, autoScrolls[this.layer].el) !== 'continue') {
                 return;
               }
             }
-
             scrollBy(autoScrolls[this.layer].el, scrollOffsetX, scrollOffsetY);
           }.bind({
             layer: layersOut
           }), 24);
         }
       }
-
       layersOut++;
     } while (options.bubbleScroll && currentParent !== winScroller && (currentParent = getParentAutoScrollElement(currentParent, false)));
-
     scrolling = scrollThisInstance; // in case another function catches scrolling as false in between when it is not
   }, 30);
 
   var drop = function drop(_ref) {
     var originalEvent = _ref.originalEvent,
-        putSortable = _ref.putSortable,
-        dragEl = _ref.dragEl,
-        activeSortable = _ref.activeSortable,
-        dispatchSortableEvent = _ref.dispatchSortableEvent,
-        hideGhostForTarget = _ref.hideGhostForTarget,
-        unhideGhostForTarget = _ref.unhideGhostForTarget;
+      putSortable = _ref.putSortable,
+      dragEl = _ref.dragEl,
+      activeSortable = _ref.activeSortable,
+      dispatchSortableEvent = _ref.dispatchSortableEvent,
+      hideGhostForTarget = _ref.hideGhostForTarget,
+      unhideGhostForTarget = _ref.unhideGhostForTarget;
     if (!originalEvent) return;
     var toSortable = putSortable || activeSortable;
     hideGhostForTarget();
     var touch = originalEvent.changedTouches && originalEvent.changedTouches.length ? originalEvent.changedTouches[0] : originalEvent;
     var target = document.elementFromPoint(touch.clientX, touch.clientY);
     unhideGhostForTarget();
-
     if (toSortable && !toSortable.el.contains(target)) {
       dispatchSortableEvent('spill');
       this.onSpill({
@@ -42239,9 +41702,7 @@ Popper.Defaults = Defaults;
       });
     }
   };
-
   function Revert() {}
-
   Revert.prototype = {
     startIndex: null,
     dragStart: function dragStart(_ref2) {
@@ -42250,40 +41711,32 @@ Popper.Defaults = Defaults;
     },
     onSpill: function onSpill(_ref3) {
       var dragEl = _ref3.dragEl,
-          putSortable = _ref3.putSortable;
+        putSortable = _ref3.putSortable;
       this.sortable.captureAnimationState();
-
       if (putSortable) {
         putSortable.captureAnimationState();
       }
-
       var nextSibling = getChild(this.sortable.el, this.startIndex, this.options);
-
       if (nextSibling) {
         this.sortable.el.insertBefore(dragEl, nextSibling);
       } else {
         this.sortable.el.appendChild(dragEl);
       }
-
       this.sortable.animateAll();
-
       if (putSortable) {
         putSortable.animateAll();
       }
     },
     drop: drop
   };
-
   _extends(Revert, {
     pluginName: 'revertOnSpill'
   });
-
   function Remove() {}
-
   Remove.prototype = {
     onSpill: function onSpill(_ref4) {
       var dragEl = _ref4.dragEl,
-          putSortable = _ref4.putSortable;
+        putSortable = _ref4.putSortable;
       var parentSortable = putSortable || this.sortable;
       parentSortable.captureAnimationState();
       dragEl.parentNode && dragEl.parentNode.removeChild(dragEl);
@@ -42291,20 +41744,17 @@ Popper.Defaults = Defaults;
     },
     drop: drop
   };
-
   _extends(Remove, {
     pluginName: 'removeOnSpill'
   });
 
   var lastSwapEl;
-
   function SwapPlugin() {
     function Swap() {
       this.defaults = {
         swapClass: 'sortable-swap-highlight'
       };
     }
-
     Swap.prototype = {
       dragStart: function dragStart(_ref) {
         var dragEl = _ref.dragEl;
@@ -42312,42 +41762,37 @@ Popper.Defaults = Defaults;
       },
       dragOverValid: function dragOverValid(_ref2) {
         var completed = _ref2.completed,
-            target = _ref2.target,
-            onMove = _ref2.onMove,
-            activeSortable = _ref2.activeSortable,
-            changed = _ref2.changed,
-            cancel = _ref2.cancel;
+          target = _ref2.target,
+          onMove = _ref2.onMove,
+          activeSortable = _ref2.activeSortable,
+          changed = _ref2.changed,
+          cancel = _ref2.cancel;
         if (!activeSortable.options.swap) return;
         var el = this.sortable.el,
-            options = this.options;
-
+          options = this.options;
         if (target && target !== el) {
           var prevSwapEl = lastSwapEl;
-
           if (onMove(target) !== false) {
             toggleClass(target, options.swapClass, true);
             lastSwapEl = target;
           } else {
             lastSwapEl = null;
           }
-
           if (prevSwapEl && prevSwapEl !== lastSwapEl) {
             toggleClass(prevSwapEl, options.swapClass, false);
           }
         }
-
         changed();
         completed(true);
         cancel();
       },
       drop: function drop(_ref3) {
         var activeSortable = _ref3.activeSortable,
-            putSortable = _ref3.putSortable,
-            dragEl = _ref3.dragEl;
+          putSortable = _ref3.putSortable,
+          dragEl = _ref3.dragEl;
         var toSortable = putSortable || this.sortable;
         var options = this.options;
         lastSwapEl && toggleClass(lastSwapEl, options.swapClass, false);
-
         if (lastSwapEl && (options.swap || putSortable && putSortable.options.swap)) {
           if (dragEl !== lastSwapEl) {
             toSortable.captureAnimationState();
@@ -42371,38 +41816,34 @@ Popper.Defaults = Defaults;
       }
     });
   }
-
   function swapNodes(n1, n2) {
     var p1 = n1.parentNode,
-        p2 = n2.parentNode,
-        i1,
-        i2;
+      p2 = n2.parentNode,
+      i1,
+      i2;
     if (!p1 || !p2 || p1.isEqualNode(n2) || p2.isEqualNode(n1)) return;
     i1 = index(n1);
     i2 = index(n2);
-
     if (p1.isEqualNode(p2) && i1 < i2) {
       i2++;
     }
-
     p1.insertBefore(n2, p1.children[i1]);
     p2.insertBefore(n1, p2.children[i2]);
   }
 
   var multiDragElements = [],
-      multiDragClones = [],
-      lastMultiDragSelect,
-      // for selection with modifier key down (SHIFT)
-  multiDragSortable,
-      initialFolding = false,
-      // Initial multi-drag fold when drag started
-  folding = false,
-      // Folding any other time
-  dragStarted = false,
-      dragEl$1,
-      clonesFromRect,
-      clonesHidden;
-
+    multiDragClones = [],
+    lastMultiDragSelect,
+    // for selection with modifier key down (SHIFT)
+    multiDragSortable,
+    initialFolding = false,
+    // Initial multi-drag fold when drag started
+    folding = false,
+    // Folding any other time
+    dragStarted = false,
+    dragEl$1,
+    clonesFromRect,
+    clonesHidden;
   function MultiDragPlugin() {
     function MultiDrag(sortable) {
       // Bind all private methods
@@ -42411,7 +41852,6 @@ Popper.Defaults = Defaults;
           this[fn] = this[fn].bind(this);
         }
       }
-
       if (!sortable.options.avoidImplicitDeselect) {
         if (sortable.options.supportPointer) {
           on(document, 'pointerup', this._deselectMultiDrag);
@@ -42420,7 +41860,6 @@ Popper.Defaults = Defaults;
           on(document, 'touchend', this._deselectMultiDrag);
         }
       }
-
       on(document, 'keydown', this._checkKeyDown);
       on(document, 'keyup', this._checkKeyUp);
       this.defaults = {
@@ -42429,7 +41868,6 @@ Popper.Defaults = Defaults;
         avoidImplicitDeselect: false,
         setData: function setData(dataTransfer, dragEl) {
           var data = '';
-
           if (multiDragElements.length && multiDragSortable === sortable) {
             multiDragElements.forEach(function (multiDragElement, i) {
               data += (!i ? '' : ', ') + multiDragElement.textContent;
@@ -42437,12 +41875,10 @@ Popper.Defaults = Defaults;
           } else {
             data = dragEl.textContent;
           }
-
           dataTransfer.setData('Text', data);
         }
       };
     }
-
     MultiDrag.prototype = {
       multiDragKeyDown: false,
       isMultiDrag: false,
@@ -42455,9 +41891,8 @@ Popper.Defaults = Defaults;
       },
       setupClone: function setupClone(_ref2) {
         var sortable = _ref2.sortable,
-            cancel = _ref2.cancel;
+          cancel = _ref2.cancel;
         if (!this.isMultiDrag) return;
-
         for (var i = 0; i < multiDragElements.length; i++) {
           multiDragClones.push(clone(multiDragElements[i]));
           multiDragClones[i].sortableIndex = multiDragElements[i].sortableIndex;
@@ -42466,18 +41901,15 @@ Popper.Defaults = Defaults;
           toggleClass(multiDragClones[i], this.options.selectedClass, false);
           multiDragElements[i] === dragEl$1 && toggleClass(multiDragClones[i], this.options.chosenClass, false);
         }
-
         sortable._hideClone();
-
         cancel();
       },
       clone: function clone(_ref3) {
         var sortable = _ref3.sortable,
-            rootEl = _ref3.rootEl,
-            dispatchSortableEvent = _ref3.dispatchSortableEvent,
-            cancel = _ref3.cancel;
+          rootEl = _ref3.rootEl,
+          dispatchSortableEvent = _ref3.dispatchSortableEvent,
+          cancel = _ref3.cancel;
         if (!this.isMultiDrag) return;
-
         if (!this.options.removeCloneOnHide) {
           if (multiDragElements.length && multiDragSortable === sortable) {
             insertMultiDragClones(true, rootEl);
@@ -42488,8 +41920,8 @@ Popper.Defaults = Defaults;
       },
       showClone: function showClone(_ref4) {
         var cloneNowShown = _ref4.cloneNowShown,
-            rootEl = _ref4.rootEl,
-            cancel = _ref4.cancel;
+          rootEl = _ref4.rootEl,
+          cancel = _ref4.cancel;
         if (!this.isMultiDrag) return;
         insertMultiDragClones(false, rootEl);
         multiDragClones.forEach(function (clone) {
@@ -42501,14 +41933,12 @@ Popper.Defaults = Defaults;
       },
       hideClone: function hideClone(_ref5) {
         var _this = this;
-
         var sortable = _ref5.sortable,
-            cloneNowHidden = _ref5.cloneNowHidden,
-            cancel = _ref5.cancel;
+          cloneNowHidden = _ref5.cloneNowHidden,
+          cancel = _ref5.cancel;
         if (!this.isMultiDrag) return;
         multiDragClones.forEach(function (clone) {
           css(clone, 'display', 'none');
-
           if (_this.options.removeCloneOnHide && clone.parentNode) {
             clone.parentNode.removeChild(clone);
           }
@@ -42519,15 +41949,14 @@ Popper.Defaults = Defaults;
       },
       dragStartGlobal: function dragStartGlobal(_ref6) {
         var sortable = _ref6.sortable;
-
         if (!this.isMultiDrag && multiDragSortable) {
           multiDragSortable.multiDrag._deselectMultiDrag();
         }
-
         multiDragElements.forEach(function (multiDragElement) {
           multiDragElement.sortableIndex = index(multiDragElement);
-        }); // Sort multi-drag elements
+        });
 
+        // Sort multi-drag elements
         multiDragElements = multiDragElements.sort(function (a, b) {
           return a.sortableIndex - b.sortableIndex;
         });
@@ -42535,10 +41964,8 @@ Popper.Defaults = Defaults;
       },
       dragStarted: function dragStarted(_ref7) {
         var _this2 = this;
-
         var sortable = _ref7.sortable;
         if (!this.isMultiDrag) return;
-
         if (this.options.sort) {
           // Capture rects,
           // hide multi drag elements (by positioning them absolute),
@@ -42546,8 +41973,8 @@ Popper.Defaults = Defaults;
           // show multi drag elements,
           // animate to rects,
           // unset rects & remove from DOM
-          sortable.captureAnimationState();
 
+          sortable.captureAnimationState();
           if (this.options.animation) {
             multiDragElements.forEach(function (multiDragElement) {
               if (multiDragElement === dragEl$1) return;
@@ -42562,18 +41989,16 @@ Popper.Defaults = Defaults;
             initialFolding = true;
           }
         }
-
         sortable.animateAll(function () {
           folding = false;
           initialFolding = false;
-
           if (_this2.options.animation) {
             multiDragElements.forEach(function (multiDragElement) {
               unsetRect(multiDragElement);
             });
-          } // Remove all auxiliary multidrag items from el, if sorting enabled
+          }
 
-
+          // Remove all auxiliary multidrag items from el, if sorting enabled
           if (_this2.options.sort) {
             removeMultiDragElements();
           }
@@ -42581,9 +42006,8 @@ Popper.Defaults = Defaults;
       },
       dragOver: function dragOver(_ref8) {
         var target = _ref8.target,
-            completed = _ref8.completed,
-            cancel = _ref8.cancel;
-
+          completed = _ref8.completed,
+          cancel = _ref8.cancel;
         if (folding && ~multiDragElements.indexOf(target)) {
           completed(false);
           cancel();
@@ -42591,10 +42015,9 @@ Popper.Defaults = Defaults;
       },
       revert: function revert(_ref9) {
         var fromSortable = _ref9.fromSortable,
-            rootEl = _ref9.rootEl,
-            sortable = _ref9.sortable,
-            dragRect = _ref9.dragRect;
-
+          rootEl = _ref9.rootEl,
+          sortable = _ref9.sortable,
+          dragRect = _ref9.dragRect;
         if (multiDragElements.length > 1) {
           // Setup unfold animation
           multiDragElements.forEach(function (multiDragElement) {
@@ -42612,47 +42035,44 @@ Popper.Defaults = Defaults;
       },
       dragOverCompleted: function dragOverCompleted(_ref10) {
         var sortable = _ref10.sortable,
-            isOwner = _ref10.isOwner,
-            insertion = _ref10.insertion,
-            activeSortable = _ref10.activeSortable,
-            parentEl = _ref10.parentEl,
-            putSortable = _ref10.putSortable;
+          isOwner = _ref10.isOwner,
+          insertion = _ref10.insertion,
+          activeSortable = _ref10.activeSortable,
+          parentEl = _ref10.parentEl,
+          putSortable = _ref10.putSortable;
         var options = this.options;
-
         if (insertion) {
           // Clones must be hidden before folding animation to capture dragRectAbsolute properly
           if (isOwner) {
             activeSortable._hideClone();
           }
-
-          initialFolding = false; // If leaving sort:false root, or already folding - Fold to new location
-
+          initialFolding = false;
+          // If leaving sort:false root, or already folding - Fold to new location
           if (options.animation && multiDragElements.length > 1 && (folding || !isOwner && !activeSortable.options.sort && !putSortable)) {
             // Fold: Set all multi drag elements's rects to dragEl's rect when multi-drag elements are invisible
             var dragRectAbsolute = getRect(dragEl$1, false, true, true);
             multiDragElements.forEach(function (multiDragElement) {
               if (multiDragElement === dragEl$1) return;
-              setRect(multiDragElement, dragRectAbsolute); // Move element(s) to end of parentEl so that it does not interfere with multi-drag clones insertion if they are inserted
-              // while folding, and so that we can capture them again because old sortable will no longer be fromSortable
+              setRect(multiDragElement, dragRectAbsolute);
 
+              // Move element(s) to end of parentEl so that it does not interfere with multi-drag clones insertion if they are inserted
+              // while folding, and so that we can capture them again because old sortable will no longer be fromSortable
               parentEl.appendChild(multiDragElement);
             });
             folding = true;
-          } // Clones must be shown (and check to remove multi drags) after folding when interfering multiDragElements are moved out
+          }
 
-
+          // Clones must be shown (and check to remove multi drags) after folding when interfering multiDragElements are moved out
           if (!isOwner) {
             // Only remove if not folding (folding will remove them anyways)
             if (!folding) {
               removeMultiDragElements();
             }
-
             if (multiDragElements.length > 1) {
               var clonesHiddenBefore = clonesHidden;
+              activeSortable._showClone(sortable);
 
-              activeSortable._showClone(sortable); // Unfold animation for clones if showing from hidden
-
-
+              // Unfold animation for clones if showing from hidden
               if (activeSortable.options.animation && !clonesHidden && clonesHiddenBefore) {
                 multiDragClones.forEach(function (clone) {
                   activeSortable.addAnimationState({
@@ -42671,12 +42091,11 @@ Popper.Defaults = Defaults;
       },
       dragOverAnimationCapture: function dragOverAnimationCapture(_ref11) {
         var dragRect = _ref11.dragRect,
-            isOwner = _ref11.isOwner,
-            activeSortable = _ref11.activeSortable;
+          isOwner = _ref11.isOwner,
+          activeSortable = _ref11.activeSortable;
         multiDragElements.forEach(function (multiDragElement) {
           multiDragElement.thisAnimationDuration = null;
         });
-
         if (activeSortable.options.animation && !isOwner && activeSortable.multiDrag.isMultiDrag) {
           clonesFromRect = _extends({}, dragRect);
           var dragMatrix = matrix(dragEl$1, true);
@@ -42692,24 +42111,23 @@ Popper.Defaults = Defaults;
       },
       drop: function drop(_ref12) {
         var evt = _ref12.originalEvent,
-            rootEl = _ref12.rootEl,
-            parentEl = _ref12.parentEl,
-            sortable = _ref12.sortable,
-            dispatchSortableEvent = _ref12.dispatchSortableEvent,
-            oldIndex = _ref12.oldIndex,
-            putSortable = _ref12.putSortable;
+          rootEl = _ref12.rootEl,
+          parentEl = _ref12.parentEl,
+          sortable = _ref12.sortable,
+          dispatchSortableEvent = _ref12.dispatchSortableEvent,
+          oldIndex = _ref12.oldIndex,
+          putSortable = _ref12.putSortable;
         var toSortable = putSortable || this.sortable;
         if (!evt) return;
         var options = this.options,
-            children = parentEl.children; // Multi-drag selection
+          children = parentEl.children;
 
+        // Multi-drag selection
         if (!dragStarted) {
           if (options.multiDragKey && !this.multiDragKeyDown) {
             this._deselectMultiDrag();
           }
-
           toggleClass(dragEl$1, options.selectedClass, !~multiDragElements.indexOf(dragEl$1));
-
           if (!~multiDragElements.indexOf(dragEl$1)) {
             multiDragElements.push(dragEl$1);
             dispatchEvent({
@@ -42718,17 +42136,16 @@ Popper.Defaults = Defaults;
               name: 'select',
               targetEl: dragEl$1,
               originalEvent: evt
-            }); // Modifier activated, select from last to dragEl
+            });
 
+            // Modifier activated, select from last to dragEl
             if (evt.shiftKey && lastMultiDragSelect && sortable.el.contains(lastMultiDragSelect)) {
               var lastIndex = index(lastMultiDragSelect),
-                  currentIndex = index(dragEl$1);
-
+                currentIndex = index(dragEl$1);
               if (~lastIndex && ~currentIndex && lastIndex !== currentIndex) {
                 // Must include lastMultiDragSelect (select it), in case modified selection from no selection
                 // (but previous selection existed)
                 var n, i;
-
                 if (currentIndex > lastIndex) {
                   i = lastIndex;
                   n = currentIndex;
@@ -42736,7 +42153,6 @@ Popper.Defaults = Defaults;
                   i = currentIndex;
                   n = lastIndex + 1;
                 }
-
                 for (; i < n; i++) {
                   if (~multiDragElements.indexOf(children[i])) continue;
                   toggleClass(children[i], options.selectedClass, true);
@@ -42753,7 +42169,6 @@ Popper.Defaults = Defaults;
             } else {
               lastMultiDragSelect = dragEl$1;
             }
-
             multiDragSortable = toSortable;
           } else {
             multiDragElements.splice(multiDragElements.indexOf(dragEl$1), 1);
@@ -42766,38 +42181,37 @@ Popper.Defaults = Defaults;
               originalEvent: evt
             });
           }
-        } // Multi-drag drop
+        }
 
-
+        // Multi-drag drop
         if (dragStarted && this.isMultiDrag) {
-          folding = false; // Do not "unfold" after around dragEl if reverted
-
+          folding = false;
+          // Do not "unfold" after around dragEl if reverted
           if ((parentEl[expando].options.sort || parentEl !== rootEl) && multiDragElements.length > 1) {
             var dragRect = getRect(dragEl$1),
-                multiDragIndex = index(dragEl$1, ':not(.' + this.options.selectedClass + ')');
+              multiDragIndex = index(dragEl$1, ':not(.' + this.options.selectedClass + ')');
             if (!initialFolding && options.animation) dragEl$1.thisAnimationDuration = null;
             toSortable.captureAnimationState();
-
             if (!initialFolding) {
               if (options.animation) {
                 dragEl$1.fromRect = dragRect;
                 multiDragElements.forEach(function (multiDragElement) {
                   multiDragElement.thisAnimationDuration = null;
-
                   if (multiDragElement !== dragEl$1) {
                     var rect = folding ? getRect(multiDragElement) : dragRect;
-                    multiDragElement.fromRect = rect; // Prepare unfold animation
+                    multiDragElement.fromRect = rect;
 
+                    // Prepare unfold animation
                     toSortable.addAnimationState({
                       target: multiDragElement,
                       rect: rect
                     });
                   }
                 });
-              } // Multi drag elements are not necessarily removed from the DOM on drop, so to reinsert
+              }
+
+              // Multi drag elements are not necessarily removed from the DOM on drop, so to reinsert
               // properly they must all be removed
-
-
               removeMultiDragElements();
               multiDragElements.forEach(function (multiDragElement) {
                 if (children[multiDragIndex]) {
@@ -42805,12 +42219,12 @@ Popper.Defaults = Defaults;
                 } else {
                   parentEl.appendChild(multiDragElement);
                 }
-
                 multiDragIndex++;
-              }); // If initial folding is done, the elements may have changed position because they are now
+              });
+
+              // If initial folding is done, the elements may have changed position because they are now
               // unfolding around dragEl, even though dragEl may not have his index changed, so update event
               // must be fired here as Sortable will not.
-
               if (oldIndex === index(dragEl$1)) {
                 var update = false;
                 multiDragElements.forEach(function (multiDragElement) {
@@ -42819,24 +42233,23 @@ Popper.Defaults = Defaults;
                     return;
                   }
                 });
-
                 if (update) {
                   dispatchSortableEvent('update');
+                  dispatchSortableEvent('sort');
                 }
               }
-            } // Must be done after capturing individual rects (scroll bar)
+            }
 
-
+            // Must be done after capturing individual rects (scroll bar)
             multiDragElements.forEach(function (multiDragElement) {
               unsetRect(multiDragElement);
             });
             toSortable.animateAll();
           }
-
           multiDragSortable = toSortable;
-        } // Remove clones if necessary
+        }
 
-
+        // Remove clones if necessary
         if (rootEl === parentEl || putSortable && putSortable.lastPutMode !== 'clone') {
           multiDragClones.forEach(function (clone) {
             clone.parentNode && clone.parentNode.removeChild(clone);
@@ -42849,7 +42262,6 @@ Popper.Defaults = Defaults;
       },
       destroyGlobal: function destroyGlobal() {
         this._deselectMultiDrag();
-
         off(document, 'pointerup', this._deselectMultiDrag);
         off(document, 'mouseup', this._deselectMultiDrag);
         off(document, 'touchend', this._deselectMultiDrag);
@@ -42857,14 +42269,16 @@ Popper.Defaults = Defaults;
         off(document, 'keyup', this._checkKeyUp);
       },
       _deselectMultiDrag: function _deselectMultiDrag(evt) {
-        if (typeof dragStarted !== "undefined" && dragStarted) return; // Only deselect if selection is in this sortable
+        if (typeof dragStarted !== "undefined" && dragStarted) return;
 
-        if (multiDragSortable !== this.sortable) return; // Only deselect if target is not item in this sortable
+        // Only deselect if selection is in this sortable
+        if (multiDragSortable !== this.sortable) return;
 
-        if (evt && closest(evt.target, this.options.draggable, this.sortable.el, false)) return; // Only deselect if left click
+        // Only deselect if target is not item in this sortable
+        if (evt && closest(evt.target, this.options.draggable, this.sortable.el, false)) return;
 
+        // Only deselect if left click
         if (evt && evt.button !== 0) return;
-
         while (multiDragElements.length) {
           var el = multiDragElements[0];
           toggleClass(el, this.options.selectedClass, false);
@@ -42900,24 +42314,20 @@ Popper.Defaults = Defaults;
         select: function select(el) {
           var sortable = el.parentNode[expando];
           if (!sortable || !sortable.options.multiDrag || ~multiDragElements.indexOf(el)) return;
-
           if (multiDragSortable && multiDragSortable !== sortable) {
             multiDragSortable.multiDrag._deselectMultiDrag();
-
             multiDragSortable = sortable;
           }
-
           toggleClass(el, sortable.options.selectedClass, true);
           multiDragElements.push(el);
         },
-
         /**
          * Deselects the provided multi-drag item
          * @param  {HTMLElement} el    The element to be deselected
          */
         deselect: function deselect(el) {
           var sortable = el.parentNode[expando],
-              index = multiDragElements.indexOf(el);
+            index = multiDragElements.indexOf(el);
           if (!sortable || !sortable.options.multiDrag || !~index) return;
           toggleClass(el, sortable.options.selectedClass, false);
           multiDragElements.splice(index, 1);
@@ -42925,17 +42335,16 @@ Popper.Defaults = Defaults;
       },
       eventProperties: function eventProperties() {
         var _this3 = this;
-
         var oldIndicies = [],
-            newIndicies = [];
+          newIndicies = [];
         multiDragElements.forEach(function (multiDragElement) {
           oldIndicies.push({
             multiDragElement: multiDragElement,
             index: multiDragElement.sortableIndex
-          }); // multiDragElements will already be sorted if folding
+          });
 
+          // multiDragElements will already be sorted if folding
           var newIndex;
-
           if (folding && multiDragElement !== dragEl$1) {
             newIndex = -1;
           } else if (folding) {
@@ -42943,7 +42352,6 @@ Popper.Defaults = Defaults;
           } else {
             newIndex = index(multiDragElement);
           }
-
           newIndicies.push({
             multiDragElement: multiDragElement,
             index: newIndex
@@ -42959,23 +42367,19 @@ Popper.Defaults = Defaults;
       optionListeners: {
         multiDragKey: function multiDragKey(key) {
           key = key.toLowerCase();
-
           if (key === 'ctrl') {
             key = 'Control';
           } else if (key.length > 1) {
             key = key.charAt(0).toUpperCase() + key.substr(1);
           }
-
           return key;
         }
       }
     });
   }
-
   function insertMultiDragElements(clonesInserted, rootEl) {
     multiDragElements.forEach(function (multiDragElement, i) {
       var target = rootEl.children[multiDragElement.sortableIndex + (clonesInserted ? Number(i) : 0)];
-
       if (target) {
         rootEl.insertBefore(multiDragElement, target);
       } else {
@@ -42983,17 +42387,15 @@ Popper.Defaults = Defaults;
       }
     });
   }
+
   /**
    * Insert multi-drag clones
    * @param  {[Boolean]} elementsInserted  Whether the multi-drag elements are inserted
    * @param  {HTMLElement} rootEl
    */
-
-
   function insertMultiDragClones(elementsInserted, rootEl) {
     multiDragClones.forEach(function (clone, i) {
       var target = rootEl.children[clone.sortableIndex + (elementsInserted ? Number(i) : 0)];
-
       if (target) {
         rootEl.insertBefore(clone, target);
       } else {
@@ -43001,7 +42403,6 @@ Popper.Defaults = Defaults;
       }
     });
   }
-
   function removeMultiDragElements() {
     multiDragElements.forEach(function (multiDragElement) {
       if (multiDragElement === dragEl$1) return;

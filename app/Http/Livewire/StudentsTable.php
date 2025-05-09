@@ -84,13 +84,13 @@ class StudentsTable extends Component
     {
         return view('livewire.students-table', [
             'filter_names' => $this->availableFilters(),
-            'tags' => Tag::getWithType(Student::class),
+            'tags' => Student::possibleTags(),
             'faculty' => Profile::whereHas('students')->pluck('full_name', 'id'),
-            'schools' => StudentData::whereType('research_profile')->pluck('data')->pluck('schools')->flatten()->unique()->filter()->sort()->values(),
+            'schools' => StudentData::uniqueValuesFor('research_profile', 'schools')->sort()->values(),
             'languages' => StudentData::$languages,
             'graduation_dates' => StudentData::uniqueValuesFor('research_profile', 'graduation_date')->sort()->values(),
             'majors' => StudentData::uniqueValuesFor('research_profile', 'major')->sort()->values(),
-            'semesters' => StudentData::whereType('research_profile')->pluck('data')->pluck('semesters')->flatten()->unique()->filter()
+            'semesters' => StudentData::uniqueValuesFor('research_profile', 'semesters')
                 ->sortBy(function($semester, $key) {
                     return Semester::date($semester)->toDateString();
                 })->values(),

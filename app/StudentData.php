@@ -5,7 +5,7 @@ namespace App;
 use App\ProfileData;
 use App\Setting;
 use App\Student;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 class StudentData extends ProfileData
 {
@@ -64,6 +64,16 @@ class StudentData extends ProfileData
         $majors = $setting_majors ? preg_split("/[\r\n]+/", $setting_majors) : [];
 
         return collect($majors)->combine($majors);
+    }
+
+    /**
+     * Get any custom questions for the student application form
+     */
+    public static function customQuestions(): Collection
+    {
+        $questions = json_decode(Setting::whereName('student_questions')->first()?->value ?? "[]", true);
+
+        return collect($questions)->groupBy('school');
     }
 
     //////////////////

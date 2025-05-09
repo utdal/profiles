@@ -10,7 +10,7 @@ use App\Student;
 use App\UserSetting;
 use App\Traits\RoleTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Auditable as HasAudits;
 use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Notifications\Notifiable;
@@ -35,7 +35,11 @@ class User extends Authenticatable implements Auditable
     ];
 
     /** @var array User columns to auto-cast to Carbon instances */
-    protected $dates = ['created_at', 'updated_at', 'last_access'];
+    protected $casts = [
+        'last_access' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
 
     /** @var array The attributes excluded from the model's JSON form. */
     protected $hidden = ['remember_token'];
@@ -77,7 +81,7 @@ class User extends Authenticatable implements Auditable
 
     /**
      * Determine if this User owns the given model.
-     * 
+     *
      * @param  \Illuminate\Database\Eloquent\Model $model
      * @param  bool $check_delegators also check if the delegator(s) owns the given model
      * @return bool
@@ -121,6 +125,21 @@ class User extends Authenticatable implements Auditable
         }
 
         return $this->bookmarked($model)->where('userable_id', '=', $model->getKey())->exists();
+    }
+
+    /**
+     * Returns the User's Bookmark of the given model
+     */
+    public function bookmarkFor(Model $model): ?Bookmark
+    {
+        if ($this->relationLoaded('bookmarks')) {
+            return $this->bookmarks->firstWhere(function($bookmark) use ($model) {
+                return $bookmark->userable_id === $model->getKey() &&
+                       $bookmark->userable_type === get_class($model);
+            });
+        }
+
+        return $this->bookmarks()->ofType($model)->firstWhere('userable_id', '=', $model->getKey());
     }
 
     /**
@@ -281,7 +300,7 @@ class User extends Authenticatable implements Auditable
 
     /**
      * Sets the user's pea without the '@domain' part.
-     * 
+     *
      * @param string $pea
      */
     public function setPeaAttribute($pea)
@@ -292,7 +311,7 @@ class User extends Authenticatable implements Auditable
 
     /**
      * Sets the user's school_id.
-     * 
+     *
      * @param string $id
      */
     public function setSchoolIdAttribute($id)
@@ -334,7 +353,7 @@ class User extends Authenticatable implements Auditable
 
     /**
      * User has many bookmarks (one to many)
-     * 
+     *
      * This is for direct access to the pivot class (i.e. all bookmarks of any type),
      * and also allows us to eager-load bookmarks in order to check existence.
      *
@@ -378,7 +397,7 @@ class User extends Authenticatable implements Auditable
 
     /**
      * Current user delegates.
-     * 
+     * @psalm-suppress InvalidArgument
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function currentDelegates()
@@ -427,7 +446,7 @@ class User extends Authenticatable implements Auditable
 
     /**
      * Current user delegators.
-     * 
+     * @psalm-suppress InvalidArgument
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function currentDelegators()
@@ -448,8 +467,8 @@ class User extends Authenticatable implements Auditable
     public function currentReminderDelegators()
     {
         return $this->currentDelegators()->where('gets_reminders', '=', true);
-    }  
-    
+    }
+
     /**
      * Additional roles currently delegated to the user.
      *

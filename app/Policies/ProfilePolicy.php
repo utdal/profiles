@@ -6,6 +6,7 @@ use App\User;
 use App\Profile;
 use App\ProfileStudent;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Auth\Access\Response;
 
 class ProfilePolicy
 {
@@ -34,7 +35,9 @@ class ProfilePolicy
      */
     protected function checkSchoolEditor(User $user, Profile $profile)
     {
-        return $user->hasRoleOption('school_profiles_editor', 'schools', $profile->user->school_id ?? -1);
+        $profile_schools = $profile->user->schools;
+
+        return $profile_schools->contains(fn($school) => $user->hasRoleOption('school_profiles_editor', 'schools', $school->id ?? -1));
     }
 
     /**
@@ -46,7 +49,9 @@ class ProfilePolicy
      */
     protected function checkDepartmentEditor(User $user, Profile $profile)
     {
-        return $user->hasRoleOption('department_profiles_editor', 'departments', $profile->user->department ?? 'none');
+        $profile_departments = $profile->user->departments;
+
+        return $profile_departments->contains(fn($department) => $user->hasRoleOption('department_profiles_editor', 'departments', $department ?? 'none'));
     }
 
     /**
@@ -78,9 +83,17 @@ class ProfilePolicy
      * @param  \App\Profile  $profile
      * @return mixed
      */
-    public function view(User $user, Profile $profile)
+    public function view(?User $user, Profile $profile)
     {
-        return true;
+        if (request()->is('api/*')) {
+            return $profile->public;
+        }
+
+        return $profile->public || ($user && (
+            $user->owns($profile, true) ||
+            $this->checkSchoolEditor($user, $profile) ||
+            $this->checkDepartmentEditor($user, $profile)
+        )) ? Response::allow() : Response::denyAsNotFound();
     }
 
     /**
@@ -126,7 +139,7 @@ class ProfilePolicy
     public function createOwn(User $user)
     {
         // Faculty can create a profile if they don't already have one
-        return $user->exists() && $user->hasRole('faculty') && !$user->profiles()->exists();
+        return $user->hasRole('faculty') && !$user->profiles()->exists();
     }
 
     /**
@@ -140,6 +153,12 @@ class ProfilePolicy
     {
         return $user->owns($profile, true) ||
                $this->checkSchoolEditor($user, $profile) ||
+               $this->checkDepartmentEditor($user, $profile);
+    }
+
+    public function updateAdvanced(User $user, Profile $profile)
+    {
+        return $this->checkSchoolEditor($user, $profile) ||
                $this->checkDepartmentEditor($user, $profile);
     }
 
@@ -163,6 +182,14 @@ class ProfilePolicy
      * @return mixed
      */
     public function delete(User $user, Profile $profile)
+    {
+        return false;
+    }
+
+    /**
+     * Determine whether the user can restore the soft-deleted profile.
+     */
+    public function restore(User $user, Profile $profile): bool
     {
         return false;
     }

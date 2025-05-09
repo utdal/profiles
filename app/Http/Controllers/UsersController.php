@@ -9,10 +9,12 @@ use App\Role;
 use App\School;
 use App\Student;
 use App\User;
+use Illuminate\Contracts\View\View as ViewContract;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Session;
+use Illuminate\View\View;
 
 class UsersController extends Controller
 {
@@ -35,11 +37,13 @@ class UsersController extends Controller
 
         $this->middleware('can:view,user')->only('show');
 
+        $this->middleware('can:viewBookmarks,user')->only('showBookmarks');
+
         $this->middleware('can:create,App\User')->only([
             'create',
             'store',
         ]);
-        
+
         $this->middleware('can:update,user')->only([
             'edit',
             'update',
@@ -53,21 +57,16 @@ class UsersController extends Controller
 
     /**
      * Display a listing of Users.
-     *
-     * @return \Illuminate\View\View
      */
-    public function index(Request $request)
+    public function index(): View|ViewContract
     {
         return view('users.index');
     }
 
     /**
-     * Show the User info.
-     *
-     * @param  User   $user
-     * @return \Illuminate\View\View
+     * Show the specified User's info.
      */
-    public function show(User $user)
+    public function show(User $user): View|ViewContract
     {
         return view('users.show', [
             'user' => $user,
@@ -78,12 +77,9 @@ class UsersController extends Controller
     }
 
     /**
-     * Show the User info.
-     *
-     * @param  User   $user
-     * @return \Illuminate\View\View
+     * Show the specified User's bookmarks.
      */
-    public function showBookmarks(User $user)
+    public function showBookmarks(User $user): View|ViewContract
     {
         return view('users.bookmarks', [
             'user' => $user,
@@ -94,21 +90,16 @@ class UsersController extends Controller
 
     /**
      * Show the view to add a new user
-     *
-     * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(): View|ViewContract
     {
         return view('users.create');
     }
 
     /**
-     * Store a new user
-     *
-     * @param UserStoreRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * Store a new user in the database.
      */
-    public function store(UserStoreRequest $request, LdapHelperContract $ldap)
+    public function store(UserStoreRequest $request, LdapHelperContract $ldap): RedirectResponse
     {
         $name = $request->input('name');
         $user = $ldap->getUser($name);
@@ -125,12 +116,9 @@ class UsersController extends Controller
     }
 
     /**
-     * Show the view to edit the User
-     * 
-     * @param  User   $user
-     * @return \Illuminate\View\View
+     * Show the view to edit the specified User
      */
-    public function edit(User $user)
+    public function edit(User $user): View|ViewContract
     {
         $roles = Role::all();
         $school_editor_role = $roles->firstWhere('name', 'school_profiles_editor');
@@ -148,12 +136,8 @@ class UsersController extends Controller
 
     /**
      * Update the User in the database.
-     * 
-     * @param  User        $user
-     * @param  Request $request
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(User $user, Request $request)
+    public function update(User $user, Request $request): RedirectResponse
     {
         $user->update($request->all());
 
@@ -174,12 +158,9 @@ class UsersController extends Controller
     }
 
     /**
-     * Confirm deletion of a user
-     *
-     * @param  User $user
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     * Confirm deletion of the specified user
      */
-    public function confirmDelete(User $user)
+    public function confirmDelete(User $user): View|ViewContract|RedirectResponse
     {
         /** @var User */
         $logged_in_user = Auth::user();
@@ -195,12 +176,9 @@ class UsersController extends Controller
     }
 
     /**
-     * Remove the user from the database
-     * 
-     * @param  User $user
-     * @return \Illuminate\Http\RedirectResponse
+     * Remove the specified user from the database
      */
-    public function destroy(User $user)
+    public function destroy(User $user): RedirectResponse
     {
         $user->delete();
 

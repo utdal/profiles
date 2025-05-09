@@ -27,13 +27,16 @@ class AcceptingStudentsToggle extends Component
         /** @var \App\ProfileData fresh copy of the profile info */
         $info = $this->profile->information()->first();
 
-        $updated = $info->updateData(['not_accepting_students' => $toggled_on ? '1' : '0']);
+        $updated = $info->updateData([
+            'show_not_accepting_students' => $toggled_on ? '1' : '0',
+            'not_accepting_students' => $toggled_on ? '1' : '0',
+        ]);
 
         if (!$updated) {
             $this->emit('alert', "Not saved. There was a problem changing that setting", 'danger');
         }
 
-        $this->emit('alert', "<strong>Saved.</strong><br> Profile for {$this->profile->full_name} marked as " . ($toggled_on ? "not" : "") . " accepting students", 'success');
+        $this->emit('alert', "<strong>Saved.</strong><br> Profile for {$this->profile->full_name} marked as " . ($toggled_on ? "not" : "") . " accepting undergraduate students", 'success');
     }
 
     public function render()

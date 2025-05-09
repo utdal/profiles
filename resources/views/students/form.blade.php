@@ -13,6 +13,30 @@
 </div>
 
 <div class="mb-3">
+    <fieldset>
+        <legend class="student-form-legend" id="school-selection">Which school(s) would you like to do research within?</legend>
+        <small class="form-text text-muted mb-2">Selecting a school here allows this form to include any school-specific questions that professors might have for you.</small>
+        @foreach($schools as $school_shortname => $school_displayname)
+            <div class="form-check ml-3">
+                {!! Form::checkbox(
+                    "research_profile[schools][]",
+                    "$school_shortname",
+                    in_array($school_shortname, $student->research_profile->schools ?? []),
+                    [
+                        'id' => "data_school_$school_shortname",
+                        'aria-describedby' => "school-selection",
+                        'class' => 'form-check-input ml-n3',
+                        'data-toggle' => 'show',
+                        'data-toggle-target' => "#school_custom_questions_{$school_shortname}"
+                    ]
+                ) !!}
+                {!! Form::label("data_school_$school_shortname", "$school_displayname ($school_shortname)", ['class' => 'form-check-label ml-1']) !!}
+            </div>
+        @endforeach
+    </fieldset>
+</div>
+
+<div class="mb-3">
     {!! Form::label('research_profile[brief_intro]', 'In 20 words or less, why are you looking for a research opportunity?', ['class' => 'form-label']) !!}
     <small class="form-text text-muted">Please be concise (20 words maximum)</small>
     {!! Form::textarea('research_profile[brief_intro]', $student->research_profile->brief_intro ?? '', ['class' => 'form-control', 'required', 'maxlength' => '280']) !!}
@@ -31,29 +55,31 @@
 </div>
 
 <div class="mb-3">
-    <label for="topics" class="form-label mr-3">Select the research topics that most interest you:</label>
-    <small class="form-text text-muted">Give this some thought and be intentional. You may select 1-4 topics.</small>
+    <strong >Select the research topics that most interest you:</strong>
+    <small class="form-text text-muted mb-1">Give this some thought and be intentional. You may select 1-5 topics. The possible topics may change depending on your school selection above. </small>
     @if($editable)
         <a class="btn btn-success btn-sm" href="#" data-target="#{{ Illuminate\Support\Str::slug($student->getRouteKey()) }}_tags_editor" data-toggle="modal" role="button"><i class="fas fa-tags"></i> Select Tags&hellip;</a>
     @endif
     <div class="tags my-2">
-        <livewire:tags-modal :model="$student">
+        <livewire:tags-modal :model="$student" :tags_type="$student->tagTypes()" :empty_message="'You must select at least one school before selecting research topic interests.'">
     </div>
 </div>
 
 <div class="mb-3">
-    {!! Form::label('research_profile[schools][]', 'Which schools would you like to do research within?', ['class' => 'form-label']) !!}
-    <small class="form-text text-muted">Hold down control/command when clicking to select multiple.</small>
-    {!! Form::select('research_profile[schools][]', $schools, $student->research_profile->schools ?? [], ['class' => 'form-control', 'multiple', 'size' => $schools->count()]); !!}
-</div>
-
-<div class="mb-3">
-    {!! Form::label('research_profile_faculty[]', 'With which ' . $schools->keys()->implode(' / ') . ' faculty members would you most like to work?', ['class' => 'form-label']) !!}
+    {!! Form::label('research_profile_faculty[]', 'With which ' . $schools->keys()->implode(' / ') . ' faculty members would you most like to work?', ['class' => 'form-label', 'id' => 'profiles-picker-label']) !!}
     <div class="profile-picker">
         @if($editable)
-        <small class="form-text text-muted">Required. Start typing the name of a professor, and select from the list. If you are not sure, please take some time to read the faculty profiles and learn about their research areas and current projects. You may click on the tags/research topics you selected above to view a list of faculty whose research interests are aligned with that topic or browse <a href="{{ route('tags.index') }}" target="_blank">all topics <i class="fas fa-external-link-alt"></i></a> or <a href="{{ route('profiles.index') }}" target="_blank">profiles <i class="fas fa-external-link-alt"></i></a>. You can also refer to <a href="{{ route('users.bookmarks.show', ['user' => auth()->user()]) }}" target="_blank">your bookmarks <i class="fas fa-external-link-alt"></i></a>.</small>
-        <small class="form-text text-muted">There are typically more applicants for each lab than there are positions available and not every lab has open positions each semester, so please select at least 4 faculty with whom you would like to work. You may select a maximum of 8.</small>
-        <i class="fas fa-users" aria-hidden="true"></i> {!! Form::select('faculty[]', $student->faculty->pluck('full_name', 'id')->all(), $student->faculty->pluck('id')->all() ?? [], ['id' => 'research_profile_faculty[]', 'multiple', 'required'] + ($schools->isNotEmpty() ? ['data-school' => $schools->keys()->implode(';')] : [])) !!}
+            <small class="form-text text-muted">Required. Start typing the name of a professor, and select from the list. If you are not sure, please take some time to read the faculty profiles and learn about their research areas and current projects. You may click on the tags/research topics you selected above to view a list of faculty whose research interests are aligned with that topic or browse <a href="{{ route('tags.index') }}" target="_blank">all topics <i class="fas fa-external-link-alt"></i></a> or <a href="{{ route('profiles.index') }}" target="_blank">profiles <i class="fas fa-external-link-alt"></i></a>. You can also refer to <a href="{{ route('users.bookmarks.show', ['user' => auth()->user()]) }}" target="_blank">your bookmarks <i class="fas fa-external-link-alt"></i></a>.</small>
+            <small class="form-text text-muted">There are typically more applicants for each lab than there are positions available and not every lab has open positions each semester, so please select at least 4 faculty with whom you would like to work. You may select a maximum of 8.</small>
+            <i class="fas fa-users" aria-hidden="true"></i> 
+            {!! Form::select('faculty[]', $student->faculty->pluck('full_name', 'id')->all(), $student->faculty->pluck('id')->all() ?? [], [
+                'id' => 'research_profile_faculty[]', 
+                'aria-labelledby' => 'profiles-picker-label',
+                'multiple', 
+                'required',
+                'data-accepting-undergrad' => 'true',
+                ] + ($schools->isNotEmpty() ? ['data-school' => $schools->keys()->implode(';')] : [])) 
+            !!}
         @else
             <i class="fas fa-users" aria-hidden="true"></i><span class="sr-only">Faculty:</span> 
             @foreach($student->faculty as $faculty)
@@ -64,7 +90,7 @@
 </div>
 
 <div class="mb-3">
-    <strong class="mr-5">Which semesters are you applying for?</strong>
+    <strong class="mr-3">Which semesters are you applying for?</strong>
     @php($semesters = $editable ? App\Helpers\Semester::currentAndNext(3) : $student->research_profile->semesters ?? [])
     @foreach($semesters as $i => $semester)
         <div class="form-check form-check-inline">
@@ -105,13 +131,11 @@
 
 <div class="mb-3">
     <div class="mb-3">
-        <strong class="mr-5">Select your spoken languages:</strong>
-    </div>
-    <div class="mb-3">
         <fieldset>
+            <legend class="student-form-legend" id="language-selection">Select your spoken languages:</legend>
             @foreach($languages as $key => $value)
                 <div class="form-check form-check-inline">
-                    {!! Form::checkbox("research_profile[languages][]", $key, in_array($key, $student->research_profile->languages ?? []), ['id' => "data_language_$key", 'class' => 'form-check-input', 'data-toggle' => 'show', 'data-toggle-target' => "#language_{$key}_subform"]) !!}
+                    {!! Form::checkbox("research_profile[languages][]", $key, in_array($key, $student->research_profile->languages ?? []), ['id' => "data_language_$key", 'class' => 'form-check-input', 'aria=describedby' => 'language-selection', 'data-toggle' => 'show', 'data-toggle-target' => "#language_{$key}_subform"]) !!}
                     {!! Form::label("data_language_$key", $value, ['class' => 'form-check-label']) !!}
                 </div>
             @endforeach
@@ -125,7 +149,7 @@
                 <div class="row">
                     @if($key === 'other')
                         <div class="col-lg-2">
-                            {!! Form::text("research_profile[language_other_name]", $student->research_profile->language_other_name, ['class' => 'form-control mb-0', 'placeholder' => 'Please specify...']) !!}
+                            {!! Form::text("research_profile[language_other_name]", $student->research_profile->language_other_name, ['class' => 'form-control mb-0', 'placeholder' => 'Please specify...', 'aria-label' => 'Other language']) !!}
                         </div>
                     @else
                         <strong class="col-lg-2">{{ $value }}</strong>
@@ -154,47 +178,52 @@
     </div>
 </div>
 
-<div class="row mb-4">
-    <strong class="col-lg-9">Are you willing to complete your research hours at one of the research centers in Dallas (<a href="https://calliercenter.utdallas.edu/">Callier Center for Communication Disorders</a>, <a href="https://vitallongevity.utdallas.edu/">Center for Vital Longevity</a> or <a href="https://brainhealth.utdallas.edu">Center for Brain Health</a>)?</strong>
-    <div class="col-lg-3">
-        <div class="form-check form-check-inline">
-            {!! Form::radio("research_profile[travel]", '1', $student->research_profile->travel === '1', ['id' => "travel_yes", 'class' => 'form-check-input']) !!}
-            {!! Form::label("travel_yes", "Yes", ['class' => 'form-check-label']) !!}
-        </div>
-        <div class="form-check form-check-inline">
-            {!! Form::radio("research_profile[travel]", '0', $student->research_profile->travel === '0', ['id' => "travel_no", 'class' => 'form-check-input']) !!}
-            {!! Form::label("travel_no", "No", ['class' => 'form-check-label']) !!}
-        </div>
-    </div>
-</div>
+@foreach($custom_questions as $school_shortname => $school_custom_questions)
+    <fieldset
+        @class([
+            'custom-questions-group mb-4',
+            'subform' => $school_shortname !== 'All',
+        ])
+        id="school_custom_questions_{{ $school_shortname }}"
+    >
+        @if($school_shortname !== 'All')
+            <legend>{{ $school_shortname }} research questions</legend>
+        @endif
+        @foreach($school_custom_questions as $question)
+            <div class="row mb-4">
+                @switch($question['type'])
+                    @case('text')              
+                        <div class="col">
+                            {!! Form::label("research_profile[{$question['name']}]", $question['label'], ['class' => 'form-label']) !!}
+                            {!! Form::text("research_profile[{$question['name']}]", $student->research_profile?->{$question['name']}, ['class' => 'form-control']) !!}
+                        </div>
+                        @break
+                    @case('textarea')
+                        <div class="col">
+                            {!! Form::label("research_profile[{$question['name']}]", $question['label'], ['class' => 'form-label']) !!}
+                            {!! Form::textarea("research_profile[{$question['name']}]", $student->research_profile?->{$question['name']}, ['class' => 'form-control']) !!}
+                        </div>
+                        @break
+                    @case('yes_no')
+                        <strong class="col-lg-9">{!! $question['label'] !!}</strong>
+                        <div class="col-lg-3">
+                            <div class="form-check form-check-inline">
+                                {!! Form::radio("research_profile[{$question['name']}]", '1', $student->research_profile->{$question['name']} === '1', ['id' => "{$question['name']}_yes", 'class' => 'form-check-input']) !!}
+                                {!! Form::label("{$question['name']}_yes", "Yes", ['class' => 'form-check-label']) !!}
+                            </div>
+                            <div class="form-check form-check-inline">
+                                {!! Form::radio("research_profile[{$question['name']}]", '0', $student->research_profile->{$question['name']} === '0', ['id' => "{$question['name']}_no", 'class' => 'form-check-input']) !!}
+                                {!! Form::label("{$question['name']}_no", "No", ['class' => 'form-check-label']) !!}
+                            </div>
+                        </div>
+                        @break
+                    @default
 
-<div class="row mb-4">
-    <strong class="col-lg-9">Are you willing to take part in research that will require you to travel regularly to sites in the Dallas area, such as community centers, participants’ homes or area schools?</strong>
-    <div class="col-lg-3">
-        <div class="form-check form-check-inline">
-            {!! Form::radio("research_profile[travel_other]", '1', $student->research_profile->travel_other === '1', ['id' => "travel_other_yes", 'class' => 'form-check-input']) !!}
-            {!! Form::label("travel_other_yes", "Yes", ['class' => 'form-check-label']) !!}
-        </div>
-        <div class="form-check form-check-inline">
-            {!! Form::radio("research_profile[travel_other]", '0', $student->research_profile->travel_other === '0', ['id' => "travel_other_no", 'class' => 'form-check-input']) !!}
-            {!! Form::label("travel_other_no", "No", ['class' => 'form-check-label']) !!}
-        </div>
-    </div>
-</div>
-
-<div class="row mb-4">
-    <strong class="col-lg-4">Are you comfortable conducting research on animals?</strong>
-    <div class="col-lg-8">
-        <div class="form-check form-check-inline">
-            {!! Form::radio("research_profile[animals]", '1', $student->research_profile->animals === '1', ['id' => "animals_yes", 'class' => 'form-check-input']) !!}
-            {!! Form::label("animals_yes", "Yes", ['class' => 'form-check-label']) !!}
-        </div>
-        <div class="form-check form-check-inline">
-            {!! Form::radio("research_profile[animals]", '0', $student->research_profile->animals === '0', ['id' => "animals_no", 'class' => 'form-check-input']) !!}
-            {!! Form::label("animals_no", "No", ['class' => 'form-check-label']) !!}
-        </div>
-    </div>
-</div>
+                @endswitch
+            </div>
+        @endforeach
+    </fieldset>
+@endforeach
 
 <div class="row mb-4">
     <strong class="col-lg-4">Do you want to volunteer or enroll to earn research credit?</strong>

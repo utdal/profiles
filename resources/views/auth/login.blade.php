@@ -2,6 +2,7 @@
 @section('title', 'Login')
 @section('header')
     @include('nav')
+    <h1 class="sr-only">Profiles</h1>
 @stop
 
 @section('content')
@@ -24,7 +25,7 @@
                         </div>
                     @endif
 
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
+                    <form id="login-form" class="form-horizontal" role="form" method="POST" action="{{ route('login')}}" data-toggle="wait-on-submit">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                         <div class="form-group row justify-content-center">
@@ -33,7 +34,7 @@
                             </label>
                             <div class="col-md-7">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" aria-label="Username">
+                                    <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" aria-label="Username" autocomplete="username">
                                 </div>
                             </div>
                         </div>
@@ -41,7 +42,7 @@
                         <div class="form-group row justify-content-center">
                             <label class="col-md-3 col-form-label text-md-right" for="password">Password</label>
                             <div class="col-md-7">
-                                <input type="password" class="form-control" id="password" name="password">
+                                <input type="password" class="form-control" id="password" name="password" autocomplete="current-password">
                             </div>
                         </div>
 
@@ -78,12 +79,14 @@
 
 @section('scripts')
 <script>
-$(document).ready(function() {
+$(function() {
     // focus the name field if it's empty
     $username = $('#name');
     if (! $username.val()) {
         $username.focus();
     }
+
+    $('form[data-toggle=wait-on-submit]').on('submit', (e) => profiles.wait_when_submitting(e.currentTarget));
 });
 </script>
 @endsection

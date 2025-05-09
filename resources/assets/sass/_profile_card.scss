@@ -1,5 +1,11 @@
-.profile-card {
+@use "sass:color";
+
+.profiles.d-flex {
+    gap: 2rem 1rem;
     margin-bottom: 2rem;
+}
+
+.profile-card {
     width: 16rem;
     border-radius: 5px;
 
@@ -7,13 +13,16 @@
         margin-top: 0;
     }
 
+    .card-footer {
+        color: $link-color-on-gray-bg;
+        text-decoration: none;
+    }
+
     @media (max-width: map-get($grid-breakpoints, lg)){
         width: 12rem;
-        font-size: 0.9rem;
 	}
 
     @media (max-width: map-get($grid-breakpoints, sm)){
-        width: 9rem;
-        font-size: 0.75rem;
+        width: 16rem;
 	}
 }

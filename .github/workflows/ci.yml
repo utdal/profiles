@@ -13,9 +13,13 @@ jobs:
     env:
       DB_CONNECTION: mysql
       DB_HOST: 127.0.0.1
+      DB_PORT: 3306
       DB_DATABASE: profiles_ci
       DB_USERNAME: root
       DB_PASSWORD: password
+      REDIS_CLIENT: predis
+      REDIS_HOST: 127.0.0.1
+      REDIS_PORT: 6379
       BROADCAST_DRIVER: log
       CACHE_DRIVER: redis
       QUEUE_CONNECTION: redis
@@ -30,18 +34,18 @@ jobs:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: profiles_ci
         ports:
-          - 3306/tcp
+          - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
       redis:
         image: redis
         ports:
-          - 6379/tcp
+          - 6379:6379
         options: --health-cmd="redis-cli ping" --health-interval=10s --health-timeout=5s --health-retries=3
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['8.0']
+        php-versions: ['8.3']
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -62,18 +66,12 @@ jobs:
 
       - name: Run Migration
         run: php artisan migrate -v
-        env:
-          DB_PORT: ${{ job.services.mysql.ports['3306'] }}
-          REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
 
       - name: Test with phpunit
         run: vendor/bin/phpunit --testdox
-        env:
-          DB_PORT: ${{ job.services.mysql.ports['3306'] }}
-          REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
 
       - name: Cache PSALM
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: cache-psalm
         with:
             path: /tmp/psalm
@@ -87,10 +85,13 @@ jobs:
     name: Profiles Security Checks
     runs-on: ubuntu-latest
 
+    env:
+      COMPOSER_AUDIT_ABANDONED: ignore
+
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['8.0']
+        php-versions: ['8.3']
 
     steps:
       - name: Checkout
@@ -105,7 +106,7 @@ jobs:
           node-version: 16
 
       - name: Cache PHP security DB
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         id: cache-symfony-db
         with:
             path: ~/.symfony/cache
@@ -113,7 +114,7 @@ jobs:
             restore-keys: ${{ runner.os }}-symfony-
 
       - name: Check PHP security with Symfony checker
-        uses: symfonycorp/security-checker-action@v3
+        uses: symfonycorp/security-checker-action@v4
 
       - name: Check PHP security with Composer audit
         run: composer audit

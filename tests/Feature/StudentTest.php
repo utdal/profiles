@@ -22,6 +22,43 @@ class StudentTest extends TestCase
     protected $seed = true;
 
     /**
+     * Test route for creating a new student application.
+     */
+    public function testStudentNewApplication(): void
+    {
+
+        $user = $this->loginAsUser();
+
+        $create_route = route('students.create');
+
+        $this->followingRedirects()
+            ->get($create_route)
+            ->assertStatus(200)
+            ->assertViewIs('students.edit')
+            ->assertSee($user->firstname);
+
+        $this->assertDatabaseHas('users', $user->getAttributes());
+    }
+
+    /**
+     * Test route for retrieving an existing student application.
+     */
+    public function testStudentExistingApplication(): void
+    {
+        $student = Student::factory()->has(StudentData::factory(), 'research_profile')->create();
+
+        $this->loginAsUser($student->user);
+
+        $create_route = route('students.create');
+
+        $this->followingRedirects()
+            ->get($create_route)
+            ->assertStatus(200)
+            ->assertViewIs('students.edit')
+            ->assertSee($student->user->firstname);
+    }
+
+    /**
      * Test Student creation.
      */
     public function testStudentCreation(): void
@@ -105,7 +142,7 @@ class StudentTest extends TestCase
             ->assertViewIs('students.show')
             ->assertSee('Un-submit');
 
-        $this->followingRedirects()->get($unsubmit_route)
+        $this->followingRedirects()->patch($unsubmit_route)
             ->assertStatus(200)
             ->assertSee('Student profile status updated');
 

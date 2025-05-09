@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Bookmark;
 use App\Policies\LogPolicy;
 use App\Policies\ProfilePolicy;
 use App\Policies\SettingPolicy;
@@ -11,6 +12,7 @@ use App\Policies\UserPolicy;
 use App\Policies\UserDelegationPolicy;
 use App\LogEntry;
 use App\Policies\ProfileStudentPolicy;
+use App\Policies\UserBookmarkPolicy;
 use App\Profile;
 use App\ProfileStudent;
 use App\Setting;
@@ -37,6 +39,7 @@ class AuthServiceProvider extends ServiceProvider
         Tag::class => TagPolicy::class,
         User::class => UserPolicy::class,
         UserDelegation::class => UserDelegationPolicy::class,
+        Bookmark::class => UserBookmarkPolicy::class,
     ];
 
     /**
@@ -46,8 +49,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerPolicies();
-
+        
         //
     }
 }

@@ -24,7 +24,7 @@
             {!! Form::open(['url' => route('app.settings.update-image', 'logo'), 'method' => 'POST', 'files' => true]) !!}
             <label for="logo">Logo</label>
             @if(isset($settings['logo']))
-                <img id="logo-img" class="profile_photo p-2 border mb-3" src="{{ $settings['logo'] }}" style="background-color:{{ $settings['primary_color'] ?? '#008542' }};">
+                <img id="logo-img" class="profile_photo p-2 border mb-3" src="{{ $settings['logo'] }}" style="background-color:{{ $settings['primary_color'] ?? '#154734' }};">
             @endif
             <div class="control-group">
                 <div class="controls">
@@ -198,6 +198,30 @@
             <small class="form-text text-muted">One per line. Used on student application form. Leave blank to allow free input.</small>
             <textarea class="form-control" id="rte_student_majors" name="setting[student_majors]">{{ $settings['student_majors'] ?? '' }}</textarea>
         </div>
+        <div class="col col-12">
+            <b>Student Custom Questions</b>
+
+            {{-- Custom student application questions. Used on the app settings page. --}}
+            <div class="student-custom-questions sortable" data-onsort="reindex" data-next-row-id="{{ count(json_decode($settings['student_questions'] ?? "[]", true)) }}">
+                @foreach (json_decode($settings['student_questions'] ?? "[]", true) as $index => $question)
+                    @include('students.custom-questions-setting')
+                @endforeach
+            </div>
+            <div class="row">
+                <div class="col text-center">
+                    <button
+                        type="button"
+                        class="btn btn-link"
+                        data-toggle="add_row"
+                        data-insert-type="append"
+                        data-insert-into=".student-custom-questions"
+                        data-template=".student-questions-template"
+                    >
+                        <i class="fas fa-fw fa-plus"></i> Add a custom question
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
     @endif
    	
@@ -209,5 +233,10 @@
     </div>
 
     {!! Form::close() !!}
+
+    @if(config('app.enable_students'))
+        {{-- Template to add new student custom questions --}}
+        @include('students.custom-questions-setting', ['template' => 'true', 'index' => 0, 'question' => ['name' => '', 'label' => '', 'type' => '', 'school' => '']])
+    @endif
 </div>
 @stop
