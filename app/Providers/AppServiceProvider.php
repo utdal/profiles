@@ -46,8 +46,6 @@ class AppServiceProvider extends ServiceProvider
             });
             view()->share('settings', $settings);
         });
-
-        CollectionMacros::register();
     }
 
     /**
