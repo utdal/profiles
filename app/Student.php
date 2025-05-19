@@ -133,7 +133,7 @@ class Student extends Model implements Auditable
      * @return \Illuminate\Support\Collection
      * 
      */
-    public static function exportStudentApps(EloquentCollection $students)
+    public static function downloadStudentApps(EloquentCollection $students)
     {
         $apps = $students->map(function ($student) {
             

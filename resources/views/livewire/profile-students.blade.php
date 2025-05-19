@@ -235,7 +235,7 @@
 
     <script>
         document.getElementById('reset_filters_button').addEventListener('click', function() {
-            Livewire.emitTo('profile-students-export-menu', 'clearFilterSummary');
+            Livewire.emitTo('profile-students-download-menu', 'resetMenu');
         });
     </script>
 </div>

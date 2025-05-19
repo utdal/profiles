@@ -19,8 +19,8 @@
     @endpush
     @include('breadcrumbs')
 @stop
-@section('content')
 
+@section('content')
 @include('students.student-application', [
                     'student' => $student,
                     'schools' => $schools,
@@ -28,5 +28,4 @@
                     'languages' => $languages,
                     'majors' => $majors,
                 ])
-
 @stop

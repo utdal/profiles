@@ -45,7 +45,9 @@ class ProfileStudents extends Component
 
     protected $listeners = [
         'profileStudentStatusUpdated' => 'refreshStudents',
-        'exportToPdf',
+        'getAppliedFilters' => 'updateAppliedFiltersOnDownloadMenu',
+        'downloadAsPdf',
+        'downloadAsExcel',
     ];
 
     protected $queryString = [
@@ -84,29 +86,24 @@ class ProfileStudents extends Component
     public function updated($name, $value)
     {
         $this->emitFilterUpdatedEvent($name, $value);
-
-        $this->updateFilterSelection($name);
+        $this->updateAppliedFiltersOnDownloadMenu();
     }
 
-    public function updateFilterSelection($filter_name = null)
+    public function updateAppliedFiltersOnDownloadMenu()
     {
-        $filters_to_check = $filter_name ? [$filter_name] : $this->availableFilters();
-    
-        foreach ($filters_to_check as $filter) {
-            if (filled(trim($this->$filter ?? ''))) {
-                $this->filter_selection[$filter] = $this->$filter;
-            } else {
-                unset($this->filter_selection[$filter]);
+        $applied_filters = [
+            'filters' => [],
+            'filing_status' => $this->filing_status,
+        ];
+
+        foreach ($this->availableFilters() as $filter_property) {
+
+            if (filled(trim($this->{$filter_property}))) {
+                $applied_filters['filters'][$filter_property] = $this->{$filter_property};
             }
         }
-    
-        if (!empty($this->filter_selection)) {
-            $filter_summary = $this->humanizeFilters(collect($this->filter_selection));
-            $this->emitTo('profile-students-export-menu', 'updateFilterSummary', $filter_summary);
-        }
-        else {
-            $this->emitTo('profile-students-export-menu', 'resetExportAll');
-        }
+
+        $this->emitTo('profile-students-download-menu', 'updateFilterSummary', $applied_filters);
     }
 
     public function refreshStudents()
@@ -114,9 +111,9 @@ class ProfileStudents extends Component
         $this->students = $this->getStudentsProperty();
     }
 
-    public function exportToPdf($export_all = true)
+    public function downloadAsPdf($download_all = true)
     {
-        if ($export_all) {
+        if ($download_all) {
             $students = $this->students;
         }
         else{
@@ -124,11 +121,12 @@ class ProfileStudents extends Component
         }
 
         if ($students->isEmpty()) {
+            $this->emit('downloadFailed');
             $this->emit('alert', "No records available for the filters applied", 'danger');
         }
         else {
             $html = '';
-            $html .= view('students.export', [
+            $html .= view('students.download', [
                 'students' => $students,
                 'schools' => Student::participatingSchools(),
                 'custom_questions' => StudentData::customQuestions(),
@@ -161,19 +159,21 @@ class ProfileStudents extends Component
                 $pdf_content = $pdf_content->addChromiumArguments(config('pdf.chrome_arguments'));
             }
 
+            $this->emit('downloadStarted');
+
             return response()->streamDownload(function () use ($pdf_content) {
-                echo $pdf_content->pdf();
-            }, 'student_applications.pdf', [
-                'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'attachment; filename="student_applications.pdf"',
-            ]);
-            
+                    echo $pdf_content->pdf();
+                }, 'student_applications.pdf', [
+                    'Content-Type' => 'application/pdf',
+                    'Content-Disposition' => 'attachment; filename="student_applications.pdf"',
+                ]);
         }
+        $this->emit('downloadFailed');
     }
 
-     public function exportToCsv($export_all = true)
+     public function downloadAsExcel($download_all = true)
     {
-        if ($export_all) {
+        if ($download_all) {
             $students = $this->students;
         }
         else{
@@ -184,8 +184,11 @@ class ProfileStudents extends Component
             $this->emit('alert', "No records available for the filters applied", 'danger');
         }
         else {
-            $student_apps = Student::exportStudentApps($students);
-            return $student_apps->toCsv('students_apps.csv');
+            $student_apps = Student::downloadStudentApps($students);
+            
+            $this->emit('downloadStarted');
+
+            return $student_apps->downloadExcel('students_apps.xlsx', null, true);
         }
     }
 

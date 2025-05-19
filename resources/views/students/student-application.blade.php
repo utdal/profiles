@@ -97,4 +97,5 @@
         <h2 id="student_feedback"><i class="fas fa-comment"></i> Feedback</h2>
         <livewire:student-feedback :student="$student">
     @endcan
+    
 </div>

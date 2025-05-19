@@ -62,6 +62,9 @@
                         </p>
                     </div>
                 </span>
+                @can('viewDelegations', $profile->user)
+                    <a class="btn btn-primary ml-3 py-1" href="{{ route('users.delegations.show', ['user' => $profile->user]) }}" title="View/Edit {{ $profile->full_name }} Delegations"><i class="fas fa-user-friends fa-fw"></i> Let someone else do this</a>
+                @endcan
                 <span class="dropdown student-filer">
                     <button
                         class="btn btn-primary dropdown-toggle py-1 ml-3"
@@ -72,7 +75,7 @@
                         aria-controls="exportAppsOptionsMenu"
                         aria-expanded="false"
                     >
-					    <i class="fas fa-download"></i> Export student applications
+					    <i class="fas fa-download"></i> Download student applications
 				    </button>
                     <div
                         id="exportAppsOptionsMenu"
@@ -80,12 +83,9 @@
                         style="min-width: 400px !important;"
                         aria-labelledby="exportAppsOptionsButton"
                     >
-                    <livewire:profile-students-export-menu :profile="$profile">
+                    <livewire:profile-students-download-menu :profile="$profile">
                     </div>
                 </span>
-                @can('viewDelegations', $profile->user)
-                    <a class="btn btn-primary ml-3 py-1" href="{{ route('users.delegations.show', ['user' => $profile->user]) }}" title="View/Edit {{ $profile->full_name }} Delegations"><i class="fas fa-user-friends fa-fw"></i> Let someone else do this</a>
-                @endcan
             </li>
         </ul>
         <p class="text-center mb-0">
