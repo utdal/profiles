@@ -5,23 +5,11 @@ namespace App\Http\Livewire;
 use App\Profile;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Enums\ProfileSectionType;
 
 class ProfileDataCard extends Component
 {
     use WithPagination;
-
-    const PER_PAGE_FOR_SECTION = [
-        'default' => 5,
-        'publications' => 8,
-        'appointments' => 10,
-        'awards' => 10,
-        'news' => 5,
-        'support' => 5,
-        'presentations' => 5,
-        'projects' => 5,
-        'additionals' => 3,
-        'affiliations' => 10
-    ];
 
     protected $paginationTheme = 'bootstrap';
     public $profile;
@@ -33,6 +21,12 @@ class ProfileDataCard extends Component
 
     public function mount(Profile $profile, $editable, $data_type, $paginated = true, $public_filtered = false)
     {
+        $section = ProfileSectionType::tryFrom($data_type);
+
+        if (!$section) {
+            abort(403, 'Invalid profile section type');
+        }
+
         $this->profile = $profile;
         $this->editable = $editable;
         $this->data_type = $data_type;
@@ -40,9 +34,21 @@ class ProfileDataCard extends Component
         $this->public_filtered = $public_filtered;
     }
 
+    public function updatingDataType($value)
+    {
+        $section = ProfileSectionType::tryFrom($value);
+
+        if (!$section) {
+            abort(403, 'Invalid profile section type');
+        }
+        $this->emit('alert', $this->data_type);
+    }
+
     public function data()
     {
-        $data_query = $this->profile->{$this->data_type}();
+        $section = ProfileSectionType::tryFrom($this->data_type);
+        
+        $data_query = $this->profile->{$section->value}();
 
         if ($this->public_filtered) {
             $data_query = $data_query->public();
@@ -50,7 +56,7 @@ class ProfileDataCard extends Component
 
         if ($this->paginated) {
             return $data_query->paginate(
-                $this::PER_PAGE_FOR_SECTION[$this->data_type] ?? $this::PER_PAGE_FOR_SECTION['default'],
+                $section->perPage() ?? ProfileSectionType::Default->perPage(),
                 ['*'],
                 $this->data_type
             );
