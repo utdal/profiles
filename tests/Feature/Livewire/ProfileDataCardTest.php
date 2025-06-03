@@ -10,6 +10,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Livewire\Livewire;
 use Tests\Feature\Traits\LoginWithRole;
 use Tests\TestCase;
+use App\Enums\ProfileSectionType;
 
 class ProfileDataCardTest extends TestCase
 {
@@ -31,7 +32,7 @@ class ProfileDataCardTest extends TestCase
     */
     public function testPaginatedItemsOnFirstAndLastPage()
     {
-        $sections = [ 'publications', 'presentations', 'projects', 'additionals' ];
+        $section_options = [ 'publications', 'presentations', 'projects', 'additionals' ];
 
         $profile = Profile::factory()
                             ->hasData()
@@ -49,30 +50,34 @@ class ProfileDataCardTest extends TestCase
         $user = $this->loginAsUser();
         $editable = $user && $user->can('update', $profile);
         
-        foreach ($sections as $section) {
+        foreach ($section_options as $section_opt) {
             
+            $section = ProfileSectionType::from($section_opt);
+
+            $this->assertNotNull($section, 'Invalid section');
+
             $this->assertTrue(
-                method_exists($profile, $section),
-                'Profile does not have method '.$section
+                method_exists($profile, $section->value),
+                'Profile does not have method '.$section->value
             );
             
-            $section_data = $profile->$section;
+            $section_data = $profile->{$section->value};
             $data_count = $section_data->count();
-            $per_page = ProfileDataCard::PER_PAGE_FOR_SECTION[$section];
+            $per_page = $section->perPage();
 
-            $this->assertDatabaseHas('profile_data', ['type' => $section]);
+            $this->assertDatabaseHas('profile_data', ['type' => $section->value]);
             $this->assertIsIterable($section_data);
             $this->assertGreaterThanOrEqual($per_page, $data_count);
 
-            $component = Livewire::test(ProfileDataCard::class, ['profile' => $profile, 'editable' => $editable, 'data_type' => $section ])
-                        ->assertSet('data_type', $section)
+            $component = Livewire::test(ProfileDataCard::class, ['profile' => $profile, 'editable' => $editable, 'data_type' => $section_opt])
+                        ->assertSet('data_type', $section_opt)
                         ->assertViewHas('data')
-                        ->assertSeeHtmlInOrder(["<section id=\"$section\" class=\"card\">", '<h3>', '<div class="entry">'] );
+                        ->assertSeeHtmlInOrder(["<section id=\"$section_opt\" class=\"card\">", '<h3>', '<div class="entry">']);
 
-            if ($section === 'additionals') {
+            if ($section_opt === 'additionals') {
                 $component->assertSee('Additional Information');
             } else {
-                $component->assertSee(ucwords($section));
+                $component->assertSee(ucwords($section->value));
             }
 
             $first_page_items_count = $data_count >= $per_page ? $per_page : $data_count;
@@ -80,8 +85,8 @@ class ProfileDataCardTest extends TestCase
             $this->assertIsIterable($component->lastRenderedView->data);
             $this->assertCount($first_page_items_count, $component->lastRenderedView->data);
 
-            $component->call('gotoPage', $component->lastRenderedView->data->lastPage(), $section)
-                        ->assertSet('data_type', $section)
+            $component->call('gotoPage', $component->lastRenderedView->data->lastPage(), $section_opt)
+                        ->assertSet('data_type', $section_opt)
                         ->assertViewHas('data');
             
             $last_page_items_count = fmod($data_count, $per_page) > 0 ? fmod($data_count, $per_page) : $per_page;
@@ -149,5 +154,32 @@ class ProfileDataCardTest extends TestCase
             $this->assertEquals(2, $component->page);
         }
     }  
+
+    /**
+    *  Test profile section type value
+    * 
+    *  @return void
+    */
+    public function testProfileSectionType()
+    {
+        $profile = Profile::factory()->hasData()->create();
+
+        $section = 'wrong_data_type_value';
+
+        $invalid_section = ProfileSectionType::tryFrom($section);
+
+        $this->assertNull($invalid_section, 'Invalid section');
+
+        $component = Livewire::test(ProfileDataCard::class, ['profile' => $profile, 'editable' => true, 'data_type' => 'news'])
+                                    ->assertHasNoErrors()
+                                    ->assertViewIs("livewire.profile-data-cards.news");
+        
+        $component
+                ->set('data_type', $section)
+                ->assertHasErrors('data_type')
+                ->assertDontSee('data')
+                ->assertEmitted('alert', 'Invalid section.', 'danger')
+                ->assertDontSeeHtml("<section id=\"$section\" class=\"card\">", '<h3>', '<div class="entry">');
+    }
 
 }
