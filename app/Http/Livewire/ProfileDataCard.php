@@ -54,7 +54,7 @@ class ProfileDataCard extends Component
 
         if ($this->paginated) {
             return $data_query->paginate(
-                $section->perPage() ?? ProfileSectionType::Default->perPage(),
+                $section->perPage(),
                 ['*'],
                 $this->data_type
             );

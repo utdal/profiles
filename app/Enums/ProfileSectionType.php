@@ -26,7 +26,6 @@ enum ProfileSectionType: string
     public function perPage(): int
     {
         return match ($this) {
-            self::Default => 5,
             self::Publications => 8,
             self::Appointments => 10,
             self::Awards => 10,
@@ -36,6 +35,10 @@ enum ProfileSectionType: string
             self::Presentations => 5,
             self::Projects => 5,
             self::Additionals => 3,
+            self::Activities => 6,
+            self::Areas => 4,
+            self::Preparation => 7,
+            self::Default => 5,
         };
     }
 }
