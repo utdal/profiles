@@ -21,12 +21,6 @@ class ProfileDataCard extends Component
 
     public function mount(Profile $profile, $editable, $data_type, $paginated = true, $public_filtered = false)
     {
-        $section = ProfileSectionType::tryFrom($data_type);
-
-        if (!$section) {
-            abort(403, 'Invalid profile section type');
-        }
-
         $this->profile = $profile;
         $this->editable = $editable;
         $this->data_type = $data_type;
@@ -34,20 +28,24 @@ class ProfileDataCard extends Component
         $this->public_filtered = $public_filtered;
     }
 
-    public function updatingDataType($value)
+    public function updatingDataType()
     {
-        $section = ProfileSectionType::tryFrom($value);
-
-        if (!$section) {
-            abort(403, 'Invalid profile section type');
-        }
-        $this->emit('alert', $this->data_type);
+        $this->validateOnly('data_type', [
+            'data_type' => 'required|in:' . implode(',', ProfileSectionType::values()),
+        ]);
     }
 
     public function data()
     {
         $section = ProfileSectionType::tryFrom($this->data_type);
-        
+
+        if (!$section) {
+            $this->addError('data_type', 'Invalid section.');
+            $this->emit('alert', 'Invalid section.', 'danger');
+
+            return null;
+        }
+
         $data_query = $this->profile->{$section->value}();
 
         if ($this->public_filtered) {
@@ -69,7 +67,7 @@ class ProfileDataCard extends Component
     {
         $data = $this->data();
 
-        if ($data->isEmpty() && !$this->editable) {
+        if ($data === null || ($data->isEmpty() && !$this->editable)) {
             return '';
         }
 
