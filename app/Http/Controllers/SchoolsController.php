@@ -67,7 +67,7 @@ class SchoolsController extends Controller
      */
     public function show(School $school): View|ViewContract
     {
-        $profiles = Profile::fromSchoolId($school->id)->public()->paginate(24);
+        $profiles = Profile::fromSchoolId($school->id)->public()->excludingUnlisted()->paginate(24);
 
         return view('schools.show', compact('school', 'profiles'));
     }

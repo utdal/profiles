@@ -28,7 +28,7 @@ class ProfilesApiController extends Controller
     public function index(ProfilesApiRequest $request): JsonResponse
     {
         return Cache::tags(['profiles', 'profile_data', 'profile_tags'])->remember($request->fullUrl(), 3600, function() use ($request) {
-            $profile = Profile::select(Profile::apiAttributes())->with(['media'])->public();
+            $profile = Profile::select(Profile::apiAttributes())->with(['media'])->public()->excludingUnlisted();
 
             if ($request->filled('person')) {
                 $profile = $profile->whereIn('slug', explode(';', $request->person));
@@ -52,6 +52,10 @@ class ProfilesApiController extends Controller
 
             if ($request->filled('tag')) {
                 $profile = $profile->withAnyTags(explode(';', $request->tag), Profile::class);
+            }
+
+            if ($request->boolean('accepting_undergrad')) {
+                $profile = $profile->acceptingUndergradStudents();
             }
 
             if ($request->boolean('with_data')) {

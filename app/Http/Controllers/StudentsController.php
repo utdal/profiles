@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\StudentViewed;
+use App\Http\Requests\StudentUpdateRequest;
 use App\Student;
 use App\StudentData;
 use App\User;
@@ -127,7 +128,7 @@ class StudentsController extends Controller
     /**
      * Update the specified student research application in the database.
      */
-    public function update(Request $request, Student $student): RedirectResponse
+    public function update(StudentUpdateRequest $request, Student $student): RedirectResponse
     {
         $updated = $student->update([
             'full_name' => $request->full_name,
