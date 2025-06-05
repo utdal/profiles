@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Profile;
 use App\Rules\AllowedProfileDataType;
+use App\Rules\AllowedSchools;
 use App\School;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -28,7 +29,7 @@ class ProfilesApiRequest extends FormRequest
     public function rules()
     {
         return [
-            'person' => ['sometimes', 'string', 'regex:/^[a-zA-Z0-9.]+$/'],
+            'person' => ['sometimes', 'string', 'regex:/^[a-zA-Z0-9.;]+$/'],
             'search' => ['sometimes', 'string', 'alpha_num', 'min:3'],
             'search_names' => ['sometimes', 'string', 'alpha_num', 'min:3'],
             'info_contains' => ['sometimes', 'string', 'alpha_num', 'min:3'],
@@ -36,12 +37,7 @@ class ProfilesApiRequest extends FormRequest
                 'sometimes',
                 'string',
                 'alpha',
-                function ($attribute, $value, $fail) {
-                    $allowed_schools = School::where('short_name', '!=', 'Other')->pluck('short_name')->toArray();
-                    if(!in_array($value, $allowed_schools)){
-                        $fail("Invalid value for $attribute.");
-                    }
-                }
+                    new AllowedSchools(),
             ],
             'tag' => ['sometimes', 'string', 'alpha_num', 'min:3'],
             'public' => 'sometimes|boolean',
