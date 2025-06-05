@@ -44,13 +44,7 @@ class ProfilesApiRequest extends FormRequest
             'with_data' => [
                 'sometimes',
                 'boolean',
-                function ($attribute, $value, $fail) {
-                    if ($value) {
-                        if (empty($this->person)) {
-                            $fail("Parameter not allowed.");
-                        }
-                    }
-                }
+               $this->validateWithData(),
             ],
             'raw_data' => 'sometimes|boolean',
             'data_type' => [
@@ -60,4 +54,14 @@ class ProfilesApiRequest extends FormRequest
             ],
         ];
     }
+
+    public function validateWithData()
+    {
+        return function ($attribute, $value, $fail) {
+            if ($value && empty($this->person)) {
+                $fail('Parameter not allowed.');
+            }
+        };
+    }
+
 }
