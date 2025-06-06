@@ -2,12 +2,11 @@
 
 namespace App\Http\Requests;
 
-use App\Profile;
 use App\Rules\AllowedProfileDataType;
 use App\Rules\AllowedSchools;
-use App\School;
+use App\Rules\ValidSearchString;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
 class ProfilesApiRequest extends FormRequest
 {
@@ -30,9 +29,9 @@ class ProfilesApiRequest extends FormRequest
     {
         return [
             'person' => ['sometimes', 'string', 'regex:/^[a-zA-Z0-9.;]+$/'],
-            'search' => ['sometimes', 'string', 'alpha_num', 'min:3'],
-            'search_names' => ['sometimes', 'string', 'alpha_num', 'min:3'],
-            'info_contains' => ['sometimes', 'string', 'alpha_num', 'min:3'],
+            'search' => new ValidSearchString(),
+            'search_names' => new ValidSearchString(),
+            'info_contains' => new ValidSearchString(),
             'from_school' => [
                 'sometimes',
                 'string',
@@ -59,7 +58,7 @@ class ProfilesApiRequest extends FormRequest
     {
         return function ($attribute, $value, $fail) {
             if ($value && empty($this->person)) {
-                $fail('Parameter not allowed.');
+                $fail('Invalid parameter.');
             }
         };
     }

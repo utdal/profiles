@@ -118,7 +118,7 @@ class ApiTest extends TestCase
             ->assertJsonValidationErrors('with_data')
             ->assertJson([
                 'errors' => [
-                    'with_data' => ["Parameter not allowed."],
+                    'with_data' => ["Invalid parameter."],
                 ],
             ]);
     }
@@ -171,7 +171,7 @@ class ApiTest extends TestCase
      * 'search_names' values shorter than 3 characters
      * Non-string values in 'info_contains'
      */
-    public function testAlphaMinCharFails()
+    public function testSearchFails()
     {
         $parameters = [
             'search' => 'invalid_search_entry!',
@@ -186,7 +186,7 @@ class ApiTest extends TestCase
             ->assertJsonValidationErrors('search')
             ->assertJson([
                 'errors' => [
-                    'search' => ["The search may only contain letters and numbers."],
+                    'search' => ["The search may only contain letters, numbers, spaces, apostrophes, dashes, commas, or periods."],
                 ],
             ]);
 
@@ -194,18 +194,15 @@ class ApiTest extends TestCase
             ->assertJsonValidationErrors('search_names')
             ->assertJson([
                 'errors' => [
-                    'search_names' => ["The search names must be at least 3 characters."],
+                    'search_names' => ["The search_names must be at least 3 characters long."],
                 ],
             ]);
         
         $response
             ->assertJsonValidationErrors('info_contains')
-                        ->assertJson([
+            ->assertJson([
                 'errors' => [
-                    'info_contains' => [
-                                        "The info contains must be a string.", 
-                                        "The info contains may only contain letters and numbers.",
-                                    ],
+                    'info_contains' => ["The info_contains must not be an array."],
                     ],
             ]);
     }
