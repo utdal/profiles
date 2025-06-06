@@ -63,4 +63,19 @@ class ProfilesApiRequest extends FormRequest
         };
     }
 
+    protected function passedValidation(): void
+    {
+        $allowedKeys = array_keys($this->rules());
+
+        $extraKeys = collect($this->all())
+            ->keys()
+            ->diff($allowedKeys);
+
+        if ($extraKeys->isNotEmpty()) {
+            throw ValidationException::withMessages([
+                'extra_parameters' => 'Invalid parameter.',
+            ]);
+        }
+    }
+
 }

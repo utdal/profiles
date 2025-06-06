@@ -208,6 +208,29 @@ class ApiTest extends TestCase
     }
 
     /**
+     * Test that the API rejects requests containing unexpected parameters
+     * 
+     */
+    public function testUnexpectedParamFails()
+    {
+        $parameters = [
+            'search' => 'Validsearchentry',
+            'extra_param' => 'malicious entry',
+        ];
+
+        $response = $this->get(route('api.index', $parameters));
+
+        $response
+            ->assertStatus(422)
+            ->assertJsonValidationErrors('extra_parameters')
+            ->assertJson([
+                'errors' => [
+                    'extra_parameters' => ["Invalid parameter."],
+                ],
+            ]);
+    }
+
+    /**
      * Get the proper Profile JSON fragment
      *
      * @param \App\Profile $profile
