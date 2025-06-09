@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\ValidSearchString;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ProfileSearchRequest extends FormRequest
@@ -24,7 +25,7 @@ class ProfileSearchRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'search' => 'string',
+            'search' => new ValidSearchString(),
         ];
     }
 
