@@ -3,8 +3,6 @@
 namespace App\Http\Requests;
 
 use App\Rules\AllowedProfileDataType;
-use App\Rules\AllowedSchools;
-use App\Rules\ValidSearchString;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
@@ -29,14 +27,13 @@ class ProfilesApiRequest extends FormRequest
     {
         return [
             'person' => ['sometimes', 'string', 'regex:/^[a-zA-Z0-9.;]+$/'],
-            'search' => new ValidSearchString(),
-            'search_names' => new ValidSearchString(),
-            'info_contains' => new ValidSearchString(),
+            'search' => ['sometimes', 'string', 'regex:/^[a-zA-Z0-9\s,\.]*$/', 'min:3'],
+            'search_names' => ['sometimes', 'string', 'regex:/^[a-zA-Z0-9\s,\.]*$/', 'min:3'],
+            'info_contains' => ['sometimes', 'string', 'regex:/^[a-zA-Z0-9\s,\.]*$/', 'min:3'],
             'from_school' => [
                 'sometimes',
                 'string',
-                'alpha',
-                    new AllowedSchools(),
+                'regex:/^[a-zA-Z0-9\s;,\.]+$/',
             ],
             'tag' => ['sometimes', 'string', 'alpha_num', 'min:3'],
             'public' => 'sometimes|boolean',

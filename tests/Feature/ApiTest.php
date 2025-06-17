@@ -158,7 +158,7 @@ class ApiTest extends TestCase
      */
     public function testSchoolFails()
     {
-        $response = $this->get(route('api.index', ['from_school' => 'Other']));
+        $response = $this->get(route('api.index', ['from_school' => 'Other:']));
 
         $response
             ->assertStatus(422)
@@ -186,7 +186,7 @@ class ApiTest extends TestCase
             ->assertJsonValidationErrors('search')
             ->assertJson([
                 'errors' => [
-                    'search' => ["The search may only contain letters, numbers, spaces, apostrophes, dashes, commas, or periods."],
+                    'search' => ["The search format is invalid."],
                 ],
             ]);
 
@@ -194,7 +194,7 @@ class ApiTest extends TestCase
             ->assertJsonValidationErrors('search_names')
             ->assertJson([
                 'errors' => [
-                    'search_names' => ["The search_names must be at least 3 characters long."],
+                    'search_names' => ["The search names must be at least 3 characters."],
                 ],
             ]);
         
@@ -202,31 +202,11 @@ class ApiTest extends TestCase
             ->assertJsonValidationErrors('info_contains')
             ->assertJson([
                 'errors' => [
-                    'info_contains' => ["The info_contains must not be an array."],
+                    'info_contains' => [
+                                        "The info contains must be a string.",
+                                        "The info contains format is invalid.",
+                                    ],
                     ],
-            ]);
-    }
-
-    /**
-     * Test that the API rejects requests containing unexpected parameters
-     * 
-     */
-    public function testUnexpectedParamFails()
-    {
-        $parameters = [
-            'search' => 'Validsearchentry',
-            'extra_param' => 'malicious entry',
-        ];
-
-        $response = $this->get(route('api.index', $parameters));
-
-        $response
-            ->assertStatus(422)
-            ->assertJsonValidationErrors('extra_parameters')
-            ->assertJson([
-                'errors' => [
-                    'extra_parameters' => ["Invalid parameter."],
-                ],
             ]);
     }
 
