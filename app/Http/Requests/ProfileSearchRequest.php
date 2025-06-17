@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\ValidSearchString;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ProfileSearchRequest extends FormRequest
@@ -25,7 +24,7 @@ class ProfileSearchRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'search' => new ValidSearchString(),
+            'search' => ['sometimes', 'string', "regex:/^[a-zA-Z0-9\s,\.']*$/", 'min:3'],
         ];
     }
 
