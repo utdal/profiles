@@ -70,7 +70,9 @@ class ProfilesController extends Controller
      */
     public function index(ProfileSearchRequest $request): View|ViewContract|RedirectResponse
     {
-        $search = $request->input('search');
+        $input_search = $request->input('search');
+
+        $search = htmlspecialchars($input_search, FILTER_FLAG_NO_ENCODE_QUOTES);
 
         /** @var EloquentCollection */
         $profiles = Profile::where('full_name', 'LIKE', "%$search%")

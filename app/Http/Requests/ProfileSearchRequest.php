@@ -17,14 +17,14 @@ class ProfileSearchRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * Regex pattern to accept alphanumeric characters, periods, spaces, commas, and non-consecutive apostrophes that are preceded and followed by a letter
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         return [
-            'search' => ['sometimes', 'string', "regex:/^[a-zA-Z0-9\s,\.']*$/", 'min:3'],
+            'search' => ['sometimes', 'string', "regex:/^([a-zA-Z0-9\s,\.]|(?<=[a-zA-Z])'(?!')(?=[a-zA-Z]))*$/", 'min:3'],
         ];
     }
 
