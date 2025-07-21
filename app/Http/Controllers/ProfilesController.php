@@ -232,13 +232,6 @@ class ProfilesController extends Controller
      */
     public function edit(Profile $profile, string $section): View|ViewContract|RedirectResponse
     {
-        //dont manage auto-managed publications
-        if ($section == 'publications' && $profile->hasOrcidManagedPublications()) {
-            $profile->updateORCID();
-            return redirect()
-                ->route('profiles.show', $profile->slug)
-                ->with('flash_message', 'Publications updated via ORCID.');
-        }
 
         $data = $profile->data()->$section()->get();
 

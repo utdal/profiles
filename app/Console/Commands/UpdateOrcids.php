@@ -40,18 +40,25 @@ class UpdateOrcids extends Command
      */
     public function handle()
     {
-        $inc = 0;
+        $inc = $updated_total = $created_total = $similar_found_total = 0;
+
         $profiles = Profile::whereHas('data', function ($query) {
             $query->where('type', 'information')
                 ->where('data->orc_id_managed', '1')
                 ->whereNotNull('data->orc_id');
         })->get();
 
-        $this->lineAndLog("Starting scheduled ORCiD data update for {$profiles->count()} profiles... ");
+        $this->lineAndLog("Starting scheduled ORCiD data update for {$profiles->count()} profiles... \n");
 
         foreach ($profiles as $profile) {
-            if ($profile->updateORCID()) {
+            [$completed, $created, $updated, $similar_found] = $profile->updateORCID();
+
+            if ($completed) {
                 $inc++;
+                $updated_total = $updated_total + $updated;
+                $created_total = $created_total + $created;
+                $similar_found_total = $similar_found_total + $similar_found;
+
                 $this->lineAndLog("Updated ORCiD info for {$profile->full_name}");
             }
             else {
@@ -60,6 +67,9 @@ class UpdateOrcids extends Command
         }
 
         $this->lineAndLog("Completed: {$inc}/{$profiles->count()} profiles have been updated.");
+        $this->lineAndLog("TOTAL: {$updated_total} publications have been updated. \n");
+        $this->lineAndLog("TOTAL: {$created_total} publications have been created. \n");
+        $this->lineAndLog("TOTAL: {$similar_found_total} similar publications have been found. \n");
 
         return Command::SUCCESS;
     }

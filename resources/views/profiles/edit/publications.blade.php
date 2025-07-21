@@ -25,22 +25,31 @@
                 </div>
             </div>
             <div class="row form-group level">
-                <div class="col col-lg-4 col-12">
+                <div class="col col-lg-7 col-12">
                     <label for="data[{{ $pub->id }}][data][url]">URL</label>
                     <input type="url" class="form-control" id="data[{{ $pub->id }}][data][url]"
-                        name="data[{{ $pub->id }}][data][url]" value="{{ $pub->url }}">
+                        name="data[{{ $pub->id }}][data][url]"
+                        value="{{ $pub->data['identifiers'][0]['id_url'] ?? $pub->url }}">
                 </div>
+                <div class="col col-lg-5 col-12">
+                    <label for="data[{{ $pub->id }}][data][url]">Identifier</label>
+                    <input type="text" class="form-control" id="data[{{ $pub->id }}][data][identifier]"
+                        name="data[{{ $pub->id }}][data][identifier]"
+                        value="{{ $pub->data['identifiers'][0]['id'] ?? null}}">
+                </div>
+            </div>
+            <div class="row form-group level">
                 <div class="col col-lg-4 col-12">
                     <label for="data[{{ $pub->id }}][data][group]">Group</label>
                     <input type="text" class="form-control" id="data[{{ $pub->id }}][data][group]"
                         name="data[{{ $pub->id }}][data][group]" value="{{ $pub->group }}">
                 </div>
-                <div class="col col-lg-2 col-12">
+                <div class="col col-lg-4 col-12">
                     <label for="data[{{ $pub->id }}][data][type]">Type</label>
                     <input type="text" class="form-control" id="data[{{ $pub->id }}][data][type]"
                         name="data[{{ $pub->id }}][data][type]" value="{{ $pub->type }}">
                 </div>
-                <div class="col col-lg-2 col-12">
+                <div class="col col-lg-4 col-12">
                     <label for="data[{{ $pub->id }}][data][status]">Status</label>
                     <input type="text" class="form-control" id="data[{{ $pub->id }}][data][status]"
                         name="data[{{ $pub->id }}][data][status]" value="{{ $pub->status }}">
