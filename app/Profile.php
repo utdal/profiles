@@ -176,16 +176,38 @@ class Profile extends Model implements HasMedia, Auditable
         return $this->information()->where('data->orc_id_managed', '1')->exists();
     }
 
+    /**
+     * Updates the current user's publications by importing data from the ORCID API.
+     *
+     * This method fetches ORCID works, checks for duplicates using various identifiers (DOI, EID),
+     * and imports new publications or updates existing ones accordingly. 
+     *
+     * @return array{
+     *     0: bool, // True if the update process completed
+     *     1: int,  // Number of publications created
+     *     2: int,  // Number of publications updated
+     *     3: int   // Number of similar publications found
+     * }
+     */
     public function updateORCID()
     {
-        $updated = $created = $similar_found = 0;
+        // Initializing counters
+        $updated = $created = 0;
+        $exact_id_match = $contained_id_url_match = $exact_title_match = $contained_title_match = 0;
+        $no_url_count = $similar_title_count = 0;
 
         $orcid_works = $this->fetchOrcidWorks()['group'];
+        $orcid_works_count = count($orcid_works);
 
+        /** @var \Illuminate\Database\Eloquent\Collection */
         $current_publications = $this->publications()->get();
+        echo("Existing publications: {$current_publications->count()}, ORCID API publications: {$orcid_works_count} \n");
 
+        Log::info("STARTING ORCID update for {$this->full_name} ‼️‼️");
+        
         foreach ($orcid_works as $record) {
             $existing_pub = null;
+            $similar_title_found = collect();
 
             $work_summary = $this->getBestWorkSummary($record['work-summary']);
 
@@ -198,25 +220,52 @@ class Profile extends Model implements HasMedia, Auditable
             $day = $work_summary['publication-date']['day']['value'] ?? null;
 
             if ($current_publications->isNotEmpty()) {
+                
+                $no_url_count = $current_publications->filter(function ($pub) {
+                                    return empty(data_get($pub, 'data.url'));
+                                })->count();
+
                 // Searching by title and date to save the count of similar matches
                 $results_by_title_and_date = self::searchPublicationByTitleAndDate($title, $month, $day, $year, $current_publications);
                 
-                if (isset($results_by_title_and_date['similar_matching'])) {
-                    $similar_found += ($results_by_title_and_date['similar_matching'])->count();
-                }
-                
                 if (isset($doi_record['id'])) { // Start searching by DOI
-                    $existing_pub = self::searchPublicationByPubIdentifier($doi_record['id'], 'doi', $current_publications); // Search by DOI in both, title and url
+                    $existing_pub = self::searchPublicationByPubIdentifier($doi_record['id'], 'doi', $current_publications, $exact_id_match, $contained_id_url_match); // Search by DOI in both, id and url
                 }
 
                 if (!$existing_pub && isset($eid_record['id'])) { // If not publciation was found, then search by EID
-                    $existing_pub = self::searchPublicationByPubIdentifier($eid_record['id'], 'eid', $current_publications); // Search by EID in both, title and url
+                    $existing_pub = self::searchPublicationByPubIdentifier($eid_record['id'], 'eid', $current_publications, $exact_id_match, $contained_id_url_match); // Search by EID in both, id and url
+                }
+
+                if ($existing_pub) {
+                    $similar_title_found = $results_by_title_and_date['exact_title_matching']
+                                            ->merge($results_by_title_and_date['contained_title_matching'])
+                                            ->merge($results_by_title_and_date['similar_title_matching'])
+                                            ->reject(function($item) use ($existing_pub) {
+                                                return $item->id === $existing_pub->id;
+                                            });
+                } 
+                else {
+                    if ($results_by_title_and_date['exact_title_matching']->isNotEmpty()) {
+                        
+                        $existing_pub = $results_by_title_and_date['exact_title_matching']->first();
+                        $exact_title_match++;
+                        
+                        Log::info($results_by_title_and_date['exact_title_matching']->first()->message);
+
+                        $similar_title_found = $results_by_title_and_date['contained_title_matching']
+                                                ->merge($results_by_title_and_date['similar_title_matching']);
+                    }
+                    elseif ($results_by_title_and_date['contained_title_matching']->isNotEmpty()) {
+                        $existing_pub = $results_by_title_and_date['contained_title_matching']->first();
+                        $contained_title_match++;
+
+                        Log::info($results_by_title_and_date['contained_title_matching']->first()->message);
+
+                        $similar_title_found = $results_by_title_and_date['similar_title_matching'];
+                    }
                 }
                 
-                if (!$existing_pub && isset($results_by_title_and_date['matching_pub']['pub'])) { // If the record wasn't found by DOI nor EID, then use the best match found by title and published date, if any
-                    $existing_pub = $results_by_title_and_date['matching_pub']['pub'];
-                    Log::info($results_by_title_and_date['matching_pub']['message']);
-                }
+                $similar_title_count += $similar_title_found->count();
             }
 
             if (!isset($doi_record['id']) && !isset($eid_record['id'])) {
@@ -246,12 +295,18 @@ class Profile extends Model implements HasMedia, Auditable
                         'orginal_source' => $work_summary['source']['source-name']['value'] ?? null,
                     ];
 
-            $this->updateOrInsertPublication($data, $existing_pub, $created, $updated);
+            //If the publication date is null then use the existing pub year to calculate the sort order
+            $sort_order = Profile::getSortOrder(...array_values($data['publication_date'] ?? ['year' => $existing_pub->year]));
+
+            $this->updateOrInsertPublication($data, $sort_order, $existing_pub, $created, $updated);
         }
 
-        foreach (compact('updated', 'created', 'similar_found') as $key => $value) {
+        Log::info("Existing publications: {$current_publications->count()}, ORCID API publications: {$orcid_works_count}");
+
+        foreach (compact('updated', 'created', 'exact_id_match', 'contained_id_url_match', 'exact_title_match', 'contained_title_match', 'similar_title_count') as $key => $value) {
             $key = strtoupper($key);
             Log::info("Total {$key} publications: {$value} ");
+            // echo ("Total {$key} publications: {$value} \n");
         }
 
         Log::info("ORCID update for {$this->full_name} completed ✅");
@@ -260,16 +315,29 @@ class Profile extends Model implements HasMedia, Auditable
         Cache::tags(['profile_data'])->flush();
 
         return [
-                true,
-                $created,
-                $updated,
-                $similar_found,
+                    true,
+                    $orcid_works_count,
+                    $created,
+                    $updated,
+                    $exact_id_match,
+                    $contained_id_url_match,
+                    $exact_title_match,
+                    $contained_title_match,
+                    $no_url_count,
+                    $similar_title_count,
                 ];
     }
 
+    /**
+     * Fetches the list of works (publications) from the ORCID API for the current user.
+     * Returns false ff the ORCID iD is missing or the API request fails, the method returns false.
+     * Otherwise, returns an associative array of works data.
+     * 
+     * @return array|false
+     */
     public function fetchOrcidWorks()
     {
-      $orc_id = $this->information()->get(array('data'))->toArray()[0]['data']['orc_id'];
+        $orc_id = $this->information()->get(array('data'))->toArray()[0]['data']['orc_id'];
 
         if (!$orc_id) {
             return false;
@@ -277,7 +345,7 @@ class Profile extends Model implements HasMedia, Auditable
 
         $orc_url = "https://pub.orcid.org/v3.0/$orc_id/works";
 
-      $client = new Client();
+        $client = new Client();
 
         $response = $client->get($orc_url, [
                                 'headers' => [
@@ -294,6 +362,14 @@ class Profile extends Model implements HasMedia, Auditable
         return json_decode($response->getBody()->getContents(), true);
     }
     
+    /**
+     * Returns the best work summary from an array of ORCID work summaries.
+     * If there's only one summary, it is returned. Otherwise, the summaries are sorted
+     * by `display-index` in descending order, and the first summary is returned.
+     *
+     * @param array $work_summaries
+     * @return array|null
+     */
     private function getBestWorkSummary($work_summaries)
     {
         if (count($work_summaries) === 1) {
@@ -307,6 +383,17 @@ class Profile extends Model implements HasMedia, Auditable
         return $sorted->first();
     }
 
+    /**
+     * If a specific type key is provided, it looks for an external ID of that type with a relationship of 'self'. 
+     * If no type key is given, it returns the first external ID with a 'self' relationship for a work summary.
+     * @param array $work_summary
+     * @param string|null $type_key
+     * @return array{
+     *     id: string|null,
+     *     id_type: string|null,
+     *     id_url: string|null
+     * }
+     */
     public static function getIdentifier($work_summary, $type_key = null)
     {
         $id_record = collect($work_summary['external-ids']['external-id'] ?? null)->first(function($ext_id) use ($type_key) {
@@ -324,28 +411,30 @@ class Profile extends Model implements HasMedia, Auditable
     }
 
     /**
-     * Search for publications that match both the given title and year .
-     *
+     * Search publication by exact identifier, if not found, then it searches for the identifier within the URL.
+     * 
      * @param string $id
-     * @param string $type - 'doi', 'eid', etc.
-     * @param \Illuminate\Support\Collection 
-     * @return App\ProfileData
+     * @param string $id_type
+     * @param \Illuminate\Database\Eloquent\Collection $publications
+     * @return \App\ProfileData|null Returns the matched publication or null if none found.
      */
-    public static function searchPublicationByPubIdentifier($id, $id_type, $publications)
+    public static function searchPublicationByPubIdentifier($id, $id_type, $publications, &$exact_id_match, &$contained_id_url_match)
     {
         $id = strtolower($id);
 
-        return $publications->first(function ($publication) use ($id, $id_type) {
+        return $publications->first(function ($publication) use ($id, $id_type, &$exact_id_match, &$contained_id_url_match) {
             $pub_id = strtolower($publication->data['id'] ?? '');
             $pub_url = strtolower($publication->data['url'] ?? '');
 
-            if ($pub_id === $id) {
+            if ($pub_id && $pub_id === $id) {
+                $exact_id_match++;
                 Log::info("Publication matched: exact ID match for {$id_type}, {$pub_id}");
                 return true;
             }
-
-            if (str_contains($pub_url, $id)) {
-                Log::info("Publication matched: ID found in URL, for {$id} in {$pub_url}");
+            
+            if ($pub_url && str_contains($pub_url, $id)) {
+                $contained_id_url_match++;
+                Log::info("Publication matched: ID found in URL, for {$id} in {$pub_url} for {$publication->id}");
                 return true;
             }
 
@@ -353,10 +442,26 @@ class Profile extends Model implements HasMedia, Auditable
         });
     }
 
+    /**
+     * Searches for a publication by matching title and publication date.
+     * It checks for exact, contained, or similar title matches. Also collects similar title matches (if year matches) in a separate group for reference.
+     *
+     * @param string $title
+     * @param string|null $month
+     * @param string|null $day
+     * @param string|null $year
+     * @param \Illuminate\Database\Eloquent\Collection $existing_publications
+     *
+     * @return array|null Returns an array with 'matching_pub' and 'similar_matching'.
+     */
     public static function searchPublicationByTitleAndDate(string $title, ?string $month, ?string $day, ?string $year, $existing_publications)
     {
-        $candidates = collect();
-        $results = [];
+        /** @var \Illuminate\Support\Collection */
+        $results = [
+                    'exact_title_matching' => collect(),
+                    'contained_title_matching' => collect(),
+                    'similar_title_matching' => collect(),
+                    ];
 
         foreach ($existing_publications as $existing_pub) {
             $data = $existing_pub->data;
@@ -374,52 +479,40 @@ class Profile extends Model implements HasMedia, Auditable
                 continue; // Continue loop if year doesn't match
             }
 
-            $title_match_type = self::getTitleMatchScore(strtolower($title), $existing_title);
+            $title_match_type = self::getTitleMatchType(strtolower($title), $existing_title);
 
             if (!$title_match_type) {
                 continue; // Continue loop if title doesn't match
             }
 
-            if ($title_match_type === 'similar') {
-                $candidates->push($existing_pub);
+            if ($month && $day && $pub_month === $month && $pub_day === $day) {
+                $existing_pub->message = "Matching publication found {$existing_pub->id} by $title_match_type title and full pubblication date: {$title}, {$year}, {$month}, {$day}";
             }
 
-            if ($title_match_type === 'exact' || $title_match_type === 'contained') {
-
-                if ($month && $day && $pub_month === $month && $pub_day === $day) {
-                    $results['matching_pub'] = [
-                                                'pub' => $existing_pub,
-                                                'message' => "Matching publication found by $title_match_type title and full pubblication date: {$title}, {$year}, {$month}, {$day}",
-                                            ];
-                }
-
-                if ($month && $pub_month === $month) {
-                    $results['matching_pub'] = [
-                                                'pub' => $existing_pub,
-                                                'message' => "Matching publication found by $title_match_type title and month: {$title}, {$month}",
-                                            ];
-                }
-
-                $results['matching_pub'] = [
-                                            'pub' => $existing_pub,
-                                            'message' => "Matching publication found by $title_match_type title and year: {$title}, {$year}",
-                                        ];
+            if ($month && $pub_month === $month) {
+                $existing_pub->message = "Matching publication {$existing_pub->id} found by $title_match_type title and month: {$title}, {$month}";
             }
+
+            $existing_pub->message = "Matching publication {$existing_pub->id} found by $title_match_type title and year: {$title}, {$year}";
+
+            $results["{$title_match_type}_title_matching"]->push($existing_pub);
         }
 
-        if (!$candidates->isEmpty()) {
-            $results['similar_matching'] = $candidates;
+        if ($results['exact_title_matching']->isEmpty() && $results['contained_title_matching']->isEmpty()) {
+            Log::warning("No matching publication found for: {$title}, {$year}, {$month}, {$day}");
         }
-
-        if (isset($results['matching_pub']) || isset($results['similar_matching'])) {
-            return $results;
-        }
-
-        Log::warning("No matching publication found for: {$title}, {$year}, {$month}, {$day}\n");
-        return null;
+        
+        return $results;
     }
 
-    private static function getTitleMatchScore(string $new_title, string $existing_title)
+    /**
+     * Determines the match type between two publication titles.
+     *
+     * @param string $new_title
+     * @param string $existing_title
+     * @return string|false Returns the match type ('exact', 'contained', 'similar') or false if no match.
+     */
+    public static function getTitleMatchType(string $new_title, string $existing_title)
     {
         if ($new_title === $existing_title) {
             return 'exact';
@@ -431,61 +524,73 @@ class Profile extends Model implements HasMedia, Auditable
 
         similar_text($new_title, $existing_title, $percent);
 
-        return $percent >= 95 ? 'similar' : false;
+        return ($percent >= 93 && $percent <= 97) ? 'similar' : false;
     }
 
-    public function updateOrInsertPublication($data, $existing_pub, &$created, &$updated)
+    /**
+     * Updates an existing publication or inserts a new one.
+     * 
+     * @param array $data
+     * @param \App\ProfileData|null $existing_pub
+     * @param int &$created
+     * @param int &$updated
+     * @return bool
+     */
+    public function updateOrInsertPublication($data, $sort_order, $existing_pub, &$created, &$updated)
     {
         if ($existing_pub) {
-            
+            unset($existing_pub->message);
             $data = array_merge($data, ['url' => $existing_pub->data['url'] ?? null ]); 
             
-            //If the publiaction date is null then use the existing pub year to calculate the sort order
-            $sort_order = Profile::getSortOrder(...array_values($data['publication_date'] ?? ['year' => $existing_pub->year]));
-
             $existing_pub->update([
                 'data' => $data,
                 'sort_order' => $sort_order,
             ]);
 
-            $updated += 1;
+            $updated++;
             Log::info("Updated best match publication for id: {$existing_pub->id}");
         } 
         else {
-
-            $sort_order = self::getSortOrder(...array_values($data['publication_date']));
-
             $existing_pub = $this->publications()->create([
                 'data' => $data,
                 'sort_order' => $sort_order,
                 'type' => 'publications',
             ]);
 
-            $created += 1;
+            $created++;
             Log::info("Created new publication (no best match found) for title: {$data['title']}");
         }
 
         return true;
     }
 
+    /**
+     * Calculates an integer value used to sort publications in reverse chronological order.
+     * It converts a given date (year, month, day) into a numeric value such that more recent dates have lower values.
+     *
+     * @param int|string $year
+     * @param int|string|null $month
+     * @param int|string|null $day
+     * @return int An integer representing the reverse chronological sort order.
+     */
     public static function getSortOrder($year, $month = null, $day = null) 
     {
         $year = (int) $year;
-        $month = $month ? str_pad((int) $month, 2, '0', STR_PAD_LEFT) : '00';
-        $day = $day ? str_pad((int) $day, 2, '0', STR_PAD_LEFT) : '00';
-
-        // If only year is present
-        if ($month === '00') {
-            return (int) (9999 - $year) . '0000';
-        }
-
-        // If only year and month are present
-        if ($day === '00') {
-            return (int) (9999 - $year) . (12 - (int)$month) . '00';
-        }
+        $month = $month !== null ? str_pad((string) $month, 2, '0', STR_PAD_LEFT) : '00';
+        $day = $day !== null ? str_pad((string) $day, 2, '0', STR_PAD_LEFT) : '00';
 
         $rev_year = 9999 - $year;
+
+        if ($month === '00') {
+            return (int) sprintf('%04d0000', $rev_year);
+        }
+
         $rev_month = 12 - (int) $month;
+
+        if ($day === '00') {
+            return (int) sprintf('%04d%02d00', $rev_year, $rev_month);
+        }
+
         $rev_day = 31 - (int) $day;
 
         return (int) sprintf('%04d%02d%02d', $rev_year, $rev_month, $rev_day);
