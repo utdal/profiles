@@ -196,7 +196,6 @@ class Profile extends Model implements HasMedia, Auditable
 
         /** @var \Illuminate\Database\Eloquent\Collection */
         $current_publications = $this->publications()->get();
-        echo("Existing publications: {$current_publications->count()}, ORCID API publications: {$orcid_works_count} \n");
 
         Log::info("STARTING ORCID update for {$this->full_name} ‼️‼️");
         
@@ -204,7 +203,7 @@ class Profile extends Model implements HasMedia, Auditable
             $existing_pub = null;
             $similar_title_found = collect();
 
-            $work_summary = $this->getBestWorkSummary($record['work-summary']);
+            $work_summary = self::getBestWorkSummary($record['work-summary']);
 
             $doi_record = self::getIdentifier($work_summary, 'doi');
             $eid_record = self::getIdentifier($work_summary, 'eid');
@@ -264,7 +263,7 @@ class Profile extends Model implements HasMedia, Auditable
             }
 
             if (!isset($doi_record['id']) && !isset($eid_record['id'])) {
-                $additional_identifier = $this->getIdentifier($work_summary);
+                $additional_identifier = self::getIdentifier($work_summary);
             }
 
             $identifiers = array_filter(
@@ -291,7 +290,7 @@ class Profile extends Model implements HasMedia, Auditable
                     ];
 
             //If the publication date is null then use the existing pub year to calculate the sort order
-            $sort_order = Profile::getSortOrder(...array_values($data['publication_date'] ?? ['year' => $existing_pub->year]));
+            $sort_order = self::getSortOrder(...array_values($data['publication_date'] ?? ['year' => $existing_pub->year]));
 
             $this->updateOrInsertPublication($data, $sort_order, $existing_pub, $created, $updated);
         }
@@ -301,7 +300,6 @@ class Profile extends Model implements HasMedia, Auditable
         foreach (compact('updated', 'created', 'exact_id_match', 'contained_id_url_match', 'exact_title_match', 'contained_title_match', 'similar_title_count') as $key => $value) {
             $key = strtoupper($key);
             Log::info("Total {$key} publications: {$value} ");
-            // echo ("Total {$key} publications: {$value} \n");
         }
 
         Log::info("ORCID update for {$this->full_name} completed ✅");
@@ -325,12 +323,12 @@ class Profile extends Model implements HasMedia, Auditable
 
     /**
      * Fetches the list of works (publications) from the ORCID API for the current user.
-     * Returns false ff the ORCID iD is missing or the API request fails, the method returns false.
+     * Returns false if the ORCID ID is missing or the API request fails, the method returns false.
      * Otherwise, returns an associative array of works data.
      * 
      * @return array|false
      */
-    public function fetchOrcidWorks()
+    protected function fetchOrcidWorks()
     {
         $orc_id = $this->information()->get(array('data'))->toArray()[0]['data']['orc_id'];
 
@@ -365,7 +363,7 @@ class Profile extends Model implements HasMedia, Auditable
      * @param array $work_summaries
      * @return array|null
      */
-    private function getBestWorkSummary($work_summaries)
+    protected static function getBestWorkSummary($work_summaries)
     {
         if (count($work_summaries) === 1) {
             return $work_summaries[0];
@@ -389,7 +387,7 @@ class Profile extends Model implements HasMedia, Auditable
      *     id_url: string|null
      * }
      */
-    public static function getIdentifier($work_summary, $type_key = null)
+    protected static function getIdentifier($work_summary, $type_key = null)
     {
         $id_record = collect($work_summary['external-ids']['external-id'] ?? null)->first(function($ext_id) use ($type_key) {
             if ($type_key) {
@@ -413,7 +411,7 @@ class Profile extends Model implements HasMedia, Auditable
      * @param \Illuminate\Database\Eloquent\Collection $publications
      * @return \App\ProfileData|null Returns the matched publication or null if none found.
      */
-    public static function searchPublicationByPubIdentifier($id, $id_type, $publications, &$exact_id_match, &$contained_id_url_match)
+    protected static function searchPublicationByPubIdentifier($id, $id_type, $publications, &$exact_id_match, &$contained_id_url_match)
     {
         $id = strtolower($id);
 
@@ -447,9 +445,9 @@ class Profile extends Model implements HasMedia, Auditable
      * @param string|null $year
      * @param \Illuminate\Database\Eloquent\Collection $existing_publications
      *
-     * @return array|null Returns an array with 'matching_pub' and 'similar_matching'.
+     * @return \Illuminate\Support\Collection
      */
-    public static function searchPublicationByTitleAndDate(string $title, ?string $month, ?string $day, ?string $year, $existing_publications)
+    protected static function searchPublicationByTitleAndDate(string $title, ?string $month, ?string $day, ?string $year, $existing_publications)
     {
         /** @var \Illuminate\Support\Collection */
         $results = [
@@ -507,7 +505,7 @@ class Profile extends Model implements HasMedia, Auditable
      * @param string $existing_title
      * @return string|false Returns the match type ('exact', 'contained', 'similar') or false if no match.
      */
-    public static function getTitleMatchType(string $new_title, string $existing_title)
+    protected static function getTitleMatchType(string $new_title, string $existing_title)
     {
         if ($new_title === $existing_title) {
             return 'exact';
@@ -523,6 +521,38 @@ class Profile extends Model implements HasMedia, Auditable
     }
 
     /**
+     * Calculates an integer value used to sort publications in reverse chronological order.
+     * It converts a given date (year, month, day) into a numeric value such that more recent dates have lower values.
+     *
+     * @param int|string $year
+     * @param int|string|null $month
+     * @param int|string|null $day
+     * @return int An integer representing the reverse chronological sort order.
+     */
+    protected static function getSortOrder($year, $month = null, $day = null) 
+    {
+        $year = (int) $year;
+        $month = $month !== null ? str_pad((string) $month, 2, '0', STR_PAD_LEFT) : '00';
+        $day = $day !== null ? str_pad((string) $day, 2, '0', STR_PAD_LEFT) : '00';
+
+        $rev_year = 9999 - $year;
+
+        if ($month === '00') {
+            return (int) sprintf('%04d0000', $rev_year);
+        }
+
+        $rev_month = 12 - (int) $month;
+
+        if ($day === '00') {
+            return (int) sprintf('%04d%02d00', $rev_year, $rev_month);
+        }
+
+        $rev_day = 31 - (int) $day;
+
+        return (int) sprintf('%04d%02d%02d', $rev_year, $rev_month, $rev_day);
+    }
+
+    /**
      * Updates an existing publication or inserts a new one.
      * 
      * @param array $data
@@ -531,7 +561,7 @@ class Profile extends Model implements HasMedia, Auditable
      * @param int &$updated
      * @return bool
      */
-    public function updateOrInsertPublication($data, $sort_order, $existing_pub, &$created, &$updated)
+    protected function updateOrInsertPublication($data, $sort_order, $existing_pub, &$created, &$updated)
     {
         if ($existing_pub) {
             unset($existing_pub->message);
@@ -557,38 +587,6 @@ class Profile extends Model implements HasMedia, Auditable
         }
 
         return true;
-    }
-
-    /**
-     * Calculates an integer value used to sort publications in reverse chronological order.
-     * It converts a given date (year, month, day) into a numeric value such that more recent dates have lower values.
-     *
-     * @param int|string $year
-     * @param int|string|null $month
-     * @param int|string|null $day
-     * @return int An integer representing the reverse chronological sort order.
-     */
-    public static function getSortOrder($year, $month = null, $day = null) 
-    {
-        $year = (int) $year;
-        $month = $month !== null ? str_pad((string) $month, 2, '0', STR_PAD_LEFT) : '00';
-        $day = $day !== null ? str_pad((string) $day, 2, '0', STR_PAD_LEFT) : '00';
-
-        $rev_year = 9999 - $year;
-
-        if ($month === '00') {
-            return (int) sprintf('%04d0000', $rev_year);
-        }
-
-        $rev_month = 12 - (int) $month;
-
-        if ($day === '00') {
-            return (int) sprintf('%04d%02d00', $rev_year, $rev_month);
-        }
-
-        $rev_day = 31 - (int) $day;
-
-        return (int) sprintf('%04d%02d%02d', $rev_year, $rev_month, $rev_day);
     }
 
     public function updateDatum($section, $request)
