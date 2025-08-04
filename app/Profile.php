@@ -182,12 +182,7 @@ class Profile extends Model implements HasMedia, Auditable
      * This method fetches ORCID works, checks for duplicates using various identifiers (DOI, EID),
      * and imports new publications or updates existing ones accordingly. 
      *
-     * @return array{
-     *     0: bool, // True if the update process completed
-     *     1: int,  // Number of publications created
-     *     2: int,  // Number of publications updated
-     *     3: int   // Number of similar publications found
-     * }
+     * @return array
      */
     public function updateORCID()
     {
@@ -314,18 +309,18 @@ class Profile extends Model implements HasMedia, Auditable
         Cache::tags(['profile-{$this->id}-current_publications'])->flush();
         Cache::tags(['profile_data'])->flush();
 
-        return [
-                    true,
-                    $orcid_works_count,
-                    $created,
-                    $updated,
-                    $exact_id_match,
-                    $contained_id_url_match,
-                    $exact_title_match,
-                    $contained_title_match,
-                    $no_url_count,
-                    $similar_title_count,
-                ];
+        return array_merge(['completed' => true], 
+                            compact(
+                                'orcid_works_count',
+                                'created',
+                                'updated',
+                                'exact_id_match',
+                                'contained_id_url_match',
+                                'exact_title_match',
+                                'contained_title_match',
+                                'no_url_count',
+                                'similar_title_count')
+                            );
     }
 
     /**
