@@ -4,12 +4,14 @@ namespace App\Http\Livewire;
 
 use App\Helpers\Semester;
 use App\Http\Livewire\Concerns\HasFilters;
+use App\Jobs\CreateStudentAppsPdf;
 use App\ProfileStudent;
 use App\Student;
 use App\StudentData;
+use Illuminate\Support\Facades\URL;
 use Livewire\Component;
-use Spatie\Browsershot\Browsershot;
 use Spatie\Tags\Tag;
+use Illuminate\Support\Str;
 
 class ProfileStudents extends Component
 {
@@ -83,6 +85,15 @@ class ProfileStudents extends Component
             ->get();
     }
 
+    public function getAllStudents()
+    {
+        return $this->profile->students()
+            ->submitted()
+            ->with('user:id,email', 'research_profile', 'stats', 'faculty', 'tags')
+            ->orderBy('last_name')
+            ->get();
+    }
+
     public function updated($name, $value)
     {
         $this->emitFilterUpdatedEvent($name, $value);
@@ -111,74 +122,32 @@ class ProfileStudents extends Component
         $this->students = $this->getStudentsProperty();
     }
 
-    public function downloadAsPdf($download_all = true)
+    public function downloadAsPdf($download_all = true, $filter_summary = '')
     {
-        if ($download_all) {
-            $students = $this->students;
-        }
-        else{
-            $students = $this->students->where('application.status', $this->filing_status);
-        }
+        $students = $download_all ? $this->getAllStudents() : $this->students->where('application.status', $this->filing_status);
 
         if ($students->isEmpty()) {
-            $this->emit('downloadFailed');
             $this->emit('alert', "No records available for the filters applied", 'danger');
         }
         else {
-            $html = '';
-            $html .= view('students.download', [
-                'students' => $students,
-                'schools' => Student::participatingSchools(),
-                'custom_questions' => StudentData::customQuestions(),
-                'languages' => StudentData::$languages,
-                'majors' => StudentData::majors(),
-            ])->render();
+            $user_id = auth()->user()->id;
+            $token = Str::ulid();
+            session()->put('download_token_' . $user_id, $token);
 
-            $pdf_content = Browsershot::html($html)
-                            ->waitUntilNetworkIdle()
-                            ->ignoreHttpsErrors()
-                            ->margins(30, 15, 30, 15);
+            $url = URL::temporarySignedRoute('profiles.initiateDownload', now()->addMinutes(10), ['profile' => $this->profile]);
 
-            if (config('pdf.node')) {
-                $pdf_content = $pdf_content->setNodeBinary(config('pdf.node'));
-            }
+            $route_name = 'profiles.downloadPdf';
+            $filename = "Student_apps";
 
-            if (config('pdf.npm')) {
-                $pdf_content = $pdf_content->setNpmBinary(config('pdf.npm'));
-            }
-
-            if (config('pdf.modules')) {
-                $pdf_content = $pdf_content->setIncludePath(config('pdf.modules'));
-            }
-
-            if (config('pdf.chrome')) {
-                $pdf_content = $pdf_content->setChromePath(config('pdf.chrome'));
-            }
-
-            if (config('pdf.chrome_arguments')) {
-                $pdf_content = $pdf_content->addChromiumArguments(config('pdf.chrome_arguments'));
-            }
-
-            $this->emit('downloadStarted');
-
-            return response()->streamDownload(function () use ($pdf_content) {
-                    echo $pdf_content->pdf();
-                }, 'student_applications.pdf', [
-                    'Content-Type' => 'application/pdf',
-                    'Content-Disposition' => 'attachment; filename="student_applications.pdf"',
-                ]);
+            CreateStudentAppsPdf::dispatch($this->profile, $students, $filename, $route_name, $filter_summary, $token);
+            
+            $this->dispatchBrowserEvent('initiatePDFDownload', ['url' => $url]);
         }
-        $this->emit('downloadFailed');
     }
 
      public function downloadAsExcel($download_all = true)
     {
-        if ($download_all) {
-            $students = $this->students;
-        }
-        else{
-            $students = $this->students->where('application.status', $this->filing_status);
-        }
+        $students = $download_all ? $this->getAllStudents() : $this->students->where('application.status', $this->filing_status);
 
         if ($students->isEmpty()) {
             $this->emit('alert', "No records available for the filters applied", 'danger');
@@ -186,9 +155,9 @@ class ProfileStudents extends Component
         else {
             $student_apps = Student::downloadStudentApps($students);
             
-            $this->emit('downloadStarted');
+            $this->dispatchBrowserEvent('initiateXlsxDownload');
 
-            return $student_apps->downloadExcel('students_apps.xlsx', null, true);
+            return $student_apps->downloadExcel('Student_apps.xlsx', null, true);
         }
     }
 

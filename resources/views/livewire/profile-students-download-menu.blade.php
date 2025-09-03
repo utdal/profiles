@@ -59,11 +59,12 @@
         </div>
             
 
-        <div class="text-right mt-2 mb-0" wire:ignore.self>
+        <div class="text-right mt-2 mb-0" wire:ignore>
             <button type="submit" id="download_button" class="btn btn-primary btn-sm" >
                 <span id="download_spinner" class="spinner-border spinner-border-sm text-light d-none" role="status" aria-hidden="true"></span>
                 <span id="download_label">Download</span>
             </button>
+            <p id="download_message" class="small text-muted mt-2 d-none" style="font-style: italic;">Your download will begin shortly in a new tab...</p>
         </div>
 
     </form>
@@ -73,20 +74,44 @@
             const spinner = document.getElementById('download_spinner');
             const label = document.getElementById('download_label');
             const button = document.getElementById('download_button');
+            const message = document.getElementById('download_message');
             const form = button.closest('form');
+            const originalLabel = label.textContent;
 
             form.addEventListener('submit', function () {
+                if (button.disabled) return;
+
+                let download_type = @this.file_format;
+
+                if (download_type === 'pdf') {
+                    download_message.classList.remove('d-none');
+                }
+
                 spinner.classList.remove('d-none');
                 label.textContent = 'Downloading...';
                 button.disabled = true;
+
             });
 
-            window.addEventListener('downloadStarted', function () {
-                console.log('Livewire event received, delaying reset...');
-                    spinner.classList.add('d-none');
-                    label.textContent = 'Download';
-                    button.disabled = false;
+            window.addEventListener('initiatePDFDownload', event => {
+                let url = event.detail.url;
+                window.open(url);
+
+                download_message.classList.add('d-none');
             });
+
+            function addListeners(events) {
+                events.split(",").forEach(event_name => {
+                    window.addEventListener(event_name.trim(),  e => {
+                        spinner.classList.add('d-none');
+                        label.textContent = originalLabel;
+                        button.disabled = false;
+                    });
+                });
+            }
+
+            addListeners("initiatePDFDownload, initiateXlsxDownload");
+
         });
     </script>
 

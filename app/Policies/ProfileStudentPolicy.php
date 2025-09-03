@@ -49,6 +49,18 @@ class ProfileStudentPolicy
     }
 
     /**
+     * Determine whether the user can download profile-specific students.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Profile  $profile
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function downloadForProfile(User $user, Profile $profile)
+    {
+        return $this->viewForProfile($user, $profile);
+    }
+
+    /**
      * Determine whether the user can create profile-student associations.
      *
      * @param  \App\User  $user

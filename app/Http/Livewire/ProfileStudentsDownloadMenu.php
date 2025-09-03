@@ -43,10 +43,10 @@ class ProfileStudentsDownloadMenu extends Component
     {
         if (isset($applied_filters)) {
 
-            $filing_status = isset($applied_filters['filing_status']) ? 'Filed as: ' . ucfirst($applied_filters['filing_status']) . ', ' : '';
-            $filters = isset($applied_filters['filters']) ? $this->humanizeFilters($applied_filters['filters'])->implode(', ') : '';
+            $filing_status = !empty($applied_filters['filing_status']) ? 'Filed as: ' . ucfirst($applied_filters['filing_status']) . '. ' : '';
+            $filters = count($applied_filters['filters']) > 0 ? $this->humanizeFilters($applied_filters['filters'])->implode(', ') : '';
 
-            $this->filter_summary = "{$filing_status} {$filters}";
+            $this->filter_summary = "{$filing_status}{$filters}";
             $this->application_scope = 'filtered';
         }
         else {
@@ -90,7 +90,7 @@ class ProfileStudentsDownloadMenu extends Component
         $format = $this->file_format;
 
         if ($format === 'pdf') {
-            $this->emitTo('profile-students', 'downloadAsPdf', $download_all);
+            $this->emitTo('profile-students', 'downloadAsPdf', $download_all, $this->filter_summary);
         } else {
             $this->emitTo('profile-students', 'downloadAsExcel', $download_all);
         }

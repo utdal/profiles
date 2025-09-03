@@ -34,6 +34,9 @@ return [
     |--------------------------------------------------------------------------
     */
 
+    /** PDFS AUTO CLEAN-UP */
+    'enable_auto_clean_pdfs_dir' => env('ENABLE_AUTO_CLEAN_PDFS_DIR', true),
+
     /** ORCID */
     'ORCID_TOKEN' => env('ORCID_TOKEN', false),
 
