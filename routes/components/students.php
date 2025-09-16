@@ -27,13 +27,6 @@ Route::name('profiles.')->prefix('/')->group(function () {
     Route::prefix('/{profile}')->group(function () {
         Route::name('students')->get('/students', [ProfileStudentsController::class, 'show']);
     
-        Route::name('downloadPdf')
-            ->get('/students/downloadPdf', [ProfileStudentsController::class, 'downloadPdf'])
-            ->middleware('signed');
-
-            Route::name('initiateDownload')
-            ->get('/students/initiateDownload', [ProfileStudentsController::class, 'initiateDownload'])
-            ->middleware('signed');
     });
 
 });

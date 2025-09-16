@@ -64,7 +64,7 @@
                 <span id="download_spinner" class="spinner-border spinner-border-sm text-light d-none" role="status" aria-hidden="true"></span>
                 <span id="download_label">Download</span>
             </button>
-            <p id="download_message" class="small text-muted mt-2 d-none" style="font-style: italic;">Your download will begin shortly in a new tab...</p>
+            <p id="new_tab_msg" class="small text-muted mt-2 d-none" style="font-style: italic;">Your download will begin shortly in a new tab...</p>.</p>
         </div>
 
     </form>
@@ -74,7 +74,7 @@
             const spinner = document.getElementById('download_spinner');
             const label = document.getElementById('download_label');
             const button = document.getElementById('download_button');
-            const message = document.getElementById('download_message');
+            const new_tab_msg = document.getElementById('new_tab_msg');
             const form = button.closest('form');
             const originalLabel = label.textContent;
 
@@ -84,7 +84,7 @@
                 let download_type = @this.file_format;
 
                 if (download_type === 'pdf') {
-                    download_message.classList.remove('d-none');
+                    new_tab_msg.classList.remove('d-none');
                 }
 
                 spinner.classList.remove('d-none');
@@ -93,25 +93,27 @@
 
             });
 
-            window.addEventListener('initiatePDFDownload', event => {
-                let url = event.detail.url;
-                window.open(url);
-
-                download_message.classList.add('d-none');
-            });
-
-            function addListeners(events) {
+            function resetDownloadButtonOn(events) {
                 events.split(",").forEach(event_name => {
                     window.addEventListener(event_name.trim(),  e => {
                         spinner.classList.add('d-none');
                         label.textContent = originalLabel;
                         button.disabled = false;
+                        new_tab_msg.classList.add('d-none');
                     });
                 });
             }
 
-            addListeners("initiatePDFDownload, initiateXlsxDownload");
+            resetDownloadButtonOn("initiatePdfDownload, initiateXlsxDownload, noStudentRecordsFound");
 
+            window.addEventListener('initiatePdfDownload', event => {
+                let url = event.detail.url;
+                window.open(url);
+            });
+
+            window.addEventListener('noStudentRecordsFound', event => {
+                Livewire.emit('alert', "No records available for the filters applied", 'danger');
+            });
         });
     </script>
 

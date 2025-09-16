@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Profile;
+use App\User;
 use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Middleware\ValidateSignature;
@@ -20,7 +21,8 @@ class ProfileStudentsController extends Controller
 
         $this->middleware('can:viewStudents,profile')->only('show');
 
-        $this->middleware('can:downloadStudents,profile')->only(['initiateDownload']);
+        // $this->middleware('can:downloadStudents,user')->only(['requestDownload']);
+        // $this->middleware('can:downloadStudents,profile')->only(['requestDownload', 'downloadPdf']);
     }
 
     /**
@@ -33,29 +35,16 @@ class ProfileStudentsController extends Controller
         ]);
     }
     
-    public function initiateDownload(Profile $profile)
+    public function requestDownload(User $user, string $token)
     {
-        $sessionKey = 'download_token_' . auth()->user()->id;
-
-        if (!session()->has($sessionKey)) {
-            abort(403);
-        }
-
-        $token = session()->pull($sessionKey);
-        
-        return view('initiate-download', compact('profile', 'token'));
+        return $this->initiatePdfDownload($token);
     }
 
     public function downloadPdf(Request $request)
     {
         $path = $request->query('path');
-        $name = $request->query('name', 'document.pdf');
+        $name = $request->query('filename', 'document.pdf');
 
-        abort_unless(is_string($path), 403);
-        abort_unless(Storage::exists($path), 404);
-
-        $absolute = Storage::path($path);
-
-        return response()->download($absolute, $name)->deleteFileAfterSend(true);
+        return $this->downloadPdfFile($path, $name);
     }
 }

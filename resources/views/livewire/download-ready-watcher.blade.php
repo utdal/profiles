@@ -19,12 +19,13 @@
     @endif
 
     <script>
-        const download_in_process_card = document.getElementById('download_in_process_card');
+        document.addEventListener('DOMContentLoaded', function () {
+            const download_in_process_card = document.getElementById('download_in_process_card');
 
-        window.addEventListener('pdfDownloadReady', event => {
-            download_in_process_card.classList.add('d-none');
+            window.addEventListener('pdfDownloadReady', event => {
+                download_in_process_card.classList.add('d-none');
+            });
         });
-
     </script>
 
 </div>

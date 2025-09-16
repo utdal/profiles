@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title', 'Unauthorized')
+@section('title', 'Download Started')
 @section('header')
 	@include('nav')
 @stop
@@ -13,7 +13,7 @@
 		</div>
 	</div>
 
-	<livewire:download-ready-watcher :token="$token" :profile="$profile" :polling="true"/>
+	<livewire:download-ready-watcher :token="$token" :polling="true"/>
 </div>
 
 @stop

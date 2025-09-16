@@ -2,8 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Profile;
-use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
@@ -13,7 +12,6 @@ class DownloadReadyWatcher extends Component
     public bool $polling = false;
     public $download = null;
 
-    public Profile $profile;
     public $token;
 
     // protected $listeners = ['resetWatcher'];
@@ -23,17 +21,17 @@ class DownloadReadyWatcher extends Component
         $this->token = (string) $token;
     }
 
-    public function updatedToken($value)
-    {
-        if ($value) $this->resetWatcher($value);
-    }
+    // public function updatedToken($value)
+    // {
+    //     if ($value) $this->resetWatcher($value);
+    // }
 
-    public function resetWatcher($token)
-    {
-        $this->token = $token;
-        $this->polling = true;
-        $this->reset(['ready', 'download']);
-    }
+    // public function resetWatcher($token)
+    // {
+    //     $this->token = $token;
+    //     $this->polling = true;
+    //     $this->reset(['ready', 'download']);
+    // }
 
     public function check()
     {
@@ -43,7 +41,7 @@ class DownloadReadyWatcher extends Component
 
         if (!$user->id) return;
 
-        $key = "pdf:ready:{$this->token}";
+        $key = "pdf:ready:{$user->name}:{$this->token}";
 
         $payload = Cache::pull($key);
 

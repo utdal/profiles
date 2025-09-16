@@ -124,41 +124,46 @@ class ProfileStudents extends Component
 
     public function downloadAsPdf($download_all = true, $filter_summary = '')
     {
-        $students = $download_all ? $this->getAllStudents() : $this->students->where('application.status', $this->filing_status);
+        $students = $this->getStudentsForDownload($download_all);
 
-        if ($students->isEmpty()) {
-            $this->emit('alert', "No records available for the filters applied", 'danger');
-        }
-        else {
-            $user_id = auth()->user()->id;
-            $token = Str::ulid();
-            session()->put('download_token_' . $user_id, $token);
+        if (!$students) { return false; }
 
-            $url = URL::temporarySignedRoute('profiles.initiateDownload', now()->addMinutes(10), ['profile' => $this->profile]);
+        $user = auth()->user();
+        $token = Str::ulid();
 
-            $route_name = 'profiles.downloadPdf';
-            $filename = "Student_apps";
+        $url = URL::temporarySignedRoute('students.requestDownload', now()->addMinutes(10), ['user' => $user, 'token' => $token]);
 
-            CreateStudentAppsPdf::dispatch($this->profile, $students, $filename, $route_name, $filter_summary, $token);
-            
-            $this->dispatchBrowserEvent('initiatePDFDownload', ['url' => $url]);
-        }
+        $route_name = 'students.downloadPdf';
+        $filename = "Student_apps";
+
+        CreateStudentAppsPdf::dispatch($this->profile, $students, $filename, $route_name, $filter_summary, $token);
+        
+        $this->dispatchBrowserEvent('initiatePdfDownload', ['url' => $url]);
     }
 
      public function downloadAsExcel($download_all = true)
     {
+        $students = $this->getStudentsForDownload($download_all);
+        
+        if (!$students) { return false; }
+
+        $student_apps = Student::downloadStudentApps($students);
+        
+        $this->dispatchBrowserEvent('initiateXlsxDownload');
+
+        return $student_apps->downloadExcel('Student_apps.xlsx', null, true);
+    }
+
+    public function getStudentsForDownload($download_all)
+    {
         $students = $download_all ? $this->getAllStudents() : $this->students->where('application.status', $this->filing_status);
 
         if ($students->isEmpty()) {
-            $this->emit('alert', "No records available for the filters applied", 'danger');
+            $this->dispatchBrowserEvent('noStudentRecordsFound');
+            return false;
         }
-        else {
-            $student_apps = Student::downloadStudentApps($students);
-            
-            $this->dispatchBrowserEvent('initiateXlsxDownload');
 
-            return $student_apps->downloadExcel('Student_apps.xlsx', null, true);
-        }
+        return $students;
     }
 
     public function render()
