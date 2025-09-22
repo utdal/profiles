@@ -131,14 +131,14 @@ class ProfileStudents extends Component
         $user = auth()->user();
         $token = Str::ulid();
 
-        $url = URL::temporarySignedRoute('students.requestDownload', now()->addMinutes(10), ['user' => $user, 'token' => $token]);
+        $download_request_url = URL::temporarySignedRoute('pdf.requestDownload', now()->addMinutes(10), ['user' => $user, 'token' => $token, 'model' => Student::class, 'ability' => 'viewAny']);
 
-        $route_name = 'students.downloadPdf';
+        $download_route_name = 'pdf.download';
         $filename = "Student_apps";
 
-        CreateStudentAppsPdf::dispatch($this->profile, $students, $filename, $route_name, $filter_summary, $token);
+        CreateStudentAppsPdf::dispatch($user, $students, $filename, $download_route_name, $filter_summary, $token, Student::class, 'viewAny');
         
-        $this->dispatchBrowserEvent('initiatePdfDownload', ['url' => $url]);
+        $this->dispatchBrowserEvent('initiatePdfDownload', ['download_request_url' => $download_request_url]);
     }
 
      public function downloadAsExcel($download_all = true)

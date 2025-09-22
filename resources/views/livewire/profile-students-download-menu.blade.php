@@ -107,7 +107,7 @@
             resetDownloadButtonOn("initiatePdfDownload, initiateXlsxDownload, noStudentRecordsFound");
 
             window.addEventListener('initiatePdfDownload', event => {
-                let url = event.detail.url;
+                let url = event.detail.download_request_url;
                 window.open(url);
             });
 

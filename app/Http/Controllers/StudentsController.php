@@ -108,6 +108,7 @@ class StudentsController extends Controller
             'custom_questions' => StudentData::customQuestions(),
             'languages' => StudentData::$languages,
             'majors' => StudentData::majors(),
+            'user' => $request->user(),
         ]);
     }
 
@@ -122,6 +123,7 @@ class StudentsController extends Controller
             'custom_questions' => StudentData::customQuestions(),
             'languages' => StudentData::$languages,
             'majors' => StudentData::majors(),
+            'user' => auth()->user(),
         ]);
     }
 

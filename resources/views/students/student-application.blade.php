@@ -26,7 +26,7 @@
                     {!! Form::close() !!}
                     </div>
                 @endcan
-                @if(!auth()->user()->owns($student))
+                @if(!$user->owns($student))
                     <livewire:bookmark-button :model="$student">
                 @endif
                 @can('viewFeedback', $student)

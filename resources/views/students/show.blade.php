@@ -27,5 +27,6 @@
                     'custom_questions' => $custom_questions,
                     'languages' => $languages,
                     'majors' => $majors,
+                    'user' => $user,
                 ])
 @stop
