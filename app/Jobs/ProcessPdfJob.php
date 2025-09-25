@@ -23,17 +23,15 @@ class ProcessPdfJob implements ShouldQueue
     public $data;
     public $token;
     public $user;
-    public $download_route_name;
     public $description;
 
     /**
      * Create a new job instance.
      */
-    public function __construct(User $user, $view, $download_route_name, $filename_prefix, $description, $token, $data = [])
+    public function __construct(User $user, $view, $filename_prefix, $description, $token, $data = [])
     {
         $this->user = $user;
         $this->view = $view;
-        $this->download_route_name = $download_route_name;
         $this->filename_prefix = $filename_prefix;
         $this->token = $token;
         $this->data = $data;

@@ -90,7 +90,7 @@ class ProfileStudentsDownloadMenu extends Component
         $format = $this->file_format;
 
         if ($format === 'pdf') {
-            $this->emitTo('profile-students', 'downloadStudentsAsPdf', $download_all, $this->filter_summary);
+            $this->emitTo('profile-students', 'downloadAsPdf', null, $download_all, $this->filter_summary);
         } else {
             $this->emitTo('profile-students', 'downloadAsExcel', $download_all);
         }

@@ -4,20 +4,17 @@ namespace App\Http\Livewire;
 
 use App\Helpers\Semester;
 use App\Http\Livewire\Concerns\HasFilters;
-use App\Jobs\CreateStudentAppsPdf;
+use App\Http\Livewire\Concerns\HasPdfDownloads;
 use App\ProfileStudent;
 use App\Student;
 use App\StudentData;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\URL;
 use Livewire\Component;
 use Spatie\Tags\Tag;
-use Illuminate\Support\Str;
 
 class ProfileStudents extends Component
 {
-    use HasFilters;
+    use HasFilters, HasPdfDownloads;
 
     use AuthorizesRequests;
 
@@ -52,7 +49,7 @@ class ProfileStudents extends Component
     protected $listeners = [
         'profileStudentStatusUpdated' => 'refreshStudents',
         'getAppliedFilters' => 'updateAppliedFiltersOnDownloadMenu',
-        'downloadStudentsAsPdf',
+        'downloadAsPdf',
         'downloadAsExcel',
     ];
 
@@ -139,50 +136,35 @@ class ProfileStudents extends Component
         return $student_apps->downloadExcel('Student_apps.xlsx', null, true);
     }
 
-    public function downloadStudentsAsPdf($download_all = true, $filter_summary = '')
+    public function downloadAsPdf($student_id = null, $download_all = true, $filter_summary = '')
     {
         $this->authorize('requestPdfDownload');
 
-        $students = $this->getStudentsForDownload($download_all);
+        if ($student_id) {
+            $students = Student::whereIn('id', [$student_id])->get();
+            $file_description = "{$students->first()->full_name}'s student application";
+        }
+        else {
+            $students = $this->getStudentsForDownload($download_all);
+            $file_description = "Student applications {$filter_summary}";
+        }
 
-        $this->initiatePdfDownload($students, $filter_summary);
+        $pdf_data = array_merge($this->getPdfDataProperty(), ['students' => $students]);
+        $view = 'students.download';
+        $filename = "Student_app";
 
+        $this->initiatePdfDownload($view, $pdf_data, $filename, $file_description);
     }
 
-    public function downloadStudentAsPdf($student_id)
+    public function getPdfDataProperty()
     {
-        $this->authorize('requestPdfDownload');
-
-        $student = Student::whereIn('id', [$student_id])->get();
-
-        $this->initiatePdfDownload($student, $student->first()->full_name);
-
-    }
-
-    public function initiatePdfDownload($students, $download_description)
-    {
-        if (!$students) { return false; }
-
-        $user = auth()->user();
-        $token = (string) Str::ulid();
-
-        $this->cachePdfToken($user, $token);
-
-        $download_request_url = URL::temporarySignedRoute('pdf.requestDownload', now()->addMinutes(10), ['user' => $user, 'token' => $token]);
-
-        $download_route_name = 'pdf.download';
-        $filename = "Student_apps";
-
-        CreateStudentAppsPdf::dispatch($user, $students, $filename, $download_route_name, $download_description, $token);
-        
-        $this->dispatchBrowserEvent('initiatePdfDownload', ['download_request_url' => $download_request_url]);
-    }
-
-    public function cachePdfToken($user, $token) {
-        $user_tokens = Cache::get("pdf:tokens:{$user->pea}", collect());
-        $user_tokens->push($token);
-
-        Cache::put("pdf:tokens:{$user->pea}", $user_tokens, now()->addMinutes(30));
+        return [
+                    'schools' => Student::participatingSchools(),
+                    'custom_questions' => StudentData::customQuestions(),
+                    'languages' => StudentData::$languages,
+                    'majors' => StudentData::majors(),
+                    'user' => auth()->user(),
+                ];
     }
 
     public function getStudentsForDownload($download_all)

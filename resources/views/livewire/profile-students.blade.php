@@ -212,7 +212,7 @@
                                             </a>
                                         </div>
                                         <div>
-                                            <a href="#" wire:click="downloadStudentAsPdf({{ $student->id }})" title="Download pdf student">
+                                            <a href="#" wire:click="downloadAsPdf({{ $student->id }})" title="Download pdf student">
                                                 <i class="fas fa-fw mr-1 fa-file-pdf"></i>Download
                                             </a>
                                         </div>
