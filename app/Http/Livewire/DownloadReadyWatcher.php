@@ -5,33 +5,22 @@ namespace App\Http\Livewire;
 
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Storage;
 
 class DownloadReadyWatcher extends Component
 {
+    use AuthorizesRequests;
+
     public bool $ready = false;
     public bool $polling = false;
-    public $download = null;
-
+    public $download = [];
     public $token;
-
-    // protected $listeners = ['resetWatcher'];
 
     public function mount($token)
     {
         $this->token = (string) $token;
     }
-
-    // public function updatedToken($value)
-    // {
-    //     if ($value) $this->resetWatcher($value);
-    // }
-
-    // public function resetWatcher($token)
-    // {
-    //     $this->token = $token;
-    //     $this->polling = true;
-    //     $this->reset(['ready', 'download']);
-    // }
 
     public function check()
     {
@@ -41,17 +30,30 @@ class DownloadReadyWatcher extends Component
 
         if (!$user->id) return;
 
-        $key = "pdf:ready:{$user->name}:{$this->token}";
+        $this->authorize('downloadPdf', $this->token);
 
-        $payload = Cache::pull($key);
+        $this->download = Cache::get("pdf:ready:{$user->pea}:{$this->token}");
 
-        if (!empty($payload)) {
-            $this->download = $payload;
+        if (!empty($this->download)) {
             $this->ready = true;
             $this->polling = false;
             $this->dispatchBrowserEvent('pdfDownloadReady');
             $this->emit('alert', 'Your PDF file is ready for download!');
         }
+    }
+
+    public function download()
+    {
+        $this->authorize('downloadPdf', $this->token);
+
+        $path = $this->download['path'];
+        $name = $this->download['filename'] ?? 'document.pdf';
+
+        abort_unless(is_string($path), 403);
+        abort_unless(Storage::exists($path), 404);
+
+        $absolute = Storage::path($path);
+        return response()->download($absolute, $name)->deleteFileAfterSend(true);
     }
 
     public function render()

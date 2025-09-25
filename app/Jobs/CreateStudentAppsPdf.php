@@ -21,13 +21,11 @@ class CreateStudentAppsPdf implements ShouldQueue
         public $download_route_name;
         public $description;
         public $token;
-        public $model;
-        public $ability;
 
     /**
      * Create a new job instance.
      */
-    public function __construct(User $user, $students, $filename, $download_route_name, $description, $token, $model, $ability)
+    public function __construct(User $user, $students, $filename, $download_route_name, $description, $token)
     {
         $this->user = $user;
         $this->students = $students;
@@ -35,8 +33,6 @@ class CreateStudentAppsPdf implements ShouldQueue
         $this->filename = $filename;
         $this->token = $token;
         $this->description = $description;
-        $this->model = $model;
-        $this->ability = $ability;
     }
 
     /**
@@ -55,6 +51,6 @@ class CreateStudentAppsPdf implements ShouldQueue
 
         $view = 'students.download';
 
-        ProcessPdfJob::dispatch($this->user, $view, $this->download_route_name, $this->filename, "Student applications $this->description", $this->token, $pdf_data, $this->model, $this->ability);
+        ProcessPdfJob::dispatch($this->user, $view, $this->download_route_name, $this->filename, "Student applications $this->description", $this->token, $pdf_data);
     }
 }

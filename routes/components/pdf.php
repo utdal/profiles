@@ -12,11 +12,7 @@ Route::name('pdf.')->prefix('/')->group(function () {
     Route::prefix('/{user}')->group(function () {
     
         Route::name('requestDownload')
-            ->get('/requestDownload/{ability}/{model}/{token}', [AppController::class, 'requestDownload'])
-            ->middleware('signed');
-
-        Route::name('download')
-            ->get('/download/{ability}/{model}', [AppController::class, 'download'])
+            ->get('/requestDownload/{token}', [AppController::class, 'requestDownload'])
             ->middleware('signed');
 
     });

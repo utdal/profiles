@@ -25,13 +25,11 @@ class ProcessPdfJob implements ShouldQueue
     public $user;
     public $download_route_name;
     public $description;
-    public $model;
-    public $ability;
 
     /**
      * Create a new job instance.
      */
-    public function __construct(User $user, $view, $download_route_name, $filename_prefix, $description, $token, $data = [], $model, $ability)
+    public function __construct(User $user, $view, $download_route_name, $filename_prefix, $description, $token, $data = [])
     {
         $this->user = $user;
         $this->view = $view;
@@ -40,8 +38,6 @@ class ProcessPdfJob implements ShouldQueue
         $this->token = $token;
         $this->data = $data;
         $this->description = $description;
-        $this->model = $model;
-        $this->ability = $ability;
     }
 
     /**
@@ -51,14 +47,13 @@ class ProcessPdfJob implements ShouldQueue
     {
         $result = $service->generatePdf($this->data, $this->view, $this->filename_prefix);
 
-        $download_url = URL::temporarySignedRoute(
-                    $this->download_route_name,
-                    now()->addMinutes(30),
-                    ['path' => $result->path, 'filename' => $result->filename, 'user' => $this->user, 'model' => $this->model, 'ability' => $this->ability]
-                );
-
-        $download_info = ['download_url' => $download_url, 'filename' => $result->filename, 'user' => $this->user, 'description' => $this->description];
-
+        $download_info = [ 
+                            'path' => $result->path,
+                            'filename' => $result->filename,
+                            'user_id' => $this->user->id,
+                            'description' => $this->description,
+                        ];
+        
         Cache::put("pdf:ready:{$this->user->pea}:{$this->token}", $download_info, now()->addMinutes(30));
     }
 
