@@ -3,10 +3,8 @@
 namespace App\Providers;
 
 use App\Events\StudentViewed;
-use App\Events\PdfReady;
 use App\Listeners\IncrementStudentViews;
 use App\Listeners\UpdateUserLastAccess;
-use App\Listeners\CachePdfReadyForUser;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -29,9 +27,6 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         StudentViewed::class => [
             IncrementStudentViews::class,
-        ],
-        PdfReady::class => [
-            CachePdfReadyForUser::class,
         ],
     ];
 
