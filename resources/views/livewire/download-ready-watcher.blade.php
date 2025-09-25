@@ -11,7 +11,7 @@
                         Your file containing <span style="font-weight: bold;"> {{ $download['description'] }}</span> is available for download.
                     </p>
                 @endif
-                <a href="{{ $download['download_url'] }}" class="btn btn-primary" title="Download {{ $download['filename'] ?? 'File' }}">
+                <a href="#" wire:click="download" class="btn btn-primary" title="Download {{ $download['filename'] ?? 'File' }}">
                     Download <i class="fas fa-download"></i>
                 </a>
             </div>

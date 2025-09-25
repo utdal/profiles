@@ -212,6 +212,11 @@
                                             </a>
                                         </div>
                                         <div>
+                                            <a href="#" wire:click="downloadStudentAsPdf({{ $student->id }})" title="Download pdf student">
+                                                <i class="fas fa-fw mr-1 fa-file-pdf"></i>Download
+                                            </a>
+                                        </div>
+                                        <div>
                                             <livewire:student-filer :profile="$profile" :student="$student" :status="$student->application->status" :wire:key="$student->slug . '_filer'">
                                         </div>
                                     </div>
