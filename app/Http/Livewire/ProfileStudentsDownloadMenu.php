@@ -44,7 +44,7 @@ class ProfileStudentsDownloadMenu extends Component
         if (isset($applied_filters)) {
 
             $filing_status = !empty($applied_filters['filing_status']) ? 'Filed as: ' . ucfirst($applied_filters['filing_status']) . '. ' : '';
-            $filters = count($applied_filters['filters']) > 0 ? $this->humanizeFilters($applied_filters['filters'])->implode(', ') : '';
+            $filters = count($applied_filters['filters']) > 0 ? $this->humanizeFilters($applied_filters['filters'])->implode(', ') . '. ' : '';
 
             $this->filter_summary = "{$filing_status}{$filters}";
             $this->application_scope = 'filtered';
