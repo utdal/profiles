@@ -133,7 +133,7 @@ class StudentDataInsight
         }
 
         return Student::query()
-                ->submitted()
+                ->everUpdated()
                 ->withWhereHas('research_profile', function($q) use ($semesters_params, $schools_params) {
                     $q->where(function($q) use ($semesters_params) {
                         foreach ($semesters_params as $semester) {
