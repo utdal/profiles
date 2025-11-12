@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Insights;
 
 use App\Insights\StudentApplications\StudentDataInsight;
 use Livewire\Component;
@@ -39,7 +39,7 @@ class StudentsAppCountChart extends Component
     public function getDatasetProperty()
     {
         $report = new StudentDataInsight();
-        return $report->appsCountBySemestersAndSchools($this->selected_semesters, $this->selected_schools);
+        return $report->appCountBySemestersAndSchools($this->selected_semesters, $this->selected_schools);
     }
 
     public function render()

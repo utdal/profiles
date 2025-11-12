@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Insights;
 
 use App\Helpers\Semester;
 use App\Insights\StudentApplications\StudentDataInsight;
@@ -40,7 +40,7 @@ class StudentAppsViewedNotViewedChart extends Component
     public function getDatasetProperty()
     {
         $report = new StudentDataInsight();
-        return $report->appsCountViewedAndNotViewed($this->selected_semesters, $this->selected_schools);
+        return $report->appCountViewedAndNotViewed($this->selected_semesters, $this->selected_schools);
     }
 
     public function render()

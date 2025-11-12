@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Insights;
 
 use App\Helpers\Semester;
 use App\Insights\StudentApplications\StudentDataInsight;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Insights;
 
 use App\Helpers\Semester;
 use App\Insights\StudentApplications\StudentDataInsight;
@@ -45,7 +45,7 @@ class AcceptedAndFollowUpAppsPercentageChart extends Component
     public function getDatasetProperty()
     {
         $report = new StudentDataInsight();
-        return $report->appsCountForTwoCategoriesOfFilingStatus($this->selected_semesters, $this->selected_schools, $this->filing_statuses_category_1, $this->filing_statuses_category_2, $this->weeks_before_semester_start, $this->weeks_before_semester_end);
+        return $report->appCountForTwoCategoriesOfFilingStatus($this->selected_semesters, $this->selected_schools, $this->filing_statuses_category_1, $this->filing_statuses_category_2, $this->weeks_before_semester_start, $this->weeks_before_semester_end);
     }
 
     public function render()

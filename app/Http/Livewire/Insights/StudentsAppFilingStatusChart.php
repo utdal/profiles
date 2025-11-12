@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Insights;
 
 use App\Insights\StudentApplications\StudentDataInsight;
 use Livewire\Component;
@@ -48,7 +48,7 @@ class StudentsAppFilingStatusChart extends Component
     public function getDatasetProperty()
     {
         $report = new StudentDataInsight();
-        return $report->appsCountBySemestersAndSchoolsWithFilingStatus($this->selected_semesters, $this->selected_schools, $this->selected_filing_statuses, $this->weeks_before_semester_start, $this->weeks_before_semester_end);
+        return $report->appCountBySemestersAndSchoolsWithFilingStatus($this->selected_semesters, $this->selected_schools, $this->selected_filing_statuses, $this->weeks_before_semester_start, $this->weeks_before_semester_end);
     }
 
     public function render()
