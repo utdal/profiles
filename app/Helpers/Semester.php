@@ -131,9 +131,12 @@ class Semester
     }
 
     /**
-     * Sort chronologically an array of semesters in the 'Semester YY' format 
-     * @param array $semesters
-     * @return array
+     * Returns a comparator function to sort semesters chronologically.
+     * 
+     * Use with usort() or Laravel collection sort methods.
+     * Sorts semesters in 'Season YYYY' format (e.g., "Spring 2023", "Fall 2024").
+     * 
+     * @return \Closure(string, string): int Comparator function returning -1, 0, or 1
      */
     public static function sortCollectionWithSemestersKeyChronologically() {
         return function ($a, $b) {
@@ -162,25 +165,30 @@ class Semester
     /**
      * Sort chronologically an array of semesters in the 'Semester YY' format 
      * @param array $semesters
-     * @return array
+     * @return bool
      */
-    public static function sortSemestersChronologically($semesters) {
-        return
-        usort($semesters, function ($a, $b) {
+    public static function sortSemestersChronologically(array &$semesters): bool
+    {
+        return usort($semesters, function (string $a, string $b): int {
             // Extract year and season
             preg_match('/(Spring|Summer|Fall) (\d+)/', $a, $matchesA);
             preg_match('/(Spring|Summer|Fall) (\d+)/', $b, $matchesB);
+            
+            // Handle invalid formats
+            if (empty($matchesA) || empty($matchesB)) {
+                return 0; // Consider them equal if invalid
+            }
         
             // Map seasons to an order
             $seasonOrder = ['Spring' => 1, 'Summer' => 2, 'Fall' => 3];
         
             // Compare by year first
-            if ($matchesA[2] != $matchesB[2]) {
-                return $matchesA[2] - $matchesB[2];
+            if ($matchesA[2] !== $matchesB[2]) {
+                return (int) $matchesA[2] <=> (int) $matchesB[2];
             }
         
             // If years are the same, compare by season
-            return $seasonOrder[$matchesA[1]] - $seasonOrder[$matchesB[1]];
+            return $seasonOrder[$matchesA[1]] <=> $seasonOrder[$matchesB[1]];
         });
     }
 

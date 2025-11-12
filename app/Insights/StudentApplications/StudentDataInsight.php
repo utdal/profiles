@@ -8,7 +8,7 @@ use App\StudentData;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
-
+use Illuminate\Database\Eloquent\Builder;
 
 class StudentDataInsight
 {
@@ -20,7 +20,7 @@ class StudentDataInsight
      * @param array $filing_status_category_2 Filing statuses for the first category. Example: ['not interested', 'maybe later'].
      * @return array
     */
-    public function appsCountForTwoCategoriesOfFilingStatus($semesters_params, $schools_params, $filing_status_category_1, $filing_status_category_2, $weeks_before_semester_start, $weeks_before_semester_end)
+    public function appCountForTwoCategoriesOfFilingStatus($semesters_params, $schools_params, $filing_status_category_1, $filing_status_category_2, $weeks_before_semester_start, $weeks_before_semester_end)
     {
         $filing_status_category_1_total = $this->cachedAppsForSemestersAndSchoolsWithFilingStatuses($semesters_params, $schools_params, $filing_status_category_1, $weeks_before_semester_start, $weeks_before_semester_end)->count();
         $filing_status_category_2_total = $this->cachedAppsForSemestersAndSchoolsWithFilingStatuses($semesters_params, $schools_params, $filing_status_category_2, $weeks_before_semester_start, $weeks_before_semester_end)->count();
@@ -65,9 +65,7 @@ class StudentDataInsight
     */
     public function groupAppsBySemestersAndSchoolsWithFilingStatus($semesters_params, $schools_params, $filing_status_params, $weeks_before_semester_start, $weeks_before_semester_end)
     {
-        $students = $this->cachedAppsForSemestersAndSchoolsWithStatsWithUser($semesters_params, $schools_params);
         $semesters_params_start_end = $this->semestersParamsStartAndEnd($semesters_params, $weeks_before_semester_start, $weeks_before_semester_end);
-        $results = [];
         
         foreach ($semesters_params_start_end as $semester => $semester_start_end) { // Looping through semesters
             foreach ($schools_params as $school) { // Looping through schools
@@ -113,7 +111,7 @@ class StudentDataInsight
         return Cache::remember(
             "student-apps-for-semesters-schools-with-stats-{$sm}-{$sch}",
             15 * 60,
-            fn() => $this->appsForSemestersAndSchools($semesters_params, $schools_params)
+            fn() => $this->studentsWithAppsForSemestersAndSchools($semesters_params, $schools_params)
                          ->with('stats')
                          ->with('user')
                          ->get()
@@ -124,9 +122,9 @@ class StudentDataInsight
      * Return query builder to retrieve students records with applications ('research_profile') for given semesters and schools.
      * @param array $semesters_params Semesters filter. Example: ["Summer 2023", "Fall 2023"].
      * @param array $schools_params Schools filter. Example: ["BBS", "NSM"].
-     * @return Illuminate\Database\Eloquent\Builder
+     * @return \Illuminate\Database\Eloquent\Builder
     */
-    public function appsForSemestersAndSchools($semesters_params, $schools_params)
+    public function studentsWithAppsForSemestersAndSchools(array $semesters_params, array $schools_params)
     {
         if (empty($semesters_params) || empty($schools_params)) {
             return Student::query()->whereRaw('1 = 0');
@@ -154,7 +152,7 @@ class StudentDataInsight
      * @param array $schools_params Schools filter. Example: ["BBS", "NSM"].
      * @return array
     */
-    public function appsCountViewedAndNotViewed($semesters_params, $schools_params)
+    public function appCountViewedAndNotViewed($semesters_params, $schools_params)
     {
         $submitted_and_viewed = $this->cachedViewedAppsForSemestersAndSchools($semesters_params, $schools_params)->count();
         $submitted_not_viewed = $this->cachedNotViewedAppsForSemestersAndSchools($semesters_params, $schools_params)->count();
@@ -164,6 +162,7 @@ class StudentDataInsight
                 'datasets' => [$submitted_and_viewed, $submitted_not_viewed],
             ];
     }
+
     /**
      * Retrieve and cache a collection of student applications for given semesters and schools that have been viewed.
      * @param array $semesters_params Semesters filter. Example: ["Summer 2023", "Fall 2023"].
@@ -178,8 +177,8 @@ class StudentDataInsight
        return Cache::remember(
            "student-apps-for-semesters-schools-viewed-{$sm}-{$sch}",
            15 * 60,
-           fn() => $this->appsForSemestersAndSchools($semesters_params, $schools_params)
-                       ->where(function($query) {
+           fn() => $this->studentsWithAppsForSemestersAndSchools($semesters_params, $schools_params)
+                       ->where(function(Builder $query) {
                            $query->whereHas('stats', function($q) {
                                $q->whereNotNull('data->views');
                                $q->where('data->views', '>', 0);
@@ -202,8 +201,8 @@ class StudentDataInsight
         return Cache::remember(
             "student-apps-for-semesters-schools-not-viewed-{$sm}-{$sch}",
             15 * 60,
-            fn() => $this->appsForSemestersAndSchools($semesters_params, $schools_params)
-                        ->where(function($query) {
+            fn() => $this->studentsWithAppsForSemestersAndSchools($semesters_params, $schools_params)
+                        ->where(function(Builder $query) {
                             $query->whereHas('stats', function($q) {
                                 $q->whereNull('data->views');
                             });
@@ -218,7 +217,7 @@ class StudentDataInsight
      * @param array $schools_params Schools filter. Example: ["BBS", "NSM"].
      * @return array
      */
-    public function appsCountBySemestersAndSchools($semesters_params, $schools_params)
+    public function appCountBySemestersAndSchools($semesters_params, $schools_params)
     {
         $applications = $this->groupAppsBySemestersAndSchools($semesters_params, $schools_params);
         $semesters_sort_closure = Semester::sortCollectionWithSemestersKeyChronologically();
@@ -295,7 +294,7 @@ class StudentDataInsight
         return Cache::remember(
             "student-apps-for-semesters-schools-{$sm}-{$sch}",
             15 * 60,
-            fn() => $this->appsForSemestersAndSchools($semesters_params, $schools_params)->get()
+            fn() => $this->studentsWithAppsForSemestersAndSchools($semesters_params, $schools_params)->get()
         );
     }
 
@@ -305,7 +304,7 @@ class StudentDataInsight
      * @param array $schools_params Schools filter. Example: ["BBS", "NSM"].
      * @param array $filing_status_params Filing status filter for the last status of the applications. Example: ['accepted', 'follow up'].
     */
-    public function appsCountBySemestersAndSchoolsWithFilingStatus($semesters_params, $schools_params, $filing_status_params, $weeks_before_semester_start, $weeks_before_semester_end)
+    public function appCountBySemestersAndSchoolsWithFilingStatus($semesters_params, $schools_params, $filing_status_params, $weeks_before_semester_start, $weeks_before_semester_end)
     {
         $applications = $this->cachedAppsForSemestersAndSchoolsWithFilingStatuses($semesters_params, $schools_params, $filing_status_params, $weeks_before_semester_start, $weeks_before_semester_end);
         $semesters_sort_closure = Semester::sortCollectionWithSemestersKeyChronologically();
@@ -358,7 +357,7 @@ class StudentDataInsight
                 break;
             default:
                 $semesters = StudentData::uniqueValuesFor('research_profile', 'semesters')
-                                ->map(fn($semester) => Semester::date($semester)?->toDateString());
+                                ->map(fn($semester) => Semester::date($semester)?->toDateString())->toArray;
                 return Semester::sortSemestersChronologically($semesters);
                 break;
         }

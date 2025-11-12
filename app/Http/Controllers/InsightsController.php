@@ -6,6 +6,7 @@ use App\Helpers\Semester;
 use App\Insights\StudentApplications\StudentDataInsight;
 use App\StudentData;
 use Illuminate\Contracts\View\View as ViewContract;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 
 class InsightsController extends Controller
@@ -23,7 +24,7 @@ class InsightsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request): ViewContract
+    public function index(Request $request): View|ViewContract
     {
 
         $schools_options = StudentDataInsight::getLabels('school')->toArray();
