@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Profile;
 use Illuminate\Contracts\View\View as ViewContract;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class ProfileStudentsController extends Controller

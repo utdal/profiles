@@ -18,6 +18,7 @@
                     aria-controls="tab_{{ Str::slug($status) }}"
                     aria-selected="{{ $loop->first ? 'true' : 'false' }}"
                     wire:ignore.self
+                    wire:click="$set('filing_status', @js($status))"
                 >
                     <span class="fa-fw mr-2 {{ $status_icons[$status] }}" style="opacity:0.3"></span>
                     {{ $status_name }}
@@ -143,7 +144,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <button type="button" class="btn btn-block btn-outline-primary" wire:click="resetFilters">Clear All Filters</button>
+                            <button type="button" id="reset_filters_button" class="btn btn-block btn-outline-primary" wire:click="resetFilters">Clear All Filters</button>
                         </div>
                     </div>
                 </div>
@@ -211,6 +212,11 @@
                                             </a>
                                         </div>
                                         <div>
+                                            <a href="#" wire:click="downloadAsPdf({{ $student->id }})" title="Download pdf student">
+                                                <i class="fas fa-fw mr-1 fa-file-pdf"></i>Download
+                                            </a>
+                                        </div>
+                                        <div>
                                             <livewire:student-filer :profile="$profile" :student="$student" :status="$student->application->status" :wire:key="$student->slug . '_filer'">
                                         </div>
                                     </div>
@@ -231,4 +237,10 @@
     </div>
 
     @include('livewire.partials._loading-fixed', ['loading_target' => 'resetFilter, resetFilters, animals_filter, credit_filter, graduation_filter, language_filter, search_filter, schools_filter, semester_filter, travel_filter, travel_other_filter, tag_filter'])
+
+    <script>
+        document.getElementById('reset_filters_button').addEventListener('click', function() {
+            Livewire.emitTo('profile-students-download-menu', 'resetMenu');
+        });
+    </script>
 </div>

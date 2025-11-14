@@ -26,6 +26,7 @@ Route::name('profiles.')->prefix('/')->group(function () {
 
     Route::prefix('/{profile}')->group(function () {
         Route::name('students')->get('/students', [ProfileStudentsController::class, 'show']);
+    
     });
 
 });

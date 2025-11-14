@@ -2,6 +2,9 @@
 
 namespace App\Http\Livewire\Concerns;
 
+use App\StudentData;
+use Illuminate\Support\Collection;
+
 trait HasFilters
 {
     public function resetFilters()
@@ -35,4 +38,5 @@ trait HasFilters
         // Any property with a name including "_filter"
         return strpos($name, '_filter') !== false;
     }
+
 }

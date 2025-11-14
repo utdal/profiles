@@ -7,6 +7,12 @@ return [
      */
     'enabled' => env('ENABLE_PDF', false),
 
+    'driver' => env('PDF_DRIVER', 'browsershot'),
+    'lambda' => [
+        // 'function_name' => env('PDF_LAMBDA_FUNCTION'),
+        // 'region' => env('AWS_DEFAULT_REGION'),
+    ],
+
     /**
      * Path to the chromium executable
      */

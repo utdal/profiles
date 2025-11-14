@@ -4,15 +4,19 @@ namespace App\Http\Livewire;
 
 use App\Helpers\Semester;
 use App\Http\Livewire\Concerns\HasFilters;
+use App\Http\Livewire\Concerns\HasPdfDownloads;
 use App\ProfileStudent;
 use App\Student;
 use App\StudentData;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 use Spatie\Tags\Tag;
 
 class ProfileStudents extends Component
 {
-    use HasFilters;
+    use HasFilters, HasPdfDownloads;
+
+    use AuthorizesRequests;
 
     public $profile;
 
@@ -38,8 +42,15 @@ class ProfileStudents extends Component
 
     public $tag_filter = '';
 
+    public $filter_selection = [];
+
+    public $filing_status = '';
+
     protected $listeners = [
-        'profileStudentStatusUpdated' => 'refreshStudents'
+        'profileStudentStatusUpdated' => 'refreshStudents',
+        'getAppliedFilters' => 'updateAppliedFiltersOnDownloadMenu',
+        'downloadAsPdf',
+        'downloadAsExcel',
     ];
 
     protected $queryString = [
@@ -70,7 +81,16 @@ class ProfileStudents extends Component
             ->willTravelOther($this->travel_other_filter)
             ->willWorkWithAnimals($this->animals_filter)
             ->needsResearchCredit($this->credit_filter)
-            ->with('user:id,email')
+            ->with('user:id,email', 'research_profile', 'stats', 'faculty', 'tags')
+            ->orderBy('last_name')
+            ->get();
+    }
+
+    public function getAllStudents()
+    {
+        return $this->profile->students()
+            ->submitted()
+            ->with('user:id,email', 'research_profile', 'stats', 'faculty', 'tags')
             ->orderBy('last_name')
             ->get();
     }
@@ -79,6 +99,24 @@ class ProfileStudents extends Component
     {
         $this->refreshStudents();
         $this->emitFilterUpdatedEvent($name, $value);
+        $this->updateAppliedFiltersOnDownloadMenu();
+    }
+
+    public function updateAppliedFiltersOnDownloadMenu()
+    {
+        $applied_filters = [
+            'filters' => [],
+            'filing_status' => $this->filing_status,
+        ];
+
+        foreach ($this->availableFilters() as $filter_property) {
+
+            if (filled(trim($this->{$filter_property}))) {
+                $applied_filters['filters'][$filter_property] = $this->{$filter_property};
+            }
+        }
+
+        $this->emitTo('profile-students-download-menu', 'updateFilterSummary', $applied_filters);
     }
 
     public function refreshStudents()
@@ -86,12 +124,71 @@ class ProfileStudents extends Component
         $this->students = $this->getStudentsProperty();
     }
 
+    public function downloadAsExcel($download_all = true)
+    {
+        $students = $this->getStudentsForDownload($download_all);
+        
+        if (!$students) { return false; }
+
+        $student_apps = Student::downloadStudentApps($students);
+        
+        $this->dispatchBrowserEvent('initiateXlsxDownload');
+
+        return $student_apps->downloadExcel('Student_apps.xlsx', null, true);
+    }
+
+    public function downloadAsPdf($student_id = null, $download_all = true, $filter_summary = '')
+    {
+        $this->authorize('requestPdfDownload');
+
+        if ($student_id) {
+            $students = Student::whereIn('id', [$student_id])->get();
+            $file_description = "{$students->first()->full_name}'s student application";
+        }
+        else {
+            $students = $this->getStudentsForDownload($download_all);
+            $file_description = "Student applications {$filter_summary}";
+        }
+
+        $pdf_data = array_merge($this->getPdfDataProperty(), ['students' => $students]);
+        $view = 'students.download';
+        $filename = "Student_app";
+
+        $this->initiatePdfDownload($view, $pdf_data, $filename, $file_description);
+    }
+
+    public function getPdfDataProperty()
+    {
+        return [
+                    'schools' => Student::participatingSchools(),
+                    'custom_questions' => StudentData::customQuestions(),
+                    'languages' => StudentData::$languages,
+                    'majors' => StudentData::majors(),
+                    'user' => auth()->user(),
+                ];
+    }
+
+    public function getStudentsForDownload($download_all)
+    {
+        $students = $download_all ? $this->getAllStudents() : $this->students->where('application.status', $this->filing_status);
+
+        if ($students->isEmpty()) {
+            $this->dispatchBrowserEvent('noStudentRecordsFound');
+            return false;
+        }
+
+        return $students;
+    }
+
     public function render()
     {
         return view('livewire.profile-students', [
             'filter_names' => $this->availableFilters(),
             'languages' => StudentData::$languages,
-            'graduation_dates' => StudentData::uniqueValuesFor('research_profile', 'graduation_date')->sort()->values(),
+            'graduation_dates' => StudentData::uniqueValuesFor('research_profile', 'graduation_date')->sort()->values()
+                ->filter(function ($date) {
+                    return preg_match('/^(January|February|March|April|May|June|July|August|September|October|November|December)\s\d{4}$/', $date);
+                }),
             'majors' => StudentData::uniqueValuesFor('research_profile', 'major')->sort()->values(),
             'schools' => StudentData::uniqueValuesFor('research_profile', 'schools')->sort()->values(),
             'semesters' => StudentData::uniqueValuesFor('research_profile', 'semesters')
