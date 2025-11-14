@@ -5,50 +5,32 @@ namespace App\Rules;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Str;
 
 class EachIsUnique implements ValidationRule
 {
-    /** Delimiter to split the field under validation into individual elements.
-     * @var string
-     * */
-    protected $delimiter;
+    /** Delimiter to split the field under validation into individual elements. */
+    protected string $delimiter;
 
-    /** Table where the uniqueness check will be performed.
-     * @var string
-     * */
-    protected $table;
+    /** Table where the uniqueness check will be performed. */
+    protected string $table;
 
-    /** Column in the table where uniqueness will be checked.
-     * @var string
-     * */
-    protected $column;
+    /** Column in the table where uniqueness will be checked. */
+    protected string $column;
 
-    /** Constraint for the where method to apply when checking uniqueness in the format of ['column', 'value'].
-     * @var array|null
-     * */
-    protected $constraint;
+    /** Constraint for the where method to apply when checking uniqueness in the format of ['column', 'value']. */
+    protected array|null $constraint;
 
-    /** The ID or model instance of the record to ignore.
-     * @var mixed|null
-     * */
-    protected $ignore_id;
+    /** The ID or model instance of the record to ignore. */
+    protected mixed $ignore_id;
 
-    /** The column name of the primary key, if it's other than the ID.
-     * @var string|null
-     * */
-    protected $ignore_column;
+    /** The column name of the primary key, if it's other than the ID. */
+    protected string|null $ignore_column;
 
 
     /**
      * Create a new validation rule instance.
-     *
-     * @param string $delimiter
-     * @param string $table
-     * @param string $column
-     * @param array  $constraint
      */
-    public function __construct($delimiter, $table, $column, $constraint = null)
+    public function __construct(string $delimiter, string $table, string $column, ?array $constraint = null)
     {
         $this->delimiter = $delimiter;
         $this->table = $table;
@@ -92,11 +74,8 @@ class EachIsUnique implements ValidationRule
 
     /**
      * Set values to be excluded or ignored by the unique checks.
-     * 
-     * @param mixed|null $id
-     * @param string|null $id_column
      */
-    public function ignore($id, $idColumn = null)
+    public function ignore(mixed $id, ?string $idColumn = null)
     {
         $this->ignore_id = $id;
         $this->ignore_column = $idColumn;
