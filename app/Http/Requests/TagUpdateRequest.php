@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\EachIsUnique;
 use App\Student;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -25,11 +24,13 @@ class TagUpdateRequest extends FormRequest
     public function rules(): array
     {
         $locale = app()->getLocale();
-        
+
         $this->tag_types += [
             "App\\Profile",
-            ...Student::participatingSchools()->keys()->map(fn($shortname) => "App\\Student\\{$shortname}"),
+            ...Student::participatingSchools()->keys()->map(fn($shortname) => "App\\Student\\{$shortname}")->all(),
         ];
+
+        $tag_field = $this->hasMultipleTags() ? 'name.*' : 'name';
 
         return [
             'type' => [
@@ -37,14 +38,30 @@ class TagUpdateRequest extends FormRequest
                 'string',
                 Rule::in($this->tag_types),
             ],
-            'name' => [
+            $tag_field => [
                 'required',
                 'string',
                 'max:100',
-                (new EachIsUnique('/\r\n|\r|\n/', 'tags', 'name->'.$locale, ['type', $this->input('type')]))
+                Rule::unique('tags', 'name->' . $locale)
+                    ->where('type', $this->input('type'))
                     ->ignore($this->route()->parameters['tag'] ?? null),
             ],
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        // split string of multiple tag names into an array for easier validation
+        if ($this->hasMultipleTags()) {
+            $this->merge([
+                'name' => preg_split('/\r\n|\r|\n/', $this->name ?? ''),
+            ]);
+        }
+    }
+
+    protected function hasMultipleTags(): bool
+    {
+        return $this->routeIs('tags.store');
     }
 
     public function messages(): array

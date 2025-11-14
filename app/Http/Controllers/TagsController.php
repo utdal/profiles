@@ -75,7 +75,7 @@ class TagsController extends Controller
      */
     public function store(TagUpdateRequest $request): RedirectResponse
     {
-        Tag::findOrCreate(preg_split('/\r\n|\r|\n/', $request->name ?? ''), $request->type);
+        Tag::findOrCreate($request->name, $request->type);
 
         return redirect()->route('tags.table')
             ->with('flash_message', 'Added tags');
