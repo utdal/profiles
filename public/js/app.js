@@ -702,6 +702,18 @@ $(function () {
   }
 });
 
+// Trix editor settings
+if ((typeof Trix === "undefined" ? "undefined" : _typeof(Trix)) === 'object') {
+  document.addEventListener('trix-initialize', function (e) {
+    document.querySelector('trix-toolbar .trix-button-group--history-tools').remove();
+    document.querySelector('trix-toolbar .trix-button-group--file-tools').remove();
+  });
+  document.addEventListener('trix-file-accept', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+  });
+}
+
 // Livewire global hooks
 if ((typeof Livewire === "undefined" ? "undefined" : _typeof(Livewire)) === 'object') {
   if ((typeof FontAwesomeDom === "undefined" ? "undefined" : _typeof(FontAwesomeDom)) === 'object') {

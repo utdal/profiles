@@ -10254,7 +10254,8 @@ trix-toolbar .trix-button-row {
   flex-wrap: wrap;
 }
 
-trix-toolbar .trix-button-group--history-tools {
+trix-toolbar .trix-button-group--history-tools,
+trix-toolbar .trix-button-group--file-tools {
   display: none;
 }
 

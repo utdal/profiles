@@ -645,6 +645,18 @@ $(function() {
 
 });
 
+// Trix editor settings
+if (typeof Trix === 'object') {
+    document.addEventListener('trix-initialize', (e) => {
+        document.querySelector('trix-toolbar .trix-button-group--history-tools').remove();
+        document.querySelector('trix-toolbar .trix-button-group--file-tools').remove();
+    });
+    document.addEventListener('trix-file-accept', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+    });
+}
+
 // Livewire global hooks
 if (typeof Livewire === 'object') {
   if (typeof FontAwesomeDom === 'object') {
