@@ -33,9 +33,6 @@
     "sass": "^1.52.3",
     "sass-loader": "^8.0.2",
     "sortablejs": "^1.15.0",
-    "trix": "^0.11.2"
-  },
-  "dependencies": {
-    "puppeteer": "^16.1.0"
+    "trix": "^2.1.1"
   }
 }
