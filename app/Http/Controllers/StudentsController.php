@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Support\Str;
 
 class StudentsController extends Controller
 {
@@ -71,7 +72,7 @@ class StudentsController extends Controller
         $user = $request->user();
 
         $student = $user->studentProfiles()->create([
-            'slug' => $user->pea,
+            'slug' => Str::ulid(),
             'full_name' => $user->display_name,
             'first_name' => $user->firstname,
             'last_name' => $user->lastname,
