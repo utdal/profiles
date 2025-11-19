@@ -42,8 +42,8 @@ class UserDelegation extends Pivot implements Auditable
     /**
      * Modify the audit data
      *
-     * @param array $data
-     * @return array
+     * @param array<string,mixed> $data
+     * @return array<string,mixed>
      */
     public function transformAudit(array $data): array
     {
