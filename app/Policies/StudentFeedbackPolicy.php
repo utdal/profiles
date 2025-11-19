@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Student;
 use App\StudentFeedback;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -55,9 +56,11 @@ class StudentFeedbackPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user, Student $student)
     {
-        return $user->userOrDelegatorhasRole(['faculty', 'students_admin']);
+        $assoc_profile_can_add_feedback = $student->isAssociatedToUserProfiles($user);
+        
+        return $user->userOrDelegatorhasRole(['faculty', 'students_admin']) || $assoc_profile_can_add_feedback;
     }
 
     /**
