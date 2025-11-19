@@ -1,6 +1,11 @@
 /** Load JavaScript dependencies */
+// import $ from 'jquery';
+// window.$ = window.jQuery = $;
 
-window.Popper = require('popper.js').default;
+// import Popper from 'popper.js';
+// window.Popper = Popper;
+
+
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -8,12 +13,12 @@ window.Popper = require('popper.js').default;
  * code may be modified to fit the specific needs of your application.
  */
 
-try {
-    window.$ = window.jQuery = require('jquery');
+// try {
+//     window.$ = window.jQuery = require('jquery');
 
-    require('bootstrap');
-    require('bootstrap4-tagsinput');
-} catch (e) {}
+//     require('bootstrap');
+//     require('bootstrap4-tagsinput');
+// } catch (e) {}
 
 /**
  * Font Awesome 5
@@ -30,10 +35,12 @@ dom.watch();
 window.FontAwesomeDom = dom;
 
 // Sortable
-window.Sortable = require('sortablejs/Sortable');
+import Sortable from 'sortablejs/Sortable';
+window.Sortable = Sortable;
 
 // Typeahead Bloodhound
-window.Bloodhound = require('corejs-typeahead');
+import * as typeahead from 'corejs-typeahead';
+window.Bloodhound = typeahead.Bloodhound || typeahead.default?.Bloodhound || typeahead;
 
 // Trix editor
-require('trix');
+import 'trix';

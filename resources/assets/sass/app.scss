@@ -5,16 +5,16 @@
 @import 'variables';
 
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+@import 'bootstrap/scss/bootstrap';
 
 // Trix
-@import '~trix/dist/trix.css';
+@import 'trix/dist/trix.css';
 
 // Boostrap datepicker
-@import '~bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css';
+@import 'bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css';
 
 // Bootstrap tagsinput
-@import '~bootstrap4-tagsinput/scss/tagsinput';
+@import 'bootstrap4-tagsinput/scss/tagsinput';
 
 // Custom Classes
 @import 'core';

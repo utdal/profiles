@@ -4,7 +4,18 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+import $ from 'jquery';
+window.$ = window.jQuery = $;
+
+import Popper from 'popper.js';
+window.Popper = Popper;
+
+import 'bootstrap';
+
+import 'bootstrap4-tagsinput';
+import 'bootstrap-datepicker';
+
+import './bootstrap';
 
 window.this_url = window.this_url || '';
 
@@ -567,8 +578,6 @@ window.profiles = profiles;
 
 $(function() {
 
-    // date-picker
-    require('bootstrap-datepicker');
     $('.datepicker.year').datepicker(profiles.config.datepicker.year);
     $('.datepicker.month').datepicker(profiles.config.datepicker.month);
 
