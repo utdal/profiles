@@ -22,17 +22,18 @@
 <div class="container">
     <h1><i class="fas fa-tags" aria-hidden="true"></i> Add Tags</h1>
 
+    @include('errors/list')
     {!! Form::open(['route' => 'tags.store']) !!}
 
     <div class="mb-3">
-        {!! Form::label('tag_name', 'Tag name(s)', ['class' => 'form-label']) !!}
+        {!! Form::label('name', 'Tag name(s)', ['class' => 'form-label']) !!}
         <small class="text-muted">One tag per line</small>
-        {!! Form::textarea('tag_name', null, ['class' => 'form-control', 'required']) !!}
+        {!! Form::textarea('name', null, ['class' => 'form-control', 'required']) !!}
     </div>
     <div class="mb-3">
-        {!! Form::label('tag_type', 'Tag type', ['class' => 'form-label']) !!}
+        {!! Form::label('type', 'Tag type', ['class' => 'form-label']) !!}
         <small class="text-muted">e.g. App\Profile, App\Student, and etc.</small>
-        {!! Form::text('tag_type', null, ['class' => 'form-control', 'required']) !!}
+        {!! Form::text('type', null, ['class' => 'form-control', 'required']) !!}
     </div>
 
     <button type="submit" class="btn btn-primary edit-button">Submit</button>

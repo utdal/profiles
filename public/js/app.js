@@ -9,9 +9,9 @@
 /* provided dependency */ var jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/src/jquery.js");
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/src/jquery.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -194,7 +194,7 @@ var profiles = function ($, undefined) {
     var item_template = document.querySelector((_options$template = options.template) !== null && _options$template !== void 0 ? _options$template : 'form .record');
     var item_container = (_document$querySelect = document.querySelector(options.insertInto)) !== null && _document$querySelect !== void 0 ? _document$querySelect : item_template.parentElement;
     if (item_template) {
-      var _new_item$querySelect, _new_item$querySelect2, _new_item$querySelect3, _new_item$querySelect4, _new_item$querySelect5, _new_item$querySelect6, _new_item$querySelect7, _new_item$querySelect8, _new_item$querySelect9, _new_item$querySelect10;
+      var _new_item$querySelect, _new_item$querySelect2, _new_item$querySelect3, _new_item$querySelect4, _new_item$querySelect5, _new_item$querySelect6, _new_item$querySelect7, _new_item$querySelect8, _new_item$querySelect9, _new_item$querySelect0;
       var old_id = item_template.dataset.rowId;
       var new_id;
       if (Number(item_container.dataset.nextRowId) >= 0) {
@@ -242,7 +242,7 @@ var profiles = function ($, undefined) {
       (_new_item$querySelect9 = new_item.querySelectorAll('.datepicker.year')) === null || _new_item$querySelect9 === void 0 || _new_item$querySelect9.forEach(function (el) {
         $(el).datepicker(config.datepicker.year);
       });
-      (_new_item$querySelect10 = new_item.querySelectorAll('.datepicker.month')) === null || _new_item$querySelect10 === void 0 || _new_item$querySelect10.forEach(function (el) {
+      (_new_item$querySelect0 = new_item.querySelectorAll('.datepicker.month')) === null || _new_item$querySelect0 === void 0 || _new_item$querySelect0.forEach(function (el) {
         $(el).datepicker(config.datepicker.month);
       });
       $(new_item).hide();
@@ -702,6 +702,18 @@ $(function () {
   }
 });
 
+// Trix editor settings
+if ((typeof Trix === "undefined" ? "undefined" : _typeof(Trix)) === 'object') {
+  document.addEventListener('trix-initialize', function (e) {
+    document.querySelector('trix-toolbar .trix-button-group--history-tools').remove();
+    document.querySelector('trix-toolbar .trix-button-group--file-tools').remove();
+  });
+  document.addEventListener('trix-file-accept', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+  });
+}
+
 // Livewire global hooks
 if ((typeof Livewire === "undefined" ? "undefined" : _typeof(Livewire)) === 'object') {
   if ((typeof FontAwesomeDom === "undefined" ? "undefined" : _typeof(FontAwesomeDom)) === 'object') {
@@ -774,7 +786,7 @@ window.Sortable = __webpack_require__(/*! sortablejs/Sortable */ "./node_modules
 window.Bloodhound = __webpack_require__(/*! corejs-typeahead */ "./node_modules/corejs-typeahead/dist/typeahead.bundle.js");
 
 // Trix editor
-__webpack_require__(/*! trix */ "./node_modules/trix/dist/trix.js");
+__webpack_require__(/*! trix */ "./node_modules/trix/dist/trix.esm.min.js");
 
 /***/ }),
 
