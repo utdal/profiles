@@ -369,6 +369,10 @@ class ProfilesController extends Controller
             $pdf_content = $pdf_content->addChromiumArguments(config('pdf.chrome_arguments'));
         }
 
+        if (config('pdf.http_username') && config('pdf.http_password')) {
+            $pdf_content = $pdf_content->authenticate(config('pdf.http_username'), config('pdf.http_password'));
+        }
+
         return response($pdf_content->pdf())
                 ->header('Content-Type', 'application/pdf');
     }

@@ -15,6 +15,7 @@ _ide_helper*
 *.css.map
 *.js.map
 **/.phpunit.result.cache
+**/.phpunit.cache
 **/capistrano.log
 deploy.php
 Homestead.json

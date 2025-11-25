@@ -29,9 +29,9 @@ class ProfileSearchRequest extends FormRequest
                 'string',
                 // letters, marks, numbers, spaces, commas, periods, dashes,
                 // and non-consecutive apostrophes that are preceded and followed by a letter
-                "regex:/^([\p{L}\p{M}\p{N}\p{Zs},\.-]|(?<=[\p{L}])'(?!')(?=[\p{L}]))*$/u",
+                "regex:/^([\p{L}\p{M}\p{N}\p{Zs},\.\/&\(\)-]|(?<=[\p{L}])'(?!')(?=[\p{L}]))*$/u",
                 'min:3',
-                'max: 100',
+                'max: 150',
             ],
         ];
     }
