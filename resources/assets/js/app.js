@@ -4,18 +4,8 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-import $ from 'jquery';
-window.$ = window.jQuery = $;
-
-import Popper from 'popper.js';
-window.Popper = Popper;
-
-import 'bootstrap';
-
-import 'bootstrap4-tagsinput';
-import 'bootstrap-datepicker';
-
 import './bootstrap';
+import 'bootstrap-datepicker';
 
 window.this_url = window.this_url || '';
 

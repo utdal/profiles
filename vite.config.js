@@ -14,15 +14,19 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
-            // Force all modules to use the same jquery version
             'jquery': path.resolve(__dirname, 'node_modules/jquery/dist/jquery.js'),
-            // Add common aliases
             '@': path.resolve(__dirname, '/resources/assets/js'),
         }
+    },
+    optimizeDeps: {
+        include: ['jquery', 'corejs-typeahead'],
     },
     build: {
         sourcemap: true,
         manifest: true,
+        commonjsOptions: {
+            include: [/corejs-typeahead/, /node_modules/],
+        },
         rollupOptions: {
             output: {
                 manualChunks: {

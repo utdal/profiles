@@ -14,7 +14,8 @@
 		<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text x='0' y='14'>👩🏻‍🔬</text></svg>" type="image/svg+xml">
 	@endif
 	<livewire:styles>
-		@vite(['resources/assets/sass/app.scss'])
+	@vite(['resources/assets/sass/app.scss', 'resources/assets/js/app.js'])
+
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 	<!-- <link rel="stylesheet" href="/css/style.css"> -->
@@ -67,8 +68,8 @@
 		var this_url = '{{ url('/') }}';
 		window.this_url = this_url;
 	</script>
+	
 	<livewire:scripts>
-	@vite(['resources/assets/js/app.js'])
 	@yield('scripts')
 	@stack('scripts')
 	@if(isset($settings['primary_color']) || isset($settings['secondary_color']) || isset($settings['tertiary_color'] ))
