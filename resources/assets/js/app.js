@@ -648,8 +648,11 @@ $(function() {
 // Trix editor settings
 if (typeof Trix === 'object') {
     document.addEventListener('trix-initialize', (e) => {
-        document.querySelector('trix-toolbar .trix-button-group--history-tools').remove();
-        document.querySelector('trix-toolbar .trix-button-group--file-tools').remove();
+        const history_tools = document.querySelector('trix-toolbar .trix-button-group--history-tools');
+        const file_tools = document.querySelector('trix-toolbar .trix-button-group--file-tools');
+        
+        if (history_tools) history_tools.remove();
+        if (file_tools) file_tools.remove();
     });
     document.addEventListener('trix-file-accept', (e) => {
         e.preventDefault();
