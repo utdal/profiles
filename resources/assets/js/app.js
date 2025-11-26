@@ -210,7 +210,7 @@ var profiles = (function ($, undefined) {
      * @param {HTMLElement} elem
      */
     var clear_row = function (elem) {
-        parent_elem = $(elem).parent().parent();
+        const parent_elem = $(elem).parent().parent();
         parent_elem.slideUp().find("input[type=text], input[type=url], input[type=month], input.clearable, textarea, select").val('');
 
         const list_container = parent_elem[0].parentElement;
