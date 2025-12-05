@@ -42,13 +42,10 @@ class ProfileStudents extends Component
 
     public $tag_filter = '';
 
-    public $filter_selection = [];
-
-    public $filing_status = '';
+    public $filing_status;
 
     protected $listeners = [
         'profileStudentStatusUpdated' => 'refreshStudents',
-        'getAppliedFilters' => 'updateAppliedFiltersOnDownloadMenu',
         'downloadAsPdf',
         'downloadAsExcel',
     ];
