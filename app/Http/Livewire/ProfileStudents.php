@@ -102,16 +102,9 @@ class ProfileStudents extends Component
     public function updateAppliedFiltersOnDownloadMenu()
     {
         $applied_filters = [
-            'filters' => [],
+            'filters' => $this->getSelectedFilters(),
             'filing_status' => $this->filing_status,
         ];
-
-        foreach ($this->availableFilters() as $filter_property) {
-
-            if (filled(trim($this->{$filter_property}))) {
-                $applied_filters['filters'][$filter_property] = $this->{$filter_property};
-            }
-        }
 
         $this->emitTo('profile-students-download-menu', 'updateFilterSummary', $applied_filters);
     }

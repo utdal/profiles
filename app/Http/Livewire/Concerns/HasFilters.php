@@ -26,6 +26,13 @@ trait HasFilters
         }
     }
 
+    public function getSelectedFilters()
+    {
+        return collect($this->only($this->availableFilters()))
+                                        ->filter(fn($value) => filled(trim($value)))
+                                        ->all();
+    }
+
     protected function availableFilters(): array
     {
         return array_filter(array_keys(get_class_vars(self::class)), function ($property_name) {
