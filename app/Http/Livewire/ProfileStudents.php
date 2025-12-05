@@ -77,13 +77,12 @@ class ProfileStudents extends Component
 
     public function updated($name, $value)
     {
-        $this->refreshStudents();
         $this->emitFilterUpdatedEvent($name, $value);
     }
 
     public function refreshStudents()
     {
-        $this->students = $this->getStudentsProperty();
+        unset($this->students);
     }
 
     public function render()
