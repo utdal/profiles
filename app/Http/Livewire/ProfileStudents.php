@@ -117,7 +117,10 @@ class ProfileStudents extends Component
     {
         $students = $this->getStudentsForDownload($download_all);
         
-        if (!$students) { return false; }
+        if ($students->isEmpty()) {
+            $this->dispatchBrowserEvent('noStudentRecordsFound');
+            return false;
+        }
 
         $student_apps = Student::downloadStudentApps($students);
         
@@ -136,6 +139,12 @@ class ProfileStudents extends Component
         }
         else {
             $students = $this->getStudentsForDownload($download_all);
+
+            if ($students->isEmpty()) {
+                $this->dispatchBrowserEvent('noStudentRecordsFound');
+                return false;
+            }
+            
             $file_description = "Student applications {$filter_summary}";
         }
 
@@ -159,14 +168,8 @@ class ProfileStudents extends Component
 
     public function getStudentsForDownload($download_all)
     {
-        $students = $download_all ? $this->getAllStudents() : $this->students->where('application.status', $this->filing_status);
+        return $download_all ? $this->getAllStudents() : $this->students->where('application.status', $this->filing_status);
 
-        if ($students->isEmpty()) {
-            $this->dispatchBrowserEvent('noStudentRecordsFound');
-            return false;
-        }
-
-        return $students;
     }
 
     public function render()
