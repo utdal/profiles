@@ -21,6 +21,7 @@ use App\User;
 use App\UserDelegation;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Cache;
 use Spatie\Tags\Tag;
 
 class AuthServiceProvider extends ServiceProvider
@@ -50,6 +51,18 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         
+        Gate::define('requestPdfDownload', function ($user) {
+            return $user->hasRole(['site_admin', 'students_admin', 'student', 'faculty']);
+        });
+
+        Gate::define('downloadPdf', function ($user, $token) {
+            $key = "pdf:tokens:{$user->pea}";
+            
+             if (Cache::has($key)) {
+                $user_tokens = Cache::get($key);
+                return $user->hasRole(['site_admin', 'students_admin', 'student', 'faculty']) && $user_tokens->contains($token);
+            }
+        });
         //
     }
 }

@@ -2,6 +2,11 @@
 
 namespace App\Providers;
 
+use App\Helpers\BrowsershotPdfHelper;
+use App\Helpers\Contracts\PdfGenerationHelperContract;
+use App\Helpers\LambdaPdfHelper;
+use App\Macros\CollectionMacros;
+use App\Services\PdfGenerationService;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Pagination\Paginator;
@@ -9,6 +14,7 @@ use Illuminate\Support\Facades\View;
 use App\Setting;
 use Collective\Html\FormFacade as Form;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -45,7 +51,6 @@ class AppServiceProvider extends ServiceProvider
             });
             view()->share('settings', $settings);
         });
-
     }
 
     /**
@@ -59,5 +64,13 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
             $this->app->register(TelescopeServiceProvider::class);
         }
+
+        $this->app->bind(PdfGenerationHelperContract::class, function () {
+            if (config('pdf.driver') === 'lambda') {
+                return new LambdaPdfHelper();
+            }
+            
+            return new BrowsershotPdfHelper();
+        });
     }
 }

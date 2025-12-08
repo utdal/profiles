@@ -36,6 +36,13 @@ class Kernel extends ConsoleKernel
         $schedule->command('profiles:update-orcid')->weekly()->sundays()->at('05:00')->when(function() {
             return config('app.enable_orcid_update');
         });
+        $schedule
+            ->command('files:clean-up-pdfs --root=tmp/reports --hours=2')
+            ->everyTwoHours()
+            ->withoutOverlapping()
+            ->when(function() {
+               return config('app.enable_auto_clean_pdfs_dir'); 
+            });
     }
 
     /**

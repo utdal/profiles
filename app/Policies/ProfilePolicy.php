@@ -109,6 +109,22 @@ class ProfilePolicy
     }
 
     /**
+     * Determine whether the user can download the profile-specific students.
+     *
+     * @param  \App\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function downloadStudents(User $user)
+    {
+        $profiles = $user->profiles;
+
+        return $profiles->contains(function($profile) use ($user) {
+            $user->can('downloadForProfile', [ProfileStudent::class, $profile]);
+        });
+        // return $user->can('downloadForProfile', [ProfileStudent::class, $profile]);
+    }
+
+    /**
      * Determine whether the user can administer profiles.
      *
      * @param  \App\User  $user
