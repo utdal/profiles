@@ -18,10 +18,14 @@ class ProfileStudentsDownloadMenu extends Component
     
     public $filter_summary;
     
-    public $applied_filters;
+    public $applied_filters = [];
+    
+    public $filing_status = '';
 
     protected $listeners = [
-        'updateFilterSummary', 
+        'updateFilterSummary',
+        'updateFilingStatus',
+        'updateAppliedFilters',
         'resetMenu',
     ];
 
@@ -32,19 +36,28 @@ class ProfileStudentsDownloadMenu extends Component
 
     public function mount(Request $request)
     {
-        $applied_filters = [
-            'filters' => $request->all(),
-        ];
-        
-        $this->updateFilterSummary($applied_filters);
+        $this->applied_filters = $request->all();
+        $this->updateFilterSummary();
     }
 
-    public function updateFilterSummary($applied_filters = null)
+    public function updateAppliedFilters($applied_filters)
     {
-        if (isset($applied_filters)) {
+        $this->applied_filters = $applied_filters;
+        $this->updateFilterSummary();
+    }
 
-            $filing_status = !empty($applied_filters['filing_status']) ? 'Filed as: ' . ucfirst($applied_filters['filing_status']) . '. ' : '';
-            $filters = count($applied_filters['filters']) > 0 ? $this->humanizeFilters($applied_filters['filters'])->implode(', ') . '. ' : '';
+    public function updateFilingStatus($filing_status)
+    {
+        $this->filing_status = $filing_status;
+        $this->updateFilterSummary();
+    }
+
+    public function updateFilterSummary()
+    {
+        if (isset($this->applied_filters) || isset($this->filing_status)) {
+
+            $filing_status = !empty($this->filing_status) ? 'Filed as: ' . ucfirst($this->filing_status) . '. ' : '';
+            $filters = count($this->applied_filters) > 0 ? $this->humanizeFilters($this->applied_filters)->implode(', ') . '. ' : '';
 
             $this->filter_summary = "{$filing_status}{$filters}";
             $this->application_scope = 'filtered';

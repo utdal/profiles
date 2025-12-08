@@ -95,17 +95,7 @@ class ProfileStudents extends Component
     public function updated($name, $value)
     {
         $this->emitFilterUpdatedEvent($name, $value);
-        $this->updateAppliedFiltersOnDownloadMenu();
-    }
-
-    public function updateAppliedFiltersOnDownloadMenu()
-    {
-        $applied_filters = [
-            'filters' => $this->getSelectedFilters(),
-            'filing_status' => $this->filing_status,
-        ];
-
-        $this->emitTo('profile-students-download-menu', 'updateFilterSummary', $applied_filters);
+        $this->emitTo('profile-students-download-menu', 'updateAppliedFilters', $this->getSelectedFilters());
     }
 
     public function refreshStudents()
