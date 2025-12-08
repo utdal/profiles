@@ -41,7 +41,7 @@ class CleanUpPdfFiles extends Command
 
         // Only consider folders named Ymd_Hi (e.g., 20250826_1430)
         $dirs = collect($disk->directories($root))
-                ->filter(fn ($path) => preg_match('~^' . preg_quote($root, '~') . '/\d{8}_\d{4}$~', $path))
+                ->filter(fn ($path) => (bool) preg_match('~^' . preg_quote($root, '~') . '/\d{8}_\d{4}$~', $path))
                 ->sort()
                 ->values();
 

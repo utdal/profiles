@@ -169,7 +169,7 @@ class ProfileStudents extends Component
             'languages' => StudentData::$languages,
             'graduation_dates' => StudentData::uniqueValuesFor('research_profile', 'graduation_date')->sort()->values()
                 ->filter(function ($date) {
-                    return preg_match('/^(January|February|March|April|May|June|July|August|September|October|November|December)\s\d{4}$/', $date);
+                    return (bool) preg_match('/^(January|February|March|April|May|June|July|August|September|October|November|December)\s\d{4}$/', $date);
                 }),
             'majors' => StudentData::uniqueValuesFor('research_profile', 'major')->sort()->values(),
             'schools' => StudentData::uniqueValuesFor('research_profile', 'schools')->sort()->values(),

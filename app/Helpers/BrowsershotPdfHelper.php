@@ -63,7 +63,7 @@ class BrowsershotPdfHelper implements PdfGenerationHelperContract
             success: true,
             filename: $filename,
             path: $storage_path,
-            job_id: Str::ulid(),
+            job_id: (string) Str::ulid(),
         );
     }
 
