@@ -9,21 +9,27 @@ export default defineConfig({
                 'resources/assets/sass/app.scss',
                 'resources/assets/js/app.js'
             ],
-            refresh: true,
+            refresh: false,
+            buildDirectory: 'build',
         }),
     ],
     resolve: {
         alias: {
             'jquery': path.resolve(__dirname, 'node_modules/jquery/dist/jquery.js'),
-            '@': path.resolve(__dirname, '/resources/assets/js'),
         }
+    },
+    css: {
+        devSourcemap: true,
     },
     optimizeDeps: {
         include: ['jquery', 'corejs-typeahead'],
     },
     build: {
         sourcemap: true,
-        manifest: true,
+        minify: false,
+        manifest: 'manifest.json',
+        outDir: 'public/build',
+        emptyOutDir: true,
         commonjsOptions: {
             include: [/corejs-typeahead/, /node_modules/],
         },
@@ -45,12 +51,11 @@ export default defineConfig({
                         'trix',
                         'corejs-typeahead',
                     ]
-                }
+                },
+            entryFileNames: 'assets/[name]-[hash].js',
+            chunkFileNames: 'assets/[name]-[hash].js',
+            assetFileNames: 'assets/[name]-[hash].[ext]'
             }
         }
     },
-    define: {
-        // Make jQuery available globally
-        'global': 'globalThis',
-    }
 });

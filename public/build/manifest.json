@@ -1,0 +1,24 @@
+{
+  "_vendor-BYhFMUUM.js": {
+    "file": "assets/vendor-BYhFMUUM.js",
+    "name": "vendor"
+  },
+  "resources/assets/js/app.js": {
+    "file": "assets/app-CqClAZmp.js",
+    "name": "app",
+    "src": "resources/assets/js/app.js",
+    "isEntry": true,
+    "imports": [
+      "_vendor-BYhFMUUM.js"
+    ]
+  },
+  "resources/assets/sass/app.scss": {
+    "file": "assets/app-C3IwDnIZ.css",
+    "src": "resources/assets/sass/app.scss",
+    "isEntry": true,
+    "name": "app",
+    "names": [
+      "app.css"
+    ]
+  }
+}
