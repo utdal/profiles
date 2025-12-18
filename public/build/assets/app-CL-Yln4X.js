@@ -1,9 +1,15 @@
-import { r as requireJquery, g as getDefaultExportFromCjs, a as requireBootstrap, b as requireTagsinput, P as Popper, c as config, l as library, _ as _iconsCache, d as _iconsCache$1, e as _iconsCache$2, f as dom, h as requireBootstrapDatepicker } from "./vendor-BYhFMUUM.js";
+import { r as requireJquery, g as getDefaultExportFromCjs, a as requireBootstrap, b as requireTagsinput, P as Popper, c as config, l as library, _ as _iconsCache, d as _iconsCache$1, e as _iconsCache$2, f as dom, h as requireBootstrapDatepicker } from "./vendor-Dt-scEca.js";
 var jqueryExports = requireJquery();
 const $$1 = /* @__PURE__ */ getDefaultExportFromCjs(jqueryExports);
 requireBootstrap();
 requireTagsinput();
 var Sortable$3 = { exports: {} };
+/**!
+ * Sortable 1.15.6
+ * @author	RubaXa   <trash@rubaxa.org>
+ * @author	owenm    <owen23355@gmail.com>
+ * @license MIT
+ */
 var Sortable$2 = Sortable$3.exports;
 var hasRequiredSortable;
 function requireSortable() {
@@ -2768,6 +2774,11 @@ function requireSortable() {
 var SortableExports = requireSortable();
 const Sortable$1 = /* @__PURE__ */ getDefaultExportFromCjs(SortableExports);
 var typeahead_jquery$1 = { exports: {} };
+/*!
+ * typeahead.js 1.3.3
+ * https://github.com/corejavascript/typeahead.js
+ * Copyright 2013-2024 Twitter, Inc. and other contributors; Licensed MIT
+ */
 var typeahead_jquery = typeahead_jquery$1.exports;
 var hasRequiredTypeahead_jquery;
 function requireTypeahead_jquery() {
@@ -4451,6 +4462,11 @@ function requireTypeahead_jquery() {
 }
 requireTypeahead_jquery();
 var bloodhound$1 = { exports: {} };
+/*!
+ * typeahead.js 1.3.3
+ * https://github.com/corejavascript/typeahead.js
+ * Copyright 2013-2024 Twitter, Inc. and other contributors; Licensed MIT
+ */
 var bloodhound = bloodhound$1.exports;
 var hasRequiredBloodhound;
 function requireBloodhound() {
@@ -5490,6 +5506,7 @@ var profiles = (function($2, undefined$1) {
     elem.disabled = true;
   };
   const add_row = function(event) {
+    var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j;
     const options = event.target.dataset;
     const item_template = document.querySelector(options.template ?? "form .record");
     const item_container = document.querySelector(options.insertInto) ?? item_template.parentElement;
@@ -5503,40 +5520,41 @@ var profiles = (function($2, undefined$1) {
       }
       let new_item = item_template.cloneNode(true);
       new_item.dataset.rowId = new_id;
-      new_item.querySelectorAll('input:not([type="button"]), textarea, select')?.forEach((el) => {
+      (_a = new_item.querySelectorAll('input:not([type="button"]), textarea, select')) == null ? void 0 : _a.forEach((el) => {
         el.id = el.id.replace(old_id, new_id);
         el.setAttribute("name", el.name.replace(old_id, new_id));
         el.setAttribute("value", "");
         el.value = "";
       });
-      new_item.querySelectorAll(`input[type="hidden"][name$="[id]"]`)?.forEach((el) => {
+      (_b = new_item.querySelectorAll(`input[type="hidden"][name$="[id]"]`)) == null ? void 0 : _b.forEach((el) => {
         el.id = el.name;
         el.value = new_id;
       });
-      new_item.querySelectorAll("label")?.forEach((el) => {
-        el.setAttribute("for", el.getAttribute("for")?.replace(old_id, new_id));
+      (_c = new_item.querySelectorAll("label")) == null ? void 0 : _c.forEach((el) => {
+        var _a2;
+        el.setAttribute("for", (_a2 = el.getAttribute("for")) == null ? void 0 : _a2.replace(old_id, new_id));
       });
-      new_item.querySelectorAll("trix-editor")?.forEach((el) => {
+      (_d = new_item.querySelectorAll("trix-editor")) == null ? void 0 : _d.forEach((el) => {
         el.setAttribute("input", el.getAttribute("input").replace(old_id, new_id));
       });
-      new_item.querySelectorAll("img")?.forEach((el) => {
+      (_e = new_item.querySelectorAll("img")) == null ? void 0 : _e.forEach((el) => {
         el.id = el.id.replace(old_id, new_id);
         el.src = "";
       });
-      new_item.querySelectorAll(".custom-file-label")?.forEach((el) => {
+      (_f = new_item.querySelectorAll(".custom-file-label")) == null ? void 0 : _f.forEach((el) => {
         el.id = el.id.replace(old_id, new_id);
         el.innerHTML = "Select an image";
       });
-      new_item.querySelectorAll(".actions .trash")?.forEach((el) => {
+      (_g = new_item.querySelectorAll(".actions .trash")) == null ? void 0 : _g.forEach((el) => {
         $2(el).on("click", () => clear_row(el));
       });
-      new_item.querySelectorAll('input[type="file"][accept^="image"]')?.forEach((el) => {
+      (_h = new_item.querySelectorAll('input[type="file"][accept^="image"]')) == null ? void 0 : _h.forEach((el) => {
         $2(el).on("change", (event2) => preview_selected_image(event2));
       });
-      new_item.querySelectorAll(".datepicker.year")?.forEach((el) => {
+      (_i = new_item.querySelectorAll(".datepicker.year")) == null ? void 0 : _i.forEach((el) => {
         $2(el).datepicker(config2.datepicker.year);
       });
-      new_item.querySelectorAll(".datepicker.month")?.forEach((el) => {
+      (_j = new_item.querySelectorAll(".datepicker.month")) == null ? void 0 : _j.forEach((el) => {
         $2(el).datepicker(config2.datepicker.month);
       });
       $2(new_item).hide();
@@ -5740,7 +5758,7 @@ var profiles = (function($2, undefined$1) {
     const prefers_reduced_motion = window.matchMedia(`(prefers-reduced-motion: reduce)`);
     play_pause_buttons.forEach((bt) => bt.addEventListener("click", (evt) => {
       const button = evt.currentTarget;
-      const video = document.getElementById(button?.getAttribute("aria-controls"));
+      const video = document.getElementById(button == null ? void 0 : button.getAttribute("aria-controls"));
       if (video instanceof HTMLVideoElement && button instanceof HTMLButtonElement) {
         toggleVideoPlay(video, button);
       }
@@ -5857,4 +5875,4 @@ if (typeof Livewire === "object") {
     }
   });
 }
-//# sourceMappingURL=app-CqClAZmp.js.map
+//# sourceMappingURL=app-CL-Yln4X.js.map
