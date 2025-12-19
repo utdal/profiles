@@ -151,24 +151,30 @@
 </div>
 @stop
 @section('scripts')
-<script>
-$(".show-more a").on("click", function() {
-    var $this = $(this);
-    var $content = $this.parent().prev("div.content");
-    var linkText = $this.text().toUpperCase();
 
-    if(linkText === "SHOW MORE"){
-        linkText = "Show less";
-        // $content.switchClass("hideContent", "showContent", 400);
-				$content.toggleClass('showContent');
-    } else {
-        linkText = "Show more";
-				$content.toggleClass('showContent');
-        // $content.switchClass("showContent", "hideContent", 400);
-    };
+<script type="module">
+    // Wait for Vite to load jQuery
+    document.addEventListener('DOMContentLoaded', function() {
+        if (window.$ && window.jQuery) {
+			$(".show-more a").on("click", function() {
+				var $this = $(this);
+				var $content = $this.parent().prev("div.content");
+				var linkText = $this.text().toUpperCase();
 
-    $this.text(linkText);
-		return false;
-});
+				if(linkText === "SHOW MORE"){
+					linkText = "Show less";
+					// $content.switchClass("hideContent", "showContent", 400);
+							$content.toggleClass('showContent');
+				} else {
+					linkText = "Show more";
+							$content.toggleClass('showContent');
+					// $content.switchClass("showContent", "hideContent", 400);
+				};
+
+				$this.text(linkText);
+					return false;
+			});
+		}
+	});
 </script>
 @stop

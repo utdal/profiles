@@ -1,19 +1,17 @@
 /** Load JavaScript dependencies */
-
-window.Popper = require('popper.js').default;
+import Popper from 'popper.js';
+window.Popper = Popper;
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
  * for JavaScript based Bootstrap features such as modals and tabs. This
  * code may be modified to fit the specific needs of your application.
  */
+import $ from 'jquery';
+window.$ = window.jQuery = $;
 
-try {
-    window.$ = window.jQuery = require('jquery');
-
-    require('bootstrap');
-    require('bootstrap4-tagsinput');
-} catch (e) {}
+import 'bootstrap';
+import 'bootstrap4-tagsinput';
 
 /**
  * Font Awesome 5
@@ -30,10 +28,13 @@ dom.watch();
 window.FontAwesomeDom = dom;
 
 // Sortable
-window.Sortable = require('sortablejs/Sortable');
+import Sortable from 'sortablejs/Sortable';
+window.Sortable = Sortable;
 
 // Typeahead Bloodhound
-window.Bloodhound = require('corejs-typeahead');
+import 'corejs-typeahead/dist/typeahead.jquery.js';
+import Bloodhound from 'corejs-typeahead/dist/bloodhound.js';
+window.Bloodhound = Bloodhound;
 
 // Trix editor
-require('trix');
+import 'trix';
