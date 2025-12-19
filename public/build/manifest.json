@@ -1,20 +1,24 @@
 {
-  "_vendor-Dt-scEca.js": {
-    "file": "assets/vendor-Dt-scEca.js",
+  "_vendor-BYhFMUUM.js": {
+    "file": "assets/vendor-BYhFMUUM.js",
     "name": "vendor"
   },
   "resources/assets/js/app.js": {
-    "file": "assets/app-CL-Yln4X.js",
+    "file": "assets/app-CqClAZmp.js",
     "name": "app",
     "src": "resources/assets/js/app.js",
     "isEntry": true,
     "imports": [
-      "_vendor-Dt-scEca.js"
+      "_vendor-BYhFMUUM.js"
     ]
   },
   "resources/assets/sass/app.scss": {
     "file": "assets/app-C3IwDnIZ.css",
     "src": "resources/assets/sass/app.scss",
-    "isEntry": true
+    "isEntry": true,
+    "name": "app",
+    "names": [
+      "app.css"
+    ]
   }
 }

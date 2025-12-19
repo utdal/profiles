@@ -1,27 +1,3 @@
-/**!
- * @fileOverview Kickass library to create and place poppers near their reference elements.
- * @version 1.16.1
- * @license
- * Copyright (c) 2016 Federico Zivolo and contributors
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
 var isBrowser = typeof window !== "undefined" && typeof document !== "undefined" && typeof navigator !== "undefined";
 var timeoutDuration = (function() {
   var longerTimeoutBrowsers = ["Edge", "Trident", "Firefox"];
@@ -1547,7 +1523,12 @@ function getAugmentedNamespace(n2) {
   var f2 = n2.default;
   if (typeof f2 == "function") {
     var a2 = function a3() {
-      if (this instanceof a3) {
+      var isInstance = false;
+      try {
+        isInstance = this instanceof a3;
+      } catch {
+      }
+      if (isInstance) {
         return Reflect.construct(f2, arguments, this.constructor);
       }
       return f2.apply(this, arguments);
@@ -1567,16 +1548,6 @@ function getAugmentedNamespace(n2) {
   return a2;
 }
 var jquery$1 = { exports: {} };
-/*!
- * jQuery JavaScript Library v3.7.1
- * https://jquery.com/
- *
- * Copyright OpenJS Foundation and other contributors
- * Released under the MIT license
- * https://jquery.org/license
- *
- * Date: 2023-08-28T13:37Z
- */
 var jquery = jquery$1.exports;
 var hasRequiredJquery;
 function requireJquery() {
@@ -7923,11 +7894,6 @@ function requireJquery() {
 }
 var bootstrap$1 = { exports: {} };
 const require$$1 = /* @__PURE__ */ getAugmentedNamespace(popper);
-/*!
-  * Bootstrap v4.6.2 (https://getbootstrap.com/)
-  * Copyright 2011-2022 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
-  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
-  */
 var bootstrap = bootstrap$1.exports;
 var hasRequiredBootstrap;
 function requireBootstrap() {
@@ -11707,10 +11673,6 @@ function requireTagsinput() {
   })(tagsinput);
   return tagsinput.exports;
 }
-/*!
- * Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com
- * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
- */
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function(obj2) {
@@ -13433,10 +13395,6 @@ var autoReplace = function autoReplace2() {
     node: autoReplaceSvgRoot
   });
 };
-/*!
- * Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com
- * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
- */
 var faAd = {
   prefix: "fas",
   iconName: "ad",
@@ -19451,10 +19409,6 @@ var _iconsCache$2 = {
   faYenSign,
   faYinYang
 };
-/*!
- * Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com
- * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
- */
 var faAddressBook = {
   prefix: "far",
   iconName: "address-book",
@@ -20369,10 +20323,6 @@ var _iconsCache$1 = {
   faWindowMinimize,
   faWindowRestore
 };
-/*!
- * Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com
- * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
- */
 var fa500px = {
   prefix: "fab",
   iconName: "500px",
@@ -23784,7 +23734,6 @@ class ne extends ie {
     return this.getChildViews()[0].createContainerElement(t3);
   }
 }
-/*! @license DOMPurify 3.2.5 | (c) Cure53 and other contributors | Released under the Apache license 2.0 and Mozilla Public License 2.0 | github.com/cure53/DOMPurify/blob/3.2.5/LICENSE */
 const { entries: re, setPrototypeOf: oe, isFrozen: se, getPrototypeOf: ae, getOwnPropertyDescriptor: le } = Object;
 let { freeze: ce, seal: ue, create: he } = Object, { apply: de, construct: ge } = "undefined" != typeof Reflect && Reflect;
 ce || (ce = function(t3) {
@@ -28492,11 +28441,6 @@ Object.assign(oo, zn), window.Trix = oo, setTimeout((function() {
   customElements.get("trix-toolbar") || customElements.define("trix-toolbar", Vr), customElements.get("trix-editor") || customElements.define("trix-editor", ro);
 }), 0);
 var bootstrapDatepicker = {};
-/*!
- * Datepicker for Bootstrap v1.10.1 (https://github.com/uxsolutions/bootstrap-datepicker)
- *
- * Licensed under the Apache License v2.0 (https://www.apache.org/licenses/LICENSE-2.0)
- */
 var hasRequiredBootstrapDatepicker;
 function requireBootstrapDatepicker() {
   if (hasRequiredBootstrapDatepicker) return bootstrapDatepicker;
@@ -30124,4 +30068,4 @@ export {
   library as l,
   requireJquery as r
 };
-//# sourceMappingURL=vendor-Dt-scEca.js.map
+//# sourceMappingURL=vendor-BYhFMUUM.js.map

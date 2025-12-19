@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import path from 'path';
-import cssSourcemap from 'vite-plugin-css-sourcemap';
 
 export default defineConfig({
     plugins: [
@@ -13,7 +12,6 @@ export default defineConfig({
             refresh: false,
             buildDirectory: 'build',
         }),
-        cssSourcemap(),
     ],
     resolve: {
         alias: {
