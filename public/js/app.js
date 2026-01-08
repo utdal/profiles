@@ -787,20 +787,33 @@ window.Bloodhound = __webpack_require__(/*! corejs-typeahead */ "./node_modules/
 
 // Trix editor
 __webpack_require__(/*! trix */ "./node_modules/trix/dist/trix.esm.min.js");
-Trix.config.textAttributes.sup = {
-  tagName: "sup",
-  inheritable: true
-};
+
+// Register text attributes
 Trix.config.textAttributes.sub = {
   tagName: "sub",
   inheritable: true
 };
+Trix.config.textAttributes.sup = {
+  tagName: "sup",
+  inheritable: true
+};
 addEventListener("trix-initialize", function (event) {
-  var buttonHTML, buttonGroup;
-  buttonHTML = '<button type="button" class="trix-button" data-trix-attribute="sub" title="Subscript" tabindex="-1"><sub>SUB</sub></button>';
-  buttonHTML += '<button type="button" class="trix-button" data-trix-attribute="sup" title="Superscript" tabindex="-1"><sub>SUP</sub></button>';
-  buttonGroup = event.target.toolbarElement.querySelector(".trix-button-group--block-tools");
-  buttonGroup.insertAdjacentHTML("beforeend", buttonHTML);
+  var toolbar = event.target.toolbarElement;
+  var buttonGroup = toolbar.querySelector(".trix-button-group--block-tools");
+  if (!buttonGroup) return;
+  var hasButton = function hasButton(attribute) {
+    return buttonGroup.querySelector(".trix-button[data-trix-attribute=\"".concat(attribute, "\"]"));
+  };
+  var buttonsToAdd = [];
+  if (!hasButton("sub")) {
+    buttonsToAdd.push("\n      <button\n        type=\"button\"\n        class=\"trix-button\"\n        data-trix-attribute=\"sub\"\n        title=\"Subscript\"\n        tabindex=\"-1\">\n        <sub>SUB</sub>\n      </button>\n    ");
+  }
+  if (!hasButton("sup")) {
+    buttonsToAdd.push("\n      <button\n        type=\"button\"\n        class=\"trix-button\"\n        data-trix-attribute=\"sup\"\n        title=\"Superscript\"\n        tabindex=\"-1\">\n        <sup>SUP</sup>\n      </button>\n    ");
+  }
+  if (buttonsToAdd.length) {
+    buttonGroup.insertAdjacentHTML("beforeend", buttonsToAdd.join(""));
+  }
 });
 
 /***/ }),

@@ -38,15 +38,57 @@ window.Bloodhound = require('corejs-typeahead');
 // Trix editor
 require('trix');
 
-Trix.config.textAttributes.sup = { tagName: "sup", inheritable: true }
-Trix.config.textAttributes.sub = { tagName: "sub", inheritable: true }
+// Register text attributes
+Trix.config.textAttributes.sub = {
+  tagName: "sub",
+  inheritable: true,
+};
 
-addEventListener("trix-initialize", function(event) {
-    var buttonHTML, buttonGroup
+Trix.config.textAttributes.sup = {
+  tagName: "sup",
+  inheritable: true,
+};
 
-    buttonHTML  = '<button type="button" class="trix-button" data-trix-attribute="sub" title="Subscript" tabindex="-1"><sub>SUB</sub></button>'
-    buttonHTML  += '<button type="button" class="trix-button" data-trix-attribute="sup" title="Superscript" tabindex="-1"><sub>SUP</sub></button>'
+addEventListener("trix-initialize", function (event) {
+  const toolbar = event.target.toolbarElement;
+  const buttonGroup = toolbar.querySelector(".trix-button-group--block-tools");
 
-    buttonGroup = event.target.toolbarElement.querySelector(".trix-button-group--block-tools")
-    buttonGroup.insertAdjacentHTML("beforeend", buttonHTML)
-})
+  if (!buttonGroup) return;
+
+  const hasButton = (attribute) =>
+    buttonGroup.querySelector(
+      `.trix-button[data-trix-attribute="${attribute}"]`
+    );
+
+  const buttonsToAdd = [];
+
+  if (!hasButton("sub")) {
+    buttonsToAdd.push(`
+      <button
+        type="button"
+        class="trix-button"
+        data-trix-attribute="sub"
+        title="Subscript"
+        tabindex="-1">
+        <sub>SUB</sub>
+      </button>
+    `);
+  }
+
+  if (!hasButton("sup")) {
+    buttonsToAdd.push(`
+      <button
+        type="button"
+        class="trix-button"
+        data-trix-attribute="sup"
+        title="Superscript"
+        tabindex="-1">
+        <sup>SUP</sup>
+      </button>
+    `);
+  }
+
+  if (buttonsToAdd.length) {
+    buttonGroup.insertAdjacentHTML("beforeend", buttonsToAdd.join(""));
+  }
+});
