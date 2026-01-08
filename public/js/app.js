@@ -806,10 +806,10 @@ addEventListener("trix-initialize", function (event) {
   };
   var buttonsToAdd = [];
   if (!hasButton("sub")) {
-    buttonsToAdd.push("\n      <button\n        type=\"button\"\n        class=\"trix-button\"\n        data-trix-attribute=\"sub\"\n        title=\"Subscript\"\n        tabindex=\"-1\">\n        <sub>SUB</sub>\n      </button>\n    ");
+    buttonsToAdd.push("\n      <button\n        type=\"button\"\n        class=\"trix-button\"\n        data-trix-attribute=\"sub\"\n        title=\"Subscript\"\n        tabindex=\"-1\">\n        X<sub>2</sub>\n      </button>\n    ");
   }
   if (!hasButton("sup")) {
-    buttonsToAdd.push("\n      <button\n        type=\"button\"\n        class=\"trix-button\"\n        data-trix-attribute=\"sup\"\n        title=\"Superscript\"\n        tabindex=\"-1\">\n        <sup>SUP</sup>\n      </button>\n    ");
+    buttonsToAdd.push("\n      <button\n        type=\"button\"\n        class=\"trix-button\"\n        data-trix-attribute=\"sup\"\n        title=\"Superscript\"\n        tabindex=\"-1\">\n        X<sup>2</sup>\n      </button>\n    ");
   }
   if (buttonsToAdd.length) {
     buttonGroup.insertAdjacentHTML("beforeend", buttonsToAdd.join(""));

@@ -70,7 +70,7 @@ addEventListener("trix-initialize", function (event) {
         data-trix-attribute="sub"
         title="Subscript"
         tabindex="-1">
-        <sub>SUB</sub>
+        X<sub>2</sub>
       </button>
     `);
   }
@@ -83,7 +83,7 @@ addEventListener("trix-initialize", function (event) {
         data-trix-attribute="sup"
         title="Superscript"
         tabindex="-1">
-        <sup>SUP</sup>
+        X<sup>2</sup>
       </button>
     `);
   }
