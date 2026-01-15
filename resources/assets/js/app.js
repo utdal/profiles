@@ -210,7 +210,7 @@ var profiles = (function ($, undefined) {
      * @param {HTMLElement} elem
      */
     var clear_row = function (elem) {
-        parent_elem = $(elem).parent().parent();
+        const parent_elem = $(elem).parent().parent();
         parent_elem.slideUp().find("input[type=text], input[type=url], input[type=month], input.clearable, textarea, select").val('');
 
         const list_container = parent_elem[0].parentElement;
@@ -648,8 +648,8 @@ $(function() {
 // Trix editor settings
 if (typeof Trix === 'object') {
     document.addEventListener('trix-initialize', (e) => {
-        document.querySelector('trix-toolbar .trix-button-group--history-tools').remove();
-        document.querySelector('trix-toolbar .trix-button-group--file-tools').remove();
+        document.querySelector('trix-toolbar .trix-button-group--history-tools')?.remove();
+        document.querySelector('trix-toolbar .trix-button-group--file-tools')?.remove();
     });
     document.addEventListener('trix-file-accept', (e) => {
         e.preventDefault();
