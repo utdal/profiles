@@ -10240,25 +10240,6 @@ textarea.form-control {
   flex: 1;
 }
 
-trix-editor {
-  margin-bottom: 15px;
-  border-color: rgb(149.175, 149.175, 149.175);
-  border-radius: 0;
-}
-trix-editor:focus {
-  box-shadow: 0 0 0 0.1rem #154734;
-  border-color: #154734;
-}
-
-trix-toolbar .trix-button-row {
-  flex-wrap: wrap;
-}
-
-trix-toolbar .trix-button-group--history-tools,
-trix-toolbar .trix-button-group--file-tools {
-  display: none;
-}
-
 pre {
   background-color: lightgrey;
   padding: 1em;
@@ -10885,6 +10866,34 @@ table.table-live .loading-indicator {
   bottom: 0;
   align-items: center;
   justify-content: center;
+}
+
+trix-editor {
+  margin-bottom: 15px;
+  border-color: rgb(149.175, 149.175, 149.175);
+  border-radius: 0;
+}
+trix-editor:focus {
+  box-shadow: 0 0 0 0.1rem #154734;
+  border-color: #154734;
+}
+
+trix-toolbar .trix-button-row {
+  flex-wrap: wrap;
+}
+
+trix-toolbar .trix-button-group--history-tools,
+trix-toolbar .trix-button-group--file-tools,
+trix-toolbar .trix-button[data-trix-attribute=strike] {
+  display: none;
+}
+
+trix-toolbar .trix-button--icon-sub::before {
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20width%3D'20'%20height%3D'20'%20viewBox%3D'0%20-960%20960%20960'%3E%3Cpath%20d%3D'M728.61-135.87v-98.83q0-21%2014.28-35.47%2014.28-14.48%2035.39-14.48h42.5v-43.22h-92.17v-52.78h95.28q21.11%200%2035.39%2014.2%2014.29%2014.21%2014.29%2035.21v49.41q0%2021-14.29%2035.48-14.28%2014.48-35.39%2014.48h-42.5v43.22h92.18v52.78zm-467.94-144%20164.26-258.37-153.02-237.89h101.08l105.49%20170.04h-.96L586.8-776.13h101.29L534.07-538.24l165.26%20258.37H597.8L481.52-465.39h.96L362.2-279.87z'%2F%3E%3C%2Fsvg%3E");
+}
+
+trix-toolbar .trix-button--icon-sup::before {
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20width%3D'20'%20height%3D'20'%20viewBox%3D'0%20-960%20960%20960'%3E%3Cpath%20d%3D'M728.61-579.35v-98.82q0-21%2014.28-35.48t35.39-14.48h42.5v-43.22h-92.17v-52.78h95.28q21.11%200%2035.39%2014.21%2014.29%2014.2%2014.29%2035.2v49.42q0%2021-14.29%2035.47-14.28%2014.48-35.39%2014.48h-42.5v43.22h92.18v52.78zM260.67-183.87l164.26-258.37-153.02-237.89h101.08l105.49%20170.04h-.96L586.8-680.13h101.29L534.07-442.24l165.26%20258.37H597.8L481.52-369.39h.96L362.2-183.87z'%2F%3E%3C%2Fsvg%3E");
 }
 
 /* Symfony Var Dumper styling */

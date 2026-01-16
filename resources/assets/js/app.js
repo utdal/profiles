@@ -655,6 +655,52 @@ if (typeof Trix === 'object') {
         e.preventDefault();
         e.stopPropagation();
     });
+
+    // Register text attributes
+    Trix.config.textAttributes.sub = {
+        tagName: 'sub',
+        inheritable: true,
+    };
+
+    Trix.config.textAttributes.sup = {
+        tagName: 'sup',
+        inheritable: true,
+    };
+
+    addEventListener('trix-initialize', function (e) {
+        const textToolsButtonGroup = e.target.toolbarElement.querySelector('.trix-button-group--text-tools');
+
+        if (!textToolsButtonGroup) return;
+
+        const hasButton = (attribute) =>
+            textToolsButtonGroup.querySelector(`.trix-button[data-trix-attribute="${attribute}"]`);
+
+        if (!hasButton('sub')) {
+            textToolsButtonGroup.insertAdjacentHTML('beforeend', `
+                <button
+                    type="button"
+                    class="trix-button trix-button--icon trix-button--icon-sub"
+                    data-trix-attribute="sub"
+                    title="Subscript"
+                    tabindex="-1"
+                >
+                </button>
+            `);
+        }
+
+        if (!hasButton('sup')) {
+            textToolsButtonGroup.insertAdjacentHTML('beforeend', `
+                <button
+                    type="button"
+                    class="trix-button trix-button--icon trix-button--icon-sup"
+                    data-trix-attribute="sup"
+                    title="Superscript"
+                    tabindex="-1"
+                >
+                </button>
+            `);
+        }
+    });
 }
 
 // Livewire global hooks
@@ -673,5 +719,4 @@ if (typeof Livewire === 'object') {
     }
   });
 }
-
 

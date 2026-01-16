@@ -713,6 +713,29 @@ if ((typeof Trix === "undefined" ? "undefined" : _typeof(Trix)) === 'object') {
     e.preventDefault();
     e.stopPropagation();
   });
+
+  // Register text attributes
+  Trix.config.textAttributes.sub = {
+    tagName: 'sub',
+    inheritable: true
+  };
+  Trix.config.textAttributes.sup = {
+    tagName: 'sup',
+    inheritable: true
+  };
+  addEventListener('trix-initialize', function (e) {
+    var textToolsButtonGroup = e.target.toolbarElement.querySelector('.trix-button-group--text-tools');
+    if (!textToolsButtonGroup) return;
+    var hasButton = function hasButton(attribute) {
+      return textToolsButtonGroup.querySelector(".trix-button[data-trix-attribute=\"".concat(attribute, "\"]"));
+    };
+    if (!hasButton('sub')) {
+      textToolsButtonGroup.insertAdjacentHTML('beforeend', "\n                <button\n                    type=\"button\"\n                    class=\"trix-button trix-button--icon trix-button--icon-sub\"\n                    data-trix-attribute=\"sub\"\n                    title=\"Subscript\"\n                    tabindex=\"-1\"\n                >\n                </button>\n            ");
+    }
+    if (!hasButton('sup')) {
+      textToolsButtonGroup.insertAdjacentHTML('beforeend', "\n                <button\n                    type=\"button\"\n                    class=\"trix-button trix-button--icon trix-button--icon-sup\"\n                    data-trix-attribute=\"sup\"\n                    title=\"Superscript\"\n                    tabindex=\"-1\"\n                >\n                </button>\n            ");
+    }
+  });
 }
 
 // Livewire global hooks
