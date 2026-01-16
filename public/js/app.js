@@ -261,7 +261,7 @@ var profiles = function ($, undefined) {
    * @param {HTMLElement} elem
    */
   var clear_row = function clear_row(elem) {
-    parent_elem = $(elem).parent().parent();
+    var parent_elem = $(elem).parent().parent();
     parent_elem.slideUp().find("input[type=text], input[type=url], input[type=month], input.clearable, textarea, select").val('');
     var list_container = parent_elem[0].parentElement;
     if (elem.dataset.remove === 'true') {
@@ -705,8 +705,9 @@ $(function () {
 // Trix editor settings
 if ((typeof Trix === "undefined" ? "undefined" : _typeof(Trix)) === 'object') {
   document.addEventListener('trix-initialize', function (e) {
-    document.querySelector('trix-toolbar .trix-button-group--history-tools').remove();
-    document.querySelector('trix-toolbar .trix-button-group--file-tools').remove();
+    var _document$querySelect2, _document$querySelect3;
+    (_document$querySelect2 = document.querySelector('trix-toolbar .trix-button-group--history-tools')) === null || _document$querySelect2 === void 0 || _document$querySelect2.remove();
+    (_document$querySelect3 = document.querySelector('trix-toolbar .trix-button-group--file-tools')) === null || _document$querySelect3 === void 0 || _document$querySelect3.remove();
   });
   document.addEventListener('trix-file-accept', function (e) {
     e.preventDefault();
