@@ -36,7 +36,6 @@ return [
         'no-pings',
         'no-sandbox',
         'no-zygote',
-        'use-gl' => 'swiftshader',
         'window-size' => '1920,1080',
         'single-process',
     ],
@@ -55,5 +54,11 @@ return [
      * Path to the node_modules where Puppeteer is installed
      */
     'node_modules' => env('NODE_MODULES_PATH'),
+
+    /**
+     * HTTP authentication credentials
+     */
+    'http_username' => env('PDF_USER'),
+    'http_password' => env('PDF_PASS'),
 
 ];

@@ -27,6 +27,8 @@ class ProfilesTable extends Component
 
     public $public_filter = '';
 
+    public $type_filter = '';
+
     public $schools_filter = '';
 
     public $archived_filter = '';
@@ -53,6 +55,9 @@ class ProfilesTable extends Component
             })
             ->when($this->public_filter !== '', function ($q) {
                 $q->where('public', '=', $this->public_filter);
+            })
+            ->when($this->type_filter !== '', function ($q) {
+                $q->where('type', '=', $this->type_filter);
             })
             ->when($this->archived_filter == '1', function ($q) {
                 $q->onlyTrashed();

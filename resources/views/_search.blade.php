@@ -8,3 +8,11 @@
     </div>
   </div>
 {!! Form::close() !!}
+
+@if($errors->has('search'))
+  @pushOnce('scripts')
+    @foreach($errors->get('search') as $error)
+      <script>profiles.toast('<strong>Sorry, there was a problem with your search:</strong> {{ $error }}', 'danger');</script>
+    @endforeach
+  @endPushOnce
+@endif

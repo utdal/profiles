@@ -156,6 +156,12 @@ class ProfilePolicy
                $this->checkDepartmentEditor($user, $profile);
     }
 
+    public function updateAdvanced(User $user, Profile $profile)
+    {
+        return $this->checkSchoolEditor($user, $profile) ||
+               $this->checkDepartmentEditor($user, $profile);
+    }
+
     /**
      * Determine whether the user can export the profile
      *

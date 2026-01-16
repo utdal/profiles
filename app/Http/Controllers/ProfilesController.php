@@ -11,9 +11,11 @@ use Illuminate\Support\Facades\Auth;
 use App\Helpers\Contracts\LdapHelperContract;
 use App\Http\Requests\ProfileBannerImageRequest;
 use App\Http\Requests\ProfileImageRequest;
+use App\Http\Requests\ProfileSearchRequest;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\School;
 use Illuminate\Contracts\View\View as ViewContract;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
@@ -66,12 +68,18 @@ class ProfilesController extends Controller
     /**
      * Display a listing of profiles.
      */
-    public function index(Request $request): View|ViewContract|RedirectResponse
+    public function index(ProfileSearchRequest $request): View|ViewContract|RedirectResponse
     {
-        $search = $request->input('search');
+        $input_search = $request->input('search');
+
+        $search = htmlspecialchars($input_search, FILTER_FLAG_NO_ENCODE_QUOTES);
 
         /** @var EloquentCollection */
-        $profiles = Profile::where('full_name', 'LIKE', "%$search%")->public()->with(['information', 'media'])->paginate(24);
+        $profiles = Profile::where('full_name', 'LIKE', "%$search%")
+            ->public()
+            ->when(empty($search), fn (Builder $query) => $query->excludingUnlisted())
+            ->with(['information', 'media'])
+            ->paginate(24);
 
         if ((Cache::get('settings')['profile_search_shortcut'] ?? false) && ($profiles->count() === 1) && ($profiles->first()->full_name === $search)) {
             return redirect()->route('profiles.show', ['profile' => $profiles->first()]);
@@ -80,7 +88,7 @@ class ProfilesController extends Controller
         $keyword_profiles = !empty($search) ? Profile::containing($search)
             ->where('full_name', 'NOT LIKE', "%$search%")->public()->paginate(24, ['*'], 'key') : collect();
 
-        $tag_profiles = !empty($search) ? Profile::taggedWith($search)->public()->paginate(24, ['*'], 'tag') : null;
+        $tag_profiles = !empty($search) ? Profile::taggedWith($search)->public()->excludingUnlisted()->paginate(24, ['*'], 'tag') : null;
 
         $schools = !empty($search) ? School::withNameLike($search)->get() : collect();
 
@@ -97,7 +105,7 @@ class ProfilesController extends Controller
     public function home(): View|ViewContract
     {
         $random_profile = Cache::tags(['home', 'profiles'])->remember('home-random-profiles', 86400, function() {
-            return Profile::public()->inRandomOrder()->limit(2)->get();
+            return Profile::public()->excludingUnlisted()->inRandomOrder()->limit(2)->get();
         });
 
         $num_profiles = Cache::tags(['home', 'profiles'])->remember('home-profile-count', 86400, function() {
@@ -359,6 +367,10 @@ class ProfilesController extends Controller
 
         if (config('pdf.chrome_arguments')) {
             $pdf_content = $pdf_content->addChromiumArguments(config('pdf.chrome_arguments'));
+        }
+
+        if (config('pdf.http_username') && config('pdf.http_password')) {
+            $pdf_content = $pdf_content->authenticate(config('pdf.http_username'), config('pdf.http_password'));
         }
 
         return response($pdf_content->pdf())
