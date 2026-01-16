@@ -712,6 +712,29 @@ if ((typeof Trix === "undefined" ? "undefined" : _typeof(Trix)) === 'object') {
     e.preventDefault();
     e.stopPropagation();
   });
+
+  // Register text attributes
+  Trix.config.textAttributes.sub = {
+    tagName: 'sub',
+    inheritable: true
+  };
+  Trix.config.textAttributes.sup = {
+    tagName: 'sup',
+    inheritable: true
+  };
+  addEventListener('trix-initialize', function (e) {
+    var textToolsButtonGroup = e.target.toolbarElement.querySelector('.trix-button-group--text-tools');
+    if (!textToolsButtonGroup) return;
+    var hasButton = function hasButton(attribute) {
+      return textToolsButtonGroup.querySelector(".trix-button[data-trix-attribute=\"".concat(attribute, "\"]"));
+    };
+    if (!hasButton('sub')) {
+      textToolsButtonGroup.insertAdjacentHTML('beforeend', "\n                <button\n                    type=\"button\"\n                    class=\"trix-button trix-button--icon trix-button--icon-sub\"\n                    data-trix-attribute=\"sub\"\n                    title=\"Subscript\"\n                    tabindex=\"-1\"\n                >\n                </button>\n            ");
+    }
+    if (!hasButton('sup')) {
+      textToolsButtonGroup.insertAdjacentHTML('beforeend', "\n                <button\n                    type=\"button\"\n                    class=\"trix-button trix-button--icon trix-button--icon-sup\"\n                    data-trix-attribute=\"sup\"\n                    title=\"Superscript\"\n                    tabindex=\"-1\"\n                >\n                </button>\n            ");
+    }
+  });
 }
 
 // Livewire global hooks
@@ -787,34 +810,6 @@ window.Bloodhound = __webpack_require__(/*! corejs-typeahead */ "./node_modules/
 
 // Trix editor
 __webpack_require__(/*! trix */ "./node_modules/trix/dist/trix.esm.min.js");
-
-// Register text attributes
-Trix.config.textAttributes.sub = {
-  tagName: "sub",
-  inheritable: true
-};
-Trix.config.textAttributes.sup = {
-  tagName: "sup",
-  inheritable: true
-};
-addEventListener("trix-initialize", function (event) {
-  var toolbar = event.target.toolbarElement;
-  var buttonGroup = toolbar.querySelector(".trix-button-group--block-tools");
-  if (!buttonGroup) return;
-  var hasButton = function hasButton(attribute) {
-    return buttonGroup.querySelector(".trix-button[data-trix-attribute=\"".concat(attribute, "\"]"));
-  };
-  var buttonsToAdd = [];
-  if (!hasButton("sub")) {
-    buttonsToAdd.push("\n      <button\n        type=\"button\"\n        class=\"trix-button\"\n        data-trix-attribute=\"sub\"\n        title=\"Subscript\"\n        tabindex=\"-1\">\n        X<sub>2</sub>\n      </button>\n    ");
-  }
-  if (!hasButton("sup")) {
-    buttonsToAdd.push("\n      <button\n        type=\"button\"\n        class=\"trix-button\"\n        data-trix-attribute=\"sup\"\n        title=\"Superscript\"\n        tabindex=\"-1\">\n        X<sup>2</sup>\n      </button>\n    ");
-  }
-  if (buttonsToAdd.length) {
-    buttonGroup.insertAdjacentHTML("beforeend", buttonsToAdd.join(""));
-  }
-});
 
 /***/ }),
 
