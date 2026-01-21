@@ -1,0 +1,50 @@
+services:
+  web.profiles:
+    container_name: web.profiles
+    hostname: ${APP_ADDRESS:-profiles}
+    build:
+      context: .
+      dockerfile: .docker/apache/Dockerfile
+      target: "${CONTAINER_ENV:-production}_build"
+      args:
+        CONTAINER_ENV: ${CONTAINER_ENV:-production}
+    image: ${IMAGE_NAME_WEB:-localdev/web.profiles:web-1.0}
+    volumes:
+      - ".:/var/www/html"
+    networks:
+      - profiles
+      - nginx-proxy
+    environment:
+      VIRTUAL_HOST: ${APP_ADDRESS:-profiles}
+
+  php.profiles:
+    container_name: php.profiles
+    hostname: "php.${APP_ADDRESS:-profiles}"
+    build:
+      context: .
+      dockerfile: .docker/php/Dockerfile
+      target: "${CONTAINER_ENV:-production}_build"
+      args:
+        CONTAINER_ENV: ${CONTAINER_ENV:-production}
+        APP_ENV: ${APP_ENV:-production}
+        DB_HOST: ${DB_HOST:-db}
+        DB_PORT: ${DB_PORT:-3306}
+        DB_DATABASE: ${DB_DATABASE:-profiles}
+        DB_USERNAME: ${DB_USERNAME:-root}
+        DB_PASSWORD: ${DB_PASSWORD:-root}
+    image: ${IMAGE_NAME_PHP:-localdev/php.profiles:php-1.0}
+    volumes:
+      - ".:/var/www/html"
+    command: sh -c "php artisan storage:link && php-fpm"
+    networks:
+      - profiles
+      - localdev-shared-services
+
+networks:
+  profiles:
+  nginx-proxy:
+    name: nginx-proxy
+    external: true
+  localdev-shared-services:
+    name: localdev-shared-services
+    external: true
