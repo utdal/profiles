@@ -65,7 +65,6 @@ WORKDIR $DOCUMENT_ROOT
 RUN php -d allow_url_fopen=On /usr/local/bin/composer install
 
 # Local Dev
-# Local Dev
 FROM base_build AS local_build
 RUN cp "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 
@@ -81,6 +80,11 @@ COPY .docker/php/xdebug.ini $PHP_INI_DIR/conf.d/zzz-xdebug.ini
 
 COPY --from=mail_build /usr/local/bin/sendmail /usr/local/bin/sendmail
 COPY .docker/php/email.ini $PHP_INI_DIR/conf.d/zzz-email.ini
+
+# Entrypoint
+COPY .docker/php/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
 # Staging
 FROM base_build AS staging_build

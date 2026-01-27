@@ -35,7 +35,6 @@ services:
     image: ${IMAGE_NAME_PHP:-localdev/php.profiles:php-1.0}
     volumes:
       - ".:/var/www/html"
-    command: sh -c "php artisan storage:link && php-fpm"
     networks:
       - profiles
       - localdev-shared-services
