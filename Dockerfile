@@ -16,7 +16,7 @@
 # most recent version of that image when you build your Dockerfile.
 # If reproducibility is important, consider using a versioned tag
 # (e.g., alpine:3.17.2) or SHA (e.g., alpine@sha256:c41ab5c992deb4fe7e5da09f67a8804a46bd0592bfdf0b1847dde0e0889d2bff).
-FROM alpine:latest as base
+FROM alpine:latest AS base
 
 ################################################################################
 # Create a stage for building/compiling the application.
@@ -26,7 +26,7 @@ FROM alpine:latest as base
 # would issue a RUN command for your application's build process to generate the
 # executable. For language-specific examples, take a look at the Dockerfiles in
 # the Awesome Compose repository: https://github.com/docker/awesome-compose
-FROM base as build
+FROM base AS build
 RUN echo -e '#!/bin/sh\n\
 echo Hello world from $(whoami)! In order to get your application running in a container, take a look at the comments in the Dockerfile to get started.'\
 > /bin/hello.sh
