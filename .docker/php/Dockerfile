@@ -81,6 +81,14 @@ COPY .docker/php/xdebug.ini $PHP_INI_DIR/conf.d/zzz-xdebug.ini
 COPY --from=mail_build /usr/local/bin/sendmail /usr/local/bin/sendmail
 COPY .docker/php/email.ini $PHP_INI_DIR/conf.d/zzz-email.ini
 
+# Node.js and Puppeteer for Browsershot
+RUN apt-get update && apt-get install -y \
+    nodejs \
+    npm \
+    --no-install-recommends \
+    && npm install -g puppeteer \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
 # Entrypoint
 COPY .docker/php/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh

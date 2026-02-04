@@ -344,36 +344,32 @@ class ProfilesController extends Controller
      */
     public function pdfExport(Profile $profile): Response
     {
-        $pdf_content = Browsershot::url("{$profile->url}?paginated=false")
-            ->waitUntilNetworkIdle()
-            ->ignoreHttpsErrors()
-            ->margins(30, 15, 30, 15);
 
-        if (config('pdf.node')) {
-            $pdf_content = $pdf_content->setNodeBinary(config('pdf.node'));
+        /** @var User the logged-in user */
+        $user = Auth::user();
+        $editable = $user && $user->can('update', $profile);
+
+        //Abort unless profile is public or user can edit it
+        if(!$profile->public && !$editable){
+            abort(404);
         }
+        
+        $html = '';
+        $html = view('profiles.show', [
+                        'profile' => $profile,
+                        'editable' => $editable,
+                        'paginated' => false,
+                        'information' => $profile->information->first(),
+                    ])->render();
 
-        if (config('pdf.npm')) {
-            $pdf_content = $pdf_content->setNpmBinary(config('pdf.npm'));
-        }
+        $pdf_content = Browsershot::html($html)
+                        ->setRemoteInstance(gethostbyname('chromium'), 9222)
+                        ->setCustomTempPath('/tmp')
+                        ->noSandbox()
+                        ->waitUntilNetworkIdle()
+                        ->margins(30, 15, 30, 15)
+                        ->pdf();
 
-        if (config('pdf.modules')) {
-            $pdf_content = $pdf_content->setIncludePath(config('pdf.modules'));
-        }
-
-        if (config('pdf.chrome')) {
-            $pdf_content = $pdf_content->setChromePath(config('pdf.chrome'));
-        }
-
-        if (config('pdf.chrome_arguments')) {
-            $pdf_content = $pdf_content->addChromiumArguments(config('pdf.chrome_arguments'));
-        }
-
-        if (config('pdf.http_username') && config('pdf.http_password')) {
-            $pdf_content = $pdf_content->authenticate(config('pdf.http_username'), config('pdf.http_password'));
-        }
-
-        return response($pdf_content->pdf())
-                ->header('Content-Type', 'application/pdf');
+        return response($pdf_content)->header('Content-Type', 'application/pdf');
     }
 }

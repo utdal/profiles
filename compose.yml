@@ -35,9 +35,32 @@ services:
     image: ${IMAGE_NAME_PHP:-localdev/php.profiles:php-1.0}
     volumes:
       - ".:/var/www/html"
+      - tmpfiles:/tmp
+    depends_on:
+      - chromium
     networks:
       - profiles
       - localdev-shared-services
+
+  chromium:
+    image: zenika/alpine-chrome
+    container_name: chromium
+    command:
+      - "chromium-browser"
+      - "--headless"
+      - "--disable-gpu"
+      - "--no-sandbox"
+      - "--remote-debugging-address=0.0.0.0"
+      - "--remote-debugging-port=9222"
+    cap_add:
+      - SYS_ADMIN
+    volumes:
+      - tmpfiles:/tmp
+    ports:
+      - "9222:9222"
+    networks:
+      - localdev-shared-services
+      - nginx-proxy
 
 networks:
   profiles:
@@ -47,3 +70,7 @@ networks:
   localdev-shared-services:
     name: localdev-shared-services
     external: true
+
+volumes:
+  tmpfiles:
+    driver: local
