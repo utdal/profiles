@@ -67,33 +67,58 @@ class StudentDataInsight
     {
         $semesters_params_start_end = $this->semestersParamsStartAndEnd($semesters_params, $weeks_before_semester_start, $weeks_before_semester_end);
         
-        foreach ($semesters_params_start_end as $semester => $semester_start_end) { // Looping through semesters
-            foreach ($schools_params as $school) { // Looping through schools
-                $start_date = $semester_start_end['start'];
-                $end_date = $semester_start_end['end'];
-                foreach ($filing_status_params as $filing_status) { // Looping through filing statuses
-            
-                    $students_filtered = $this->filterStudentsBySemesterAndSchool($students, $semester, $school);
-                    $students_filtered->each(function ($student) use ($start_date, $end_date, $filing_status, $semester, &$results) {
-                        // For each student, find the non empty status history in the stats
-                        if (!empty($student->stats->data['status_history'])) { // Each status history equals a filing record for a student app - 
-                            // Each status history represents an action of filing the app for a specific status by a faculty member
-                            $matching_updates = collect($student->stats->data['status_history']) //For each status history, group by profile
-                                                ->groupBy('profile') //Filter the st-hist for which the last update matches the filing status param and was updated in the given timeframe
-                                                ->filter(function($group_by_profile) use ($start_date, $end_date, $filing_status) {
-                                                    $last_update_by_profile = $this->lastUpdateByProfile($group_by_profile);
-                                                    $filing_date = Carbon::parse($last_update_by_profile['updated_at']);
-                                                    return $last_update_by_profile['new_status'] === $filing_status && $filing_date->between($start_date, $end_date);
-                                                });
-                                                // There could be multiple matches. For instance, two faculty members file the app as follow up in the same timeframe
-                                                foreach ($matching_updates as $m) { 
-                                                    $results[] = $this->lastUpdateBetweenRangeByProfileWithStatus($m->first(), $semester, $student);
-                                                }
-                        }
-                    });
-                }
+        $students = $this->cachedAppsForSemestersAndSchoolsWithStatsWithUser($semesters_params, $schools_params);
+        
+        $results = [];
+
+        $students->each(function ($student) use ($semesters_params_start_end, $schools_params, $filing_status_params, &$results) {
+            if (empty($student->stats->data['status_history'])) { 
+                return;
             }
-        }
+            
+            // Check if the application's school(s) match ANY of the filter schools
+            $student_schools = (array) $student->research_profile->data['schools'];
+            if (empty(array_intersect($student_schools, $schools_params))) {
+                return;
+            }
+            
+            $student_semesters = (array) $student->research_profile->data['semesters'];
+            
+            $status_history = collect($student->stats->data['status_history'])->groupBy('profile'); // Each status history represents an action of filing the app for a specific status by a faculty member
+
+            $status_history->each(function($group_by_profile, $profile) use ($semesters_params_start_end, $student_semesters, $filing_status_params, $student, &$results) {
+                
+                // Check each semester the student applied for
+                foreach ($student_semesters as $semester) {
+                    if (!isset($semesters_params_start_end[$semester])) {
+                        continue; // Application doesn't include the semester(s) in the filter
+                    }
+                    
+                    $start_date = $semesters_params_start_end[$semester]['start'];
+                    $end_date = $semesters_params_start_end[$semester]['end'];
+                    
+                    // Find updates by this profile that occurred during this semester's review period
+                    $updates_in_range = $group_by_profile->filter(function($update) use ($start_date, $end_date) {
+                                            $update_date = Carbon::parse($update['updated_at']);
+                                            return $update_date->between($start_date, $end_date);
+                                        });
+                    
+                    if ($updates_in_range->isEmpty()) {
+                        continue; // This profile didn't file during this semester's review period
+                    }
+
+                    $last_update_in_range = $this->lastUpdateByProfile($updates_in_range);
+                    
+                    // Check if this filing's status matches the filter
+                    if (!in_array($last_update_in_range['new_status'], $filing_status_params)) {
+                        continue;
+                    }
+
+                    $results[] = $this->lastUpdateBetweenRangeByProfileWithStatus($last_update_in_range, $semester, $student);
+                }
+            });
+        });
+        
         return collect($results);
     }
 
@@ -370,11 +395,9 @@ class StudentDataInsight
 
             $semester = explode(' ', $semester_params);
             $start_date = Carbon::createFromFormat('M j Y', Semester::seasonDates()[$semester[0]][0].' '.$semester[1])
-                            ->subweeks((int) $weeks_before_start)
-                            ->format('Y-m-d');
+                            ->subweeks((int) $weeks_before_start);
             $end_date = Carbon::createFromFormat('M j Y', Semester::seasonDates()[$semester[0]][1].' '.$semester[1])
-                            ->subweeks((int) $weeks_before_end)
-                            ->format('Y-m-d');
+                            ->subweeks((int) $weeks_before_end);
             
             $result[$semester_params] = [ 'start' => $start_date, 'end' => $end_date ];
         }
