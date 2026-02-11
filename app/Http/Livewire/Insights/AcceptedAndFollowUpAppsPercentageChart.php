@@ -17,7 +17,10 @@ class AcceptedAndFollowUpAppsPercentageChart extends Component
     public $weeks_before_semester_end;
     public array $filing_statuses_category_1;
     public array $filing_statuses_category_2;
-    protected $listeners = ['refreshData5', 'refreshChart5'];
+    protected $listeners = [
+                    'refreshAcceptedFollowUpData' => 'refreshData', 
+                    'refreshAcceptedFollowUpChart' => 'refreshChart'
+                ];
 
     public function mount() 
     {
@@ -29,9 +32,9 @@ class AcceptedAndFollowUpAppsPercentageChart extends Component
         $this->labels = ['Accepted & Follow Up', 'Other'];
     }
 
-    public function refreshChart5($data, $labels) {}
+    public function refreshChart($data, $labels) {}
 
-    public function refreshData5($selected_semesters, $selected_schools, $weeks_before_semester_start, $weeks_before_semester_end)
+    public function refreshData($selected_semesters, $selected_schools, $weeks_before_semester_start, $weeks_before_semester_end)
     {
         $this->weeks_before_semester_start = $weeks_before_semester_start;
         $this->weeks_before_semester_end = $weeks_before_semester_end;
@@ -39,7 +42,7 @@ class AcceptedAndFollowUpAppsPercentageChart extends Component
         $this->selected_schools = $selected_schools;
 
         $this->data = $this->dataset;
-        $this->emit('refreshChart5', $this->data, $this->labels);
+        $this->emit('refreshAcceptedFollowUpChart', $this->data, $this->labels);
     }
 
     public function getDatasetProperty()

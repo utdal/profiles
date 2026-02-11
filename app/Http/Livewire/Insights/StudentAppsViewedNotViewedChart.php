@@ -14,7 +14,10 @@ class StudentAppsViewedNotViewedChart extends Component
     public array $selected_semesters;
     public array $selected_schools;
     public $selected_filing_statuses;
-    protected $listeners = ['refreshData4', 'refreshChart4'];
+    protected $listeners = [
+                    'refreshViewedNotViewedData' => 'refreshData', 
+                    'refreshViewedNotViewedChart' => 'refreshChart'
+                ];
 
     public function mount()
     {
@@ -23,9 +26,9 @@ class StudentAppsViewedNotViewedChart extends Component
         $this->labels = $data['labels'];    
     }
 
-    public function refreshChart4($data, $labels) {}
+    public function refreshChart($data, $labels) {}
 
-    public function refreshData4($selected_semesters, $selected_schools) {
+    public function refreshData($selected_semesters, $selected_schools) {
         $this->selected_semesters = $selected_semesters;
         $this->selected_schools = $selected_schools;
 
@@ -34,7 +37,7 @@ class StudentAppsViewedNotViewedChart extends Component
         $this->data = $data['datasets'];
         $this->labels = $data['labels'];
 
-        $this->emit('refreshChart4', $this->data, $this->labels);
+        $this->emit('refreshViewedNotViewedChart', $this->data, $this->labels);
     }
 
     public function getDatasetProperty()

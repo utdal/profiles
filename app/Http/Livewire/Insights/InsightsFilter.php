@@ -26,10 +26,10 @@ class InsightsFilter extends Component
     public function applyFilters($selected_semesters, $selected_schools, $weeks_before_semester_start, $weeks_before_semester_end) {
         $this->charts_loaded = false;
         $this->title = StudentDataInsight::convertParameterstoTitle($selected_semesters, $selected_schools);
-        $this->emitTo('accepted-and-follow-up-apps-percentage-chart', 'refreshData5', $selected_semesters, $selected_schools, $weeks_before_semester_start, $weeks_before_semester_end);
-        $this->emitTo('student-apps-viewed-not-viewed-chart', 'refreshData4', $selected_semesters, $selected_schools, $weeks_before_semester_start, $weeks_before_semester_end);
-        $this->emitTo('students-app-count-chart', 'refreshData2', $selected_semesters, $selected_schools, $weeks_before_semester_start, $weeks_before_semester_end);
-        $this->emitTo('students-app-filing-status-chart', 'refreshData1', $selected_semesters, $selected_schools, $weeks_before_semester_start, $weeks_before_semester_end);
+        $this->emitTo('insights.accepted-and-follow-up-apps-percentage-chart', 'refreshAcceptedFollowUpData', $selected_semesters, $selected_schools, $weeks_before_semester_start, $weeks_before_semester_end);
+        $this->emitTo('insights.student-apps-viewed-not-viewed-chart', 'refreshViewedNotViewedData', $selected_semesters, $selected_schools, $weeks_before_semester_start, $weeks_before_semester_end);
+        $this->emitTo('insights.students-app-count-chart', 'refreshAppsCountData', $selected_semesters, $selected_schools, $weeks_before_semester_start, $weeks_before_semester_end);
+        $this->emitTo('insights.students-app-filing-status-chart', 'refreshAppsFilingStatusData', $selected_semesters, $selected_schools, $weeks_before_semester_start, $weeks_before_semester_end);
     }
 
     public function render()

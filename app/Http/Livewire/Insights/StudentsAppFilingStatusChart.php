@@ -15,7 +15,10 @@ class StudentsAppFilingStatusChart extends Component
     public $weeks_before_semester_start;
     public $weeks_before_semester_end;
     public $selected_filing_statuses;
-    protected $listeners = ['refreshData1', 'refreshChart1'];
+    protected $listeners = [
+                    'refreshAppsFilingStatusData' => 'refreshData', 
+                    'refreshAppsFilingStatusChart' => 'refreshChart'
+                ];
 
     public function mount()
     {
@@ -28,9 +31,9 @@ class StudentsAppFilingStatusChart extends Component
         $this->labels = $data['labels'];
     }
 
-    public function refreshChart1($data, $labels) {}
+    public function refreshChart($data, $labels) {}
 
-    public function refreshData1($selected_semesters, $selected_schools, $weeks_before_semester_start, $weeks_before_semester_end) {
+    public function refreshData($selected_semesters, $selected_schools, $weeks_before_semester_start, $weeks_before_semester_end) {
 
         $this->weeks_before_semester_start = $weeks_before_semester_start;
         $this->weeks_before_semester_end = $weeks_before_semester_end;
@@ -42,7 +45,7 @@ class StudentsAppFilingStatusChart extends Component
         $this->data = $data['datasets'];
         $this->labels = $data['labels'];
 
-        $this->emit('refreshChart1', $this->data, $this->labels);
+        $this->emit('refreshAppsFilingStatusChart', $this->data, $this->labels);
     }
 
     public function getDatasetProperty()

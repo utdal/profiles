@@ -68,7 +68,7 @@
                         plugins: [progressTextPlugin, toggleTooltipPlugin],
                     });
 
-                    Livewire.on('refreshChart5', (data, labels) => {
+                    Livewire.on('refreshAcceptedFollowUpChart', (data, labels) => {
                         var [data, labels, bg_color] = getChartData(data, labels);
                         chart_instance.data.labels = labels;
                         chart_instance.data.datasets = [{

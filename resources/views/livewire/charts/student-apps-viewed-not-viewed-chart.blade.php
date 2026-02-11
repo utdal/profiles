@@ -65,7 +65,7 @@
                      plugins: [progressTextPlugin, toggleTooltipPlugin],
                 });
 
-                Livewire.on('refreshChart4', (data, labels) => {
+                Livewire.on('refreshViewedNotViewedChart', (data, labels) => {
                     var [data, labels, bg_color] = getChartData(data, labels);
                     chart_instance.data.labels = labels;
                     chart_instance.data.datasets = [{

@@ -46,7 +46,7 @@
                         plugins: [highlightTickPlugin, validateEmptyDataPlugin],
                     }
                 );
-                Livewire.on('refreshChart1', (data, labels) => {
+                Livewire.on('refreshAppsFilingStatusChart', (data, labels) => {
                     appCountFilingStatusChart.data.labels = labels;
                     appCountFilingStatusChart.data.datasets = data;
                     appCountFilingStatusChart.update();

@@ -12,7 +12,10 @@ class StudentsAppCountChart extends Component
     public array $data;
     public $selected_semesters = [];
     public $selected_schools = [];
-    protected $listeners = ['refreshData2', 'refreshChart2'];
+    protected $listeners = [
+                    'refreshAppsCountData' => 'refreshData', 
+                    'refreshAppsCountChart' => 'refreshChart'
+                ];
 
     public function mount()
     {
@@ -21,9 +24,9 @@ class StudentsAppCountChart extends Component
         $this->labels = $data['labels'];
     }
 
-    public function refreshChart2($data, $labels) {}
+    public function refreshChart($data, $labels) {}
 
-    public function refreshData2($selected_semesters, $selected_schools) {
+    public function refreshData($selected_semesters, $selected_schools) {
 
         $this->selected_semesters = $selected_semesters;
         $this->selected_schools = $selected_schools;
@@ -33,7 +36,7 @@ class StudentsAppCountChart extends Component
         $this->data = $data['datasets'];
         $this->labels = $data['labels'];
 
-        $this->emit('refreshChart2', $this->data, $this->labels);
+        $this->emit('refreshAppsCountChart', $this->data, $this->labels);
     }
 
     public function getDatasetProperty()
