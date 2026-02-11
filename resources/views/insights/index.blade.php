@@ -41,8 +41,8 @@
             <div class="col-md-6 d-md-flex justify-content-center"><livewire:insights.accepted-and-follow-up-apps-percentage-chart :selected_semesters="$semesters_selected" :selected_schools="$schools_options"/></div>
             <div class="col-md-6 d-md-flex justify-content-center"><livewire:insights.student-apps-viewed-not-viewed-chart :selected_semesters="$semesters_selected" :selected_schools="$schools_options"/></div>
         </div>
-        <div><livewire:insights.students-app-count-chart :selected_semesters="$semesters_selected" :selected_schools="$schools_options"/></div>
-        <div><livewire:insights.students-app-filing-status-chart :selected_semesters="$semesters_selected" :selected_schools="$schools_options"/></div>
+        <div><livewire:insights.student-apps-count-chart :selected_semesters="$semesters_selected" :selected_schools="$schools_options"/></div>
+        <div><livewire:insights.student-apps-filing-status-chart :selected_semesters="$semesters_selected" :selected_schools="$schools_options"/></div>
 
         <small class="mt-4 small d-block text-muted font-italic">[1] This chart represents only the count of applications for the semesters selected by the students.</small>
         <small class="small d-block text-muted font-italic">[2] This chart represents the count of how faculty have filed student applications for the selected semesters and schools. Given that a student can choose multiple faculty members in a single application, each application can be counted more than once.</small>

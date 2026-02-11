@@ -28,8 +28,8 @@ class InsightsFilter extends Component
         $this->title = StudentDataInsight::convertParameterstoTitle($selected_semesters, $selected_schools);
         $this->emitTo('insights.accepted-and-follow-up-apps-percentage-chart', 'refreshAcceptedFollowUpData', $selected_semesters, $selected_schools, $weeks_before_semester_start, $weeks_before_semester_end);
         $this->emitTo('insights.student-apps-viewed-not-viewed-chart', 'refreshViewedNotViewedData', $selected_semesters, $selected_schools, $weeks_before_semester_start, $weeks_before_semester_end);
-        $this->emitTo('insights.students-app-count-chart', 'refreshAppsCountData', $selected_semesters, $selected_schools, $weeks_before_semester_start, $weeks_before_semester_end);
-        $this->emitTo('insights.students-app-filing-status-chart', 'refreshAppsFilingStatusData', $selected_semesters, $selected_schools, $weeks_before_semester_start, $weeks_before_semester_end);
+        $this->emitTo('insights.student-apps-count-chart', 'refreshAppsCountData', $selected_semesters, $selected_schools, $weeks_before_semester_start, $weeks_before_semester_end);
+        $this->emitTo('insights.student-apps-filing-status-chart', 'refreshAppsFilingStatusData', $selected_semesters, $selected_schools, $weeks_before_semester_start, $weeks_before_semester_end);
     }
 
     public function render()

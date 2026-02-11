@@ -5,7 +5,7 @@ namespace App\Http\Livewire\Insights;
 use App\Insights\StudentApplications\StudentDataInsight;
 use Livewire\Component;
 
-class StudentsAppFilingStatusChart extends Component
+class StudentAppsFilingStatusChart extends Component
 {
 
     public array $labels;
