@@ -1,8 +1,5 @@
 FROM httpd:2.4-bookworm AS base_build
 
-ARG CONTAINER_ENV
-ENV CONTAINER_ENV=${CONTAINER_ENV:-production}
-
 ARG DOCUMENT_ROOT
 ENV DOCUMENT_ROOT=${DOCUMENT_ROOT:-/var/www/html}
 
