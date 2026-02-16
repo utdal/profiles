@@ -1,5 +1,7 @@
 #!/bin/bash
 
-php artisan storage:link
+if [ ! -L public/storage ]; then
+    php artisan storage:link
+fi
 
 exec php-fpm
