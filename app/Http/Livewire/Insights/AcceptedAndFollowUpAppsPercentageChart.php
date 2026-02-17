@@ -18,9 +18,9 @@ class AcceptedAndFollowUpAppsPercentageChart extends Component
     public array $filing_statuses_category_1;
     public array $filing_statuses_category_2;
     protected $listeners = [
-                    'refreshAcceptedFollowUpData' => 'refreshData', 
-                    'refreshAcceptedFollowUpChart' => 'refreshChart'
-                ];
+        'refreshAcceptedFollowUpData' => 'refreshData', 
+        'refreshAcceptedFollowUpChart' => 'refreshChart',
+    ];
 
     public function mount() 
     {

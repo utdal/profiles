@@ -15,9 +15,9 @@ class StudentAppsViewedNotViewedChart extends Component
     public array $selected_schools;
     public $selected_filing_statuses;
     protected $listeners = [
-                    'refreshViewedNotViewedData' => 'refreshData', 
-                    'refreshViewedNotViewedChart' => 'refreshChart'
-                ];
+        'refreshViewedNotViewedData' => 'refreshData', 
+        'refreshViewedNotViewedChart' => 'refreshChart',
+    ];
 
     public function mount()
     {

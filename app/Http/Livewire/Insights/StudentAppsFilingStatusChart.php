@@ -16,9 +16,9 @@ class StudentAppsFilingStatusChart extends Component
     public $weeks_before_semester_end;
     public $selected_filing_statuses;
     protected $listeners = [
-                    'refreshAppsFilingStatusData' => 'refreshData', 
-                    'refreshAppsFilingStatusChart' => 'refreshChart'
-                ];
+        'refreshAppsFilingStatusData' => 'refreshData', 
+        'refreshAppsFilingStatusChart' => 'refreshChart',
+    ];
 
     public function mount()
     {

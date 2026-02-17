@@ -13,9 +13,9 @@ class StudentAppsCountChart extends Component
     public $selected_semesters = [];
     public $selected_schools = [];
     protected $listeners = [
-                    'refreshAppsCountData' => 'refreshData', 
-                    'refreshAppsCountChart' => 'refreshChart'
-                ];
+        'refreshAppsCountData' => 'refreshData', 
+        'refreshAppsCountChart' => 'refreshChart',
+    ];
 
     public function mount()
     {
