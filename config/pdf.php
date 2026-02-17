@@ -61,4 +61,7 @@ return [
     'http_username' => env('PDF_USER'),
     'http_password' => env('PDF_PASS'),
 
+    /** PDF temp path used by Browsershot::html() */
+    'pdf_temp_path' => env('PDF_TEMP_PATH', "/tmp/pdf"),
+
 ];

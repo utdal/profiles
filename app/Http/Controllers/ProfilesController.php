@@ -362,9 +362,11 @@ class ProfilesController extends Controller
                         'information' => $profile->information->first(),
                     ])->render();
 
+        $pdf_temp_path = config("pdf.pdf_temp_path", '/tmp/pdf');
+
         $pdf_content = Browsershot::html($html)
                         ->setRemoteInstance(gethostbyname('chromium'), 9222)
-                        ->setCustomTempPath('/tmp')
+                        ->setCustomTempPath($pdf_temp_path)
                         ->noSandbox()
                         ->waitUntilNetworkIdle()
                         ->margins(30, 15, 30, 15)

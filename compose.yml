@@ -35,7 +35,7 @@ services:
     image: ${IMAGE_NAME_PHP:-localdev/php.profiles:php-1.0}
     volumes:
       - ".:/var/www/html"
-      - tmpfiles:/tmp
+      - tmpfiles:${PDF_TEMP_PATH:-/tmp/pdf}
     depends_on:
       - chromium
     networks:
@@ -55,7 +55,7 @@ services:
     cap_add:
       - SYS_ADMIN
     volumes:
-      - tmpfiles:/tmp
+      - tmpfiles:${PDF_TEMP_PATH:-/tmp/pdf}
     ports:
       - "9222:9222"
     networks:
