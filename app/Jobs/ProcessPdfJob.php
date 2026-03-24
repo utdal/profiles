@@ -8,11 +8,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use App\Events\PdfReady;
 use App\Services\PdfGenerationService;
-use App\Student;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\URL;
 
 class ProcessPdfJob implements ShouldQueue
 {
