@@ -5,7 +5,13 @@
             <li class="entry">
                 <article>
                     @if($project->url)
-                        <h3><a href="{{$project->url}}">{{$project->title}} <i class="fas fa-link" aria-hidden="true"></i></a></h3>
+                        <h3>
+                            <a href="{{$project->url}}" target="_blank" class="has-external-link-icon">
+                                <span class="has-external-link-icon">{{$project->title}}</span>
+                                <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                                <span class="sr-only"> (opens in a new tab)</span>
+                            </a>
+                        </h3>
                     @else
                         <h3>{{$project->title}}</h3>
                     @endif

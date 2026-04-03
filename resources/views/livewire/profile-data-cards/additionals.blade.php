@@ -3,7 +3,19 @@
     <ul class="list-unstyled">
         @foreach($data as $additional)
             <li class="entry">
-                <h3><i class="far fa-sticky-note" aria-hidden="true"></i> {{$additional->title}}</h3>
+                @if($additional->url)
+                    <h3>
+                        <a target="_blank" href="{{$additional->url}}" class="has-external-link-icon">
+                            <i class="far fa-sticky-note" aria-hidden="true"></i>
+                            <span class="has-external-link-icon">{!! Purify::clean($additional->title) !!}</span>
+                            <i class="fas fa-external-link-alt"></i>
+                            <span class="sr-only"> (opens in a new tab)</span>
+                        </a>
+                    </h3>
+                @else
+                    <h3><i class="far fa-sticky-note" aria-hidden="true"></i> {{$additional->title}}</h3>
+                @endif
+                {!! Purify::clean($additional->description) !!}
             </li>
         @endforeach
     </ul>
