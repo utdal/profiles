@@ -9618,6 +9618,21 @@ h3, h4, h5, h6 {
   color: rgb(174.87, 70.47, 0);
 }
 
+.has-external-link-icon {
+  text-decoration: none;
+}
+.has-external-link-icon:hover {
+  text-decoration: none;
+}
+.has-external-link-icon span {
+  text-decoration: underline;
+}
+
+ul.plain {
+  padding-inline-start: 0;
+  list-style-type: none;
+}
+
 img {
   max-width: 100%;
   height: auto;
