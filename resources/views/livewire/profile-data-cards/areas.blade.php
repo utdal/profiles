@@ -1,8 +1,8 @@
-<section id="areas" class="card">
-    <h2><i class="fas fa-flask" aria-hidden="true"></i> Research Areas @if($editable)<a class="btn btn-primary btn-sm" href="{{ route('profiles.edit', [$profile->slug, 'areas']) }}" aria-label="Edit Research Areas"><i class="fas fa-edit"></i> Edit</a>@endif</h2>
+<section id="areas" role="region" class="card" aria-labelledby="areas-heading">
+    <h2 id="areas-heading"><i class="fas fa-flask" aria-hidden="true"></i> Research Areas @if($editable)<a class="btn btn-primary btn-sm" href="{{ route('profiles.edit', [$profile->slug, 'areas']) }}" aria-label="Edit Research Areas"><i class="fas fa-edit"></i> Edit</a>@endif</h2>
     <ul class="list-unstyled">
         @foreach($data as $area)
-            <li>
+            <li aria-label="{{$area->title}}">
                 @if($area->url)
                     <h3>
                         <a href="{{$area->url}}" target="_blank" class="has-external-link-icon">
@@ -14,7 +14,7 @@
                 @else
                     <h3>{{$area->title}}</h3>
                 @endif
-                {!! Purify::clean($area->description) !!}
+                <p>{!! Purify::clean($area->description) !!}</p>
             </li>
         @endforeach
     </ul>
