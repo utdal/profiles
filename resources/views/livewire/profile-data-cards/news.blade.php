@@ -1,8 +1,8 @@
-<section id="news" class="card">
-    <h2><i class="fas fa-newspaper" aria-hidden="true"></i> News Articles @if($editable)<a class="btn btn-primary btn-sm" href="{{ route('profiles.edit', [$profile->slug, 'news']) }}" aria-label="Edit News Articles"><i class="fas fa-edit"></i> Edit</a>@endif</h2>
+<section id="news" role="region" class="card" aria-labelledby="news-heading">
+    <h2 id="news-heading"><i class="fas fa-newspaper" aria-hidden="true"></i> News Articles @if($editable)<a class="btn btn-primary btn-sm" href="{{ route('profiles.edit', [$profile->slug, 'news']) }}" aria-label="Edit News Articles"><i class="fas fa-edit"></i> Edit</a>@endif</h2>
     <ul class="list-unstyled">
         @foreach($data as $article)
-            <li class="entry">
+            <li class="entry" aria-label="{{$article->title}}">
                 <article>
                     @if($article->url)
                         <h3>
@@ -18,7 +18,7 @@
                     @if($article->image)
                         <img src="{{ $article->imageUrl }}" class="news_image" alt="{{ $article->image_alt ?? $article->title }}"/>
                     @endif
-                    {!! Purify::clean($article->description) !!}
+                    <p>{!! Purify::clean($article->description) !!}</p>
                 </article>
             </li>
         @endforeach

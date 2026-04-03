@@ -1,5 +1,5 @@
-<section id="publications" class="card">
-    <h2><i class="fa fa-book" aria-hidden="true"></i> Publications
+<section id="publications" role="region" class="card" aria-labelledby="publications-heading">
+    <h2 id="publications-heading"><i class="fa fa-book" aria-hidden="true"></i> Publications
         @if($editable)
         <a class="btn btn-primary btn-sm" href="{{ route('profiles.edit', [$profile->slug, 'publications']) }}" data-toggle="class" data-toggle-class="fa-spin" data-target="#publications .fa-sync">
             @if($profile->hasOrcidManagedPublications())
@@ -12,7 +12,7 @@
     </h2>
     <ul class="list-unstyled">
         @foreach($data as $pub)
-            <li class="entry">
+            <li class="entry" aria-label="{{$pub->title}}">
                 @if($pub->url)
                     <a target="_blank" href="{{$pub->url}}" class="has-external-link-icon">
                         <span class="has-external-link-icon">{!! Purify::clean($pub->title) !!} {{$pub->year}}</span>
