@@ -6,14 +6,18 @@
                 <article>
                     @if($article->url)
                         <h3>
-                            <a href="{{$article->url}}" target="_blank" title="link to article">
-                                {{$article->title}} <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                            <a href="{{$article->url}}" target="_blank" class="has-external-link-icon">
+                                <span class="has-external-link-icon">{{$article->title}}</span>
+                                <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                                <span class="sr-only"> (opens in a new tab)</span>
                             </a>
                         </h3>
                     @else
                         <h3>{{$article->title}}</h3>
                     @endif
-                    @if($article->image)<img src="{{ $article->imageUrl }}" class="news_image" alt="{{ $article->image_alt ?? $article->title }}"/>@endif
+                    @if($article->image)
+                        <img src="{{ $article->imageUrl }}" class="news_image" alt="{{ $article->image_alt ?? $article->title }}"/>
+                    @endif
                     {!! Purify::clean($article->description) !!}
                 </article>
             </li>

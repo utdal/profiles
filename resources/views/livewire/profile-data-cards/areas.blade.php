@@ -4,7 +4,13 @@
         @foreach($data as $area)
             <li>
                 @if($area->url)
-                    <h3><a href="{{$area->url}}">{{$area->title}} <i class="fas fa-link" aria-hidden="true"></i></a></h3>
+                    <h3>
+                        <a href="{{$area->url}}" target="_blank" class="has-external-link-icon">
+                            <span class="has-external-link-icon">{{$area->title}}</span>
+                            <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                            <span class="sr-only"> (opens in a new tab)</span>
+                        </a>
+                    </h3>
                 @else
                     <h3>{{$area->title}}</h3>
                 @endif
