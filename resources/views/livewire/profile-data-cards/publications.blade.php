@@ -10,16 +10,18 @@
         </a>
         @endif
     </h2>
-    @foreach($data as $pub)
-        <div class="entry">
-            {!! Purify::clean($pub->title) !!} {{$pub->year}} - <strong>{{$pub->type}}</strong>
-            @if($pub->url)
-                <a target="_blank" href="{{$pub->url}}">
-                    <span class="fas fa-external-link-alt" title="external link to publication"></span>
-                </a>
-            @endif
-        </div>
-    @endforeach
+    <ul class="list-unstyled">
+        @foreach($data as $pub)
+            <li class="entry">
+                {!! Purify::clean($pub->title) !!} {{$pub->year}} - <strong>{{$pub->type}}</strong>
+                @if($pub->url)
+                    <a target="_blank" href="{{$pub->url}}">
+                        <span class="fas fa-external-link-alt" title="external link to publication"></span>
+                    </a>
+                @endif
+            </li>
+        @endforeach
+    </ul>
     @if($paginated)
         {{ $data->links() }}
     @endif

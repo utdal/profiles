@@ -18,6 +18,11 @@ a {
 	}
 }
 
+ul.list-unstyled {
+    padding-inline-start: 0;
+    list-style-type: none;
+}
+
 img{
 	max-width: 100%;
 	height: auto;
