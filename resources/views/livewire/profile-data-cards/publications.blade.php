@@ -15,13 +15,13 @@
             <li class="entry" aria-label="{{$pub->title}}">
                 @if($pub->url)
                     <a target="_blank" href="{{$pub->url}}" class="has-external-link-icon">
-                        <span class="has-external-link-icon">{!! Purify::clean($pub->title) !!} {{$pub->year}}</span>
+                        <span class="has-external-link-icon">{!! Purify::clean($pub->title) !!}</span>
                         <i class="fas fa-external-link-alt" aria-hidden="true"></i>
                         <span class="sr-only"> (opens in a new tab)</span>
                     </a>
-                    <strong>{{$pub->type}}</strong>
+                    {{$pub->year}} - {{$pub->type}}
                 @else
-                    {!! Purify::clean($pub->title) !!} {{$pub->year}} - <strong>{{$pub->type}}</strong></>
+                    {!! Purify::clean($pub->title) !!} {{$pub->year}} - {{$pub->type}}
                 @endif
             </li>
         @endforeach
