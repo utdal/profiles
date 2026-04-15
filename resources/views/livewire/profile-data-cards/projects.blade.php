@@ -2,7 +2,7 @@
     <h2 id="projects-heading"><i class="fas fa-tasks" aria-hidden="true"></i> Projects @if($editable)<a class="btn btn-primary btn-sm" href="{{ route('profiles.edit', [$profile->slug, 'projects']) }}" aria-label="Edit Projects"><i class="fas fa-edit"></i> Edit</a>@endif</h2>
     <ul class="list-unstyled">
         @foreach($data as $project)
-            <li class="entry" aria-label="{{$project->title}}">
+            <li class="entry">
                 <article>
                     @if($project->url)
                         <h3>

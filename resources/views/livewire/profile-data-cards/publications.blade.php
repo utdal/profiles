@@ -12,7 +12,7 @@
     </h2>
     <ul class="list-unstyled">
         @foreach($data as $pub)
-            <li class="entry" aria-label="{{$pub->title}}">
+            <li class="entry">
                 @if($pub->url)
                     <a target="_blank" href="{{$pub->url}}" class="has-external-link-icon">
                         <span class="has-external-link-icon">{!! Purify::clean($pub->title) !!}</span>
