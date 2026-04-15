@@ -1,4 +1,4 @@
-<section id="funding" role="region" class="card" aria-labelledby="funding-heading">
+<section id="funding" class="card" aria-labelledby="funding-heading">
     <h2 id="funding-heading"><i class="fas fa-dollar-sign" aria-hidden="true"></i> Funding @if($editable)<a class="btn btn-primary btn-sm" href="{{ route('profiles.edit', [$profile->slug, 'support']) }}" aria-label="Edit Funding"><i class="fas fa-edit"></i> Edit</a>@endif</h2>
     <ul class="list-unstyled">
         @foreach($data as $funding)

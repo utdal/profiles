@@ -1,4 +1,4 @@
-<section id="presentations" role="region" class="card" aria-labelledby="presentations-heading">
+<section id="presentations" class="card" aria-labelledby="presentations-heading">
     <h2 id="presentations-heading"><i class="fas fa-laptop" aria-hidden="true"></i> Presentations @if($editable)<a class="btn btn-primary btn-sm" href="{{ route('profiles.edit', [$profile->slug, 'presentations']) }}" aria-label="Edit Presentations"><i class="fas fa-edit"></i> Edit</a>@endif</h2>
     <ul class="list-unstyled">
         @foreach($data as $presentation)
