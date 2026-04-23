@@ -10642,6 +10642,11 @@ button.video-control .fa-play {
   -o-object-position: center;
      object-position: center;
 }
+@media (max-width: 992px) {
+  .profile .fancy_header .banner-img {
+    display: none;
+  }
+}
 .profile .fancy_header > .container {
   position: relative;
   display: flex;
