@@ -22,7 +22,7 @@
 <div class="container">
     <h1><i class="fas fa-tags" aria-hidden="true"></i> Edit Tag {{ $tag->name }}</h1>
 
-    @include('errors/has')
+    @include('errors/list')
 
     {!! Form::model($tag, ['method' => 'PATCH','route' => ['tags.updateTag', $tag], 'class' => 'form-horizontal' ]) !!}
 

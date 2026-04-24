@@ -1,7 +1,7 @@
 <div class="livewire-datatable">
 
     <div class="form-row">
-        <div class="form-group col-lg-3">
+        <div class="form-group col-lg-2">
             <label for="profileSearch">Search</label>
             <input wire:model.debounce.250ms="search_filter" type="text" id="profileSearch" class="form-control" placeholder="Search...">
         </div>
@@ -18,24 +18,33 @@
             <label for="publicFilter">Public</label>
             <select wire:model="public_filter" id="publicFilter" class="form-control">
                 <option value="" selected>All</option>
-                <option value="1" selected>Public</option>
-                <option value="0" selected>Not Public</option>
+                <option value="1">Public</option>
+                <option value="0">Not Public</option>
+            </select>
+        </div>
+        <div class="form-group col-lg-2">
+            <label for="typeFilter">Type</label>
+            <select wire:model="type_filter" id="typeFilter" class="form-control">
+                <option value="" selected>All</option>
+                @foreach (App\Enums\ProfileType::cases() as $profile_type)
+                    <option value="{{ $profile_type->value }}">{{ $profile_type->label() }}</option>
+                @endforeach
             </select>
         </div>
         <div class="form-group col-lg-1">
             <label for="archivedFilter">Archived</label>
             <select wire:model="archived_filter" id="archivedFilter" class="form-control">
                 <option value="0" selected>No</option>
-                <option value="1" selected>Yes</option>
+                <option value="1">Yes</option>
             </select>
         </div>
-        <div class="form-group col-lg-2">
+        <div class="form-group col-lg-1">
             <label for="perPage">Per Page</label>
             <select wire:model="per_page" id="perPage" class="form-control">
-                <option value="10">10 per page</option>
-                <option value="25" selected>25 per page</option>
-                <option value="50">50 per page</option>
-                <option value="100">100 per page</option>
+                <option value="10">10</option>
+                <option value="25" selected>25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
             </select>
         </div>
         <div class="form-group col-lg-2 text-center">
@@ -46,7 +55,7 @@
         </div>
     </div>
 
-    @include('livewire.partials._applied-filters', ['filter_value_names' => ['schools_filter' => $schools->pluck('short_name', 'id')->all()]])
+    @include('livewire.partials._applied-filters', ['filter_value_names' => ['schools_filter' => $schools->pluck('short_name', 'id')->all(), 'type_filter' => App\Enums\ProfileType::toArray()]])
 
     <table class="table table-sm table-striped table-live table-responsive-lg" aria-live="polite" wire:loading.attr="aria-busy">
         <caption class="sr-only">List of profiles</caption>
@@ -73,11 +82,20 @@
                     <td><a href="{{ $profile->url }}">{{ $profile->slug }}</a></td>
                 @endif
                 <td>{{ optional($profile->user->school)->short_name }}</td>
-                @if($profile->trashed())
-                    <td class="text-center"><span class="fas fa-archive" title="Archived"></span></td>
-                @else
-                    <td class="text-center"><span class="fas {{ $profile->public ? 'fa-eye' : 'fa-eye-slash text-muted' }}" title="{{ $profile->public ? 'Public' : 'Not public' }}"></span></td>
-                @endif
+                <td class="text-center">
+                    <span class="fas {{ $profile->public ? 'fa-eye' : 'fa-eye-slash text-muted' }}" title="{{ $profile->public ? 'Public' : 'Not public' }}"></span>
+                    @if($profile->trashed())
+                        <span class="fas fa-archive" title="Archived"></span>
+                    @endif
+                    @switch($profile->type)
+                        @case(App\Enums\ProfileType::Unlisted)
+                            <span class="fas fa-link text-muted" title="Unlisted"></span>
+                            @break
+                        @case(App\Enums\ProfileType::InMemoriam)
+                            <span class="fas fa-monument" title="In Memoriam"></span>
+                            @break
+                    @endswitch
+                </td>
                 <td>{{ $profile->created_at->toFormattedDateString() }}</td>
                 <td>{{ $profile->updated_at->toFormattedDateString() }}</td>
                 <td>
