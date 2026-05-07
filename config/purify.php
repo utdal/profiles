@@ -50,6 +50,20 @@ return [
             'AutoFormat.RemoveEmpty' => false,
         ],
 
+        'trix_email' => [
+            'HTML.Doctype'             => 'HTML 4.01 Transitional',
+            'HTML.AllowedElements'     => 'a,span',
+            'HTML.AllowedAttributes'   => 'a.href,a.style,span.style',
+            'AutoFormat.RemoveEmpty'   => true,
+            'AutoFormat.RemoveEmpty.RemoveNbsp' => true,
+            'CSS.AllowedProperties'    => 'color,text-decoration',
+            'Output.TidyFormat'        => true,
+            'HTML.Nofollow'            => false,
+            'Core.NormalizeNewlines'   => true,
+            'AutoFormat.AutoParagraph' => false,
+            'AutoFormat.RemoveSpansWithoutAttributes' => true,
+        ],
+
     ],
 
     /*
