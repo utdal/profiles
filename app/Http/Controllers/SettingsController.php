@@ -56,12 +56,22 @@ class SettingsController extends Controller
         if ($request->hasFile($setting_name)) {
             $setting = Setting::firstOrCreate(['name' => $setting_name]);
             $setting->addMedia($request->file($setting_name))->toMediaCollection($setting_name);
-            // $message = $setting->processImage($request->file($image_name), 'settings');
-            // $url = $setting->getFullImageUrlAttribute();
 
-            $setting->value = url($setting->getFirstMediaUrl($setting_name) ?: '/img/default.png');
+            $image = $setting->getFirstMedia($setting_name);
 
-            $setting->save();
+            $setting->update([
+                'value' => url($image?->getUrl() ?: '/img/default.png'),
+            ]);
+
+            foreach (['thumb', 'medium', 'large'] as $conversion) {
+                if ($image->hasGeneratedConversion($conversion)) {
+                    Setting::updateOrCreate(
+                        ['name' => "{$setting_name}_{$conversion}"],
+                        ['value' => $image->getUrl($conversion)]
+                    );
+                }
+            }
+
             $message = 'Settings image has been updated.';
         } else {
             $message = 'Cannot update settings image.';
