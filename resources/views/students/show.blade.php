@@ -56,6 +56,11 @@
                     <div class="mr-2"><a class="btn btn-primary btn-sm" href="#student_feedback"><i class="fas fa-comment"></i> Feedback</a></div>
                 @endcan
             </div>
+            @can('update', $student)
+            <div class="mt-2 row">
+                <livewire:toggle-student-app-accepted-status :student="$student">
+            </div>
+            @endcan
         </div>
         <div class="col-md-4 stats alert alert-success">
             <dl class="row mb-0">
@@ -96,14 +101,21 @@
                     @endif
 
                     @if($student->stats->accepted_by && !empty($student->stats->accepted_by))
-                    <dt class="col-sm-4" title="Accepted to research with these labs" data-toggle="tooltip">
-                        accepted by
-                    </dt>
-                    <dd class="col-sm-8">
-                        @foreach($student->stats->accepted_by as $accepted_record)
-                            <div>{{ $accepted_record['profile_name'] ?? 'n/a' }}</div>
-                        @endforeach
-                    </dd>
+                        <dt class="col-sm-4" title="Accepted to research with these labs" data-toggle="tooltip">
+                            accepted by
+                        </dt>
+                        <div class="row-cols-md-1"
+                             id="accepted_status_history"
+                             @if(!(!isset($student->stats->accepted_status_history_visibility) || $student->stats->accepted_status_history_visibility === '1'))
+                                style="display:none;"
+                             @endif
+                        >
+                            <dd class="col-sm-8">
+                                @foreach($student->stats->accepted_by as $accepted_record)
+                                    <div>{{ $accepted_record['profile_name'] ?? 'n/a' }}</div>
+                                @endforeach
+                            </dd>
+                        </div>
                     @endif
                 @endif
             </dl>

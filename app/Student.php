@@ -108,6 +108,7 @@ class Student extends Model implements Auditable
         if ($accepted) {
             if (!isset($stats->accepted_by[$accepted_key])) {
                 $stats->insertData([
+                    'accepted_status_history_visibility' => '1',
                     'accepted_by' => [
                         $accepted_key => [
                             'profile' => $profile->id,
