@@ -37,11 +37,11 @@
                             <a href="{{ url('/') }}" style="text-decoration: none;">
                                 <table cellpadding="0" cellspacing="0" border="0" align="center" role="presentation">
                                     <tr>
-                                        @if(isset($settings['logo']))
+                                        @isset($settings['logo_thumb'])
                                         <td style="padding-right: 10px;">
-                                            <img src="{{ asset('img/monogram-solid-rgb-full.png') }}" alt="UT Dallas logo" width="70" height="70">
+                                            <img src="{{ $settings['logo_thumb'] }}" alt="{{ $settings['site_title'] ?? 'Profiles' }} logo" width="70" height="70">
                                         </td>
-                                        @endif
+                                        @endisset
                                         <td style="color: #ffffff; font-size: 20px; white-space: nowrap; font-family: Helvetica, Arial, sans-serif;">
                                             {{ $settings['site_title'] ?? 'Profiles' }}
                                         </td>
