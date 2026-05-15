@@ -7,7 +7,7 @@ use App\Student;
 use Livewire\Component;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
-class ToggleStudentAppAcceptedStatus extends Component
+class AcceptedStatusVisibilityToggle extends Component
 {
     use AuthorizesRequests; 
 
@@ -15,6 +15,10 @@ class ToggleStudentAppAcceptedStatus extends Component
     public $user;
 
     public Student $student;
+    
+    public int $profile_id;
+    
+    public string $profile_name;
 
     public $visible;
 
@@ -26,12 +30,14 @@ class ToggleStudentAppAcceptedStatus extends Component
         $this->syncStatsVisibility();
     }
 
-    public function updatedVisible($value)
+    public function toggleVisibility()
     {
         $this->authorize('update', [$this->student, $this->user]);
 
-        $this->stats->removeData('accepted_status_history_visibility');
-        $this->stats->insertData(['accepted_status_history_visibility' => $value ? '1' : '0']);
+        $value = $this->visible = !$this->visible;
+
+        $this->stats->removeData("accepted_by.profile_{$this->profile_id}.visible");
+        $this->stats->insertData(['accepted_by' => ["profile_{$this->profile_id}" => ['visible' => $value ? '1' : '0']]]);
         $this->emit('alert', $value
             ? "Now Displaying Last Accepted Status!"
             : "Last Accepted Status is Hidden Now.",
@@ -44,6 +50,6 @@ class ToggleStudentAppAcceptedStatus extends Component
     private function syncStatsVisibility()
     {
         $this->stats = $this->student->fresh()->stats;
-        $this->visible = !isset($this->stats->accepted_status_history_visibility) || $this->stats->accepted_status_history_visibility === '1' ? true : false;
+        $this->visible = !isset($this->stats->accepted_by["profile_{$this->profile_id}"]['visible']) || $this->stats->accepted_by["profile_{$this->profile_id}"]['visible'] === '1' ? true : false;
     }
 }

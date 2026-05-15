@@ -56,11 +56,6 @@
                     <div class="mr-2"><a class="btn btn-primary btn-sm" href="#student_feedback"><i class="fas fa-comment"></i> Feedback</a></div>
                 @endcan
             </div>
-            @can('update', $student)
-            <div class="mt-2 row">
-                <livewire:toggle-student-app-accepted-status :student="$student">
-            </div>
-            @endcan
         </div>
         <div class="col-md-4 stats alert alert-success">
             <dl class="row mb-0">
@@ -100,23 +95,34 @@
                     </dd>
                     @endif
 
-                    @if($student->stats->accepted_by && !empty($student->stats->accepted_by))
-                        <dt class="col-sm-4" title="Accepted to research with these labs" data-toggle="tooltip">
-                            accepted by
-                        </dt>
-                        <div class="row-cols-md-1"
-                             id="accepted_status_history"
-                             @if(!(!isset($student->stats->accepted_status_history_visibility) || $student->stats->accepted_status_history_visibility === '1'))
-                                style="display:none;"
-                             @endif
-                        >
-                            <dd class="col-sm-8">
-                                @foreach($student->stats->accepted_by as $accepted_record)
-                                    <div>{{ $accepted_record['profile_name'] ?? 'n/a' }}</div>
-                                @endforeach
-                            </dd>
-                        </div>
+                    <dt class="col-sm-4" title="Accepted to research with these labs" data-toggle="tooltip">
+                        accepted by
+                    </dt>
+                    <dd class="col-sm-8">
+                    @php
+                        $accepted_stats = $student->stats->accepted_by;
+                        $hidden_accepted_count = count(array_filter($accepted_stats, fn($accepted) => $accepted['visible'] === "0"));
+                    @endphp
+                    @if(count($accepted_stats) > 0)
+                        @can('update', $student)
+                            @foreach($accepted_stats as $accepted_record)
+                                <livewire:accepted-status-visibility-toggle 
+                                    :student="$student" 
+                                    :profile_id="$accepted_record['profile']" 
+                                    :profile_name="$accepted_record['profile_name']">
+                            @endforeach
+                        @else
+                            @foreach(array_filter($accepted_stats, fn($accepted) => $accepted['visible'] === "1"); as $accepted_record)
+                                <div class="col-sm-12">{{ $accepted_record['profile_name'] }}</div>
+                            @endforeach
+                            @if($hidden_accepted_count > 0)
+                                {{$hidden_accepted_count}} hidden.
+                            @endif
+                        @endcan
+                    @else
+                        n/a
                     @endif
+                    </dd>
                 @endif
             </dl>
         </div>
