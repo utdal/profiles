@@ -37,7 +37,7 @@
                 <label for="data[{{ $news->id }}][image]-img">Image</label>
                 <img class="uploaded-image w-100 d-flex" id="data[{{ $news->id }}][image]-img"
                     src="@if ($news->imageUrl != asset('/img/default.png')) {{ $news->imageUrl }} @endif">
-                <div class="custom-file form-control">
+                <div class="custom-file form-control" style="margin-bottom: 0px!important;">
                     <input type="file" id="data[{{ $news->id }}][image]" name="data[{{ $news->id }}][image]"
                         accept="image/*" class="custom-file-input clickable">
                     <label id="label-{{ $news->id }}" for="data[{{ $news->id }}][image]"
@@ -45,6 +45,12 @@
                         {{ $news->image->file_name ?? 'Select an image' }}
                     </label>
                 </div>
+                <small class="form-text text-muted"> Image requirements <a role="button" tabindex="0" aria-label="image requirements information" data-toggle="popover" data-trigger="focus" data-popover-content="#img-rules"><i class="fas fa-question-circle"></i></a></small>
+                <div id="img-rules" style="display:none">
+                    <p class="m-1"><small>Supported file types: JPEG, PNG, GIF, BMP, SVG, and WebP.</small></p>
+                    <p class="m-1"><small>Maximum file size: 10 MB.</small></p>
+                    <p class="m-1"><small>Maximum file name lentgh: 200 characters.</small></p>
+	    		</div>
                 @foreach ($errors->get("data.{$news->id}.image") as $image_error)
                     @include('alert', ['message' => $image_error, 'type' => 'danger'])
                     <p class="d-block invalid-feedback"><i class="fas fa-asterisk"></i> {!! $image_error !!}</p>
