@@ -2,14 +2,21 @@
 
 namespace App\Http\Requests\Concerns;
 
+use App\Rules\FilenameLengthRule;
+
 trait HasImageUploads
 {
-    public function uploadedImageRules(): string
+    public function uploadedImageRules(): array
     {
         $max_filesize = $this->maxFilesize() * 1000;
         $allowed_mimes = implode(',', $this->supportedMimes());
 
-        return "mimes:$allowed_mimes|min:1|max:$max_filesize";
+        return [
+            "mimes:{$allowed_mimes}",
+            "min:1",
+            "max:{$max_filesize}",
+            new FilenameLengthRule(maxLength: 200),
+        ];
     }
 
     public function uploadedImageMessages(string $rule): string
