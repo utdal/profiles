@@ -6,6 +6,12 @@
 			<label for="file">Icon</label>
 			<img id="file-img" class="profile_photo" src="{{ $profile->imageUrl }}" />
 			<br />
+			<small class="form-text text-muted"> Image requirements <a role="button" tabindex="0" aria-label="image requirements information" data-toggle="popover" data-trigger="focus" data-popover-content="#img-rules"><i class="fas fa-question-circle"></i></a></small>
+			<div id="img-rules" style="display:none">
+				<p class="m-1"><small>Supported file types: JPEG, PNG, GIF, BMP, SVG, and WebP.</small></p>
+				<p class="m-1"><small>Maximum file size: 10 MB.</small></p>
+				<p class="m-1"><small>Maximum file name lentgh: 200 characters.</small></p>
+			</div>
 			<br />
 			<div class="control-group">
 				<div class="controls">
@@ -24,6 +30,7 @@
 			<label for="banner">Banner</label>
 			<img id="banner-img" class="profile_photo" src="{{ $profile->banner_url }}" />
 			<br />
+				<small class="form-text text-muted"> Image requirements <a role="button" tabindex="0" aria-label="image requirements information" data-toggle="popover" data-trigger="focus" data-popover-content="#img-rules"><i class="fas fa-question-circle"></i></a></small>
 			<br />
 			<div class="control-group">
 				<div class="controls">
