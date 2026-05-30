@@ -9,47 +9,45 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class AcceptedStatusVisibilityToggle extends Component
 {
-    use AuthorizesRequests; 
+    use AuthorizesRequests;
 
     /** @var User */
     public $user;
 
     public Student $student;
-    
-    public int $profile_id;
-    
-    public string $profile_name;
 
-    public $visible;
+    public $accepted_stats;
 
-    public $stats;
+    public $visibility_map = [];
 
-    public function mount()
+    public function mount($student, $accepted_stats)
     {
-        $this->user = auth()->user();
-        $this->syncStatsVisibility();
+        $this->student = $student;
+
+        foreach ($accepted_stats as $profile_key => $record) {
+            $this->visibility_map[$profile_key] = !isset($record['visible']) || $record['visible'] === '1';
+        }
     }
 
-    public function toggleVisibility()
+    public function saveDisplayPreferences()
     {
         $this->authorize('update', [$this->student, $this->user]);
 
-        $value = $this->visible = !$this->visible;
-
-        $this->stats->removeData("accepted_by.profile_{$this->profile_id}.visible");
-        $this->stats->insertData(['accepted_by' => ["profile_{$this->profile_id}" => ['visible' => $value ? '1' : '0']]]);
-        $this->emit('alert', $value
-            ? "Now Displaying Last Accepted Status!"
-            : "Last Accepted Status is Hidden Now.",
-            'success'
-        );
-
-        $this->syncStatsVisibility();
+        foreach ($this->visibility_map as $profile_key => $visible) {
+            $this->student->stats->removeData("accepted_by.{$profile_key}.visible");
+            $this->student->stats->insertData([
+                'accepted_by' => [
+                    $profile_key => ['visible' => $visible ? '1' : '0']
+                ]
+            ]);
+        }
+        $this->refreshAcceptedStatusVisibility();
+        $this->emit('alert', 'Display preferences saved!', 'success');
     }
 
-    private function syncStatsVisibility()
+    public function refreshAcceptedStatusVisibility()
     {
-        $this->stats = $this->student->fresh()->stats;
-        $this->visible = !isset($this->stats->accepted_by["profile_{$this->profile_id}"]['visible']) || $this->stats->accepted_by["profile_{$this->profile_id}"]['visible'] === '1' ? true : false;
+        $accepted_by = $this->student->fresh()->stats->accepted_by;
+        $this->dispatchBrowserEvent('refreshAcceptedStatusVisibility', $accepted_by);
     }
 }

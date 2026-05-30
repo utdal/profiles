@@ -55,6 +55,39 @@
                 @can('viewFeedback', $student)
                     <div class="mr-2"><a class="btn btn-primary btn-sm" href="#student_feedback"><i class="fas fa-comment"></i> Feedback</a></div>
                 @endcan
+
+                @php
+                    $accepted_stats = $student->stats->accepted_by;
+                @endphp
+                @can('update', $student)
+                    @if(count($accepted_stats) > 0)
+                        <span class="dropdown">
+                            <button
+                                class="btn btn-sm btn-primary dropdown-toggle py-1"
+                                type="button"
+                                id="acceptedStatusVisibilityButton"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-controls="acceptedStatusVisibilityToggle"
+                                aria-expanded="false"
+                            >
+                                <i class="fas fa-eye fa-fw"></i> Display options
+                            </button>
+                            <div 
+                                id="acceptedStatusVisibilityToggle" 
+                                class="dropdown-menu p-3" 
+                                aria-labelledby="acceptedStatusVisibilityButton"
+                                style="min-width: min(300px, 90vw) !important;"
+                            >
+                                <livewire:accepted-status-visibility-toggle
+                                    :student="$student"
+                                    :accepted_stats="$accepted_stats"
+                                />
+                            </div>
+                        </span>
+                    @endif
+                @endcan
+
             </div>
         </div>
         <div class="col-md-4 stats alert alert-success">
@@ -80,49 +113,32 @@
                     @endif
 
                     @if($student->stats->status)
-                    <dt class="col-sm-4" title="How individual faculty have marked this application after reviewing it" data-toggle="tooltip">
-                        marked
-                    </dt>
-                    <dd class="col-sm-8">
-                        @foreach($student->stats->status as $stat_status => $stat_count)
-                            @if($stat_count)
-                                <div>
-                                    {{ App\ProfileStudent::$statuses[$stat_status] ?? $stat_status }}
-                                    <span class="badge">({{ $stat_count }})</span>
-                                </div>
-                            @endif
-                        @endforeach
-                    </dd>
-                    @endif
-
-                    <dt class="col-sm-4" title="Accepted to research with these labs" data-toggle="tooltip">
-                        accepted by
-                    </dt>
-                    <dd class="col-sm-8">
-                    @php
-                        $accepted_stats = $student->stats->accepted_by;
-                        $hidden_accepted_count = count(array_filter($accepted_stats, fn($accepted) => $accepted['visible'] === "0"));
-                    @endphp
-                    @if(count($accepted_stats) > 0)
-                        @can('update', $student)
-                            @foreach($accepted_stats as $accepted_record)
-                                <livewire:accepted-status-visibility-toggle 
-                                    :student="$student" 
-                                    :profile_id="$accepted_record['profile']" 
-                                    :profile_name="$accepted_record['profile_name']">
+                        <dt class="col-sm-4" title="How individual faculty have marked this application after reviewing it" data-toggle="tooltip">
+                            marked
+                        </dt>
+                        <dd class="col-sm-8">
+                            @foreach($student->stats->status as $stat_status => $stat_count)
+                                @if($stat_count)
+                                    <div>
+                                        {{ App\ProfileStudent::$statuses[$stat_status] ?? $stat_status }}
+                                        <span class="badge">({{ $stat_count }})</span>
+                                    </div>
+                                @endif
                             @endforeach
+                        </dd>
+                        @if(count($accepted_stats) > 0)
+                            <dt class="col-sm-4" title="Accepted to research with these labs" data-toggle="tooltip">
+                                accepted by
+                            </dt>
+                            <dd id="accepted_status_history">
+                                @foreach(array_filter($accepted_stats, fn($accepted) => $accepted['visible'] === "1" || !isset($accepted['visible'])) as $accepted_record)
+                                    <div class="col-sm-12">{{ $accepted_record['profile_name'] }}</div>
+                                @endforeach
+                            </dd>
                         @else
-                            @foreach(array_filter($accepted_stats, fn($accepted) => $accepted['visible'] === "1"); as $accepted_record)
-                                <div class="col-sm-12">{{ $accepted_record['profile_name'] }}</div>
-                            @endforeach
-                            @if($hidden_accepted_count > 0)
-                                {{$hidden_accepted_count}} hidden.
-                            @endif
-                        @endcan
-                    @else
-                        n/a
+                            n/a
+                        @endif
                     @endif
-                    </dd>
                 @endif
             </dl>
         </div>
@@ -141,3 +157,19 @@
 </div>
 
 @stop
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const download_in_process_card = document.getElementById('download_in_process_card');
+
+        window.addEventListener('refreshAcceptedStatusVisibility', event => {
+            const container = document.getElementById('accepted_status_history');
+            const profiles = event.detail;
+
+            container.innerHTML = Object.values(profiles)
+                .filter(record => !record.visible || record.visible === '1')
+                .map(record => `<div class="col-sm-12">${record.profile_name}</div>`)
+                .join('');
+        });
+    });
+</script>
