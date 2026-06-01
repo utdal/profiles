@@ -1,12 +1,12 @@
 <div>
-    <small class="form-text text-muted mb-4">Use this option to toggle the visibility of research work in the statistics section of your application
+    <small class="form-text text-muted mb-4">Toggle the visibility of any previous or current research work in the statistics section of your application
         <a role="button" tabindex="0" aria-label="visibility information" data-toggle="popover" data-trigger="hover focus" data-popover-content="#accepted-visibility-info">
             <i class="fas fa-question-circle"></i>
         </a>
     </small>
 
     <div id="accepted-visibility-info" style="display: none;">
-        Display relevant researchers' names you've worked with or hide any once the collaboration has ended to show your availability.
+        Display relevant researchers' names you've worked with or hide any once the collaboration has ended.
     </div>
 
     <form wire:submit.prevent="saveDisplayPreferences">
@@ -29,8 +29,16 @@
                 </div>
             </div>
         @endforeach
+        
         <div class="row justify-content-end pr-4 pt-2">
-            <button type="submit" class="btn btn-primary btn-sm">Save</button>
+            <button wire:loading.remove wire:target="saveDisplayPreferences" type="submit" class="btn btn-primary btn-sm">Save</button>
+            
+            <div wire:loading wire:target="saveDisplayPreferences">
+                <button type="submit" class="btn btn-default btn-sm">
+                    <i class="fas fa-spinner fa-spin fa-fw"></i> Saving preferences...
+                </button>
+            </div>
         </div>
+
     </form>
 </div>
