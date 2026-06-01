@@ -126,18 +126,20 @@
                                 @endif
                             @endforeach
                         </dd>
-                        @if(count($accepted_stats) > 0)
-                            <dt class="col-sm-4" title="Accepted to research with these labs" data-toggle="tooltip">
-                                accepted by
-                            </dt>
-                            <dd id="accepted_status_history">
-                                @foreach(array_filter($accepted_stats, fn($accepted) => $accepted['visible'] === "1" || !isset($accepted['visible'])) as $accepted_record)
-                                    <div class="col-sm-12">{{ $accepted_record['profile_name'] }}</div>
-                                @endforeach
-                            </dd>
-                        @else
-                            n/a
-                        @endif
+                        <dt class="col-sm-4" title="Accepted to research with these labs" data-toggle="tooltip">
+                            accepted by
+                        </dt>
+                        <dd class="col-sm-8">
+                            @if(count($accepted_stats) > 0)
+                                <span id="accepted_status_history">
+                                    @foreach(array_filter($accepted_stats, fn($accepted) => $accepted['visible'] === "1" || !isset($accepted['visible'])) as $accepted_record)
+                                      <div>{{ $accepted_record['profile_name'] }}</div>
+                                    @endforeach
+                                </span>
+                            @else
+                                n/a
+                            @endif
+                        </dd>
                     @endif
                 @endif
             </dl>
@@ -168,7 +170,7 @@
 
             container.innerHTML = Object.values(profiles)
                 .filter(record => !record.visible || record.visible === '1')
-                .map(record => `<div class="col-sm-12">${record.profile_name}</div>`)
+                .map(record => `<div>${record.profile_name}</div>`)
                 .join('');
         });
     });
