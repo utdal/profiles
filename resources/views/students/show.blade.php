@@ -53,7 +53,7 @@
                     <livewire:bookmark-button :model="$student">
                 @endif
                 @can('viewFeedback', $student)
-                    <div class="mr-2"><a class="btn btn-primary btn-sm" href="#student_feedback"><i class="fas fa-comment"></i> Feedback</a></div>
+                    <div class="mr-2 ml-2"><a class="btn btn-primary btn-sm" href="#student_feedback"><i class="fas fa-comment"></i> Feedback</a></div>
                 @endcan
 
                 @php
