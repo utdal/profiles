@@ -57,7 +57,7 @@
                 @endcan
 
                 @php
-                    $accepted_stats = $student->stats->accepted_by;
+                    $accepted_stats = $student->stats->accepted_by ?? [];
                 @endphp
                 @can('update', $student)
                     @if(count($accepted_stats) > 0)
