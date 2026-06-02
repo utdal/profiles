@@ -6,7 +6,7 @@
     </small>
 
     <div id="accepted-visibility-info" style="display: none;">
-        Display relevant researchers' names you've worked with or hide any once the collaboration has ended.
+        Display relevant researchers' names you've worked with or hide them once the collaboration has ended.
     </div>
 
     <form wire:submit.prevent="saveDisplayPreferences">
