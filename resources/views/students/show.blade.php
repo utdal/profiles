@@ -132,7 +132,7 @@
                         <dd class="col-sm-8">
                             @if(count($accepted_stats) > 0)
                                 <span id="accepted_status_history">
-                                    @foreach(array_filter($accepted_stats, fn($accepted) => $accepted['visible'] === "1" || !isset($accepted['visible'])) as $accepted_record)
+                                    @foreach(array_filter($accepted_stats, fn($accepted) => !isset($accepted['visible']) || $accepted['visible'] === "1") as $accepted_record)
                                       <div>{{ $accepted_record['profile_name'] }}</div>
                                     @endforeach
                                 </span>
