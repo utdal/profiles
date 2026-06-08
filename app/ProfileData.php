@@ -182,6 +182,174 @@ class ProfileData extends Model implements HasMedia, Auditable
     }
 
     /**
+     * Build a citation string from the patent's title and members.
+     *
+     * Format: "Title - Country - Number (mm/dd/yyyy), Country - pending - Number (mm/dd/yyyy), ..."
+     *
+     * - Granted members: "Country - Number (issued_date)"
+     * - Pending members: "Country - pending - Number (filed_date)"
+     * - European countries sharing a patent number collapse into one "EPO - Number" entry
+     *   using the earliest issued_date among them
+     */
+    public function getCitationAttribute(): ?string
+    {
+        if ($this->type !== 'patents') {
+            return null;
+        }
+
+        $data = $this->data;
+        $title = trim((string) ($data['title'] ?? ''));
+        $co_inventors = trim((string) ($data['co_inventors'] ?? ''));
+        $members = $data['members'] ?? [];
+
+        if (!is_array($members) || empty($members)) {
+            $base = $title !== '' ? $title : null;
+            if ($base !== null && $co_inventors !== '') {
+                return "{$base} - co-inventors: {$co_inventors}";
+            }
+            return $base;
+        }
+
+        $entries = [];
+        $ep_buckets = [];
+
+        $european_countries = [
+            'European', 'Belgium', 'Switzerland', 'Germany', 'Spain', 'France',
+            'United Kingdom', 'Ireland', 'Italy', 'The Netherlands',
+        ];
+
+        foreach ($members as $member) {
+            $country = trim((string) ($member['country'] ?? ''));
+            $status = $member['status'] ?? 'granted';
+            $patent_no = trim((string) ($member['patent_no'] ?? ''));
+            $internal_id = trim((string) ($member['patent_internal_id'] ?? ''));
+
+            $identifier = $patent_no !== '' ? $patent_no : $internal_id;
+            if ($country === '' || $identifier === '') {
+                continue;
+            }
+
+            if ($status === 'granted'
+                && $patent_no !== ''
+                && in_array($country, $european_countries, true)) {
+
+                $date_str = trim((string) ($member['issued_date'] ?? ''));
+                $date_sortable = $this->dateSortable($date_str);
+
+                if (!isset($ep_buckets[$patent_no])) {
+                    $ep_buckets[$patent_no] = [
+                        'patent_no' => $patent_no,
+                        'date_display' => $this->formatCitationDate($date_str),
+                        'date_sortable' => $date_sortable,
+                    ];
+                } elseif ($date_sortable < $ep_buckets[$patent_no]['date_sortable']) {
+                    $ep_buckets[$patent_no]['date_display'] = $this->formatCitationDate($date_str);
+                    $ep_buckets[$patent_no]['date_sortable'] = $date_sortable;
+                }
+                continue;
+            }
+
+            $entries[] = $this->formatCitationMember($member);
+        }
+
+        foreach ($ep_buckets as $bucket) {
+            $entry = "EPO - {$bucket['patent_no']}";
+            if ($bucket['date_display'] !== '') {
+                $entry .= " ({$bucket['date_display']})";
+            }
+            $entries[] = $entry;
+        }
+
+        $entries = array_filter($entries, fn ($e) => $e !== null && $e !== '');
+
+        if (empty($entries)) {
+            $base = $title !== '' ? $title : null;
+            if ($base !== null && $co_inventors !== '') {
+                return "{$base} - co-inventors: {$co_inventors}";
+            }
+            return $base;
+        }
+
+        $citation = $title !== ''
+            ? "{$title} - " . implode(', ', $entries)
+            : implode(', ', $entries);
+
+        if ($co_inventors !== '') {
+            $citation .= " - co-inventors: {$co_inventors}";
+        }
+
+        return $citation;
+    }
+
+    /**
+     * Format a single member as a citation entry.
+     */
+    private function formatCitationMember(array $member): ?string
+    {
+        $country = trim((string) ($member['country'] ?? ''));
+        $status = $member['status'] ?? 'granted';
+        $patent_no = trim((string) ($member['patent_no'] ?? ''));
+        $internal_id = trim((string) ($member['patent_internal_id'] ?? ''));
+
+        $identifier = $patent_no !== '' ? $patent_no : $internal_id;
+        if ($country === '' || $identifier === '') {
+            return null;
+        }
+
+        $country_display = match ($country) {
+            'European' => 'EPO',
+            'United States' => 'US',
+            'Korea (Republic of)' => 'Korea',
+            default => $country,
+        };
+
+        $date_field = $status === 'pending' ? 'filed_date' : 'issued_date';
+        $date_str = trim((string) ($member[$date_field] ?? ''));
+        $date_display = $this->formatCitationDate($date_str);
+
+        $entry = $country_display;
+        if ($status === 'pending') {
+            $entry .= ' - pending';
+        }
+        $entry .= " - {$identifier}";
+        if ($date_display !== '') {
+            $entry .= " ({$date_display})";
+        }
+
+        return $entry;
+    }
+
+    /**
+     * Format a date string as mm/dd/yyyy. Returns empty string if unparseable.
+     */
+    private function formatCitationDate(string $date_str): string
+    {
+        if ($date_str === '') {
+            return '';
+        }
+        try {
+            return \Carbon\Carbon::parse($date_str)->format('m/d/Y');
+        } catch (\Throwable) {
+            return '';
+        }
+    }
+
+    /**
+     * Return a sortable integer (YYYYMMDD) from a date string. Returns PHP_INT_MAX if unparseable.
+     */
+    private function dateSortable(string $date_str): int
+    {
+        if ($date_str === '') {
+            return PHP_INT_MAX;
+        }
+        try {
+            return (int) \Carbon\Carbon::parse($date_str)->format('Ymd');
+        } catch (\Throwable) {
+            return PHP_INT_MAX;
+        }
+    }
+
+    /**
      * Get the image URL. ($this->image_url)
      *
      * @return string
@@ -248,6 +416,17 @@ class ProfileData extends Model implements HasMedia, Auditable
     public function scopeAwards($query)
     {
         return $query->where('type', 'awards');
+    }
+
+    /**
+     * Query scope for patents
+     *
+     * @param  \Illuminate\Database\Query\Builder $query
+     * @return \Illuminate\Database\Query\Builder
+     */
+    public function scopePatents($query)
+    {
+        return $query->where('type', 'patents');
     }
 
     /**

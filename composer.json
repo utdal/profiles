@@ -16,6 +16,7 @@
         "league/flysystem-aws-s3-v3": "^3.0",
         "livewire/livewire": "^2.10",
         "owen-it/laravel-auditing": "^13.0",
+        "phpoffice/phpspreadsheet": "^5.7",
         "predis/predis": "^1.1",
         "sentry/sentry-laravel": "^4.15.0",
         "spatie/browsershot": "^5.1.0",

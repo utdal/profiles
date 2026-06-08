@@ -767,6 +767,17 @@ class Profile extends Model implements HasMedia, Auditable
     {
         return $this->data()->awards();
     }
+    
+    /**
+     * This has many patents.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+
+    public function patents()
+    {
+        return $this->data()->patents();
+    }
 
     /**
      * This has many areas.
