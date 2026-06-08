@@ -75,7 +75,7 @@
                             </button>
                             <div 
                                 id="acceptedStatusVisibilityToggle" 
-                                class="dropdown-menu p-3" 
+                                class="dropdown-menu p-3 alert-success" 
                                 aria-labelledby="acceptedStatusVisibilityButton"
                                 style="min-width: min(300px, 90vw) !important;"
                             >

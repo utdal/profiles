@@ -1,12 +1,15 @@
 <div>
-    <small class="form-text text-muted mb-4">Toggle the visibility of any previous or current research work in the statistics section of your application
-        <a role="button" tabindex="0" aria-label="visibility information" data-toggle="popover" data-trigger="hover focus" data-popover-content="#accepted-visibility-info">
-            <i class="fas fa-question-circle"></i>
-        </a>
-    </small>
-
+    <strong>Accepted by </strong>
+    <a role="button" tabindex="0" aria-label="visibility information" data-toggle="popover" data-trigger="hover focus" data-popover-content="#accepted-visibility-info">
+        <i class="fas fa-question-circle"></i>
+    </a>
+    </br>
+    </br>
+    
     <div id="accepted-visibility-info" style="display: none;">
-        Display relevant researchers' names you've worked with or hide them once the collaboration has ended.
+        <small class="form-text text-muted mb-4">
+            Toggle the visibility of any previous or current relevant research work in the statistics section
+        </small>
     </div>
 
     <form wire:submit.prevent="saveDisplayPreferences">
