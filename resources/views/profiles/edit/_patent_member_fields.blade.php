@@ -1,0 +1,62 @@
+<div class="row ml-1">
+    <div class="col col-lg-2 col-12">
+        <label for="data[{{ $parent_id }}][data][members][patent_{{ $index }}][patent_no]">Number</label>
+        <input type="text" class="form-control"
+               id="data[{{ $parent_id }}][data][members][patent_{{ $index }}][patent_no]"
+               name="data[{{ $parent_id }}][data][members][patent_{{ $index }}][patent_no]"
+               value="{{ $member['patent_no'] ?? '' }}">
+    </div>
+
+    <div class="col col-lg-2 col-12">
+        <label for="data[{{ $parent_id }}][data][members][patent_{{ $index }}][country]">Country</label>
+        <input type="text" class="form-control"
+               id="data[{{ $parent_id }}][data][members][patent_{{ $index }}][country]"
+               name="data[{{ $parent_id }}][data][members][patent_{{ $index }}][country]"
+               value="{{ $member['country'] ?? '' }}">
+    </div>
+
+    <div class="col col-lg-2 col-12">
+        <label for="data[{{ $parent_id }}][data][members][patent_{{ $index }}][status]">Status</label>
+        <select class="form-control"
+                id="data[{{ $parent_id }}][data][members][patent_{{ $index }}][status]"
+                name="data[{{ $parent_id }}][data][members][patent_{{ $index }}][status]">
+            @php $current_status = $member['status'] ?? 'granted'; @endphp
+            <option value="granted" {{ $current_status === 'granted' ? 'selected' : '' }}>Granted</option>
+            <option value="pending" {{ $current_status === 'pending' ? 'selected' : '' }}>Pending</option>
+            <option value="expired" {{ $current_status === 'expired' ? 'selected' : '' }}>Expired</option>
+        </select>
+    </div>
+
+    <div class="col col-lg-2 col-12">
+        <label for="data[{{ $parent_id }}][data][members][patent_{{ $index }}][filed_date]">Filed Date</label>
+        <input type="text" class="form-control datepicker month"
+               id="data[{{ $parent_id }}][data][members][patent_{{ $index }}][filed_date]"
+               name="data[{{ $parent_id }}][data][members][patent_{{ $index }}][filed_date]"
+               value="{{ $member['filed_date'] ?? '' }}">
+    </div>
+
+    <div class="col col-lg-2 col-12">
+        <label for="data[{{ $parent_id }}][data][members][patent_{{ $index }}][issued_date]">Issued Date</label>
+        <input type="text" class="form-control datepicker month"
+               id="data[{{ $parent_id }}][data][members][patent_{{ $index }}][issued_date]"
+               name="data[{{ $parent_id }}][data][members][patent_{{ $index }}][issued_date]"
+               value="{{ $member['issued_date'] ?? '' }}">
+    </div>
+
+    <div class="col col-lg-1 col-12 subrecord-actions d-flex justify-content-end">
+        <button type="button" class="btn btn-sm subrow-duplicate" title="Duplicate this member">
+            <i class="fas fa-copy text-secondary"></i>
+        </button>
+        <button type="button" class="btn btn-sm trash" title="Remove this member">
+            <i class="fas fa-times text-danger"></i>
+        </button>
+    </div>
+
+    <div class="col col-lg-8 col-12 mt-2">
+        <label for="data[{{ $parent_id }}][data][members][patent_{{ $index }}][title]">Title <small class="text-muted">(optional)</small></label>
+        <input type="text" class="form-control"
+               id="data[{{ $parent_id }}][data][members][patent_{{ $index }}][title]"
+               name="data[{{ $parent_id }}][data][members][patent_{{ $index }}][title]"
+               value="{{ $member['title'] ?? '' }}">
+    </div>
+</div>

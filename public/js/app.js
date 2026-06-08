@@ -252,6 +252,19 @@ var profiles = function ($, undefined) {
         item_container.append(new_item);
       }
       $(new_item).slideDown();
+      if (new_item.dataset.supportsSubrows === 'true') {
+        var subrecords_container = new_item.querySelector('.subrecords');
+        if (subrecords_container) {
+          // Remove any cloned subrecords (template stays, real ones get cleared for a fresh row)
+          subrecords_container.querySelectorAll(':scope > .subrecord:not(.template)').forEach(function (el) {
+            return el.remove();
+          });
+          subrecords_container.dataset.nextSubrowId = '0';
+          subrecords_container.style.display = 'none';
+        }
+        update_subrecord_count(new_item);
+        auto_expand_subrecords(new_item);
+      }
     }
   };
 
@@ -606,20 +619,215 @@ var profiles = function ($, undefined) {
       icon.className = "fas fa-play";
     }
   };
+
+  /**
+   * Toggle expand/collapse of the subrecords section for a parent row.
+   *
+   * @param {Event} event
+   */
+  var toggle_subrecords = function toggle_subrecords(event) {
+    var button = event.currentTarget;
+    var row = button.closest('.record');
+    var subrecords = row === null || row === void 0 ? void 0 : row.querySelector('.subrecords');
+    if (!subrecords) return;
+    var is_expanded = button.getAttribute('aria-expanded') === 'true';
+    button.setAttribute('aria-expanded', String(!is_expanded));
+    var icon = button.querySelector('i');
+    if (icon) {
+      icon.classList.toggle('fa-chevron-right', is_expanded);
+      icon.classList.toggle('fa-chevron-down', !is_expanded);
+    }
+    if (is_expanded) {
+      $(subrecords).slideUp(200);
+    } else {
+      $(subrecords).slideDown(200);
+    }
+  };
+
+  /**
+   * Update the badge showing the number of subrecords for a parent row.
+   *
+   * @param {HTMLElement} row - the parent .record element
+   */
+  var update_subrecord_count = function update_subrecord_count(row) {
+    if (!row) return;
+    var count = row.querySelectorAll('.subrecords > .subrecord:not(.template)').length;
+    var badge = row.querySelector('.subrecord-count');
+    if (badge) {
+      badge.textContent = String(count);
+    }
+  };
+
+  /**
+   * Set the initial expanded/collapsed state of a row's subrecords section.
+   * Expanded if any subrecords exist, collapsed if empty.
+   *
+   * @param {HTMLElement} row - the parent .record element
+   */
+  var auto_expand_subrecords = function auto_expand_subrecords(row) {
+    if (!row || row.dataset.supportsSubrows !== 'true') return;
+    var subrecords = row.querySelector('.subrecords');
+    var button = row.querySelector('[data-toggle-subrecords]');
+    if (!subrecords || !button) return;
+    var count = subrecords.querySelectorAll(':scope > .subrecord:not(.template)').length;
+    var should_expand = count > 0;
+    button.setAttribute('aria-expanded', String(should_expand));
+    var icon = button.querySelector('i');
+    if (icon) {
+      icon.classList.toggle('fa-chevron-down', should_expand);
+      icon.classList.toggle('fa-chevron-right', !should_expand);
+    }
+    subrecords.style.display = should_expand ? 'block' : 'none';
+  };
+
+  /**
+   * Replace placeholder strings in a subrecord clone's name/id/for attributes.
+   *
+   * @param {HTMLElement} element - the cloned subrecord
+   * @param {string} parent_id - the parent row's data-row-id
+   * @param {string} subrow_id - the new subrow's data-subrow-id
+   */
+  var reindex_subrecord = function reindex_subrecord(element, parent_id, subrow_id) {
+    ['name', 'id', 'for'].forEach(function (attr) {
+      element.querySelectorAll("[".concat(attr, "]")).forEach(function (field) {
+        var original = field.getAttribute(attr);
+        if (original) {
+          field.setAttribute(attr, original.replace(/__parent__/g, parent_id).replace(/__index__/g, subrow_id));
+        }
+      });
+    });
+  };
+
+  /**
+   * Wire up the click handlers and pickers for a single subrow.
+   *
+   * @param {HTMLElement} subrow
+   */
+  var wire_subrow_actions = function wire_subrow_actions(subrow) {
+    subrow.querySelectorAll('.trash').forEach(function (el) {
+      $(el).off('click.subrow').on('click.subrow', remove_subrow);
+    });
+    subrow.querySelectorAll('.subrow-duplicate').forEach(function (el) {
+      $(el).off('click.subrow').on('click.subrow', duplicate_subrow);
+    });
+    subrow.querySelectorAll('.datepicker.year').forEach(function (el) {
+      $(el).datepicker(config.datepicker.year);
+    });
+    subrow.querySelectorAll('.datepicker.month').forEach(function (el) {
+      $(el).datepicker(config.datepicker.month);
+    });
+  };
+
+  /**
+   * Add a new (empty) subrecord row to a parent row's subrecords container.
+   *
+   * @param {Event} event - triggered by clicking [data-toggle="add_subrow"]
+   */
+  var add_subrow = function add_subrow(event) {
+    var button = event.currentTarget;
+    var row = button.closest('.record');
+    if (!row || row.dataset.supportsSubrows !== 'true') return;
+    var subrecords = row.querySelector('.subrecords');
+    var template = subrecords === null || subrecords === void 0 ? void 0 : subrecords.querySelector('.subrecord.template');
+    if (!subrecords || !template) return;
+    var parent_id = row.dataset.rowId;
+    var next_id = subrecords.dataset.nextSubrowId || '0';
+    subrecords.dataset.nextSubrowId = String(Number(next_id) + 1);
+    var new_subrow = template.cloneNode(true);
+    new_subrow.classList.remove('template');
+    new_subrow.dataset.subrowId = next_id;
+    new_subrow.style.display = '';
+    reindex_subrecord(new_subrow, parent_id, next_id);
+    wire_subrow_actions(new_subrow);
+    $(new_subrow).hide();
+    subrecords.appendChild(new_subrow);
+    $(new_subrow).slideDown(200);
+
+    // Make sure the section is expanded after adding
+    var toggle = row.querySelector('[data-toggle-subrecords]');
+    if (toggle && toggle.getAttribute('aria-expanded') !== 'true') {
+      toggle.click();
+    }
+    update_subrecord_count(row);
+  };
+
+  /**
+   * Duplicate an existing subrecord (copying its values) and append after it.
+   *
+   * @param {Event} event - triggered by clicking .subrow-duplicate
+   */
+  var duplicate_subrow = function duplicate_subrow(event) {
+    var button = event.currentTarget;
+    var source = button.closest('.subrecord');
+    var row = button.closest('.record');
+    var subrecords = row === null || row === void 0 ? void 0 : row.querySelector('.subrecords');
+    if (!source || !row || !subrecords) return;
+    var next_id = subrecords.dataset.nextSubrowId || '0';
+    subrecords.dataset.nextSubrowId = String(Number(next_id) + 1);
+    var new_subrow = source.cloneNode(true);
+    new_subrow.dataset.subrowId = next_id;
+
+    // Rename name/id/for attributes from source index to next_id
+    var search_for = new RegExp("\\[members\\]\\[patent_".concat(source.dataset.subrowId, "\\]"), 'g');
+    var replace_with = "[members][patent_".concat(next_id, "]");
+    ['name', 'id', 'for'].forEach(function (attr) {
+      new_subrow.querySelectorAll("[".concat(attr, "]")).forEach(function (field) {
+        var original = field.getAttribute(attr);
+        if (original) {
+          field.setAttribute(attr, original.replace(search_for, replace_with));
+        }
+      });
+    });
+
+    // Copy actual input VALUES (cloneNode doesn't copy user-entered values)
+    var source_inputs = source.querySelectorAll('input, textarea, select');
+    var new_inputs = new_subrow.querySelectorAll('input, textarea, select');
+    source_inputs.forEach(function (src, i) {
+      if (new_inputs[i]) new_inputs[i].value = src.value;
+    });
+    wire_subrow_actions(new_subrow);
+    $(new_subrow).hide();
+    source.insertAdjacentElement('afterend', new_subrow);
+    $(new_subrow).slideDown(200);
+    update_subrecord_count(row);
+  };
+
+  /**
+   * Remove a subrecord row.
+   *
+   * @param {Event} event - triggered by clicking .trash inside a subrecord
+   */
+  var remove_subrow = function remove_subrow(event) {
+    var button = event.currentTarget;
+    var subrow = button.closest('.subrecord');
+    var row = button.closest('.record');
+    if (!subrow || !row) return;
+    $(subrow).slideUp(200, function () {
+      subrow.remove();
+      update_subrecord_count(row);
+    });
+  };
   return {
     add_row: add_row,
+    add_subrow: add_subrow,
+    auto_expand_subrecords: auto_expand_subrecords,
     clear_row: clear_row,
     config: config,
     deobfuscate_mail_links: deobfuscate_mail_links,
+    duplicate_subrow: duplicate_subrow,
     on_list_updated: on_list_updated,
     preview_selected_image: preview_selected_image,
+    remove_subrow: remove_subrow,
     replace_icon: replace_icon,
     registerTagEditors: registerTagEditors,
     registerProfilePickers: registerProfilePickers,
     toast: toast,
     toggle_class: toggle_class,
     toggle_show: toggle_show,
+    toggle_subrecords: toggle_subrecords,
+    update_subrecord_count: update_subrecord_count,
     wait_when_submitting: wait_when_submitting,
+    wire_subrow_actions: wire_subrow_actions,
     registerVideoControls: registerVideoControls
   };
 }(jQuery);
@@ -700,6 +908,21 @@ $(function () {
   if (document.querySelectorAll('.video-cover video').length > 0 && document.querySelectorAll('.video-cover .video-control').length > 0) {
     profiles.registerVideoControls();
   }
+
+  // Subrecords: expand/collapse toggle (delegated so it works for new rows too)
+  $(document).on('click', '[data-toggle-subrecords]', profiles.toggle_subrecords);
+
+  // Subrecords: add new subrow (delegated)
+  $(document).on('click', '[data-toggle="add_subrow"]', profiles.add_subrow);
+
+  // Subrecords: initialize state and wire actions on existing rows
+  document.querySelectorAll('.record[data-supports-subrows="true"]').forEach(function (row) {
+    profiles.update_subrecord_count(row);
+    profiles.auto_expand_subrecords(row);
+    row.querySelectorAll('.subrecords > .subrecord:not(.template)').forEach(function (subrow) {
+      profiles.wire_subrow_actions(subrow);
+    });
+  });
 });
 
 // Trix editor settings
