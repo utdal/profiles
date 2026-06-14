@@ -2,69 +2,75 @@
 
 namespace App\Traits;
 
-use PhpOffice\PhpSpreadsheet\IOFactory;
+use Carbon\Carbon;
+use RuntimeException;
 
 trait ReadsPatentSpreadsheets
 {
     /**
-     * Read a CSV or XLSX file and return rows keyed by header name.
-     * Optionally targets a specific sheet by name; defaults to the active sheet.
+     * Read a CSV file and return rows keyed by header name.
      *
-     * @return array<int, array<string, mixed>>
+     * Expects: UTF-8 encoded CSV with a header row.
+     * Excel "CSV UTF-8" export works; "CSV (Comma delimited)" may need manual
+     * encoding conversion if your data has non-ASCII characters.
      */
-    protected function readSpreadsheetRows(string $path, ?string $sheetName = null): array
+    protected function readSpreadsheetRows(string $path): array
     {
-        $spreadsheet = IOFactory::load($path);
-
-        if ($sheetName) {
-            $sheet = null;
-            foreach ($spreadsheet->getAllSheets() as $s) {
-                if (strcasecmp($s->getTitle(), $sheetName) === 0) {
-                    $sheet = $s;
-                    break;
-                }
-            }
-            $sheet ??= $spreadsheet->getActiveSheet();
-        } else {
-            $sheet = $spreadsheet->getActiveSheet();
+        if (! is_file($path)) {
+            throw new RuntimeException("File not found: {$path}");
         }
 
-        $data = $sheet->toArray(null, true, true, false);
-
-        if (count($data) < 2) {
-            return [];
+        $handle = fopen($path, 'r');
+        if ($handle === false) {
+            throw new RuntimeException("Could not open file: {$path}");
         }
 
-        $headers = array_map(fn ($h) => trim((string) $h), array_shift($data));
+        $headers = fgetcsv($handle);
+        if ($headers === false) {
+            fclose($handle);
+            throw new RuntimeException("Empty file or invalid CSV: {$path}");
+        }
+
+        // Strip UTF-8 BOM from first header (Excel "CSV UTF-8" adds one)
+        $headers[0] = preg_replace('/^\xEF\xBB\xBF/', '', $headers[0]);
+        $headers = array_map('trim', $headers);
+
         $rows = [];
-
-        foreach ($data as $raw) {
-            if (count(array_filter($raw, fn ($v) => $v !== null && $v !== '')) === 0) {
+        while (($row = fgetcsv($handle)) !== false) {
+            // Skip blank rows (Excel sometimes adds trailing empty rows)
+            $non_empty = array_filter($row, fn ($v) => $v !== null && trim((string) $v) !== '');
+            if (empty($non_empty)) {
                 continue;
             }
-            $assoc = [];
-            foreach ($headers as $i => $header) {
-                $assoc[$header] = $raw[$i] ?? null;
-            }
-            $rows[] = $assoc;
+
+            // Pad/truncate row to match header count
+            $row = array_pad(array_slice($row, 0, count($headers)), count($headers), '');
+
+            // Trim each value
+            $row = array_map(fn ($v) => is_string($v) ? trim($v) : $v, $row);
+
+            $rows[] = array_combine($headers, $row);
         }
+        fclose($handle);
 
         return $rows;
     }
 
-    protected function parseDate(?string $value): ?string
+    /**
+     * Parse a date string into ISO format (YYYY-MM-DD).
+     * Returns null for unparseable or empty input.
+     */
+    protected function parseDate(string $value): ?string
     {
-        if ($value === null || trim($value) === '') {
+        $value = trim($value);
+        if ($value === '') {
             return null;
         }
+
         try {
-            return \Carbon\Carbon::createFromFormat('n/j/y', trim($value))->format('Y-m-d');
-        } catch (\Throwable) {
-            try {
-                return \Carbon\Carbon::parse($value)->format('Y-m-d');
-            } catch (\Throwable) {
-                return null;
-            }
+            return Carbon::parse($value)->format('Y-m-d');
+        } catch (\Exception $e) {
+            return null;
         }
     }
 }
