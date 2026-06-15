@@ -162,20 +162,11 @@ class PatentFamilyGrouper
 
     private function buildEntry(array $group, array $co_inventor_index): array
     {
-        $countries = [];
-        $patent_numbers = [];
         $co_inventor_names = [];
 
         foreach ($group['rows'] as $r) {
             $c = trim((string) ($r['Country'] ?? ''));
-            if ($c !== '' && ! in_array($c, $countries, true)) {
-                $countries[] = $c;
-            }
-
             $p = trim((string) ($r['Patent No.'] ?? ''));
-            if ($p !== '' && ! in_array($p, $patent_numbers, true)) {
-                $patent_numbers[] = $p;
-            }
 
             $prefix = $this->familyPrefix((string) ($r['Patent Internal ID'] ?? ''));
             $co_key = $prefix . '|' . $c . '|' . $p;
@@ -199,9 +190,6 @@ class PatentFamilyGrouper
             'canonical_title' => $this->toTitleCase($group['canonical_title']),
             'normalized_title' => $group['normalized_title'],
             'family_prefix' => $group['family_prefix'],
-            'total_filings' => count($group['rows']),
-            'countries' => $countries,
-            'patent_numbers' => $patent_numbers,
             'co_inventors' => $co_inventors_formatted,
             'rows' => $group['rows'],
         ];

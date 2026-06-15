@@ -138,9 +138,6 @@ class ImportPatentsToProfilesCommand extends Command
             'title' => $entry['canonical_title'],
             'co_inventors' => $entry['co_inventors'],
             'family_prefix' => $entry['family_prefix'],
-            'total_filings' => $entry['total_filings'],
-            'countries' => $entry['countries'],
-            'patent_numbers' => $entry['patent_numbers'],
             'members' => $members,
         ];
     }
