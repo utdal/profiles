@@ -191,7 +191,7 @@ class ProfileData extends Model implements HasMedia, Auditable
      * - European countries sharing a patent number collapse into one "EPO - Number" entry
      *   using the earliest published_date among them
      */
-    public function getCitationAttribute(): ?string
+    public function getPatentCitationAttribute(): ?string
     {
         if ($this->type !== 'patents') {
             return null;
