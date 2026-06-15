@@ -674,17 +674,16 @@ var profiles = (function ($, undefined) {
         if (!row || row.dataset.supportsSubrows !== 'true') return;
 
         const subrecords = row.querySelector('.subrecords');
-        const template = subrecords?.querySelector('.subrecord.template');
+        const template = row.querySelector('template');
         if (!subrecords || !template) return;
 
         const parent_id = row.dataset.rowId;
         const next_id = subrecords.dataset.nextSubrowId || '0';
         subrecords.dataset.nextSubrowId = String(Number(next_id) + 1);
 
-        const new_subrow = template.cloneNode(true);
-        new_subrow.classList.remove('template');
+        // <template>.content is a DocumentFragment — clone its first element
+        const new_subrow = template.content.firstElementChild.cloneNode(true);
         new_subrow.dataset.subrowId = next_id;
-        new_subrow.style.display = '';
 
         reindex_subrecord(new_subrow, parent_id, next_id);
         wire_subrow_actions(new_subrow);

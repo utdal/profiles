@@ -61,13 +61,15 @@
                      style="display:none;">
 
                     {{-- Hidden template to add_subrow() to clone new members --}}
-                    <div class="subrecord template form-group" data-subrow-id="__template__" style="display:none;">
-                        @include('profiles.edit._patent_member_fields', [
-                            'parent_id' => '__parent__',
-                            'index' => '__index__',
-                            'member' => null,
-                        ])
-                    </div>
+                    <template id="patents-member-template-{{ $patent->id }}">
+                        <div class="subrecord form-group" data-subrow-id="__template__">
+                            @include('profiles.edit._patent_member_fields', [
+                                'parent_id' => '__parent__',
+                                'index' => '__index__',
+                                'member' => null,
+                            ])
+                        </div>
+                    </template>
 
                     {{-- Existing members — keys like patent_1, patent_2, ... preserved --}}
                     @foreach ($patent->members ?? [] as $member_key => $member)
