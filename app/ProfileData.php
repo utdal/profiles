@@ -189,7 +189,7 @@ class ProfileData extends Model implements HasMedia, Auditable
      * - Granted members: "jurisdiction - Number (published_date)"
      * - Pending members: "jurisdiction - pending - Number (filed_date)"
      * - European countries sharing a patent number collapse into one "EPO - Number" entry
-     *   using the earliest issued_date among them
+     *   using the earliest published_date among them
      */
     public function getCitationAttribute(): ?string
     {
@@ -233,7 +233,7 @@ class ProfileData extends Model implements HasMedia, Auditable
                 && $patent_no !== ''
                 && in_array($jurisdiction, $european_countries, true)) {
 
-                $date_str = trim((string) ($member['issued_date'] ?? ''));
+                $date_str = trim((string) ($member['published_date'] ?? ''));
                 $date_sortable = $this->dateSortable($date_str);
 
                 if (!isset($ep_buckets[$patent_no])) {
@@ -303,7 +303,7 @@ class ProfileData extends Model implements HasMedia, Auditable
             default => $jurisdiction,
         };
 
-        $date_field = $status === 'pending' ? 'filed_date' : 'issued_date';
+        $date_field = $status === 'pending' ? 'filed_date' : 'published_date';
         $date_str = trim((string) ($member[$date_field] ?? ''));
         $date_display = $this->formatCitationDate($date_str);
 

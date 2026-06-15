@@ -127,10 +127,9 @@ class ImportPatentsToProfilesCommand extends Command
                 'patent_title' => trim((string) ($r['Patent Title'] ?? '')),
                 'jurisdiction' => trim((string) ($r['Country'] ?? '')) ?: null,
                 'patent_no' => $patent_no,
-                'status' => 'granted',
+                'status' => 'published',
                 'filed_date' => null,
-                'issued_date' => $this->parseDate((string) ($r['Filed Date'] ?? '')),
-                'department' => trim((string) ($r['Department'] ?? '')) ?: null,
+                'published_date' => $this->parseDate((string) ($r['Filed Date'] ?? '')),
             ];
             $i++;
         }

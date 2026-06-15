@@ -28,8 +28,8 @@
         <select class="form-control"
                 id="data[{{ $parent_id }}][data][members][patent_{{ $index }}][status]"
                 name="data[{{ $parent_id }}][data][members][patent_{{ $index }}][status]">
-            @php $current_status = $member['status'] ?? 'granted'; @endphp
-            <option value="granted" {{ $current_status === 'granted' ? 'selected' : '' }}>Granted</option>
+            @php $current_status = $member['status'] ?? 'published'; @endphp
+            <option value="granted" {{ $current_status === 'published' ? 'selected' : '' }}>Published</option>
             <option value="pending" {{ $current_status === 'pending' ? 'selected' : '' }}>Pending</option>
             <option value="expired" {{ $current_status === 'expired' ? 'selected' : '' }}>Expired</option>
         </select>
@@ -44,11 +44,11 @@
     </div>
 
     <div class="col col-lg-2 col-12">
-        <label for="data[{{ $parent_id }}][data][members][patent_{{ $index }}][issued_date]">Issued Date</label>
+        <label for="data[{{ $parent_id }}][data][members][patent_{{ $index }}][published_date]">Published Date</label>
         <input type="text" class="form-control datepicker month"
-               id="data[{{ $parent_id }}][data][members][patent_{{ $index }}][issued_date]"
-               name="data[{{ $parent_id }}][data][members][patent_{{ $index }}][issued_date]"
-               value="{{ $member['issued_date'] ?? '' }}">
+               id="data[{{ $parent_id }}][data][members][patent_{{ $index }}][published_date]"
+               name="data[{{ $parent_id }}][data][members][patent_{{ $index }}][published_date]"
+               value="{{ $member['published_date'] ?? '' }}">
     </div>
 
     <div class="col col-lg-1 col-12 subrecord-actions d-flex justify-content-end">
