@@ -32,7 +32,7 @@
 
             <div class="col col-12">
                 <input type="hidden" name="data[{{ $patent->id }}][id]" value="{{ $patent->id }}">
-                <label for="data[{{ $patent->id }}][data][title]">Title</label>
+                <label for="data[{{ $patent->id }}][data][title]">Patents Group Title <small class="text-muted">(Enter an individual patent or a group of related patents)</small></label>
                 <input type="text" class="form-control"
                        id="data[{{ $patent->id }}][data][title]"
                        name="data[{{ $patent->id }}][data][title]"
@@ -46,17 +46,17 @@
                             aria-expanded="false"
                             data-toggle-subrecords>
                         <i class="fas fa-chevron-right" aria-hidden="true"></i>
-                        <span>Members</span>
+                        <span>Patents Information</span>
                         <span class="subrecord-count badge badge-secondary ml-1">0</span>
                     </button>
                     <button type="button"
                             class="btn btn-sm btn-outline-primary"
                             data-toggle="add_subrow">
-                        <i class="fas fa-plus"></i> Add Member
+                        <i class="fas fa-plus"></i> Add New Patent to Group
                     </button>
                 </div>
 
-                <div class="subrecords mt-2"
+                <div class="subrecords mt-2 border-left pl-3 ml-3"
                      data-next-subrow-id="{{ $next_subrow_id($patent->members ?? []) }}"
                      style="display:none;">
 

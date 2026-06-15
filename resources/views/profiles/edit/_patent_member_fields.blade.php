@@ -60,7 +60,7 @@
         </button>
     </div>
 
-    <div class="col col-lg-8 col-12 mt-2">
+    <div class="col col-lg-11 col-12 mt-2">
         <label for="data[{{ $parent_id }}][data][members][patent_{{ $index }}][title]">Title <small class="text-muted">(optional)</small></label>
         <input type="text" class="form-control"
                id="data[{{ $parent_id }}][data][members][patent_{{ $index }}][title]"
