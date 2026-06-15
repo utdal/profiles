@@ -7,12 +7,20 @@
                value="{{ $member['patent_no'] ?? '' }}">
     </div>
 
-    <div class="col col-lg-2 col-12">
-        <label for="data[{{ $parent_id }}][data][members][patent_{{ $index }}][country]">Country</label>
-        <input type="text" class="form-control"
-               id="data[{{ $parent_id }}][data][members][patent_{{ $index }}][country]"
-               name="data[{{ $parent_id }}][data][members][patent_{{ $index }}][country]"
-               value="{{ $member['country'] ?? '' }}">
+    <!-- jurisdiction selectpr -->
+    <div class="col col-lg-3 col-12">
+        <label for="data[{{ $parent_id }}][data][members][patent_{{ $index }}][jurisdiction]">Jurisdiction</label>
+        <select class="form-control"
+            id="jurisdiction_{{ $parent_id }}_{{ $index }}"
+            name="data[{{ $parent_id }}][data][members][patent_{{ $index }}][jurisdiction]">
+            <option value="">Select a value</option>
+            @foreach($jurisdictions as $jurisdiction)
+                <option value="{{ $jurisdiction }}"
+                    @selected(old("data.{$parent_id}.data.members.patent_{$index}.jurisdiction", $member['jurisdiction'] ?? '') === $jurisdiction)>
+                    {{ $jurisdiction }}
+                </option>
+            @endforeach
+        </select>
     </div>
 
     <div class="col col-lg-2 col-12">

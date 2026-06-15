@@ -125,7 +125,7 @@ class ImportPatentsToProfilesCommand extends Command
             $members['patent_' . $i] = [
                 'patent_internal_id' => trim((string) ($r['Patent Internal ID'] ?? '')),
                 'patent_title' => trim((string) ($r['Patent Title'] ?? '')),
-                'country' => trim((string) ($r['Country'] ?? '')) ?: null,
+                'jurisdiction' => trim((string) ($r['Country'] ?? '')) ?: null,
                 'patent_no' => $patent_no,
                 'status' => 'granted',
                 'filed_date' => null,

@@ -184,10 +184,10 @@ class ProfileData extends Model implements HasMedia, Auditable
     /**
      * Build a citation string from the patent's title and members.
      *
-     * Format: "Title - Country - Number (mm/dd/yyyy), Country - pending - Number (mm/dd/yyyy), ..."
+     * Format: "Title - jurisdiction - Number (mm/dd/yyyy), jurisdiction - pending - Number (mm/dd/yyyy), ..."
      *
-     * - Granted members: "Country - Number (issued_date)"
-     * - Pending members: "Country - pending - Number (filed_date)"
+     * - Granted members: "jurisdiction - Number (published_date)"
+     * - Pending members: "jurisdiction - pending - Number (filed_date)"
      * - European countries sharing a patent number collapse into one "EPO - Number" entry
      *   using the earliest issued_date among them
      */
@@ -219,19 +219,19 @@ class ProfileData extends Model implements HasMedia, Auditable
         ];
 
         foreach ($members as $member) {
-            $country = trim((string) ($member['country'] ?? ''));
+            $jurisdiction = trim((string) ($member['jurisdiction'] ?? ''));
             $status = $member['status'] ?? 'granted';
             $patent_no = trim((string) ($member['patent_no'] ?? ''));
             $internal_id = trim((string) ($member['patent_internal_id'] ?? ''));
 
             $identifier = $patent_no !== '' ? $patent_no : $internal_id;
-            if ($country === '' || $identifier === '') {
+            if ($jurisdiction === '' || $identifier === '') {
                 continue;
             }
 
             if ($status === 'granted'
                 && $patent_no !== ''
-                && in_array($country, $european_countries, true)) {
+                && in_array($jurisdiction, $european_countries, true)) {
 
                 $date_str = trim((string) ($member['issued_date'] ?? ''));
                 $date_sortable = $this->dateSortable($date_str);
@@ -286,28 +286,29 @@ class ProfileData extends Model implements HasMedia, Auditable
      */
     private function formatCitationMember(array $member): ?string
     {
-        $country = trim((string) ($member['country'] ?? ''));
+        $jurisdiction = trim((string) ($member['jurisdiction'] ?? ''));
         $status = $member['status'] ?? 'granted';
         $patent_no = trim((string) ($member['patent_no'] ?? ''));
         $internal_id = trim((string) ($member['patent_internal_id'] ?? ''));
 
         $identifier = $patent_no !== '' ? $patent_no : $internal_id;
-        if ($country === '' || $identifier === '') {
+        if ($jurisdiction === '' || $identifier === '') {
             return null;
         }
 
-        $country_display = match ($country) {
+        $jurisdiction_display = match ($jurisdiction) {
             'European' => 'EPO',
             'United States' => 'US',
             'Korea (Republic of)' => 'Korea',
-            default => $country,
+            default => $jurisdiction,
         };
 
         $date_field = $status === 'pending' ? 'filed_date' : 'issued_date';
         $date_str = trim((string) ($member[$date_field] ?? ''));
         $date_display = $this->formatCitationDate($date_str);
 
-        $entry = $country_display;
+        $entry = $jurisdiction_display;
+
         if ($status === 'pending') {
             $entry .= ' - pending';
         }
