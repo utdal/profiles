@@ -334,6 +334,14 @@ class ProfileData extends Model implements HasMedia, Auditable
         }
     }
 
+    public static function jurisdictions()
+    {
+        $patent_jurisdictions_setting = optional(Setting::whereName('patent_jurisdictions')->first())->value;
+        $jurisdictions = $patent_jurisdictions_setting ? preg_split("/[\r\n]+/", $patent_jurisdictions_setting) : [];
+
+        return collect($jurisdictions)->combine($jurisdictions);
+    }
+
     /**
      * Return a sortable integer (YYYYMMDD) from a date string. Returns PHP_INT_MAX if unparseable.
      */
