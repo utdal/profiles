@@ -1,7 +1,7 @@
 services:
   web.profiles:
     container_name: web.profiles
-    hostname: ${APP_ADDRESS:-profiles}
+    hostname: ${APP_ADDRESS:-profiles.test}
     build:
       context: .
       dockerfile: .docker/apache/Dockerfile
@@ -15,11 +15,12 @@ services:
       - profiles
       - nginx-proxy
     environment:
-      VIRTUAL_HOST: ${APP_ADDRESS:-profiles}
+      VIRTUAL_HOST: ${APP_ADDRESS:-profiles.test}
+      SELF_SIGNED_HOST: ${APP_ADDRESS:-profiles.test}
 
   php.profiles:
     container_name: php.profiles
-    hostname: "php.${APP_ADDRESS:-profiles}"
+    hostname: "php.${APP_ADDRESS:-profiles.test}"
     build:
       context: .
       dockerfile: .docker/php/Dockerfile
@@ -43,7 +44,7 @@ networks:
   profiles:
   nginx-proxy:
     name: nginx-proxy
-    external: true
+    external: ${CONTAINER_IS_LOCALDEV:-false}
   localdev-shared-services:
     name: localdev-shared-services
-    external: true
+    external: ${CONTAINER_IS_LOCALDEV:-false}
