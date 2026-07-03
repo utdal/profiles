@@ -4,31 +4,69 @@
 # For more help, visit the .dockerignore file reference guide at
 # https://docs.docker.com/go/build-context-dockerignore/
 
-**/.DS_Store
+# Version control
+.git
+.gitignore
+.github
+
+# Build dependencies & package managers
+node_modules/
+vendor/
+**/bin
+**/obj
 **/__pycache__
 **/.venv
-**/.classpath
-**/.dockerignore
+
+# Environment secrets
 **/.env
-**/.git
-**/.gitignore
-**/.project
+.env.testing
+deploy.php
+**/secrets.dev.yaml
+**/values.dev.yaml
 **/.settings
-**/.toolstarget
-**/.vs
-**/.vscode
+
+# Logs, diagnostics, and temporary files
+LICENSE.md
+readme.md
+.phpunit.cache/
+.phpunit.result.cache
+.phpactor.json
+**/npm-debug.log
+
+# Laravel framework
+public/uploads/
+public/storage/
+storage/app/*
+!storage/app/.gitignore
+storage/app/excel-temp/*
+!storage/app/excel-temp/.gitignore
+storage/logs/*
+!storage/logs/.gitignore
+storage/debugbar/
+storage/framework/cache/*
+!storage/framework/cache/.gitignore
+storage/framework/data/*
+!storage/framework/data/.gitignore
+storage/framework/sessions/*
+!storage/framework/sessions/.gitignore
+storage/framework/testing/*
+!/storage/framework/testing/.gitignore
+storage/framework/views/*
+!/storage/framework/views/.gitignore
+
+# IDE and system
+**/.DS_Store
+**/Thumbs.db
+**/.project
+.phpstorm.meta.php
+.vs/
+.vscode/
+.idea/
+_ide_helper*
 **/*.*proj.user
-**/*.dbmdl
-**/*.jfm
-**/bin
-**/charts
+
+# Docker files
+**/.dockerignore
 **/docker-compose*
 **/compose.y*ml
 **/Dockerfile*
-**/node_modules
-**/npm-debug.log
-**/obj
-**/secrets.dev.yaml
-**/values.dev.yaml
-LICENSE
-README.md
