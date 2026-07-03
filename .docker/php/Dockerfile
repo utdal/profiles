@@ -29,7 +29,6 @@ COPY --from=ghcr.io/php/pie:bin /pie /usr/local/bin/pie
 RUN apt-get update \
     && apt-get install -y --no-install-recommends --no-install-suggests \
     # PIE build tools
-    $PHPIZE_DEPS \
     libtool \
     git \
     # ImageMagick library
@@ -40,7 +39,6 @@ RUN apt-get update \
     libheif-dev \
     && pie install imagick/imagick --with-imagick=/usr \
     && apt-get clean \
-    && apt-get purge -y --auto-remove $PHPIZE_DEPS libtool \
     && rm -rf /var/lib/apt/lists/*
 
 # Sendmail (for Mailpit)
@@ -76,10 +74,9 @@ RUN cp "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 
 # Xdebug
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends --no-install-suggests $PHPIZE_DEPS libtool git \
+    && apt-get install -y --no-install-recommends --no-install-suggests libtool git \
     && pie install xdebug/xdebug \
     && apt-get clean \
-    && apt-get purge -y --auto-remove $PHPIZE_DEPS libtool \
     && rm -rf /var/lib/apt/lists/*
 COPY .docker/php/xdebug.ini $PHP_INI_DIR/conf.d/zzz-xdebug.ini
 
