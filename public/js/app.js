@@ -261,7 +261,7 @@ var profiles = function ($, undefined) {
    * @param {HTMLElement} elem
    */
   var clear_row = function clear_row(elem) {
-    parent_elem = $(elem).parent().parent();
+    var parent_elem = $(elem).parent().parent();
     parent_elem.slideUp().find("input[type=text], input[type=url], input[type=month], input.clearable, textarea, select").val('');
     var list_container = parent_elem[0].parentElement;
     if (elem.dataset.remove === 'true') {
@@ -389,7 +389,7 @@ var profiles = function ($, undefined) {
    * @return {void}
    */
   var registerProfilePicker = function registerProfilePicker(selector, api) {
-    if (typeof api === 'undefined') api = this_url + '/api/v1?with_data=1&data_type=information&public=1';
+    if (typeof api === 'undefined') api = this_url + '/api/v1?with_data=1&data_type=information';
     var $select = $(selector);
     if ($select.length === 0) return;
     if ($select.data('school')) {
@@ -705,12 +705,36 @@ $(function () {
 // Trix editor settings
 if ((typeof Trix === "undefined" ? "undefined" : _typeof(Trix)) === 'object') {
   document.addEventListener('trix-initialize', function (e) {
-    document.querySelector('trix-toolbar .trix-button-group--history-tools').remove();
-    document.querySelector('trix-toolbar .trix-button-group--file-tools').remove();
+    var _document$querySelect2, _document$querySelect3;
+    (_document$querySelect2 = document.querySelector('trix-toolbar .trix-button-group--history-tools')) === null || _document$querySelect2 === void 0 || _document$querySelect2.remove();
+    (_document$querySelect3 = document.querySelector('trix-toolbar .trix-button-group--file-tools')) === null || _document$querySelect3 === void 0 || _document$querySelect3.remove();
   });
   document.addEventListener('trix-file-accept', function (e) {
     e.preventDefault();
     e.stopPropagation();
+  });
+
+  // Register text attributes
+  Trix.config.textAttributes.sub = {
+    tagName: 'sub',
+    inheritable: true
+  };
+  Trix.config.textAttributes.sup = {
+    tagName: 'sup',
+    inheritable: true
+  };
+  addEventListener('trix-initialize', function (e) {
+    var textToolsButtonGroup = e.target.toolbarElement.querySelector('.trix-button-group--text-tools');
+    if (!textToolsButtonGroup) return;
+    var hasButton = function hasButton(attribute) {
+      return textToolsButtonGroup.querySelector(".trix-button[data-trix-attribute=\"".concat(attribute, "\"]"));
+    };
+    if (!hasButton('sub')) {
+      textToolsButtonGroup.insertAdjacentHTML('beforeend', "\n                <button\n                    type=\"button\"\n                    class=\"trix-button trix-button--icon trix-button--icon-sub\"\n                    data-trix-attribute=\"sub\"\n                    title=\"Subscript\"\n                    tabindex=\"-1\"\n                >\n                </button>\n            ");
+    }
+    if (!hasButton('sup')) {
+      textToolsButtonGroup.insertAdjacentHTML('beforeend', "\n                <button\n                    type=\"button\"\n                    class=\"trix-button trix-button--icon trix-button--icon-sup\"\n                    data-trix-attribute=\"sup\"\n                    title=\"Superscript\"\n                    tabindex=\"-1\"\n                >\n                </button>\n            ");
+    }
   });
 }
 

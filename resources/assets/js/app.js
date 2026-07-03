@@ -210,7 +210,7 @@ var profiles = (function ($, undefined) {
      * @param {HTMLElement} elem
      */
     var clear_row = function (elem) {
-        parent_elem = $(elem).parent().parent();
+        const parent_elem = $(elem).parent().parent();
         parent_elem.slideUp().find("input[type=text], input[type=url], input[type=month], input.clearable, textarea, select").val('');
 
         const list_container = parent_elem[0].parentElement;
@@ -344,7 +344,7 @@ var profiles = (function ($, undefined) {
      * @return {void}
      */
     let registerProfilePicker = (selector, api) => {
-      if (typeof (api) === 'undefined') api = this_url + '/api/v1?with_data=1&data_type=information&public=1';
+      if (typeof (api) === 'undefined') api = this_url + '/api/v1?with_data=1&data_type=information';
       let $select = $(selector);
       if ($select.length === 0) return;
 
@@ -648,12 +648,58 @@ $(function() {
 // Trix editor settings
 if (typeof Trix === 'object') {
     document.addEventListener('trix-initialize', (e) => {
-        document.querySelector('trix-toolbar .trix-button-group--history-tools').remove();
-        document.querySelector('trix-toolbar .trix-button-group--file-tools').remove();
+        document.querySelector('trix-toolbar .trix-button-group--history-tools')?.remove();
+        document.querySelector('trix-toolbar .trix-button-group--file-tools')?.remove();
     });
     document.addEventListener('trix-file-accept', (e) => {
         e.preventDefault();
         e.stopPropagation();
+    });
+
+    // Register text attributes
+    Trix.config.textAttributes.sub = {
+        tagName: 'sub',
+        inheritable: true,
+    };
+
+    Trix.config.textAttributes.sup = {
+        tagName: 'sup',
+        inheritable: true,
+    };
+
+    addEventListener('trix-initialize', function (e) {
+        const textToolsButtonGroup = e.target.toolbarElement.querySelector('.trix-button-group--text-tools');
+
+        if (!textToolsButtonGroup) return;
+
+        const hasButton = (attribute) =>
+            textToolsButtonGroup.querySelector(`.trix-button[data-trix-attribute="${attribute}"]`);
+
+        if (!hasButton('sub')) {
+            textToolsButtonGroup.insertAdjacentHTML('beforeend', `
+                <button
+                    type="button"
+                    class="trix-button trix-button--icon trix-button--icon-sub"
+                    data-trix-attribute="sub"
+                    title="Subscript"
+                    tabindex="-1"
+                >
+                </button>
+            `);
+        }
+
+        if (!hasButton('sup')) {
+            textToolsButtonGroup.insertAdjacentHTML('beforeend', `
+                <button
+                    type="button"
+                    class="trix-button trix-button--icon trix-button--icon-sup"
+                    data-trix-attribute="sup"
+                    title="Superscript"
+                    tabindex="-1"
+                >
+                </button>
+            `);
+        }
     });
 }
 
@@ -673,5 +719,4 @@ if (typeof Livewire === 'object') {
     }
   });
 }
-
 

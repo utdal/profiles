@@ -58,6 +58,7 @@ class Setting extends Model implements HasMedia
             ->width($width)
             ->height($height)
             ->crop(Manipulations::CROP_TOP, $width, $height)
+            ->format(Manipulations::FORMAT_PNG)
             ->performOnCollections('logo');
     }
 

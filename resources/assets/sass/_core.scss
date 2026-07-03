@@ -320,25 +320,6 @@ textarea.form-control{
 	flex: 1;
 }
 
-//rich text editor
-trix-editor {
-	margin-bottom: 15px;
-	border-color: $input-border-color;
-	border-radius: $border-radius;
-
-	&:focus {
-		box-shadow: 0 0 0 $input-btn-focus-width $input-btn-focus-color;
-		border-color: $input-btn-focus-color;
-	}
-}
-trix-toolbar .trix-button-row {
-	flex-wrap: wrap;
-}
-trix-toolbar .trix-button-group--history-tools,
-trix-toolbar .trix-button-group--file-tools {
-    display: none;
-}
-
 pre {
 	background-color: lightgrey;
 	padding: 1em;
