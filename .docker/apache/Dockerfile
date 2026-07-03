@@ -1,4 +1,4 @@
-FROM httpd:2.4-bookworm AS base_build
+FROM public.ecr.aws/docker/library/httpd:2.4-trixie AS base_build
 
 ARG CONTAINER_ENV
 ENV CONTAINER_ENV=${CONTAINER_ENV:-production}

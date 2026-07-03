@@ -1,43 +1,42 @@
-FROM php:8.3-fpm AS base_build
+FROM public.ecr.aws/docker/library/php:8.3-fpm-trixie AS base_build
 
 # Arguments & Environment Variables
-ARG CONTAINER_ENV
-ENV CONTAINER_ENV=${CONTAINER_ENV:-production}
-
 ARG APP_ENV
 ENV APP_ENV=${APP_ENV:-production}
 
 ARG DOCUMENT_ROOT
 ENV DOCUMENT_ROOT=${DOCUMENT_ROOT:-/var/www/html}
 
-ARG DB_HOST
-ENV DB_HOST=${DB_HOST:-db}
-
-ARG DB_PORT
-ENV DB_PORT=${DB_PORT:-3306}
-
-ARG DB_DATABASE
-ENV DB_DATABASE=${DB_DATABASE:-utdlink}
-
-ARG DB_USERNAME
-ENV DB_USERNAME=${DB_USERNAME:-root}
-
-ARG DB_PASSWORD
-ENV DB_PASSWORD=${DB_PASSWORD:-root}
-
 # Common
-RUN apt-get update
 COPY .docker/.bashrc /root/.bashrc
 
 # PHP
 COPY .docker/php/php.ini $PHP_INI_DIR/conf.d/zzz-01-custom.ini
-RUN apt-get install -y libzip-dev libldap2-dev
-RUN rm -rf /var/lib/apt/lists/*
-RUN docker-php-ext-configure ldap --with-libdir=lib/$(arch)-linux-gnu/
-RUN docker-php-ext-install opcache pdo pdo_mysql mysqli zip exif pcntl ldap
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends --no-install-suggests libzip-dev libldap2-dev \
+    && docker-php-ext-configure ldap --with-libdir=lib/$(arch)-linux-gnu/ \
+    && docker-php-ext-install opcache pdo pdo_mysql mysqli zip exif pcntl ldap \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Composer
-COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+COPY --from=public.ecr.aws/composer/composer:latest /usr/bin/composer /usr/local/bin/composer
+
+# PIE: PHP Installer for Extensions
+COPY --from=ghcr.io/php/pie:bin /pie /usr/local/bin/pie
+
+# Extensions: Imagick
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends --no-install-suggests \
+    $PHPIZE_DEPS \
+    libtool \
+    git \
+    libmagickwand-dev \
+    # pkg-config \
+    && pie install imagick/imagick \
+    && apt-get clean \
+    && apt-get purge -y --auto-remove $PHPIZE_DEPS libtool \
+    && rm -rf /var/lib/apt/lists/*
 
 # Sendmail (for Mailpit)
 FROM base_build AS mail_build
@@ -50,7 +49,9 @@ RUN apt-get update \
     && git clone https://github.com/axllent/mailpit.git \
     && cd mailpit/sendmail \
     && go build -ldflags "-s -w" \
-    && cp ~/mailpit/sendmail/sendmail /usr/local/bin/sendmail
+    && cp ~/mailpit/sendmail/sendmail /usr/local/bin/sendmail \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # App files
 FROM base_build AS app_files
@@ -68,14 +69,13 @@ RUN php -d allow_url_fopen=On /usr/local/bin/composer install
 FROM base_build AS local_build
 RUN cp "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 
-# Imagick
-RUN apt-get update && apt-get install -y libmagickwand-dev \
-    && pecl install imagick \
-    && docker-php-ext-enable imagick
-
 # Xdebug
-RUN pecl install xdebug \
-    && docker-php-ext-enable xdebug
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends --no-install-suggests $PHPIZE_DEPS libtool git \
+    && pie install xdebug/xdebug \
+    && apt-get clean \
+    && apt-get purge -y --auto-remove $PHPIZE_DEPS libtool \
+    && rm -rf /var/lib/apt/lists/*
 COPY .docker/php/xdebug.ini $PHP_INI_DIR/conf.d/zzz-xdebug.ini
 
 COPY --from=mail_build /usr/local/bin/sendmail /usr/local/bin/sendmail
