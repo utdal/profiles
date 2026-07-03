@@ -28,12 +28,17 @@ COPY --from=ghcr.io/php/pie:bin /pie /usr/local/bin/pie
 # Extensions: Imagick
 RUN apt-get update \
     && apt-get install -y --no-install-recommends --no-install-suggests \
+    # PIE build tools
     $PHPIZE_DEPS \
     libtool \
     git \
+    # ImageMagick library
     libmagickwand-dev \
-    # pkg-config \
-    && pie install imagick/imagick \
+    # for SVG support
+    libmagickcore-7.q16hdri-10-extra \
+    # for HEIC support
+    libheif-dev \
+    && pie install imagick/imagick --with-imagick=/usr \
     && apt-get clean \
     && apt-get purge -y --auto-remove $PHPIZE_DEPS libtool \
     && rm -rf /var/lib/apt/lists/*
