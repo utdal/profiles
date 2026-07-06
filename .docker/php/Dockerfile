@@ -11,9 +11,19 @@ COPY .docker/.bashrc /root/.bashrc
 # PHP
 COPY .docker/php/php.ini $PHP_INI_DIR/conf.d/zzz-01-custom.ini
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends --no-install-suggests libzip-dev libldap2-dev \
+    && apt-get install -y --no-install-recommends --no-install-suggests \
+    # for zip
+    libzip-dev \
+    # for LDAP
+    libldap2-dev \
+    # for GD image formats
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libpng-dev \
+    libwebp-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
     && docker-php-ext-configure ldap --with-libdir=lib/$(arch)-linux-gnu/ \
-    && docker-php-ext-install opcache pdo pdo_mysql mysqli zip exif pcntl ldap \
+    && docker-php-ext-install opcache pdo pdo_mysql mysqli zip exif pcntl gd ldap \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -81,6 +91,9 @@ COPY .docker/php/xdebug.ini $PHP_INI_DIR/conf.d/zzz-xdebug.ini
 
 COPY --from=mail_build /usr/local/bin/sendmail /usr/local/bin/sendmail
 COPY .docker/php/email.ini $PHP_INI_DIR/conf.d/zzz-email.ini
+
+# Add local dev commands to path
+ENV PATH="$PATH:$DOCUMENT_ROOT/vendor/bin"
 
 # Entrypoint
 COPY .docker/php/entrypoint.sh /usr/local/bin/entrypoint.sh
