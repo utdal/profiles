@@ -25,6 +25,8 @@ services:
       target: "${CONTAINER_ENV:-production}_build"
       args:
         APP_ENV: ${APP_ENV:-production}
+    environment:
+      - XDEBUG_MODE=${XDEBUG_MODE:-off}
     image: ${IMAGE_NAME_PHP:-localdev/php.profiles:php-1.0}
     volumes:
       - ".:/var/www/html"
