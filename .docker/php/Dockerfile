@@ -1,11 +1,9 @@
 FROM public.ecr.aws/docker/library/php:8.3-fpm-trixie AS base_build
 
 # Arguments & Environment Variables
-ARG APP_ENV
-ENV APP_ENV=${APP_ENV:-production}
+ARG APP_ENV=production
 
-ARG DOCUMENT_ROOT
-ENV DOCUMENT_ROOT=${DOCUMENT_ROOT:-/var/www/html}
+ENV DOCUMENT_ROOT=/var/www/html
 
 # Common
 COPY .docker/.bashrc /root/.bashrc
@@ -58,6 +56,7 @@ RUN apt-get update \
 
 # App files
 FROM base_build AS app_files
+ARG APP_ENV
 WORKDIR $DOCUMENT_ROOT
 COPY . .
 RUN cp ".env.${APP_ENV}" .env

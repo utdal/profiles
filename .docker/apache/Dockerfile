@@ -1,10 +1,6 @@
 FROM public.ecr.aws/docker/library/httpd:2.4-trixie AS base_build
 
-ARG CONTAINER_ENV
-ENV CONTAINER_ENV=${CONTAINER_ENV:-production}
-
-ARG DOCUMENT_ROOT
-ENV DOCUMENT_ROOT=${DOCUMENT_ROOT:-/var/www/html}
+ENV DOCUMENT_ROOT=/var/www/html
 
 RUN mkdir -p /var/www/html
 COPY .docker/.bashrc /root/.bashrc

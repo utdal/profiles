@@ -6,8 +6,6 @@ services:
       context: .
       dockerfile: .docker/apache/Dockerfile
       target: "${CONTAINER_ENV:-production}_build"
-      args:
-        CONTAINER_ENV: ${CONTAINER_ENV:-production}
     image: ${IMAGE_NAME_WEB:-localdev/web.profiles:web-1.0}
     volumes:
       - ".:/var/www/html"
@@ -26,13 +24,7 @@ services:
       dockerfile: .docker/php/Dockerfile
       target: "${CONTAINER_ENV:-production}_build"
       args:
-        CONTAINER_ENV: ${CONTAINER_ENV:-production}
         APP_ENV: ${APP_ENV:-production}
-        DB_HOST: ${DB_HOST:-db}
-        DB_PORT: ${DB_PORT:-3306}
-        DB_DATABASE: ${DB_DATABASE:-profiles}
-        DB_USERNAME: ${DB_USERNAME:-root}
-        DB_PASSWORD: ${DB_PASSWORD:-root}
     image: ${IMAGE_NAME_PHP:-localdev/php.profiles:php-1.0}
     volumes:
       - ".:/var/www/html"
