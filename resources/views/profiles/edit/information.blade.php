@@ -153,7 +153,7 @@
 					</div>
 				</div>
 				<div class="col col-12 col-xl-5">
-					<p class="text-muted">Refresh all publications via ORCID. All previous publications will be removed and fresh data will be pulled in at regular intervals. Keep unchecked to manually edit your publications.</p>
+					<p class="text-muted">Refresh all publications via ORCID. Identifies publications that were previously automatically imported and updates them with the latest data. Manually added publications will not be updated. New publications will also be pulled. Automatic updates occurr weekly.</p>
 				</div>
 			</fieldset>
 			<fieldset id="fancy_header" class="form-group row my-3 py-4 border-top">
