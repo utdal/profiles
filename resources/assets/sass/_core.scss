@@ -18,6 +18,18 @@ a {
 	}
 }
 
+.has-external-link-icon {
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: none;
+    }
+
+    span {
+        text-decoration: underline;
+    }
+}
+
 img{
 	max-width: 100%;
 	height: auto;

@@ -9618,6 +9618,16 @@ h3, h4, h5, h6 {
   color: rgb(174.87, 70.47, 0);
 }
 
+.has-external-link-icon {
+  text-decoration: none;
+}
+.has-external-link-icon:hover {
+  text-decoration: none;
+}
+.has-external-link-icon span {
+  text-decoration: underline;
+}
+
 img {
   max-width: 100%;
   height: auto;
@@ -10674,19 +10684,21 @@ button.video-control .fa-play {
 .profile .contact_info > div {
   margin-top: 30px;
 }
-.profile h3 {
+.profile h2 {
   font-weight: lighter;
   font-size: 1.8rem;
   margin-bottom: 1.4rem;
   z-index: 0;
   position: relative;
+  margin-top: 1rem;
 }
-.profile h5 {
+.profile h3 {
   clear: both;
   margin-bottom: 15px;
 }
-.profile h6 {
+.profile h4 {
   color: #c95100;
+  font-size: 1rem;
 }
 .profile .links {
   text-align: center;
