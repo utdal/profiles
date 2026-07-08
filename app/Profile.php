@@ -10,7 +10,7 @@ use App\User;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Auditable as HasAudits;
 use OwenIt\Auditing\Contracts\Auditable;
-use Spatie\Image\Manipulations;
+use Spatie\Image\Enums\CropPosition;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -351,23 +351,23 @@ class Profile extends Model implements HasMedia, Auditable
      *
      * @param  Media|null $media
      */
-    public function registerMediaConversions(Media $media = null): void
+    public function registerMediaConversions(?Media $media = null): void
     {
-        $this->registerImageThumbnails($media, 'thumb', 150);
-        $this->registerImageThumbnails($media, 'medium', 450);
-        $this->registerImageThumbnails($media, 'large', 1800, 1200, '*');
+        $this->registerImageThumbnails('thumb', 150);
+        $this->registerImageThumbnails('medium', 450);
+        $this->registerImageThumbnails('large', 1800, 1200, '*');
     }
 
     /**
      * Registers image thumbnails.
      *
-     * @param  Media|null $media
      * @param  string     $name       Name of the thumbnail
-     * @param  int        $size       Max dimension in pixels
+     * @param  int        $width      Max width dimension in pixels
+     * @param  int        $height     Max height dimension in pixels
      * @param  string     $collection Name of the collection for the thumbnails
      * @return void
      */
-    protected function registerImageThumbnails(Media $media = null, $name, $width, $height = null, $collection = 'images'): void
+    protected function registerImageThumbnails(string $name, int $width, ?int $height = null, $collection = 'images'): void
     {
         if(!$height) {
             $height = $width;
@@ -376,7 +376,7 @@ class Profile extends Model implements HasMedia, Auditable
         $this->addMediaConversion($name)
             ->width($width)
             ->height($height)
-            ->crop(Manipulations::CROP_TOP, $width, $height)
+            ->crop($width, $height, CropPosition::Top)
             ->performOnCollections($collection);
     }
 

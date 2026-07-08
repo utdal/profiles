@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Image\Manipulations;
+use Spatie\Image\Enums\CropPosition;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -33,22 +33,22 @@ class Setting extends Model implements HasMedia
      *
      * @param  Media|null $media
      */
-    public function registerMediaConversions(Media $media = null): void
+    public function registerMediaConversions(?Media $media = null): void
     {
-        $this->registerImageThumbnails($media, 'thumb', 150);
-        $this->registerImageThumbnails($media, 'medium', 450);
-        $this->registerImageThumbnails($media, 'large', 1800, 1200);
+        $this->registerImageThumbnails('thumb', 150);
+        $this->registerImageThumbnails('medium', 450);
+        $this->registerImageThumbnails('large', 1800, 1200);
     }
 
     /**
      * Registers image thumbnails.
      *
-     * @param  Media|null $media
      * @param  string     $name       Name of the thumbnail
-     * @param  int        $size       Max dimension in pixels
+     * @param  int        $width      Max width dimension in pixels
+     * @param  int        $height     Max height dimension in pixels
      * @return void
      */
-    protected function registerImageThumbnails(Media $media = null, $name, $width, $height = null): void
+    protected function registerImageThumbnails(string $name, int $width, ?int $height = null): void
     {
         if (!$height) {
             $height = $width;
@@ -57,8 +57,8 @@ class Setting extends Model implements HasMedia
         $this->addMediaConversion($name)
             ->width($width)
             ->height($height)
-            ->crop(Manipulations::CROP_TOP, $width, $height)
-            ->format(Manipulations::FORMAT_PNG)
+            ->crop($width, $height, CropPosition::Top)
+            ->format('png')
             ->performOnCollections('logo');
     }
 
