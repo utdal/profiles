@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Profile;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
@@ -16,6 +17,7 @@ class ProfileData extends Model implements HasMedia, Auditable
 {
     use HasFactory;
     use HasAudits;
+    /** @use InteractsWithMedia<Media> */
     use InteractsWithMedia;
 
     /** @var string The database table used by the model */
@@ -183,7 +185,7 @@ class ProfileData extends Model implements HasMedia, Auditable
     /**
      * Get the image URL. ($this->image_url)
      *
-     * @return string
+     * @return UrlGenerator|string
      */
     public function getImageUrlAttribute()
     {

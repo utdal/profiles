@@ -16,12 +16,16 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Tags\HasTags;
 use GuzzleHttp\Client;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
 
 /**
+ * @mixin Builder
+ * @mixin QueryBuilder
  * @method public()
  * @method private()
  * @method withApiData(array|string|null $sections)
@@ -37,6 +41,7 @@ class Profile extends Model implements HasMedia, Auditable
 {
     use HasAudits;
     use HasFactory;
+    /** @use InteractsWithMedia<Media> */
     use InteractsWithMedia;
     use HasTags;
     use SoftDeletes;
@@ -625,7 +630,7 @@ class Profile extends Model implements HasMedia, Auditable
     /**
      * Get the full image URL. ($this->full_image_url)
      *
-     * @return string
+     * @return UrlGenerator|string
      */
     public function getFullImageUrlAttribute()
     {
@@ -635,7 +640,7 @@ class Profile extends Model implements HasMedia, Auditable
     /**
      * Get the full image URL. ($this->large_image_url)
      *
-     * @return string
+     * @return UrlGenerator|string
      */
     public function getLargeImageUrlAttribute()
     {
@@ -645,7 +650,7 @@ class Profile extends Model implements HasMedia, Auditable
     /**
      * Get the image URL. ($this->image_url)
      *
-     * @return string
+     * @return UrlGenerator|string
      */
     public function getImageUrlAttribute()
     {
@@ -655,7 +660,7 @@ class Profile extends Model implements HasMedia, Auditable
     /**
      * Get the image thumbnail URL. ($this->image_thumb_url)
      *
-     * @return string
+     * @return UrlGenerator|string
      */
     public function getImageThumbUrlAttribute()
     {
@@ -665,7 +670,7 @@ class Profile extends Model implements HasMedia, Auditable
     /**
      * Get the banner image thumbnail. ($this->banner_url)
      *
-     * @return string
+     * @return UrlGenerator|string
      */
     public function getBannerUrlAttribute()
     {

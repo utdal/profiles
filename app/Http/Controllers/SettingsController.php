@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Setting;
-use Illuminate\Contracts\View\View as ViewContract;
+use Illuminate\Contracts\View\Factory as ViewFactory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 use Illuminate\Support\Facades\Cache;
 
 class SettingsController extends Controller
@@ -23,7 +23,7 @@ class SettingsController extends Controller
     /**
      * Show the settings for editing.
      */
-    public function edit(): View|ViewContract
+    public function edit(): View|ViewFactory
     {
         return view('settings', [
             'settings' => Setting::pluck('value', 'name')->toArray(),

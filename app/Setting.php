@@ -10,6 +10,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Setting extends Model implements HasMedia
 {
+    /** @use InteractsWithMedia<Media> */
     use InteractsWithMedia;
 
     /** @var array The attributes that are mass-assignable */
