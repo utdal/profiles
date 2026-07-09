@@ -14,14 +14,14 @@ use App\Http\Requests\ProfileImageRequest;
 use App\Http\Requests\ProfileSearchRequest;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\School;
-use Illuminate\Contracts\View\View as ViewContract;
+use Illuminate\Contracts\View\Factory as ViewFactory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
-use Illuminate\View\View;
 use Spatie\Browsershot\Browsershot;
 
 class ProfilesController extends Controller
@@ -68,7 +68,7 @@ class ProfilesController extends Controller
     /**
      * Display a listing of profiles.
      */
-    public function index(ProfileSearchRequest $request): View|ViewContract|RedirectResponse
+    public function index(ProfileSearchRequest $request): View|ViewFactory|RedirectResponse
     {
         $input_search = $request->input('search');
 
@@ -102,7 +102,7 @@ class ProfilesController extends Controller
     /**
      * Display the home page
      */
-    public function home(): View|ViewContract
+    public function home(): View|ViewFactory
     {
         $random_profile = Cache::tags(['home', 'profiles'])->remember('home-random-profiles', 86400, function() {
             return Profile::public()->excludingUnlisted()->inRandomOrder()->limit(2)->get();
@@ -132,7 +132,7 @@ class ProfilesController extends Controller
     /**
      * Display an admin table of profiles.
      */
-    public function table(): View|ViewContract
+    public function table(): View|ViewFactory
     {
         return view('profiles.table');
     }
@@ -140,7 +140,7 @@ class ProfilesController extends Controller
     /**
      * Show the specified profile.
      */
-    public function show(Request $request, Profile $profile): View|ViewContract
+    public function show(Request $request, Profile $profile): View|ViewFactory
     {
         /** @var User the logged-in user */
         $user = Auth::user();
@@ -172,7 +172,7 @@ class ProfilesController extends Controller
     /**
      * Create a Profile
      */
-    public function create(Request $request, User $user, LdapHelperContract $ldap): View|ViewContract|RedirectResponse
+    public function create(Request $request, User $user, LdapHelperContract $ldap): View|ViewFactory|RedirectResponse
     {
         $existing_profile = $user->profiles()->withTrashed()->first();
 
@@ -233,7 +233,7 @@ class ProfilesController extends Controller
     /**
      * Show the view for editing a profile section
      */
-    public function edit(Profile $profile, string $section): View|ViewContract|RedirectResponse
+    public function edit(Profile $profile, string $section): View|ViewFactory|RedirectResponse
     {
         //dont manage auto-managed publications
         if ($section == 'publications' && $profile->hasOrcidManagedPublications()) {
@@ -294,7 +294,7 @@ class ProfilesController extends Controller
     /**
      * Confirm deletion of a profile
      */
-    public function confirmDelete(Profile $profile): View|ViewContract
+    public function confirmDelete(Profile $profile): View|ViewFactory
     {
         return view('profiles.delete', ['profile' => $profile]);
     }
@@ -302,7 +302,7 @@ class ProfilesController extends Controller
     /**
      * Confirm restoration of a soft-deleted profile
      */
-    public function confirmRestore(Request $request, Profile $profile): View|ViewContract|RedirectResponse
+    public function confirmRestore(Request $request, Profile $profile): View|ViewFactory|RedirectResponse
     {
         // this message is in case someone tries to create an already archived profile
         if ($request->user()->cannot('restore', $profile)) {

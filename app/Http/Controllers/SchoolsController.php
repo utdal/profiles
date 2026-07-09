@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Profile;
 use App\School;
-use Illuminate\Contracts\View\View as ViewContract;
+use Illuminate\Contracts\View\Factory as ViewFactory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 
 class SchoolsController extends Controller
 {
@@ -35,7 +35,7 @@ class SchoolsController extends Controller
     /**
      * Display a list of schools.
      */
-    public function index(): View|ViewContract
+    public function index(): View|ViewFactory
     {
         $schools = School::get();
 
@@ -45,7 +45,7 @@ class SchoolsController extends Controller
     /**
      * Show the form for creating a new school.
      */
-    public function create(): View|ViewContract
+    public function create(): View|ViewFactory
     {
         return view('schools.create');
     }
@@ -65,7 +65,7 @@ class SchoolsController extends Controller
     /**
      * Display all profiles from the specified school.
      */
-    public function show(School $school): View|ViewContract
+    public function show(School $school): View|ViewFactory
     {
         $profiles = Profile::fromSchoolId($school->id)->public()->excludingUnlisted()->paginate(24);
 
@@ -75,7 +75,7 @@ class SchoolsController extends Controller
     /**
      * Show the form for editing the specified school.
      */
-    public function edit(School $school): View|ViewContract
+    public function edit(School $school): View|ViewFactory
     {
         return view('schools.edit', compact('school'));
     }

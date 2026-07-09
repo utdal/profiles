@@ -62,7 +62,7 @@ class UserPolicy
      * Determine whether the user can view the delegator's delegations.
      *
      * @param  \App\User  $user
-     * @param  \App\User  $model
+     * @param  \App\User  $delegator
      * @return mixed
      */
     public function viewDelegations(User $user, User $delegator)
@@ -74,7 +74,7 @@ class UserPolicy
      * Determine whether the user can view the owner's bookmarks.
      *
      * @param  \App\User  $user
-     * @param  \App\User  $model
+     * @param  \App\User  $owner
      * @return mixed
      */
     public function viewBookmarks(User $user, User $owner)
