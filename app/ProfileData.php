@@ -11,6 +11,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use App\Helpers\Country;
 
 class ProfileData extends Model implements HasMedia, Auditable
 {
@@ -188,7 +189,9 @@ class ProfileData extends Model implements HasMedia, Auditable
      *
      * - Granted members: "jurisdiction - Number (published_date)"
      * - Pending members: "jurisdiction - pending - Number (filed_date)"
-     * - European countries sharing a patent number collapse into one "EPO - Number" entry
+     * - A member's own patent_title prefixes its entry only when it differs from
+     *   the group title after normalization (case/punctuation variants are omitted)
+     * - European jurisdictions sharing a patent number collapse into one "EPO - Number" entry
      *   using the earliest published_date among them
      */
     public function getPatentCitationAttribute(): ?string
@@ -213,10 +216,7 @@ class ProfileData extends Model implements HasMedia, Auditable
         $entries = [];
         $ep_buckets = [];
 
-        $european_countries = [
-            'European', 'Belgium', 'Switzerland', 'Germany', 'Spain', 'France',
-            'United Kingdom', 'Ireland', 'Italy', 'The Netherlands',
-        ];
+        $european_codes = ['EP', 'BE', 'CH', 'DE', 'ES', 'FR', 'GB', 'IE', 'IT', 'NL'];
 
         foreach ($members as $member) {
             $jurisdiction = trim((string) ($member['jurisdiction'] ?? ''));
@@ -231,7 +231,7 @@ class ProfileData extends Model implements HasMedia, Auditable
 
             if ($status === 'granted'
                 && $patent_no !== ''
-                && in_array($jurisdiction, $european_countries, true)) {
+                && in_array($jurisdiction, $european_codes, true)) {
 
                 $date_str = trim((string) ($member['published_date'] ?? ''));
                 $date_sortable = $this->dateSortable($date_str);
@@ -297,10 +297,10 @@ class ProfileData extends Model implements HasMedia, Auditable
         }
 
         $jurisdiction_display = match ($jurisdiction) {
-            'European' => 'EPO',
-            'United States' => 'US',
-            'Korea (Republic of)' => 'Korea',
-            default => $jurisdiction,
+            'EP' => 'EPO',
+            'US' => 'US',
+            'KR' => 'Korea',
+            default => Country::name($jurisdiction) ?? $jurisdiction,
         };
 
         $date_field = $status === 'pending' ? 'filed_date' : 'published_date';

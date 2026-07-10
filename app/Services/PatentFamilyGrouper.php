@@ -14,9 +14,8 @@ class PatentFamilyGrouper
         '/^(\d+MTI)\d+/',
     ];
 
-    private const EUROPEAN_COUNTRIES = [
-        'European', 'Belgium', 'Switzerland', 'Germany', 'Spain', 'France',
-        'United Kingdom', 'Ireland', 'Italy', 'The Netherlands',
+    private const EUROPEAN_CODES = [
+        'EP', 'BE', 'CH', 'DE', 'ES', 'FR', 'GB', 'IE', 'IT', 'NL',
     ];
 
     public function familyPrefix(string $patent_internal_id): string
@@ -75,8 +74,8 @@ class PatentFamilyGrouper
             $country_part = '';
 
             if ($include_country) {
-                $country = trim((string) ($row['Country'] ?? ''));
-                if (in_array($country, self::EUROPEAN_COUNTRIES, true)) {
+                $country = trim((string) ($row['Code'] ?? ''));
+                if (in_array($country, self::EUROPEAN_CODES, true)) {
                     $country = 'EP';
                 }
                 $country_part = '||' . $country;
@@ -122,7 +121,7 @@ class PatentFamilyGrouper
 
         foreach ($rows as $row) {
             $prefix = $this->familyPrefix((string) ($row['Patent Internal ID'] ?? ''));
-            $country = trim((string) ($row['Country'] ?? ''));
+            $country = trim((string) ($row['Code'] ?? ''));
             $patent_no = trim((string) ($row['Patent No.'] ?? ''));
             $inventor = trim((string) ($row['Inventor'] ?? ''));
 
@@ -165,7 +164,7 @@ class PatentFamilyGrouper
         $co_inventor_names = [];
 
         foreach ($group['rows'] as $r) {
-            $c = trim((string) ($r['Country'] ?? ''));
+            $c = trim((string) ($r['Code'] ?? ''));
             $p = trim((string) ($r['Patent No.'] ?? ''));
 
             $prefix = $this->familyPrefix((string) ($r['Patent Internal ID'] ?? ''));

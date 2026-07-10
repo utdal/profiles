@@ -8,16 +8,21 @@
     </div>
 
     <!-- jurisdiction selectpr -->
+    @use(App\Helpers\Country)
     <div class="col col-lg-3 col-12">
-        <label for="data[{{ $parent_id }}][data][members][patent_{{ $index }}][jurisdiction]">Jurisdiction</label>
+        <label for="jurisdiction_{{ $parent_id }}_{{ $index }}">Jurisdiction</label>
         <select class="form-control"
             id="jurisdiction_{{ $parent_id }}_{{ $index }}"
-            name="data[{{ $parent_id }}][data][members][patent_{{ $index }}][jurisdiction]">
-            <option value="">Select a value</option>
-            @foreach($jurisdictions as $jurisdiction)
-                <option value="{{ $jurisdiction }}"
-                    @selected(old("data.{$parent_id}.data.members.patent_{$index}.jurisdiction", $member['jurisdiction'] ?? '') === $jurisdiction)>
-                    {{ $jurisdiction }}
+            name="data[{{ $parent_id }}][data][members][patent_{{ $index }}][jurisdiction]"
+            required
+        >
+            <option value="">Select a jurisdiction…</option>
+            @foreach(Country::all() as $code => $name)
+                <option
+                    value="{{ $code }}"
+                    @selected(old("data.{$parent_id}.data.members.patent_{$index}.jurisdiction", $member['jurisdiction'] ?? '') === $code)
+                >
+                    {{ $name }}
                 </option>
             @endforeach
         </select>
