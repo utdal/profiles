@@ -14,7 +14,6 @@ use App\Http\Requests\ProfileImageRequest;
 use App\Http\Requests\ProfileSearchRequest;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\School;
-use App\Setting;
 use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
@@ -254,11 +253,7 @@ class ProfilesController extends Controller
             $data->push($record);
         }
 
-        if ($section === 'patents') {
-            $jurisdictions = ProfileData::jurisdictions();
-        }
-
-        return view('profiles.edit', compact('profile', 'section', 'data', 'jurisdictions'));
+        return view('profiles.edit', compact('profile', 'section', 'data'));
     }
 
     /**

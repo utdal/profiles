@@ -225,12 +225,6 @@
     </div>
     @endif
 
-    <div class="col col-12">
-        <label for="patent_jurisdictions">Patent Jurisdictions</label>
-        <small class="form-text text-muted">One per line. Used on patents section edit view.</small>
-        <textarea class="form-control" id="patent_jurisdictions" name="setting[patent_jurisdictions]">{{ $settings['patent_jurisdictions'] ?? '' }}</textarea>
-    </div>
-   	
     <div class="row">
         <div class="col">
             {!! Form::submit('Save', array('class' => 'btn btn-primary edit-button')) !!}
