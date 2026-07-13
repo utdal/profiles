@@ -183,9 +183,10 @@ class ProfileData extends Model implements HasMedia, Auditable
     }
 
     /**
-     * Build a citation string from the patent's title and members.
+     * Build a citation string from the patent's members. The title is not
+     * included — the view renders it separately with its own format.
      *
-     * Format: "Title - jurisdiction - Number (mm/dd/yyyy), jurisdiction - pending - Number (mm/dd/yyyy), ..."
+     * Format: "jurisdiction - Number (mm/dd/yyyy), jurisdiction - pending - Number (mm/dd/yyyy), ..."
      *
      * - Granted members: "jurisdiction - Number (published_date)"
      * - Pending members: "jurisdiction - pending - Number (filed_date)"
@@ -201,16 +202,12 @@ class ProfileData extends Model implements HasMedia, Auditable
         }
 
         $data = $this->data;
-        $title = trim((string) ($data['title'] ?? ''));
         $co_inventors = trim((string) ($data['co_inventors'] ?? ''));
+        $group_title_normalized = $this->normalizeCitationTitle((string) ($data['title'] ?? ''));
         $members = $data['members'] ?? [];
 
         if (!is_array($members) || empty($members)) {
-            $base = $title !== '' ? $title : null;
-            if ($base !== null && $co_inventors !== '') {
-                return "{$base} - co-inventors: {$co_inventors}";
-            }
-            return $base;
+            return $co_inventors !== '' ? "co-inventors: {$co_inventors}" : null;
         }
 
         $entries = [];
@@ -239,21 +236,26 @@ class ProfileData extends Model implements HasMedia, Auditable
                 if (!isset($ep_buckets[$patent_no])) {
                     $ep_buckets[$patent_no] = [
                         'patent_no' => $patent_no,
+                        'title_display' => $this->variantTitle($member, $group_title_normalized),
                         'date_display' => $this->formatCitationDate($date_str),
                         'date_sortable' => $date_sortable,
                     ];
                 } elseif ($date_sortable < $ep_buckets[$patent_no]['date_sortable']) {
+                    $ep_buckets[$patent_no]['title_display'] = $this->variantTitle($member, $group_title_normalized);
                     $ep_buckets[$patent_no]['date_display'] = $this->formatCitationDate($date_str);
                     $ep_buckets[$patent_no]['date_sortable'] = $date_sortable;
                 }
                 continue;
             }
 
-            $entries[] = $this->formatCitationMember($member);
+            $entries[] = $this->formatCitationMember($member, $group_title_normalized);
         }
 
         foreach ($ep_buckets as $bucket) {
             $entry = "EPO - {$bucket['patent_no']}";
+            if ($bucket['title_display'] !== '') {
+                $entry = "{$bucket['title_display']} - {$entry}";
+            }
             if ($bucket['date_display'] !== '') {
                 $entry .= " ({$bucket['date_display']})";
             }
@@ -263,16 +265,10 @@ class ProfileData extends Model implements HasMedia, Auditable
         $entries = array_filter($entries, fn ($e) => $e !== null && $e !== '');
 
         if (empty($entries)) {
-            $base = $title !== '' ? $title : null;
-            if ($base !== null && $co_inventors !== '') {
-                return "{$base} - co-inventors: {$co_inventors}";
-            }
-            return $base;
+            return $co_inventors !== '' ? "co-inventors: {$co_inventors}" : null;
         }
 
-        $citation = $title !== ''
-            ? "{$title} - " . implode(', ', $entries)
-            : implode(', ', $entries);
+        $citation = implode(', ', $entries);
 
         if ($co_inventors !== '') {
             $citation .= " - co-inventors: {$co_inventors}";
@@ -284,7 +280,7 @@ class ProfileData extends Model implements HasMedia, Auditable
     /**
      * Format a single member as a citation entry.
      */
-    private function formatCitationMember(array $member): ?string
+    private function formatCitationMember(array $member, string $group_title_normalized): ?string
     {
         $jurisdiction = trim((string) ($member['jurisdiction'] ?? ''));
         $status = $member['status'] ?? 'granted';
@@ -309,6 +305,11 @@ class ProfileData extends Model implements HasMedia, Auditable
 
         $entry = $jurisdiction_display;
 
+        $variant_title = $this->variantTitle($member, $group_title_normalized);
+        if ($variant_title !== '') {
+            $entry = "{$variant_title} - {$entry}";
+        }
+
         if ($status === 'pending') {
             $entry .= ' - pending';
         }
@@ -318,6 +319,34 @@ class ProfileData extends Model implements HasMedia, Auditable
         }
 
         return $entry;
+    }
+
+    /**
+     * Return the member's own title when it's different from the group
+     * title, or '' when it matches after normalization (or is empty).
+     */
+    private function variantTitle(array $member, string $group_title_normalized): string
+    {
+        $member_title = trim((string) ($member['patent_title'] ?? ''));
+        if ($member_title === '') {
+            return '';
+        }
+
+        return $this->normalizeCitationTitle($member_title) === $group_title_normalized
+            ? ''
+            : $member_title;
+    }
+
+    /**
+     * Normalize a title for comparison: lowercase, strip punctuation,
+     * collapse whitespace. Mirrors PatentFamilyGrouper::normalizeTitle().
+     */
+    private function normalizeCitationTitle(string $title): string
+    {
+        $t = mb_strtolower(trim($title));
+        $t = preg_replace('/[^\p{L}\p{N}\s]/u', ' ', $t);
+        $t = preg_replace('/\s+/', ' ', $t);
+        return trim($t);
     }
 
     /**
