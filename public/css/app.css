@@ -10361,6 +10361,11 @@ input[type=file]:invalid {
   padding: 0.75rem;
 }
 
+[data-toggle-subrecords][aria-expanded=true] .when-collapsed,
+[data-toggle-subrecords][aria-expanded=false] .when-expanded {
+  display: none;
+}
+
 #footer-container {
   background-color: #919191;
   border-top: 10px solid #154734;

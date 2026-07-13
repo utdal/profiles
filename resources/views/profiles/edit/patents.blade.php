@@ -45,7 +45,8 @@
                             class="btn btn-sm btn-link p-0 mr-3"
                             aria-expanded="false"
                             data-toggle-subrecords>
-                        <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                        <i class="fas fa-chevron-down when-expanded" aria-hidden="true"></i>
+                        <i class="fas fa-chevron-right when-collapsed" aria-hidden="true"></i>
                         <span>Patents Information</span>
                         <span class="subrecord-count badge badge-secondary ml-1">0</span>
                     </button>

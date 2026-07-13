@@ -645,11 +645,6 @@ var profiles = function ($, undefined) {
     if (!subrecords) return;
     var is_expanded = button.getAttribute('aria-expanded') === 'true';
     button.setAttribute('aria-expanded', String(!is_expanded));
-    var icon = button.querySelector('i');
-    if (icon) {
-      icon.classList.toggle('fa-chevron-right', is_expanded);
-      icon.classList.toggle('fa-chevron-down', !is_expanded);
-    }
     if (is_expanded) {
       $(subrecords).slideUp(200);
     } else {
@@ -685,11 +680,6 @@ var profiles = function ($, undefined) {
     var count = subrecords.querySelectorAll(':scope > .subrecord:not(.template)').length;
     var should_expand = count > 0;
     button.setAttribute('aria-expanded', String(should_expand));
-    var icon = button.querySelector('i');
-    if (icon) {
-      icon.classList.toggle('fa-chevron-down', should_expand);
-      icon.classList.toggle('fa-chevron-right', !should_expand);
-    }
     subrecords.style.display = should_expand ? 'block' : 'none';
   };
 

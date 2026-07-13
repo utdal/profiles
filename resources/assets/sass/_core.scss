@@ -447,3 +447,8 @@ input[type="file"]:invalid{
 .datepicker-dropdown {
     padding: 0.75rem;
 }
+
+[data-toggle-subrecords][aria-expanded="true"]  .when-collapsed,
+[data-toggle-subrecords][aria-expanded="false"] .when-expanded {
+    display: none;
+}
