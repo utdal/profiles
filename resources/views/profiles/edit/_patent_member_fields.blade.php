@@ -1,7 +1,7 @@
 <div class="row ml-1">
     <div class="col col-lg-2 col-12">
         <label for="data[{{ $parent_id }}][data][members][patent_{{ $index }}][patent_no]">Number</label>
-        <input type="text" class="form-control"
+        <input type="text" class="form-control mb-1"
                id="data[{{ $parent_id }}][data][members][patent_{{ $index }}][patent_no]"
                name="data[{{ $parent_id }}][data][members][patent_{{ $index }}][patent_no]"
                value="{{ $member['patent_no'] ?? '' }}">
@@ -11,7 +11,7 @@
     @use(App\Helpers\Country)
     <div class="col col-lg-3 col-12">
         <label for="jurisdiction_{{ $parent_id }}_{{ $index }}">Jurisdiction</label>
-        <select class="form-control"
+        <select class="form-control mb-1"
             id="jurisdiction_{{ $parent_id }}_{{ $index }}"
             name="data[{{ $parent_id }}][data][members][patent_{{ $index }}][jurisdiction]"
             required
@@ -30,7 +30,7 @@
 
     <div class="col col-lg-2 col-12">
         <label for="data[{{ $parent_id }}][data][members][patent_{{ $index }}][status]">Status</label>
-        <select class="form-control"
+        <select class="form-control mb-1"
                 id="data[{{ $parent_id }}][data][members][patent_{{ $index }}][status]"
                 name="data[{{ $parent_id }}][data][members][patent_{{ $index }}][status]">
             @php $current_status = $member['status'] ?? 'published'; @endphp
@@ -42,7 +42,7 @@
 
     <div class="col col-lg-2 col-12">
         <label for="data[{{ $parent_id }}][data][members][patent_{{ $index }}][filed_date]">Filed Date</label>
-        <input type="text" class="form-control datepicker day"
+        <input type="text" class="form-control mb-1 datepicker day"
                id="data[{{ $parent_id }}][data][members][patent_{{ $index }}][filed_date]"
                name="data[{{ $parent_id }}][data][members][patent_{{ $index }}][filed_date]"
                value="{{ $member['filed_date'] ?? '' }}">
@@ -50,7 +50,7 @@
 
     <div class="col col-lg-2 col-12">
         <label for="data[{{ $parent_id }}][data][members][patent_{{ $index }}][published_date]">Published Date</label>
-        <input type="text" class="form-control datepicker day"
+        <input type="text" class="form-control mb-1 datepicker day"
                id="data[{{ $parent_id }}][data][members][patent_{{ $index }}][published_date]"
                name="data[{{ $parent_id }}][data][members][patent_{{ $index }}][published_date]"
                value="{{ $member['published_date'] ?? '' }}">
@@ -65,9 +65,9 @@
         </button>
     </div>
 
-    <div class="col col-lg-11 col-12 mt-2">
+    <div class="col col-lg-11 col-12 mt-1">
         <label for="data[{{ $parent_id }}][data][members][patent_{{ $index }}][title]">Title <small class="text-muted">(optional)</small></label>
-        <input type="text" class="form-control"
+        <input type="text" class="form-control mb-5"
                id="data[{{ $parent_id }}][data][members][patent_{{ $index }}][title]"
                name="data[{{ $parent_id }}][data][members][patent_{{ $index }}][title]"
                value="{{ $member['title'] ?? '' }}">
