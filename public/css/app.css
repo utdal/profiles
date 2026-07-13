@@ -10357,6 +10357,10 @@ input[type=file]:invalid {
   padding: 30px;
 }
 
+.datepicker-dropdown {
+  padding: 0.75rem;
+}
+
 #footer-container {
   background-color: #919191;
   border-top: 10px solid #154734;

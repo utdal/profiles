@@ -42,7 +42,7 @@
 
     <div class="col col-lg-2 col-12">
         <label for="data[{{ $parent_id }}][data][members][patent_{{ $index }}][filed_date]">Filed Date</label>
-        <input type="text" class="form-control datepicker month"
+        <input type="text" class="form-control datepicker day"
                id="data[{{ $parent_id }}][data][members][patent_{{ $index }}][filed_date]"
                name="data[{{ $parent_id }}][data][members][patent_{{ $index }}][filed_date]"
                value="{{ $member['filed_date'] ?? '' }}">
@@ -50,7 +50,7 @@
 
     <div class="col col-lg-2 col-12">
         <label for="data[{{ $parent_id }}][data][members][patent_{{ $index }}][published_date]">Published Date</label>
-        <input type="text" class="form-control datepicker month"
+        <input type="text" class="form-control datepicker day"
                id="data[{{ $parent_id }}][data][members][patent_{{ $index }}][published_date]"
                name="data[{{ $parent_id }}][data][members][patent_{{ $index }}][published_date]"
                value="{{ $member['published_date'] ?? '' }}">

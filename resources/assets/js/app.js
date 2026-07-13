@@ -35,6 +35,16 @@ var profiles = (function ($, undefined) {
                 minViewMode: 1,
                 format: 'yyyy/mm',
             },
+            day: {
+                autoclose: true,
+                assumeNearbyYear: true,
+                clearBtn: true,
+                forceParse: false,
+                keepEmptyValues: true,
+                minViewMode: 0,
+                startView: 0,
+                format: 'yyyy-mm-dd',
+            },
         },
     };
 
@@ -192,6 +202,9 @@ var profiles = (function ($, undefined) {
             });
             new_item.querySelectorAll('.datepicker.month')?.forEach((el) => {
                 $(el).datepicker(config.datepicker.month);
+            });
+            new_item.querySelectorAll('.datepicker.day')?.forEach((el) => {
+                $(el).datepicker(config.datepicker.day);
             });
 
             $(new_item).hide();
@@ -661,6 +674,9 @@ var profiles = (function ($, undefined) {
         subrow.querySelectorAll('.datepicker.month').forEach((el) => {
             $(el).datepicker(config.datepicker.month);
         });
+        subrow.querySelectorAll('.datepicker.day').forEach((el) => {
+            $(el).datepicker(config.datepicker.day);
+        });
     };
 
     /**
@@ -798,6 +814,7 @@ $(function() {
     require('bootstrap-datepicker');
     $('.datepicker.year').datepicker(profiles.config.datepicker.year);
     $('.datepicker.month').datepicker(profiles.config.datepicker.month);
+    $('.datepicker.day').datepicker(profiles.config.datepicker.day);
 
     //show preview of uploaded image
     $('input[type="file"]').on('change', (e) => profiles.preview_selected_image(e));
