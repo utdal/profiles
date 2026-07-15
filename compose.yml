@@ -1,0 +1,44 @@
+services:
+  web.profiles:
+    container_name: web.profiles
+    hostname: ${APP_ADDRESS:-profiles.test}
+    build:
+      context: .
+      dockerfile: .docker/apache/Dockerfile
+      target: "${CONTAINER_ENV:-production}_build"
+    image: ${IMAGE_NAME_WEB:-localdev/web.profiles:web-1.0}
+    volumes:
+      - ".:/var/www/html"
+    networks:
+      - profiles
+      - nginx-proxy
+    environment:
+      VIRTUAL_HOST: ${APP_ADDRESS:-profiles.test}
+      SELF_SIGNED_HOST: ${APP_ADDRESS:-profiles.test}
+
+  php.profiles:
+    container_name: php.profiles
+    hostname: "php.${APP_ADDRESS:-profiles.test}"
+    build:
+      context: .
+      dockerfile: .docker/php/Dockerfile
+      target: "${CONTAINER_ENV:-production}_build"
+      args:
+        APP_ENV: ${APP_ENV:-production}
+    environment:
+      - XDEBUG_MODE=${XDEBUG_MODE:-off}
+    image: ${IMAGE_NAME_PHP:-localdev/php.profiles:php-1.0}
+    volumes:
+      - ".:/var/www/html"
+    networks:
+      - profiles
+      - localdev-shared-services
+
+networks:
+  profiles:
+  nginx-proxy:
+    name: nginx-proxy
+    external: ${CONTAINER_IS_LOCALDEV:-false}
+  localdev-shared-services:
+    name: localdev-shared-services
+    external: ${CONTAINER_IS_LOCALDEV:-false}

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Helpers\Contracts\LdapHelperContract;
 use App\Http\Requests\ProfileBannerImageRequest;
 use App\Http\Requests\ProfileImageRequest;
+use App\Http\Requests\ProfileSearchRequest;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\School;
 use Illuminate\Contracts\View\View as ViewContract;
@@ -67,9 +68,11 @@ class ProfilesController extends Controller
     /**
      * Display a listing of profiles.
      */
-    public function index(Request $request): View|ViewContract|RedirectResponse
+    public function index(ProfileSearchRequest $request): View|ViewContract|RedirectResponse
     {
-        $search = $request->input('search');
+        $input_search = $request->input('search');
+
+        $search = htmlspecialchars($input_search, FILTER_FLAG_NO_ENCODE_QUOTES);
 
         /** @var EloquentCollection */
         $profiles = Profile::where('full_name', 'LIKE', "%$search%")
@@ -364,6 +367,10 @@ class ProfilesController extends Controller
 
         if (config('pdf.chrome_arguments')) {
             $pdf_content = $pdf_content->addChromiumArguments(config('pdf.chrome_arguments'));
+        }
+
+        if (config('pdf.http_username') && config('pdf.http_password')) {
+            $pdf_content = $pdf_content->authenticate(config('pdf.http_username'), config('pdf.http_password'));
         }
 
         return response($pdf_content->pdf())

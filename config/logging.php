@@ -32,7 +32,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['daily'],
+            'channels' => ['daily', 'sentry_logs'],
         ],
 
         'single' => [
@@ -46,6 +46,11 @@ return [
             'path' => storage_path('logs/laravel.log'),
             'level' => env('APP_LOG_LEVEL', 'debug'),
             'days' => env('APP_LOG_MAX_FILES', 30),
+        ],
+
+        'sentry_logs' => [
+            'driver' => 'sentry_logs',
+            'level' => env('SENTRY_LOG_LEVEL', env('APP_LOG_LEVEL', 'debug')),
         ],
 
         'slack' => [

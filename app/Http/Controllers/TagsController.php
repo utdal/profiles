@@ -73,9 +73,9 @@ class TagsController extends Controller
     /**
      * Save the tag in the database.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(TagUpdateRequest $request): RedirectResponse
     {
-        Tag::findOrCreate(preg_split('/\r\n|\r|\n/', $request->tag_name ?? ''), $request->tag_type);
+        Tag::findOrCreate($request->name, $request->type);
 
         return redirect()->route('tags.table')
             ->with('flash_message', 'Added tags');

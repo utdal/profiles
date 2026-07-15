@@ -3,6 +3,7 @@
 /public/storage
 /storage/*.key
 /storage/medialibrary
+/storage/media-library
 /vendor
 /.idea
 /.vagrant
@@ -14,6 +15,7 @@ _ide_helper*
 *.css.map
 *.js.map
 **/.phpunit.result.cache
+**/.phpunit.cache
 **/capistrano.log
 deploy.php
 Homestead.json
