@@ -42,17 +42,23 @@
 
     <div class="col col-lg-2 col-12">
         <label for="data[{{ $parent_id }}][data][members][patent_{{ $index }}][filed_date]">Filed Date</label>
-        <input type="text" class="form-control mb-1 datepicker day"
+        <input type="text" class="form-control mb-1"
                id="data[{{ $parent_id }}][data][members][patent_{{ $index }}][filed_date]"
                name="data[{{ $parent_id }}][data][members][patent_{{ $index }}][filed_date]"
+               data-provide="datepicker"
+               data-date-format="MM d, yyyy"
+               data-date-autoclose="true"
                value="{{ $member['filed_date'] ?? '' }}">
     </div>
 
     <div class="col col-lg-2 col-12">
         <label for="data[{{ $parent_id }}][data][members][patent_{{ $index }}][published_date]">Published Date</label>
-        <input type="text" class="form-control mb-1 datepicker day"
+        <input type="text" class="form-control mb-1"
                id="data[{{ $parent_id }}][data][members][patent_{{ $index }}][published_date]"
                name="data[{{ $parent_id }}][data][members][patent_{{ $index }}][published_date]"
+               data-provide="datepicker"
+               data-date-format="MM d, yyyy"
+               data-date-autoclose="true"
                value="{{ $member['published_date'] ?? '' }}">
     </div>
 

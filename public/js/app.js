@@ -46,16 +46,6 @@ var profiles = function ($, undefined) {
         keepEmptyValues: true,
         minViewMode: 1,
         format: 'yyyy/mm'
-      },
-      day: {
-        autoclose: true,
-        assumeNearbyYear: true,
-        clearBtn: true,
-        forceParse: false,
-        keepEmptyValues: true,
-        minViewMode: 0,
-        startView: 0,
-        format: 'yyyy-mm-dd'
       }
     }
   };
@@ -204,7 +194,7 @@ var profiles = function ($, undefined) {
     var item_template = document.querySelector((_options$template = options.template) !== null && _options$template !== void 0 ? _options$template : 'form .record');
     var item_container = (_document$querySelect = document.querySelector(options.insertInto)) !== null && _document$querySelect !== void 0 ? _document$querySelect : item_template.parentElement;
     if (item_template) {
-      var _new_item$querySelect, _new_item$querySelect2, _new_item$querySelect3, _new_item$querySelect4, _new_item$querySelect5, _new_item$querySelect6, _new_item$querySelect7, _new_item$querySelect8, _new_item$querySelect9, _new_item$querySelect0, _new_item$querySelect1;
+      var _new_item$querySelect, _new_item$querySelect2, _new_item$querySelect3, _new_item$querySelect4, _new_item$querySelect5, _new_item$querySelect6, _new_item$querySelect7, _new_item$querySelect8, _new_item$querySelect9, _new_item$querySelect0;
       var old_id = item_template.dataset.rowId;
       var new_id;
       if (Number(item_container.dataset.nextRowId) >= 0) {
@@ -254,9 +244,6 @@ var profiles = function ($, undefined) {
       });
       (_new_item$querySelect0 = new_item.querySelectorAll('.datepicker.month')) === null || _new_item$querySelect0 === void 0 || _new_item$querySelect0.forEach(function (el) {
         $(el).datepicker(config.datepicker.month);
-      });
-      (_new_item$querySelect1 = new_item.querySelectorAll('.datepicker.day')) === null || _new_item$querySelect1 === void 0 || _new_item$querySelect1.forEach(function (el) {
-        $(el).datepicker(config.datepicker.day);
       });
       $(new_item).hide();
       if ('insertType' in options && options.insertType === 'prepend') {
@@ -719,9 +706,6 @@ var profiles = function ($, undefined) {
     subrow.querySelectorAll('.datepicker.month').forEach(function (el) {
       $(el).datepicker(config.datepicker.month);
     });
-    subrow.querySelectorAll('.datepicker.day').forEach(function (el) {
-      $(el).datepicker(config.datepicker.day);
-    });
   };
 
   /**
@@ -843,7 +827,6 @@ $(function () {
   __webpack_require__(/*! bootstrap-datepicker */ "./node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.js");
   $('.datepicker.year').datepicker(profiles.config.datepicker.year);
   $('.datepicker.month').datepicker(profiles.config.datepicker.month);
-  $('.datepicker.day').datepicker(profiles.config.datepicker.day);
 
   //show preview of uploaded image
   $('input[type="file"]').on('change', function (e) {
