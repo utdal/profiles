@@ -1,4 +1,8 @@
 <div class="row ml-1">
+    <input type="hidden"
+           name="data[{{ $parent_id }}][data][members][patent_{{ $index }}][patent_internal_id]"
+           value="{{ $member['patent_internal_id'] ?? '' }}">
+
     <div class="col col-lg-2 col-12">
         <label for="data[{{ $parent_id }}][data][members][patent_{{ $index }}][patent_no]">Number</label>
         <input type="text" class="form-control mb-1"
