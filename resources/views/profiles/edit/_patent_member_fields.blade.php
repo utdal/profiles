@@ -47,24 +47,24 @@
     <div class="col col-lg-2 col-12">
         <label for="data[{{ $parent_id }}][data][members][patent_{{ $index }}][filed_date]">Filed Date</label>
         <input type="text" class="form-control mb-1"
-               id="data[{{ $parent_id }}][data][members][patent_{{ $index }}][filed_date]"
-               name="data[{{ $parent_id }}][data][members][patent_{{ $index }}][filed_date]"
-               data-provide="datepicker"
-               data-date-format="MM d, yyyy"
-               data-date-autoclose="true"
-               value="{{ $member['filed_date'] ?? '' }}">
+            id="data[{{ $parent_id }}][data][members][patent_{{ $index }}][filed_date]"
+            name="data[{{ $parent_id }}][data][members][patent_{{ $index }}][filed_date]"
+            data-provide="datepicker"
+            data-date-format="mm/dd/yyyy"
+            data-date-autoclose="true"
+            value="{{ !empty($member['filed_date']) ? \Carbon\Carbon::parse($member['filed_date'])->format('m/d/Y') : '' }}">
     </div>
 
     <div class="col col-lg-2 col-12">
-        <label for="data[{{ $parent_id }}][data][members][patent_{{ $index }}][published_date]">Published Date</label>
-        <input type="text" class="form-control mb-1"
-               id="data[{{ $parent_id }}][data][members][patent_{{ $index }}][published_date]"
-               name="data[{{ $parent_id }}][data][members][patent_{{ $index }}][published_date]"
-               data-provide="datepicker"
-               data-date-format="MM d, yyyy"
-               data-date-autoclose="true"
-               value="{{ $member['published_date'] ?? '' }}">
-    </div>
+            <label for="data[{{ $parent_id }}][data][members][patent_{{ $index }}][published_date]">Published Date</label>
+            <input type="text" class="form-control mb-1"
+            id="data[{{ $parent_id }}][data][members][patent_{{ $index }}][published_date]"
+            name="data[{{ $parent_id }}][data][members][patent_{{ $index }}][published_date]"
+            data-provide="datepicker"
+            data-date-format="mm/dd/yyyy"
+            data-date-autoclose="true"
+            value="{{ !empty($member['published_date']) ? \Carbon\Carbon::parse($member['published_date'])->format('m/d/Y') : '' }}">
+        </div>
 
     <div class="col col-lg-1 col-12 subrecord-actions d-flex justify-content-end">
         <button type="button" class="btn btn-sm subrow-duplicate" title="Duplicate this member">

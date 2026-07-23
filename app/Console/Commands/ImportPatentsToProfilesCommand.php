@@ -129,7 +129,7 @@ class ImportPatentsToProfilesCommand extends Command
                 'patent_no' => $patent_no,
                 'status' => 'published',
                 'filed_date' => null,
-                'published_date' => $this->parseDate((string) ($r['Filed Date'] ?? '')),
+                'published_date' => $this->toStoredDate((string) ($r['Filed Date'] ?? '')),
             ];
             $i++;
         }
@@ -148,5 +148,16 @@ class ImportPatentsToProfilesCommand extends Command
             return $path;
         }
         return base_path($path);
+    }
+
+    /**
+     * Parse an import date and return it in the same m/d/Y form the edit
+     * form's datepicker submits, so imported and hand-edited records share
+     * one stored format. Reuses parseDate() for parsing/validation.
+     */
+    private function toStoredDate(string $value): ?string
+    {
+        $iso = $this->parseDate($value);
+        return $iso === null ? null : \Carbon\Carbon::createFromFormat('Y-m-d', $iso)->format('m/d/Y');
     }
 }
