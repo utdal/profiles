@@ -76,10 +76,10 @@
     </div>
 
     <div class="col col-lg-11 col-12 mt-1">
-        <label for="data[{{ $parent_id }}][data][members][patent_{{ $index }}][title]">Title <small class="text-muted">(optional)</small></label>
-        <input type="text" class="form-control mb-5"
-               id="data[{{ $parent_id }}][data][members][patent_{{ $index }}][title]"
-               name="data[{{ $parent_id }}][data][members][patent_{{ $index }}][title]"
-               value="{{ $member['title'] ?? '' }}">
+        <label for="data[{{ $parent_id }}][data][members][patent_{{ $index }}][patent_title]">Title <small class="text-muted">(optional — only shown in the citation if different from the group title)</small></label>
+        <input type="text" class="form-control mb-0"
+               id="data[{{ $parent_id }}][data][members][patent_{{ $index }}][patent_title]"
+               name="data[{{ $parent_id }}][data][members][patent_{{ $index }}][patent_title]"
+               value="{{ $member['patent_title'] ?? '' }}">
     </div>
 </div>
