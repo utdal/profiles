@@ -38,7 +38,7 @@
                 id="data[{{ $parent_id }}][data][members][patent_{{ $index }}][status]"
                 name="data[{{ $parent_id }}][data][members][patent_{{ $index }}][status]">
             @php $current_status = $member['status'] ?? 'published'; @endphp
-            <option value="granted" {{ $current_status === 'published' ? 'selected' : '' }}>Published</option>
+            <option value="published" {{ $current_status === 'published' ? 'selected' : '' }}>Published</option>
             <option value="pending" {{ $current_status === 'pending' ? 'selected' : '' }}>Pending</option>
             <option value="expired" {{ $current_status === 'expired' ? 'selected' : '' }}>Expired</option>
         </select>

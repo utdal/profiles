@@ -283,7 +283,7 @@ class ProfileData extends Model implements HasMedia, Auditable
     private function formatCitationMember(array $member, string $group_title_normalized): ?string
     {
         $jurisdiction = trim((string) ($member['jurisdiction'] ?? ''));
-        $status = $member['status'] ?? 'granted';
+        $status = $member['status'] ?? 'published';
         $patent_no = trim((string) ($member['patent_no'] ?? ''));
         $internal_id = trim((string) ($member['patent_internal_id'] ?? ''));
 
