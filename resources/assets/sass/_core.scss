@@ -452,3 +452,6 @@ input[type="file"]:invalid{
 [data-toggle-subrecords][aria-expanded="false"] .when-expanded {
     display: none;
 }
+
+.subrecords > .subrecord:not(:last-child) { margin-bottom: 3.0rem; }
+.subrecords > .subrecord                  { margin-bottom: 0; }

@@ -10366,6 +10366,14 @@ input[type=file]:invalid {
   display: none;
 }
 
+.subrecords > .subrecord:not(:last-child) {
+  margin-bottom: 3rem;
+}
+
+.subrecords > .subrecord {
+  margin-bottom: 0;
+}
+
 #footer-container {
   background-color: #919191;
   border-top: 10px solid #154734;
