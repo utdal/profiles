@@ -240,6 +240,7 @@ class Profile extends Model implements HasMedia, Auditable
 
       //iterate over each record
       foreach($request->data as $entry){
+          $entry = $this->normalizeMembers($entry);
           $should_save = false;
           //do we have any data in the record and should we save it
           foreach($entry['data'] as $key => $value){
@@ -309,6 +310,37 @@ class Profile extends Model implements HasMedia, Auditable
         }
 
         Cache::tags(['profile_data'])->flush();
+    }
+
+    /**
+     * Renumber the members object so keys are sequential patent_1, patent_2, ...
+     */
+    private function normalizeMembers(array $entry, string $parent_key = 'patent'): array
+    {
+        if (!isset($entry['data']['members']) || !is_array($entry['data']['members'])) {
+            return $entry;
+        }
+
+        $renumbered = [];
+        $i = 1;
+        foreach ($entry['data']['members'] as $member) {
+            // Skip entirely empty members (all fields blank)
+            $hasContent = false;
+            foreach ($member as $value) {
+                if (!empty($value)) {
+                    $hasContent = true;
+                    break;
+                }
+            }
+            if (!$hasContent) {
+                continue;
+            }
+            $renumbered["{$parent_key}_{$i}"] = $member;
+            $i++;
+        }
+
+        $entry['data']['members'] = $renumbered;
+        return $entry;
     }
 
     /**
@@ -766,6 +798,17 @@ class Profile extends Model implements HasMedia, Auditable
     public function awards()
     {
         return $this->data()->awards();
+    }
+    
+    /**
+     * This has many patents.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+
+    public function patents()
+    {
+        return $this->data()->patents();
     }
 
     /**

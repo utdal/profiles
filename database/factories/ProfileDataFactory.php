@@ -128,7 +128,7 @@ class ProfileDataFactory extends Factory
             return [
                 'type' => 'affiliations',
                 'data' => [
-                    'tittle' => $this->faker->sentence(),
+                    'title' => $this->faker->sentence(),
                     'description' => $this->faker->sentence(),
                     'start_date' => $this->faker->year(),
                     'end_date' => $this->faker->year(),
@@ -148,7 +148,7 @@ class ProfileDataFactory extends Factory
             return [
                 'type' => 'support',
                 'data' => [
-                    'tittle' => $this->faker->sentence(),
+                    'title' => $this->faker->sentence(),
                     'sponsor' => $this->faker->company(),
                     'amount' => $this->faker->randomNumber(5, true),
                     'description' => $this->faker->sentence(),
@@ -170,7 +170,7 @@ class ProfileDataFactory extends Factory
             return [
                 'type' => 'news',
                 'data' => [
-                    'tittle' => $this->faker->sentence(),
+                    'title' => $this->faker->sentence(),
                     'url' => $this->faker->url(),
                     'description' => $this->faker->sentence(),
                     'start_date' => $this->faker->year(),
@@ -179,4 +179,46 @@ class ProfileDataFactory extends Factory
             ];
         });
     }
+
+    /**
+     * Data Type "patents"
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function patents()
+    {
+        return $this->state(function (array $attributes) {
+            $title = $this->faker->sentence();
+
+            return [
+                'type' => 'patents',
+                'data' => [
+                    'title'         => $title,
+                    'co_inventors'  => '',
+                    'family_prefix' => (string) $this->faker->numberBetween(10000, 99999),
+                    'members'       => [
+                        'patent_1' => [
+                            'patent_internal_id' => $this->faker->numerify('#####US#'),
+                            'patent_title'       => $title,
+                            'jurisdiction'       => 'US',
+                            'patent_no'          => number_format($this->faker->numberBetween(7_000_000, 11_999_999)),
+                            'status'             => 'published',
+                            'filed_date'         => null,
+                            'published_date'     => $this->faker->date('m/d/Y'),
+                        ],
+                        'patent_2' => [
+                            'patent_internal_id' => $this->faker->numerify('#####JP#'),
+                            'patent_title'       => $title,
+                            'jurisdiction'       => 'JP',
+                            'patent_no'          => (string) $this->faker->numberBetween(5_000_000, 6_999_999),
+                            'status'             => 'published',
+                            'filed_date'         => null,
+                            'published_date'     => $this->faker->date('m/d/Y'),
+                        ],
+                    ],
+                ],
+            ];
+        });
+    }
 }
+

@@ -15,6 +15,7 @@ class ProfileDataCard extends Component
         'publications' => 8,
         'appointments' => 10,
         'awards' => 10,
+        'patents' => 8,
         'news' => 5,
         'support' => 5,
         'presentations' => 5,

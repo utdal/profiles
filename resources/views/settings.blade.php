@@ -224,7 +224,7 @@
         </div>
     </div>
     @endif
-   	
+
     <div class="row">
         <div class="col">
             {!! Form::submit('Save', array('class' => 'btn btn-primary edit-button')) !!}

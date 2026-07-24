@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Http\Requests\Concerns\HasImageUploads;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use App\Helpers\Country;
 
 class ProfileUpdateRequest extends FormRequest
 {
@@ -87,6 +88,9 @@ class ProfileUpdateRequest extends FormRequest
             'data.*.data.secondary_url' => 'Secondary URL',
             'data.*.data.tertiary_url' => 'Tertiary URL',
             'data.*.data.orc_id' => 'ORCID',
+            'data.*.data.members.*.jurisdiction'   => 'Jurisdiction',
+            'data.*.data.members.*.status'         => 'Status',
+            'data.*.data.members.*.patent_no'      => 'Patent number',
         ];
     }
 
@@ -108,4 +112,16 @@ class ProfileUpdateRequest extends FormRequest
                 })
             ];
     }
+
+    public function patentsRules() : array {
+        return [
+            'data.*.data.title'         => ['required', 'string', 'max:120'],
+            'data.*.data.members'       => ['nullable', 'array'],
+
+            'data.*.data.members.*.patent_no'      => ['required', 'string', 'max:50'],
+            'data.*.data.members.*.status'         => ['required', Rule::in(['published', 'pending', 'expired'])],
+            'data.*.data.members.*.jurisdiction'   => ['required', Rule::in(Country::codes())],
+        ];
+    }
+
 }
