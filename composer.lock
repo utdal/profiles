@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9fdbdc552d45f04ff380c62d5a8f0e53",
+    "content-hash": "61e27853b0fd59afd3c399a3790053f8",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -5593,27 +5593,27 @@
         },
         {
             "name": "stevebauman/purify",
-            "version": "v5.1.1",
+            "version": "v6.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stevebauman/purify.git",
-                "reference": "639cf2fe17b45f2afaf0688be1316d4aad801f9a"
+                "reference": "deba4aa55a45a7593c369b52d481c87b545a5bf8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stevebauman/purify/zipball/639cf2fe17b45f2afaf0688be1316d4aad801f9a",
-                "reference": "639cf2fe17b45f2afaf0688be1316d4aad801f9a",
+                "url": "https://api.github.com/repos/stevebauman/purify/zipball/deba4aa55a45a7593c369b52d481c87b545a5bf8",
+                "reference": "deba4aa55a45a7593c369b52d481c87b545a5bf8",
                 "shasum": ""
             },
             "require": {
-                "ezyang/htmlpurifier": "^4.9.0",
-                "illuminate/contracts": "~7.0|~8.0|~9.0|~10.0",
-                "illuminate/support": "~7.0|~8.0|~9.0|~10.0",
+                "ezyang/htmlpurifier": "^4.17",
+                "illuminate/contracts": "^7.0|^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
+                "illuminate/support": "^7.0|^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
                 "php": ">=7.4"
             },
             "require-dev": {
-                "orchestra/testbench": "~5.0|~6.0|~7.0",
-                "phpunit/phpunit": "~8.0|~9.0"
+                "orchestra/testbench": "^5.0|^6.0|^7.0|^8.0|^9.0|^10.0|^11.0",
+                "phpunit/phpunit": "^8.0|^9.0|^10.0|^11.5.3|^12.5.12"
             },
             "type": "library",
             "extra": {
@@ -5653,9 +5653,9 @@
             ],
             "support": {
                 "issues": "https://github.com/stevebauman/purify/issues",
-                "source": "https://github.com/stevebauman/purify/tree/v5.1.1"
+                "source": "https://github.com/stevebauman/purify/tree/v6.3.2"
             },
-            "time": "2023-02-04T16:54:22+00:00"
+            "time": "2026-03-18T16:42:42+00:00"
         },
         {
             "name": "symfony/console",
