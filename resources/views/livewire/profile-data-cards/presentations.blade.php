@@ -14,6 +14,6 @@
         </div>
     @endforeach
     @if($paginated)
-        {{ $data->links() }}
+        {{ $data->links(data: ['scrollTo' => '#presentations']) }}
     @endif
 </section>

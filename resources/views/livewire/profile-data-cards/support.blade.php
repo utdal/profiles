@@ -12,6 +12,6 @@
         </div>
     @endforeach
     @if($paginated)
-        {{ $data->links() }}
+        {{ $data->links(data: ['scrollTo' => '#funding']) }}
     @endif
 </section>

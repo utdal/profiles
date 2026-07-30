@@ -9,6 +9,6 @@
         {!! Purify::clean($area->description) !!}
     @endforeach
     @if($paginated)
-        {{ $data->links() }}
+        {{ $data->links(data: ['scrollTo' => '#areas']) }}
     @endif
 </section>
