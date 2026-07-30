@@ -1,7 +1,7 @@
 <form>
     <div class="form-check form-check-inline align-items-baseline m-0">
         <input
-            wire:model="not_accepting_students"
+            wire:model.live="not_accepting_students"
             type="checkbox"
             id="notAcceptingStudentsCheckbox"
             class="form-check-input"

@@ -3,11 +3,11 @@
     <div class="form-row">
         <div class="form-group col-lg-6">
             <label for="userSearch">Search</label>
-            <input wire:model.debounce.250ms="search_filter" type="text" id="userSearch" class="form-control" placeholder="Search...">
+            <input wire:model.live.debounce.250ms="search_filter" type="text" id="userSearch" class="form-control" placeholder="Search...">
         </div>
         <div class="form-group col-lg-2">
             <label for="delegationNotifyFilter">Notify</label>
-            <select wire:model="notify_filter" id="delegationNotifyFilter" class="form-control">
+            <select wire:model.live="notify_filter" id="delegationNotifyFilter" class="form-control">
                 <option value="" selected>All</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
@@ -15,7 +15,7 @@
         </div>
         <div class="form-group col-lg-2">
             <label for="perPage">Per Page</label>
-            <select wire:model="per_page" id="perPage" class="form-control">
+            <select wire:model.live="per_page" id="perPage" class="form-control">
                 <option value="10">10 per page</option>
                 <option value="25" selected>25 per page</option>
                 <option value="50">50 per page</option>

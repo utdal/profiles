@@ -1,7 +1,7 @@
 <div class="directory-search input-group dropdown">
     <input
         id="{{ $input_id }}"
-        wire:model.debounce.250ms="query"
+        wire:model.live.debounce.250ms="query"
         wire:keydown.escape="resetSearch"
         type="text"
         class="form-control position-relative mb-0 dropdown-toggle"
@@ -12,7 +12,7 @@
         @if($aria_describedby) aria-describedby="{{ $aria_describedby }}" @endif
         @if($required) required @endif
     >
-    <input wire:model="selected_username" type="hidden" name="{{ $input_name }}">
+    <input wire:model.live="selected_username" type="hidden" name="{{ $input_name }}">
 
     <div class="dropdown-menu shadow border-primary w-100">
         <button

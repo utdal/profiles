@@ -28,11 +28,11 @@
                     <div class="form-row">
                         <div class="form-group col-lg-2">
                             <label for="studentNameSearch">Name</label>
-                            <input wire:model.debounce.250ms="search_filter" type="text" id="studentNameSearch" class="form-control" placeholder="Search...">
+                            <input wire:model.live.debounce.250ms="search_filter" type="text" id="studentNameSearch" class="form-control" placeholder="Search...">
                         </div>
                         <div class="form-group col-lg-2">
                             <label for="studentTagSearch">Topic Interests</label>
-                            <select wire:model="tag_filter" id="studentTagSearch" class="form-control">
+                            <select wire:model.live="tag_filter" id="studentTagSearch" class="form-control">
                                 <option value="" selected>All</option>
                                 @foreach($tags as $tag)
                                 <option value="{{ $tag->slug }}">{{ $tag->name }}</option>
@@ -41,7 +41,7 @@
                         </div>
                         <div class="form-group col-lg-2">
                             <label for="studentFacultySearch">Faculty Interest</label>
-                            <select wire:model="faculty_filter" id="studentFacultySearch" class="form-control">
+                            <select wire:model.live="faculty_filter" id="studentFacultySearch" class="form-control">
                                 <option value="" selected>All</option>
                                 @foreach($faculty as $faculty_id => $faculty_name)
                                 <option value="{{ $faculty_id }}">{{ $faculty_name }}</option>
@@ -50,7 +50,7 @@
                         </div>
                         <div class="form-group col-lg-2">
                             <label for="studentSchoolSearch">School</label>
-                            <select wire:model="schools_filter" id="studentSchoolSearch" class="form-control">
+                            <select wire:model.live="schools_filter" id="studentSchoolSearch" class="form-control">
                                 <option value="" selected>All</option>
                                 @foreach($schools as $school)
                                 <option value="{{ $school }}">{{ $school }}</option>
@@ -59,7 +59,7 @@
                         </div>
                         <div class="form-group col-lg-2">
                             <label for="studentSemesterSearch">Semester</label>
-                            <select wire:model="semester_filter" id="studentSemesterSearch" class="form-control">
+                            <select wire:model.live="semester_filter" id="studentSemesterSearch" class="form-control">
                                 <option value="" selected>All</option>
                                 @foreach($semesters as $semester)
                                 <option value="{{ $semester }}">{{ $semester }}</option>
@@ -68,7 +68,7 @@
                         </div>
                         <div class="form-group col-lg-2">
                             <label for="studentMajorSearch">Major</label>
-                            <select wire:model="major_filter" id="studentMajorSearch" class="form-control">
+                            <select wire:model.live="major_filter" id="studentMajorSearch" class="form-control">
                                 <option value="" selected>All</option>
                                 @foreach($majors as $major)
                                 <option value="{{ $major }}">{{ $major }}</option>
@@ -77,7 +77,7 @@
                         </div>
                         <div class="form-group col-lg-2">
                             <label for="studentLanguageSearch">Language</label>
-                            <select wire:model="language_filter" id="studentLanguageSearch" class="form-control">
+                            <select wire:model.live="language_filter" id="studentLanguageSearch" class="form-control">
                                 <option value="" selected>All</option>
                                 @foreach($languages as $language_code => $language)
                                 <option value="{{ $language_code }}">{{ $language }}</option>
@@ -86,7 +86,7 @@
                         </div>
                         <div class="form-group col-lg-2">
                             <label for="studentTravelSearch">Travel to Centers</label>
-                            <select wire:model="travel_filter" id="studentTravelSearch" class="form-control">
+                            <select wire:model.live="travel_filter" id="studentTravelSearch" class="form-control">
                                 <option value="" selected>All</option>
                                 <option value="1">Yes</option>
                                 <option value="0">No</option>
@@ -94,7 +94,7 @@
                         </div>
                         <div class="form-group col-lg-2">
                             <label for="studentTravelOtherSearch">Travel to Sites</label>
-                            <select wire:model="travel_other_filter" id="studentTravelOtherSearch" class="form-control">
+                            <select wire:model.live="travel_other_filter" id="studentTravelOtherSearch" class="form-control">
                                 <option value="" selected>All</option>
                                 <option value="1">Yes</option>
                                 <option value="0">No</option>
@@ -102,7 +102,7 @@
                         </div>
                         <div class="form-group col-lg-2">
                             <label for="studentAnimalsSearch">Work with Animals</label>
-                            <select wire:model="animals_filter" id="studentAnimalsSearch" class="form-control">
+                            <select wire:model.live="animals_filter" id="studentAnimalsSearch" class="form-control">
                                 <option value="" selected>All</option>
                                 <option value="1">Yes</option>
                                 <option value="0">No</option>
@@ -110,7 +110,7 @@
                         </div>
                         <div class="form-group col-lg-2">
                             <label for="studentCreditSearch">Research Credit</label>
-                            <select wire:model="credit_filter" id="studentCreditSearch" class="form-control">
+                            <select wire:model.live="credit_filter" id="studentCreditSearch" class="form-control">
                                 <option value="" selected>All</option>
                                 <option value="1">Credit</option>
                                 <option value="0">Volunteer</option>
@@ -119,7 +119,7 @@
                         </div>
                         <div class="form-group col-lg-2">
                             <label for="studentGraduatesSearch">Expected Graduation</label>
-                            <select wire:model="graduation_filter" id="studentGraduatesSearch" class="form-control">
+                            <select wire:model.live="graduation_filter" id="studentGraduatesSearch" class="form-control">
                                 <option value="" selected>All</option>
                                 @foreach($graduation_dates as $graduation_date)
                                 <option value="{{ $graduation_date }}">{{ $graduation_date }}</option>
@@ -128,7 +128,7 @@
                         </div>
                         <div class="form-group col-lg-2">
                             <label for="studentStatus">Status</label>
-                            <select wire:model="status_filter" id="studentStatus" class="form-control">
+                            <select wire:model.live="status_filter" id="studentStatus" class="form-control">
                                 <option value="" selected>All</option>
                                 <option value="submitted">submitted</option>
                                 <option value="drafted">drafted</option>
@@ -203,7 +203,7 @@
             {{ $this->students->links() }}
         </div>
         <div class="col-lg-2">
-            <select wire:model="per_page" id="perPage" class="form-control form-control-sm">
+            <select wire:model.live="per_page" id="perPage" class="form-control form-control-sm">
                 <option value="10">10 per page</option>
                 <option value="25" selected>25 per page</option>
                 <option value="50">50 per page</option>

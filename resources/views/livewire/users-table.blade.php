@@ -3,11 +3,11 @@
     <div class="form-row">
         <div class="form-group col-lg-2">
             <label for="userSearch">Search</label>
-            <input wire:model.debounce.250ms="search_filter" type="text" id="userSearch" class="form-control" placeholder="Search...">
+            <input wire:model.live.debounce.250ms="search_filter" type="text" id="userSearch" class="form-control" placeholder="Search...">
         </div>
         <div class="form-group col-lg-2">
             <label for="userTitleSearch">Title</label>
-            <select wire:model="title_filter" id="userTitleSearch" class="form-control">
+            <select wire:model.live="title_filter" id="userTitleSearch" class="form-control">
                 <option value="" selected>All</option>
                 @foreach($titles as $title)
                 <option value="{{ $title }}">{{ $title }}</option>
@@ -16,7 +16,7 @@
         </div>
         <div class="form-group col-lg-2">
             <label for="userSchoolSearch">School</label>
-            <select wire:model="schools_filter" id="userSchoolSearch" class="form-control">
+            <select wire:model.live="schools_filter" id="userSchoolSearch" class="form-control">
                 <option value="" selected>All</option>
                 @foreach($schools as $school)
                 <option value="{{ $school->id }}">{{ $school->short_name }}</option>
@@ -25,7 +25,7 @@
         </div>
         <div class="form-group col-lg-2">
             <label for="userDepartmentSearch">Department</label>
-            <select wire:model="department_filter" id="userDepartmentSearch" class="form-control">
+            <select wire:model.live="department_filter" id="userDepartmentSearch" class="form-control">
                 <option value="" selected>All</option>
                 @foreach($departments as $department)
                 <option value="{{ $department }}">{{ $department }}</option>
@@ -34,7 +34,7 @@
         </div>
         <div class="form-group col-lg-2">
             <label for="perPage">Per Page</label>
-            <select wire:model="per_page" id="perPage" class="form-control">
+            <select wire:model.live="per_page" id="perPage" class="form-control">
                 <option value="10">10 per page</option>
                 <option value="25" selected>25 per page</option>
                 <option value="50">50 per page</option>
