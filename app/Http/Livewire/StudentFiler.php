@@ -34,10 +34,10 @@ class StudentFiler extends Component
                 $this->student->updateAcceptedStats($this->profile, false);
             }
             $this->status = $new_status;
-            $this->emit('alert', "{$this->student->full_name} filed as {$new_status_name}", 'success');
-            $this->emit('profileStudentStatusUpdated');
+            $this->dispatch('alert', message: "{$this->student->full_name} filed as {$new_status_name}",  type: 'success');
+            $this->dispatch('profileStudentStatusUpdated');
         } else {
-            $this->emit('alert', "Unable to file student.", 'danger');
+            $this->dispatch('alert', message: "Unable to file student.", type: 'danger');
         }
     }
 

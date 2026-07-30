@@ -7,7 +7,7 @@ trait HasFilters
     public function resetFilters()
     {
         $this->reset($this->availableFilters());
-        $this->emit('alert', "Cleared all filters.", 'success');
+        $this->dispatch('alert', message: "Cleared all filters.", type: 'success');
     }
 
     public function resetFilter($filter_name)
@@ -19,7 +19,7 @@ trait HasFilters
     protected function emitFilterUpdatedEvent($name, $value)
     {
         if ($this->isAFilter($name)) {
-            $this->emit('alert', ($value === '') ? "Cleared filter." : "Applied filter.", 'success');
+            $this->dispatch('alert', message: ($value === '') ? "Cleared filter." : "Applied filter.", type: 'success');
         }
     }
 

@@ -747,15 +747,28 @@ if ((typeof Livewire === "undefined" ? "undefined" : _typeof(Livewire)) === 'obj
       });
     });
   }
-  Livewire.on('alert', function (message, type) {
-    return profiles.toast(message, type);
-  });
-  Livewire.onError(function (status, response) {
-    // show a toast instead of a modal for 403 responses
-    if (status === 403) {
-      profiles.toast('⛔️ Sorry, you are not authorized to do that.', 'danger');
-      return false;
-    }
+
+  /**
+   * Livewire 3 Global Event Listener
+   */
+  document.addEventListener('livewire:init', function () {
+    Livewire.on('alert', function (event) {
+      // Livewire 3 passes parameters nested inside an array container
+      // event[0] holds the named object: { message: "...", type: "..." }
+      var eventData = Array.isArray(event) ? event[0] : event;
+      var message = eventData === null || eventData === void 0 ? void 0 : eventData.message;
+      var type = (eventData === null || eventData === void 0 ? void 0 : eventData.type) || 'success';
+      if (message) {
+        profiles.toast(message, type);
+      }
+    });
+    Livewire.onError(function (status, response) {
+      // show a toast instead of a modal for 403 responses
+      if (status === 403) {
+        profiles.toast('⛔️ Sorry, you are not authorized to do that.', 'danger');
+        return false;
+      }
+    });
   });
 }
 

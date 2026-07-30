@@ -56,7 +56,7 @@ class TagsTable extends Component
 
         $tag->delete();
 
-        $this->emit('alert', "Deleted tag $tag_name", 'success');
+        $this->dispatch('alert', message: "Deleted tag $tag_name", type: 'success');
     }
 
     public function render()

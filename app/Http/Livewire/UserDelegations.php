@@ -72,11 +72,11 @@ class UserDelegations extends Component
                 'gets_reminders' => $this->new_delegation['gets_reminders'] ?? false,
             ]);
 
-            $this->emit('alert', "Delegate saved.", 'success');
-            $this->emit('profiles.directorySearch.reset');
+            $this->dispatch('alert', message: "Delegate saved.",  type: 'success');
+            $this->dispatch('profiles.directorySearch.reset');
             $this->resetNewDelegation();
         } else {
-            $this->emit('alert', "Unable to save delegate", 'danger');
+            $this->dispatch('alert', message: "Unable to save delegate", type: 'danger');
         }
     }
 
@@ -86,7 +86,7 @@ class UserDelegations extends Component
 
         $delegation->delete();
 
-        $this->emit('alert', "Removed delegation", 'success');
+        $this->dispatch('alert', message: "Removed delegation", type: 'success');
     }
 
     public function render(): View|ViewFactory
