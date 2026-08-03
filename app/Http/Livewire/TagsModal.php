@@ -6,13 +6,12 @@ use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use Spatie\Tags\Tag;
+use Livewire\Attributes\On;
 
 class TagsModal extends Component
 {
     /** @var \Illuminate\Database\Eloquent\Model */
     public $model;
-
-    protected $listeners = ['addTagType', 'removeTagType'];
 
     public $model_slug;
 
@@ -46,6 +45,7 @@ class TagsModal extends Component
         $this->tags = $this->selected_tags->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE);
     }
 
+    #[On('addTagType')]
     public function addTagType($tag_type)
     {
         if (!in_array($tag_type, $this->tags_type)) {
@@ -53,6 +53,7 @@ class TagsModal extends Component
         }
     }
 
+    #[On('removeTagType')]
     public function removeTagType($tag_type)
     {
         if (($key = array_search($tag_type, $this->tags_type)) !== false) {

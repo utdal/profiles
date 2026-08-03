@@ -10,6 +10,7 @@ use Illuminate\Contracts\View\Factory as ViewFactory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
+use Livewire\Attributes\On;
 
 class UserDelegations extends Component
 {
@@ -36,10 +37,6 @@ class UserDelegations extends Component
         'new_delegation.gets_reminders.boolean' => 'The gets reminders field must be true/false.',
     ];
 
-    protected $listeners = [
-        'profiles.directorySearch.selected' => 'selectPerson',
-    ];
-
     public function mount(User $user): void
     {
         $this->user = $user;
@@ -53,6 +50,7 @@ class UserDelegations extends Component
         ];
     }
 
+    #[On('profiles.directorySearch.selected')]
     public function selectPerson(string $username): void
     {
         $this->new_delegation['name'] = $username;

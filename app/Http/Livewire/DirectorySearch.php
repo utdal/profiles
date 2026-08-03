@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Helpers\Contracts\LdapHelperContract;
 use Livewire\Component;
+use Livewire\Attributes\On;
 
 class DirectorySearch extends Component
 {
@@ -27,10 +28,6 @@ class DirectorySearch extends Component
 
     public $title_attribute = 'title';
 
-    protected $listeners = [
-        'profiles.directorySearch.reset' => 'resetAll',
-    ];
-
     protected $ldap;
 
     protected $limit = 15;
@@ -50,6 +47,7 @@ class DirectorySearch extends Component
         $this->ldap = $ldap;
     }
 
+    #[On('profiles.directorySearch.reset')] 
     public function resetAll()
     {
         $this->reset(['query', 'people', 'selected_username']);
