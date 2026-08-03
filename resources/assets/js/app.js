@@ -729,12 +729,17 @@ if (typeof Livewire === 'object') {
         });
         
 
-        Livewire.onError((status, response) => {
-            // show a toast instead of a modal for 403 responses
-            if (status === 403) {
-            profiles.toast('⛔️ Sorry, you are not authorized to do that.', 'danger');
-                return false;
-            }
+        Livewire.hook('request', ({ fail }) => {
+            fail(({ status, preventDefault }) => {
+                if (status === 403) {
+                    preventDefault();
+
+                    profiles.toast(
+                        '⛔️ Sorry, you are not authorized to do that.',
+                        'danger'
+                    );
+                }
+            });
         });
     });
 }

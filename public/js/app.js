@@ -762,12 +762,16 @@ if ((typeof Livewire === "undefined" ? "undefined" : _typeof(Livewire)) === 'obj
         profiles.toast(message, type);
       }
     });
-    Livewire.onError(function (status, response) {
-      // show a toast instead of a modal for 403 responses
-      if (status === 403) {
-        profiles.toast('⛔️ Sorry, you are not authorized to do that.', 'danger');
-        return false;
-      }
+    Livewire.hook('request', function (_ref) {
+      var fail = _ref.fail;
+      fail(function (_ref2) {
+        var status = _ref2.status,
+          preventDefault = _ref2.preventDefault;
+        if (status === 403) {
+          preventDefault();
+          profiles.toast('⛔️ Sorry, you are not authorized to do that.', 'danger');
+        }
+      });
     });
   });
 }
