@@ -53,7 +53,7 @@
 
 @push('scripts')
 <script>
-    document.addEventListener('livewire:load', function () {
+    document.addEventListener('livewire:init', function () {
         $("input[type=checkbox][id^=data_school]").on('change', function() {
             if ($(this).is(':checked')) {
                 Livewire.emit('addTagType', "App\\Student\\"+$(this).val());
