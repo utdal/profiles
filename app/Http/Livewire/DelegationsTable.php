@@ -7,6 +7,7 @@ use App\Http\Livewire\Concerns\HasPagination;
 use App\Http\Livewire\Concerns\HasSorting;
 use App\UserDelegation;
 use Illuminate\Support\Str;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 
 class DelegationsTable extends Component
@@ -33,7 +34,8 @@ class DelegationsTable extends Component
         $this->sort_descending = true;
     }
 
-    public function getDelegationsProperty()
+    #[Computed()]
+    public function delegations()
     {
         return UserDelegation::query()
             ->search($this->search_filter, $this->search_fields)

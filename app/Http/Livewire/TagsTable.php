@@ -6,6 +6,7 @@ use App\Http\Livewire\Concerns\HasFilters;
 use App\Http\Livewire\Concerns\HasPagination;
 use App\Http\Livewire\Concerns\HasSorting;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Spatie\Tags\Tag;
 
@@ -25,7 +26,8 @@ class TagsTable extends Component
         $this->per_page = 10;
     }
 
-    public function getTagsProperty()
+    #[Computed]
+    public function tags()
     {
         return Tag::query()
             ->when($this->tag_type_filter, function ($q) {

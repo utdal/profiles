@@ -9,6 +9,7 @@ use App\Http\Livewire\Concerns\HasFilters;
 use App\Http\Livewire\Concerns\HasPagination;
 use App\Http\Livewire\Concerns\HasSorting;
 use App\Profile;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Spatie\Tags\Tag;
 
@@ -49,7 +50,8 @@ class StudentsTable extends Component
         $this->status_filter = 'submitted';
     }
 
-    public function getStudentsProperty()
+    #[Computed]
+    public function students()
     {
         return Student::query()
             ->with(['research_profile', 'tags', 'faculty'])

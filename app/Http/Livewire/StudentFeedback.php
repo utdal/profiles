@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\StudentFeedback as StudentFeedbackEntry;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 
 class StudentFeedback extends Component
@@ -14,7 +15,8 @@ class StudentFeedback extends Component
 
     public $new_feedback = [];
 
-    public function getFeedbackProperty()
+    #[Computed()]
+    public function feedback()
     {
         return $this->student
             ->feedback()

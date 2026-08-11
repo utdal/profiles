@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Str;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Spatie\Tags\Tag;
 use Livewire\Attributes\On;
@@ -69,7 +70,8 @@ class TagsModal extends Component
      *
      * @return EloquentCollection
      */
-    public function getPossibleTagsProperty()
+    #[Computed]
+    public function possibleTags()
     {
         /** @var EloquentCollection */
         $tags = Tag::whereIn('type', $this->tags_type)

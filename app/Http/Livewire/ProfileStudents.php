@@ -7,6 +7,7 @@ use App\Http\Livewire\Concerns\HasFilters;
 use App\ProfileStudent;
 use App\Student;
 use App\StudentData;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Spatie\Tags\Tag;
 use Livewire\Attributes\On;
@@ -53,7 +54,8 @@ class ProfileStudents extends Component
         'semester_filter' => ['except' => '', 'as' => 'semester'],
     ];
 
-    public function getStudentsProperty()
+    #[Computed]
+    public function students()
     {
         return $this->profile->students()
             ->submitted()
