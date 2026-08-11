@@ -211,7 +211,7 @@
                                             </a>
                                         </div>
                                         <div>
-                                            <livewire:student-filer :profile="$profile" :student="$student" :status="$student->application->status" :wire:key="$student->slug . '_filer'">
+                                            <livewire:student-filer :profile="$profile" :student="$student" :status="$student->application->status" :key="$student->slug . '_filer_' . $student->application->status" />
                                         </div>
                                     </div>
                                 </div>
