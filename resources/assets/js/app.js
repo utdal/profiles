@@ -705,11 +705,9 @@ if (typeof Trix === 'object') {
 
 // Livewire global hooks
 if (typeof Livewire === 'object') {
-  if (typeof FontAwesomeDom === 'object') {
-    document.addEventListener('DOMContentLoaded', () => {
-      Livewire.hook('message.processed', () => FontAwesomeDom.i2svg());
-    });
-  }
+    if (typeof FontAwesomeDom === 'object') {
+        Livewire.hook('morphed', ({ el }) => FontAwesomeDom.i2svg({ node: el }))
+    }
 
     /**
      * Livewire 3 Global Event Listener
