@@ -6,10 +6,11 @@ use App\Helpers\Contracts\LdapHelperContract;
 use App\Http\Livewire\Concerns\ConvertEmptyStringsToNull;
 use App\User;
 use App\UserDelegation;
-use Illuminate\Contracts\View\View as ViewContract;
+use Illuminate\Contracts\View\Factory as ViewFactory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\View\View;
 use Livewire\Component;
+use Livewire\Attributes\On;
 
 class UserDelegations extends Component
 {
@@ -36,10 +37,6 @@ class UserDelegations extends Component
         'new_delegation.gets_reminders.boolean' => 'The gets reminders field must be true/false.',
     ];
 
-    protected $listeners = [
-        'profiles.directorySearch.selected' => 'selectPerson',
-    ];
-
     public function mount(User $user): void
     {
         $this->user = $user;
@@ -53,6 +50,7 @@ class UserDelegations extends Component
         ];
     }
 
+    #[On('profiles.directorySearch.selected')]
     public function selectPerson(string $username): void
     {
         $this->new_delegation['name'] = $username;
@@ -72,11 +70,11 @@ class UserDelegations extends Component
                 'gets_reminders' => $this->new_delegation['gets_reminders'] ?? false,
             ]);
 
-            $this->emit('alert', "Delegate saved.", 'success');
-            $this->emit('profiles.directorySearch.reset');
+            $this->dispatch('alert', message: "Delegate saved.",  type: 'success');
+            $this->dispatch('profiles.directorySearch.reset');
             $this->resetNewDelegation();
         } else {
-            $this->emit('alert', "Unable to save delegate", 'danger');
+            $this->dispatch('alert', message: "Unable to save delegate", type: 'danger');
         }
     }
 
@@ -86,10 +84,10 @@ class UserDelegations extends Component
 
         $delegation->delete();
 
-        $this->emit('alert', "Removed delegation", 'success');
+        $this->dispatch('alert', message: "Removed delegation", type: 'success');
     }
 
-    public function render(): View|ViewContract
+    public function render(): View|ViewFactory
     {
         return view('livewire.user-delegations', [
             'delegations' => $this->user->delegations()->with('delegate')->get(),

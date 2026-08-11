@@ -33,10 +33,10 @@ class AcceptingStudentsToggle extends Component
         ]);
 
         if (!$updated) {
-            $this->emit('alert', "Not saved. There was a problem changing that setting", 'danger');
+            $this->dispatch('alert', message: "Not saved. There was a problem changing that setting", type: 'danger');
         }
 
-        $this->emit('alert', "<strong>Saved.</strong><br> Profile for {$this->profile->full_name} marked as " . ($toggled_on ? "not" : "") . " accepting undergraduate students", 'success');
+        $this->dispatch('alert', message: "<strong>Saved.</strong><br> Profile for {$this->profile->full_name} marked as " . ($toggled_on ? "not" : "") . " accepting undergraduate students", type: 'success');
     }
 
     public function render()

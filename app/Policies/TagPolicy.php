@@ -13,7 +13,7 @@ class TagPolicy
     /**
      * Runs before any other authorization checks
      *
-     * @param \App\User $user
+     * @param User $user
      * @param string $ability
      * @return void|bool
      */
@@ -27,7 +27,7 @@ class TagPolicy
     /**
      * Determine whether the user can view the model.
      *
-     * @param  \App\User  $user
+     * @param  User  $user
      * @return mixed
      */
     public function viewAdminIndex(User $user)
@@ -38,7 +38,7 @@ class TagPolicy
     /**
      * Determine whether the user can create tags.
      *
-     * @param  \App\User  $user
+     * @param  User  $user
      * @return mixed
      */
     public function create(User $user)
@@ -49,11 +49,11 @@ class TagPolicy
     /**
      * Determine whether the user can update the tag.
      *
-     * @param  \App\User  $user
-     * @param  \Spatie\Tags\Tag  $tag
+     * @param  User  $user
+     * @param  Tag|null  $tag
      * @return mixed
      */
-    public function update(User $user)
+    public function update(User $user, ?Tag $tag = null)
     {
         return false;
     }
@@ -61,11 +61,11 @@ class TagPolicy
     /**
      * Determine whether the user can update the tag.
      *
-     * @param  \App\User  $user
-     * @param  \Spatie\Tags\Tag  $tag
+     * @param  User  $user
+     * @param  Tag  $tag
      * @return mixed
      */
-    public function updateTag(User $user)
+    public function updateTag(User $user, ?Tag $tag = null)
     {
         return false;
     }
@@ -73,11 +73,11 @@ class TagPolicy
     /**
      * Determine whether the user can delete the tag.
      *
-     * @param  \App\User  $user
-     * @param  \Spatie\Tags\Tag  $tag
+     * @param  User  $user
+     * @param  Tag  $tag
      * @return mixed
      */
-    public function delete(User $user)
+    public function delete(User $user, ?Tag $tag = null)
     {
         return false;
     }

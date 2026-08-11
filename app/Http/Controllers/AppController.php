@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Contracts\View\View as ViewContract;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\Factory as ViewFactory;
+use Illuminate\Contracts\View\View;
 
 class AppController extends Controller
 {
     /**
      * Display the App Homepage.
      */
-    public function index(): View|ViewContract
+    public function index(): View|ViewFactory
     {
         return view('home');
     }
@@ -19,7 +18,7 @@ class AppController extends Controller
     /**
      * Display the FAQ page.
      */
-    public function faq(): View|ViewContract
+    public function faq(): View|ViewFactory
     {
         return view('faq');
     }

@@ -391,7 +391,7 @@ class User extends Authenticatable implements Auditable
     {
         return $this->belongsToMany('App\User', 'user_delegations', 'delegator_user_id', 'delegate_user_id')
                     ->using(UserDelegation::class)
-                    ->withPivot('starting', 'until', 'gets_reminders')
+                    ->withPivot(['starting', 'until', 'gets_reminders'])
                     ->withTimestamps();
     }
 
@@ -440,7 +440,7 @@ class User extends Authenticatable implements Auditable
     {
         return $this->belongsToMany('App\User', 'user_delegations', 'delegate_user_id', 'delegator_user_id')
                     ->using(UserDelegation::class)
-                    ->withPivot('starting', 'until', 'gets_reminders')
+                    ->withPivot(['starting', 'until', 'gets_reminders'])
                     ->withTimestamps();
     }
 
@@ -472,7 +472,7 @@ class User extends Authenticatable implements Auditable
     /**
      * Additional roles currently delegated to the user.
      *
-     * @return \Illuminate\Database\Query\Builder
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function currentDelegatedRoles()
     {

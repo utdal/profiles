@@ -7,8 +7,10 @@ use App\Http\Livewire\Concerns\HasFilters;
 use App\ProfileStudent;
 use App\Student;
 use App\StudentData;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Spatie\Tags\Tag;
+use Livewire\Attributes\On;
 
 class ProfileStudents extends Component
 {
@@ -38,10 +40,6 @@ class ProfileStudents extends Component
 
     public $tag_filter = '';
 
-    protected $listeners = [
-        'profileStudentStatusUpdated' => 'refreshStudents'
-    ];
-
     protected $queryString = [
         'animals_filter' => ['except' => '', 'as' => 'animals'],
         'credit_filter' => ['except' => '', 'as' => 'credit'],
@@ -56,7 +54,8 @@ class ProfileStudents extends Component
         'semester_filter' => ['except' => '', 'as' => 'semester'],
     ];
 
-    public function getStudentsProperty()
+    #[Computed]
+    public function students()
     {
         return $this->profile->students()
             ->submitted()
@@ -80,6 +79,7 @@ class ProfileStudents extends Component
         $this->emitFilterUpdatedEvent($name, $value);
     }
 
+    #[On('profileStudentStatusUpdated')]
     public function refreshStudents()
     {
         unset($this->students);

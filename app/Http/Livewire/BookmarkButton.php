@@ -33,7 +33,7 @@ class BookmarkButton extends Component
 
         $this->user->bookmark($this->model);
 
-        $this->emit('alert', "Bookmarked!", 'success');
+        $this->dispatch('alert', message: 'Bookmarked!', type: 'success');
     }
 
     public function unbookmark()
@@ -42,6 +42,6 @@ class BookmarkButton extends Component
 
         $this->user->unbookmark($this->model);
 
-        $this->emit('alert', "Removed from your bookmarks", 'success');
+        $this->dispatch('alert', message: 'Removed from your bookmarks', type: 'success');
     }
 }
