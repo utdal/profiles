@@ -43,9 +43,9 @@
         <p class="mb-0">Complete and submit your student research application below. This application will not be public, but will be made available to faculty researchers who may be looking for students. After submitting, you can always come back later to edit or withdraw your student research application.</p>
     </div>
 
-    {!! Form::model($student, ['route' => ['students.update', $student]]) !!}
+    {{ html()->modelForm($student,'POST',route('students.update', $student))->attribute('accept-charset', 'UTF-8')->open() }}
         @include('students.form', ['editable' => true])
-    {!! Form::close() !!}
+    {{ html()->closeModelForm() }}
 
 </div>
 
