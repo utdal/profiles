@@ -2,14 +2,14 @@
 <div class="row">
 	@foreach($data as $info)
 		<div class="col col-md-4">
-			{!! Form::open(['url' => route('profiles.update-image', [$profile->slug]), 'method' => 'POST', 'files' => true]) !!}
+			{{ html()->form('POST', route('profiles.update-image', [$profile->slug]))->acceptsFiles()->attribute('accept-charset', 'UTF-8')->open() }}
 			<label for="file">Icon</label>
 			<img id="file-img" class="profile_photo" src="{{ $profile->imageUrl }}" />
 			<br />
 			<br />
 			<div class="control-group">
 				<div class="controls">
-					{!! Form::file('image', ['id' => 'file', 'name' => 'image', 'required' => 'true', 'accept' => 'image/*', 'class' => 'd-none form-control']) !!}
+					{{ html()->file('image')->id('file')->name('image')->required()->accept('image/*')->class('d-none form-control') }}
 					<label for="file" class="btn btn-secondary btn-block"><i class="fas fa-plus"></i> Select Image</label>
 					{!! Form::inlineErrors('image') !!}
 				</div>
@@ -17,17 +17,17 @@
 			<button type="submit" class="btn btn-primary btn-block" data-toggle="replace-icon" data-newicon="fas fa-sync fa-spin" data-inputrequired="#file">
 				<i class="fas fa-upload"></i> Replace Image
 			</button>
-			{!! Form::close() !!}
+			{{ html()->form()->close() }}
 			<br>
 			<br>
-			{!! Form::open(['url' => route('profiles.update-banner', [$profile->slug]), 'method' => 'POST', 'files' => true]) !!}
+			{{ html()->form('POST', route('profiles.update-banner', [$profile->slug]))->acceptsFiles()->open() }}
 			<label for="banner">Banner</label>
 			<img id="banner-img" class="profile_photo" src="{{ $profile->banner_url }}" />
 			<br />
 			<br />
 			<div class="control-group">
 				<div class="controls">
-					{!! Form::file('banner_image', ['id' => 'banner', 'name' => 'banner_image', 'required' => 'true', 'accept' => 'image/*', 'class' => 'd-none form-control']) !!}
+					{{ html()->file('banner_image')->id('banner')->name('banner_image')->required()->accept('image/*')->class('d-none form-control') }}
 					<label for="banner" class="btn btn-secondary btn-block"><i class="fas fa-plus"></i> Select Image</label>
 					{!! Form::inlineErrors('banner_image') !!}
 				</div>
@@ -35,15 +35,15 @@
 			<button type="submit" class="btn btn-primary btn-block" data-toggle="replace-icon" data-newicon="fas fa-sync fa-spin" data-inputrequired="#banner">
 				<i class="fas fa-upload"></i> Replace Image
 			</button>
-			{!! Form::close() !!}
+			{{ html()->form()->close() }}
 			<br>
 			<br>
 		</div>
 		<div class="col col-md-8 col-12">
-			{!! Form::model($profile, ['route' => ['profiles.update', 'profile' => $profile, 'section' => 'information']]) !!}
+			{{ html()->modelForm($profile,'POST',route('profiles.update', ['profile' => $profile, 'section' => 'information']))->attribute('accept-charset', 'UTF-8')->open() }}
 			<div class="form-group">
-				{!! Form::label('full_name', 'Display Name') !!}
-				{!! Form::text('full_name', $profile->full_name, ['class' => 'form-control', 'required']) !!}
+				{{ html()->label('Display Name', 'full_name') }}
+				{{ html()->text('faull_name', $profile->full_name)->class('form-control')->required() }}
 				{!! Form::inlineErrors('full_name') !!}
 			</div>
 			<div class="form-group">
@@ -359,9 +359,9 @@
 				</div>
 			</fieldset>
 			@endcan
-			{!! Form::submit('Save', array('class' => 'btn btn-primary edit-button')) !!}
+			{{ html()->submit('Save')->class('btn btn-primary edit-button') }}
 			<a href="{{ $profile->url }}" class='btn btn-light edit-button'>Cancel</a>
-			{!! Form::close() !!}
+			{{ html()->closeModelForm() }}
 		</div>
 	@endforeach
 </div>
