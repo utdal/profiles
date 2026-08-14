@@ -11,7 +11,7 @@
 				<div class="controls">
 					{{ html()->file('image')->id('file')->name('image')->required()->accept('image/*')->class('d-none form-control') }}
 					<label for="file" class="btn btn-secondary btn-block"><i class="fas fa-plus"></i> Select Image</label>
-					{!! Form::inlineErrors('image') !!}
+					@inlineErrors('image')
 				</div>
 			</div>
 			<button type="submit" class="btn btn-primary btn-block" data-toggle="replace-icon" data-newicon="fas fa-sync fa-spin" data-inputrequired="#file">
@@ -29,7 +29,7 @@
 				<div class="controls">
 					{{ html()->file('banner_image')->id('banner')->name('banner_image')->required()->accept('image/*')->class('d-none form-control') }}
 					<label for="banner" class="btn btn-secondary btn-block"><i class="fas fa-plus"></i> Select Image</label>
-					{!! Form::inlineErrors('banner_image') !!}
+					@inlineErrors('banner_image')
 				</div>
 			</div>
 			<button type="submit" class="btn btn-primary btn-block" data-toggle="replace-icon" data-newicon="fas fa-sync fa-spin" data-inputrequired="#banner">
@@ -44,13 +44,13 @@
 			<div class="form-group">
 				{{ html()->label('Display Name', 'full_name') }}
 				{{ html()->text('faull_name', $profile->full_name)->class('form-control')->required() }}
-				{!! Form::inlineErrors('full_name') !!}
+				@inlineErrors('full_name')
 			</div>
 			<div class="form-group">
 				<input type="hidden" name="data[{{$info->id}}][id]"  value="{{$info->id}}" />
 				<label for="data[{{$info->id}}][data][title]">Title</label>
 				<input type="text" class="form-control" name="data[{{$info->id}}][data][title]" id="data[{{$info->id}}][data][title]" value="{{$info->title}}" required />
-				{!! Form::inlineErrors("data.".$info->id.".data.title") !!}
+				@inlineErrors("data.".$info->id.".data.title")
 			</div>
 			<div class="form-group">
 				<label for="data[{{$info->id}}][data][distinguished_title]">Distinguished Title</label>
