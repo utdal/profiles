@@ -29,9 +29,9 @@
 <div class="container">
     <h2 class="text-center mt-5">Edit School &ldquo;{{ $school->display_name }}&rdquo;:</h2>
 
-    {!! Form::model($school, ['method' => 'PATCH', 'route' => ['schools.update', $school], 'class' => 'form-horizontal', 'id' => 'schools_form']) !!}
+    {{ html()->modelForm($school,'PATCH',route('schools.update', ['school' => $school]))->id('schools_form')->class('form-horizontal')->attribute('accept-charset', 'UTF-8')->open() }}
         @include('schools.form', ['submitButtonText' => 'Update School'])
-    {!! Form::close() !!}
+    {{ html()->closeModelForm() }}
 
 </div>
 @stop
