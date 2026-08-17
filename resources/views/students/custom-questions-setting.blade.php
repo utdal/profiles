@@ -33,21 +33,26 @@
     </div>
     <div class="form-group col">
         <label for="setting[student_questions][{{ $index }}][type]">Response Type</label>
-        {!! Form::select(
-            "setting[student_questions][$index][type]",
-            ['text' => 'Text', 'textarea' => 'Paragraph', 'yes_no' => 'Yes/No'],
-            $question['type'] ?? null,
-            ['class' => 'form-control', 'required' => 'required']);
-        !!}
+        {{ html()->select(
+                "setting[student_questions][$index][type]",
+                ['text' => 'Text', 'textarea' => 'Paragraph', 'yes_no' => 'Yes/No'],
+                $question['type'] ?? null
+            )
+            ->required()
+            ->class('form-control')
+        }}
     </div>
     <div class="form-group col-2">
         <label for="setting[student_questions][{{ $index }}][school]">Show for School</label>
-        {!! Form::select(
-            "setting[student_questions][$index][school]",
-            App\School::pluck('short_name', 'short_name')->prepend('all', 'All'),
-            $question['school'] ?? null,
-            ['class' => 'form-control', 'required' => 'required']);
-        !!}
+        {{ html()->select(
+                "setting[student_questions][$index][school]",
+                App\School::pluck('short_name', 'short_name')->prepend('all', 'All'),
+                $question['school'] ?? null
+            )
+            ->required()
+            ->class('form-control')
+        }}
+
     </div>
     <div class="actions d-flex position-relative">
         <a class="handle" title="Drag to reorder"><i class="fas fa-arrows-alt-v"></i></a>
