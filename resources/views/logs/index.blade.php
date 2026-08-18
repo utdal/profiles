@@ -16,7 +16,7 @@
 <div class="container">
     <h1>Activity Logs</h1>
 
-    {!! Form::open(['url' => route('app.logs.index'), 'method' => 'get', 'class' => 'form-inline mb-4']) !!}
+    {{ html()->form('GET', route('app.logs.index'))->class('form-inline mb-4')->attribute('accept-charset', 'UTF-8')->open() }}
     <div class="search input-group input-group-lg">
         <input id="log_search" class="search form-control" type="search" name="log_search" placeholder="search..." aria-label="Search" value="{{$log_search}}">
         <div class="input-group-append">
@@ -25,7 +25,7 @@
         </button>
         </div>
     </div>
-    {!! Form::close() !!}
+    {{ html()->form()->close() }}
 
     <table class="table table-sm table-striped">
         <thead>
