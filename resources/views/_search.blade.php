@@ -1,4 +1,4 @@
-{{ html()->form('GET', route('profiles.index'))->class('form-inline my-2 my-lg-0 mr-sm-2') }}
+{{ html()->form('GET', route('profiles.index'))->class('form-inline my-2 my-lg-0 mr-sm-2')->open() }}
   <div class="search input-group input-group-lg">
     <input class="search form-control" type="search" name="search" placeholder="search..." aria-label="Search" value="{{ $search ?? '' }}">
     <div class="input-group-append">
