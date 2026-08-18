@@ -23,26 +23,24 @@
     <h1><i class="fas fa-tags" aria-hidden="true"></i> Edit Tag {{ $tag->name }}</h1>
 
     @include('errors/list')
-
-    {!! Form::model($tag, ['method' => 'PATCH','route' => ['tags.updateTag', $tag], 'class' => 'form-horizontal' ]) !!}
-
+    {{ html()->modelForm($tag, 'PATCH', route('tags.updateTag', $tag))->class('form-horizontal')->attribute('accept-charset', 'UTF-8')->open() }}
         <div class="form-group {{ ($errors->has('name') ?  'has-error' : '') }}">
-            {!! Form::label('name', 'Tag name(s)', ['class' => 'col-sm-2 control-label']) !!}
+            {{ html()->label('Tag name(s)', 'name')->class('col-sm-2 control-label') }}
             <div class="col-sm-9">
                 <span class="text-danger">{!! $errors->first('name') !!}</span>
-                {!! Form::text('name', null, ['class' => 'form-control']) !!}
+                {{ html()->text('name', null)->class('form-control') }}
             </div>
             <div class="col-sm-9">
                 <span class="text-danger">{!! $errors->first('type') !!}</span>
-                {!! Form::text('type', null, ['class' => 'form-control', 'readonly']) !!}
+                {{ html()->text('type', null)->isReadonly()->class('form-control') }}
             </div>
         </div>
 
         <!-- Submit Button -->
         <div class="col-sm-9">
             <a href="{{ route('tags.table') }}" class='btn btn-light'>Cancel</a>
-            {!! Form::submit('Update Tag', ['class' => 'btn btn-primary']) !!}
+            {{ html()->submit('Update Tag')->class('btn btn-primary') }}
         </div>
-    {!! Form::close() !!}
+    {{ html()->closeModelForm() }}
 </div>
 @stop
