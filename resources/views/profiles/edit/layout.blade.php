@@ -3,7 +3,7 @@
 
 @yield('info')
 
-{!! Form::open(['url' => route('profiles.update', [$profile->slug, $section]), 'files' => $files ?? false]) !!}
+{{ html()->form('POST', route('profiles.update', [$profile->slug, $section]))->acceptsFilesIf($files ?? false)->open() }}
 
 @include('profiles.edit._insert_button', ['type' => 'prepend'])
 <div class="row mb-4 lower-border"></div>
@@ -17,4 +17,4 @@
 @include('profiles.edit._insert_button', ['type' => 'append'])
 @include('profiles.edit._buttons')
 
-{!! Form::close() !!}
+{{ html()->form()->close() }}

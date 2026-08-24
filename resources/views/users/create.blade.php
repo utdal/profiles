@@ -30,7 +30,7 @@
     <div class="col-md-8">
             <div class="card">
                 <div class="card-body p-5">
-                {!! Form::open(['route' => ['users.store'], 'method' => 'POST']) !!}
+                {{ html()->form('POST', route('users.store'))->attribute('accept-charset', 'UTF-8')->open() }}
                     <div class="form-group">
                         <livewire:directory-search
                             :input_name="'name'"
@@ -49,7 +49,7 @@
                     <button type="submit" class="btn btn-success btn-block mt-md-5">
                         <i class="fas fa-plus"></i> Add
                     </button>
-                {!! Form::close() !!}
+                {{ html()->form()->close() }}
                 </div>
             </div>
         </div>

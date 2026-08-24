@@ -23,23 +23,23 @@
     <h1><i class="fas fa-tags" aria-hidden="true"></i> Add Tags</h1>
 
     @include('errors/list')
-    {!! Form::open(['route' => 'tags.store']) !!}
-
+    {{ html()->form('POST', route('tags.store'))->attribute('accept-charset', 'UTF-8')->open() }}
+    
     <div class="mb-3">
-        {!! Form::label('name', 'Tag name(s)', ['class' => 'form-label']) !!}
+        {{ html()->label('Tag name(s)', 'name')->class('form-label') }}
         <small class="text-muted">One tag per line</small>
-        {!! Form::textarea('name', null, ['class' => 'form-control', 'required']) !!}
+        {{ html()->textarea('name', null)->required()->class('form-control')->attributes(['rows' => '10', 'cols' => '50']) }}
     </div>
     <div class="mb-3">
-        {!! Form::label('type', 'Tag type', ['class' => 'form-label']) !!}
+        {{ html()->label('Tag type', 'type')->class('form-label') }}
         <small class="text-muted">e.g. App\Profile, App\Student, and etc.</small>
-        {!! Form::text('type', null, ['class' => 'form-control', 'required']) !!}
+        {{ html()->text('type', null)->required()->class('form-control') }}
     </div>
-
+    
     <button type="submit" class="btn btn-primary edit-button">Submit</button>
     <a href="{{ url()->previous() }}" class='btn btn-light edit-button'>Cancel</a>
-
-    {!! Form::close() !!}
+    
+    {{ html()->form()->close() }}
 
 </div>
 

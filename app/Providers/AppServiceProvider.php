@@ -24,8 +24,10 @@ class AppServiceProvider extends ServiceProvider
         Paginator::defaultView('vendor.pagination.default');
         Paginator::defaultSimpleView('vendor.pagination.simple-default');
         Paginator::useBootstrap();
-        
-        Form::component('inlineErrors', 'errors.inline', ['field_name']);
+
+        Blade::directive('inlineErrors', fn ($field) =>
+            "<?php echo view('errors.inline', ['field_name' => {$field}])->render(); ?>"
+        );
 
         View::composer([
             'layout',

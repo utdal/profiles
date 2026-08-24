@@ -46,76 +46,76 @@
 		</div>
 	@endif
 
-	{!! Form::model($user, ['method' => 'PATCH', 'route' => ['users.update', $user->pea], 'class' => 'form-horizontal', 'files' => true]) !!}
+	{{ html()->modelForm($user,'PATCH',route('users.update', $user->pea))->class('form-horizontal')->acceptsFiles()->open() }}
 	<!-- Username (name) -->
 	<div class="form-group {{ ($errors->has('name') ?  'has-error' : '') }}">
-		{!! Form::label('name', $settings['account_name'] ?? 'Username', ['class' => 'col-sm-2 control-label']) !!}
+		{{ html()->label($settings['account_name'] ?? 'Username', 'name')->class('col-sm-2 control-label') }}
 		<div class="col-sm-9">
-		{!! Form::text('name', null, ['class' => 'form-control']) !!}
+		{{ html()->text('name', null)->class('form-control') }}
 		<span class="text-danger">{!! $errors->first('name') !!}</span>
 		</div>
 	</div>
 	<!-- pea -->
 	<div class="form-group {{ ($errors->has('pea') ?  'has-error' : '') }}">
-		{!! Form::label('pea', 'URL Name', ['class' => 'col-sm-2 control-label']) !!}
+		{{ html()->label('URL Name', 'pea')->class('col-sm-2 control-label') }}
 		<div class="col-sm-9">
-		{!! Form::text('pea', null, ['class' => 'form-control']) !!}
+		{{ html()->text('pea', null)->class('form-control') }}
 		<span class="text-danger">{!! $errors->first('pea') !!}</span>
 		</div>
 	</div>
 	<!-- Display Name -->
 	<div class="form-group {{ ($errors->has('display_name') ?  'has-error' : '') }}">
-		{!! Form::label('display_name', 'Display Name:', ['class' => 'col-sm-2 control-label']) !!}
+		{{ html()->label('Display Name:', 'display_name')->class('col-sm-2 control-label') }}
 		<div class="col-sm-9">
-		{!! Form::text('display_name', null, ['class' => 'form-control']) !!}
+		{{ html()->text('display_name', null)->class('form-control') }}
 		<span class="text-danger">{!! $errors->first('display_name') !!}</span>
 		</div>
 	</div>
 	<!-- firstname -->
 	<div class="form-group {{ ($errors->has('firstname') ?  'has-error' : '') }}">
-		{!! Form::label('firstname', 'First Name:', ['class' => 'col-sm-2 control-label']) !!}
+		{{ html()->label('First Name:', 'firstname')->class('col-sm-2 control-label') }}
 		<div class="col-sm-9">
-		{!! Form::text('firstname', null, ['class' => 'form-control']) !!}
+		{{ html()->text('firstname', null)->class('form-control') }}
 		<span class="text-danger">{!! $errors->first('firstname') !!}</span>
 		</div>
 	</div>
 	<!-- lastname -->
 	<div class="form-group {{ ($errors->has('lastname') ?  'has-error' : '') }}">
-		{!! Form::label('lastname', 'Last Name:', ['class' => 'col-sm-2 control-label']) !!}
+		{{ html()->label('Last Name:', 'lastname')->class('col-sm-2 control-label') }}
 		<div class="col-sm-9">
-		{!! Form::text('lastname', null, ['class' => 'form-control']) !!}
+		{{ html()->text('lastname', null)->class('form-control') }}
 		<span class="text-danger">{!! $errors->first('lastname') !!}</span>
 		</div>
 	</div>
 	<!-- email -->
 	<div class="form-group {{ ($errors->has('email') ?  'has-error' : '') }}">
-		{!! Form::label('email', 'Email:', ['class' => 'col-sm-2 control-label']) !!}
+		{{ html()->label('Email:', 'email')->class('col-sm-2 control-label') }}
 		<div class="col-sm-9">
-		{!! Form::text('email', null, ['class' => 'form-control']) !!}
+		{{ html()->text('email', null)->class('form-control') }}
 		<span class="text-danger">{!! $errors->first('email') !!}</span>
 		</div>
 	</div>
 	<!-- title -->
 	<div class="form-group {{ ($errors->has('title') ?  'has-error' : '') }}">
-		{!! Form::label('title', 'Title:', ['class' => 'col-sm-2 control-label']) !!}
+		{{ html()->label('Title:', 'title')->class('col-sm-2 control-label' )}}
 		<div class="col-sm-9">
-		{!! Form::text('title', null, ['class' => 'form-control']) !!}
+		{{ html()->text('title', null)->class('form-control') }}
 		<span class="text-danger">{!! $errors->first('title') !!}</span>
 		</div>
 	</div>
 	<!-- department -->
 	<div class="form-group {{ ($errors->has('department') ?  'has-error' : '') }}">
-		{!! Form::label('department', 'Department:', ['class' => 'col-sm-2 control-label']) !!}
+		{{ html()->label('Department:', 'department')->class('col-sm-2 control-label') }}
 		<div class="col-sm-9">
-		{!! Form::text('department', null, ['class' => 'form-control']) !!}
+		{{ html()->text('department', null)->class('form-control') }}
 		<span class="text-danger">{!! $errors->first('department') !!}</span>
 		</div>
 	</div>
 	<!-- School -->
 	<div class="form-group {{ ($errors->has('school_id') ?  'has-error' : '') }}">
-		{!! Form::label('school_id', 'School:', ['class' => 'col-sm-2 control-label']) !!}
+		{{ html()->label('School:', 'school_id')->class('col-sm-2 control-label') }}
 		<div class="col-sm-9">
-		{!! Form::select('school_id', [null => "None"] + $schools, null, ['class' => 'form-control']) !!}
+		{{ html()->select('school_id', [null => "None"] + $schools, null)->class('form-control') }}
 		<span class="text-danger">{!! $errors->first('school_id') !!}</span>
 		</div>
 	</div>
@@ -126,15 +126,15 @@
 		</button>
 		<div class="collapse col-sm-9" id="additional">
 			<div class="form-group col-sm-12">
-				{!! Form::label('additional_departments', 'Additional Departments:', ['class' => 'control-label']) !!}
-				{!! Form::text('additional_departments', implode(',', $user->setting->additional_departments ?? []), ['class' => 'form-control']) !!}
+				{{ html()->label('Additional Departments:', 'additional_departments')->class('control-label') }}
+				{{ html()->text('additional_departments', implode(',', $user->setting->additional_departments ?? []))->class('form-control') }}
 			</div>
 			<div class="form-group col-sm-12">
-				{!! Form::label('additional_schools', 'Additional Schools:', ['class' => 'control-label']) !!}
+				{{ html()->label('Additional Schools:', 'additional_schools')->class('control-label') }}
 				<div class="col-sm-12">
 					@foreach($schools as $school_id => $school_name)
 						<label class="checkbox">
-							{!! Form::checkbox("additional_schools[{$school_id}]", $school_name, optional($user->setting->additional_schools ?? null)->contains('id', $school_id)) !!}
+							{{ html()->checkbox("additional_schools[{$school_id}]", optional($user->setting->additional_schools ?? null)->contains('id', $school_id), $school_name) }}
 							{{ $school_name }}
 						</label>
 					@endforeach
@@ -149,19 +149,19 @@
 		</button>
 		<div class="collapse col-sm-9" id="synchronization">
 			<div class="form-group {{ ($errors->has('no_sync') ?  'has-error' : '') }}">
-				{!! Form::label('no_sync', 'Exclude from sync on login:', ['class' => 'col-sm-4 control-label']) !!}
+				{{ html()->label('Exclude from sync on login:', 'no_sync')->class('col-sm-4 control-label') }}
 				<div class="col-sm-8">
 					<div class="checkbox-inline">
 						<label class="checkbox-inline" title="User no-sync setting">
-							{!! Form::checkbox("no_sync[attributes]", 1, $user->setting->no_sync['attributes'] ?? false) !!}
+							{{ html()->checkbox("no_sync[attributes]", $user->setting->no_sync['attributes'] ?? false, 1) }}
 							User attributes
 						</label>
 						<label class="checkbox-inline" title="User no-sync setting">
-							{!! Form::checkbox("no_sync[roles]", 1, $user->setting->no_sync['roles'] ?? false) !!}
+							{{ html()->checkbox("no_sync[roles]", $user->setting->no_sync['roles'] ?? false, 1) }}
 							User roles
 						</label>
 						<label class="checkbox-inline" title="User no-sync setting">
-							{!! Form::checkbox("no_sync[school]", 1, $user->setting->no_sync['school'] ?? false) !!}
+							{{ html()->checkbox("no_sync[school]", $user->setting->no_sync['school'] ?? false, 1) }}
 							User school
 						</label>
 					</div>
@@ -172,7 +172,7 @@
 	</div>
 	<!-- Roles -->
 	<div class="form-group {{ ($errors->has('roles') ?  'has-error' : '') }}">
-		{!! Form::label('roles', 'Roles:', ['class' => 'col-sm-2 control-label']) !!}
+		{{ html()->label('Roles:', 'roles')->class('col-sm-2 control-label') }}
 		<div class="col-sm-9">
 			<div class="checkbox">
 				@foreach($roles as $role)
@@ -187,7 +187,7 @@
 					}
 				?>
 				<label class="checkbox-inline" title="{{ $role->description }}">
-					{!! Form::checkbox("role_list[{$role->id}]",$role->id,$user->hasRole($role->name), $role_options) !!}
+					{{ html()->checkbox("role_list[{$role->id}]", $user->hasRole($role->name), $role->id)->attributes($role_options) }}
 					{{ $role->display_name }}
 				</label>
 				@endforeach
@@ -198,28 +198,28 @@
 	<!-- Editor schools -->
 	<?php $school_editor_field = "role_list[{$school_editor_role->id}][options][schools][]" ?>
 	<div id="editor_schools_toggle" class="subform form-group{{ ($errors->has($school_editor_field) ?  'has-error' : '') }}">
-		{!! Form::label($school_editor_field, 'Editor for school:', ['class' => 'col-sm-6 control-label']) !!}
+		{{ html()->label('Editor for school:', $school_editor_field)->class('col-sm-6 control-label') }}
 		<div class="col-sm-6">
-			{!! Form::select($school_editor_field, $schools, $user->roleOptions('school_profiles_editor', 'schools'), ['class' => 'form-control', 'placeholder' => 'Select school(s)', 'multiple' => 'multiple']) !!}
+			{{ html()->select($school_editor_field, $schools, $user->roleOptions('school_profiles_editor', 'schools'))->placeholder('Select school(s)')->multiple()->class('form-control') }}
 			<span class="text-danger">{!! $errors->first('editor_schools[]') !!}</span>
 		</div>
 	</div>
 	<!-- Editor departments -->
 	<?php $department_editor_field = "role_list[{$department_editor_role->id}][options][departments][]" ?>
 	<div id="editor_departments_toggle" class="subform form-group{{ ($errors->has($department_editor_field) ?  'has-error' : '') }}">
-		{!! Form::label($department_editor_field, 'Editor for departments:', ['class' => 'col-sm-6 control-label']) !!}
+		{{ html()->label('Editor for departments:', $department_editor_field)->class('col-sm-6 control-label') }}
 		<div class="col-sm-6">
-			{!! Form::select($department_editor_field, $departments, $user->roleOptions('department_profiles_editor', 'departments'), ['class' => 'form-control', 'placeholder' => 'Select department(s)', 'multiple' => 'multiple']) !!}
+			{{ html()->select($department_editor_field, $departments, $user->roleOptions('department_profiles_editor', 'departments'))->placeholder('Select department(s)')->multiple()->class('form-control') }}
 			<span class="text-danger">{!! $errors->first('editor_departments') !!}</span>
 		</div>
 	</div>
 	<!-- Submit Button -->
 	<div class="form-group">
 		<div class="col-sm-offset-3 col-sm-7">
-			{!! Form::submit('Update User', ['class' => 'btn btn-primary form-control']) !!}
+			{{ html()->submit('Update User')->class('btn btn-primary form-control') }}
 		</div>
 	</div>
-	{!! Form::close() !!}
+	{{ html()->closeModelForm() }}
 </div>
 @stop
 @section('scripts')

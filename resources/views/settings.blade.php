@@ -21,14 +21,14 @@
 
     <div class="row lower-border">
         <div class="col col-md-4">
-            {!! Form::open(['url' => route('app.settings.update-image', 'logo'), 'method' => 'POST', 'files' => true]) !!}
+            {{ html()->form('POST', route('app.settings.update-image', 'logo'))->acceptsFiles()->attribute('accept-charset', 'UTF-8')->open() }}
             <label for="logo">Logo</label>
             @if(isset($settings['logo']))
                 <img id="logo-img" class="profile_photo p-2 border mb-3" src="{{ $settings['logo'] }}" style="background-color:{{ $settings['primary_color'] ?? '#154734' }};">
             @endif
             <div class="control-group">
                 <div class="controls">
-                    {!! Form::file('logo', ['id' => 'logo', 'name' => 'logo', 'required' => 'true', 'accept' => 'image/*', 'class' => 'd-none']) !!}
+                    {{ html()->file('logo')->id('logo')->name('logo')->required()->accept('image/*')->class('d-none') }}
                     <label for="logo" class="btn btn-secondary btn-block"><i class="fas fa-plus"></i> Select Image</label>
                     <p class="errors">{!!$errors->first('logo')!!}</p>
                     @if(Session::has('error'))
@@ -39,17 +39,17 @@
             <button type="submit" class="btn btn-primary btn-block" data-toggle="replace-icon" data-newicon="fas fa-sync fa-spin" data-inputrequired="#logo">
                 <i class="fas fa-upload"></i> Replace Image
             </button>
-            {!! Form::close() !!}
+            {{ html()->form()->close() }}
         </div>
         <div class="col col-md-4">
-            {!! Form::open(['url' => route('app.settings.update-image', 'favicon'), 'method' => 'POST', 'files' => true]) !!}
+            {{ html()->form('POST', route('app.settings.update-image', 'favicon'))->acceptsFiles()->attribute('accept-charset', 'UTF-8')->open() }}
             <label for="favicon">Favicon</label>
             @if(isset($settings['favicon']))
                 <img id="favicon-img" class="profile_photo p-2 border mb-3" src="{{ $settings['favicon'] }}">
             @endif
             <div class="control-group">
                 <div class="controls">
-                    {!! Form::file('favicon', ['id' => 'favicon', 'name' => 'favicon', 'required' => 'true', 'accept' => 'image/*', 'class' => 'd-none']) !!}
+                    {{ html()->file('favicon')->id('favicon')->name('favicon')->required()->accept('image/*')->class('d-none') }}
                     <label for="favicon" class="btn btn-secondary btn-block"><i class="fas fa-plus"></i> Select Image</label>
                     <p class="errors">{!!$errors->first('favicon')!!}</p>
                     @if(Session::has('error'))
@@ -60,18 +60,18 @@
             <button type="submit" class="btn btn-primary btn-block" data-toggle="replace-icon" data-newicon="fas fa-sync fa-spin" data-inputrequired="#favicon">
                 <i class="fas fa-upload"></i> Replace Image
             </button>
-            {!! Form::close() !!}
+            {{ html()->form()->close() }}
         </div>
         @if(config('app.enable_students'))
         <div class="col col-md-4">
-            {!! Form::open(['url' => route('app.settings.update-image', 'student_info_image'), 'method' => 'POST', 'files' => true]) !!}
+            {{ html()->form('POST', route('app.settings.update-image', 'student_info_image'))->acceptsFiles()->attribute('accept-charset', 'UTF-8')->open() }}
             <label for="student_info_image">Student Info Image</label>
             @if(isset($settings['student_info_image']))
                 <img id="student_info_image-img" class="profile_photo p-2 border mb-3" src="{{ $settings['student_info_image'] }}">
             @endif
             <div class="control-group">
                 <div class="controls">
-                    {!! Form::file('student_info_image', ['id' => 'student_info_image', 'name' => 'student_info_image', 'required' => 'true', 'accept' => 'image/*', 'class' => 'd-none']) !!}
+                    {{ html()->file('student_info_image')->id('student_info_image')->name('student_info_image')->required()->accept('image/*')->class('d-none') }}
                     <label for="student_info_image" class="btn btn-secondary btn-block"><i class="fas fa-plus"></i> Select Image</label>
                     <p class="errors">{!!$errors->first('student_info_image')!!}</p>
                     @if(Session::has('error'))
@@ -82,11 +82,12 @@
             <button type="submit" class="btn btn-primary btn-block" data-toggle="replace-icon" data-newicon="fas fa-sync fa-spin" data-inputrequired="#student_info_image">
                 <i class="fas fa-upload"></i> Replace Image
             </button>
-            {!! Form::close() !!}
+            {{ html()->form()->close() }}
         </div>
         @endif
     </div>
-    {!! Form::open(['url' => route('app.settings.update')]) !!}
+
+    {{ html()->form('POST', route('app.settings.update'))->open() }}
 
     <div class="row record form-group level lower-border">
         <div class="col col-md-4 col-12">
@@ -191,7 +192,7 @@
         <div class="col col-12">
             <label for="rte_student_schools">Schools participating in student research</label>
             <small class="form-text text-muted">Hold down control/command when clicking to select multiple.</small>
-            {!! Form::select('setting[student_participating_schools][]', App\School::pluck('display_name', 'short_name'), json_decode($settings['student_participating_schools'] ?? "[]"), ['class' => 'form-control', 'multiple', 'size' => App\School::count()]); !!}
+            {{ html()->select('setting[student_participating_schools][]', App\School::pluck('display_name', 'short_name'), json_decode($settings['student_participating_schools'] ?? "[]"))->multiple()->attribute('size', App\School::count())->class('form-control') }}
         </div>
         <div class="col col-12">
             <label for="rte_student_info">Student Majors</label>
@@ -227,12 +228,12 @@
    	
     <div class="row">
         <div class="col">
-            {!! Form::submit('Save', array('class' => 'btn btn-primary edit-button')) !!}
+            {{ html()->submit('Save')->class('btn btn-primary edit-button') }}
             <a href="{{route('profiles.home')}}" class='btn btn-light edit-button'>Cancel</a>
         </div>
     </div>
 
-    {!! Form::close() !!}
+    {{ html()->form()->close() }}
 
     @if(config('app.enable_students'))
         {{-- Template to add new student custom questions --}}

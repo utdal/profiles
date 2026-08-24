@@ -40,13 +40,13 @@
                 @can('update', $student)
                     <div class="ml-3 mr-2"><a class="btn btn-primary btn-sm" href="{{ route('students.edit', [$student]) }}"><i class="fas fa-edit"></i> Edit</a></div>
                     <div class="mr-2">
-                    {!! Form::open(['url' => route('students.status', $student), 'method' => 'PATCH']) !!}
+                    {{ html()->form('PATCH', route('students.status', $student))->attribute('accept-charset', 'UTF-8')->open() }}
                         @if($student->status === 'drafted')
                             <button class="btn btn-secondary btn-sm" type="submit" name="status" value="submitted" data-toggle="tooltip" data-placement="auto" title="Submit this student application for consideration"><i class="fas fa-check"></i> Submit</button>
                         @else
                             <button class="btn btn-secondary btn-sm" type="submit" name="status" value="drafted" data-toggle="tooltip" data-placement="auto" title="Un-submit if you've already joined a research group or want to remove your application from future consideration"><i class="fas fa-undo"></i> Un-submit</button>
                         @endif
-                    {!! Form::close() !!}
+                    {{ html()->form()->close() }}
                     </div>
                 @endcan
                 @if(!auth()->user()->owns($student))
