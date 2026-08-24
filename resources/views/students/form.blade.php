@@ -77,7 +77,7 @@
                 ->multiple()
                 ->required()
                 ->data('accepting-undergrad', 'true')
-                ->data('school', $schools->isNotEmpty() ? $schools->keys()->implode(';') : [])
+                ->data('school', $schools->keys()->implode(';'))
             }}
         @else
             <i class="fas fa-users" aria-hidden="true"></i><span class="sr-only">Faculty:</span> 
