@@ -24,7 +24,7 @@ class StudentFeedback extends Component
 
     public function add()
     {
-        $this->authorize('create', StudentFeedbackEntry::class);
+        $this->authorize('create', [StudentFeedbackEntry::class, $this->student]);
 
         $feedback = $this->student->feedback()->create([
             'data' => $this->new_feedback + ['submitted_by' => auth()->user()->id ?? 'system'],

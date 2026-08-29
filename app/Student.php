@@ -188,6 +188,16 @@ class Student extends Model implements Auditable
             ->all();
     }
 
+    /**
+     * Determine whether the profile(s) of a given user is associated to the student.
+     */
+    public function isAssociatedToUserProfiles(User $user)
+    {
+        $profile_ids = $user->profiles()->pluck('id');
+
+        return $this->faculty()->whereKey($profile_ids)->exists();
+    }
+
     ////////////////////////////////////
     // Mutators and Virtual Attributes//
     ////////////////////////////////////

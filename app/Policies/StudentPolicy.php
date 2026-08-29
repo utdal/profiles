@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Profile;
 use App\Student;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -36,6 +37,17 @@ class StudentPolicy
     }
 
     /**
+     * Determine whether the student can be viewed by the associated profile's user.
+     *
+     * @param  \App\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function viewForAssociatedProfile(User $user, Student $student)
+    {
+        return $student->isAssociatedToUserProfiles($user);
+    }
+
+    /**
      * Determine whether the user can view the student.
      *
      * @param  \App\User  $user
@@ -44,7 +56,7 @@ class StudentPolicy
      */
     public function view(User $user, Student $student)
     {
-        return $this->viewAny($user) || $user->owns($student, true);
+        return $this->viewAny($user) || $user->owns($student, true) || $this->viewForAssociatedProfile($user, $student);
     }
 
     /**

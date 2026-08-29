@@ -1,6 +1,6 @@
 <div>
     {{-- Feedback form --}}
-    @can('create', App\StudentFeedback::class)
+    @can('create', [App\StudentFeedback::class, $student])
         <div class="add-feedback mb-5">
             <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#student_{{ $student->id }}_feedback_form" aria-expanded="false" aria-controls="student_{{ $student->id }}_feedback_form">
                 <i class="fas fa-comment-medical"></i> Add feedback <i class="fas fa-caret-down"></i>
