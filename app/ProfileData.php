@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Profile;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
@@ -16,6 +17,7 @@ class ProfileData extends Model implements HasMedia, Auditable
 {
     use HasFactory;
     use HasAudits;
+    /** @use InteractsWithMedia<Media> */
     use InteractsWithMedia;
 
     /** @var string The database table used by the model */
@@ -55,22 +57,21 @@ class ProfileData extends Model implements HasMedia, Auditable
      *
      * @param  Media|null $media
      */
-    public function registerMediaConversions(Media $media = null): void
+    public function registerMediaConversions(?Media $media = null): void
     {
-        $this->registerImageThumbnails($media, 'thumb', 150);
-        $this->registerImageThumbnails($media, 'medium', 350);
+        $this->registerImageThumbnails('thumb', 150);
+        $this->registerImageThumbnails('medium', 350);
     }
 
     /**
      * Registers image thumbnails.
      *
-     * @param  Media|null $media
      * @param  string     $name       Name of the thumbnail
      * @param  int        $size       Max dimension in pixels
      * @param  string     $collection Name of the collection for the thumbnails
      * @return void
      */
-    protected function registerImageThumbnails(Media $media = null, $name, $size, $collection = 'images'): void
+    protected function registerImageThumbnails($name, $size, $collection = 'images'): void
     {
         $this->addMediaConversion($name)
             ->width($size)
@@ -184,7 +185,7 @@ class ProfileData extends Model implements HasMedia, Auditable
     /**
      * Get the image URL. ($this->image_url)
      *
-     * @return string
+     * @return UrlGenerator|string
      */
     public function getImageUrlAttribute()
     {

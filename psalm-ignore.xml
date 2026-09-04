@@ -1,106 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.30.0@d0bc6e25d89f649e4f36a534f330f8bb4643dd69">
+<files psalm-version="5.26.1@d747f6500b38ac4f7dfc5edbcae6e4b637d7add0">
   <file src="app/Exceptions/Handler.php">
-    <ForbiddenCode occurrences="1">
-      <code>shell_exec('git rev-parse --verify HEAD')</code>
+    <ForbiddenCode>
+      <code><![CDATA[shell_exec('git rev-parse --verify HEAD')]]></code>
     </ForbiddenCode>
-    <InvalidDocblock occurrences="1">
-      <code>public function render($request, Throwable $e)</code>
+    <InvalidDocblock>
+      <code><![CDATA[public function render($request, Throwable $e)]]></code>
     </InvalidDocblock>
   </file>
-  <file src="app/Helpers/LdapHelper.php">
-    <InvalidReturnStatement occurrences="1">
-      <code>$user</code>
-    </InvalidReturnStatement>
-    <InvalidReturnType occurrences="1">
-      <code>User</code>
-    </InvalidReturnType>
-  </file>
   <file src="app/Http/Controllers/ProfilesController.php">
-    <TypeDoesNotContainType occurrences="2">
-      <code>$existing_profile</code>
-      <code>$existing_profile</code>
-    </TypeDoesNotContainType>
-    <UndefinedMagicMethod occurrences="1">
-      <code>inRandomOrder</code>
-    </UndefinedMagicMethod>
-  </file>
-  <file src="app/Http/Livewire/ProfileStudents.php">
-    <UndefinedThisPropertyAssignment occurrences="1">
-      <code>$this-&gt;students</code>
-    </UndefinedThisPropertyAssignment>
-  </file>
-  <file src="app/Http/Livewire/StudentFeedback.php">
-    <TypeDoesNotContainType occurrences="1">
-      <code>auth()-&gt;user()-&gt;id</code>
+    <InvalidStaticInvocation>
+      <code><![CDATA[Profile::containing($search)]]></code>
+      <code><![CDATA[Profile::public()]]></code>
+      <code><![CDATA[Profile::public()]]></code>
+      <code><![CDATA[Profile::taggedWith($search)]]></code>
+    </InvalidStaticInvocation>
+    <TypeDoesNotContainType>
+      <code><![CDATA[$existing_profile]]></code>
+      <code><![CDATA[$existing_profile]]></code>
     </TypeDoesNotContainType>
   </file>
   <file src="app/Http/Middleware/AuthorizeCreateProfile.php">
-    <UndefinedInterfaceMethod occurrences="2">
-      <code>authenticate</code>
-      <code>user</code>
+    <UndefinedInterfaceMethod>
+      <code><![CDATA[authenticate]]></code>
+      <code><![CDATA[user]]></code>
     </UndefinedInterfaceMethod>
   </file>
-  <file src="app/Ldap/Handlers/LdapAttributeHandler.php">
-    <UndefinedMagicMethod occurrences="1">
-      <code>exists</code>
-    </UndefinedMagicMethod>
-  </file>
-  <file src="app/Student.php">
-    <InvalidReturnStatement occurrences="3">
-      <code>$this-&gt;hasMany(StudentFeedback::class)-&gt;where('type', 'feedback')</code>
-      <code>$this-&gt;hasOne(StudentData::class)-&gt;where('type', 'research_profile')</code>
-      <code>$this-&gt;hasOne(StudentData::class)-&gt;where('type', 'stats')</code>
-    </InvalidReturnStatement>
-    <InvalidReturnType occurrences="3">
-      <code>\Illuminate\Database\Eloquent\Relations\HasMany</code>
-      <code>\Illuminate\Database\Eloquent\Relations\HasOne</code>
-      <code>\Illuminate\Database\Eloquent\Relations\HasOne</code>
-    </InvalidReturnType>
-  </file>
-  <file src="app/User.php">
-    <InvalidReturnStatement occurrences="5">
-      <code>$this-&gt;currentDelegates()-&gt;where('gets_reminders', '=', true)</code>
-      <code>$this-&gt;currentDelegators()-&gt;where('gets_reminders', '=', true)</code>
-    </InvalidReturnStatement>
-    <InvalidReturnType occurrences="5">
-      <code>\Illuminate\Database\Eloquent\Relations\BelongsToMany</code>
-      <code>\Illuminate\Database\Eloquent\Relations\BelongsToMany</code>
-      <code>\Illuminate\Database\Eloquent\Relations\BelongsToMany</code>
-      <code>\Illuminate\Database\Eloquent\Relations\BelongsToMany</code>
-      <code>\Illuminate\Database\Query\Builder</code>
-    </InvalidReturnType>
-  </file>
-  <file src="app/Http/Controllers/ProfilesController.php">
-    <InvalidStaticInvocation occurrences="4">
-      <code>Profile::containing($search)</code>
-      <code>Profile::taggedWith($search)</code>
-      <code>Profile::public()</code>
-      <code>Profile::public()</code>
-    </InvalidStaticInvocation>
-    <TypeDoesNotContainType occurrences="2">
-      <code>$existing_profile</code>
-      <code>$existing_profile</code>
-    </TypeDoesNotContainType>
-  </file>
   <file src="app/Http/Controllers/SchoolsController.php">
-    <InvalidStaticInvocation occurrences="1">
-      <code>Profile::fromSchoolId($school-&gt;id)</code>
+    <InvalidStaticInvocation>
+      <code><![CDATA[Profile::fromSchoolId($school->id)]]></code>
     </InvalidStaticInvocation>
   </file>
   <file src="app/Console/Commands/NotifyProfilesAboutStudents.php">
-    <InvalidStaticInvocation occurrences="1">
-      <code>Profile::StudentsPendingReviewWithSemester($semester)</code>
+    <InvalidStaticInvocation>
+      <code><![CDATA[Profile::StudentsPendingReviewWithSemester($semester)]]></code>
     </InvalidStaticInvocation>
   </file>
   <file src="app/Http/Controllers/Testing/TestingController.php">
-    <InvalidStaticInvocation occurrences="1">
-      <code>Profile::EagerStudentsPendingReviewWithSemester($semester)</code>
+    <InvalidStaticInvocation>
+      <code><![CDATA[Profile::EagerStudentsPendingReviewWithSemester($semester)]]></code>
     </InvalidStaticInvocation>
-  </file>
-  <file src="app/Http/Controllers/ProfilesApiController.php">
-    <UndefinedMagicMethod occurrences="1">
-      <code>Profile::select(Profile::apiAttributes())</code>
-    </UndefinedMagicMethod>
   </file>
 </files>

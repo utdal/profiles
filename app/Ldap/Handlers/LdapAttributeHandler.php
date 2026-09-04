@@ -12,7 +12,7 @@ class LdapAttributeHandler
     /**
      * Sync things from an Ldap User to a local User.
      *
-     * @param LdapUser  $ldapUser
+     * @param LdapUser  $ldap_user
      * @param User      $user
      */
     public function handle(LdapUser $ldap_user, User $user)

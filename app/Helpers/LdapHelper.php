@@ -113,7 +113,6 @@ class LdapHelper implements LdapHelperContract
     /**
      * Look up and return a local user instance by checking LDAP for that user.
      *
-     * @param  string $display_name The user's display name
      * @param  string $name         The user's name/uid
      *
      * @return User|boolean
