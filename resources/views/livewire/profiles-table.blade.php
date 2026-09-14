@@ -3,11 +3,11 @@
     <div class="form-row">
         <div class="form-group col-lg-2">
             <label for="profileSearch">Search</label>
-            <input wire:model.debounce.250ms="search_filter" type="text" id="profileSearch" class="form-control" placeholder="Search...">
+            <input wire:model.live.debounce.250ms="search_filter" type="text" id="profileSearch" class="form-control" placeholder="Search...">
         </div>
         <div class="form-group col-lg-2">
             <label for="profileSchoolFilter">School</label>
-            <select wire:model="schools_filter" id="profileSchoolFilter" class="form-control">
+            <select wire:model.live="schools_filter" id="profileSchoolFilter" class="form-control">
                 <option value="" selected>All</option>
                 @foreach($schools as $school)
                 <option value="{{ $school->id }}">{{ $school->short_name }}</option>
@@ -16,7 +16,7 @@
         </div>
         <div class="form-group col-lg-2">
             <label for="publicFilter">Public</label>
-            <select wire:model="public_filter" id="publicFilter" class="form-control">
+            <select wire:model.live="public_filter" id="publicFilter" class="form-control">
                 <option value="" selected>All</option>
                 <option value="1">Public</option>
                 <option value="0">Not Public</option>
@@ -24,7 +24,7 @@
         </div>
         <div class="form-group col-lg-2">
             <label for="typeFilter">Type</label>
-            <select wire:model="type_filter" id="typeFilter" class="form-control">
+            <select wire:model.live="type_filter" id="typeFilter" class="form-control">
                 <option value="" selected>All</option>
                 @foreach (App\Enums\ProfileType::cases() as $profile_type)
                     <option value="{{ $profile_type->value }}">{{ $profile_type->label() }}</option>
@@ -33,14 +33,14 @@
         </div>
         <div class="form-group col-lg-1">
             <label for="archivedFilter">Archived</label>
-            <select wire:model="archived_filter" id="archivedFilter" class="form-control">
+            <select wire:model.live="archived_filter" id="archivedFilter" class="form-control">
                 <option value="0" selected>No</option>
                 <option value="1">Yes</option>
             </select>
         </div>
         <div class="form-group col-lg-1">
             <label for="perPage">Per Page</label>
-            <select wire:model="per_page" id="perPage" class="form-control">
+            <select wire:model.live="per_page" id="perPage" class="form-control">
                 <option value="10">10</option>
                 <option value="25" selected>25</option>
                 <option value="50">50</option>

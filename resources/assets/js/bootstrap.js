@@ -25,9 +25,10 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
 
 config.autoReplaceSvg = 'nest';
 library.add(fas, far, fab);
+
 // Kicks off the process of finding <i> tags and replacing with <svg>
-dom.watch();
 window.FontAwesomeDom = dom;
+document.addEventListener('DOMContentLoaded', () => dom.i2svg());
 
 // Sortable
 window.Sortable = require('sortablejs/Sortable');

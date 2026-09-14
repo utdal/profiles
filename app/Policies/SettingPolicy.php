@@ -13,7 +13,7 @@ class SettingPolicy
     /**
      * Runs before any other authorization checks
      *
-     * @param \App\User $user
+     * @param User $user
      * @param string $ability
      * @return void|bool
      */
@@ -27,7 +27,7 @@ class SettingPolicy
     /**
      * Determine whether the user can view the index.
      *
-     * @param  \App\User  $user
+     * @param  User  $user
      * @return mixed
      */
     public function viewAny(User $user)
@@ -38,11 +38,11 @@ class SettingPolicy
     /**
      * Determine whether the user can view the setting.
      *
-     * @param  \App\User  $user
-     * @param  \App\Setting  $setting
+     * @param  User  $user
+     * @param  Setting|null  $setting
      * @return mixed
      */
-    public function view(User $user)
+    public function view(User $user, ?Setting $setting = null)
     {
         return false;
     }
@@ -50,7 +50,7 @@ class SettingPolicy
     /**
      * Determine whether the user can create settings.
      *
-     * @param  \App\User  $user
+     * @param  User  $user
      * @return mixed
      */
     public function create(User $user)
@@ -61,11 +61,11 @@ class SettingPolicy
     /**
      * Determine whether the user can update the setting.
      *
-     * @param  \App\User  $user
-     * @param  \App\Setting  $setting
+     * @param  User  $user
+     * @param  Setting|null  $setting
      * @return mixed
      */
-    public function update(User $user)
+    public function update(User $user, ?Setting $setting = null)
     {
         return false;
     }
@@ -73,11 +73,11 @@ class SettingPolicy
     /**
      * Determine whether the user can delete the setting.
      *
-     * @param  \App\User  $user
-     * @param  \App\Setting  $setting
+     * @param  User  $user
+     * @param  Setting|null  $setting
      * @return mixed
      */
-    public function delete(User $user)
+    public function delete(User $user, ?Setting $setting = null)
     {
         return false;
     }

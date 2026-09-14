@@ -64,10 +64,16 @@ class ProfileDataCardTest extends TestCase
             $this->assertIsIterable($section_data);
             $this->assertGreaterThanOrEqual($per_page, $data_count);
 
-            $component = Livewire::test(ProfileDataCard::class, ['profile' => $profile, 'editable' => $editable, 'data_type' => $section ])
-                        ->assertSet('data_type', $section)
-                        ->assertViewHas('data')
-                        ->assertSeeHtmlInOrder(["<section id=\"$section\" class=\"card\">", '<h3>', '<div class="entry">'] );
+            $component = Livewire::test(ProfileDataCard::class, ['profile' => $profile, 'editable' => $editable, 'data_type' => $section])
+                            ->assertSet('data_type', $section)
+                            ->assertViewHas('data')
+                            ->assertSeeHtmlInOrder([
+                                '<section',
+                                "id=\"$section\"",
+                                'class="card"',
+                                '<h3>',
+                                '<div class="entry">',
+                            ]);
 
             if ($section === 'additionals') {
                 $component->assertSee('Additional Information');
@@ -76,17 +82,19 @@ class ProfileDataCardTest extends TestCase
             }
 
             $first_page_items_count = $data_count >= $per_page ? $per_page : $data_count;
-            
-            $this->assertIsIterable($component->lastRenderedView->data);
-            $this->assertCount($first_page_items_count, $component->lastRenderedView->data);
 
-            $component->call('gotoPage', $component->lastRenderedView->data->lastPage(), $section)
-                        ->assertSet('data_type', $section)
-                        ->assertViewHas('data');
-            
+            $data = $component->viewData('data');
+            $this->assertIsIterable($data);
+            $this->assertCount($first_page_items_count, $data);
+
+            $component->call('gotoPage', $data->lastPage(), $section)
+                ->assertSet('data_type', $section);
+
             $last_page_items_count = fmod($data_count, $per_page) > 0 ? fmod($data_count, $per_page) : $per_page;
-            $this->assertIsIterable($component->lastRenderedView->data);
-            $this->assertCount($last_page_items_count, $component->lastRenderedView->data);
+
+            $last_page_data = $component->viewData('data');
+            $this->assertIsIterable($last_page_data);
+            $this->assertCount($last_page_items_count, $last_page_data);
         } 
     }
 
@@ -126,12 +134,12 @@ class ProfileDataCardTest extends TestCase
             ->assertSessionHasNoErrors()
             ->assertStatus(200)
             ->assertViewIs('profiles.show');
-        
+
         foreach ($sections as $section) {
-            $component = Livewire::test(ProfileDataCard::class, ['profile' => $profile, 'editable' => $editable, 'data_type' => $section ])
-            ->assertHasNoErrors()
-            ->assertViewIs("livewire.profile-data-cards.{$section}")
-            ->call('nextPage');
+            $component = Livewire::test(ProfileDataCard::class, ['profile' => $profile, 'editable' => $editable, 'data_type' => $section])
+                ->assertHasNoErrors()
+                ->assertViewIs("livewire.profile-data-cards.{$section}")
+                ->call('nextPage', $section);
 
             $this->assertDatabaseHas('profile_data', ['type' => $section]);
 
@@ -139,14 +147,14 @@ class ProfileDataCardTest extends TestCase
                 method_exists($profile, $section),
                 'Profile does not have method '.$section
             );
-                
-            foreach ($component->lastRenderedView->data as $data) {
+            
+            foreach ($component->viewData('data') as $data) {
                 $this->assertContains($data->id, $profile->$section->pluck('id'));
-            };
-        
-            $this->assertArrayHasKey($section, $component->paginators);
-            $this->assertEquals(1, $component->paginators[$section]);
-            $this->assertEquals(2, $component->page);
+            }
+
+            $paginators = $component->get('paginators');
+            $this->assertArrayHasKey($section, $paginators);
+            $this->assertEquals(2, $paginators[$section]);
         }
     }  
 

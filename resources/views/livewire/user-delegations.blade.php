@@ -40,7 +40,7 @@
         </button>
         <div id="user_{{ $user->id }}_delegation_form" class="collapse" wire:ignore.self>
             <div class="card">
-                <form wire:submit.prevent="add()" class="card-body" novalidate>
+                <form wire:submit="add()" class="card-body" novalidate>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="user_{{ $user->id }}_directorySearch" class="form-label">Name:</label>
@@ -58,7 +58,7 @@
                             <label for="user_{{ $user->id }}_delegation[name]" class="form-label">Username:</label>
                             <input
                                 type="text"
-                                wire:model="new_delegation.name"
+                                wire:model.live="new_delegation.name"
                                 name="user_{{ $user->id }}_delegation[name]"
                                 id="user_{{ $user->id }}_delegation[name]"
                                 class="form-control mb-0"
@@ -76,7 +76,7 @@
                             <label for="user_{{ $user->id }}_delegation[starting]" class="form-label">Starting:</label>
                             <input
                                 type="text"
-                                wire:model.defer="new_delegation.starting"
+                                wire:model="new_delegation.starting"
                                 name="user_{{ $user->id }}_delegation[starting]"
                                 id="user_{{ $user->id }}_delegation[starting]"
                                 class="form-control mb-0"
@@ -94,7 +94,7 @@
                             <label for="user_{{ $user->id }}_delegation[until]" class="form-label">Until:</label>
                             <input
                                 type="text"
-                                wire:model.defer="new_delegation.until"
+                                wire:model="new_delegation.until"
                                 name="user_{{ $user->id }}_delegation[until]"
                                 id="user_{{ $user->id }}_delegation[until]"
                                 class="form-control mb-0"
@@ -113,7 +113,7 @@
                             <label for="user_{{ $user->id }}_delegation[gets_reminders]" class="form-label clickable">Delegate receives user's notifications:</label>
                             <input
                                 type="checkbox"
-                                wire:model.defer="new_delegation.gets_reminders"
+                                wire:model="new_delegation.gets_reminders"
                                 name="user_{{ $user->id }}_delegation[gets_reminders]"
                                 id="user_{{ $user->id }}_delegation[gets_reminders]"
                                 class="form-check-input clickable"

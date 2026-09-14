@@ -15,7 +15,7 @@
                             <label class="form-label">Select any that apply:</label>
                             @foreach ($reasons as $reason_key => $reason_label)
                                 <div class="form-check">
-                                    <input wire:model.defer="new_feedback.reasons.{{ $reason_key }}" type="checkbox" name="student_{{ $student->id }}_feedback[reasons][{{ $reason_key }}]" id="student_{{ $student->id }}_feedback[reasons][{{ $reason_key }}]">
+                                    <input wire:model="new_feedback.reasons.{{ $reason_key }}" type="checkbox" name="student_{{ $student->id }}_feedback[reasons][{{ $reason_key }}]" id="student_{{ $student->id }}_feedback[reasons][{{ $reason_key }}]">
                                     <label for="student_{{ $student->id }}_feedback[reasons][{{ $reason_key }}]" class="form-check-label">
                                         {{ $reason_label }}
                                     </label>
@@ -25,7 +25,7 @@
 
                         <div class="form-group">
                             <label for="student_{{ $student->id }}_feedback[comment]" class="form-label">Other / Comments:</label>
-                            <textarea wire:model.defer="new_feedback.comment" name="student_{{ $student->id }}_feedback[comment]" id="student_{{ $student->id }}_feedback[comment]" rows="10" class="form-control"></textarea>
+                            <textarea wire:model="new_feedback.comment" name="student_{{ $student->id }}_feedback[comment]" id="student_{{ $student->id }}_feedback[comment]" rows="10" class="form-control"></textarea>
                         </div>
                         <button wire:click="add()" type="button" class="btn btn-primary edit-button" data-toggle="collapse" data-target="#student_{{ $student->id }}_feedback_form" aria-expanded="false" aria-controls="student_{{ $student->id }}_feedback_form">
                             <i class="fas fa-comment-medical"></i> Submit my feedback

@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\StudentFeedback as StudentFeedbackEntry;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 
 class StudentFeedback extends Component
@@ -14,7 +15,8 @@ class StudentFeedback extends Component
 
     public $new_feedback = [];
 
-    public function getFeedbackProperty()
+    #[Computed()]
+    public function feedback()
     {
         return $this->student
             ->feedback()
@@ -31,10 +33,10 @@ class StudentFeedback extends Component
         ]);
 
         if ($feedback) {
-            $this->emit('alert', "Feedback saved. Thank you!", 'success');
+            $this->dispatch('alert', "Feedback saved. Thank you!", 'success');
             $this->new_feedback = [];
         } else {
-            $this->emit('alert', "Unable to save feedback", 'danger');
+            $this->dispatch('alert', message: "Unable to save feedback", type: 'danger');
         }
     }
 
@@ -44,7 +46,7 @@ class StudentFeedback extends Component
 
         $feedback->delete();
 
-        $this->emit('alert', "Feedback removed.", 'success');
+        $this->dispatch('alert', message: "Feedback removed.", type: 'success');
     }
 
     public function render()

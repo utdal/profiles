@@ -3,11 +3,11 @@
     <div class="form-row">
         <div class="form-group col-lg-6">
             <label for="tagNameSearch">Tag Name</label>
-            <input wire:model.debounce.250ms="search_filter" type="text" id="studentNameSearch" class="form-control" placeholder="Search...">
+            <input wire:model.live.debounce.250ms="search_filter" type="text" id="studentNameSearch" class="form-control" placeholder="Search...">
         </div>
         <div class="form-group col-lg-2">
             <label for="tagTypeFilter">Tag Type</label>
-            <select wire:model="tag_type_filter" id="tagTypeFilter" class="form-control">
+            <select wire:model.live="tag_type_filter" id="tagTypeFilter" class="form-control">
                 <option value="" selected>All</option>
                 @foreach($tag_types as $tag_type)
                 <option value="{{ $tag_type }}">{{ $tag_type }}</option>
@@ -16,7 +16,7 @@
         </div>
         <div class="form-group col-lg-2">
             <label for="perPage">Per Page</label>
-            <select wire:model="per_page" id="perPage" class="form-control">
+            <select wire:model.live="per_page" id="perPage" class="form-control">
                 <option value="10">10</option>
                 <option value="25" selected>25</option>
                 <option value="50">50</option>

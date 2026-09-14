@@ -63,10 +63,6 @@ class ProfileDataCard extends Component
     {
         $data = $this->data();
 
-        if ($data->isEmpty() && !$this->editable) {
-            return '';
-        }
-
         return view("livewire.profile-data-cards/{$this->data_type}", [
             'data' => $data,
             'editable' => $this->editable,

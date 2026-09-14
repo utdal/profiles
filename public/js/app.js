@@ -741,21 +741,39 @@ if ((typeof Trix === "undefined" ? "undefined" : _typeof(Trix)) === 'object') {
 // Livewire global hooks
 if ((typeof Livewire === "undefined" ? "undefined" : _typeof(Livewire)) === 'object') {
   if ((typeof FontAwesomeDom === "undefined" ? "undefined" : _typeof(FontAwesomeDom)) === 'object') {
-    document.addEventListener('DOMContentLoaded', function () {
-      Livewire.hook('message.processed', function () {
-        return FontAwesomeDom.i2svg();
+    Livewire.hook('morphed', function (_ref) {
+      var el = _ref.el;
+      return FontAwesomeDom.i2svg({
+        node: el
       });
     });
   }
-  Livewire.on('alert', function (message, type) {
-    return profiles.toast(message, type);
-  });
-  Livewire.onError(function (status, response) {
-    // show a toast instead of a modal for 403 responses
-    if (status === 403) {
-      profiles.toast('⛔️ Sorry, you are not authorized to do that.', 'danger');
-      return false;
-    }
+
+  /**
+   * Livewire 3 Global Event Listener
+   */
+  document.addEventListener('livewire:init', function () {
+    Livewire.on('alert', function (event) {
+      // Livewire 3 passes parameters nested inside an array container
+      // event[0] holds the named object: { message: "...", type: "..." }
+      var eventData = Array.isArray(event) ? event[0] : event;
+      var message = eventData === null || eventData === void 0 ? void 0 : eventData.message;
+      var type = (eventData === null || eventData === void 0 ? void 0 : eventData.type) || 'success';
+      if (message) {
+        profiles.toast(message, type);
+      }
+    });
+    Livewire.hook('request', function (_ref2) {
+      var fail = _ref2.fail;
+      fail(function (_ref3) {
+        var status = _ref3.status,
+          preventDefault = _ref3.preventDefault;
+        if (status === 403) {
+          preventDefault();
+          profiles.toast('⛔️ Sorry, you are not authorized to do that.', 'danger');
+        }
+      });
+    });
   });
 }
 
@@ -799,9 +817,12 @@ try {
 
 _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_0__.config.autoReplaceSvg = 'nest';
 _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_0__.library.add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__.fas, _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_2__.far, _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_3__.fab);
+
 // Kicks off the process of finding <i> tags and replacing with <svg>
-_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_0__.dom.watch();
 window.FontAwesomeDom = _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_0__.dom;
+document.addEventListener('DOMContentLoaded', function () {
+  return _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_0__.dom.i2svg();
+});
 
 // Sortable
 window.Sortable = __webpack_require__(/*! sortablejs/Sortable */ "./node_modules/sortablejs/Sortable.js");

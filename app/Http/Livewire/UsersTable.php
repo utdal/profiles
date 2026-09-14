@@ -7,6 +7,7 @@ use App\Http\Livewire\Concerns\HasPagination;
 use App\Http\Livewire\Concerns\HasSorting;
 use App\School;
 use App\User;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 
 class UsersTable extends Component
@@ -38,7 +39,8 @@ class UsersTable extends Component
         $this->sort_descending = false;
     }
 
-    public function getUsersProperty()
+    #[Computed]
+    public function users()
     {
         return User::query()
             ->with(['school', 'profiles', 'setting'])

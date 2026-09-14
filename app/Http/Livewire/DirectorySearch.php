@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Helpers\Contracts\LdapHelperContract;
 use Livewire\Component;
+use Livewire\Attributes\On;
 
 class DirectorySearch extends Component
 {
@@ -27,10 +28,6 @@ class DirectorySearch extends Component
 
     public $title_attribute = 'title';
 
-    protected $listeners = [
-        'profiles.directorySearch.reset' => 'resetAll',
-    ];
-
     protected $ldap;
 
     protected $limit = 15;
@@ -50,6 +47,7 @@ class DirectorySearch extends Component
         $this->ldap = $ldap;
     }
 
+    #[On('profiles.directorySearch.reset')] 
     public function resetAll()
     {
         $this->reset(['query', 'people', 'selected_username']);
@@ -63,7 +61,7 @@ class DirectorySearch extends Component
     public function resetSelected()
     {
         $this->reset(['selected_username']);
-        $this->emit('profiles.directorySearch.selected', '');
+        $this->dispatch('profiles.directorySearch.selected', username: '');
     }
 
     public function selectPerson($index)
@@ -71,7 +69,7 @@ class DirectorySearch extends Component
         $this->query = $this->people[$index][$this->displayname_attribute] ?? $this->query;
         $this->selected_username = $this->people[$index][$this->username_attribute] ?? '';
 
-        $this->emit('profiles.directorySearch.selected', $this->selected_username);
+        $this->dispatch('profiles.directorySearch.selected', username: $this->selected_username);
     }
 
     public function updatedQuery()
@@ -90,7 +88,7 @@ class DirectorySearch extends Component
 
         $this->people = array_slice($search_results, 0, $this->limit);
 
-        $this->emit('profiles.directorySearch.query.updated');
+        $this->dispatch('profiles.directorySearch.query.updated');
     }
 
     public function render()
