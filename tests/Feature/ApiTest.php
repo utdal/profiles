@@ -67,19 +67,6 @@ class ApiTest extends TestCase
             $response->assertJsonFragment($this->profileJsonFragment($profiles[$i]));
         }
 
-        ////////////////////////////
-        // All profiles with data //
-        ////////////////////////////
-
-        // profiles.test/api/v1?with_data=1
-        $response = $this->get(route('api.index', ['with_data' => 1]));
-
-        $response
-            ->assertStatus(400)
-            ->assertJson([
-                'error' => "Please use a filter when pulling data.",
-            ]);
-
         ////////////////////////////////
         // Certain profiles with data //
         ////////////////////////////////
@@ -115,6 +102,112 @@ class ApiTest extends TestCase
                 'profile' => $this->profileJsonFragment($profiles[0]),
             ])
             ->assertJsonFragment($this->profileInfoJsonFragment($profiles[0]->data->first()));
+    }
+
+    /**
+     * Test validation fails for profiles with data when 'person' is missing
+     * 
+     * Endpoint: profiles.test/api/v1?with_data=1
+     */
+    public function testWithDataFails()
+    {
+        $response = $this->get(route('api.index', ['with_data' => 1]));
+
+        $response
+            ->assertStatus(422)
+            ->assertJsonValidationErrors('with_data')
+            ->assertJson([
+                'errors' => [
+                    'with_data' => ["Invalid parameter."],
+                ],
+            ]);
+    }
+
+    /**
+     * Test validation fails for 'person' that includes an invalid character
+     * 
+     * Endpoint: profiles.test/api/v1?person=invalid#char
+     */
+    public function testPersonFails()
+    {
+        $response = $this->get(route('api.index', ['person' => 'invalid#char']));
+
+        $response
+            ->assertStatus(422)
+            ->assertJsonValidationErrors('person');
+    }
+
+    /**
+     * Test validation fails for an invalid profile data type
+     * 
+     * Endpoint: profiles.test/api/v1?data_type=invalid_type
+     */
+    public function testDataTypeFails()
+    {
+        $response = $this->get(route('api.index', ['data_type' => 'invalid_type']));
+
+        $response
+            ->assertStatus(422)
+            ->assertJsonValidationErrors('data_type');
+    }
+
+    /**
+     * Test validation fails for an invalid value for from_school
+     * 
+     * Endpoint: profiles.test/api/v1?from_school=Other
+     */
+    public function testSchoolFails()
+    {
+        $response = $this->get(route('api.index', ['from_school' => 'Other:']));
+
+        $response
+            ->assertStatus(422)
+            ->assertJsonValidationErrors('from_school');
+    }
+
+    /**
+     * Test validation fails for:
+     * Non-alphanumeric characters in 'search'
+     * 'search_names' values shorter than 3 characters
+     * Non-string values in 'info_contains'
+     */
+    public function testSearchFails()
+    {
+        $parameters = [
+            'search' => 'invalid_search_entry!',
+            'search_names' => 'No',
+            'info_contains' => ['not', 'a', 'string'],
+        ];
+
+        $response = $this->get(route('api.index', $parameters));
+
+        $response
+            ->assertStatus(422)
+            ->assertJsonValidationErrors('search')
+            ->assertJson([
+                'errors' => [
+                    'search' => ["The search format is invalid."],
+                ],
+            ]);
+
+        $response
+            ->assertJsonValidationErrors('search_names')
+            ->assertJson([
+                'errors' => [
+                    'search_names' => ["The search names must be at least 3 characters."],
+                ],
+            ]);
+        
+        $response
+            ->assertJsonValidationErrors('info_contains')
+            ->assertJson([
+                'errors' => [
+                    'info_contains' => [
+                                        "The info contains must be a string.",
+                                        "The info contains format is invalid.",
+                                    ],
+                    ],
+            ]);
     }
 
     /**
