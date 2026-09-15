@@ -15,7 +15,7 @@ trait HasImageUploads
             "mimes:{$allowed_mimes}",
             "min:1",
             "max:{$max_filesize}",
-            new FilenameLengthRule(maxLength: 200),
+            new FilenameLengthRule(maxLength: $this->maxFilenameLength()),
         ];
     }
 
@@ -36,6 +36,11 @@ trait HasImageUploads
     public function maxFilesize()
     {
         return config('media-library.max_file_size') / (1024 * 1024);
+    }
+
+    public function maxFilenameLength(): int
+    {
+        return config('media-library.max_filename_length', 200);
     }
 
     /**
@@ -88,6 +93,11 @@ trait HasImageUploads
 
         // default: GD driver
         return $mimes;
+    }
+
+    public function supportedMimeString(): string
+    {
+        return implode(', ', $this->supportedMimes());
     }
 
 }

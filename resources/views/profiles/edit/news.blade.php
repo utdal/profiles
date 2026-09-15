@@ -46,11 +46,6 @@
                     </label>
                 </div>
                 <small class="form-text text-muted"> Image requirements <a role="button" tabindex="0" aria-label="image requirements information" data-toggle="popover" data-trigger="focus" data-popover-content="#img-rules"><i class="fas fa-question-circle"></i></a></small>
-                <div id="img-rules" style="display:none">
-                    <p class="m-1"><small>Supported file types: JPEG, PNG, GIF, BMP, SVG, and WebP.</small></p>
-                    <p class="m-1"><small>Maximum file size: 10 MB.</small></p>
-                    <p class="m-1"><small>Maximum file name lentgh: 200 characters.</small></p>
-	    		</div>
                 @foreach ($errors->get("data.{$news->id}.image") as $image_error)
                     @include('alert', ['message' => $image_error, 'type' => 'danger'])
                     <p class="d-block invalid-feedback"><i class="fas fa-asterisk"></i> {!! $image_error !!}</p>
@@ -63,4 +58,5 @@
             </div>
         </div>
     @endforeach
+    @include('profiles.edit._img_rules')
 @endsection
