@@ -96,6 +96,10 @@ return [
     |
     */
 
-    'serializer' => storage_path('app/purify'),
+    'serializer' => [
+       'disk' => env('FILESYSTEM_DISK', 'local'),
+       'path' => 'purify',
+       'cache' => \Stevebauman\Purify\Cache\FilesystemDefinitionCache::class,
+    ],
 
 ];

@@ -8,11 +8,13 @@ use App\User;
 use App\Http\Controllers\Controller;
 use App\Profile;
 use Exception;
-use Illuminate\Contracts\View\View as ViewContract;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Contracts\View\Factory as ViewFactory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
 
 class TestingController extends Controller
 {
@@ -49,7 +51,7 @@ class TestingController extends Controller
     /**
      * Show a list of possible users to login as
      */
-    public function showLoginAsList(): Response
+    public function showLoginAsList(): Response|ResponseFactory
     {
         $output = "<h1>Log in as a Different User</h1>\n";
         $output .= "<ul>\n";
@@ -67,7 +69,7 @@ class TestingController extends Controller
      */
     public function loginAs(int $id): RedirectResponse
     {
-        auth()->loginUsingId($id);
+        Auth::loginUsingId($id);
 
         return redirect()->route('profiles.home');
     }
@@ -75,7 +77,7 @@ class TestingController extends Controller
     /**
      * Preview an email template
      */
-    public function previewEmail(Request $request, string $view): View|ViewContract
+    public function previewEmail(Request $request, string $view): View|ViewFactory
     {
         $default_params = [];
 
