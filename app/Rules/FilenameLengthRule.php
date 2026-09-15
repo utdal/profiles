@@ -18,7 +18,7 @@ class FilenameLengthRule implements ValidationRule
 
         $name = $value->getClientOriginalName();
 
-        if (strlen($name) > $this->maxLength) {
+        if (mb_strlen($name) > $this->maxLength) {
             $fail("The :attribute filename must not exceed {$this->maxLength} characters.");
         }
     }
