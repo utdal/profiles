@@ -53,6 +53,11 @@ return [
      */
     'max_file_size' => 1024 * 1024 * ((int) env('IMAGE_MAX_MB', 16)),
 
+    /**
+     * The maximum filename character length. (Profiles app specific setting)
+     */
+    'max_filename_length' => (int) env('IMAGE_MAX_FILENAME_LENGTH', 200),
+
     /*
      * Uploads whose file name contains any of these extensions will be rejected.
      * The check looks at every extension in the file name, so a file named
