@@ -31,17 +31,18 @@ class ProfileDataCardTest extends TestCase
     */
     public function testPaginatedItemsOnFirstAndLastPage()
     {
-        $sections = [ 'publications', 'presentations', 'projects', 'additionals' ];
+        $sections = [ 'publications', 'presentations', 'projects', 'additionals', 'patents' ];
 
         $profile = Profile::factory()
                             ->hasData()
                             ->has(ProfileData::factory()
-                                ->count(30)
+                                ->count(40)
                                 ->sequence(
                                     ['type' => 'presentations'],
                                     ['type' => 'publications'],
                                     ['type' => 'projects'],
-                                    ['type' => 'additionals']
+                                    ['type' => 'additionals'],
+                                    ['type' => 'patents']
                                 )
                                 ->general(),'data')
                             ->create();

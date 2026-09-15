@@ -125,6 +125,7 @@
 			@if($profile->publications()->exists())<li><a href="#publications">Publications</a></li>@endif
 			@if($profile->appointments()->exists())<li><a href="#appointments">Appointments</a></li>@endif
 			@if($profile->awards()->exists())<li><a href="#awards">Awards</a></li>@endif
+			@if($profile->patents()->exists())<li><a href="#patents">Patents</a></li>@endif
 			@if($profile->projects()->exists())<li><a href="#projects">Projects</a></li>@endif
 			@if($profile->presentations()->exists())<li><a href="#presentations">Presentations</a></li>@endif
 			@if($profile->additionals()->exists())<li><a href="#additionals">Additional Information</a></li>@endif
@@ -139,6 +140,7 @@
 		<livewire:profile-data-card :editable="$editable" :profile="$profile" :paginated="false" data_type="areas">
 		<livewire:profile-data-card :editable="$editable" :profile="$profile" :paginated="$paginated" data_type="publications">
 		<livewire:profile-data-card :editable="$editable" :profile="$profile" :paginated="$paginated" data_type="awards">
+		<livewire:profile-data-card :editable="$editable" :profile="$profile" :paginated="$paginated" data_type="patents">
 		<livewire:profile-data-card :editable="$editable" :profile="$profile" :paginated="$paginated" data_type="appointments">
 		<livewire:profile-data-card :editable="$editable" :profile="$profile" :paginated="$paginated" data_type="projects">
 		<livewire:profile-data-card :editable="$editable" :profile="$profile" :paginated="$paginated" data_type="presentations">

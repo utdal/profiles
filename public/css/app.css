@@ -10357,6 +10357,23 @@ input[type=file]:invalid {
   padding: 30px;
 }
 
+.datepicker-dropdown {
+  padding: 0.75rem;
+}
+
+[data-toggle-subrecords][aria-expanded=true] .when-collapsed,
+[data-toggle-subrecords][aria-expanded=false] .when-expanded {
+  display: none;
+}
+
+.subrecords > .subrecord:not(:last-child) {
+  margin-bottom: 3rem;
+}
+
+.subrecords > .subrecord {
+  margin-bottom: 0;
+}
+
 #footer-container {
   background-color: #919191;
   border-top: 10px solid #154734;
