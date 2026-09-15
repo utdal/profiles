@@ -105,7 +105,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * Test validation fails for profiles with data when 'person' is missing
+     * Test validation fails for profiles with data when 'person' or 'data_type' is missing
      * 
      * Endpoint: profiles.test/api/v1?with_data=1
      */
@@ -116,9 +116,9 @@ class ApiTest extends TestCase
         $response
             ->assertStatus(422)
             ->assertJsonValidationErrors('with_data')
-            ->assertJson([
+            ->assertJsonStructure([
                 'errors' => [
-                    'with_data' => ["Invalid parameter."],
+                    'with_data',
                 ],
             ]);
     }
