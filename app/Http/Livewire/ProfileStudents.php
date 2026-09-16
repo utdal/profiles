@@ -82,7 +82,7 @@ class ProfileStudents extends Component
 
     public function refreshStudents()
     {
-        $this->students = $this->getStudentsProperty();
+        unset($this->students);
     }
 
     public function render()

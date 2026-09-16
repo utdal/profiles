@@ -3,15 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Events\StudentViewed;
+use App\Http\Requests\StudentUpdateRequest;
 use App\Student;
 use App\StudentData;
 use App\User;
-use Illuminate\Contracts\View\View as ViewContract;
+use Illuminate\Contracts\View\Factory as ViewFactory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View;
 
 class StudentsController extends Controller
 {
@@ -34,7 +34,7 @@ class StudentsController extends Controller
     /**
      * Display the list of student research applications.
      */
-    public function index(): View|ViewContract
+    public function index(): View|ViewFactory
     {
         /** @var User */
         $user = Auth::user();
@@ -93,7 +93,7 @@ class StudentsController extends Controller
     /**
      * Display the specified student research application.
      */
-    public function show(Request $request, Student $student): View|ViewContract
+    public function show(Request $request, Student $student): View|ViewFactory
     {
         if ($request->user() && $request->user()->userOrDelegatorhasRole('faculty')) {
             StudentViewed::dispatch($student);
@@ -113,7 +113,7 @@ class StudentsController extends Controller
     /**
      * Show the form for editing the specified student research application.
      */
-    public function edit(Student $student): View|ViewContract
+    public function edit(Student $student): View|ViewFactory
     {
         return view('students.edit', [
             'student' => $student,
@@ -127,7 +127,7 @@ class StudentsController extends Controller
     /**
      * Update the specified student research application in the database.
      */
-    public function update(Request $request, Student $student): RedirectResponse
+    public function update(StudentUpdateRequest $request, Student $student): RedirectResponse
     {
         $updated = $student->update([
             'full_name' => $request->full_name,

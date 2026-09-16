@@ -36,20 +36,24 @@
                     </a>
                 </small>
             </h2>
-            <div class="mb-3 mb-md-0">
+            <div class="mb-3 mb-md-0 row">
                 @can('update', $student)
-                    <a class="btn btn-primary btn-sm" href="{{ route('students.edit', [$student]) }}"><i class="fas fa-edit"></i> Edit</a>
-                    @if($student->status === 'drafted')
-                        <a class="btn btn-secondary btn-sm" href="{{ route('students.status', ['student' => $student, 'status' => 'submitted']) }}" data-toggle="tooltip" data-placement="auto" title="Submit this student application for consideration"><i class="fas fa-check"></i> Submit</a>
-                    @else
-                        <a class="btn btn-secondary btn-sm" href="{{ route('students.status', ['student' => $student, 'status' => 'drafted']) }}" data-toggle="tooltip" data-placement="auto" title="Un-submit if you've already joined a research group or want to remove your application from future consideration"><i class="fas fa-undo"></i> Un-submit</a>
-                    @endif
+                    <div class="ml-3 mr-2"><a class="btn btn-primary btn-sm" href="{{ route('students.edit', [$student]) }}"><i class="fas fa-edit"></i> Edit</a></div>
+                    <div class="mr-2">
+                    {!! Form::open(['url' => route('students.status', $student), 'method' => 'PATCH']) !!}
+                        @if($student->status === 'drafted')
+                            <button class="btn btn-secondary btn-sm" type="submit" name="status" value="submitted" data-toggle="tooltip" data-placement="auto" title="Submit this student application for consideration"><i class="fas fa-check"></i> Submit</button>
+                        @else
+                            <button class="btn btn-secondary btn-sm" type="submit" name="status" value="drafted" data-toggle="tooltip" data-placement="auto" title="Un-submit if you've already joined a research group or want to remove your application from future consideration"><i class="fas fa-undo"></i> Un-submit</button>
+                        @endif
+                    {!! Form::close() !!}
+                    </div>
                 @endcan
                 @if(!auth()->user()->owns($student))
                     <livewire:bookmark-button :model="$student">
                 @endif
                 @can('viewFeedback', $student)
-                    <a class="btn btn-primary btn-sm" href="#student_feedback"><i class="fas fa-comment"></i> Feedback</a>
+                    <div class="mr-2"><a class="btn btn-primary btn-sm" href="#student_feedback"><i class="fas fa-comment"></i> Feedback</a></div>
                 @endcan
             </div>
         </div>

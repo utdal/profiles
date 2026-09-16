@@ -11,15 +11,17 @@ use Illuminate\Support\Facades\Auth;
 use App\Helpers\Contracts\LdapHelperContract;
 use App\Http\Requests\ProfileBannerImageRequest;
 use App\Http\Requests\ProfileImageRequest;
+use App\Http\Requests\ProfileSearchRequest;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\School;
-use Illuminate\Contracts\View\View as ViewContract;
+use Illuminate\Contracts\View\Factory as ViewFactory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
-use Illuminate\View\View;
 use Spatie\Browsershot\Browsershot;
 
 class ProfilesController extends Controller
@@ -66,12 +68,18 @@ class ProfilesController extends Controller
     /**
      * Display a listing of profiles.
      */
-    public function index(Request $request): View|ViewContract|RedirectResponse
+    public function index(ProfileSearchRequest $request): View|ViewFactory|RedirectResponse
     {
-        $search = $request->input('search');
+        $input_search = $request->input('search');
+
+        $search = htmlspecialchars($input_search, FILTER_FLAG_NO_ENCODE_QUOTES);
 
         /** @var EloquentCollection */
-        $profiles = Profile::where('full_name', 'LIKE', "%$search%")->public()->with(['information', 'media'])->paginate(24);
+        $profiles = Profile::where('full_name', 'LIKE', "%$search%")
+            ->public()
+            ->when(empty($search), fn (Builder $query) => $query->excludingUnlisted())
+            ->with(['information', 'media'])
+            ->paginate(24);
 
         if ((Cache::get('settings')['profile_search_shortcut'] ?? false) && ($profiles->count() === 1) && ($profiles->first()->full_name === $search)) {
             return redirect()->route('profiles.show', ['profile' => $profiles->first()]);
@@ -80,7 +88,7 @@ class ProfilesController extends Controller
         $keyword_profiles = !empty($search) ? Profile::containing($search)
             ->where('full_name', 'NOT LIKE', "%$search%")->public()->paginate(24, ['*'], 'key') : collect();
 
-        $tag_profiles = !empty($search) ? Profile::taggedWith($search)->public()->paginate(24, ['*'], 'tag') : null;
+        $tag_profiles = !empty($search) ? Profile::taggedWith($search)->public()->excludingUnlisted()->paginate(24, ['*'], 'tag') : null;
 
         $schools = !empty($search) ? School::withNameLike($search)->get() : collect();
 
@@ -94,10 +102,10 @@ class ProfilesController extends Controller
     /**
      * Display the home page
      */
-    public function home(): View|ViewContract
+    public function home(): View|ViewFactory
     {
         $random_profile = Cache::tags(['home', 'profiles'])->remember('home-random-profiles', 86400, function() {
-            return Profile::public()->inRandomOrder()->limit(2)->get();
+            return Profile::public()->excludingUnlisted()->inRandomOrder()->limit(2)->get();
         });
 
         $num_profiles = Cache::tags(['home', 'profiles'])->remember('home-profile-count', 86400, function() {
@@ -124,7 +132,7 @@ class ProfilesController extends Controller
     /**
      * Display an admin table of profiles.
      */
-    public function table(): View|ViewContract
+    public function table(): View|ViewFactory
     {
         return view('profiles.table');
     }
@@ -132,7 +140,7 @@ class ProfilesController extends Controller
     /**
      * Show the specified profile.
      */
-    public function show(Request $request, Profile $profile): View|ViewContract
+    public function show(Request $request, Profile $profile): View|ViewFactory
     {
         /** @var User the logged-in user */
         $user = Auth::user();
@@ -164,7 +172,7 @@ class ProfilesController extends Controller
     /**
      * Create a Profile
      */
-    public function create(Request $request, User $user, LdapHelperContract $ldap): View|ViewContract|RedirectResponse
+    public function create(Request $request, User $user, LdapHelperContract $ldap): View|ViewFactory|RedirectResponse
     {
         $existing_profile = $user->profiles()->withTrashed()->first();
 
@@ -225,7 +233,7 @@ class ProfilesController extends Controller
     /**
      * Show the view for editing a profile section
      */
-    public function edit(Profile $profile, string $section): View|ViewContract|RedirectResponse
+    public function edit(Profile $profile, string $section): View|ViewFactory|RedirectResponse
     {
         //dont manage auto-managed publications
         if ($section == 'publications' && $profile->hasOrcidManagedPublications()) {
@@ -273,7 +281,7 @@ class ProfilesController extends Controller
     /**
      * Confirm deletion of a profile
      */
-    public function confirmDelete(Profile $profile): View|ViewContract
+    public function confirmDelete(Profile $profile): View|ViewFactory
     {
         return view('profiles.delete', ['profile' => $profile]);
     }
@@ -281,7 +289,7 @@ class ProfilesController extends Controller
     /**
      * Confirm restoration of a soft-deleted profile
      */
-    public function confirmRestore(Request $request, Profile $profile): View|ViewContract|RedirectResponse
+    public function confirmRestore(Request $request, Profile $profile): View|ViewFactory|RedirectResponse
     {
         // this message is in case someone tries to create an already archived profile
         if ($request->user()->cannot('restore', $profile)) {
@@ -346,6 +354,10 @@ class ProfilesController extends Controller
 
         if (config('pdf.chrome_arguments')) {
             $pdf_content = $pdf_content->addChromiumArguments(config('pdf.chrome_arguments'));
+        }
+
+        if (config('pdf.http_username') && config('pdf.http_password')) {
+            $pdf_content = $pdf_content->authenticate(config('pdf.http_username'), config('pdf.http_password'));
         }
 
         return response($pdf_content->pdf())

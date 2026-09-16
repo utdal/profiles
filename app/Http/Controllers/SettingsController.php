@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Setting;
-use Illuminate\Contracts\View\View as ViewContract;
+use Illuminate\Contracts\View\Factory as ViewFactory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 use Illuminate\Support\Facades\Cache;
 
 class SettingsController extends Controller
@@ -23,7 +23,7 @@ class SettingsController extends Controller
     /**
      * Show the settings for editing.
      */
-    public function edit(): View|ViewContract
+    public function edit(): View|ViewFactory
     {
         return view('settings', [
             'settings' => Setting::pluck('value', 'name')->toArray(),
@@ -56,12 +56,22 @@ class SettingsController extends Controller
         if ($request->hasFile($setting_name)) {
             $setting = Setting::firstOrCreate(['name' => $setting_name]);
             $setting->addMedia($request->file($setting_name))->toMediaCollection($setting_name);
-            // $message = $setting->processImage($request->file($image_name), 'settings');
-            // $url = $setting->getFullImageUrlAttribute();
 
-            $setting->value = url($setting->getFirstMediaUrl($setting_name) ?: '/img/default.png');
+            $image = $setting->getFirstMedia($setting_name);
 
-            $setting->save();
+            $setting->update([
+                'value' => url($image?->getUrl() ?: '/img/default.png'),
+            ]);
+
+            foreach (['thumb', 'medium', 'large'] as $conversion) {
+                if ($image->hasGeneratedConversion($conversion)) {
+                    Setting::updateOrCreate(
+                        ['name' => "{$setting_name}_{$conversion}"],
+                        ['value' => $image->getUrl($conversion)]
+                    );
+                }
+            }
+
             $message = 'Settings image has been updated.';
         } else {
             $message = 'Cannot update settings image.';

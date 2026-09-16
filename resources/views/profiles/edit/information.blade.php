@@ -1,7 +1,48 @@
 <h1>Edit <a href="{{ action('ProfilesController@show', [$profile->slug]) }}">{{$profile->name}}</a>'s Contact Information</h1>
 <div class="row">
 	@foreach($data as $info)
-		<div class="col">
+		<div class="col col-md-4">
+			{!! Form::open(['url' => route('profiles.update-image', [$profile->slug]), 'method' => 'POST', 'files' => true]) !!}
+			<label for="file">Icon</label>
+			<img id="file-img" class="profile_photo" src="{{ $profile->imageUrl }}" />
+			<br />
+			<small class="form-text text-muted"> Image requirements <a role="button" tabindex="0" aria-label="image requirements information" data-toggle="popover" data-trigger="focus" data-popover-content="#img-rules"><i class="fas fa-question-circle"></i></a></small>
+			@include('profiles.edit._img_rules')
+			<br />
+			<div class="control-group">
+				<div class="controls">
+					{!! Form::file('image', ['id' => 'file', 'name' => 'image', 'required' => 'true', 'accept' => 'image/*', 'class' => 'd-none form-control']) !!}
+					<label for="file" class="btn btn-secondary btn-block"><i class="fas fa-plus"></i> Select Image</label>
+					{!! Form::inlineErrors('image') !!}
+				</div>
+			</div>
+			<button type="submit" class="btn btn-primary btn-block" data-toggle="replace-icon" data-newicon="fas fa-sync fa-spin" data-inputrequired="#file">
+				<i class="fas fa-upload"></i> Replace Image
+			</button>
+			{!! Form::close() !!}
+			<br>
+			<br>
+			{!! Form::open(['url' => route('profiles.update-banner', [$profile->slug]), 'method' => 'POST', 'files' => true]) !!}
+			<label for="banner">Banner</label>
+			<img id="banner-img" class="profile_photo" src="{{ $profile->banner_url }}" />
+			<br />
+				<small class="form-text text-muted"> Image requirements <a role="button" tabindex="0" aria-label="image requirements information" data-toggle="popover" data-trigger="focus" data-popover-content="#img-rules"><i class="fas fa-question-circle"></i></a></small>
+			<br />
+			<div class="control-group">
+				<div class="controls">
+					{!! Form::file('banner_image', ['id' => 'banner', 'name' => 'banner_image', 'required' => 'true', 'accept' => 'image/*', 'class' => 'd-none form-control']) !!}
+					<label for="banner" class="btn btn-secondary btn-block"><i class="fas fa-plus"></i> Select Image</label>
+					{!! Form::inlineErrors('banner_image') !!}
+				</div>
+			</div>
+			<button type="submit" class="btn btn-primary btn-block" data-toggle="replace-icon" data-newicon="fas fa-sync fa-spin" data-inputrequired="#banner">
+				<i class="fas fa-upload"></i> Replace Image
+			</button>
+			{!! Form::close() !!}
+			<br>
+			<br>
+		</div>
+		<div class="col col-md-8 col-12">
 			{!! Form::model($profile, ['route' => ['profiles.update', 'profile' => $profile, 'section' => 'information']]) !!}
 			<div class="form-group">
 				{!! Form::label('full_name', 'Display Name') !!}
@@ -238,6 +279,49 @@
 					<p class="text-muted">Make profile viewable and searchable by website visitors. If turned off, it will still be accessible to site administrators.</p>
 				</div>
 			</fieldset>
+			@can('updateAdvanced', $profile)
+			<fieldset class="form-group row my-3 py-4 border-bottom">
+				<div class="col col-12 col-xl-7">
+					<legend class="col-form-label font-weight-bold p-0 mb-3">Profile Type <span class="badge badge-secondary">Advanced Setting</span></legend>
+					<div class="form-group">
+						<div class="form-check mb-1">
+							<input
+								type="radio"
+								name="type"
+								id="type_default"
+								@checked(old('type', $profile->isDefault()))
+								value="0"
+							>
+							<label class="form-check-label" for="type_default">Default</label>
+						</div>
+						<div class="form-check mb-1">
+							<input
+								type="radio"
+								name="type"
+								id="type_unlisted"
+								@checked(old('type', $profile->isUnlisted()))
+								value="1"
+							>
+							<label class="form-check-label" for="type_unlisted">Unlisted</label>
+						</div>
+						<div class="form-check mb-1">
+							<input
+								type="radio"
+								name="type"
+								id="type_in_memoriam"
+								@checked(old('type', $profile->isInMemoriam()))
+								value="2"
+							>
+							<label class="form-check-label" for="type_in_memoriam">In Memoriam</label>
+						</div>
+					</div>
+				</div>
+				<div class="col col-12 col-xl-5">
+					<p class="text-muted"><em>Unlisted</em> profiles do not appear in school, tag, or browse lists, but can still be searched and viewed (if public) by their URL.</p>
+					<p class="text-muted"><em>In Memoriam</em> profiles behave the same as unlisted but show an additional "In Memory of" label on the profile</p>
+				</div>
+			</fieldset>
+			@endcan
 			{!! Form::submit('Save', array('class' => 'btn btn-primary edit-button')) !!}
 			<a href="{{ $profile->url }}" class='btn btn-light edit-button'>Cancel</a>
 			{!! Form::close() !!}

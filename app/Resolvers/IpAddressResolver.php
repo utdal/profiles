@@ -11,10 +11,12 @@ class IpAddressResolver implements Resolver
     /**
      * {@inheritdoc}
      * 
-     * @return string|array|null
+     * @return string
      */
     public static function resolve(Auditable $auditable)
     {
-        return Request::header('HTTP_X_FORWARDED_FOR', Request::ip());
+        $ip = Request::header('HTTP_X_FORWARDED_FOR', Request::ip());
+
+        return is_string($ip) ? $ip : '';
     }
 }

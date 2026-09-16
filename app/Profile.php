@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Enums\ProfileType;
 use App\ProfileData;
 use App\ProfileStudent;
 use App\Student;
@@ -9,19 +10,23 @@ use App\User;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Auditable as HasAudits;
 use OwenIt\Auditing\Contracts\Auditable;
-use Spatie\Image\Manipulations;
+use Spatie\Image\Enums\CropPosition;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Tags\HasTags;
 use GuzzleHttp\Client;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
 /**
+ * @mixin Builder
+ * @mixin QueryBuilder
  * @method public()
  * @method private()
  * @method withApiData(array|string|null $sections)
@@ -37,6 +42,7 @@ class Profile extends Model implements HasMedia, Auditable
 {
     use HasAudits;
     use HasFactory;
+    /** @use InteractsWithMedia<Media> */
     use InteractsWithMedia;
     use HasTags;
     use SoftDeletes;
@@ -53,28 +59,30 @@ class Profile extends Model implements HasMedia, Auditable
     ];
 
     /**
-        * The attributes that should be cast to native types.
-        *
-        * @var array
-        */
-       protected $casts = [
-           'public' => 'boolean',
-       ];
+    * The attributes that should be cast to native types.
+    *
+    * @var array
+    */
+    protected $casts = [
+        'public' => 'boolean',
+        'type' => ProfileType::class,
+    ];
 
     /**
     * The attributes that are mass assignable.
     *
     * @var array
     */
-   protected $fillable = [
-          'slug',
-          'full_name',
-          'first_name',
-          'middle_name',
-          'last_name',
-          'active',
-          'public'
-      ];
+    protected $fillable = [
+        'slug',
+        'full_name',
+        'first_name',
+        'middle_name',
+        'last_name',
+        'active',
+        'public',
+        'type',
+    ];
 
 
     /////////////////////
@@ -304,10 +312,16 @@ class Profile extends Model implements HasMedia, Auditable
 
       }
 
-        // update overall profile visibility
-        if ($section == 'information' && $request->hasAny(['public', 'full_name'])) {
+        // update overall profile record
+        if ($section == 'information' && $request->hasAny(['public', 'type', 'full_name'])) {
             $this->update([
                 'public' => $request->input('public') ?? $this->public,
+                'type' => match ($request->input('type')) {
+                    '0' => ProfileType::Default,
+                    '1' => ProfileType::Unlisted,
+                    '2' => ProfileType::InMemoriam,
+                    default => $this->type,
+                },
                 'full_name' => $request->input('full_name') ?? $this->full_name,
             ]);
         }
@@ -355,23 +369,23 @@ class Profile extends Model implements HasMedia, Auditable
      *
      * @param  Media|null $media
      */
-    public function registerMediaConversions(Media $media = null): void
+    public function registerMediaConversions(?Media $media = null): void
     {
-        $this->registerImageThumbnails($media, 'thumb', 150);
-        $this->registerImageThumbnails($media, 'medium', 450);
-        $this->registerImageThumbnails($media, 'large', 1800, 1200, '*');
+        $this->registerImageThumbnails('thumb', 150);
+        $this->registerImageThumbnails('medium', 450);
+        $this->registerImageThumbnails('large', 1800, 1200, '*');
     }
 
     /**
      * Registers image thumbnails.
      *
-     * @param  Media|null $media
      * @param  string     $name       Name of the thumbnail
-     * @param  int        $size       Max dimension in pixels
+     * @param  int        $width      Max width dimension in pixels
+     * @param  int        $height     Max height dimension in pixels
      * @param  string     $collection Name of the collection for the thumbnails
      * @return void
      */
-    protected function registerImageThumbnails(Media $media = null, $name, $width, $height = null, $collection = 'images'): void
+    protected function registerImageThumbnails(string $name, int $width, ?int $height = null, $collection = 'images'): void
     {
         if(!$height) {
             $height = $width;
@@ -380,8 +394,28 @@ class Profile extends Model implements HasMedia, Auditable
         $this->addMediaConversion($name)
             ->width($width)
             ->height($height)
-            ->crop(Manipulations::CROP_TOP, $width, $height)
+            ->crop($width, $height, CropPosition::Top)
             ->performOnCollections($collection);
+    }
+
+    public function isType(ProfileType $type): bool
+    {
+        return $this->type === $type;
+    }
+
+    public function isDefault(): bool
+    {
+        return $this->isType(ProfileType::Default);
+    }
+
+    public function isUnlisted(): bool
+    {
+        return $this->isType(ProfileType::Unlisted);
+    }
+
+    public function isInMemoriam(): bool
+    {
+        return $this->isType(ProfileType::InMemoriam);
     }
 
     //////////////////
@@ -408,6 +442,55 @@ class Profile extends Model implements HasMedia, Auditable
     public function scopePrivate($query)
     {
         return $query->where('public', 0);
+    }
+
+    /**
+     * Query scope for Profiles of a particular type
+     */
+    public function scopeOfType(Builder $query, ProfileType $type): void
+    {
+        $query->where('type', $type->value);
+    }
+
+    /**
+     * Query scope for Profiles excluding a particular type
+     */
+    public function scopeExcludingType(Builder $query, ProfileType $type): void
+    {
+        $query->whereNot('type', $type->value);
+    }
+
+    /**
+     * Query scope for Profiles of default/normal type
+     */
+    public function scopeDefault(Builder $query): void
+    {
+        $query->ofType(ProfileType::Default);
+    }
+
+    /**
+     * Query scope for unlisted Profiles
+     */
+    public function scopeUnlisted(Builder $query): void
+    {
+        $query->ofType(ProfileType::Unlisted);
+    }
+
+    /**
+     * Query scope for unlisted Profiles
+     */
+    public function scopeInMemoriam(Builder $query): void
+    {
+        $query->ofType(ProfileType::InMemoriam);
+    }
+
+    /**
+     * Query scope for excluding unlisted Profiles
+     */
+    public function scopeExcludingUnlisted(Builder $query): void
+    {
+        $query->excludingType(ProfileType::Unlisted);
+        $query->excludingType(ProfileType::InMemoriam);
     }
 
     /**
@@ -523,6 +606,24 @@ class Profile extends Model implements HasMedia, Auditable
             $query_students->WithStatusPendingReview();
         });
     }
+    /**
+     * Query scope for Profiles that are accepting undergrad students,
+     * i.e. not marked as "Not accepting undergrad students" nor "Not accepting students".
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeAcceptingUndergradStudents($query) {
+        return $query
+            ->whereDoesntHave("information", function ($q) {
+                $q->whereJsonContains("data->not_accepting_students", "1");
+            })
+            ->whereDoesntHave("information", function ($q) {
+                $q->whereJsonContains("data->show_not_accepting_students", "1")
+                  ->whereJsonContains("data->not_accepting_students", "0")
+                  ->whereJsonContains("data->not_accepting_grad_students", "0");
+            });
+    }
 
     ///////////////////////////////////
     // Mutators & Virtual Attributes //
@@ -542,7 +643,7 @@ class Profile extends Model implements HasMedia, Auditable
     /**
      * Get the full image URL. ($this->full_image_url)
      *
-     * @return string
+     * @return UrlGenerator|string
      */
     public function getFullImageUrlAttribute()
     {
@@ -552,7 +653,7 @@ class Profile extends Model implements HasMedia, Auditable
     /**
      * Get the full image URL. ($this->large_image_url)
      *
-     * @return string
+     * @return UrlGenerator|string
      */
     public function getLargeImageUrlAttribute()
     {
@@ -562,7 +663,7 @@ class Profile extends Model implements HasMedia, Auditable
     /**
      * Get the image URL. ($this->image_url)
      *
-     * @return string
+     * @return UrlGenerator|string
      */
     public function getImageUrlAttribute()
     {
@@ -572,7 +673,7 @@ class Profile extends Model implements HasMedia, Auditable
     /**
      * Get the image thumbnail URL. ($this->image_thumb_url)
      *
-     * @return string
+     * @return UrlGenerator|string
      */
     public function getImageThumbUrlAttribute()
     {
@@ -582,7 +683,7 @@ class Profile extends Model implements HasMedia, Auditable
     /**
      * Get the banner image thumbnail. ($this->banner_url)
      *
-     * @return string
+     * @return UrlGenerator|string
      */
     public function getBannerUrlAttribute()
     {

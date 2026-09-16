@@ -22,6 +22,9 @@ class AllowedProfileDataType implements InvokableRule
         if (is_string($value)) {
             $value = explode(';', $value);
         }
+        else {
+            $fail('The :attribute must be a string.');
+        }
 
         foreach ($value as $data_type) {
             if (!in_array($data_type, $allowed_data_types)) {

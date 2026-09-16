@@ -1,0 +1,12 @@
+services:
+  web.profiles:
+    # don't bind mount host volume
+    volumes: !reset []
+    # networks: !override
+    #   - profiles
+
+  php.profiles:
+    # don't bind mount host volume
+    volumes: !reset []
+    # networks: !override
+    #   - profiles
