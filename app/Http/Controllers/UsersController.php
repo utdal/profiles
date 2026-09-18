@@ -9,12 +9,12 @@ use App\Role;
 use App\School;
 use App\Student;
 use App\User;
-use Illuminate\Contracts\View\View as ViewContract;
+use Illuminate\Contracts\View\Factory as ViewFactory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\View\View;
 
 class UsersController extends Controller
 {
@@ -58,7 +58,7 @@ class UsersController extends Controller
     /**
      * Display a listing of Users.
      */
-    public function index(): View|ViewContract
+    public function index(): View|ViewFactory
     {
         return view('users.index');
     }
@@ -66,7 +66,7 @@ class UsersController extends Controller
     /**
      * Show the specified User's info.
      */
-    public function show(User $user): View|ViewContract
+    public function show(User $user): View|ViewFactory
     {
         return view('users.show', [
             'user' => $user,
@@ -79,7 +79,7 @@ class UsersController extends Controller
     /**
      * Show the specified User's bookmarks.
      */
-    public function showBookmarks(User $user): View|ViewContract
+    public function showBookmarks(User $user): View|ViewFactory
     {
         return view('users.bookmarks', [
             'user' => $user,
@@ -91,7 +91,7 @@ class UsersController extends Controller
     /**
      * Show the view to add a new user
      */
-    public function create(): View|ViewContract
+    public function create(): View|ViewFactory
     {
         return view('users.create');
     }
@@ -118,7 +118,7 @@ class UsersController extends Controller
     /**
      * Show the view to edit the specified User
      */
-    public function edit(User $user): View|ViewContract
+    public function edit(User $user): View|ViewFactory
     {
         $roles = Role::all();
         $school_editor_role = $roles->firstWhere('name', 'school_profiles_editor');
@@ -160,7 +160,7 @@ class UsersController extends Controller
     /**
      * Confirm deletion of the specified user
      */
-    public function confirmDelete(User $user): View|ViewContract|RedirectResponse
+    public function confirmDelete(User $user): View|ViewFactory|RedirectResponse
     {
         /** @var User */
         $logged_in_user = Auth::user();

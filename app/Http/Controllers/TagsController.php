@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Contracts\View\View as ViewContract;
+use Illuminate\Contracts\View\Factory as ViewFactory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\View\View;
 use Spatie\Tags\Tag;
 use App\Http\Requests\TagsUpdateRequest;
 use App\Http\Requests\TagUpdateRequest;
@@ -39,7 +39,7 @@ class TagsController extends Controller
     /**
      * Show the index of all associated tags.
      */
-    public function index(): View|ViewContract
+    public function index(): View|ViewFactory
     {
         $tags = Tag::whereExists(function($query) {
             $query->select(\DB::raw(1))->from('taggables')->whereRaw('tags.id = taggables.tag_id');
@@ -57,7 +57,7 @@ class TagsController extends Controller
     /**
      * Show the index table of all associated tags.
      */
-    public function table(): View|ViewContract
+    public function table(): View|ViewFactory
     {
         return view('tags.table');
     }
@@ -65,7 +65,7 @@ class TagsController extends Controller
     /**
      * Show the index table of all associated tags.
      */
-    public function create(): View|ViewContract
+    public function create(): View|ViewFactory
     {
         return view('tags.create');
     }

@@ -187,6 +187,12 @@ var profiles = (function ($, undefined) {
             new_item.querySelectorAll('input[type="file"][accept^="image"]')?.forEach((el) => {
                 $(el).on('change', (event) => preview_selected_image(event));
             });
+            new_item.querySelectorAll('[data-toggle="popover"]')?.forEach((el) => {
+                $(el).popover({
+                    html: true,
+                    content: () => document.querySelector(el.dataset.popoverContent)?.innerHTML ?? '',
+                });
+            });
             new_item.querySelectorAll('.datepicker.year')?.forEach((el) => {
                 $(el).datepicker(config.datepicker.year);
             });

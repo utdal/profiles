@@ -3,6 +3,7 @@
 /public/storage
 /storage/*.key
 /storage/medialibrary
+/storage/media-library
 /vendor
 /.idea
 /.vagrant
