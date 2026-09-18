@@ -1,12 +1,14 @@
-<section id="affiliations" class="card">
-    <h3><i class="fas fa-users" aria-hidden="true"></i> Affiliations @if($editable)<a class="btn btn-primary btn-sm" href="{{ route('profiles.edit', [$profile->slug, 'affiliations']) }}" aria-label="Edit Affiliations"><i class="fas fa-edit"></i> Edit</a>@endif</h3>
-    @foreach($data as $affiliation)
-        <div class="entry">
-            <h5>{{$affiliation->title}}</h5>
-            @if($affiliation->start_date)<strong>{{$affiliation->start_date}}@if($affiliation->end_date)&ndash;{{$affiliation->end_date}}@endif</strong><br>@endif
-            {!! Purify::clean($affiliation->description) !!}
-        </div>
-    @endforeach
+<section id="affiliations" class="card" aria-labelledby="affiliations-heading">
+    <h2 id="affiliations-heading"><i class="fas fa-users" aria-hidden="true"></i> Affiliations @if($editable)<a class="btn btn-primary btn-sm" href="{{ route('profiles.edit', [$profile->slug, 'affiliations']) }}" aria-label="Edit Affiliations"><i class="fas fa-edit"></i> Edit</a>@endif</h2>
+    <ul class="list-unstyled">
+        @foreach($data as $affiliation)
+            <li class="entry">
+                <h3>{{$affiliation->title}}</h3>
+                @if($affiliation->start_date)<strong>{{$affiliation->start_date}}@if($affiliation->end_date)&ndash;{{$affiliation->end_date}}@endif</strong><br>@endif
+                <p>{!! Purify::clean($affiliation->description) !!}</p>
+            </li>
+        @endforeach
+    </ul>
     @if($paginated)
         {{ $data->links() }}
     @endif
