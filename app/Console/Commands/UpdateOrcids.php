@@ -40,18 +40,32 @@ class UpdateOrcids extends Command
      */
     public function handle()
     {
-        $inc = 0;
-        $profiles = Profile::whereHas('data', function ($query) {
-            $query->where('type', 'information')
-                ->where('data->orc_id_managed', '1')
-                ->whereNotNull('data->orc_id');
-        })->get();
+        $total_profiles_count = $total_orcid_works_count = $updated_total = $created_total = 0;
+        $exact_id_match_total = $contained_id_url_match_total = $exact_title_match_total = $contained_title_match_total = 0;
+        $no_url_count_total = $similar_title_count_total = 0;
 
-        $this->lineAndLog("Starting scheduled ORCiD data update for {$profiles->count()} profiles... ");
+        $profiles = Profile::whereHas('data', function ($query) {
+                        $query->where('type', 'information')
+                            ->where('data->orc_id_managed', '1')
+                            ->whereNotNull('data->orc_id');
+                    })->get();
+
+        $this->lineAndLog("Starting scheduled ORCiD data update for {$profiles->count()} profiles... \n");
 
         foreach ($profiles as $profile) {
-            if ($profile->updateORCID()) {
-                $inc++;
+            $results = $profile->updateORCID();
+
+            if ($results['completed']) {
+                $total_profiles_count++;
+                $total_orcid_works_count += $results['orcid_works_count'];
+                $created_total += $results['created'];
+                $updated_total += $results['updated'];
+                $exact_id_match_total += $results['exact_id_match'];
+                $contained_id_url_match_total += $results['contained_id_url_match'];
+                $exact_title_match_total += $results['exact_title_match'];
+                $contained_title_match_total += $results['contained_title_match'];
+                $no_url_count_total += $results['no_url_count'];
+                $similar_title_count_total += $results['similar_title_count'];
                 $this->lineAndLog("Updated ORCiD info for {$profile->full_name}");
             }
             else {
@@ -59,7 +73,15 @@ class UpdateOrcids extends Command
             }
         }
 
-        $this->lineAndLog("Completed: {$inc}/{$profiles->count()} profiles have been updated.");
+        $this->lineAndLog("Completed: {$total_profiles_count}/{$profiles->count()} profiles have been updated.");
+        $this->lineAndLog("TOTAL: {$updated_total} publications updated/{$total_orcid_works_count} orcid records found.");
+        $this->lineAndLog("TOTAL: {$created_total} new publications created.");
+        $this->lineAndLog("TOTAL: {$exact_id_match_total} publications found by exact ID.");
+        $this->lineAndLog("TOTAL: {$contained_id_url_match_total} publications found by id contained in URL.");
+        $this->lineAndLog("TOTAL: {$exact_title_match_total} publications found by exact title.");
+        $this->lineAndLog("TOTAL: {$contained_title_match_total} publications found by title contained in existing record.");
+        $this->lineAndLog("TOTAL: {$similar_title_count_total} similar publications have been found.");
+        $this->lineAndLog("TOTAL: {$no_url_count_total} publications without URL.");
 
         return Command::SUCCESS;
     }
