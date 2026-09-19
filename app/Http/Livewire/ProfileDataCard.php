@@ -5,23 +5,11 @@ namespace App\Http\Livewire;
 use App\Profile;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Enums\ProfileSectionType;
 
 class ProfileDataCard extends Component
 {
     use WithPagination;
-
-    const PER_PAGE_FOR_SECTION = [
-        'default' => 5,
-        'publications' => 8,
-        'appointments' => 10,
-        'awards' => 10,
-        'news' => 5,
-        'support' => 5,
-        'presentations' => 5,
-        'projects' => 5,
-        'additionals' => 3,
-        'affiliations' => 10
-    ];
 
     protected $paginationTheme = 'bootstrap';
     public $profile;
@@ -40,9 +28,25 @@ class ProfileDataCard extends Component
         $this->public_filtered = $public_filtered;
     }
 
+    public function updatingDataType()
+    {
+        $this->validateOnly('data_type', [
+            'data_type' => 'required|in:' . implode(',', ProfileSectionType::values()),
+        ]);
+    }
+
     public function data()
     {
-        $data_query = $this->profile->{$this->data_type}();
+        $section = ProfileSectionType::tryFrom($this->data_type);
+
+        if (!$section) {
+            $this->addError('data_type', 'Invalid section.');
+            $this->emit('alert', 'Invalid section.', 'danger');
+
+            return null;
+        }
+
+        $data_query = $this->profile->{$section->value}();
 
         if ($this->public_filtered) {
             $data_query = $data_query->public();
@@ -50,7 +54,7 @@ class ProfileDataCard extends Component
 
         if ($this->paginated) {
             return $data_query->paginate(
-                $this::PER_PAGE_FOR_SECTION[$this->data_type] ?? $this::PER_PAGE_FOR_SECTION['default'],
+                $section->perPage(),
                 ['*'],
                 $this->data_type
             );
@@ -63,7 +67,7 @@ class ProfileDataCard extends Component
     {
         $data = $this->data();
 
-        if ($data->isEmpty() && !$this->editable) {
+        if ($data === null || ($data->isEmpty() && !$this->editable)) {
             return '';
         }
 
