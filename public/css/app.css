@@ -10281,7 +10281,25 @@ div.content.showContent {
   display: none;
 }
 
-/* The slider */
+/* Base container */
+.switch {
+  /* Default (original) values */
+  --switch-size: 26px;
+  --switch-gap: 4px;
+  --switch-translation: 26px;
+  position: relative;
+  display: inline-block;
+  width: calc(var(--switch-size) * 2 + var(--switch-gap) * 2);
+  height: calc(var(--switch-size) + var(--switch-gap) * 2);
+}
+
+/* SMALL VERSION OVERRIDE */
+.switch.small-switch {
+  --switch-size: 12px; /* Smaller knob */
+  --switch-gap: 3px; /* Tighter padding */
+  --switch-translation: 12px; /* Smaller slide distance */
+}
+
 .slider {
   position: absolute;
   cursor: pointer;
@@ -10296,10 +10314,10 @@ div.content.showContent {
 .slider:before {
   position: absolute;
   content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
+  height: var(--switch-size);
+  width: var(--switch-size);
+  left: var(--switch-gap);
+  bottom: var(--switch-gap);
   background-color: white;
   transition: 0.4s;
 }
@@ -10313,7 +10331,8 @@ input:focus + .slider {
 }
 
 input:checked + .slider:before {
-  transform: translateX(26px);
+  /* Automatically uses the correct distance based on the class */
+  transform: translateX(var(--switch-translation));
 }
 
 /* Rounded sliders */

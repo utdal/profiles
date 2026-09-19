@@ -112,6 +112,7 @@ class Student extends Model implements Auditable
                         $accepted_key => [
                             'profile' => $profile->id,
                             'profile_name' => $profile->full_name,
+                            'visible' => '1',
                         ],
                     ],
                     'accepted_on' => now()->toDateTimeString(),
