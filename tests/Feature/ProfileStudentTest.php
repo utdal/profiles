@@ -64,4 +64,54 @@ class ProfileStudentTest extends TestCase
             ->assertViewIs('students.profile-students')
             ->assertSee($student->full_name);
     }
+    
+    /**
+     * Test Profile (non-faculty) specific view of students
+     *
+     * @return void
+     */
+    public function testNonFcultyProfileStudentView(): void
+    {
+        $associated_profile = Profile::factory()
+            ->hasData()
+            ->create();
+
+        $non_associated_profile= Profile::factory()
+            ->hasData()
+            ->create();
+
+        $student = Student::factory()
+            ->submitted()
+            ->has(StudentData::factory(), 'research_profile')
+            ->hasAttached($associated_profile, [], 'faculty')
+            ->create();
+
+        $profile_student_route = route('profiles.students', ['profile' => $non_associated_profile]);
+        $show_route = route('students.show', ['student' => $student]);
+
+        $this->loginAsUserWithRole('staff', $non_associated_profile->user);
+        $this->get($show_route)
+            ->assertStatus(403);
+
+        $this->loginAsUserWithRole('faculty', $non_associated_profile->user);
+        $this->get($profile_student_route)
+            ->assertStatus(200)
+            ->assertViewIs('students.profile-students')
+            ->assertDontSee($student->full_name);
+
+        $this->get($show_route)
+            ->assertStatus(200);
+        
+        $profile_student_route = route('profiles.students', ['profile' => $associated_profile]);
+        
+        $this->loginAsUserWithRole('staff', $associated_profile->user);
+        $this->get($profile_student_route)
+            ->assertStatus(200)
+            ->assertViewIs('students.profile-students')
+            ->assertSee($student->full_name);
+        
+            $this->get($show_route)
+            ->assertStatus(200)
+            ->assertSee($student->full_name);
+    }
 }
