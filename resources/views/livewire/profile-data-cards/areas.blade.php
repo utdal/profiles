@@ -14,7 +14,7 @@
                 @else
                     <h3>{{$area->title}}</h3>
                 @endif
-                <p>{!! Purify::clean($area->description) !!}</p>
+                <div>{!! Purify::clean($area->description) !!}</div>
             </li>
         @endforeach
     </ul>

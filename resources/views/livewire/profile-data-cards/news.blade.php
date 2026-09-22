@@ -18,7 +18,7 @@
                     @if($article->image)
                         <img src="{{ $article->imageUrl }}" class="news_image" alt="{{ $article->image_alt ?? $article->title }}"/>
                     @endif
-                    <p>{!! Purify::clean($article->description) !!}</p>
+                    <div>{!! Purify::clean($article->description) !!}</div>
                 </article>
             </li>
         @endforeach

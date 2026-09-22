@@ -3,14 +3,14 @@
     <ul class="list-unstyled">
         @foreach($data as $appt)
             <li class="entry">
-                <p>
+                <div>
                     <strong>{{$appt->appointment}}</strong>
                     <br>
                     <em>{{$appt->organization}}</em> [{{$appt->start_date}}@if($appt->end_date)&ndash;{{$appt->end_date}}@else<span>&ndash;Present</span>@endif]<br />
                     @if($appt->description)
                         {!! Purify::clean($appt->description) !!}
                     @endif
-                </p>
+                </div>
             </li>
         @endforeach
     </ul>

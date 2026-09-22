@@ -5,7 +5,7 @@
             <li class="entry">
                 <h3>{{$affiliation->title}}</h3>
                 @if($affiliation->start_date)<strong>{{$affiliation->start_date}}@if($affiliation->end_date)&ndash;{{$affiliation->end_date}}@endif</strong><br>@endif
-                <p>{!! Purify::clean($affiliation->description) !!}</p>
+                <div>{!! Purify::clean($affiliation->description) !!}</div>
             </li>
         @endforeach
     </ul>
