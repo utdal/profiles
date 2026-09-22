@@ -9624,6 +9624,9 @@ h3, h4, h5, h6 {
 .has-external-link-icon:hover {
   text-decoration: none;
 }
+.has-external-link-icon:hover span {
+  text-decoration: none;
+}
 .has-external-link-icon span {
   text-decoration: underline;
 }

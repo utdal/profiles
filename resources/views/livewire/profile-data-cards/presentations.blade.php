@@ -7,7 +7,7 @@
                     @if($presentation->url)
                     <h3>
                         <a href="{{$presentation->url}}" target="_blank" class="has-external-link-icon">
-                            <span class="has-external-link-icon">{{$presentation->title}}</span>
+                            <span>{{$presentation->title}}</span>
                             <i class="fas fa-external-link-alt" aria-hidden="true"></i>
                             <span class="sr-only"> (opens in a new tab)</span>
                         </a>
@@ -15,13 +15,7 @@
                     @else
                         <h3>{{$presentation->title}}</h3>
                     @endif
-                    @if($presentation->start_date)
-                        <strong>{{$presentation->start_date}}
-                            @if($presentation->end_date)
-                                &ndash;{{$presentation->end_date}}
-                            @endif
-                        </strong>
-                    @endif
+                    @if($presentation->start_date)<strong>{{$presentation->start_date}}@if($presentation->end_date)&ndash;{{$presentation->end_date}}@endif</strong>@endif
                     @if($presentation->description)
                         <em>{!! Purify::clean($presentation->description) !!}</em>
                     @endif

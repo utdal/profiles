@@ -6,7 +6,7 @@
                 @if($area->url)
                     <h3>
                         <a href="{{$area->url}}" target="_blank" class="has-external-link-icon">
-                            <span class="has-external-link-icon">{{$area->title}}</span>
+                            <span>{{$area->title}}</span>
                             <i class="fas fa-external-link-alt" aria-hidden="true"></i>
                             <span class="sr-only"> (opens in a new tab)</span>
                         </a>

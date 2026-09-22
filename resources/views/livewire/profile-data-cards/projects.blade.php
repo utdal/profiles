@@ -7,7 +7,7 @@
                     @if($project->url)
                         <h3>
                             <a href="{{$project->url}}" target="_blank" class="has-external-link-icon">
-                                <span class="has-external-link-icon">{{$project->title}}</span>
+                                <span>{{$project->title}}</span>
                                 <i class="fas fa-external-link-alt" aria-hidden="true"></i>
                                 <span class="sr-only"> (opens in a new tab)</span>
                             </a>

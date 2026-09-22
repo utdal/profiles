@@ -7,8 +7,8 @@
                     <h3>
                         <a target="_blank" href="{{$additional->url}}" class="has-external-link-icon">
                             <i class="far fa-sticky-note" aria-hidden="true"></i>
-                            <i class="fas fa-external-link-alt"></i>
                             <span>{{ $additional->title }}</span>
+                            <i class="fas fa-external-link-alt" aria-hidden="true"></i>
                             <span class="sr-only"> (opens in a new tab)</span>
                         </a>
                     </h3>
