@@ -1,6 +1,5 @@
 <div>
-    <form wire:submit.prevent="save" enctype="multipart/form-data" method="GET">
-        @csrf
+    <form wire:submit.prevent="save" enctype="multipart/form-data">
         <div class="d-flex align-items-center justify-content-center">
             @if ($errors->any())
                 <div class="alert alert-danger" role="alert">
@@ -21,7 +20,7 @@
 
             <div class="m-3 col-5">
                 <label for="image-{{$custom_key}}" class="btn btn-secondary btn-block"><i class="fas fa-plus"></i> Select Image</label>
-                <input type="file" wire:model="image" name="image-{{$custom_key}}" id="image-{{$custom_key}}" accept = "image/*" style="display: none;">
+                <input type="file" wire:model="image" id="image-{{$custom_key}}" accept = "image/*" style="display: none;">
                 <small class="text-muted">{{ $custom_msg }}</small>
             </div>
         </div>
@@ -34,8 +33,9 @@
             <div class="row justify-content-center">
                 <button type="button" class="btn btn-secondary mr-3 col-3" data-dismiss="modal" aria-label="Close">Cancel</button>
 
-                <button type="submit" class="btn btn-primary ml-3 col-3" data-toggle="replace-icon" data-newicon="fas fa-sync fa-spin">
-                    <i class="fas fa-upload"></i> Save
+                <button type="submit" class="btn btn-primary ml-3 col-3" wire:target="save" wire:loading.attr="disabled">
+                    <span wire:target="save" wire:loading.remove><i class="fas fa-upload"></i></span>
+                    <span wire:target="save" wire:loading><i class="fas fa-sync fa-spin"></i></span> Save
                 </button>
             </div>
         </div>

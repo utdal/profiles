@@ -316,6 +316,9 @@ var profiles = function ($, undefined) {
     // this shouldn't be needed, but for some reason Chrome occasionally fails
     // to propogate when a submit button is clicked.
     if (this.getAttribute('type') === 'submit') {
+      if ($(this).closest('form[wire\\:submit], form[wire\\:submit\\.prevent]').length) {
+        return;
+      }
       $(this).closest('form').submit();
     }
   };

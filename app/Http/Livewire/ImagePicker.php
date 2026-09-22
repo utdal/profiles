@@ -43,7 +43,7 @@ class ImagePicker extends Component
     
     /**
      * Model instance that has an image is associated
-     * @var \Illuminate\Database\Eloquent\Model
+     * @var Model
      */ 
     public $model;
     
@@ -118,10 +118,9 @@ class ImagePicker extends Component
     public function updatedImage()
     {
         if ($this->image) {
-            $this->validate(
-                ['image' => "nullable|{$this->uploadedImageRules()}"],
-            );
-            
+            $this->validate([
+                'image' => array_merge(['nullable'], $this->uploadedImageRules()),
+            ]);
             $this->save_params[$this->image_param_name] = $this->image;
         }
     }

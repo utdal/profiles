@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Livewire;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 use App\Http\Livewire\ImagePicker;
 use App\Profile;
@@ -11,7 +12,7 @@ use Tests\Feature\Traits\LoginWithRole;
 
 class ImagePickerTest extends TestCase
 {
-    use LoginWithRole, HasUploadedImage;
+    use LoginWithRole, HasUploadedImage, RefreshDatabase;
     
     /** @test */
     public function can_preview_image()
