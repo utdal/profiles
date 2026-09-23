@@ -194,7 +194,7 @@ var profiles = function ($, undefined) {
     var item_template = document.querySelector((_options$template = options.template) !== null && _options$template !== void 0 ? _options$template : 'form .record');
     var item_container = (_document$querySelect = document.querySelector(options.insertInto)) !== null && _document$querySelect !== void 0 ? _document$querySelect : item_template.parentElement;
     if (item_template) {
-      var _new_item$querySelect, _new_item$querySelect2, _new_item$querySelect3, _new_item$querySelect4, _new_item$querySelect5, _new_item$querySelect6, _new_item$querySelect7, _new_item$querySelect8, _new_item$querySelect9, _new_item$querySelect0;
+      var _new_item$querySelect, _new_item$querySelect2, _new_item$querySelect3, _new_item$querySelect4, _new_item$querySelect5, _new_item$querySelect6, _new_item$querySelect7, _new_item$querySelect8, _new_item$querySelect9, _new_item$querySelect0, _new_item$querySelect1;
       var old_id = item_template.dataset.rowId;
       var new_id;
       if (Number(item_container.dataset.nextRowId) >= 0) {
@@ -239,10 +239,19 @@ var profiles = function ($, undefined) {
           return preview_selected_image(event);
         });
       });
-      (_new_item$querySelect9 = new_item.querySelectorAll('.datepicker.year')) === null || _new_item$querySelect9 === void 0 || _new_item$querySelect9.forEach(function (el) {
+      (_new_item$querySelect9 = new_item.querySelectorAll('[data-toggle="popover"]')) === null || _new_item$querySelect9 === void 0 || _new_item$querySelect9.forEach(function (el) {
+        $(el).popover({
+          html: true,
+          content: function content() {
+            var _document$querySelect2, _document$querySelect3;
+            return (_document$querySelect2 = (_document$querySelect3 = document.querySelector(el.dataset.popoverContent)) === null || _document$querySelect3 === void 0 ? void 0 : _document$querySelect3.innerHTML) !== null && _document$querySelect2 !== void 0 ? _document$querySelect2 : '';
+          }
+        });
+      });
+      (_new_item$querySelect0 = new_item.querySelectorAll('.datepicker.year')) === null || _new_item$querySelect0 === void 0 || _new_item$querySelect0.forEach(function (el) {
         $(el).datepicker(config.datepicker.year);
       });
-      (_new_item$querySelect0 = new_item.querySelectorAll('.datepicker.month')) === null || _new_item$querySelect0 === void 0 || _new_item$querySelect0.forEach(function (el) {
+      (_new_item$querySelect1 = new_item.querySelectorAll('.datepicker.month')) === null || _new_item$querySelect1 === void 0 || _new_item$querySelect1.forEach(function (el) {
         $(el).datepicker(config.datepicker.month);
       });
       $(new_item).hide();
@@ -705,9 +714,9 @@ $(function () {
 // Trix editor settings
 if ((typeof Trix === "undefined" ? "undefined" : _typeof(Trix)) === 'object') {
   document.addEventListener('trix-initialize', function (e) {
-    var _document$querySelect2, _document$querySelect3;
-    (_document$querySelect2 = document.querySelector('trix-toolbar .trix-button-group--history-tools')) === null || _document$querySelect2 === void 0 || _document$querySelect2.remove();
-    (_document$querySelect3 = document.querySelector('trix-toolbar .trix-button-group--file-tools')) === null || _document$querySelect3 === void 0 || _document$querySelect3.remove();
+    var _document$querySelect4, _document$querySelect5;
+    (_document$querySelect4 = document.querySelector('trix-toolbar .trix-button-group--history-tools')) === null || _document$querySelect4 === void 0 || _document$querySelect4.remove();
+    (_document$querySelect5 = document.querySelector('trix-toolbar .trix-button-group--file-tools')) === null || _document$querySelect5 === void 0 || _document$querySelect5.remove();
   });
   document.addEventListener('trix-file-accept', function (e) {
     e.preventDefault();

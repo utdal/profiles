@@ -2,14 +2,21 @@
 
 namespace App\Http\Requests\Concerns;
 
+use App\Rules\FilenameLengthRule;
+
 trait HasImageUploads
 {
-    public function uploadedImageRules(): string
+    public function uploadedImageRules(): array
     {
         $max_filesize = $this->maxFilesize() * 1000;
         $allowed_mimes = implode(',', $this->supportedMimes());
 
-        return "mimes:$allowed_mimes|min:1|max:$max_filesize";
+        return [
+            "mimes:{$allowed_mimes}",
+            "min:1",
+            "max:{$max_filesize}",
+            new FilenameLengthRule(maxLength: $this->maxFilenameLength()),
+        ];
     }
 
     public function uploadedImageMessages(string $rule): string
@@ -29,6 +36,11 @@ trait HasImageUploads
     public function maxFilesize()
     {
         return config('media-library.max_file_size') / (1024 * 1024);
+    }
+
+    public function maxFilenameLength(): int
+    {
+        return config('media-library.max_filename_length', 200);
     }
 
     /**
@@ -81,6 +93,11 @@ trait HasImageUploads
 
         // default: GD driver
         return $mimes;
+    }
+
+    public function supportedMimeString(): string
+    {
+        return implode(', ', $this->supportedMimes());
     }
 
 }

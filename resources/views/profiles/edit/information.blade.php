@@ -6,6 +6,8 @@
 			<label for="file">Icon</label>
 			<img id="file-img" class="profile_photo" src="{{ $profile->imageUrl }}" />
 			<br />
+			<small class="form-text text-muted"> Image requirements <a role="button" tabindex="0" aria-label="image requirements information" data-toggle="popover" data-trigger="focus" data-popover-content="#img-rules"><i class="fas fa-question-circle"></i></a></small>
+			@include('profiles.edit._img_rules')
 			<br />
 			<div class="control-group">
 				<div class="controls">
@@ -24,6 +26,7 @@
 			<label for="banner">Banner</label>
 			<img id="banner-img" class="profile_photo" src="{{ $profile->banner_url }}" />
 			<br />
+				<small class="form-text text-muted"> Image requirements <a role="button" tabindex="0" aria-label="image requirements information" data-toggle="popover" data-trigger="focus" data-popover-content="#img-rules"><i class="fas fa-question-circle"></i></a></small>
 			<br />
 			<div class="control-group">
 				<div class="controls">
