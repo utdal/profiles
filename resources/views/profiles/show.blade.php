@@ -31,8 +31,8 @@
 @stop
 @section('content')
 <div class="profile">
-	<div class="profile-header fancy_header">
 	@if($information->fancy_header)
+	<div class="profile-header @if($information->fancy_header) fancy_header @endif">
         <img src="{{ $profile->banner_url }}" class="banner-img" alt="">
     @endif
 	
