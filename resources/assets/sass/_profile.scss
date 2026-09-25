@@ -47,26 +47,35 @@
 	}
 	
 	.fancy_header {
+		position: relative;
 		display: grid;
 		grid-template-areas: "stack";
+		align-items: center;
+		min-height: 60vh;
 		padding: 0;
 		background-color: transparent;
-		
+
 		.banner-img,
 		> .container {
 			grid-area: stack;
 		}
-		
+
 		.banner-img {
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
 			width: 100%;
 			height: 100%;
 			object-fit: cover;
 			object-position: center;
+		}
+			min-height: 0;
 
 			@media (max-width: map-get($grid-breakpoints, lg)) {
 				display: none;
 			}
-		}
 		
 		> .container {
 			position: relative;
