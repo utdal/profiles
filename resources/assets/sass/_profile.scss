@@ -71,12 +71,18 @@
 			object-fit: cover;
 			object-position: center;
 		}
+
+		@media (max-width: map-get($grid-breakpoints, lg)) {
+			display: block;
 			min-height: 0;
 
-			@media (max-width: map-get($grid-breakpoints, lg)) {
-				display: none;
+			.banner-img {
+				position: static;
+				height: auto;
+				max-height: 40vh;
 			}
-		
+		}
+
 		> .container {
 			position: relative;
 			display: flex;
@@ -88,6 +94,7 @@
 		.contact_info {
 			padding: 15px 45px 60px;
 			background: $light;
+			box-shadow: 2px 2px 1px 1px $gray-300;
 		}
 
 		.fancy_link_container {

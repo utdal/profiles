@@ -10650,12 +10650,15 @@ button.video-control .fa-play {
   -o-object-position: center;
      object-position: center;
 }
-.profile .fancy_header {
-  min-height: 0;
-}
 @media (max-width: 992px) {
   .profile .fancy_header {
-    display: none;
+    display: block;
+    min-height: 0;
+  }
+  .profile .fancy_header .banner-img {
+    position: static;
+    height: auto;
+    max-height: 40vh;
   }
 }
 .profile .fancy_header > .container {
@@ -10668,6 +10671,7 @@ button.video-control .fa-play {
 .profile .fancy_header .contact_info {
   padding: 15px 45px 60px;
   background: #f8f9fa;
+  box-shadow: 2px 2px 1px 1px #dee2e6;
 }
 .profile .fancy_header .fancy_link_container {
   position: absolute;
