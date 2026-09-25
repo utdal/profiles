@@ -31,8 +31,8 @@
 @stop
 @section('content')
 <div class="profile">
-	@if($information->fancy_header)
 	<div class="profile-header @if($information->fancy_header) fancy_header @endif">
+	@if($information->fancy_header && $profile->getFirstMedia('banners'))
         <img src="{{ $profile->banner_url }}" class="banner-img" alt="">
     @endif
 	
