@@ -27,9 +27,11 @@ services:
         APP_ENV: ${APP_ENV:-production}
     environment:
       - XDEBUG_MODE=${XDEBUG_MODE:-off}
+      - SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock
     image: ${IMAGE_NAME_PHP:-localdev/php.profiles:php-1.0}
     volumes:
       - ".:/var/www/html"
+      - /run/host-services/ssh-auth.sock:/run/host-services/ssh-auth.sock
     networks:
       - profiles
       - localdev-shared-services
