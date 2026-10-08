@@ -23,7 +23,7 @@ RUN apt-get update \
     libwebp-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
     && docker-php-ext-configure ldap --with-libdir=lib/$(arch)-linux-gnu/ \
-    && docker-php-ext-install opcache pdo pdo_mysql mysqli zip exif pcntl gd ldap \
+    && docker-php-ext-install -j$(nproc) opcache pdo pdo_mysql mysqli zip exif pcntl gd ldap \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -45,7 +45,7 @@ RUN apt-get update \
     libmagickcore-7.q16hdri-10-extra \
     # for HEIC support
     libheif-dev \
-    && pie install imagick/imagick --with-imagick=/usr \
+    && pie install -j$(nproc) imagick/imagick --with-imagick=/usr \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -81,10 +81,10 @@ RUN php -d allow_url_fopen=On /usr/local/bin/composer install
 FROM base_build AS local_build
 RUN cp "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 
-# Xdebug
+# Xdebug, Git, SSH client
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends --no-install-suggests libtool git \
-    && pie install xdebug/xdebug \
+    && apt-get install -y --no-install-recommends --no-install-suggests libtool git openssh-client \
+    && pie install -j$(nproc) xdebug/xdebug \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 COPY .docker/php/xdebug.ini $PHP_INI_DIR/conf.d/zzz-xdebug.ini

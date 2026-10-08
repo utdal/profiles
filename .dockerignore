@@ -20,6 +20,7 @@ vendor/
 # Environment secrets
 **/.env
 .env.testing
+.deployer
 deploy.php
 **/secrets.dev.yaml
 **/values.dev.yaml

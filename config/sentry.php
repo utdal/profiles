@@ -10,8 +10,12 @@ return [
     // @see: https://docs.sentry.io/platforms/php/guides/laravel/configuration/options/#logger
     // 'logger' => Sentry\Logger\DebugFileLogger::class, // By default this will log to `storage_path('logs/sentry.log')`
 
-    // capture release as git sha
-    'release' => trim(exec('git --git-dir ' . base_path('.git') . ' log --pretty="%h" -n1 HEAD')),
+    // capture release from either a REVISION file, a git hash, a SENTRY_RELEASE env variable, or a timestamp
+    'release' => file_exists(base_path('REVISION'))
+        ? trim(file_get_contents(base_path('REVISION')))
+        : (is_dir(base_path('.git')) && ($gitHash = @exec('git --git-dir ' . base_path('.git') . ' log --pretty="%H" -n1 HEAD'))
+            ? trim($gitHash)
+            : env('SENTRY_RELEASE', env('APP_ENV', 'production') . '-' . time())),
 
     // When left empty or `null` the Laravel environment will be used (usually discovered from `APP_ENV` in your `.env`)
     'environment' => env('SENTRY_ENVIRONMENT', env('APP_ENV', 'local')),

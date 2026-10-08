@@ -17,6 +17,9 @@ _ide_helper*
 **/.phpunit.result.cache
 **/.phpunit.cache
 **/capistrano.log
+.deployer
+deployer.phar
+dep
 deploy.php
 Homestead.json
 Homestead.yaml

@@ -66,6 +66,12 @@
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
+        ],
+        "setup-deployer": [
+            "curl -O https://deployer.org/releases/v8.0.5/deployer.phar",
+            "rm -rf .deployer && mkdir -p .deployer/stubs",
+            "php -r \"\\$p = new Phar('deployer.phar'); \\$p->extractTo('.deployer/stubs/', 'recipe/'); \\$p->extractTo('.deployer/stubs/', 'src/');\"",
+            "rm -f /usr/local/bin/dep && mv deployer.phar /usr/local/bin/dep && chmod +x /usr/local/bin/dep"
         ]
     },
     "config": {
