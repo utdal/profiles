@@ -37,7 +37,7 @@
 		</div>
 	</noscript>
 	@if (config('app.banner_message'))
-		<div class="alert alert-info mb-0" role="alert">
+		<div class="alert alert-warning mb-0" role="alert">
 			<div class="container">
 				{!! config('app.banner_message') !!}
 			</div>
