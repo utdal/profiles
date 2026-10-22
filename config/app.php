@@ -40,6 +40,9 @@ return [
     /** enable scheduled orcid data update */
     'enable_orcid_update' => env('ENABLE_ORCID_UPDATE', false),
 
+    /** read-only mode: disables login, search, and all changes */
+    'read_only' => env('APP_READ_ONLY', false),
+
     /** banner message */
     'banner_message' => env('APP_BANNER_MESSAGE', null),
 

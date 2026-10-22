@@ -33,6 +33,7 @@ Route::name('app.')->group(function () {
     Route::name('settings.update-image')->post('/settings/image/{image}', 'SettingsController@updateImage')
         ->where('image', '(logo|favicon|student_info_image)');
     Route::name('faq')->get('/faq', 'AppController@faq');
+    Route::name('maintenance')->get('/maintenance', 'AppController@maintenance');
 });
 
 /******************
