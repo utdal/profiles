@@ -18,6 +18,24 @@ a {
 	}
 }
 
+.has-external-link-icon {
+    text-decoration: none;
+
+    // underline the link text but never the trailing icon; on hover the
+    // underline is dropped entirely (intentional — see &:hover span below)
+    &:hover {
+        text-decoration: none;
+
+        span {
+            text-decoration: none;
+        }
+    }
+
+    span {
+        text-decoration: underline;
+    }
+}
+
 img{
 	max-width: 100%;
 	height: auto;

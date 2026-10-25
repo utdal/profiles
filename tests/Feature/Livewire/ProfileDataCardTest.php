@@ -67,7 +67,12 @@ class ProfileDataCardTest extends TestCase
             $component = Livewire::test(ProfileDataCard::class, ['profile' => $profile, 'editable' => $editable, 'data_type' => $section ])
                         ->assertSet('data_type', $section)
                         ->assertViewHas('data')
-                        ->assertSeeHtmlInOrder(["<section id=\"$section\" class=\"card\">", '<h3>', '<div class="entry">'] );
+                        ->assertSeeHtmlInOrder([
+                                "<section id=\"$section\" class=\"card\" aria-labelledby=\"$section-heading\">",
+                                "<h2 id=\"$section-heading\">",
+                                '<ul class="list-unstyled">',
+                                '<li class="entry">',
+                            ]);
 
             if ($section === 'additionals') {
                 $component->assertSee('Additional Information');
