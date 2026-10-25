@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 
 /**
  * @mixin Builder
@@ -163,6 +164,18 @@ class Profile extends Model implements HasMedia, Auditable
         }
 
         return $message;
+    }
+
+    public function updateLayoutSettings($fancy_header, $fancy_header_right) 
+    {
+        $profile_info = $this->information->first();
+        
+        $profile_info->data = array_merge($profile_info->data ?? [], [
+                                'fancy_header' => $fancy_header,
+                                'fancy_header_right' => (bool) $fancy_header_right,
+                            ]);
+
+        $profile_info->save();
     }
 
     /**
@@ -674,7 +687,7 @@ class Profile extends Model implements HasMedia, Auditable
      */
     public function getBannerUrlAttribute()
     {
-        return url($this->getFirstMediaUrl('banners', 'large') ?: '/img/default.png');
+        return url($this->getFirstMediaUrl('banners', 'large'));
     }
 
     /**
@@ -695,6 +708,21 @@ class Profile extends Model implements HasMedia, Auditable
     public function getApiUrlAttribute()
     {
         return route('api.index', ['person' => $this->slug, 'with_data' => true]);
+    }
+
+    public function hasFancyHeader()
+    {
+        return $this->information->first()->data['fancy_header'] ?? false;
+    }
+
+    public function hasFancyHeaderRight()
+    {
+        return $this->information->first()->data['fancy_header_right'] ?? false;
+    }
+    
+    public function hasImage($collection = null)
+    {
+        return $this->hasMedia($collection);
     }
 
     ///////////////

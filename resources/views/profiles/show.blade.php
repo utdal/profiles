@@ -37,8 +37,17 @@
 				@if(!$information->fancy_header)
 					<div class="col-md-5 col-sm-6">
 						<img class="profile_photo" src="{{ $profile->image_url }}" alt="{{ $profile->full_name }}">
+						@if($editable)
+						<div class="edit_photo_button">
+							<a class="d-flex btn-sm btn-info btn" href="#" data-target="#profile_header_editor" data-toggle="modal" role="button">
+								<small><i class="fas fa-camera"></i> Edit</small>
+							</a>
+						</div>
+						@endif
+						
 					</div>
 				@endif
+				<livewire:profile-header-editor-modal :profile="$profile">
 				<div class="@if($information->fancy_header)col-lg-5 @else col-md-7 col-sm-6 @endif">
 					<div class="contact_info">
 
@@ -117,6 +126,14 @@
 				@endif
 			</div>
 		</div>
+		@if($editable & $information->fancy_header)
+			<div class="d-flex edit_banner_button">
+				<a class="btn-sm btn-info btn" href="#" data-target="#profile_header_editor" data-toggle="modal" role="button">
+					<small><i class="fas fa-camera"></i> Edit</small>
+				</a>
+			</div>
+		@endif
+		
 	</div>
 	<nav id="links" class="container links" aria-label="profile sections">
 		<ul>
