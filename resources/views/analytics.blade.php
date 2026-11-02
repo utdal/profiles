@@ -10,8 +10,8 @@
     </script>
 @endif
 
-@if (config('app.env')==='production')
-    <script async src="https://analytics.silktide.com/91ba706a81f8e4d84246e3cf4593f4ae.js"></script>
+@if(config('app.silktide_analytics_url'))
+    <script async src="{{ config('app.silktide_analytics_url') }}"></script>
     <script> (function (s,i,l,k,y) {
         s[i] = s[i] || y;
         s[l] = s[l] || [];

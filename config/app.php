@@ -52,6 +52,9 @@ return [
     /** analytics id */
     'analytics_id' => env('GOOGLE_ANALYTICS_ID', false),
 
+    /** silktide analytics url */
+    'silktide_analytics_url' => env('SILKTIDE_ANALYTICS_URL', false),
+
     /** enable student research application feature */
     'enable_students' => env('ENABLE_STUDENTS', false),
 
