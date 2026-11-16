@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProfilesApiRequest;
 use App\Profile;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
 class ProfilesApiController extends Controller
@@ -93,10 +92,5 @@ class ProfilesApiController extends Controller
         $profile->loadApiData();
 
         return response()->json(compact('profile'));
-    }
-
-    public function authRouteAPI(Request $request)
-    {
-        return $request->user();
     }
 }
