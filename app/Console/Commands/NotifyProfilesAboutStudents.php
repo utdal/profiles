@@ -47,9 +47,10 @@ class NotifyProfilesAboutStudents extends Command
         $year = (int)$this->argument('year');
 
         $semester = ($season && $year) ? Semester::formatName($season, $year) : Semester::current();
-        $faculty_list = Profile::StudentsPendingReviewWithSemester($semester)
-                                ->EagerStudentsPendingReviewWithSemester($semester)
-                                ->with('user:id,email,display_name')->get();
+        $faculty_list = Profile::AcceptingUndergradStudents()
+                                    ->EagerStudentsPendingReviewWithSemester($semester)
+                                    ->with('user:id,email,display_name')
+                                    ->get();
 
         foreach ($faculty_list as $faculty) { 
             $count = $faculty->students->count();
