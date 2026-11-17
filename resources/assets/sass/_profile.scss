@@ -105,21 +105,23 @@
 		}
     }
 
-	h3 {
+	h2 {
 		font-weight: lighter;
 		font-size: 1.8rem;
 		margin-bottom: 1.4rem;
 		z-index: 0;
 		position: relative;
+		margin-top: 1rem;
     }
 
-	h5 {
+	h3 {
 		clear: both;
 		margin-bottom: 15px;
     }
 
-	h6 {
+	h4 {
 		color: $utd-web-orange;
+		font-size: 1rem;
 	}
 	
 	.links {

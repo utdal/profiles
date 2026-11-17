@@ -63,7 +63,14 @@ return [
             'AutoFormat.AutoParagraph' => false,
             'AutoFormat.RemoveSpansWithoutAttributes' => true,
         ],
-
+        'inline_text' => [
+            'Core.Encoding' => 'utf-8',
+            'HTML.Doctype' => 'HTML 4.01 Transitional',
+            'Cache.SerializerPermissions' => env('PURIFY_CACHE_PERMISSIONS', null),
+            'HTML.Allowed' => 'b,strong,i,em,sub,sup,span,br',
+            'AutoFormat.AutoParagraph' => false,
+            'AutoFormat.RemoveEmpty' => false,
+        ],
     ],
 
     /*
