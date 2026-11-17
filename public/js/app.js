@@ -316,6 +316,9 @@ var profiles = function ($, undefined) {
     // this shouldn't be needed, but for some reason Chrome occasionally fails
     // to propogate when a submit button is clicked.
     if (this.getAttribute('type') === 'submit') {
+      if ($(this).closest('form[wire\\:submit], form[wire\\:submit\\.prevent]').length) {
+        return;
+      }
       $(this).closest('form').submit();
     }
   };
@@ -641,7 +644,7 @@ $(function () {
 
   //show preview of uploaded image
   $('input[type="file"]').on('change', function (e) {
-    return profiles.preview_selected_image(e);
+    profiles.preview_selected_image(e);
   });
 
   // enable drag and drop sorting for items with sortable class
