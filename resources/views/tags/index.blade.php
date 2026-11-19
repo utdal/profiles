@@ -22,7 +22,7 @@
 			<ul class="list-inline">
 				@foreach($tags as $tag)
 					<li class="list-inline-item">
-						<a href="{{ route('profiles.index', ['search' => $tag->name]) }}" class="badge badge-primary tags-badge large">
+						<a href="{{ route('tags.show', ['slug' => $tag->slug]) }}" class="badge badge-primary tags-badge large">
 							{{ ucwords($tag->name) }}
 						</a>
 					</li>

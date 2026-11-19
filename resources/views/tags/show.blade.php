@@ -1,36 +1,36 @@
-<?php
-$id = $id ?? Illuminate\Support\Str::slug($model->getRouteKey());
-$tags = $model->tags ?? collect();
-$model_class = get_class($model);
-$random_tags = Spatie\Tags\Tag::whereType($model_class)->inRandomOrder()->limit(10)->pluck('name');
-?>
+@extends('layout')
+@section('title', ucwords($tag->name) . ' Profiles')
+@section('header')
+	@include('nav')
+	@push('breadcrumbs')
+		<li class="breadcrumb-item"><a href="{{ route('tags.index') }}">All Tags</a></li>
+		<li class="breadcrumb-item active" aria-current="page">{{ ucwords($tag->name) }}</li>
+	@endpush
+	@include('breadcrumbs')
+@stop
+@section('content')
+<div class="container profile-container">
+	<h1><i class="fas fa-tag" aria-hidden="true"></i> {{ ucwords($tag->name) }}</h1>
+	<p class="text-muted">
+		@if($keyword_fallback && $profiles->total() > 0)
+			No profiles are tagged with &ldquo;{{ $tag->name }}&rdquo;. Showing {{ $profiles->total() }} {{ Str::plural('profile', $profiles->total()) }} that {{ $profiles->total() === 1 ? 'mentions' : 'mention' }} it.
+		@else
+			{{ $profiles->total() }} {{ Str::plural('profile', $profiles->total()) }} tagged with &ldquo;{{ $tag->name }}&rdquo;
+		@endif
+	</p>
 
-{{-- Tag List --}}
-<span id="{{ $id }}_current_tags" class="tags">
-    @include('tags.badge')
-</span>
+	@if($profiles->total() === 0)
+		<h2 class="text-center my-5">No profiles have this tag yet.</h2>
+	@else
+		<div class="profiles d-flex flex-wrap justify-content-around justify-content-md-between">
+			@foreach($profiles as $profile)
+				@include('profiles.panel')
+			@endforeach
+		</div>
 
-{{-- Tag Editor --}}
-<div id="{{ $id }}_tags_editor" class="tags-editor modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-
-      <div class="modal-body">
-        <div class="container-fluid">
-          <div class="alert alert-info">
-            <p>Please type your desired tags, e.g. <strong>{{ $random_tags->implode(', ') }}</strong>, and etc.</p>
-            <p>Press the 'enter' key or type a comma (,) after each new tag.</p>
-          </div>
-          {!! Form::label($id.'_tags[]', 'Tags:', ['class' => 'form-label', 'id' => 'tags-picker-label']) !!}
-          {!! Form::select($id.'_tags[]', $tags->pluck('name','name')->all(), null, ['id' => $id.'_tags[]', 'multiple', 'data-token' => csrf_token(), 'data-model-name' => $id, 'data-url' => route('tags.api.update'), 'data-model-id' => $model->getKey(), 'data-model' => $model_class, 'aria-labelledby' => 'tags-picker-label',]) !!}
-        </div>
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary tagsInsertBtn">Update Tags</button>
-      </div>
-
-    </div>
-  </div>
+		<div class="paginator">
+			{{ $profiles->links() }}
+		</div>
+	@endif
 </div>
+@stop

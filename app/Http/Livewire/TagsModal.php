@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire;
 
+use App\Profile;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use Spatie\Tags\Tag;
@@ -42,6 +44,10 @@ class TagsModal extends Component
         }
         foreach ($this->tags_type as $tag_type) {
             $this->model->syncTagsWithType($this->selected_tags->where('type', $tag_type), $tag_type);
+        }
+        // Only profile tags feed the cached tag pages; skip the flush for student topic tags.
+        if (in_array(Profile::class, $this->tags_type)) {
+            Cache::tags(['profile_tags'])->flush();
         }
         $this->tags = $this->selected_tags->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE);
     }

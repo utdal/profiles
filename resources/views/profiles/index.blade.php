@@ -61,7 +61,7 @@
 		        {!! $keyword_profiles->appends(Request::except('key'))->render() !!}
 		    </div>
 		@endif
-		@if($profiles->isEmpty() && $keyword_profiles->isEmpty() && (isset($tag_profiles) && $tag_profiles->isEmpty()) && $schools->isEmpty())
+		@if($profiles->isEmpty() && $keyword_profiles->isEmpty() && $tag_profiles->isEmpty() && $schools->isEmpty())
 		    <h1 class="text-center" style="margin-top: 200px; margin-bottom: 300px;">No Results.</h1>
 		@endif
 </div>

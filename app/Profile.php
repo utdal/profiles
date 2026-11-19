@@ -7,6 +7,7 @@ use App\ProfileData;
 use App\ProfileStudent;
 use App\Student;
 use App\User;
+use App\Traits\HasCachedSearch;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Auditable as HasAudits;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -29,7 +30,7 @@ use Illuminate\Support\Facades\Cache;
  * @method public()
  * @method private()
  * @method withApiData(array|string|null $sections)
- * @method containing(string $search, string $type = null)
+ * @method containing(string $search, string $type = null, bool $match_encoded = false)
  * @method taggedWith(string $tag, string $type = null)
  * @method withName(string $search)
  * @method fromSchool(string $school)
@@ -45,6 +46,7 @@ class Profile extends Model implements HasMedia, Auditable
     use InteractsWithMedia;
     use HasTags;
     use SoftDeletes;
+    use HasCachedSearch;
 
     /** @var string The database table used by the model. */
     protected $table = 'profiles';
@@ -505,17 +507,27 @@ class Profile extends Model implements HasMedia, Auditable
      * @param  \Illuminate\Database\Eloquent\Builder $query
      * @param  string $search  what to search for
      * @param  string|null $type  restrict the search to data of the given type
+     * @param  bool $match_encoded  also match the HTML-encoded form of the term (e.g. "&amp;" for "&"),
+     *                              since rich-text data is stored as sanitized HTML
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeContaining($query, $search, $type = null)
+    public function scopeContaining($query, $search, $type = null, bool $match_encoded = false)
     {
-        return $query->whereHas('data', function ($data_query) use ($search, $type) {
+        return $query->whereHas('data', function ($data_query) use ($search, $type, $match_encoded) {
             if ($type !== null) {
                 $data_query->where('type', '=', $type);
             }
-            $data_query->where(function($data_sub_query) use ($search) {
-                $data_sub_query->where('data', 'LIKE', "%$search%");
-                $data_sub_query->orWhere('data', 'LIKE', "%" . ucwords(strtolower($search)) . "%");
+
+            $terms = [$search, ucwords(strtolower($search))];
+
+            if ($match_encoded) {
+                $terms = array_merge($terms, array_map(fn ($term) => htmlspecialchars($term, ENT_NOQUOTES), $terms));
+            }
+
+            $data_query->where(function ($data_sub_query) use ($terms) {
+                foreach (array_unique($terms) as $term) {
+                    $data_sub_query->orWhere('data', 'LIKE', "%$term%");
+                }
             });
         });
     }

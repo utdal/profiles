@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Spatie\Browsershot\Browsershot;
@@ -70,9 +71,16 @@ class ProfilesController extends Controller
      */
     public function index(ProfileSearchRequest $request): View|ViewFactory|RedirectResponse
     {
-        $input_search = $request->input('search');
+        // Raw input: validation limits the allowed characters and Blade escapes it on output.
+        $search = (string) $request->input('search', '');
 
-        $search = htmlspecialchars($input_search, FILTER_FLAG_NO_ENCODE_QUOTES);
+        // Tag search shortcut: a search that matches a profile tag (e.g. an old "?search=Machine Learning"
+        // link) goes straight to that tag's page. Uses the same cached lookup as the tag page.
+        if ((Cache::get('settings')['tag_search_shortcut'] ?? false) && ($slug = Str::slug($search)) !== '') {
+            if (Profile::cachedTagsWithSlug($slug)->contains('type', Profile::class)) {
+                return redirect()->route('tags.show', ['slug' => $slug]);
+            }
+        }
 
         /** @var EloquentCollection */
         $profiles = Profile::where('full_name', 'LIKE', "%$search%")
@@ -85,10 +93,13 @@ class ProfilesController extends Controller
             return redirect()->route('profiles.show', ['profile' => $profiles->first()]);
         }
 
-        $keyword_profiles = !empty($search) ? Profile::containing($search)
-            ->where('full_name', 'NOT LIKE', "%$search%")->public()->paginate(24, ['*'], 'key') : collect();
+        $keyword_profiles = !empty($search) ?
+                            Profile::paginateIds(Profile::cachedProfileIdsContainingKeyword($search), 'key') :
+                            collect();
 
-        $tag_profiles = !empty($search) ? Profile::taggedWith($search)->public()->excludingUnlisted()->paginate(24, ['*'], 'tag') : null;
+        $tag_profiles = !empty($search) ?
+                        Profile::paginateIds(Profile::cachedProfileIdsTaggedWithKeyword($search), 'tag') :
+                        collect();
 
         $schools = !empty($search) ? School::withNameLike($search)->get() : collect();
 

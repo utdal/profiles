@@ -2,7 +2,7 @@
     {{-- Tag List --}}
     <span id="{{ $model_slug }}_current_tags" class="tags">
         @foreach($tags as $tag)
-            <a class="badge badge-primary tags-badge" href="{{ route('profiles.index', ['search' => $tag->name]) }}" target="_blank">
+            <a class="badge badge-primary tags-badge" href="{{ route('tags.show', ['slug' => $tag->slug]) }}" target="_blank">
                 {{ ucwords($tag->name) }}
             </a>
             <span class="{{ $tag->slug }}"></span> {{-- this is just here so Livewire respects whitespace when adding a tag --}}
