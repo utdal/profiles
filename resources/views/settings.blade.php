@@ -159,6 +159,18 @@
 
     <div class="row record form-group level lower-border">
         <div class="col col-12">
+            <label for="visibility">Tag Search Shortcut</label><br>
+            <p><small class="form-text text-muted">If a search matches a profile tag (ignoring capitalization and punctuation), skip the search results and redirect to that tag's page instead. This also applies to searches typed in the search box, so those visitors won't see name or keyword matches.</small></p>
+            <label class="switch pull-left">
+                <input type="hidden" name="setting[tag_search_shortcut]" id="setting[tag_search_shortcut]" value="0">
+                <input type="checkbox" name="setting[tag_search_shortcut]" id="setting[tag_search_shortcut]" value="1" @if($settings['tag_search_shortcut'] ?? false) checked @endif>
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+
+    <div class="row record form-group level lower-border">
+        <div class="col col-12">
             <label for="rte_faq">FAQ Page</label>
             <input id="rte_faq" type="hidden" class="clearable" name="setting[faq]" value="{{ $settings['faq'] ?? NULL }}">
             <trix-editor input="rte_faq"></trix-editor>

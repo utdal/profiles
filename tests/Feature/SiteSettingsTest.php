@@ -56,6 +56,7 @@ class SiteSettingsTest extends TestCase
             'forgot_password_url' => $this->faker->url,
             'school_search_shortcut' => $this->faker->boolean(),
             'profile_search_shortcut' => $this->faker->boolean(),
+            'tag_search_shortcut' => $this->faker->boolean(),
             'faq' => $this->faker->paragraph(),
             'footer' => $this->faker->paragraph(),
             'student_info' => '<div>' . $this->faker->paragraph() . '</div>',
@@ -80,6 +81,7 @@ class SiteSettingsTest extends TestCase
             ->assertSee($settings['forgot_password_url'])
             ->assertSee("id=\"setting[school_search_shortcut]\" value=\"1\" " . ($settings['school_search_shortcut'] ? ' checked ' : ''), false)
             ->assertSee("id=\"setting[profile_search_shortcut]\" value=\"1\" " . ($settings['profile_search_shortcut'] ? ' checked ' : ''), false)
+            ->assertSee("id=\"setting[tag_search_shortcut]\" value=\"1\" " . ($settings['tag_search_shortcut'] ? ' checked ' : ''), false)
             ->assertSee($settings['faq'])
             ->assertSee($settings['footer'])
             ->assertSee($settings['student_info'])
