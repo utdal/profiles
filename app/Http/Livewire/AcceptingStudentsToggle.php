@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
 class AcceptingStudentsToggle extends Component
@@ -35,6 +36,9 @@ class AcceptingStudentsToggle extends Component
         if (!$updated) {
             $this->emit('alert', "Not saved. There was a problem changing that setting", 'danger');
         }
+
+        // Keyword search matches the raw profile data, so clear its cached results.
+        Cache::tags(['profile_data'])->flush();
 
         $this->emit('alert', "<strong>Saved.</strong><br> Profile for {$this->profile->full_name} marked as " . ($toggled_on ? "not" : "") . " accepting undergraduate students", 'success');
     }

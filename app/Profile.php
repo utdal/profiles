@@ -22,6 +22,10 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
+use Spatie\Tags\Tag;
 
 /**
  * @mixin Builder
@@ -29,7 +33,7 @@ use Illuminate\Support\Facades\Cache;
  * @method public()
  * @method private()
  * @method withApiData(array|string|null $sections)
- * @method containing(string $search, string $type = null)
+ * @method containing(string $search, string $type = null, bool $match_encoded = false)
  * @method taggedWith(string $tag, string $type = null)
  * @method withName(string $search)
  * @method fromSchool(string $school)
@@ -505,19 +509,87 @@ class Profile extends Model implements HasMedia, Auditable
      * @param  \Illuminate\Database\Eloquent\Builder $query
      * @param  string $search  what to search for
      * @param  string|null $type  restrict the search to data of the given type
+     * @param  bool $match_encoded  also match the HTML-encoded form of the term (e.g. "&amp;" for "&"),
+     *                              since rich-text data is stored as sanitized HTML
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeContaining($query, $search, $type = null)
+    public function scopeContaining($query, $search, $type = null, bool $match_encoded = false)
     {
-        return $query->whereHas('data', function ($data_query) use ($search, $type) {
+        return $query->whereHas('data', function ($data_query) use ($search, $type, $match_encoded) {
             if ($type !== null) {
                 $data_query->where('type', '=', $type);
             }
-            $data_query->where(function($data_sub_query) use ($search) {
-                $data_sub_query->where('data', 'LIKE', "%$search%");
-                $data_sub_query->orWhere('data', 'LIKE', "%" . ucwords(strtolower($search)) . "%");
+
+            $terms = [$search, ucwords(strtolower($search))];
+
+            if ($match_encoded) {
+                $terms = array_merge($terms, array_map(fn ($term) => htmlspecialchars($term, ENT_NOQUOTES), $terms));
+            }
+
+            $data_query->where(function ($data_sub_query) use ($terms) {
+                foreach (array_unique($terms) as $term) {
+                    $data_sub_query->orWhere('data', 'LIKE', "%$term%");
+                }
             });
         });
+    }
+
+    /**
+     * IDs of public profiles whose data contains the search term, sorted by name.
+     *
+     * Cached for a day under 'profiles'/'profile_data', so the existing flushes on
+     * profile edits, create, archive and restore clear it. The key uses the exact
+     * term because keyword matching is case-sensitive.
+     *
+     * @param  bool  $exclude_name_matches
+     * @return int[]
+     */
+    public static function cachedKeywordIds(string $search, bool $exclude_name_matches = true): array
+    {
+        $key = 'keyword-ids:' . ($exclude_name_matches ? 'without-names:' : 'all:') . md5($search);
+
+        return Cache::tags(['profiles', 'profile_data'])->remember($key, 86400, fn () => static::containing($search, null, match_encoded: true)
+            ->when($exclude_name_matches, fn ($query) => $query->where('full_name', 'NOT LIKE', "%$search%"))
+            ->public()
+            ->orderBy('last_name')
+            ->orderBy('first_name')
+            ->pluck('id')
+            ->all());
+    }
+
+    /**
+     * All tags of any type with the given slug.
+     *
+     * Several tags can share a slug when their names differ only by case. Cached for a
+     * day under 'profile_tags', so creating, renaming or deleting any tag clears it
+     * (see AppServiceProvider). Unknown slugs cache an empty result too.
+     */
+    public static function cachedTagsWithSlug(string $slug): EloquentCollection
+    {
+        return Cache::tags(['profile_tags'])
+            ->remember("tags-with-slug:{$slug}", 86400, fn () => Tag::where('slug->en', $slug)->get());
+    }
+
+    /**
+     * Paginate an ordered list of profile IDs, loading only the profiles on the current page.
+     *
+     * @param  int[]  $ids
+     */
+    public static function paginateIds(array $ids, string $page_name = 'page', int $per_page = 24): LengthAwarePaginator
+    {
+        $page = LengthAwarePaginator::resolveCurrentPage($page_name);
+        $page_ids = array_slice($ids, ($page - 1) * $per_page, $per_page);
+
+        $page_profiles = static::whereIn('id', $page_ids)
+            ->with(['information', 'media'])
+            ->get()
+            ->sortBy(fn ($profile) => array_search($profile->id, $page_ids))
+            ->values();
+
+        return new LengthAwarePaginator($page_profiles, count($ids), $per_page, $page, [
+            'path' => Paginator::resolveCurrentPath(),
+            'pageName' => $page_name,
+        ]);
     }
 
     /**

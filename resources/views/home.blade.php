@@ -30,7 +30,7 @@
 		@include('_search')
 		<ul id="search-terms" class="list-unstyled d-flex flex-wrap justify-content-center m-0" aria-label="some expertise tags">
 			@foreach($tags as $tag)
-				<li><a href="{{ route('profiles.index', ['search' => $tag->name]) }}"><span class="badge tags-badge">{{ ucwords($tag->name) }}</span></a></li>
+				<li><a href="{{ route('tags.show', ['slug' => $tag->slug]) }}"><span class="badge tags-badge">{{ ucwords($tag->name) }}</span></a></li>
 			@endforeach
 		</ul>
 		<h3><i class="fas fa-lightbulb"></i> Explore more <a href="{{ route('tags.index') }}">expertise</a> <i class="fas fa-caret-right"></i></h3>

@@ -182,6 +182,10 @@ class UsersController extends Controller
     {
         $user->delete();
 
+        // The database cascades the delete to the user's profiles and their data,
+        // so clear the cached profile lists (search, tag pages, home page counts).
+        Cache::tags(['profiles', 'profile_data'])->flush();
+
         return redirect()->route('users.index')->with('flash_message', 'The user has been removed.');
     }
 

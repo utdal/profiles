@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Cache;
 use Spatie\Tags\Tag;
 use App\Http\Requests\TagsUpdateRequest;
 use App\Http\Requests\TagUpdateRequest;
+use App\Profile;
 use Illuminate\Http\JsonResponse;
 
 class TagsController extends Controller
@@ -20,7 +21,7 @@ class TagsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->except('index');
+        $this->middleware('auth')->except(['index', 'show']);
 
         $this->middleware('can:viewAdminIndex,'.Tag::class)->only('table');
 
@@ -60,6 +61,43 @@ class TagsController extends Controller
     public function table(): View|ViewFactory
     {
         return view('tags.table');
+    }
+
+    /**
+     * Show the public profiles associated with a tag.
+     *
+     * When no profile has the tag (e.g. a student research topic), fall back to
+     * profiles whose data mentions the tag name, like the keyword search.
+     */
+    public function show(string $slug): View|ViewFactory
+    {
+        $all_tags = Profile::cachedTagsWithSlug($slug);
+
+        abort_if($all_tags->isEmpty(), 404);
+
+        $tags = $all_tags->where('type', Profile::class);
+        $tag = $tags->first() ?? $all_tags->first();
+
+        // Tagged 'profiles'/'profile_data' so the existing flushes on profile edits, archive and restore clear it too.
+        $profile_ids = Cache::tags(['profile_tags', 'profiles', 'profile_data'])
+            ->remember("tag-profiles:{$slug}", 86400, fn () => Profile::query()
+                ->whereHas('tags', fn ($q) => $q->whereIn('tags.id', $tags->modelKeys()))
+                ->public()
+                ->excludingUnlisted()
+                ->orderBy('last_name')
+                ->orderBy('first_name')
+                ->pluck('id')
+                ->all());
+
+        $keyword_fallback = empty($profile_ids);
+
+        if ($keyword_fallback) {
+            $profile_ids = Profile::cachedKeywordIds($tag->name, exclude_name_matches: false);
+        }
+
+        $profiles = Profile::paginateIds($profile_ids);
+
+        return view('tags.show', compact('tag', 'profiles', 'keyword_fallback'));
     }
 
     /**

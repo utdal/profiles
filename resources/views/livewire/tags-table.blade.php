@@ -50,7 +50,7 @@
             @foreach ($this->tags as $tag)
             <tr>
                 <td>{{ $tag->id }}</td>
-                <td><a href="{{ route('profiles.index', ['search' => $tag->name]) }}">{{ $tag->name }}</a></td>
+                <td><a href="{{ route('tags.show', ['slug' => $tag->slug]) }}">{{ $tag->name }}</a></td>
                 <td>{{ $tag->slug }}</td>
                 <td>{{ $tag->type }}</td>
                 <td>{{ $tag->created_at->toFormattedDateString() }}</td>
