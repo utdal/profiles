@@ -93,20 +93,13 @@ class ProfilesController extends Controller
             return redirect()->route('profiles.show', ['profile' => $profiles->first()]);
         }
 
-        $keyword_profiles = !empty($search)
-            ? Profile::paginateIds(Profile::cachedKeywordIds($search), 'key')
-            : collect();
+        $keyword_profiles = !empty($search) ?
+                            Profile::paginateIds(Profile::cachedProfileIdsContainingKeyword($search), 'key') :
+                            collect();
 
-        $tag_profiles = !empty($search)
-            ? Profile::paginateIds(Cache::tags(['profile_tags', 'profiles', 'profile_data'])
-                ->remember('search-tag:' . md5(mb_strtolower($search)), 86400, fn () => Profile::taggedWith($search)
-                    ->public()
-                    ->excludingUnlisted()
-                    ->orderBy('last_name')
-                    ->orderBy('first_name')
-                    ->pluck('id')
-                    ->all()), 'tag')
-            : collect();
+        $tag_profiles = !empty($search) ?
+                        Profile::paginateIds(Profile::cachedProfileIdsTaggedWithKeyword($search), 'tag') :
+                        collect();
 
         $schools = !empty($search) ? School::withNameLike($search)->get() : collect();
 

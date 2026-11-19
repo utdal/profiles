@@ -78,21 +78,12 @@ class TagsController extends Controller
         $tags = $all_tags->where('type', Profile::class);
         $tag = $tags->first() ?? $all_tags->first();
 
-        // Tagged 'profiles'/'profile_data' so the existing flushes on profile edits, archive and restore clear it too.
-        $profile_ids = Cache::tags(['profile_tags', 'profiles', 'profile_data'])
-            ->remember("tag-profiles:{$slug}", 86400, fn () => Profile::query()
-                ->whereHas('tags', fn ($q) => $q->whereIn('tags.id', $tags->modelKeys()))
-                ->public()
-                ->excludingUnlisted()
-                ->orderBy('last_name')
-                ->orderBy('first_name')
-                ->pluck('id')
-                ->all());
+        $profile_ids = Profile::cachedProfileIdsAssociatedWithTag($tags, $slug);
 
         $keyword_fallback = empty($profile_ids);
 
         if ($keyword_fallback) {
-            $profile_ids = Profile::cachedKeywordIds($tag->name, exclude_name_matches: false);
+            $profile_ids = Profile::cachedProfileIdsContainingKeyword($tag->name, exclude_name_matches: false);
         }
 
         $profiles = Profile::paginateIds($profile_ids);
